@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>demo</title>
-    <url>/2019/11/25/demo/</url>
-    <content><![CDATA[<p>demo</p>]]></content>
-      <categories>
-        <category>demo</category>
-      </categories>
-      <tags>
-        <tag>demo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法导论排序</title>
     <url>/2019/11/25/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/</url>
     <content><![CDATA[<h1 id="算法导论-排序"><a href="#算法导论-排序" class="headerlink" title="算法导论 排序"></a>算法导论 排序</h1><h2 id="1、插入排序"><a href="#1、插入排序" class="headerlink" title="1、插入排序"></a>1、插入排序</h2><h2 id="基本思想："><a href="#基本思想：" class="headerlink" title="基本思想："></a>基本思想：</h2><p>将数组中的第一个数认为是有序数组，从后往前（从前往后）扫描该有序数组，把数组中其余n-1个数，根据数值的大小，插入到有序数组中，直至数组中的所有数有序排列为止。这样的话，n个元素需要进行n-1趟排序！！！ </p><a id="more"></a>
@@ -29,6 +18,17 @@
       </categories>
       <tags>
         <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>demo</title>
+    <url>/2019/11/25/demo/</url>
+    <content><![CDATA[<p>demo</p>]]></content>
+      <categories>
+        <category>demo</category>
+      </categories>
+      <tags>
+        <tag>demo</tag>
       </tags>
   </entry>
   <entry>
