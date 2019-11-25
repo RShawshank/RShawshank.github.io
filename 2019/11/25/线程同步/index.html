@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/blog_favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/blog_favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="线程同步关于线程同步 ​    线程之间通信的两个基本问题是互斥和同步。  线程同步是指线程之间所具有的一种制约关系，一个线程的执行依赖另一个线程的消息，当它没有得到另一个线程的消息时应等待，直到消息到达时才被唤醒。  线程互斥是指对于共享的操作系统资源（指的是广义的”资源”，而不是Windows的.res文件，譬如全局变量就是一种共享资源），在各线程访问时的排它性。当有若干个线程都要使用某一共享">
+<meta name="keywords" content="线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程同步">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;25&#x2F;%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5&#x2F;index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="线程同步关于线程同步 ​    线程之间通信的两个基本问题是互斥和同步。  线程同步是指线程之间所具有的一种制约关系，一个线程的执行依赖另一个线程的消息，当它没有得到另一个线程的消息时应等待，直到消息到达时才被唤醒。  线程互斥是指对于共享的操作系统资源（指的是广义的”资源”，而不是Windows的.res文件，譬如全局变量就是一种共享资源），在各线程访问时的排它性。当有若干个线程都要使用某一共享">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:updated_time" content="2019-11-25T15:37:59.509Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/25/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>线程同步 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">rhb_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">1</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">1</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/25/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          线程同步
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-24 20:52:20" itemprop="dateCreated datePublished" datetime="2019-11-24T20:52:20Z">2019-11-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-25 15:37:59" itemprop="dateModified" datetime="2019-11-25T15:37:59Z">2019-11-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/win32/" itemprop="url" rel="index">
+                    <span itemprop="name">win32</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/win32/%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">线程</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>29k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>线程同步</p><h1 id="关于线程同步"><a href="#关于线程同步" class="headerlink" title="关于线程同步"></a>关于线程同步</h1><ol>
+<li>​    线程之间通信的两个基本问题是互斥和同步。</li>
+</ol><ul>
+<li><p>线程同步是指线程之间所具有的一种制约关系，一个线程的执行依赖另一个线程的消息，当它没有得到另一个线程的消息时应等待，直到消息到达时才被唤醒。</p>
+</li>
+<li><p>线程互斥是指对于共享的操作系统资源（指的是广义的”资源”，而不是Windows的.res文件，譬如全局变量就是一种共享资源），在各线程访问时的排它性。当有若干个线程都要使用某一共享资源时，任何时刻最多只允许一个线程去使用，其它要使用该资源的线程必须等待，直到占用资源者释放该资源。</p>
+</li>
+</ul><a id="more"></a>
+
+
+<ol start="2">
+<li>线程互斥是一种特殊的线程同步。实际上，互斥和同步对应着线程间通信发生的两种情况：</li>
+</ol>
+<ul>
+<li><p>当有多个线程访问共享资源而不使资源被破坏时；</p>
+</li>
+<li><p>当一个线程需要将某个任务已经完成的情况通知另外一个或多个线程时。</p>
+</li>
+</ul>
+<ol start="3">
+<li>从大的方面讲，线程的同步可分用户模式的线程同步和内核对象的线程同步两大类。</li>
+</ol>
+<ul>
+<li>用户模式中线程的同步方法主要有原子访问和临界区等方法。其特点是同步速度特别快，适合于对线程运行速度有严格要求的场合。</li>
+<li>内核对象的线程同步则主要由事件、等待定时器、信号量以及信号灯等内核对象构成。由于这种同步机制使用了内核对象，使用时必须将线程从用户模式切换到内核模式，而这种转换一般要耗费近千个CPU周期，因此同步速度较慢，但在适用性上却要远优于用户模式的线程同步方式。</li>
+</ul>
+<h1 id="linux线程同步"><a href="#linux线程同步" class="headerlink" title="linux线程同步"></a>linux线程同步</h1><p><strong>同步： 在保证数据安全的前提下，让线程能够按照某种特定的顺序访问临界资源，从而有效避免饥饿问题，叫做同步。</strong><br><strong>竞态条件： 因为时序问题，而导致程序异常，我们称之为竞态条件。</strong></p>
+<p><strong>没有同步导致的饥饿问题：</strong><br>假如有一个线程，它非常强势，它一直都在申请锁，然后申请完了释放锁，释放完了又不给别的线程留机会，自己又去申请锁，那么此时如果有线程想要访问临界资源就必须等它彻底走了，那么有越来越多的线程想要访问临界资源，这个线程又一直不给让路，那么就会导致其他线程长时间得不到CPU资源从而导致其他线程的饥饿问题。所以这种情况就应该要加上同步机制，让这个线程申请一次释放之后就排在等待队列最后进行等待按顺序访问临界资源，让其他线程进行临界资源的访问。</p>
+<p><strong>没有同步导致的效率问题：</strong><br>假如，有一个读线程，一个写线程，它们往管道里进行数据的读写，那么如果写线程写满了，该让读线程来读取数据了，但是此时读线程不知道已经写好了，一直不去读，写线程就会不断地去检测管道里是否有空间可以写数据，这样就会造成效率的低下，因此此时需要加上同步机制，当写线程写完的条件满足时，通知读线程来进行数据的读取，同样的，读线程读完的条件满足时，通知写线程来进行数据的写入，这样就达到了按照一定的顺序访问临界资源。</p>
+<h2 id="一、互斥锁"><a href="#一、互斥锁" class="headerlink" title="一、互斥锁"></a>一、互斥锁</h2><p> <a href="https://blog.csdn.net/qq_22847457/article/details/89430008" target="_blank" rel="noopener">https://blog.csdn.net/qq_22847457/article/details/89430008</a> </p>
+<p>通过锁机制实现线程间的同步。</p>
+<p>Linux中提供一把互斥锁mutex（也称之为互斥量）。每个线程在对资源操作前都尝试先加锁，成功加锁才能操作，操作结束解锁。资源还是共享的，线程间也还是竞争的， 但通过“锁”就将资源的访问变成互斥操作，而后与时间有关的错误也不会再产生了。<br>但，应注意：<strong>同一时刻，只能有一个线程持有该锁。</strong><br>当A线程对某个全局变量加锁访问，B在访问前尝试加锁，拿不到锁，B阻塞。C线程不去加锁，而直接访问该全局变量，依然能够访问，但会出现数据混乱。<br>互斥锁实质上是操作系统提供的一把“建议锁”（又称“协同锁”），建议程序中有多线程访问共享资源的时候使用该机制。但，并没有强制限定。<br>因此，即使有了mutex，如果有线程不按规则来访问数据，依然会造成数据混乱。</p>
+<h3 id="主要api"><a href="#主要api" class="headerlink" title="主要api"></a>主要api</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pthread_mutex_init</span><br><span class="line">pthread_mutex_destroy</span><br><span class="line">pthread_mutex_lock</span><br><span class="line">pthread_mutex_trylock</span><br><span class="line">pthread_mutex_unlock</span><br><span class="line"> </span><br><span class="line">//以上5个函数的返回值都是：成功返回0， 失败返回错误号。</span><br><span class="line">//pthread_mutex_t 类型，其本质是一个结构体。为简化理解，应用时可忽略其实现细节，简单当成整数看待。</span><br><span class="line">//pthread_mutex_t mutex; 变量mutex只有两种取值1、0。</span><br></pre></td></tr></table></figure>
+
+<p><code>pthread_mutex_init</code>  <strong>初始化一个互斥锁(互斥量) —&gt; 初值可看作1</strong></p>
+<ul>
+<li><pre><code>int pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 参数1：传出参数，调用时应传 &amp;mutex</span><br><span class="line">  restrict关键字：只用于限制指针，告诉编译器，所有修改该指针指向内存中内容的操作，只能通过本指针完成。不能通过除本指针以外的其他变量或指针修改</span><br><span class="line"></span><br><span class="line">- 参2：互斥量属性。是一个传入参数，通常传NULL，选用默认属性(线程间共享)。 参APUE.12.4同步属性</span><br><span class="line"></span><br><span class="line">  1、静态初始化：如果互斥锁 mutex 是静态分配的（定义在全局，或加了static关键字修饰），可以直接使用宏进行初始化。e.g.  pthead_mutex_t muetx = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line"></span><br><span class="line">  2、动态初始化：局部变量应采用动态初始化。e.g.  pthread_mutex_init(&amp;mutex, NULL)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- `pthread_mutex_destroy`  **销毁一个互斥锁**</span><br><span class="line"></span><br><span class="line">-</span><br></pre></td></tr></table></figure>
+int pthread_mutex_destroy(pthread_mutex_t *mutex);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">`pthread_mutex_lock`  **加锁。可理解为将mutex--（或-1）**</span><br><span class="line"></span><br><span class="line">-</span><br></pre></td></tr></table></figure>
+int pthread_mutex_lock(pthread_mutex_t *mutex);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">`pthread_mutex_unlock` **解锁。可理解为将mutex ++（或+1）**</span><br><span class="line"></span><br><span class="line">-</span><br></pre></td></tr></table></figure>
+int pthread_mutex_unlock(pthread_mutex_t *mutex);
+
+</code></pre></li>
+</ul>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  `pthread_mutex_trylock`  **尝试加锁** </span><br><span class="line"></span><br><span class="line">-</span><br></pre></td></tr></table></figure>
+<p>  int pthread_mutex_trylock(pthread_mutex_t *mutex);</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  **加锁与解锁** </span><br><span class="line"></span><br><span class="line"> **lock与unlock：**</span><br><span class="line"></span><br><span class="line">- lock尝试加锁，如果加锁不成功，线程阻塞，阻塞到持有该互斥量的其他线程解锁为止。</span><br><span class="line"></span><br><span class="line">- unlock主动解锁函数，同时将阻塞在该锁上的所有线程全部唤醒，至于哪个线程先被唤醒，取决于优先级、调度。默认：先阻塞、先唤醒。</span><br><span class="line"></span><br><span class="line">- 例如：T1、T2、 T3、 T4 使用一把mutex锁。T1加锁成功，其他线程均阻塞，直至T1解锁。T1解锁后，T2、 T3、 T4均被唤醒，并自动再次尝试加锁。</span><br><span class="line"></span><br><span class="line">- 可假想mutex锁 init成功初值为1。 lock 功能是将mutex--。 unlock将mutex++</span><br><span class="line"></span><br><span class="line">**lock与trylock：**</span><br><span class="line"></span><br><span class="line">lock加锁失败会阻塞，等待锁释放。</span><br><span class="line">trylock加锁失败直接返回错误号（如：EBUSY），不阻塞。</span><br><span class="line"></span><br><span class="line">## 二、条件变量</span><br><span class="line"></span><br><span class="line"> 互斥锁不同，**条件变量是用来等待而不是用来上锁的**。条件变量用来自动阻塞一个线程，直到某特殊情况发生为止。通常条件变量和互斥锁同时使用。条件变量分为两部分: 条件和变量。条件本身是由互斥量保护的。线程在改变条件状态前先要锁住互斥量。**条件变量使我们可以睡眠等待某种条件出现**。条件变量是利用线程间共享的全局变量进行同步的一种机制，主要包括两个动作：一个线程等待&quot;条件变量的条件成立&quot;而挂起；另一个线程使&quot;条件成立&quot;（给出条件成立信号）。条件的检测是在互斥锁的保护下进行的。如果一个条件为假，一个线程自动阻塞，并释放等待状态改变的互斥锁。如果另一个线程改变了条件，它发信号给关联的条件变量，唤醒一个或多个等待它的线程，重新获得互斥锁，重新评价条件。如果两进程共享可读写的内存，**条件变量可以被用来实现这两进程间的线程同步。** </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">所以需要引入条件变量相关函数来解决线程的等待和通知问题：</span><br><span class="line"></span><br><span class="line">1. 条件不满足时，就挂起等待</span><br><span class="line">2. 条件满足时通过条件变量就会通知另外的进程来执行其他的操作</span><br><span class="line"></span><br><span class="line">**初始化：pthread_cond_init**</span><br></pre></td></tr></table></figure>
+<p>int pthread_cond_init(pthread_cond_t *restrict cond,const pthread_condattr_t *restrict attr);</p>
+<p>参数：<br>cond： 要初始化的条件变量<br>attr： 属性，一般设置为NULL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**销毁：pthread_cond_destroy**</span><br></pre></td></tr></table></figure>
+<p>int pthread_cond_destroy(pthread_cond_t *cond)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**等待条件满足：pthread_cond_wait**</span><br></pre></td></tr></table></figure>
+<p>int pthread_cond_wait(pthread_cond_t *restrict cond,pthread_mutex_t *restrict mutex);</p>
+<p>参数：<br>cond： 要在这个条件变量上等待（把当前线程挂起）<br>mutex： 互斥量（把当前线程拿到的锁释放）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为什么第二个参数要传互斥量？</span><br><span class="line"></span><br><span class="line">因为等待条件满足是在临界区里等待的，如果**某个线程直接进行等待，那么就会抱着锁去等待，此时，其他线程也无法进入临界资源。**</span><br><span class="line"></span><br><span class="line">- 条件等待是线程间同步的一种手段，如果只有一个线程，条件不满足，一直等下去都不会满足，所以必须要有一个线程通过某些操作，改变共享变量，使原先不满足的条件变得满足，并且友好的通知等待在条件变量上的线程。</span><br><span class="line">- 条件不会无缘无故的突然变得满足了，必然会牵扯到共享数据的变化。所以一定要用互斥锁来保护。没有互斥锁就无法安全的获取和修改共享数据。</span><br><span class="line">- ![在这里插入图片描述](/images/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/20190119151655131.png)</span><br><span class="line"></span><br><span class="line">**唤醒等待：pthread_cond_signal/phread_cond_broadcast**</span><br></pre></td></tr></table></figure>
+<p>int pthread_cond_broadcast(pthread_cond_t *cond);<br>int pthread_cond_signal(pthread_cond_t *cond);</p>
+<p>pthread_cond_broadcast唤醒多个线程<br>pthread_cond_signal唤醒一个线程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**条件变量使用规范**</span><br><span class="line"></span><br><span class="line">等待条件代码</span><br></pre></td></tr></table></figure>
+<p>pthread_mutex_lock(&amp;lock);     ——上锁<br>while(条件不成立)<br>{<br>    pthread_cond_wait(&amp;cond);  ——条件不成立时挂起等待（注意是while）<br>}<br>进行操作……                  ——修改、操作<br>pthread_mutex_unlock(&amp;lock);   ——解锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">给条件发信号代码</span><br></pre></td></tr></table></figure>
+<p>pthread_mutex_lock(&amp;lock);     ——上锁<br>设置条件为真…                 ——符合条件<br>pthread_cond_signal(&amp;cond);    ——唤醒<br>pthread_mutex_unlock(&amp;lock);   ——解锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">示例代码</span><br><span class="line"></span><br><span class="line">![在这里插入图片描述](/images/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/20190119141412611.png)</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line"></span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">#include &quot;stdlib.h&quot;</span><br><span class="line">#include &quot;unistd.h&quot;</span><br><span class="line">pthread_mutex_t mutex;</span><br><span class="line">pthread_cond_t cond;</span><br><span class="line">void hander(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	free(arg);</span><br><span class="line">	(void)pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">&#125;</span><br><span class="line">void *thread1(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	pthread_cleanup_push(hander, &amp;mutex);</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;thread1 is running\n&quot;);</span><br><span class="line">		pthread_mutex_lock(&amp;mutex);</span><br><span class="line">		pthread_cond_wait(&amp;cond, &amp;mutex);</span><br><span class="line">		printf(&quot;thread1 applied the condition\n&quot;);</span><br><span class="line">		pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">		sleep(4);</span><br><span class="line">	&#125;</span><br><span class="line">	pthread_cleanup_pop(0);</span><br><span class="line">&#125;</span><br><span class="line">void *thread2(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;thread2 is running\n&quot;);</span><br><span class="line">		pthread_mutex_lock(&amp;mutex);</span><br><span class="line">		pthread_cond_wait(&amp;cond, &amp;mutex);</span><br><span class="line">		printf(&quot;thread2 applied the condition\n&quot;);</span><br><span class="line">		pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">		sleep(1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t thid1,thid2;</span><br><span class="line">	printf(&quot;condition variable study!\n&quot;);</span><br><span class="line">	pthread_mutex_init(&amp;mutex, NULL);</span><br><span class="line">	pthread_cond_init(&amp;cond, NULL);</span><br><span class="line">	pthread_create(&amp;thid1, NULL, thread1, NULL);</span><br><span class="line">	pthread_create(&amp;thid2, NULL, thread2, NULL);</span><br><span class="line">	sleep(1);</span><br><span class="line">	do</span><br><span class="line">	&#123;c++</span><br><span class="line">		pthread_cond_signal(&amp;cond);</span><br><span class="line">	&#125;while(1);</span><br><span class="line">	sleep(20);</span><br><span class="line">	pthread_exit(0);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdlib.h"</span></span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_mutex_t</span> mtx = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_cond_t</span> cond = PTHREAD_COND_INITIALIZER;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> n_number;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">n_next</span>;</span></span><br><span class="line">&#125;*head = <span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cleanup_handler</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"Cleanup handler of second thread./n"</span>);</span><br><span class="line">	<span class="built_in">free</span>(arg);</span><br><span class="line">	(<span class="keyword">void</span>)pthread_mutex_unlock(&amp;mtx);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> *<span class="title">thread_func</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">p</span> = <span class="title">NULL</span>;</span></span><br><span class="line">	pthread_cleanup_push(cleanup_handler, p);</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//这个mutex主要是用来保证pthread_cond_wait的并发性</span></span><br><span class="line">		pthread_mutex_lock(&amp;mtx);</span><br><span class="line">		<span class="keyword">while</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//这个while要特别说明一下，单个pthread_cond_wait功能很完善，为何</span></span><br><span class="line">			<span class="comment">//这里要有一个while (head == NULL)呢？因为pthread_cond_wait里的线</span></span><br><span class="line">			<span class="comment">//程可能会被意外唤醒，如果这个时候head != NULL，则不是我们想要的情况。</span></span><br><span class="line">			<span class="comment">//这个时候，应该让线程继续进入pthread_cond_wait</span></span><br><span class="line">			<span class="comment">// pthread_cond_wait会先解除之前的pthread_mutex_lock锁定的mtx，</span></span><br><span class="line">			<span class="comment">//然后阻塞在等待对列里休眠，直到再次被唤醒(大多数情况下是等待的条件成立</span></span><br><span class="line">			<span class="comment">//而被唤醒，唤醒后，该进程会先锁定先pthread_mutex_lock(&amp;mtx);，再读取资源</span></span><br><span class="line">			<span class="comment">//用这个流程是比较清楚的</span></span><br><span class="line">			pthread_cond_wait(&amp;cond, &amp;mtx);</span><br><span class="line">			p = head;</span><br><span class="line">			head = head-&gt;n_next;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"Got %d from front of queue/n"</span>, p-&gt;n_number);</span><br><span class="line">			<span class="built_in">free</span>(p);</span><br><span class="line">		&#125;</span><br><span class="line">		pthread_mutex_unlock(&amp;mtx); <span class="comment">//临界区数据操作完毕，释放互斥锁</span></span><br><span class="line">	&#125;</span><br><span class="line">	pthread_cleanup_pop(<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">pthread_t</span> tid;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">p</span>;</span></span><br><span class="line">	<span class="comment">//子线程会一直等待资源，类似生产者和消费者，但是这里的消费者可以是多个消费者，而</span></span><br><span class="line">	<span class="comment">//不仅仅支持普通的单个消费者，这个模型虽然简单，但是很强大</span></span><br><span class="line">	pthread_create(&amp;tid, <span class="literal">NULL</span>, thread_func, <span class="literal">NULL</span>);</span><br><span class="line">	sleep(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		p = (struct node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct node));</span><br><span class="line">		p-&gt;n_number = i;</span><br><span class="line">		pthread_mutex_lock(&amp;mtx); <span class="comment">//需要操作head这个临界资源，先加锁，</span></span><br><span class="line">		p-&gt;n_next = head;</span><br><span class="line">		head = p;</span><br><span class="line">		pthread_cond_signal(&amp;cond);</span><br><span class="line">		pthread_mutex_unlock(&amp;mtx); <span class="comment">//解锁</span></span><br><span class="line">		sleep(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"thread 1 wanna end the line.So cancel thread 2./n"</span>);</span><br><span class="line">	<span class="comment">//关于pthread_cancel，有一点额外的说明，它是从外部终止子线程，子线程会在最近的取消点，退出</span></span><br><span class="line">	<span class="comment">//线程，而在我们的代码里，最近的取消点肯定就是pthread_cond_wait()了。</span></span><br><span class="line">	pthread_cancel(tid);</span><br><span class="line">	pthread_join(tid, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"All done -- exiting/n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、信号量"><a href="#三、信号量" class="headerlink" title="三、信号量"></a>三、信号量</h2><h3 id="信号量的概念"><a href="#信号量的概念" class="headerlink" title="信号量的概念"></a>信号量的概念</h3><p>为了防止出现因多个程序同时访问一个共享资源而引发的一系列问题，我们需要一种方法，它可以通过生成并使用令牌来授权，在任一时刻只能有一个执行线程访问代码的临界区域。临界区域是指执行数据更新的代码需要独占式地执行。而信号量就可以提供这样的一种访问机制，让一个临界区同一时间只有一个线程在访问它，也就是说信号量是用来调协进程对共享资源的访问的。</p>
+<p>信号量是一个特殊的变量，程序对其访问都是原子操作，且只允许对它进行等待（即P(信号变量))和发送（即V(信号变量))信息操作。最简单的信号量是只能取0和1的变量，这也是信号量最常见的一种形式，叫做二进制信号量。而可以取多个正整数的信号量被称为通用信号量。这里主要讨论二进制信号量。</p>
+<h3 id="信号量的工作原理"><a href="#信号量的工作原理" class="headerlink" title="信号量的工作原理"></a>信号量的工作原理</h3><p>由于信号量只能进行两种操作等待和发送信号，即P(sv)和V(sv),他们的行为是这样的：<br>P(sv)：如果sv的值大于零，就给它减1；如果它的值为零，就挂起该进程的执行<br>V(sv)：如果有其他进程因等待sv而被挂起，就让它恢复运行，如果没有进程因等待sv而挂起，就给它加1.</p>
+<p>举个例子，就是两个进程共享信号量sv，一旦其中一个进程执行了P(sv)操作，它将得到信号量，并可以进入临界区，使sv减1。而第二个进程将被阻止进入临界区，因为当它试图执行P(sv)时，sv为0，它会被挂起以等待第一个进程离开临界区域并执行V(sv)释放信号量，这时第二个进程就可以恢复执行。</p>
+<ul>
+<li>进化版的互斥锁（1 –&gt; N）</li>
+<li>由于互斥锁的粒度比较大，如果我们希望在多个线程间对某一对象的部分数据进行共享，使用互斥锁是没有办法实现的，只能将整个数据对象锁住。这样虽然达到了多线程操作共享数据时保证数据正确性的目的，却无形中导致线程的并发性下降。线程从并行执行，变成了串行执行。与直接使用单进程无异。</li>
+<li>信号量，是相对折中的一种处理方式，既能保证同步，数据不混乱，又能提高线程并发。</li>
+</ul>
+<h3 id="接口和使用api"><a href="#接口和使用api" class="headerlink" title="接口和使用api"></a>接口和使用api</h3><p>信号量的函数都以sem_开头，线程中使用的基本信号量函数有4个，它们都声明在头文件semaphore.h中。</p>
+<p>1、sem_init函数<br>该函数用于创建信号量，其原型如下：<br>int sem_init(sem_t *sem, int pshared， unsigned int value);<br>该函数初始化由sem指向的信号对象，设置它的共享选项，并给它一个初始的整数值。pshared控制信号量的类型，如果其值为0，就表示这个信号量是当前进程的局部信号量，否则信号量就可以在多个进程之间共享，value为sem的初始值。调用成功时返回0，失败返回-1.</p>
+<p>2、sem_wait函数<br>该函数用于以原子操作的方式将信号量的值减1。原子操作就是，如果两个线程企图同时给一个信号量加1或减1，它们之间不会互相干扰。它的原型如下：<br>int sem_wait(sem_t *sem);<br>sem指向的对象是由sem_init调用初始化的信号量。调用成功时返回0，失败返回-1.</p>
+<p><strong>信号量的初值，决定了占用信号量的线程的个数。换句话说，</strong></p>
+<p>3、sem_post函数<br>该函数用于以原子操作的方式将信号量的值加1。它的原型如下：<br>int sem_post(sem_t *sem);<br>与sem_wait一样，sem指向的对象是由sem_init调用初始化的信号量。调用成功时返回0，失败返回-1.</p>
+<p>4、sem_destroy函数<br>该函数用于对用完的信号量的清理。它的原型如下：<br>int sem_destroy(sem_t *sem);<br>成功时返回0，失败时返回-1.</p>
+<p> <a href="https://blog.csdn.net/qq_22847457/article/details/89430008" target="_blank" rel="noopener">https://blog.csdn.net/qq_22847457/article/details/89430008</a> </p>
+<h2 id="互斥锁、条件变量和信号量的区别："><a href="#互斥锁、条件变量和信号量的区别：" class="headerlink" title="互斥锁、条件变量和信号量的区别："></a>互斥锁、条件变量和信号量的区别：</h2><p> <a href="https://blog.csdn.net/a987073381/article/details/52029070" target="_blank" rel="noopener">https://blog.csdn.net/a987073381/article/details/52029070</a> </p>
+<p>互斥锁：互斥，一个线程占用了某个资源，那么其它的线程就无法访问，直到这个线程解锁，其它线程才可以访问。<br>条件变量：同步，一个线程完成了某一个动作就通过条件变量发送信号告诉别的线程，别的线程再进行某些动作。条件变量必须和互斥锁配合使用。<br>信号量：同步，一个线程完成了某一个动作就通过信号量告诉别的线程，别的线程再进行某些动作。而且信号量有一个更加强大的功能，信号量可以用作为资源计数器，把信号量的值初始化为某个资源当前可用的数量，使用一个之后递减，归还一个之后递增。</p>
+<p>另外还有以下几点需要注意：<br>1、信号量可以模拟条件变量，因为条件变量和互斥量配合使用，相当于信号量模拟条件变量和互斥量的组合。在生产者消费者线程池中，生产者生产数据后就会发送一个信号 pthread_cond_signal通知消费者线程，消费者线程通过pthread_cond_wait等待到了信号就可以继续执行。这是用条件变量和互斥锁实现生产者消费者线程的同步，用信号量一样可以实现！<br>2、信号量可以模拟互斥量，因为互斥量只能为加锁或解锁（0 or 1），信号量值可以为非负整数，也就是说，一个互斥量只能用于一个资源的互斥访问，它不能实现多个资源的多线程互斥问题。信号量可以实现多个同类资源的多线程互斥和同步。当信号量为单值信号量时，就完成一个资源的互斥访问。前面说了，信号量主要用做多线程多任务之间的同步，而同步能够控制线程访问的流程，当信号量为单值时，必须有线程释放，其他线程才能获得，同一个时刻只有一个线程在运行（注意，这个运行不一定是访问资源，可能是计算）。如果线程是在访问资源，就相当于实现了对这个资源的互斥访问。<br>3、互斥锁是为上锁而优化的；条件变量是为等待而优化的； 信号量既可用于上锁，也可用于等待，因此会有更多的开销和更高的复杂性。<br>4、互斥锁，条件变量都只用于同一个进程的各线程间，而信号量（有名信号量）可用于不同进程间的同步。当信号量用于进程间同步时，要求信号量建立在共享内存区。<br>5、互斥量必须由同一线程获取以及释放，信号量和条件变量则可以由一个线程释放，另一个线程得到。<br>6、信号量的递增和减少会被系统自动记住，系统内部的计数器实现信号量，不必担心丢失，而唤醒一个条件变量时，如果没有相应的线程在等待该条件变量，此次唤醒会被丢失。</p>
+<h1 id="win32-线程同步"><a href="#win32-线程同步" class="headerlink" title="win32 线程同步"></a>win32 线程同步</h1><h2 id="临界区（Critical-Sections）"><a href="#临界区（Critical-Sections）" class="headerlink" title="临界区（Critical Sections）"></a>临界区（Critical Sections）</h2><p> <a href="https://blog.csdn.net/morewindows/article/details/7442639" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7442639</a> </p>
+<p>临界区是一种<strong>防止多个线程同时执行一个特定代码段</strong>的机制。如果有多个线程试图同时访问临界区，那么在有一个线程进入后其他的所有试图访问此临界区的线程将被挂起，并且一直持续到进入临界区的线程离开。<br>临界区适用于多个线程操作之间没有先后顺序但要求互斥的同步。<br>多个线程访问同一个临界区的原则：<br><strong>1、一次最多只能一个线程停留在临界区内。</strong><br><strong>2、不能让一个线程无限的停留在临界区内，否则其它线程将不能进入临界区。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DWORD dwFlag = <span class="number">0</span>;   <span class="comment">//实现临界区的方式就是加锁</span></span><br><span class="line">            <span class="comment">//锁：全局变量  进去加一 出去减一</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(dwFlag  == <span class="number">0</span>)        <span class="comment">//进入临界区 </span></span><br><span class="line">&#123;   </span><br><span class="line">    dwFlag   = <span class="number">1</span>    </span><br><span class="line">    .......</span><br><span class="line">    .......</span><br><span class="line">    .......</span><br><span class="line"></span><br><span class="line">    dwFlag   = <span class="number">0</span>    <span class="comment">//离开临界区</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>临界区包含两个操作原语：</strong> </p>
+<p><code>EnterCriticalSection（）</code> 进入临界区 </p>
+<p><code>LeaveCriticalSection（）</code> 离开临界区 </p>
+<p>EnterCriticalSection（）语句执行后代码将进入临界区以后无论发生什么，必须确保与之匹配的LeaveCriticalSection（）都能够被执行到。否则临界区保护的共享资源将永远不会被释放。虽然临界区同步速度很快，但却只能用来同步本 进程内的线程，而不可用来同步多个进程中的线程。 </p>
+<p><code>Critical section</code> 并不是核心对象。 因此，没有所谓 handle 这样的东西。它和核心对象不同，<strong>它存在于进程的内存空间中。</strong><br>一旦线程进入一个 critical section，它就能够一再地重复进入该 critical section。唯一的警告就是，每一个“进入”操作都必须有一个对应的“离开”操 作 。 如果某个线程调用EnterCriticalSection() 5 次，它也必须调用LeaveCriticalSection() 5 次，该 critical section 才能够被释放。</p>
+<p>Critical section 的一个缺点就是，没有办法获知进入 critical section 中的那个线程是生是死。从另一个角度看，由于 critical section 不是核心对象，如果进入 critical section 的那个线程结束了或当掉了，而没有调用LeaveCriticalSection() 的话，系统没有办法将该 critical section 清除。如果你需要那样的机能，你应该使用 mutex。<br>任何时候当一段代码需要两个（或更多）资源时，都有潜在性的死锁阴影。强迫将资源锁定，使它们成为 ” all-or-nothing”（要不统统获得，要不统统没有），可以阻止死锁的发生，这样做往往会影响程序性能。更好的方式是使用下文的Mutex和WaitForMultipleObjects解决死锁问题。</p>
+<h3 id="临界区和互斥锁的区别"><a href="#临界区和互斥锁的区别" class="headerlink" title="临界区和互斥锁的区别"></a>临界区和互斥锁的区别</h3><ol>
+<li>核心矛盾是<strong>“竞态条件”，</strong>即多个线程同时读写某个字段<strong>。</strong></li>
+<li>竞态条件下多线程争抢的是<strong>“竞态资源”</strong>。</li>
+<li>涉及读写竟态资源的代码片段叫<strong>“临界区”</strong>。</li>
+<li>保证竟态资源安全的最朴素的一个思路就是让临界区代码<strong>“互斥”</strong>，即同一时刻最多只能有一个线程进入临界区。（<strong>可以使用互斥锁来保护临界区</strong>）</li>
+<li>最朴素的互斥手段：在进入临界区之前，用if检查一个bool值，条件不满足就<strong>“忙等”</strong>。这叫<strong>“锁变量”</strong>。</li>
+<li>但锁变量不是线程安全的。因为“检查-占锁”这个动作不具备<strong>“原子性”</strong>。</li>
+<li><strong>“TSL指令”</strong>就是原子性地完成“检查-占锁”的动作。</li>
+<li>就算不用TSL指令，也可以设计出线程安全的代码，有一种既巧妙又简洁的结构叫<strong>“自旋锁”</strong>。当然还有其他更复杂的锁比如“Peterson锁”。</li>
+<li>但自旋锁的缺点是条件不满足时会<strong>“忙等待”</strong>，需要后台调度器重新分配时间片，效率低。</li>
+<li>解决忙等待问题的是：“<strong>sleep”</strong>和“<strong>wakeup”</strong>两个原语。sleep阻塞当前线程的同时会让出它占用的锁。wakeup可以唤醒在目标锁上睡眠的线程。</li>
+<li>使用sleep和wakeup原语，保证同一时刻只有一个线程进入临界区代码片段的锁叫<strong>“互斥量”</strong>。</li>
+<li>把互斥锁推广到”N”的空间，同时允许有N个线程进入临界区的锁叫<strong>“信号量”</strong>。</li>
+<li>互斥量和信号量的实现都依赖TSL指令保证“检查-占锁”动作的原子性。</li>
+<li>把互斥量交给程序员使用太危险，有些编程语言实现了<strong>“管程”</strong>的特性，从编译器的层面保证了临界区的互斥，比如Java的synchronized关键字。</li>
+<li>并没有“同步锁”这个名词，Java的synchronized正确的叫法应该是“互斥锁”，“独占锁”或者“内置锁”。但有的人“顾名思义”叫它同步锁。</li>
+</ol>
+<p>eg</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;process.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="keyword">long</span> g_nNum;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> __<span class="function">stdcall <span class="title">Fun</span><span class="params">(<span class="keyword">void</span> *pPM)</span></span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> THREAD_NUM = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//关键段变量声明</span></span><br><span class="line">CRITICAL_SECTION  g_csThreadParameter, g_csThreadCode;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"     经典线程同步 关键段\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">" -- by MoreWindows( http://blog.csdn.net/MoreWindows ) --\n\n"</span>);</span><br><span class="line"> </span><br><span class="line">	<span class="comment">//关键段初始化</span></span><br><span class="line">	InitializeCriticalSection(&amp;g_csThreadParameter);</span><br><span class="line">	InitializeCriticalSection(&amp;g_csThreadCode);</span><br><span class="line">	</span><br><span class="line">	HANDLE  handle[THREAD_NUM];	</span><br><span class="line">	g_nNum = <span class="number">0</span>;	</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (i &lt; THREAD_NUM) </span><br><span class="line">	&#123;</span><br><span class="line">		EnterCriticalSection(&amp;g_csThreadParameter);<span class="comment">//进入子线程序号关键区域</span></span><br><span class="line">		handle[i] = (HANDLE)_beginthreadex(<span class="literal">NULL</span>, <span class="number">0</span>, Fun, &amp;i, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">		++i;</span><br><span class="line">	&#125;</span><br><span class="line">	WaitForMultipleObjects(THREAD_NUM, handle, TRUE, INFINITE);</span><br><span class="line"> </span><br><span class="line">	DeleteCriticalSection(&amp;g_csThreadCode);</span><br><span class="line">	DeleteCriticalSection(&amp;g_csThreadParameter);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> __<span class="function">stdcall <span class="title">Fun</span><span class="params">(<span class="keyword">void</span> *pPM)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> nThreadNum = *(<span class="keyword">int</span> *)pPM; </span><br><span class="line">	LeaveCriticalSection(&amp;g_csThreadParameter);<span class="comment">//离开子线程序号关键区域</span></span><br><span class="line"> </span><br><span class="line">	Sleep(<span class="number">50</span>);<span class="comment">//some work should to do</span></span><br><span class="line"> </span><br><span class="line">	EnterCriticalSection(&amp;g_csThreadCode);<span class="comment">//进入各子线程互斥区域</span></span><br><span class="line">	g_nNum++;</span><br><span class="line">	Sleep(<span class="number">0</span>);<span class="comment">//some work should to do</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"线程编号为%d  全局资源值为%d\n"</span>, nThreadNum, g_nNum);</span><br><span class="line">	LeaveCriticalSection(&amp;g_csThreadCode);<span class="comment">//离开各子线程互斥区域</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">————————————————</span><br><span class="line">版权声明：本文为CSDN博主「MoreWindows」的原创文章，遵循 CC <span class="number">4.0</span> BY-SA 版权协议，转载请附上原文出处链接及本声明。</span><br><span class="line">原文链接：https:<span class="comment">//blog.csdn.net/morewindows/article/details/7442639</span></span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下图：</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5.assets/1334038015_4442.PNG" alt="1334038015_4442"></p>
+<p>结合该作者的解释，我个人的理解是，主线程确实创建了十个子线程，即while循环里面是全部执行了的，但是，由于关键段是可以多次进入的，导致该十个子线程并没有按照顺序执行，反而有两个子线程执行的时候，i==5.所以有三个子线程是i=5。</p>
+<h2 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h2><p> <a href="https://blog.csdn.net/morewindows/article/details/7470936" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7470936</a> </p>
+<p>虽然 mutex 和 critical section 做相同的事情，但是它们的运作还是有差别的：</p>
+<p><strong>锁住一个未被拥有的 mutex，比锁住一个未被拥有的 critical section，需要花费几乎 100 倍的时间。因为 critical section 不需要进入操作系统核心。</strong><br><strong>Mutexes 可以跨进程使用。 Critical section 则只能够在同一个进程中使用。</strong>为了能够跨进程使用同一个 mutex，你可以在产生mutex 时指定其名称。如果你指定了名称，系统中的其他任何线程就可以使用这个名称来处理该 mutex。</p>
+<p>但是互斥量比关键段多了“遗弃”的特点，比如有一个占用互斥量的线程在调用ReleaseMutex()触发互斥量前就意外终止了（相当于该互斥量被“遗弃”了），那么所有等待这个互斥量的线程是否会由于该互斥量无法被触发而陷入一个无穷的等待过程中了？这显然不合理。因为占用某个互斥量的线程既然终止了那足以证明它不再使用被该互斥量保护的资源，所以这些资源完全并且应当被其它线程来使用。因此在这种“遗弃”情况下，系统自动把该互斥量内部的线程ID设置为0，并将它的递归计数器复置为0，表示这个互斥量被触发了。然后系统将“公平地”选定一个等待线程来完成调度（被选中的线程的WaitForSingleObject()会返回WAIT_ABANDONED_0）。</p>
+<p>Mutexes行为特征：</p>
+<ul>
+<li>Mutex 是一个核心对象，因此它被保持在系统核心之中，并且和其他核心对象一样，有所谓的引用计数（reference count）。每次你调用CloseHandle()，引用计数便减 1。当引用计数达到 0 时， mutex 便自动被系统清除掉。如果拥有某 mutex 之线程结束了，该 mutex 会被自动清除的唯一情况是：此线程是最后一个与该 mutex handle 有关联的线程。 否则此核心对象的引用计数仍然是比 0 大，其他线程（以及进程）仍然可以拥有此 mutex 的合法handle。</li>
+<li>一旦没有任何线程拥有 mutex 且有一个线程正以 Wait…() 等待该 mutex，该 mutex 就会短暂地出现激发状态，使 Wait…() 得以返回。</li>
+<li>第二个容易引人迷惑的地方是，Mutex 的拥有权并非属于那个产生它的线程，而是那个最后对此 mutex 进行 Wait…() 操作并且尚未进行 ReleaseMutex() 操作的线程。线程拥有 mutex 就好像线程进入 critical section 一样。一次只能有一个线程拥有该 mutex。</li>
+<li>有时候，线程可能没有在结束前调用ReleaseMutex()。为了解决这个问题，mutex 有一个在各种同步机制中是独一无二的特性：如果线程拥有一个 mutex 而在结束前没有调用ReleaseMutex()，mutex 不会被摧毁。取而代之的是，该 mutex 会被视为“ 未被拥有”以及“未被激发”，而下一个等待中的线程会被以WAIT_ABANDONED_0 通知。不论线程是因为ExitThread() 而结束，或是因当掉而结束，这种情况都存在。</li>
+<li>如果其他线程正以 WaitForMultipleObjects() 等待此 mutex，该函数也会返回，传回值介于 WAIT_ ABANDONED_0 和(WAIT_ABANDONED_0_n +1)之间，其中的 n 是指 handle 数组的元素个数。线程可以根据这个值了解到究竟哪一个mutex 被放弃了。至于 WaitForSingleObject()，则只是传回WAIT_ABANDONED_0。</li>
+</ul>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p> <a href="https://blog.csdn.net/morewindows/article/details/7481609" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7481609</a> </p>
+<p> <strong>信号量（semaphore）是一种更高级的同步机制，mutex可以说是semaphore在仅取值0/1时的特例。Semaphore可以有更多的取值空间，用来实现更加复杂的同步，而不单单是线程间互斥。</strong> </p>
+<h2 id="事件Event"><a href="#事件Event" class="headerlink" title="事件Event"></a>事件Event</h2><p> <a href="https://blog.csdn.net/morewindows/article/details/7445233" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7445233</a> </p>
+<p>该同步机制是win32中最具有弹性的，Event是一种核心对象。==主要用于线程的等待通知==</p>
+<p>*<em>事件是一个允许一个线程在某种情况发生时，唤醒另外一个线程的同步对象 *</em></p>
+<p> <strong>一、CEvent 类对象有两种状态：激发状态和未激发状态</strong>  ：</p>
+<p>  他的<strong>唯一目的就是成为激发状态或者未激发状态</strong>（ 即每一个 CEvent 对象可以有两种状态：有信号状态和无信号状态 ）。这两种状态完全由程序来控制，不会成为Wait…()函数的副作用。 （？？？）</p>
+<p> <strong>1、无信号状态会阻塞到<code>WaitForSingleObject</code>()函数，直到触发事件(即调用<code>SetEvent</code>)。</strong></p>
+<p><strong>2、有信号状态则会忽略事件触发信号，不会阻塞到<code>WaitForSingleObject</code>()函数。</strong> </p>
+<p> <strong>二、CEvent 类对象有两种类型：人工事件和自动事件。</strong>  （即手动置位还是自动置位）：</p>
+<p><strong>1、一个自动 <code>CEvent</code> 对象在被至少一个线程释放后会自动返回到无信号状态（ 自动置位，则对该事件调用WaitForSingleObject()后会自动调用ResetEvent()使事件变成未触发状态 ）；</strong></p>
+<p><strong>2、而人工事件对象（手动置位）获得信号后，释放可利用线程，但直到调用成员函数 <code>ReSetEvent</code>()才将其设置为无信号状态。</strong></p>
+<blockquote>
+<p><strong>事件能够通知一个操作已经完成</strong>。有两种不同类型的事件对象。一种是人工重置的事件，另一种是自动重置的事件。</p>
+<p>当人工重置的事件得到通知时，等待该事件的所有线程均变为可调度线程。</p>
+<p>当一个自动重置的事件得到通知时，等待该事件的线程中只有一个线程变为可调度线程。</p>
+</blockquote>
+<p><strong>在创 CEvent 类的对象时，默认创建的是自动事件。</strong></p>
+<p><strong>通俗理解事件：</strong></p>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><p> CEvent 类的各成员函数的原型和参数说明如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CEvent(</span><br><span class="line">    BOOL bInitiallyOwn=FALSE,</span><br><span class="line">	BOOL bManualReset=FALSE,</span><br><span class="line">	LPCTSTR lpszName=<span class="literal">NULL</span>,</span><br><span class="line">	LPSECURITY_ATTRIBUTES lpsaAttribute=<span class="literal">NULL</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">//bInitiallyOwn:指定事件对象初始化状态，TRUE 为有信号，FALSE 为无信号；</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//bManualReset：指定要创建的事件是属于人工事件还是自动事件。  如为FALSE，表示这个event将在变成激发状态（因而唤醒一个线程）之后，自动重置（reset）为非激发状态。如果为TRUE，表示不会自动重置。必须靠程序操作（调用ResetEvent（））才能将激发状态的event重置为非激发状态。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>1、创建一个时间对象：CreateEvent</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateEvent</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">  LPSECURITY_ATTRIBUTES lpEventAttributes, <span class="comment">// SD 安全属性</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bManualReset,                       <span class="comment">// reset type 0自动复位(互斥)、1手动复位(通知模式)</span></span></span></span><br><span class="line"><span class="function"><span class="params">  BOOL bInitialState,                      <span class="comment">// initial state 初始创建时时间是否具备信号bInitialState  如果为TRUE，表示这个event一开始处于激发状态，如为FALSE，则表示这个event一开始处于非激发状态。</span></span></span></span><br><span class="line"><span class="function"><span class="params">  LPCTSTR lpName                           <span class="comment">// object name 对象的名称</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>返回值：<br>    如果调用成功，会传回一个event handle，GetLastError()会传回0.如果lpName所指定的event对象已经存在，CreateEvent（）传回的是该event handle，而不会产生一个新的。这时候GetLastError()会传回ERROR_ALREADY_EXISTS。如果CreateEvent()失败，传回的是NULL，GetLastError()可以获得更进一步的失败信息。</p>
+<p><strong>2、将目标事件对象设置为有信号的（同时通知其他线程）</strong>：<strong>SetEvent</strong>（触发事件）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">SetEvent</span><span class="params">(  </span></span></span><br><span class="line"><span class="function"><span class="params">    HANDLE hEvent   <span class="comment">// handle to event //目标事件的句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p> 将<code>CEvent</code> 类对象的状态设置为有信号状态。</p>
+<p><strong>如果事件是人工事件，则 CEvent 类对象保持为有信号状态，直到调用成员数ResetEvent()将其重新设为无信号状态时为止。</strong></p>
+<p><strong>如果CEvent 类对象为自动事件，则在 SetEvent()将事件设置为有信号状态后，CEvent 类对象由系统自动重置为无信号状态。</strong></p>
+<p>如果该函数执行成功，则返回非零值，否则返回零。 </p>
+<p><strong>3、将目标事件对象设置为无信号的：ResetEvent</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">ResetEvent</span><span class="params">(  </span></span></span><br><span class="line"><span class="function"><span class="params">    HANDLE hEvent   <span class="comment">// handle to event 目标事件的句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p> 该函数将事件的状态设置为无信号状态，并保持该状态直至 SetEvent()被调用时为止。由于自动事件是由系统自动重置，故自动事件不需要调用该函数。如果该函数执行成功， 返回非零值，否则返回零。我们一般通过调用 <code>WaitForSingleObject</code> 函数来监视事件状态。 </p>
+<p><strong>4、根据名称获得一个事件的句柄：openEvent</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HANDLEOpenEvent(</span><br><span class="line"></span><br><span class="line">DWORD dwDesiredAccess,<span class="comment">//第一个参数：表示访问权限，对事件一般传入EVENT_ALL_ACCESS</span></span><br><span class="line"></span><br><span class="line">BOOL bInheritHandle,<span class="comment">//第二个参数：表示事件句柄继承性，一般传入TRUE即可。</span></span><br><span class="line"></span><br><span class="line">LPCTSTR lpName     <span class="comment">//第三个参数：表示名称，不同进程中的各线程可以通过名称来确保它们访问同一个事件。</span></span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"><span class="comment">//返回值：返回事件的句柄</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>例子</strong></p>
+<h3 id="通知模式"><a href="#通知模式" class="headerlink" title="通知模式"></a>通知模式</h3><p>回顾互斥模式</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https:////upload-images.jianshu.io/upload_images/5396392-c75794947c82656e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/805/format/webp" alt="img"></p>
+<p>在线程间共享资源的时候，它们间的状态是互相排斥的，当A拿到所有权使用共享资源的时候,B线程是被排斥的，只有当A交出所有权的时候B才能够使用</p>
+<p>在 <code>锁</code> 中有个属性 <code>标识符</code> 比如说标识符为<code>1</code>的时候代表无人使用(有信号的)，这个时候A和B回去抢夺锁，使用<code>WaitForSingleObject</code>来检测标识符，先到先得，比如线程A先到获得了信号，A就会获取信号回去所有权，此时锁会自动设置为0 代表无信号，此时A获得了临界区，可以访问共享资源，此时即使发生线程切换，也可保证共享资源的完整。当A使用完毕后，使用<code>ReleaseMutex</code>归还所有权，那么此时互斥锁状态改为<code>1</code> 有信号 回归无人使用。其他线程继续抢夺</p>
+<p><strong>通知模式</strong></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="https:////upload-images.jianshu.io/upload_images/5396392-fb702999f4366e19.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/855/format/webp" alt="img"></p>
+<p>通知模式，A 或者B线程的<code>WaitForSingleObject</code>检测信号，当使用<code>SetEvent</code>API发出信号的时候，与互斥模式不同，通知模式检测到 标识为 <code>1</code>的的时候 <code>WaitForSingleObject</code> 会立即返回往下执行，但不会修改信号标识，发生线程切换后，其他线程也可以检测到1 继续执行 同样不会修改。此时就像通知一样，其他的线程都可以往下继续执行了。</p>
+<h1 id="win32-多线程四种方式的区别"><a href="#win32-多线程四种方式的区别" class="headerlink" title="win32 多线程四种方式的区别"></a>win32 多线程四种方式的区别</h1><p> <a href="https://blog.csdn.net/morewindows/article/details/7538247" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7538247</a> </p>
+<p>四种进程或线程同步互斥的控制方法<br>1、临界区:通过对多线程的串行化来访问公共资源或一段代码，速度快，适合控制数据访问。<br>2、互斥量:为协调共同对一个共享资源的单独访问而设计的。<br>3、信号量:为控制一个具有有限数量用户资源而设计。<br>4、事 件:用来通知线程有一些事件已发生，从而启动后继任务的开始。</p>
+<p><strong>临界区（Critical Section）</strong></p>
+<p>保证在某一时刻只有一个线程能访问数据的简便办法。在任意时刻只允许一个线程对共享资源进行访问。如果有多个线程试图同时访问临界区，那么 在有一个线程进入后其他所有试图访问此临界区的线程将被挂起，并一直持续到进入临界区的线程离开。临界区在被释放后，其他线程可以继续抢占，并以此达到用原子方式操 作共享资源的目的。<br>临界区包含两个操作原语：<br>EnterCriticalSection（） 进入临界区<br>LeaveCriticalSection（） 离开临界区<br>EnterCriticalSection（） 语句执行后代码将进入临界区以后无论发生什么，必须确保与之匹配的 LeaveCriticalSection（）都能够被执行到。否则临界区保护的共享资源将永远不会被释放。虽然临界区同步速度很快，但却只能用来同步本 进程内的线程，而不可用来同步多个进程中的线程。 </p>
+<p><strong>互斥量（Mutex）</strong></p>
+<p>互斥量跟临界区很相似，<strong>只有拥有互斥对象的线程才具有访问资源的权限</strong>，由于互斥对象只有一个，因此就决定了任何情况下此共享资源都不会同时被多个线程所访问。当前占据资源的线程在任务处理完后应将拥有的互斥对象交出，以便其他线程在获得后得以访问资源。互斥量比临界区复杂。因为使用互斥不仅仅能够在同一应用程序不同线程中实现资源的安全共享，而且可以在不同应用程序的线程之间实现对资源的安全共享。</p>
+<p>互斥量包含的几个操作原语：<br>CreateMutex（） 创建一个互斥量<br>OpenMutex（） 打开一个互斥量<br>ReleaseMutex（） 释放互斥量<br>WaitForMultipleObjects（） 等待互斥量对象</p>
+<p>同样MFC为互斥量提供有一个CMutex类。使用CMutex类实现互斥量操作非常简单，但是要特别注意对CMutex的构造函数的调用<br>CMutex( BOOL bInitiallyOwn = FALSE, LPCTSTR lpszName = NULL, LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)<br>不用的参数不能乱填，乱填会出现一些意想不到的运行结果。</p>
+<p><strong>信号量（Semaphores）</strong></p>
+<p>信号量对象对线程的同步方式与前面几种方法不同，信号允许多个线程同时使用共享资源 ，这与操作系统中的PV操作相同。它指出了同时访问共享 资源的线程 最大数目。它允许多个线程在同一时刻访问同一资源，但是需要限制在同一时刻访问此资源的最大线程数目。在用CreateSemaphore（）创建信号量 时即要同时指出允许的最大资源计数和当前可用资源计数。一般是将当前可用资源计数设置为最大资源计数，每增加一个线程对共享资源的访问，当前可用资源计数 就会减1，只要当前可用资源计数是大于0的，就可以发出信号量信号。但是当前可用计数减小到0时则说明当前占用资源的线程数已经达到了所允许的最大数目， 不能在允许其他线程的进入，此时的信号量信号将无法发出。线程在处理完共享资源后，应在离开的同时通过ReleaseSemaphore（）函数将当前可 用资源计数加1。在任何时候当前可用资源计数决不可能大于最大资源计数。<br>PV操作及信号量的概念都是由荷兰科学家E.W.Dijkstra提出的。信号量S是一个整数，S大于等于零时代表可供并发进程使用的资源实体数，但S小于零时则表示正在等待使用共享资源的进程数。<br>P操作 申请资源：<br>  　　（1）S减1；<br>  　　（2）若S减1后仍大于等于零，则进程继续执行；<br>  　　（3）若S减1后小于零，则该进程被阻塞后进入与该信号相对应的队列中，然后转入进程调度。<br>  V操作 释放资源：<br>  　　（1）S加1；<br>  　　（2）若相加结果大于零，则进程继续执行；<br>  　　（3）若相加结果小于等于零，则从该信号的等待队列中唤醒一个等待进程，然后再返回原进程继续执行或转入进程调度。</p>
+<p>  　　信号量包含的几个操作原语：<br>  　　CreateSemaphore（） 创建一个信号量<br>  　　OpenSemaphore（） 打开一个信号量<br>  　　ReleaseSemaphore（） 释放信号量<br>  　　WaitForSingleObject（） 等待信号量</p>
+<p><strong>事件（Event）</strong></p>
+<p>事件对象也可以通过通知操作的方式来保持线程的同步。并且可以实现不同进程中的线程同步操作。<br>信号量包含的几个操作原语：<br>  　　CreateEvent（） 创建一个事件<br>  　　OpenEvent（） 打开一个事件<br>  　　SetEvent（） 回置事件<br>  　　WaitForSingleObject（） 等待一个事件<br>  　　WaitForMultipleObjects（）　　　　　　　　 等待多个事件<br>  　　　　WaitForMultipleObjects 函数原型：<br>  　　　　　WaitForMultipleObjects（<br>  　　　　　IN DWORD nCount, // 等待句柄数<br>  　　　　　IN CONST HANDLE *lpHandles, //指向句柄数组<br>  　　　　　IN BOOL bWaitAll, //是否完全等待标志<br>  　　　　　IN DWORD dwMilliseconds //等待时间<br>  　　　　　）<br>参 数nCount指定了要等待的内核对象的数目，存放这些内核对象的数组由lpHandles来指向。fWaitAll对指定的这nCount个内核对象的两种等待方式进行了指定，为TRUE时当所有对象都被通知时函数才会返回，为FALSE则只要其中任何一个得到通知就可以返回。 dwMilliseconds在这里的作用与在WaitForSingleObject（）中的作用是完全一致的。如果等待超时，函数将返回 WAIT_TIMEOUT。</p>
+<p><strong>总结：</strong><br>1． 互斥量与临界区的作用非常相似，但互斥量是可以命名的，也就是说它可以跨越进程使用。所以创建互斥量需要的资源更多，所以如果只为了在进程内部是用的话使用临界区会带来速度上的优势并能够减少资源占用量 。因为互斥量是跨进程的互斥量一旦被创建，就可以通过名字打开它。<br>2． 互斥量（Mutex），信号灯（Semaphore），事件（Event）都可以被跨越进程使用来进行同步数据操作，而其他的对象与数据同步操作无关，但对于进程和线程来讲，如果进程和线程在运行状态则为无信号状态，在退出后为有信号状态。所以可以使用WaitForSingleObject来等待进程和 线程退出。<br>3． 通过互斥量可以指定资源被独占的方式使用，但如果有下面一种情况通过互斥量就无法处理，比如现在一位用户购买了一份三个并发访问许可的数据库系统，可以根据用户购买的访问许可数量来决定有多少个线程/进程能同时进行数据库操作，这时候如果利用互斥量就没有办法完成这个要求，信号灯对象可以说是一种资源计数器。</p>
+<p>关于更详细的一篇介绍，请看这里：<a href="http://www.cppblog.com/killsound/archive/2009/07/15/16147.html" target="_blank" rel="noopener">http://www.cppblog.com/killsound/archive/2009/07/15/16147.html</a></p>
+<p>Win32 多线程的性能（Win32 Multithreading Performance）：</p>
+<p>译文：<a href="http://blog.csdn.net/enoloo/archive/2004/08/08/68608.aspx" target="_blank" rel="noopener">http://blog.csdn.net/enoloo/archive/2004/08/08/68608.aspx</a></p>
+<p>原文：<a href="http://msdn.microsoft.com/en-us/library/ms810437.aspx" target="_blank" rel="noopener">http://msdn.microsoft.com/en-us/library/ms810437.aspx</a></p>
+<h1 id="四种方式的“遗弃”问题"><a href="#四种方式的“遗弃”问题" class="headerlink" title="四种方式的“遗弃”问题"></a>四种方式的“遗弃”问题</h1><p> <a href="https://blog.csdn.net/MoreWindows/article/details/7823572" target="_blank" rel="noopener">https://blog.csdn.net/MoreWindows/article/details/7823572</a> </p>
+<p> 遗弃”问题就是——<strong>占有某种资源的进程意外终止后，其它等待该资源的进程能否感知。</strong> </p>
+<h1 id="生产者和消费者的问题"><a href="#生产者和消费者的问题" class="headerlink" title="生产者和消费者的问题"></a>生产者和消费者的问题</h1><p> <a href="https://blog.csdn.net/morewindows/article/details/7577591" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7577591</a> </p>
+<h1 id="附1：CreateThread与-beginthreadex本质区别"><a href="#附1：CreateThread与-beginthreadex本质区别" class="headerlink" title="附1：CreateThread与_beginthreadex本质区别"></a>附1：CreateThread与_beginthreadex本质区别</h1><p><code>CreateThread</code></p>
+<p>函数功能：创建线程</p>
+<p>函数原型：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">HANDLEWINAPICreateThread(</span><br><span class="line"></span><br><span class="line">  LPSECURITY_ATTRIBUTES  lpThreadAttributes,<span class="comment">//第一个参数表示线程内核对象的安全属性，一般传入NULL表示使用默认设置。</span></span><br><span class="line">    </span><br><span class="line">  SIZE_T  dwStackSize,<span class="comment">//第二个参数表示线程栈空间大小。传入0表示使用默认大小（1MB）。</span></span><br><span class="line">  </span><br><span class="line">    LPTHREAD_START_ROUTINE  lpStartAddress,<span class="comment">//第三个参数表示新线程所执行的线程函数地址，多个线程可以使用同一个函数地址。</span></span><br><span class="line">  </span><br><span class="line">    LPVOID  lpParameter,<span class="comment">//第四个参数是传给线程函数的参数。</span></span><br><span class="line">  </span><br><span class="line">    DWORD  dwCreationFlags, <span class="comment">//第五个参数指定额外的标志来控制线程的创建，为0表示线程创建之后立即就可以进行调度，如果为CREATE_SUSPENDED则表示线程创建后暂停运行，这样它就无法调度，直到调用ResumeThread()。</span></span><br><span class="line">  </span><br><span class="line">    LPDWORD  lpThreadId<span class="comment">//第六个参数将返回线程的ID号，传入NULL表示不需要返回该线程ID号。</span></span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"><span class="comment">//函数返回值：成功返回新线程的句柄，失败返回NULL。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="window等待唤醒机制"><a href="#window等待唤醒机制" class="headerlink" title="window等待唤醒机制"></a>window等待唤醒机制</h2><p> <a href="https://blog.csdn.net/youyou519/article/details/82355439" target="_blank" rel="noopener">https://blog.csdn.net/youyou519/article/details/82355439</a> </p>
+<p>  <strong>在Windows中，一个线程可以通过等待一个或者多个可等待对象，从而进入等待状态，另一个线程可以在某些时刻唤醒等待这些对象的其他线程。</strong> </p>
+<h3 id="可等待对象"><a href="#可等待对象" class="headerlink" title="可等待对象"></a>可等待对象</h3><p>在Windbg中查看如下结构体：            </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dt _KPROCESS            进程</span><br><span class="line"></span><br><span class="line">dt _KTHREAD         线程</span><br><span class="line"></span><br><span class="line">dt _KTIMER          定时器</span><br><span class="line"></span><br><span class="line">dt _KSEMAPHORE      信号量</span><br><span class="line"></span><br><span class="line">dt _KEVENT          事件</span><br><span class="line"></span><br><span class="line">dt _KMUTANT         互斥体</span><br><span class="line"></span><br><span class="line">dt _FILE_OBJECT     文件</span><br></pre></td></tr></table></figure>
+
+<p>这些可等待对象的特点是都是一个结构体，都有一个成员，即第一个成员<code>_DISPATCHER_HEADER</code>（有些·1比较特殊，文件比较特殊不在第一个成员）</p>
+<p>那么第一个是与不是_DISPATCHER_HEADER的对象有什么区别呢</p>
+<h3 id="可等待对象的差异"><a href="#可等待对象的差异" class="headerlink" title="可等待对象的差异"></a>可等待对象的差异</h3><p>WaitForSingleObject(3环)</p>
+<p>NtWaitForSingleObject(内核)       </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>) 通过<span class="number">3</span>环用户提供的句柄，找到等待对象的内核地址。       </span><br><span class="line"></span><br><span class="line"><span class="number">2</span>) 如果是以_DISPATCHER_HEADER开头，直接使用。</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>) 如果不是以_DISPATCHER_HEADER开头的对象,则           找到在其中嵌入的_DISPATCHER_HEADER对象。</span><br><span class="line">KeWaitForSingleObject(内核)</span><br><span class="line">        核心功能，后面会讲</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="一个线程等待一个对象"><a href="#一个线程等待一个对象" class="headerlink" title="一个线程等待一个对象"></a>一个线程等待一个对象</h3><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/24.png" alt="24"></p>
+<p>被等待对象有个变量是WaitListHead圈着所有等待块，把等待他的所有线程的等待块，就是第一个参数WaitListEntry</p>
+<h3 id="一个线程等待多个对象"><a href="#一个线程等待多个对象" class="headerlink" title="一个线程等待多个对象"></a>一个线程等待多个对象</h3><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/25.png" alt="25"></p>
+<h3 id="等待网"><a href="#等待网" class="headerlink" title="等待网"></a>等待网</h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/26.png" alt="26"></p>
+<p>1、等待中的线程，一定在等待链表中(KiWaitListHead)，同时也一定在这张网上(KTHREAD +5C的位置不为空)。</p>
+<p>2、线程通过调用WaitForSingleObject/WaitForMultipleObjects函数将自己挂到这张网上。</p>
+<p>3、线程什么时候会再次执行取决于其他线程何时调用相关函数，等待对象不同调用的函数也不同。</p>
+<p><code>WaitForSingleObject</code> </p>
+<p>函数功能：等待函数 – 使线程自愿进入等待状态，直到指定的内核对象被触发(已通知状态或者说该线程的事件对象为有信号（事件对象就是上文线程同步的四种方式）)。</p>
+<p>换句话说就是哪个线程的事件对象有信号就让哪个线程运行，其他的线程就全部等待</p>
+<p>函数原形：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORDWINAPI <span class="title">WaitForSingleObject</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  HANDLEhHandle,<span class="comment">//第一个参数为要等待的内核对象。</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  DWORDdwMilliseconds<span class="comment">//第二个参数为最长等待的时间，以毫秒为单位，如传入5000就表示5秒，传入0就立即返回，传入INFINITE表示无限等待。</span></span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="comment">//传递INFINITE有些危险。如果对象永远不变为已通知状态，那么调用线程永远不会被唤醒，它将永远处于死锁状态，不过，它不会浪费宝贵的C P U时间。</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">    因为线程的句柄在线程运行时是未触发的，线程结束运行，句柄处于触发状态。所以可以用WaitForSingleObject()来等待一个线程结束运行。(触发状态意味着结束线程的运行)</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="comment">//函数返回值：在指定的时间内对象被触发，函数返回WAIT_OBJECT_0。超过最长等待时间对象仍未被触发返回WAIT_TIMEOUT。传入参数有错误将返回WAIT_FAILED</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p> <code>WaitForMultipleObjects</code></p>
+<p>函数功能： 它允许调用线程同时查看若干个内核对象的已通知状态。</p>
+<p>函数原型为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD <span class="title">WaitForMultipleObjects</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">DWORD nCount, <span class="comment">// number of handles in the handle array    nCount 指定列表中的句柄数量 最大值为MAXIMUM_WAIT_OBJECTS（64）用于指明想要让函数查看的内核对象的数量</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">CONST HANDLE *lpHandles, <span class="comment">// pointer to the object-handle array      *lpHandles 句柄数组的指针。lpHandles为指定对象句柄组合中的第一个元素 HANDLE类型可以为（Event，Mutex，Process，Thread，Semaphore）数组</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">BOOL fWaitAll, <span class="comment">// wait flag          bWaitAll 等待的类型，如果为TRUE，表示除非对象都发出信号，否则就一直等待下去；如果FALSE，表示任何对象发出信号即可</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">DWORD dwMilliseconds <span class="comment">// time-out interval in milliseconds          dwMilliseconds指定要等候的毫秒数。如设为零，表示立即返回。如指定常数INFINITE，则可根据实际情况无限等待下去</span></span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*函数的返回值有：</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">WAIT_ABANDONED_0：所有对象都发出消息，而且其中有一个或多个属于互斥体（一旦拥有它们的进程中止，就会发出信号）</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">WAIT_TIMEOUT：对象保持未发信号的状态，但规定的等待超时时间已经超过</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">WAIT_OBJECT_0：所有对象都发出信号</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">WAIT_IO_COMPLETION：（仅适用于WaitForMultipleObjectsEx）由于一个I/O完成操作已作好准备执行，所以造成了函数的返回</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">返回WAIT_FAILED则表示函数执行失败，会设置GetLastError</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">如bWaitAll为FALSE，那么返回结果相似，只是可能还会返回相对于WAIT_ABANDONED_0或WAIT_OBJECT_0的一个正偏移量，指出哪个对象是被抛弃还是发出信号。WAIT_OBJECT_0是微软定义的一个宏，你就把它看成一个数字就可以了。例如，WAIT_OBJECT_0 + 5的返回结果意味着列表中的第5个对象发出了信号</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>可以以两种不同的方式来使用WaitForMultipleObjects函数。</p>
+<p>一种方式是让线程进入等待状态，直到指定内核对象中的任何一个变为已通知状态。</p>
+<p>另一种方式是让线程进入等待状态，直到所有指定的内核对象都变为已通知状态。</p>
+<p>fWaitAll参数告诉该函数，你想要让它使用何种方式。如果为该参数传递TRUE，那么在所有对象变为已通知状态之前，该函数将不允许调用线程运行。</p>
+<p>dwMilliseconds参数的作用与它在WaitForSingleObject中的作用完全相同。如果在等待的时候规定的时间到了，那么该函数无论如何都会返回。。</p>
+<p>WaitForMultipleObjects函数的返回值告诉调用线程，为什么它会被重新调度。可能的返回值是WAIT_FAILED和WAIT_TIMEOUT。如果为fWaitAl l参数传递TRUE，同时所有对象均变为已通知状态，那么返回值是WAIT_OBJECT_0。如果为fWaitAll传递FALSE，那么一旦任何一个对象变为已通知状态，该函数便返回。在这种情况下，你可能想要知道哪个对象变为已通知状态。返回值是WAIT_OBJECT_0与（WAIT_OJECT_0 + dwCount-1）之间的一个值。换句话说，如果返回值不是WAIT_TIMEOUT，也不是WAIT_FAILED，那么应该从返回值中减去WAIT_OBJECT_0。产生的数字是作为第二个参数传递给WaitForMultipleObjects的句柄数组中的索引。该索引说明哪个对象变为已通知状态。</p>
+<p> <a href="https://blog.csdn.net/morewindows/article/details/7421759" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7421759</a> </p>
+<h1 id="附2-原子操作Interlocked"><a href="#附2-原子操作Interlocked" class="headerlink" title="附2 原子操作Interlocked"></a>附2 原子操作Interlocked</h1><p> <a href="https://blog.csdn.net/morewindows/article/details/7429155" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7429155</a> </p>
+<h1 id="附3-一些有关多线程的题目"><a href="#附3-一些有关多线程的题目" class="headerlink" title="附3 一些有关多线程的题目"></a>附3 一些有关多线程的题目</h1><p>第一篇    多线程笔试面试题汇总</p>
+<pre><code>多线程在笔试面试中经常出现，下面列出一些公司的多线程笔试面试题。首先是一些概念性的问答题，这些是多线程的基础知识，经常出现在面试中的第一轮面试（我参加2011年腾讯研究院实习生招聘时就被问到了几个概念性题目）。然后是一些选择题，这些一般在笔试时出现，虽然不是太难，但如果在选择题上花费大多时间无疑会对后面的编程题造成影响，因此必须迅速的解决掉。最后是综合题即难一些的问答题或是编程题。这种题目当然是最难解决了，要么会引来面试官的追问，要么就很容易考虑不周全，因此解决这类题目时一定要考虑全面和细致。
+
+下面就来看看这三类题目吧。</code></pre><p>一．概念性问答题<br>第一题：线程的基本概念、线程的基本状态及状态之间的关系？</p>
+<p>第二题：线程与进程的区别？</p>
+<pre><code>这个题目问到的概率相当大，计算机专业考研中也常常考到。要想全部答出比较难。</code></pre><p>第三题：多线程有几种实现方法，都是什么？</p>
+<p>第四题：多线程同步和互斥有几种实现方法，都是什么？</p>
+<pre><code>我在参加2011年迅雷校园招聘时的一面和二面都被问到这个题目，回答的好将会给面试成绩加不少分。</code></pre><p>第五题：多线程同步和互斥有何异同，在什么情况下分别使用他们？举例说明。</p>
+<p>二．选择题<br>第一题（百度笔试题）：</p>
+<p>以下多线程对int型变量x的操作，哪几个不需要进行同步：<br>A. x=y;      B. x++;    C. ++x;    D. x=1;</p>
+<p>第二题（阿里巴巴笔试题）</p>
+<p>多线程中栈与堆是公有的还是私有的</p>
+<p>A：栈公有, 堆私有</p>
+<p>B：栈公有，堆公有</p>
+<p>C：栈私有, 堆公有</p>
+<p>D：栈私有，堆私有</p>
+<p>三．综合题<br>第一题（台湾某杀毒软件公司面试题）：</p>
+<p>在Windows编程中互斥量与临界区比较类似，请分析一下二者的主要区别。</p>
+<p>第二题：</p>
+<p>一个全局变量tally，两个线程并发执行（代码段都是ThreadProc)，问两个线程都结束后，tally取值范围。</p>
+<p>inttally = 0;//glable</p>
+<p>voidThreadProc()</p>
+<p>{</p>
+<pre><code>for(inti = 1; i &lt;= 50; i++)
+
+       tally += 1;</code></pre><p>}</p>
+<p>第三题（某培训机构的练习题）：</p>
+<p>子线程循环 10 次，接着主线程循环 100 次，接着又回到子线程循环 10 次，接着再回到主线程又循环 100 次，如此循环50次，试写出代码。</p>
+<p>第四题（迅雷笔试题）：</p>
+<p>编写一个程序，开启3个线程，这3个线程的ID分别为A、B、C，每个线程将自己的ID在屏幕上打印10遍，要求输出结果必须按ABC的顺序显示；如：ABCABC….依次递推。</p>
+<p>第五题（Google面试题）</p>
+<p>有四个线程1、2、3、4。线程1的功能就是输出1，线程2的功能就是输出2，以此类推………现在有四个文件ABCD。初始都为空。现要让四个文件呈如下格式：</p>
+<p>A：1 2 3 4 1 2….</p>
+<p>B：2 3 4 1 2 3….</p>
+<p>C：3 4 1 2 3 4….</p>
+<p>D：4 1 2 3 4 1….</p>
+<p>请设计程序。</p>
+<p>下面的第六题与第七题也是在考研中或是程序员和软件设计师认证考试中的热门试题。</p>
+<p>第六题</p>
+<p>生产者消费者问题</p>
+<p>这是一个非常经典的多线程题目，题目大意如下：有一个生产者在生产产品，这些产品将提供给若干个消费者去消费，为了使生产者和消费者能并发执行，在两者之间设置一个有多个缓冲区的缓冲池，生产者将它生产的产品放入一个缓冲区中，消费者可以从缓冲区中取走产品进行消费，所有生产者和消费者都是异步方式运行的，但它们必须保持同步，即不允许消费者到一个空的缓冲区中取产品，也不允许生产者向一个已经装满产品且尚未被取走的缓冲区中投放产品。</p>
+<p>第七题</p>
+<p>读者写者问题</p>
+<p>这也是一个非常经典的多线程题目，题目大意如下：有一个写者很多读者，多个读者可以同时读文件，但写者在写文件时不允许有读者在读文件，同样有读者读时写者也不能写。</p>
+<p> <a href="https://blog.csdn.net/morewindows/article/details/7442333" target="_blank" rel="noopener">https://blog.csdn.net/morewindows/article/details/7442333</a> </p>
+<h1 id="附4-几种内核对象的受信与非受信状态"><a href="#附4-几种内核对象的受信与非受信状态" class="headerlink" title="附4 几种内核对象的受信与非受信状态"></a>附4 <a href="https://www.cnblogs.com/felove2013/articles/3924333.html" target="_blank" rel="noopener">几种内核对象的受信与非受信状态</a></h1><p>已通知状态（受信状态） 未通知状态（非受信状态）</p>
+<p>进程内核对象</p>
+<p>   当进程<strong>正在运行</strong>时，进程内核对象处于<strong>未通知状态</strong>。当进程<strong>停止运行</strong>时，就处于<strong>已通知状态</strong>。可以通过等待进程来检查进程是否仍然运行。</p>
+<p>   无成功等待的副作用。</p>
+<p>线程内核对象</p>
+<p>   当线程正在运行时，线程内核对象处于未通知状态。当线程停止运行时，就处于已通知状态。可以通过等待线程来检查线程是否仍然运行。</p>
+<p>   无成功等待的副作用。</p>
+<p>事件内核对象</p>
+<p>   包括人工重置的事件和自动重置的事件。</p>
+<p>当人工重置事件得到通知时，等待该事件的所有线程成为可调度线程；它没有成功等待副作用。</p>
+<p>当自动重置的事件得到通知时，等待该事件的线程中只有一个线程变为可调度线程。其成功等待的副作用是该对象自动重置为未通知状态。</p>
+<p>   事件内核对象通过CreateEvent创建，初始可以是通知或未通知状态。SetEvent将事件改为已通知状态，ResetEvent将事件设为未通知状态。</p>
+<p>   当一个线程执行初始化操作，然后通知另一个线程执行剩余的操作时，经常使用人工事件对象。另外如果一个写线程，多个读线程，可以让写线程完成写操作时通过人工事件通知读线程读取数据。</p>
+<p>而自动事件对象则可以用于保护资源在同一时间只有一个线程可以访问，因为它保证只有一个线程被激活。</p>
+<p>等待定时器内核对象</p>
+<p>   等待定时器是在某个时间或按规定的时间间隔发出自己的信号通知的内核对象。包括人工重置的定时器和自动重置的定时器。初始必须是未通知状态。</p>
+<p>   当发出人工重置的定时器信号时，等待该定时器的所有线程变为可调度；无成功等待副作用。</p>
+<p>   当发出自动重置的定时器信号时，只有一个等待线程变为可调度线程。成功等待副作用是重置对象。</p>
+<p>   通过CreatWaitableTimer创建，CancelWaitableTimer撤销一个定时器，SetWaitableTimer告诉定时器何时让其变为已通知状态。</p>
+<p>   信号量内核对象</p>
+<p>   信号量用来对资源进行计数。它包含两个32位值，一个表示能够使用的最大资源数量，一个表示当前可用的资源数量。</p>
+<p>   信号量的使用规则如下：</p>
+<p>\1.    如果当前资源数量大于0，发出信号量信号</p>
+<p>\2.    如果当前资源数量是0，不发出信号量信号</p>
+<p>\3.    不允许当前资源数量为负值</p>
+<p>\4.    当前资源数量不能大于最大信号数量</p>
+<p>通过CreateSemaphore创建。ReleaseSemaphore来释放资源，从而使当前资源数量增加。</p>
+<p>当调用等待函数时，它会检查信号量的当前资源数量。如果它的值大于0，那么计数器减1，调用线程处于可调度状态。如果当前资源是0，则调用函数的线程进入等待状态。当另一个线程对信号量的当前资源通过ReleaseSemaphore进行递增时，系统会记住该等待线程，并将其变为可调度状态。</p>
+<p>当有多个资源共访问时，经常使用信号量内核对象。</p>
+<p>其成功等待副作用是当前资源数量减1。</p>
+<p>互斥器内核对象</p>
+<p>   互斥器保证线程拥有对单个资源的互斥访问权。互斥对象类似于关键代码区，但它是一个内核对象。</p>
+<p>   互斥器不同于其他内核对象，它有一个“线程所有权”的概念。它如果被某个线程等待成功，就属于该线程。</p>
+<p>   互斥器的使用规则如下：</p>
+<p>\1.    如果线程ID是0（无效ID），互斥对象不被任何线程拥有，并且发出该互斥对象的通知信号。</p>
+<p>\2.    如果ID是非0数字，那么一个线程可以拥有互斥对象，并且不发出该互斥对象的通知信号。</p>
+<p>\3.    互斥器有一个递归计数器。如果线程已经拥有了互斥器，而它再次等待该互斥器，则马上成功返回；而且递归计数器加1。</p>
+<p>通过CreateMutex创建。ReleaseMutex用来释放互斥器。如果线程拥有互斥器，则首先把递归计数器减1，如果减到0，则线程释放互斥器，或者说互斥器的所属线程为空。此后其他线程就可以等待得到该互斥器了。但是如果一个线程ReleaseMutex了一个本来不归他所有的互斥器，则不会有任何效果。</p>
+<p>   互斥器常用于保护由多个线程访问的内核块。互斥器保证了访问内存块的任何线程拥有对该内存块的独占访问。</p>
+<p>   其成功等待副作用是将所有权赋予线程，并将递归计数器加1。</p>
+<p>   互斥器和关键代码区的功能是非常相似的，只是一个是用户对象，一个是内核对象。</p>
+<p>WaitForSingleObject()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">DWORD WINAPI WaitForSingleObject(</span><br><span class="line"></span><br><span class="line"> _In_ HANDLE hHandle,</span><br><span class="line"></span><br><span class="line"> _In_ DWORD dwMilliseconds</span><br><span class="line"></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">hHandle ：指向内核对象的句柄；</span><br><span class="line"></span><br><span class="line">dwMilliseconds：线程最大等待多长时间，直到该对象被触发。经常使用INFINITE，表示阻塞等待。</span><br></pre></td></tr></table></figure>
+
+<p>WaitForSingleObject被称呼为等待函数，是等待内核对象被触发通用的等待函数，被用在所有的内核对象触发等待中。等待函数在等待互斥量内核对象时，会进行互斥量的线程ID 是否为 0 ，如果为非 0 ，表示互斥量处于未触发状态，等待函数会被阻塞。当另外一个线程将互斥量释放，使其线程 ID 为 0 时，系统会唤醒阻塞的等待函数，把互斥量的线程 ID 设置为它的线程 ID ，使其成为可调度状态 。</p>
+<p>还有一个WaitForMultipleObject函数，用于等待多个内核对象被触发。</p>
+
+    </div>
+
+    
+    
+    
+      
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/11/25/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/" title="线程同步">http://yoursite.com/2019/11/25/%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 线程</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于线程同步"><span class="nav-number">1.</span> <span class="nav-text">关于线程同步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#linux线程同步"><span class="nav-number">2.</span> <span class="nav-text">linux线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、互斥锁"><span class="nav-number">2.1.</span> <span class="nav-text">一、互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主要api"><span class="nav-number">2.1.1.</span> <span class="nav-text">主要api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、信号量"><span class="nav-number">2.2.</span> <span class="nav-text">三、信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量的概念"><span class="nav-number">2.2.1.</span> <span class="nav-text">信号量的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量的工作原理"><span class="nav-number">2.2.2.</span> <span class="nav-text">信号量的工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口和使用api"><span class="nav-number">2.2.3.</span> <span class="nav-text">接口和使用api</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥锁、条件变量和信号量的区别："><span class="nav-number">2.3.</span> <span class="nav-text">互斥锁、条件变量和信号量的区别：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#win32-线程同步"><span class="nav-number">3.</span> <span class="nav-text">win32 线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#临界区（Critical-Sections）"><span class="nav-number">3.1.</span> <span class="nav-text">临界区（Critical Sections）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#临界区和互斥锁的区别"><span class="nav-number">3.1.1.</span> <span class="nav-text">临界区和互斥锁的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥量"><span class="nav-number">3.2.</span> <span class="nav-text">互斥量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量"><span class="nav-number">3.3.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件Event"><span class="nav-number">3.4.</span> <span class="nav-text">事件Event</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#api"><span class="nav-number">3.4.1.</span> <span class="nav-text">api</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知模式"><span class="nav-number">3.4.2.</span> <span class="nav-text">通知模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#win32-多线程四种方式的区别"><span class="nav-number">4.</span> <span class="nav-text">win32 多线程四种方式的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四种方式的“遗弃”问题"><span class="nav-number">5.</span> <span class="nav-text">四种方式的“遗弃”问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生产者和消费者的问题"><span class="nav-number">6.</span> <span class="nav-text">生产者和消费者的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附1：CreateThread与-beginthreadex本质区别"><span class="nav-number">7.</span> <span class="nav-text">附1：CreateThread与_beginthreadex本质区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#window等待唤醒机制"><span class="nav-number">7.1.</span> <span class="nav-text">window等待唤醒机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可等待对象"><span class="nav-number">7.1.1.</span> <span class="nav-text">可等待对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可等待对象的差异"><span class="nav-number">7.1.2.</span> <span class="nav-text">可等待对象的差异</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个线程等待一个对象"><span class="nav-number">7.1.3.</span> <span class="nav-text">一个线程等待一个对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个线程等待多个对象"><span class="nav-number">7.1.4.</span> <span class="nav-text">一个线程等待多个对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待网"><span class="nav-number">7.1.5.</span> <span class="nav-text">等待网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.1.6.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附2-原子操作Interlocked"><span class="nav-number">8.</span> <span class="nav-text">附2 原子操作Interlocked</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附3-一些有关多线程的题目"><span class="nav-number">9.</span> <span class="nav-text">附3 一些有关多线程的题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附4-几种内核对象的受信与非受信状态"><span class="nav-number">10.</span> <span class="nav-text">附4 几种内核对象的受信与非受信状态</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rhb"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">29k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">26 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+</html>
