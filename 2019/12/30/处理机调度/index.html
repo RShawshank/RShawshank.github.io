@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/blog_favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/blog_favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://rshawshank.github.io').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="处理机调度 作业调度（宏观）： ­决定哪些程序调入计算机系统。 进&#x2F;线程调度（微观）： ­决定哪个（些）进程占用CPU。 不同类型操作系统的侧重点不同。 批处理系统   2层  作业—选择作业进入主存​       进程—选择获得CPU的进程">
+<meta name="keywords" content="操作系统,处理机调度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="处理机调度">
+<meta property="og:url" content="http:&#x2F;&#x2F;rshawshank.github.io&#x2F;2019&#x2F;12&#x2F;30&#x2F;%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6&#x2F;index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="处理机调度 作业调度（宏观）： ­决定哪些程序调入计算机系统。 进&#x2F;线程调度（微观）： ­决定哪个（些）进程占用CPU。 不同类型操作系统的侧重点不同。 批处理系统   2层  作业—选择作业进入主存​       进程—选择获得CPU的进程">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-02T07:42:52.689Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>处理机调度 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">rhb_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">17</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">23</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          处理机调度
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 22:54:39" itemprop="dateCreated datePublished" datetime="2019-12-29T22:54:39Z">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-02 07:42:52" itemprop="dateModified" datetime="2020-01-02T07:42:52Z">2020-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="处理机调度"><a href="#处理机调度" class="headerlink" title="处理机调度"></a>处理机调度</h1><p> 作业调度（宏观）： </p><p>­决定哪些程序调入计算机系统。</p><p> 进/线程调度（微观）： </p><p>­决定哪个（些）进程占用CPU。</p><p> 不同类型操作系统的侧重点不同。</p><p> <strong>批处理系统</strong>  </p><p> 2层  作业—选择作业进入主存</p><p>​       进程—选择获得CPU的进程</p><a id="more"></a>
+
+
+
+
+
+
+
+<p> 分析：作业 小时—分钟为单位 发生的频率低</p>
+<p>​        高效调度，充分优化              </p>
+<p>   进程 发生的频率高 ms为单位 快速调度</p>
+<p>​          例：20ms—时间片，2ms—调度执行</p>
+<p> <strong>分时操作系统—进程调度</strong></p>
+<p> 个人计算机操作系统—进程调度或线程调度</p>
+<h2 id="作业调度"><a href="#作业调度" class="headerlink" title="作业调度"></a>作业调度</h2><blockquote>
+<p> 一般来说，计算机系统把用户要求处理的一项工作称为一个<strong>作业</strong>。</p>
+<p> 作业有四种状态：</p>
+<p>­<strong>1 .</strong> <strong>提交状态</strong>  用户将程序和数据提交计算中心；</p>
+<p>­<strong>2.</strong> <strong>后备状态</strong> 将作业录入到后援存储设备；</p>
+<p>­<strong>3.</strong> <strong>执行状态</strong> 作业调入计算机系统内存；</p>
+<p>­<strong>4.</strong> <strong>完成状态</strong> 作业计算完成的善后处理。</p>
+</blockquote>
+<p> 作业调度的主要任务是完成作业从后备状态到执行状态和从执行状态到完成状态的转变。</p>
+<p> 功能：</p>
+<p>­<strong>1. ** **确定数据结构</strong>，记录已进入系统的各作业的情况JCB（Job Control Block）</p>
+<p>­<strong>2.</strong>  <strong>按一定的调度算法</strong>，从后备作业中选择一个或几个作业进入内存；</p>
+<p>­<strong>3.</strong> <strong>分配资源，为被选中的作业创建进程，并为其申请系统资源；</strong></p>
+<p>­<strong>4.</strong> <strong>作业结束后作善后处理</strong>。（进程和作业的资源回收是同时的）</p>
+<h3 id="作业控制块JCB"><a href="#作业控制块JCB" class="headerlink" title="作业控制块JCB"></a>作业控制块JCB</h3><p>每个作业进入系统时由系统为其建立一个作业控制块JCB（Job Control Block)，它是存放作业控制和管理信息的数据结构。</p>
+<h3 id="调度算法性能的衡量"><a href="#调度算法性能的衡量" class="headerlink" title="调度算法性能的衡量"></a>调度算法性能的衡量</h3><p>需要考虑系统中各种资源的负载均匀</p>
+<p>作业的周转时间：<br>$$<br>t_i = t_ci - t_{si}\<br>t_i:作业周转时间，t_ci:作业完成时间，t_{si}：作业提交到系统的时间<br>$$<br>平均周转时间：<br>$$<br>t=1/n\sum_{i=1}^n t_i<br>$$<br>平均带权周转时间<br>$$<br>w=1/n\sum_{i=1}^nw_i\<br>w_i=t_i/t_{ri}\<br>t_{ri}:作业i实际运行时间<br>$$</p>
+<h3 id="作业调度算法"><a href="#作业调度算法" class="headerlink" title="作业调度算法"></a>作业调度算法</h3><h4 id="先来先服务算法FCFS"><a href="#先来先服务算法FCFS" class="headerlink" title="先来先服务算法FCFS"></a>先来先服务算法FCFS</h4><p><strong>­先来先服务算法是按作业来到的先后次序进行调度的</strong>，换句话说，调度程序每次选择的作业是等待时间最久的，而不管作业的运行时间的长短。这种调度算法突出的优点是实现简单，效率较低，在一些实际的系统和一般应用程序中采用这种算法的较多。</p>
+<h4 id="短作业优先算法SJF"><a href="#短作业优先算法SJF" class="headerlink" title="短作业优先算法SJF"></a>短作业优先算法SJF</h4><p>­<strong>短作业优先调度算法考虑作业的运行时间，每次总是选择一个运行时间最小的作业调入内存（系统）</strong> </p>
+<p>­<strong>在一般情况下这种调度算法比先来先服务调度算法的效率要高一些。实现相对先来先服务调度算法要困难些，如果作业的到来顺序及运行时间不合适，会出现饿死现象。</strong></p>
+<h4 id="响应比高者优先算法"><a href="#响应比高者优先算法" class="headerlink" title="响应比高者优先算法"></a>响应比高者优先算法</h4><p>$$<br>响应比=响应时间/执行时间\<br>响应时间=作业进入系统的等待时间+执行时间<br>$$</p>
+<p>理论上讲是比较好的，但是需要估计作业的等待时间和运行时间，比较复杂，开销大。</p>
+<h4 id="优先数调度算法"><a href="#优先数调度算法" class="headerlink" title="优先数调度算法"></a>优先数调度算法</h4><p>­<strong>优先数调度算法是终合考虑各方面的因素（作业等待时间、运行时间、缓急程度，系统资源使用等），给每个作业设置一个优先数，调度程序总是选择一个优先数最大（或者最小）的作业调入（系统）内存。</strong></p>
+<p>确定优先数的一种简单的方法是：用户为自己的作业确定一个优先级</p>
+<p>当然，优先数是可以浮动的。</p>
+<h2 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h2><p>见《进程管理》</p>
+<h3 id="UNIX系统进程调度"><a href="#UNIX系统进程调度" class="headerlink" title="UNIX系统进程调度"></a>UNIX系统进程调度</h3><ul>
+<li><p>采用优先数调度算法</p>
+</li>
+<li><p>进程有一个进程优先数p_pri</p>
+</li>
+<li><p>p_pri取值范围是-127～127，其值越小，进程的优先级越高</p>
+</li>
+</ul>
+<p><strong>优先数的确定</strong><br><strong>系统设置</strong><br>在sleep（）中设置将要进入睡眠状态进程的优先数，当该进程被唤醒后，就以系统给它设置的优先数去参与处理机的竟争。</p>
+<pre><code>0＃进程（－100优先数）；
+资源请求得不到满足的进程，磁盘（-80），打印机（-20），…；
+所有处于用户态运行进程同步（一般情况下为大于**0）。</code></pre><p>­<strong>优先数的计算</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> p_pri = min&#123;127, (p_cpu/16+p_nice+PUSER)&#125;</span><br><span class="line"> 其中：</span><br><span class="line">p_cpu: 进程占用CPU的程度</span><br><span class="line">p_nice: 用户通过系统调用nice(priority)设置的</span><br><span class="line">   进程优先数</span><br><span class="line">PUSER: 常数，其值为100</span><br></pre></td></tr></table></figure>
+
+<h3 id="Linux系统进程调度"><a href="#Linux系统进程调度" class="headerlink" title="Linux系统进程调度"></a>Linux系统进程调度</h3><p>进程调度程序是内核的组成部分，负责选择下一个要运行的进程。</p>
+<p>进程调度可看作在可运行态进程之间分配有限的处理器时间资源的内核子系统。</p>
+<p>进程调度程序是如Linux这样的多任务操作系统的基础。</p>
+<p><strong>Linux进程调度策略</strong></p>
+<p>​    <strong>基于动态优先级和可变时间片的调度</strong></p>
+<p>​    <strong>调度方式为可抢占式调度</strong></p>
+<h4 id="调度目标"><a href="#调度目标" class="headerlink" title="调度目标"></a>调度目标</h4><ul>
+<li><p>实现算法复杂度为O(1)级的调度</p>
+<ul>
+<li>进程调度算法保证在恒定的时间内完成</li>
+<li>算法执行时间与系统中处于就绪(可运行)状态的进程个数无关</li>
+</ul>
+</li>
+<li><p>提高交互性能</p>
+<ul>
+<li>提高交互性能，保证系统能快速响应</li>
+</ul>
+</li>
+<li><p>保证公平</p>
+<ul>
+<li>在合理设定的时间范围内，没有进程会出现饥饿状态，也不会有进程获得大量的时间片 </li>
+</ul>
+</li>
+<li><p>实现对称多处理器（SMP）可扩展性</p>
+</li>
+</ul>
+<h4 id="I-O消耗型和处理器消耗型的进程"><a href="#I-O消耗型和处理器消耗型的进程" class="headerlink" title="I/O消耗型和处理器消耗型的进程"></a>I/O消耗型和处理器消耗型的进程</h4><ul>
+<li><p>I/O消耗型进程</p>
+<ul>
+<li>大部分时间是使用外部设备，交互式进程具有此特征</li>
+</ul>
+</li>
+<li><p>处理器消耗型进程</p>
+<ul>
+<li>大部分时间是使用CPU，计算进程具有此特征</li>
+</ul>
+</li>
+</ul>
+<p>交互式的程序都是I/O消耗型的。Linux为了保证交互式应用，优化了进程的响应，更倾向于优先调度I/O消耗型进程，但并未忽略处理器消耗型程序。</p>
+<h4 id="进程调度的特点"><a href="#进程调度的特点" class="headerlink" title="进程调度的特点"></a>进程调度的特点</h4><ul>
+<li>Linux系统实现了基于进程过去行为的启发式算法；</li>
+<li>Linux系统选择优先级高的进程先运行，相同优先级的进程按循环方式调度；</li>
+<li>动态优先级依进程占有CPU的情况、休眠时间的长短来增、减 ；</li>
+<li>系统根据进程优先级调整分配给它的时间片；</li>
+<li>实施可抢占调度方式</li>
+</ul>
+<h4 id="动态优先级"><a href="#动态优先级" class="headerlink" title="动态优先级"></a>动态优先级</h4><p>每个进程有一个动态优先级，它是进程调度程序选择可运行进程所使用的参数，其取值范围是100(最高优先级) ~ 139(最低优先级) </p>
+<p><strong>动态优先级的计算</strong></p>
+<p>   <strong>动态优先级</strong> = max(100，min(静态优先级－ bonus + 5，139))</p>
+<p>   bonus是范围 0 <strong>～</strong> 10的值，</p>
+<p>​          值小于5表示降低动态优先级以示惩罚</p>
+<p>​          值大于5表示增加动态优先级以示奖励</p>
+<p>   进程调度使用的是动态优先级，通过effective_prio( )函  数来计算一个进程的动态优先级。</p>
+<h4 id="确定I-O消耗型和处理器消耗型进程的方法"><a href="#确定I-O消耗型和处理器消耗型进程的方法" class="headerlink" title="确定I/O消耗型和处理器消耗型进程的方法"></a>确定I/O消耗型和处理器消耗型进程的方法</h4><p><strong>依据</strong> <strong>——</strong> <strong>进程睡眠时间的长短</strong></p>
+<p>   若进程睡眠时间长 —— <strong>I/O消耗型</strong></p>
+<p>   若进程睡眠时间短 ——<strong>处理器消耗型</strong></p>
+<h4 id="可变时间片"><a href="#可变时间片" class="headerlink" title="可变时间片"></a>可变时间片</h4><p><strong>对交互式进程,系统提供较长的时间片</strong></p>
+<p><strong>调度程序根据进程的优先级动态调整分配给它的时间片</strong></p>
+<p><strong>时间片处理的时机</strong></p>
+<ul>
+<li><p><strong>创建新进程时的处理</strong></p>
+<ul>
+<li>新创建的子进程和父进程均分父进程剩余的时间片 </li>
+</ul>
+</li>
+<li><p><strong>进程用完时间片时的处理</strong></p>
+<ul>
+<li>当一个进程的时间片用完时，依任务的静态优先级重新计算时间片；</li>
+<li>task_timeslice()函数为给定任务返回一个新的时间片</li>
+</ul>
+</li>
+</ul>
+<p><strong>时间片的使用</strong></p>
+<ul>
+<li><p>一个进程拥有的时间片可分多次使用，放弃CPU时进入活动队列</p>
+</li>
+<li><p>当一个进程的时间片耗尽时，认为是过期进程，进入过期队</p>
+</li>
+</ul>
+<p><strong>时间片的计算</strong></p>
+<p><strong>基本时间片</strong></p>
+<p>   静态优先级本质上决定了进程的基本时间片</p>
+<p>​                    (140 －静态优先级) ×20  若静态优先级 ＜ 120</p>
+<p>​                    (140 －静态优先级) ×5   若静态优先级 ≥ 120</p>
+<p>   静态优先级越高(值越小)，基本时间片越长。</p>
+<p><strong>活动队列和过期队列</strong></p>
+<p>​     每个处理器维护两个优先级数组—— 活动数组和过期数组</p>
+<p><strong>活动数组上的可执行队列中的进程都有剩余时间片</strong></p>
+<p><strong>过期数组上的可执行队列中的进程都已耗尽时间片</strong></p>
+<p>   当一个进程的时间片耗尽时，被移至过期队列中；</p>
+<p>   当活动数组上的可执行队列中的所有进程都已耗尽时时间片，这时，在活动数组和过期数组之间切换指针。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\操作系统概述\" rel="bookmark">操作系统概述</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-01-02</div>
+      <div class="popular-posts-title"><a href="\2020\01\02\资源分配与调度\" rel="bookmark">资源分配与调度</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\进程和进程管理\" rel="bookmark">进程和进程管理</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" title="处理机调度">http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
+              <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag"><i class="fa fa-tag"></i> 处理机调度</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/30/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="prev" title="进程和进程管理">
+      <i class="fa fa-chevron-left"></i> 进程和进程管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/02/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="next" title="资源分配与调度">
+      资源分配与调度 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#处理机调度"><span class="nav-number">1.</span> <span class="nav-text">处理机调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#作业调度"><span class="nav-number">1.1.</span> <span class="nav-text">作业调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作业控制块JCB"><span class="nav-number">1.1.1.</span> <span class="nav-text">作业控制块JCB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法性能的衡量"><span class="nav-number">1.1.2.</span> <span class="nav-text">调度算法性能的衡量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作业调度算法"><span class="nav-number">1.1.3.</span> <span class="nav-text">作业调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#先来先服务算法FCFS"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">先来先服务算法FCFS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#短作业优先算法SJF"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">短作业优先算法SJF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应比高者优先算法"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">响应比高者优先算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优先数调度算法"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">优先数调度算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程调度"><span class="nav-number">1.2.</span> <span class="nav-text">进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX系统进程调度"><span class="nav-number">1.2.1.</span> <span class="nav-text">UNIX系统进程调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux系统进程调度"><span class="nav-number">1.2.2.</span> <span class="nav-text">Linux系统进程调度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调度目标"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">调度目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I-O消耗型和处理器消耗型的进程"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">I/O消耗型和处理器消耗型的进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程调度的特点"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">进程调度的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态优先级"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">动态优先级</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#确定I-O消耗型和处理器消耗型进程的方法"><span class="nav-number">1.2.2.5.</span> <span class="nav-text">确定I/O消耗型和处理器消耗型进程的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变时间片"><span class="nav-number">1.2.2.6.</span> <span class="nav-text">可变时间片</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rhb"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">184k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:47</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+</html>
