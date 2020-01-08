@@ -1,6 +1,478 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>最大流</title>
+    <url>/2020/01/02/%E6%9C%80%E5%A4%A7%E6%B5%81/</url>
+    <content><![CDATA[<h1 id="最大流"><a href="#最大流" class="headerlink" title="最大流"></a>最大流</h1><p>有一个源结点和一个汇点，从源结点向汇点“运输”货物。在不违反任何路径容量限制的条件下，从源结点到汇点运送货物的最大速率是多少——这一问题的抽象称为最大流问题</p><p>流具有三个需要注意的点！！</p><p>1、对于图中非s和t的普通结点，流进量等于流出量</p><a id="more"></a>
+
+
+<p>2、我们非常关心总运输流量，比如这个下水道系统，究竟从s点到t点最多能运输多少立方米的水？我们把它记成|f|，这个|f|极其重要，是我们研究的目的所在。</p>
+<p>3、当然，每条边是有运输上限的，就像某条公路车流是有上限的一样，若运输量无穷无尽，我们的研究也就没有意义了。我们将从u点到v点的运输上限，或者说是运载能力记为c(u,v)。对于从u点到v点的流量，记作f(u,v)。显然对所有边(u,v)我们有f(u,v)&lt;=c(u,v)。<br><a href="https://blog.csdn.net/sinat_41613352/article/details/84481115" target="_blank" rel="noopener">参考文章</a></p>
+<h2 id="流网络"><a href="#流网络" class="headerlink" title="流网络"></a>流网络</h2><p>流网络G=(V,E)是一个有向图，其中每条边(u,v)∈E均有一个非负能量c(u,v)≥0。如果(u,v)∉E，则假定c(u,v)=0。流网络中有两个特点的顶点，源点s和汇点t，假定每个顶点均处于从源点到汇点的某条路径上，就是说，对每个顶点v∈V，存在一条路径s-&gt;v-&gt;t，因此图G是连通图，且|E|≥|V|-1。</p>
+<blockquote>
+<p>带权有向图：网络</p>
+<p>结点：表示城市</p>
+<p>有向边：表示运输路径和物流的方向</p>
+<p>权重：表示运量限制</p>
+<p>流：一条从源点到汇点的路径即路径上的流量——这种用来表示”流（flow）”的图称为“流网络”</p>
+</blockquote>
+<p>流网络遵循以下基本性质：</p>
+<p>（1）流量守恒：除源结点和汇点外，其它结点上物料只是“流过”，即物料进入的速率等于离开的速率；</p>
+<p>（2）物料的生成速率和接收速率恒定且足够快、足够多，满足需要（包括源结点的输出和所有结点的输入）；</p>
+<p>（3）每条边上的容量是物料通过该边的最大速率，不能突破</p>
+<p>流网络是一个有向图，边上定义有容量函数c：</p>
+<p>(1) 有一个源结点s和汇点t；</p>
+<p>(2) 有向边表示流向；</p>
+<p>(3) 每条边上有一个非负的容量值；如果(u,v)∉E，则假定c(u,v)=0；</p>
+<p>(4) <strong>如果边集合E中包含（u，v）边，则图中不包含其反向边（u，v）</strong>；</p>
+<p>(5) <strong>图中不允许有自循环</strong>；</p>
+<p>(6) <strong>流网络是连通图</strong>，每个结点都在从s到t的某条路径上；</p>
+<p>(7) 除源结点外，每个结点至少有一条流入的边；</p>
+<p>(8) 除汇点外，每个结点至少有一条流出的边；</p>
+<p>(9)  |E|&gt;=|V|-1</p>
+<p><strong>标准流网络</strong>：</p>
+<p>(1)无反向边：也称为反向平行边。一个有向图中，（v，u）、（u，v）互为反向平行边</p>
+<p>(2)只有单一的源结点和汇点。</p>
+<p><strong>非标准流网络</strong>：</p>
+<p>不满足上述要求的流网络是非标准的流网络。对于非标准的流网络可转化为标准流网络。</p>
+<p>方法：</p>
+<p>1）添加反向平行边</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%9C%80%E5%A4%A7%E6%B5%81/image-20200107193531468.png" alt></p>
+<p>2）多个源结点和多个汇点。加入一个超级源结点s。加入一个超级汇点t。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%9C%80%E5%A4%A7%E6%B5%81/image-20200107193503982.png" alt></p>
+<h2 id="Ford-Fulkerson方法"><a href="#Ford-Fulkerson方法" class="headerlink" title="Ford-Fulkerson方法"></a>Ford-Fulkerson方法</h2><p>通过不断增加可行流值的方式找到最大流：</p>
+<p>（1）从流值为0的初始流开始；</p>
+<p>（2）通过某种方法，对流值进行增加；</p>
+<p>（3）当确认无法再增加流值时，就得到最大流；</p>
+<p>首先这个算法有个重要的工具：残存网络。残存网络其实就是具有残存容量的图。算法导论上有个普遍公式来定义残存容量：<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%9C%80%E5%A4%A7%E6%B5%81/20181125132832238.png" alt></p>
+<p>翻译一下公式，说明的就是对于两点间的残存容量定义为：<br>1.如果这两点连线原来就是原图的边，那么它的残存容量等于运载上限-运输流量。（<strong>就是目前你还能增加的流量的量</strong>）<br>2.如果这两点的反向连线是原图的边，那么它的残存容量等于那条边的运输流量。（<strong>表示目前用的运输流量，一旦该运输流量等于运载上限，运算结束</strong>）<br>3.其他情况是0，当做没连通。</p>
+<p>接下来我们看看残存网络对我们的<strong>帮助</strong>：<br>1.残存网络中没有从s到t的路径时，最大流等于最小割容量。（<strong>没有路径就说明s到t的连线有一段已经达到了最大运载上限了，就是残存容量为0</strong>）<br>2.残存网络中有从s到t的路径时，最大流不等于最小割容量。</p>
+<h2 id="最大流算法应用：寻找最大二分匹配"><a href="#最大流算法应用：寻找最大二分匹配" class="headerlink" title="最大流算法应用：寻找最大二分匹配"></a>最大流算法应用：寻找最大二分匹配</h2><p><a href="https://yq.aliyun.com/articles/242142" target="_blank" rel="noopener">https://yq.aliyun.com/articles/242142</a></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>最大流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>所有结点对的最短路径</title>
+    <url>/2020/01/02/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</url>
+    <content><![CDATA[<h1 id="所有结点对的最短路径"><a href="#所有结点对的最短路径" class="headerlink" title="所有结点对的最短路径"></a>所有结点对的最短路径</h1><p><strong>问题</strong>：有一个带权有向图 G = (V, E)，V 为图的顶点集合，E 为边的集合，权重函数为 w：E → R，该函数将边映射到实数值上。我们希望找到，对于所有结点对 u，v∈V，一条从结点 u 到结点 v 的最短路径，使得结点 u 到结点 v 的路径所有边的权重之和最小。</p><a id="more"></a>
+<p>简单来说，我们考虑的问题是<strong>如何找到一个图中所有结点之间的最短路径</strong>。</p>
+<p>用单源最短路径算法求解：<br>执行|V|次单源最短路径算法，每次使用一个不同的结点作为源点，从而可以求出每个结点到其他所有结点的最短路径。</p>
+<ul>
+<li>如果所有的边的权重为非负值，用Dijkstra算法：<ul>
+<li>用线性数组实现最小优先队列：O(V^3^+VE)=O(V^3^);</li>
+<li>用二叉堆实现最小优先队列：O(VElgV)；（对稀疏图较好）</li>
+<li>用斐波那契堆实现最小优先队列：O(V^2^lgV+VE)；</li>
+</ul>
+</li>
+<li>如果有权重为负值边，用Bellman-Ford算法：<ul>
+<li>一般的运行时间：O(V^2^E);</li>
+<li>对稠密图，运行时间为O(V^4^)。</li>
+</ul>
+</li>
+</ul>
+<p><strong>允许存在权重为负值的边，但不能包含权重为负值的环路</strong></p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>邻接矩阵是表示一个图的常用存储表示。它用两个数组分别存储数据元素（顶点）的信息和数据元素之间的关系（边或弧）的信息。<br>$$<br>W_{ij}=\begin{cases}0 &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i=j\有向边（i，j）的权重 &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i\not=j&amp;and(i,j)\in E\NIL &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i\not=j&amp;and(i,j)\notin E\\end{cases}<br>$$</p>
+<h3 id="最短路径和矩阵乘法"><a href="#最短路径和矩阵乘法" class="headerlink" title="最短路径和矩阵乘法"></a>最短路径和矩阵乘法</h3><h4 id="步骤一：分析最优解结构"><a href="#步骤一：分析最优解结构" class="headerlink" title="步骤一：分析最优解结构"></a>步骤一：分析最优解结构</h4><p>一条最短路径的所有子路径都是最短路径</p>
+<p><strong>每条路径都是最短路径</strong></p>
+<h4 id="步骤二：所有结点对最短路径的递归解"><a href="#步骤二：所有结点对最短路径的递归解" class="headerlink" title="步骤二：所有结点对最短路径的递归解"></a>步骤二：所有结点对最短路径的递归解</h4><p>设<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20180611225358746" style="zoom: 33%;">为从i到j的一条最短路径，且这条路径最多包含m条边。我们可以得到以下的递推公式：</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/2018061122580795-1578384535707" style="zoom: 50%;">
+
+<p>如果图G不包含权重为负值的环路，则对于每一对结点i和j，如果δ(i,j)&lt;∞，则从i到j之间存在一条最短路径。并且，由于最短路径是简单路径，其中至多包含n-1条边，因此有：</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107161153382.png" style="zoom: 67%;">
+
+<h4 id="步骤三：自底向上计算最短路径权重"><a href="#步骤三：自底向上计算最短路径权重" class="headerlink" title="步骤三：自底向上计算最短路径权重"></a>步骤三：自底向上计算最短路径权重</h4><h4 id="步骤三改进：重复平方"><a href="#步骤三改进：重复平方" class="headerlink" title="步骤三改进：重复平方"></a>步骤三改进：重复平方</h4><h4 id="步骤四：构建最优解"><a href="#步骤四：构建最优解" class="headerlink" title="步骤四：构建最优解"></a>步骤四：构建最优解</h4><h2 id="计算最短路径权重-Floyd-Warshall-算法"><a href="#计算最短路径权重-Floyd-Warshall-算法" class="headerlink" title="计算最短路径权重 - Floyd-Warshall 算法"></a>计算最短路径权重 - Floyd-Warshall 算法</h2><p><strong>采取的是动态规划策略</strong></p>
+<p><strong>算法的时间复杂度Θ(V^3^)。</strong></p>
+<p><strong>算法允许图中存在负权重的边，但不能存在权重为负值的环路</strong></p>
+<p>Floyd 算法考虑的是<em>一条路径上的中间结点</em>。对于任意结点对 i，j∈V，考虑从结点 i 到结点 j 的所有中间结点均取自集合 {1, 2, …, k} 的路径（该集合是 V ={1,2,3·····,n}的一个子集），并且设 p 为最短路径。</p>
+<p>含义：</p>
+<ul>
+<li><p>p是简单路径，且p的中间结点都不大于k。</p>
+</li>
+<li><p>p从i到j，仅经过集合{1,2,…,k}中的结点，但，</p>
+<ul>
+<li>不一定经过其中的每一个结点，且与顺序无关；</li>
+<li>也可能不存在这样的路径，此时p的权重等于∞</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>从任意节点i到任意节点j的最短路径不外乎2种可能，1是直接从i到j，2是从i经过若干个节点k到j。所以，算法假设Dis(i,j)为节点u到节点v的最短路径的距离，对于每一个节点k，算法检查Dis(i,k) + Dis(k,j) &lt; Dis(i,j)是否成立，如果成立，证明从i到k再到j的路径比i直接到j的路径短，便设置Dis(i,j) = Dis(i,k) + Dis(k,j)，这样一来，当遍历完所有节点k，Dis(i,j)中记录的便是i到j的最短路径的距离。</p>
+</blockquote>
+<p>有两种情况：</p>
+<ul>
+<li>如果结点 k 不是路径 p 上的中间结点，则路径 p 上的所有中间结点都属于集合 {1, 2, …, k - 1}。</li>
+<li>如果结点 k 是路径 p 上的中间结点，则可将路径 p 分解为两条路径，分别是结点 i 到结点 k 和结点 k 到结点 j 的路径。</li>
+</ul>
+<p>简单来说，就是中间结点选自集合 {1，2，…，k - 1} 的时候的所有结点对的最短路径权重已经知道了，接下来的考虑的中间结点从集合 1，2，…，k - 1，k} 选的时候最短路径权重是多少，只需要考虑路径经过结点 k 的时候权重变化就行了，k 可将 i 到 j 的路径分为两条路径，分别是结点 i 到结点 k 和结点 k 到结点 j 的路径，而这两个的最短路径权重已经知道的（i 到 k 的最短路径的中间结点只能从集合 {1，2，…，k - 1} 选），同理 k 到 j），所以最新的权重选择经过 k 与不经过 k 时的权重较小的那个就行。</p>
+<h3 id="递归解"><a href="#递归解" class="headerlink" title="递归解"></a>递归解</h3><p>设$$d^{(k)}_{ij}$$表示从结点 i 到结点 j 的所有中间结点全部取自集合 {1，2，…，k} 的一条最短路径的权重。</p>
+<p>k = 0 时，表示结点 i 到结点 j 的路径没有任何中间结点，因此$$d^{(0)}<em>{ij} = w</em>{ij} $$。</p>
+<p>状态转移方程：<br>$$<br>d^{(k)}<em>{ij} = \begin{cases} w</em>{ij} &amp;  \text {if $k = 0$} \min(d^{(k-1)}<em>{ij}, d^{(k-1)}</em>{ik}+ d^{(k-1)}_{kj}) &amp;  \text {if $k\geq1$  }\end{cases}<br>$$</p>
+<p>而因为任何路径的中间结点都属于集合{1,2,…,n}，所以k=n时，$$d^{(n)}_{ij}$$给出所有可能的从结点i到结点j的中间结点均取自集合{1,2,…,n}的一条最短路径的权重，也就是从结点i到结点j的最短路径的权重。</p>
+<p>所以对所有的$$i,j\in V$$,有：<br>$$<br>d^{(n)}_{ij}=δ(i,j)<br>$$</p>
+<h3 id="自底向上计算最短路径权重"><a href="#自底向上计算最短路径权重" class="headerlink" title="自底向上计算最短路径权重"></a>自底向上计算最短路径权重</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">floyd</span><span class="params">(Graph G, <span class="keyword">int</span> dist)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//vexnum表示图G的顶点数</span></span><br><span class="line">    <span class="comment">// 计算最短路径</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; G.vexnum; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; G.vexnum; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; G.vexnum; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果经过下标为k顶点路径比原两点间路径更短，则更新dist[i][j]</span></span><br><span class="line">                <span class="keyword">int</span> tmp = (dist[i][k] + dist[k][j]);</span><br><span class="line">                <span class="keyword">if</span> (dist[i][j] &gt; tmp)</span><br><span class="line">                &#123;</span><br><span class="line">                    dist[i][j] = tmp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建最短路径"><a href="#构建最短路径" class="headerlink" title="构建最短路径"></a>构建最短路径</h3><p>思路：给定一个前驱矩阵 $$\prod$$，再利用递归的思想即可输出结点 i 到结点 j 的最短路径。</p>
+<p><strong>前驱矩阵</strong></p>
+<blockquote>
+<p>定义：给出的是从结点 i 到结点 j 的最短路径上结点 j 的前驱结点，i=j 或者从 i 到 j 不存在路径时为 NIL。</p>
+</blockquote>
+<p>$$\pi^{(k)}_{ij}$$为从结点i到结点j的一条所有中间结点都取自集合{1,2, …, k}的最短路径上j的前驱结点。</p>
+<p><strong>怎么得到前驱矩阵？</strong>一种方法是计算权重矩阵 dist 的同时计算前驱矩阵 ∏。具体来说，与 floyd 算法思路类似，分为两种情况：<br>当 k = 0 时，从 i 到 j 的最短路径没有中间结点，所以，<br>$$<br>\pi^{(0)}<em>{ij} = \begin{cases} NIL &amp;  \text {if $i = j\ or\ w</em>{ij} = NIL$ } \i &amp;  \text {if $i \ne j\ or\ w_{ij} &lt; NIL$ }\end{cases}<br>$$<br>当 k≥1时<br>$$<br>\pi^{(k)}<em>{ij} = \begin{cases}\pi^{(k-1)}</em>{ij}  &amp;  \text {if $d^{(k-1)}<em>{ij} \leq d^{(k-1)}</em>{ik} + d^{(k-1)}<em>{kj}$ } \ \pi^{(k-1)}</em>{kj} &amp;  \text {if $d^{(k-1)}<em>{ij} &gt; d^{(k-1)}</em>{ik} + d^{(k-1)}_{kj}$ }\end{cases}<br>$$</p>
+<blockquote>
+<p>若不经过k：</p>
+<p>此时求从结点i到结点j的所有中间结点都取自集合{1,2,…,k}的最短路径上的j的前驱等价于求从结点i到结点j的所有中间结点都取自集合{1,2,…,k-1}的最短路径上的j的前驱。</p>
+<p>若经过k：</p>
+<p>此时求从结点i到结点j的所有中间结点都取自集合{1,2,…,k}的最短路径上的j的前驱等价于求从结点k到结点j的所有中间结点都取自集合{1,2,…,k-1}的最短路径上的j的前驱。</p>
+</blockquote>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170608073.png" alt></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170623559.png" alt></p>
+<h2 id="用于稀疏图的Johnson算法"><a href="#用于稀疏图的Johnson算法" class="headerlink" title="用于稀疏图的Johnson算法"></a>用于稀疏图的Johnson算法</h2><p>在稀疏图中求每对结点之间的最短路径权重。</p>
+<p>对稀疏图，Johnson算法优于Floyd-Warshall算法，时间复杂度可达O(V^2^lgV+VE)。</p>
+<ol>
+<li>Johnson算法使用的方式相当于给每个边都加了一个权重，使得所有边都为非负数，这样就能对每个边使用较为高效的Dijkstra算法。</li>
+<li>注意的是不能简单的给每个边加相同的值然后使得所有边都变成非负数，原因为假设从a-&gt;b有两条路径，一条权重为1+1，一条为2，本应权重和相等；如果都加1，则变成了2+2和3，不一致了，就会导致更新了不该更新的边。</li>
+<li>Johnson比较巧妙的引入了h函数来解决这个问题，通过这个函数进行每个边的重新赋值权重</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/36bbe0e86765" target="_blank" rel="noopener">参考文章</a></p>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><ol>
+<li>给定图 G = (V, E)，增加一个新的顶点 s，使 s 指向图 G 中的所有顶点都建立连接，设新的图为 G’；</li>
+<li>对图 G’ 中顶点 s 使用 Bellman-Ford 算法计算单源最短路径，得到结果 h[] = {h[0], h[1], .. h[V-1]}；</li>
+<li>对原图 G 中的所有边进行 “re-weight”，即对于每个边 (u, v)，其新的权值为 w(u, v) + (h[u] - h[v])；</li>
+<li>移除新增的顶点 s，对每个顶点运行 Dijkstra 算法求得最短路径；</li>
+</ol>
+<h3 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>所有结点对的最短路径</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>最小生成树</title>
+    <url>/2020/01/02/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</url>
+    <content><![CDATA[<h1 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h1><p>关于图的几个概念定义：</p><ul>
+<li><strong>连通图</strong>：在无向图中，若任意两个顶点vivi与vjvj都有路径相通，则称该无向图为连通图。</li>
+<li><strong>强连通图</strong>：在有向图中，若任意两个顶点vivi与vjvj都有路径相通，则称该有向图为强连通图。</li>
+<li><strong>连通网</strong>：在连通图中，若图的边具有一定的意义，每一条边都对应着一个数，称为权；权代表着连接连个顶点的代价，称这种连通图叫做连通网。</li>
+<li><strong>生成树</strong>：一个连通图的生成树是指一个连通子图，它含有图中全部n个顶点，但只有足以构成一棵树的n-1条边。一颗有n个顶点的生成树有且仅有n-1条边，如果生成树中再添加一条边，则必定成环。</li>
+<li><strong>最小生成树</strong>：在连通网的所有生成树中，所有边的代价和最小的生成树，称为最小生成树。</li>
+</ul><a id="more"></a>
+
+<p><strong>最小生成树并不一定唯一</strong></p>
+<h2 id="最小生成树的形成"><a href="#最小生成树的形成" class="headerlink" title="最小生成树的形成"></a>最小生成树的形成</h2><h3 id="MST性质"><a href="#MST性质" class="headerlink" title="MST性质"></a>MST性质</h3><p>假设N = （V，{ E }）是一个连通网，U 是顶点集V的一个非空子集。若（u , v ）是一条具有最小权值（代价）的边，其中u∈U， v∈V - U，则必存在一棵包含边（u，v）的最小生成树。</p>
+<p><strong>证明：</strong></p>
+<p>剪枝-粘贴法</p>
+<p>假设网N的任何一棵最小生成树都不包含（u，v）。设T是连通网上的一棵最小生成树，当将边（u，v）加入到T中时，由生成树的定义，T中必存在一条包含（u，v)的回路。另一方面，由于T是生成树，则在T上必存在另一条边（u’，v’），其中u’∈U，v’∈V - U，且u和u’之间，v和v’之间均有路径相通。删去边（u’，v’），便可消除上述回路，同时得到另一棵生成树T’。因为（u，v）的代价不高于（u’，v’），则T’的代价亦不高于T，T’是包含（u，v）的一棵最小生成树，和假设矛盾。</p>
+<h3 id="贪心策略设计（MST性质）"><a href="#贪心策略设计（MST性质）" class="headerlink" title="贪心策略设计（MST性质）"></a>贪心策略设计（MST性质）</h3><p>每个时刻，该方法生长最小生成树的一条边，并在整个策略的实施过程中，管理一个遵守下述循环不变式的边的集合A：<strong>在每遍循环之前，A是某棵最小生成树的一个子集。</strong></p>
+<p>循环不变式：在每遍循环之前，A是某棵最小生成树的一个子集。</p>
+<p>处理策略：每一步，我们选择一条边不违反循环不变式的边(u,v)加入集合A，即A∪{(u,v)}仍是某棵最小生成树的子集。</p>
+<p>这样的边称为“安全边”，因为在集合A中加入它不会破坏A的循环不变式。</p>
+<h2 id="Kruskal算法（贪心算法）"><a href="#Kruskal算法（贪心算法）" class="headerlink" title="Kruskal算法（贪心算法）"></a>Kruskal算法（贪心算法）</h2><p>初始最小生成树边数为0，每迭代一次就选择一条满足条件的最小代价边，加入到最小生成树的边集合里。 </p>
+<ol>
+<li><p>把图中的所有边按代价从小到大排序； </p>
+</li>
+<li><p>把图中的n个顶点看成独立的n棵树组成的森林； </p>
+</li>
+<li><p>按权值从小到大选择边，所选的边连接的两个顶点u<del>i</del>,v<del>i</del>（u<del>i</del>,v<del>i</del>,应属于两颗不同的树），则成为最小生成树的一条边，并将这两颗树合并作为一颗树。 </p>
+</li>
+<li><p>重复(3),直到所有顶点都在一颗树内或者有n-1条边为止。</p>
+</li>
+<li><p><strong>注意：不能生成环</strong></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/20160714144315409" alt></p>
+</li>
+</ol>
+<p>Kruskal算法的时间为：O(E lgE)。</p>
+<p>如果再注意到|E|&lt;|V|2，则有lg|E|=O(lgV)，所以Kruskal算法的时间可表示为O(E lgV)。</p>
+<h2 id="Prim算法（贪心算法）"><a href="#Prim算法（贪心算法）" class="headerlink" title="Prim算法（贪心算法）"></a>Prim算法（贪心算法）</h2><p>此算法可以称为“加点法”，每次迭代选择代价最小的边（已经加到最小生成树的点可以连接的边中选择）对应的点，加入到最小生成树中。算法从某一个顶点s开始，逐渐长大覆盖整个连通网的所有顶点。</p>
+<ol>
+<li>图的所有顶点集合为V；初始令集合u={s},v=V−u;</li>
+<li>在两个集合u,v能够组成的边中，选择一条代价最小的边(u<del>0</del>,v<del>0</del>)，加入到最小生成树中，并把v<del>0</del>并入到集合u中。</li>
+<li>重复上述步骤，直到最小生成树有n-1条边或者n个顶点为止。</li>
+<li><strong>注意不能生成环</strong></li>
+</ol>
+<p>由于不断向集合u中加点，所以最小代价边必须同步更新；需要建立一个辅助数组closedge,用来维护集合v中每个顶点与集合u中最小代价边信息，</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/20160714161107576" alt></p>
+<p>Prim算法的运行时间依赖于最小优先队列Q的具体实现。</p>
+<p>可用二叉最小优先队列的方式实现。</p>
+<p>每次EXTRACT-MIN的时间是O(lgV)。</p>
+<p>EXTRACT-MIN的总时间是O(V lgV)。</p>
+<p>其它时间：第11行的赋值操作共需O(E lgV)。</p>
+<p>Prim算法的时间为：O(V lgV+E lgV)=O(E lgV)。</p>
+<p>从渐进意义上看，Kruskal和Prim算法具有相同的运行时间</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>最小生成树</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基本的图算法</title>
+    <url>/2020/01/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="图检索算法"><a href="#图检索算法" class="headerlink" title="图检索算法"></a>图检索算法</h1><h2 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h2><p><a href="cnblogs.com/xiaoyh/p/10411762.html">原文链接</a></p><p>对于图G=（V，E）借助数组存储的方法有邻接矩阵表示法和邻接表表示法，边集表示法。</p><h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>图的邻接矩阵（adjacent matrix）表示法是使用数组来存储图结构的方法，也被称为数组表示法。 它采用两个数组来表示图：一个是用于存储所有顶点信息的一维数组，另一个是用于存储图中顶点之间关联关系的二维数组，这个关联关系数组也被称为邻接矩阵。</p><a id="more"></a>
+
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/a149a488117186e44e5e41d747e760db9fc.jpg" alt></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/9251fa44a83f2d7b05c01c79ad26c1f7f94.jpg" alt></p>
+<p>邻接矩阵有如下特性：</p>
+<ul>
+<li>图中各顶点序号确定后，图的邻接矩阵是唯一确定的。</li>
+<li>无向图和无向网的邻接矩阵是一个对称矩阵。</li>
+<li>无向图邻接矩阵中第i行或第i列的非0元素个数即为第i个顶点的度。</li>
+<li>有向图邻接矩阵第i行非0元素个数为第i个顶点的出度，第i列非0元素个数为第i个顶点的入度，第i个顶点的度为第i行与第i列非0元素个数之和。</li>
+<li>无向图的边数等于邻接矩阵中非0元素个数之和的一半，有向图的弧数等于邻接矩阵中非0元素个数之和。</li>
+<li>除完全图外，其他图的邻接矩阵有许多零元素，特别是当n值较大，而边数相对完全图的边n-1又少的多时，则此矩阵称为稀疏矩阵，非常浪费存储空间。</li>
+</ul>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>邻接表（adjacency list）是图的一种链式存储方法，邻接表表示法类似于树的孩子链表表示法。</p>
+<p>　　在邻接表中对于图G中的每个顶点v<del>i</del>建立一个单链表，将所有邻接于v<del>i</del>的顶点v<del>j</del>链成一个单链表，并在表头附设一个表头结点，这个单链表就称为顶点v<del>i</del>的邻接表。</p>
+<p>邻接表中共有两种结点结构，分别是边表结点和表头结点。</p>
+<p>　　<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/be3f15175348d75fcef74290a460ad7a949.jpg" alt></p>
+<p>邻接表中的每一个结点均包含有两个域：邻接点域和指针域。</p>
+<ul>
+<li>邻接点域用于存放与定点vi相邻接的一个顶点的序号。</li>
+<li>指针域用于指向下一个边表结点。</li>
+</ul>
+<p>边表结点由3个域组成：</p>
+<ul>
+<li>邻接点域（adjvex）指示与定点v<del>i</del>邻接的顶点在图中的位置。</li>
+<li>链域（nextdge）指向下一条边所在的结点。</li>
+<li>数据域（info）存储和边有关的信息。</li>
+</ul>
+<p>头结点由2个域组成：</p>
+<ul>
+<li>链域（firstedge）指向链表中的第一个结点之外。</li>
+<li>数据域（data）存储顶点相关信息。</li>
+</ul>
+<p>如下图为邻接表的存储示例：</p>
+<p>　　<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/07dfaff1985e288b750947545aca322d389.jpg" alt></p>
+<p>在无向图的邻接表中，顶点的每一个边表结点对应于与顶点相关联的一条边。</p>
+<p>在有向图的邻接表中，顶点的每一个边表结点对应于<strong>以顶点为始点的一条弧</strong>，因此也称有向图的邻接表的边表为出边表。</p>
+<p>在有向图的邻接表中，将顶点的每个边表结点对应于以顶点为重点的一条弧，即用便捷点的邻接点域存储邻接到顶点的序号，由此构成的邻接表称为有向图的逆邻接表，逆邻接表有边表称为入边表。</p>
+<p>邻接表的性质如下：</p>
+<ul>
+<li>图的邻接表表示不是惟一的，它与表结点的链入次序有关。</li>
+<li>无向图的邻接表中第i个边表的结点个数即为第i个顶点的度。</li>
+<li>有向图的邻接表中第i个出边表的结点个数即为第i个结点的出度，有向图的逆邻接表中第i个入边表的结点个数即为第i个结点的入度。</li>
+<li>无向图的边数等于邻接表中边表结点数的一半，有向图的弧数等于邻接表（逆邻接表）中出边表结点（入边表结点）的数目。</li>
+</ul>
+<p>需要说明的是：</p>
+<ul>
+<li>在邻接表的每个线性链接表中各结点的顺序是任意的。</li>
+<li>邻接表中的各个线性链接表不说明他们顶点之间的邻接关系。</li>
+<li>对于无向图，某顶点的度数=该顶点对应的线性链表的结点数。</li>
+<li>对于有向图，某顶点的“出度”数=该顶点对应的线性链表的结点数；求某顶点的“入度”需要对整个邻接表的各链接扫描一遍，看有多少与该顶点相同的结点，相同结点数之和即为“入度”值。</li>
+</ul>
+<p>邻接表与邻接矩阵的关系如下：</p>
+<ul>
+<li>对应于邻接矩阵的每一行有一个线形连接表；</li>
+<li>链接表的表头对应着邻接矩阵该行的顶点；</li>
+<li>链接表中的每个结点对应着邻接矩阵中该行的一个非零元素；</li>
+<li>对于无向图，一个非零元素表示与该行顶点相邻接的另一个顶点；</li>
+<li>对于有向图，非零元素则表示以该行顶点为起点的一条边的终点。</li>
+</ul>
+<h2 id="宽度（广度）优先检索BFS"><a href="#宽度（广度）优先检索BFS" class="headerlink" title="宽度（广度）优先检索BFS"></a>宽度（广度）优先检索BFS</h2><p>广度优先搜索类似于树的<strong>层次遍历</strong>。从图中的某一顶点出发，遍历每一个顶点时，依次遍历其所有的邻接点，然后再从这些邻接点出发，同样依次访问它们的邻接点。按照此过程，直到图中所有被访问过的顶点的邻接点都被访问到。</p>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p><strong>广度优先遍历背后基于队列</strong>，下面介绍一下具体实现的方法：</p>
+<ol>
+<li><p>访问起始顶点，并将插入队列；</p>
+</li>
+<li><p>从队列中删除队头顶点，将与其相邻的未被访问的顶点插入队列中；</p>
+</li>
+<li><p>重复第二步，直至队列为空。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//邻接矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">breadFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (v &lt; <span class="number">0</span> || v &gt;= numOfVexs)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException();</span><br><span class="line">		visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];</span><br><span class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">		Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">   		 queue.offer(v);</span><br><span class="line">		visit[v] = <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            v = queue.poll();</span><br><span class="line">			sb.append(vexs[v] + <span class="string">","</span>);</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numOfVexs; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> ((edges[v][i] != <span class="number">0</span> &amp;&amp; edges[v][i] != Integer.MAX_VALUE)&amp;&amp; !visited[i]) &#123;</span><br><span class="line">					queue.offer(i);<span class="comment">//因为使用的是队列，所以每次poll出去的都是同一层的。这个和深度优先算法使用栈，每次pop出的都是一层中的一个元素不同</span></span><br><span class="line">					visit[i] = <span class="keyword">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">           <span class="keyword">return</span> sb.length() &gt; <span class="number">0</span> ? sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>) : <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="comment">//邻接表</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">breadFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (v &lt; <span class="number">0</span> || v &gt;= numOfVexs)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundsException();</span><br><span class="line">		visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];</span><br><span class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">		Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		queue.offer(v);</span><br><span class="line">		visit[v] = <span class="keyword">true</span>;</span><br><span class="line">		ENode current;</span><br><span class="line">		<span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">			v = queue.poll();</span><br><span class="line">			sb.append(vexs[v].data + <span class="string">","</span>);</span><br><span class="line">			current = vexs[v].firstadj;</span><br><span class="line">			<span class="keyword">while</span> (current != <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (!visited[current.adjvex]) &#123;</span><br><span class="line">					queue.offer(current.adjvex);</span><br><span class="line">					visit[current.adjvex] = <span class="keyword">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				current = current.nextadj;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> sb.length() &gt; <span class="number">0</span> ? sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>) : <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="深度优先检索DFS"><a href="#深度优先检索DFS" class="headerlink" title="深度优先检索DFS"></a>深度优先检索DFS</h2><p><strong>从一个顶点V0开始，沿着一条路一直走到底，如果发现不能到达目标解，那就返回到上一个节点，然后从另一条路开始走到底</strong></p>
+<p><strong>从图中的某一个顶点x出发，访问x，然后遍历任何一个与x相邻的未被访问的顶点y，再遍历任何一个与y相邻的未被访问的顶点z……依次类推，直到到达一个所有邻接点都被访问的顶点为止；然后，依次回退到尚有邻接点未被访问过的顶点，重复上述过程，直到图中的全部顶点都被访问过为止。</strong></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/image-20200105153958259.png" alt></p>
+<h3 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h3><p><strong>深度优先遍历背后基于堆栈，有两种方式：第一种是在程序中显示构造堆栈，利用压栈出栈操作实现；第二种是利用递归函数调用，基于递归程序栈实现。</strong></p>
+<h4 id="堆栈法"><a href="#堆栈法" class="headerlink" title="堆栈法"></a>堆栈法</h4><ol>
+<li>访问起始顶点，并将其压入栈中；</li>
+<li>从栈中弹出最上面的顶点，将与其相邻的未被访问的顶点压入栈中；</li>
+<li>重复第二步，直至栈为空栈。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//采用邻接矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">depthFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundException();</span><br><span class="line">    <span class="keyword">boolean</span> []visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">    Stack&lt;Integer&gt; stack  = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    stack.push(v);</span><br><span class="line">    visit[v]=<span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(!stack.isEmpty())</span><br><span class="line">    &#123;</span><br><span class="line">        v=stack.pop();<span class="comment">//每层依次出一个没有标记的节点</span></span><br><span class="line">        sb.append(vexs[v] + <span class="string">","</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=numOfVexs-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>((edges[v][i]!=<span class="number">0</span>&amp;&amp;edges[v][i]!=Integer.MAX_VALUE)&amp;&amp;!visit[i])</span><br><span class="line">            &#123;</span><br><span class="line">                stack.push(i);</span><br><span class="line">                visit[i]=<span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//基于邻接表</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">depthFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundException();</span><br><span class="line">   <span class="keyword">boolean</span> []visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">   Stack&lt;Integer&gt; stack  = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">   StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">   stack.push(v);</span><br><span class="line">   visit[v]=<span class="keyword">true</span>;</span><br><span class="line">	Node current;</span><br><span class="line">    <span class="keyword">while</span>(!stack.isEmpty())</span><br><span class="line">    &#123;</span><br><span class="line">        v=stack.pop();<span class="comment">//每次一层选一个出栈</span></span><br><span class="line">        sb.append(vexs[v].data + <span class="string">","</span>);</span><br><span class="line">       	current = vexs[v].firstadj;</span><br><span class="line">        <span class="keyword">while</span>(current!=<span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[current.adjvex])</span><br><span class="line">            &#123;</span><br><span class="line">                stack.push(current.adjvex);<span class="comment">//这里也是把邻接点全部入栈</span></span><br><span class="line">                visit[current.abjvex]=<span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            current=current.nextabj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="递归法"><a href="#递归法" class="headerlink" title="递归法"></a>递归法</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//邻接矩阵</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">depthFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundException();</span><br><span class="line">	<span class="keyword">boolean</span> []visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">	visit[v]=<span class="keyword">true</span>;</span><br><span class="line">	printf(<span class="string">"%d "</span>,v);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;numOfVexs;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">if</span>(visit[i]!=<span class="number">0</span>&amp;&amp;(edges[v][i]!=<span class="number">0</span>&amp;&amp;edges[v][i]!=Integer.MAX_VALUE))</span><br><span class="line">    	depthFirstSearch(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//邻接表</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">depthFirstSearch</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> ArrayIndexOutOfBoundException();</span><br><span class="line">	<span class="keyword">boolean</span> []visit = <span class="keyword">new</span> <span class="keyword">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">	visit[v]=<span class="keyword">true</span>;</span><br><span class="line">	printf(<span class="string">"%d "</span>,v);</span><br><span class="line">    Node current;</span><br><span class="line">	<span class="keyword">while</span>(current!=<span class="keyword">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(visit[current.abjvex]!=<span class="keyword">true</span>)</span><br><span class="line">            depthFirstSearch(current.abjvex);</span><br><span class="line">                    current=current.nextabj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>基本图算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>贪心算法</title>
+    <url>/2020/01/02/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p>贪心算法是这样一种方法：分步骤实施，它<strong>在每一步仅作出当时看起来最佳的选择</strong>，即<strong>局部最优的选择</strong>，并希望通过这样的选择最终能找到<strong>全局最优解</strong>。</p><p>贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性（即某个状态以后的过程不会影响以前的状态，只与当前状态有关。）</p><a id="more"></a>
+
+<p><strong>所以，对所采用的贪心策略一定要仔细分析其是否满足无后效性。</strong></p>
+<blockquote>
+<p>最优解问题大部分都可以拆分成一个个的子问题，把解空间的遍历视作对子问题树的遍历，则以某种形式对树整个的遍历一遍就可以求出最优解，大部分情况下这是不可行的。<strong>贪心算法和动态规划本质上是对子问题树的一种修剪，两种算法要求问题都具有的一个性质就是子问题最优性</strong>(组成最优解的每一个子问题的解，对于这个子问题本身肯定也是最优的)。动态规划方法代表了这一类问题的一般解法，我们自底向上构造子问题的解，对每一个子树的根，求出下面每一个叶子的值，并且以其中的最优值作为自身的值，其它的值舍弃。而贪心算法是动态规划方法的一个特例，可以证明每一个子树的根的值不取决于下面叶子的值，而只取决于当前问题的状况。换句话说，不需要知道一个节点所有子树的情况，就可以求出这个节点的值。由于贪心算法的这个特性，它对解空间树的遍历不需要自底向上，而只需要自根开始，选择最优的路，一直走到底就可以了。</p>
+</blockquote>
+<p>对比动态规划方法：</p>
+<p>在动态规划方法中，每个步骤也都要进行一次选择，但这种选择通常依赖于子问题的解，这导致我们要先求解较小的子问题，然后才能计算较大的子问题。</p>
+<p>在贪心方法中，我们总是做出当前看来最佳的选择，然后求解剩下的唯一一个子问题。尽管贪心算法进行选择时可能依赖之前做出的选择，但不依赖任何将来的选择或子问题的解。</p>
+<p>动态规划要先求解子问题才能进行选择，贪心算法在进行第一次选择之前不需要求解任何子问题。</p>
+<p>动态规划算法通常采用自底向上的方式完成计算，而贪心算法通常是自顶向下的，每一次选择，将给定的问题转换成一个更小的问题，然后继续求解小问题</p>
+<h2 id="贪心算法的步骤"><a href="#贪心算法的步骤" class="headerlink" title="贪心算法的步骤"></a>贪心算法的步骤</h2><p>贪心算法通常采用自顶向下的设计，做出一个选择，然后求解剩下的子问题。每次选择将问题转化成一个更小规模的问题。</p>
+<ul>
+<li><p>确定问题的最优子结构</p>
+</li>
+<li><p>将最优化问题转化为这样的形式：每次对其作出选择后，只剩下一个子问题需要求解；</p>
+</li>
+<li><p>证明作出贪心选择后，剩余的子问题满足：其最优子解与前面的贪心选择组合即可得到原问题的最优解(具有最优子结构)。</p>
+</li>
+</ul>
+<p>注：对应每个贪心算法，都有一个动态规划算法，但动态规划算法要繁琐的多。</p>
+<h2 id="贪心算法存在的问题"><a href="#贪心算法存在的问题" class="headerlink" title="贪心算法存在的问题"></a>贪心算法存在的问题</h2><ul>
+<li>不能保证求得的最后解是最佳的</li>
+<li>不能用来求最大值或最小值的问题</li>
+<li>只能求满足某些约束条件的可行解的范围</li>
+</ul>
+<h2 id="贪心算法适用的问题"><a href="#贪心算法适用的问题" class="headerlink" title="贪心算法适用的问题"></a>贪心算法适用的问题</h2><p><strong>贪心策略适用的前提是：局部最优策略能导致产生全局最优解。</strong><br>实际上，贪心算法适用的情况很少。一般对一个问题分析是否适用于贪心算法，可以先选择该问题下的几个实际数据进行分析，就可以做出判断。</p>
+<h2 id="活动选择问题"><a href="#活动选择问题" class="headerlink" title="活动选择问题"></a>活动选择问题</h2><p>有n个需要在同一天使用同一个教室的活动a1,a2,…,an，教室同一时刻只能由一个活动使用。每个活动ai都有一个开始时间si和结束时间fi 。一旦被选择后，活动ai就占据半开时间区间[si,fi)。如果[si,fi]和[sj,fj]互不重叠，ai和aj两个活动就可以被安排在这一天。</p>
+<p>活动选择问题：就是对给定的包含n个活动的集合S，在已知每个活动开始时间和结束时间的条件下，从中选出最多可兼容活动的子集合，称为最大兼容活动集合。不失一般性，设活动已经按照结束时间单调递增排序：</p>
+<p>$$<br>f1&lt;=f2&lt;=f3&lt;=f4&lt;=…&lt;=fn-1&lt;=fn<br>$$</p>
+<h3 id="活动选择问题的最优子结构"><a href="#活动选择问题的最优子结构" class="headerlink" title="活动选择问题的最优子结构"></a>活动选择问题的最优子结构</h3><p>令S<del>ij</del>表示在ai结束之后开始且在a<del>j</del>开始之前结束的那些活动的集合。</p>
+<p>问题和子问题的形式定义如下：设A<del>ij</del>是S<del>ij</del>的一个最大兼容活动集，并设A<del>ij</del>包含活动a<del>k</del>，则有：<strong>A<del>ik</del>表示A<del>ij</del>中a<del>k</del>开始之前的活动子集，A<del>kj</del>表示A<del>ij</del>中a<del>k</del>结束之后的活动子集</strong>。并得到两个子问题：寻找S<del>ik</del>的最大兼容活动集合和寻找S<del>kj</del>的最大兼容活动集合。</p>
+<p>活动选择问题具有最优子结构性，即：必有：A<del>ik</del>是S<del>ik</del>一个最大兼容活动子集，A<del>kj</del>是S<del>kj</del>一个最大兼容活动子集。而A<del>ij</del>= A<del>ik</del>∪{a<del>k</del>}∪A<del>kj</del>。——最优子结构性成立。</p>
+<h3 id="活动选择问题的动态规划方法"><a href="#活动选择问题的动态规划方法" class="headerlink" title="活动选择问题的动态规划方法"></a>活动选择问题的动态规划方法</h3><p>$$<br>c[i,j]表示集合s_{ij}的最优解大小，递归式如下：\<br>c[i,j]=c[i,k]+c[k,j]+1\<br>c[i,j]=\begin{cases}<br>0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\quad S_{ij}=\Phi\<br>\max\limits_{a_k\in S_{ij}}(c[i,k]+c[k,j]+1)\ \ if\quad S_{ij}\not=\Phi<br>\end{cases}<br>$$</p>
+<h3 id="活动选择问题的贪心算法"><a href="#活动选择问题的贪心算法" class="headerlink" title="活动选择问题的贪心算法"></a>活动选择问题的贪心算法</h3><p>活动选择问题的贪心选择：每次总选择具有最早结束时间的兼容活动加入到集合A中。</p>
+<p>直观上，按这种方法选择兼容活动可以为未安排的活动留下尽可能多的时间。也就是说，该算法的贪心选择的意义是使剩余的可安排时间段最大化，以便安排尽可能多的兼容活动。</p>
+<h4 id="贪心算法的正确性"><a href="#贪心算法的正确性" class="headerlink" title="贪心算法的正确性"></a>贪心算法的正确性</h4><p>假设A<del>ij</del>是S<del>ij</del>的某个最大兼容活动集，假设A<del>ij</del>中，最早结束的活动是a<del>n</del>，分两种情况：</p>
+<p>1、如果a<del>n</del>=a<del>i</del> ,得证</p>
+<p>2、如果a<del>n</del>！= a<del>i</del> ，则a<del>n</del>的结束时间一定会晚于a<del>1</del>的结束时间，我们用a<del>i</del>去替换A<del>ij</del>中的a<del>n</del>，于是得到A^1^，由于a<del>i</del>比a<del>n</del>结束的早，而A<del>ij</del>中的其他活动都比a<del>n</del>的结束时间开始 的要晚，所以A^1^中的其他活动 都与a<del>i</del>不想交，所以A^1^中的所有活动是兼容的，所以A^1^也是S<del>ij</del>的一个最大兼容活动集。</p>
+<h4 id="贪心算法的递归实现"><a href="#贪心算法的递归实现" class="headerlink" title="贪心算法的递归实现"></a>贪心算法的递归实现</h4><p>自顶向下的设计</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//s、f数组分别表示n个活动的开始时间和结束时间，假设n个活动已经按照结束时间单调递增排列好了</span></span><br><span class="line"><span class="comment">//list用来保存已选的活动</span></span><br><span class="line"><span class="comment">//对于当前的k，返回Sk的一个最大兼容活动集</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; RECURSIVE_ACTIVITY+SELECTOR(List&lt;Integer&gt; list,<span class="keyword">int</span>[] s ,<span class="keyword">int</span>[] f,<span class="keyword">int</span> k,<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> m = k+<span class="number">1</span>;<span class="comment">//表示是当前剩下没有添加到list的第一个活动</span></span><br><span class="line">    <span class="keyword">if</span>(k==<span class="number">0</span>)</span><br><span class="line">        list.add(m);</span><br><span class="line">    <span class="comment">//往后找f[k]&lt;=s[m]的活动</span></span><br><span class="line">    <span class="keyword">while</span>(m&lt;=s.length&amp;&amp;s[m]&lt;f[k])</span><br><span class="line">    &#123;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(m&lt;=n)</span><br><span class="line">    &#123;</span><br><span class="line">        list.add[m+<span class="number">1</span>];<span class="comment">//m+1对应活动编号。k=0时的第一个加入的活动编号为1</span></span><br><span class="line">        RECURSIVE_ACTIVITY+SELECTOR(s,f,m,n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="贪心算法的迭代实现"><a href="#贪心算法的迭代实现" class="headerlink" title="贪心算法的迭代实现"></a>贪心算法的迭代实现</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; GREEDY_ACTIVITY+SELECTOR(List&lt;Integer&gt; list,<span class="keyword">int</span>[] s ,<span class="keyword">int</span>[] f,<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> k=<span class="number">1</span>;</span><br><span class="line">   	list.add(k);<span class="comment">//添加第一个活动。</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> m=<span class="number">2</span>;m&lt;=n;m++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[m]&gt;=f[k])<span class="comment">//依次添加符合条件的活动，反正f都是排好序的</span></span><br><span class="line">        &#123;</span><br><span class="line">            list.add(m);</span><br><span class="line">            k=m</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分数背包问题"><a href="#分数背包问题" class="headerlink" title="分数背包问题"></a>分数背包问题</h2><p>已知n种物品，各具有重量(w<del>1</del>,w<del>2</del>,…,w<del>n</del>)和效益值(p<del>1</del>,p<del>2</del>,…,p<del>n</del>)，及一个可容纳M重量的背包。</p>
+<p>问：怎样装包才能使在不超过背包容量的前提下，装入背包的物品的总效益最大？</p>
+<p>​    这里：</p>
+<p>​                1）所有的w<del>i</del>&gt;0, p<del>i</del>&gt;0，1≤i≤n；</p>
+<p>​                2）问题的解用向量(x<del>1</del>,x<del>2</del>,…,x<del>n</del>)表示，每个x<del>i</del>表示物品i被放入背包的比例，0≤x<del>i</del>≤1。当物品i的一部分x<del>i</del>放入背包，可得到p<del>i</del>x<del>i</del>的效益，同时会占用x<del>i</del>w<del>i</del>的重量。</p>
+<p>问题分析：</p>
+<ul>
+<li><p>装入背包的总重量小于等于M，即：<br>$$<br>\sum_{1&lt;=i&lt;=n}W_iX_i&lt;=M<br>$$</p>
+</li>
+<li><p>$$<br>求\sum_{1&lt;=i&lt;=n}P_iX_i的最大值<br>$$</p>
+</li>
+<li><p>可行解：满足上述约束条件的任一(x<del>1</del>,x<del>2</del>,…,x<del>n</del>) 都是问题的一个可行解。可行解可能有多个（甚至是无穷多个）。</p>
+</li>
+<li><p>最优解：能够使目标函数取最大值的可行解是问题的最优解。最优解也可能有多个。</p>
+</li>
+</ul>
+<h3 id="贪心策略"><a href="#贪心策略" class="headerlink" title="贪心策略"></a>贪心策略</h3><p>这里我们需要思考：</p>
+<p>1、策略一：以每装入一件物品，就使背包获得最大可能的效益增量作为策略</p>
+<p>2、策略二：让背包容量尽可能慢地被消耗，从而可以尽可能多地装入一些物品。</p>
+<p>3、如下的贪心策略</p>
+<p>我们要设计一个贪心策略来使得装入背包物品的价值最大。我们的第一直觉肯定是要选择单位重量价格最高的。</p>
+<p>然后再选择物品里面第二高的，一次类推直到装满背包为止！</p>
+<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>可以利用反证法求证策略一和策略二都不是最优解。</p>
+<p>策略三：</p>
+<p><strong>需要注意的是X<del>i</del> 的值是小于等于1的</strong></p>
+<p>我们首先假设我们有一个最优解A<del>1</del>,那么我们首先找到A<del>1</del>里面单位价值最高的物品a<del>m</del></p>
+<ul>
+<li>情况一：a<del>m</del>=商品里面单位价值最高的物品a<del>1</del>。那么问题得证（因为只要不断拿掉单位价值最高的即可）</li>
+<li>情况二：a<del>m</del>&lt;a<del>1</del>。运用剪枝技巧，讲a<del>m</del> 剪掉，补上a<del>1</del> （a<del>1</del>将a<del>m</del>进行全部替换或者部分替换）<ul>
+<li>如果a<del>m</del> 的重量比a<del>1</del> 的重量小，a<del>1</del> 全部替换a<del>m</del>，</li>
+<li>如果a<del>m</del> 的重量比a<del>1</del> 的重量大，a<del>1</del> 部分替换a<del>m</del>，其余部分保留</li>
+</ul>
+</li>
+</ul>
+<h2 id="Huffman编码"><a href="#Huffman编码" class="headerlink" title="Huffman编码"></a>Huffman编码</h2><p>其中变长编码表是通过一种评估来源符号出现机率的方法得到的，<strong>出现机率高的字母使用较短的编码，反之出现机率低的则使用较长的编码</strong>，这便使编码之后的字符串的平均长度、期望值降低，从而达到无损压缩数据的目的。</p>
+<p>前缀码(Prefix code)：任何码字都不是其它码字的前缀。</p>
+<p>问题是：如何设计前缀码？</p>
+<h3 id="编码树"><a href="#编码树" class="headerlink" title="编码树"></a>编码树</h3><p>一种为表示字符二进制编码而构造的二叉树。</p>
+<p>叶子结点：对应给定的字符，每个字符对应一个叶子结点。</p>
+<p>编码构造：字符的二进制码字由根结点到该字符叶子结点的简单路径表示：0代表转向左孩子，1代表转向右孩子。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/image-20200102212604104.png" alt></p>
+<p>一个文件的最优字符编码方案总对应一棵满(full)二叉树，即每个非叶子结点都有两个孩子结点。</p>
+<h3 id="最优编码方案"><a href="#最优编码方案" class="headerlink" title="最优编码方案"></a>最优编码方案</h3><p>文件的最优编码方案对应一棵满二叉树。</p>
+<ul>
+<li><p>设C为字母表</p>
+<ul>
+<li>对字母表C中的任意字符c，令属性c.freq表示字符c在文件中出现的频率（设所有字符的出现频率均为正数）。</li>
+<li>最优前缀码对应的树中恰好有|C|个叶子结点，每个叶子结点对应字母表中的一个字符，且恰有|C|-1个内部结点。</li>
+</ul>
+</li>
+<li><p>令T表示一棵前缀编码树；</p>
+</li>
+<li><p>令d<del>T</del>(c)表示c的叶子结点在树T中的深度（根到叶子结点的路径长度）。</p>
+<ul>
+<li>d<del>T</del>(c)也是字符c对应的码字的长度。</li>
+</ul>
+</li>
+</ul>
+<p>令B(T)表示采用编码方案T时文件的编码长度，则：<br>$$<br>B(T)=\sum_{c\in C}c.freq*d_T(c)<br>$$<br>即文件要用B(T)个二进制位表示.</p>
+<ul>
+<li>称B(T)为T的代价。</li>
+<li>最优编码：对给定的字符集和文件，使文件的编码长度最小的编码称为最优编码。<ul>
+<li>Huffman编码是一种最优编码。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Huffman编码的贪心算法"><a href="#Huffman编码的贪心算法" class="headerlink" title="Huffman编码的贪心算法"></a>Huffman编码的贪心算法</h3><p>自底向上法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">HUFFMAN(C)<span class="comment">//C表示字母表</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> n=C.size();</span><br><span class="line">    queue Q =C;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">new</span> node z;</span><br><span class="line">        z.left = x = EXTRACT_MIN(Q);<span class="comment">//取队列中频率最小的</span></span><br><span class="line">        z.right=y=EXTRACT_MIN(Q);</span><br><span class="line">        z.freq=x.freq+y.freq;</span><br><span class="line">        INSERT(Q,Z);<span class="comment">//频率低的拼好后，一步步往上累加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/image-20200102213951216.png" alt></p>
+<h4 id="时间分析"><a href="#时间分析" class="headerlink" title="时间分析"></a>时间分析</h4><p>Q是使用最小二叉堆实现的。</p>
+<ul>
+<li><p>首先，Q的初始化花费O(n)的时间。</p>
+</li>
+<li><p>其次，循环的总代价是O(nlgn)。</p>
+<ul>
+<li>for循环共执行了n-1次，每次从堆中找出当前频率最小的两个结点及把合并得到的新结点插入到堆中均花费O(lgn)，所以循环的总代价是O(nlgn).</li>
+</ul>
+</li>
+</ul>
+<p><strong>所以，HUFFMAN的总运行时间O(nlgn)</strong></p>
+<h4 id="HUFFMAN算法的正确性"><a href="#HUFFMAN算法的正确性" class="headerlink" title="HUFFMAN算法的正确性"></a>HUFFMAN算法的正确性</h4><p>1、第一点：令C为一个字母表，其中每个字符c∈C都有一个频率c.freq。令x和y是C中频率最低的两个字符。那么存在C的一个最优前缀码，x和y的码字长度相同，且只有最后一个二进制位不同。</p>
+<p>二叉树T表示字符集C的一个最优前缀码，证明可以对T作适当修改后得到一棵新的二叉树T”，在T”中x和y是最深叶子且为兄弟，同时T”表示的前缀码也是C的最优前缀码。设b和c是二叉树T的最深叶子，且为兄弟。设f(b)&lt;=f(c)，f(x)&lt;=f(y)。由于x和y是C中具有最小频率的两个字符，有f(x)&lt;=f(b)，f(y)&lt;=f(c)。首先，在树T中交换叶子b和x的位置得到T’，然后再树T’中交换叶子c和y的位置，得到树T’’。如图所示：<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1364295841_4708.jpg" alt></p>
+<p>由此可知，树T和T’的前缀码的平均码长之差为：</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1364296506_7690.jpg" alt></p>
+<p> 因此，<em>T’’表示的前缀码也是最优前缀码</em>，且x,y具有相同的码长，同时，仅最优一位编码不同。</p>
+<p>2、第二点：令C为一个给定的字母表，其中每个字符c∈C都有一个频率c.freq。</p>
+<p>令x和y是C中频率最低的两个字符。<br>令C’为C去掉字符x和y，并加入一个新字符z后得到的字母表，即C’= C -{x, y}∪{z}。</p>
+<p>类似C，也为C’定义freq，且z.freq= x.freq+ y.freq。<br>令T’为字母表C’的任意一个最优前缀码对应的编码树。则有：可以将T’中叶子结点z替换为一个以x和y为孩子的内部结点，得到树T，而T表示字母表C的一个最优前缀码。</p>
+<h4 id="最优子结构性质"><a href="#最优子结构性质" class="headerlink" title="最优子结构性质"></a>最优子结构性质</h4><p>贪心选择性：</p>
+<ul>
+<li>1、第一点说明首次选择频率最低的两个字符和选择其它可能的字符一样，都可以构造相应的最优编码树。</li>
+<li>2、第二点说明首次贪心选择，选择出频率最低的两个字符x和y，合并后将z加入元素集合，可以构造包含z的最优编码树，而还原x和y，一样还是最优编码树。</li>
+<li>所以贪心选择性成立。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>贪心算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>资源分配与调度</title>
     <url>/2020/01/02/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/</url>
     <content><![CDATA[<h1 id="资源分配与调度"><a href="#资源分配与调度" class="headerlink" title="资源分配与调度"></a>资源分配与调度</h1><h2 id="资源管理概述"><a href="#资源管理概述" class="headerlink" title="资源管理概述"></a>资源管理概述</h2><p>资源：应用程序执行时所需要的<strong>全部硬件、软件和数据</strong>。</p><p>资源管理的目标：</p><ul>
@@ -2782,7 +3254,7 @@ else
 
 <p>3）合并（Combine）：将子问题的解合并成原问题的解。</p>
 <h2 id="递归式求解的三种方法"><a href="#递归式求解的三种方法" class="headerlink" title="递归式求解的三种方法"></a>递归式求解的三种方法</h2><p>通常遇到的输入规模为n的递归式，形式如下：</p>
-<p>$T(n) = aT(n/b) + f(n)$</p>
+<p>$$T(n) = aT(n/b) + f(n)$$</p>
 <p>该式描述的是：它将规模为n的问题分解为a个子问题，每个子问题规模为n/b，其中a和b都是正常数。a个子问题递归地进行求解，每个花费时间T(n/b)。<strong>函数f(n)包含了问题分解和子问题解合并的代价</strong>。例如，描述Strassen算法的递归式中，a=7，b=2，f(n) = Θ(n2) 。</p>
 <p>接下来分析求解上述式子的三种方法</p>
 <h3 id="代入法"><a href="#代入法" class="headerlink" title="代入法"></a>代入法</h3><p>  实质上就是数学归纳法，先对一个小的值做假设，然后推测更大的值得正确性。</p>
@@ -5354,6 +5826,186 @@ else
       </tags>
   </entry>
   <entry>
+    <title>单源最短路径</title>
+    <url>/2019/12/02/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</url>
+    <content><![CDATA[<h1 id="单源最短路径"><a href="#单源最短路径" class="headerlink" title="单源最短路径"></a>单源最短路径</h1><p>最短路径问题：一个带权重的有向图G = (V, E)和权重函数w: E-&gt;R，该权重函数将每条边映射到实数值的权重上。一条路径p的权重w(p)是构成该路径的所有边的权重之和，定义从节点u到结点v的最短路径权重δ (u, v)如下：</p><a id="more"></a>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107001543931.png" alt></p>
+<p>单目的地最短路径问题：找出从每个顶点v到指定终点t的最短路径。把图中的每条边反向，就可以把这一问题变为单源最短路径问题。</p>
+<p><strong>一些概念：</strong></p>
+<p>如果一条路径中包含两个相同的结点，则该路径包含<strong>环路</strong>。</p>
+<p>不包含环路的路径称为<strong>简单路径</strong>。</p>
+<p>最短路应为简单路径，不包含环路。</p>
+<ul>
+<li>对任何简单路径最多包含|V|-1条边和|V|个结点。</li>
+<li>不失一般性，假设后续算法寻找的最短路径都不包含环路。</li>
+</ul>
+<h3 id="负权重边"><a href="#负权重边" class="headerlink" title="负权重边"></a>负权重边</h3><p>边的权重可以为负值，即使边的权重为负值，对于所有节点v，最短路径权重 (u, v)都可以有精确定义。但是，<strong>如果图G=(V, E)包含从源节点s可以到达的，权重为负值的环路，则最短路径权重无定义，从s到该环路上的任意节点的路径都不可能是最短路径</strong>。如果从节点s到节点v的某条路径上存在权重为负值的环路，则(u, v) = -∞。</p>
+<p>示例：</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107002803468.png" style="zoom:67%;">
+
+<p> 从节点s到节点c有无数条路径；&lt;s,c&gt;, &lt;s,c,d,c&gt;,&lt;s,c,d,c,d,c&gt;等，因为环路&lt;c, d, c&gt;的权重为3&gt;0。所以从s到c的最短路径为&lt;s,c&gt;，δ(s, c)=5。</p>
+<p>   从节点s到节点e也有无数条路径：&lt;s,e&gt;, &lt;s,e,f,e&gt;, &lt;s,e, f,e, f,e &gt;等，因为环路&lt;e, f, e&gt;的权重为-3，所以，从节点s到节点e没有最短路径，因此δ(s,e)=-∞。类似的， δ(s,f)=-∞。因为g可以从节点f到达，所以， δ(s, g)=-∞。（因为s到e可以在e、f上转圈圈，就会使得路径趋于负的无穷小）</p>
+<h3 id="最短路径的表示"><a href="#最短路径的表示" class="headerlink" title="最短路径的表示"></a>最短路径的表示</h3><p>一个结点的<strong>前驱结点</strong>记为：v.π<br>（前驱结点或者为NIL或者为另一个结点）</p>
+<p>利用v.π的记录可以搜索出最短路径上的所有结点。</p>
+<p>一个源点s所诱导的前驱子图定义为Gπ=(Vπ，Eπ)，其中，</p>
+<p>结点集合Vπ={v∈V：v.π≠NIL}∪{s}</p>
+<ul>
+<li>即Vπ是源点s和图G中的前驱结点不为NIL的所有结点的集合</li>
+</ul>
+<p>边集合Eπ={(v.π,v)∈E：v∈Vπ-{s}}</p>
+<ul>
+<li>即Eπ是由Vπ中的结点v的π值所“诱导”(induced)的边的集合。</li>
+</ul>
+<p>则，算法终止时，<strong>Gπ是一棵最短路径树。</strong></p>
+<p><strong>该树包含了从源点s到每个可以从s到达的结点的最短路径。</strong></p>
+<p><strong>另外，最短路径不是唯一的，最短路径树也不一定是唯一的。</strong></p>
+<h3 id="松弛操作"><a href="#松弛操作" class="headerlink" title="松弛操作"></a>松弛操作</h3><p>松弛：原来用一根橡皮筋连接p和w两点，现在有一点v到w的路径更短，现在把橡皮筋w点的另一端p换成v点，这样缓解橡皮筋紧绷的压力，让其变得松弛。</p>
+<p>简单的说就是不断更新最短路径。</p>
+<p>1）松弛边：  w -&gt; v 意味着先检查从s到v的最短路径是否是先从s 到 w，再由w -&gt; v, 如果是，则更新v.d和v.π的数据。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//对于每个顶点v∈V，都设置一个属性d[v]，用来描述从源点s到v的最短路径上权值的上界，称为**最短路径估计（shortest-path estimate）**。π[v]代表S到v的当前最短路径中v点之前的一个点的编号</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">relax</span><span class="params">(DirectedEdge e)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> v = e.from(), w = e.to();</span><br><span class="line">        <span class="keyword">if</span> (v.d  &gt;  w.d + e.Weight())</span><br><span class="line">        &#123;</span><br><span class="line">            v.d = w.d + e.Weight();</span><br><span class="line">            v.π = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//RELAX 的时间：O(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="最短路径和松弛操作的性质"><a href="#最短路径和松弛操作的性质" class="headerlink" title="最短路径和松弛操作的性质"></a>最短路径和松弛操作的性质</h3><p>1。<strong>三角不等式性质</strong>：对于任何边(u,v)∈E，有δ(s,v)≤δ(s,u)+ω(u,v)。</p>
+<blockquote>
+<p>证明：</p>
+<p>假定p是从源结点s到结点v的一条最短路径，则p的权重不会比任何从s到v的其它路径的权重大，因此路径p的权重也不会比这样的一条路径的权重更大：从源结点s到结点u的一条最短路径，再加上边(u,v)而到达结点v的这条路径。</p>
+<p>如果s到v没有最短路径，则不可能存在s到v的路径。</p>
+</blockquote>
+<p>2。<strong>上界性质</strong>：对于所有结点v∈V，我们有v.d≥δ(s,v)。一旦v.d的取值达到δ(s,v)，其值将不再变化。</p>
+<blockquote>
+<p>证明：</p>
+<p>使用数学归纳法</p>
+</blockquote>
+<p>3。<strong>非路径性质</strong>：若从结点s到结点v之间不存在路径，有v.d=δ(s,v)=∞。</p>
+<blockquote>
+<p>证明：</p>
+<p>因为从源点s到给定点v之间不存在路径，所以δ(s,v)=∞。而根据上界性质，总有v.d≥δ(s,v)，所以，v.d≥δ(s,v)=∞。</p>
+</blockquote>
+<p>4。<strong>收敛性质：</strong>设结点u,v∈V，如果s⇝u→v是图G中的一条最短路径，且在对边(u,v)进行松弛前的任意时间有u.d=δ(s,u)，则在之后的所有时间有v.d=δ(s,v)。</p>
+<p>5。<strong>路径松弛性质</strong>：若p=&lt;v<del>0</del>,v<del>1</del>,…,v<del>k</del>&gt;是从源结点s=v<del>0</del>到结点v<del>k</del>的一条路径，且我们对p中所进行松弛的次序为(v<del>0</del>,v<del>1</del>),(v<del>1</del>,v<del>2</del>),…,(v<del>k−1</del>,v<del>k</del>)，则v<del>k</del>.d=δ(s,v<del>k</del>)。</p>
+<blockquote>
+<p>该性质的成立与其他边的松弛操作及次序无关，即使这些松弛操作是与对p上的边所进行的松弛操作穿插进行的。</p>
+<p>数学归纳法证明。</p>
+</blockquote>
+<p>6。<strong>前驱子图性质</strong>：对于所有结点v∈V，一旦v.d=δ(s,v)，则前驱子图是一棵根结点为s的最短路径树。</p>
+<h2 id="最短路径的最优子结构"><a href="#最短路径的最优子结构" class="headerlink" title="最短路径的最优子结构"></a>最短路径的最优子结构</h2><p><strong>最短路径具有最优子结构性质：两个结点之间的一条最短路径包含其他的最短路径</strong></p>
+<p><strong>具有==贪心思想==</strong></p>
+<h3 id="证明（剪枝-复制法-反证法）"><a href="#证明（剪枝-复制法-反证法）" class="headerlink" title="证明（剪枝-复制法+反证法）"></a>证明（剪枝-复制法+反证法）</h3><p>假设路径p分为p<del>oi</del> 、p<del>ij</del>、p<del>jk</del> ，并且p是v<del>o</del>到v<del>k</del>的最短路径。如果p<del>oi</del> 、p<del>ij</del>、p<del>jk</del>不是最短路径的话，假设存在p<del>oi2</del></p>
+<p>是v<del>o</del>到v<del>i</del> 的最短路径。将p<del>oi</del> 减去复制上p<del>oi2</del> 就反证出p不是最短路径，矛盾。</p>
+<h2 id="Bellman-ford算法"><a href="#Bellman-ford算法" class="headerlink" title="Bellman-ford算法"></a>Bellman-ford算法</h2><h3 id="适用条件-amp-范围"><a href="#适用条件-amp-范围" class="headerlink" title="适用条件&amp;范围"></a>适用条件&amp;范围</h3><ul>
+<li>单源最短路径(从源点s到其它所有顶点v);——<strong>可以有负权重的边，但不能有负权重的环</strong></li>
+<li>有向图&amp;无向图(无向图可以看作(u,v),(v,u)同属于边集E的有向图);</li>
+<li>边权可正可负(如有负权回路输出错误提示);</li>
+<li>差分约束系统;</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>第一，初始化所有点。每一个点保存一个值，表示从原点到达这个点的距离，将原点的值设为0，其它的点的值设为无穷大（表示不可达）。</p>
+<p>第二，进行循环，循环下标为从1到n－1（n等于图中点的个数）。在循环内部，遍历所有的边，进行松弛计算。（对于N个点，进行N次循环，每次循环依次更新路径）</p>
+<p>第三，遍历途中所有的边（edge（u，v）），判断是否存在这样情况：<br>d（v） &gt; d (u) + w(u,v)（三角不等式性质）<br>则返回false，表示途中存在从源点可达的权为负的回路。</p>
+<h3 id="松弛迭代（核心）"><a href="#松弛迭代（核心）" class="headerlink" title="松弛迭代（核心）"></a>松弛迭代（核心）</h3><p><a href="https://www.jianshu.com/p/b876fe9b2338" target="_blank" rel="noopener">参考文章</a></p>
+<p>大致意思就是，每次对所有边进行松弛，就算一次松弛迭代：</p>
+<p>性质一：<strong>一般性的，当图中已经存在一个或多个已确认顶点时，即图处于任意一种状态，若图中尚存在未确认顶点，则执行一次迭代后，会增加至少一个已确认顶点。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>性质二：<strong>若图中存在由起点不可达的顶点，则这些顶点的初始化状态即为最短路径状态，即初始化时就处于已确认状态。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>所以Bellman-ford算法的循环次数：</p>
+<ul>
+<li>松弛边按照最坏情况下进行，即一次只增加一个已确认顶点，则需要执行的迭代次数为 |V|-1次</li>
+<li>松弛边按照最好情况下进行，则需要执行的迭代次数为 1 次。</li>
+</ul>
+<h3 id="检测带权有向图中是否存在负权回路"><a href="#检测带权有向图中是否存在负权回路" class="headerlink" title="检测带权有向图中是否存在负权回路"></a>检测带权有向图中是否存在负权回路</h3><blockquote>
+<p>根据前面对松弛函数执行次数的分析可知，若图中不存在负权回路，那么即使在最坏情况下，也只需要执行 |V|-1 次迭代松弛，即可获得从起点到各顶点的最短路径。</p>
+<p> 若图中存在负权回路，当回路较小时，例如顶点自身或者两个顶点之间的负权回路，则在 |V|-1 次迭代过程中，可能多次通过了该负权回路；若回路较大，例如从起点出发，串联所有顶点最后回到起点，即通过 |V|-1 条边构成一个圆形，如下图所示。则 |V|-1 次迭代过程中，可能一次也不会通过该负权回路，但是当再执行一次迭代松弛，即可将 d<del>s</del> 值更新为负值，所以<strong>可以多执行一次迭代，通过判断是否更新从起点到某个顶点的最短路径权值，来判断图中是否存在负权回路</strong>。</p>
+</blockquote>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><p>BELLMAN-FORD(G,w, s)</p>
+<pre><code>INITIALIZE-SINGLE-SOURCE(G, s)
+for i = 1 to |G.V|-1
+       for  each edge (u, v)∈ E
+              RELAX(u, v, w)
+      for each edge (u, v) ∈ E
+       if  v.d &gt; u.d + w(u, v)
+              return  FALSE
+
+                   return TRUE</code></pre><h3 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h3><p>根据最优子结构性和松弛迭代就可以证明：</p>
+<ul>
+<li><p>如果图G中不包含从源结点s可以到达的权重为负值的环路，则算法将返回TRUE，且对于所有结点v∈V，前驱子图Gπ是一个根结点为s的最短路径树。</p>
+<blockquote>
+<p>如果结点v是从s可以到达的，则论断可以从松弛迭代和最优子结构性得到证明。</p>
+<p>如果结点v不能从s可达，则论断可以从非路径性质获得。</p>
+<p>综合前驱子图性质和本论断，可以推导出G<del>π</del>是一棵最短路径树</p>
+</blockquote>
+</li>
+<li><p>如果图G中包含一条从源结点s可以到达的权重为负值的环路，则算法将返回FALSE。</p>
+<blockquote>
+<p>三角不等式性质。可以使用反证法说明</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="时间性能"><a href="#时间性能" class="headerlink" title="时间性能"></a>时间性能</h3><p>初始化：Θ(V)</p>
+<p>松弛处理：for循环执行|V|-1次，每次的时间是Θ(E)</p>
+<p>Bellman-ford算法总的运行时间是O(VE)。</p>
+<h2 id="Dijkstra算法（贪心算法）"><a href="#Dijkstra算法（贪心算法）" class="headerlink" title="Dijkstra算法（贪心算法）"></a>Dijkstra算法（贪心算法）</h2><p>Dijkstra算法解决带权重的有向图上单源最短路径问题</p>
+<p><strong>==该算法要求所有边的权重为非负值==</strong>，如果采用合适的实现方式，Dijkstra算法的运行时间要比Bellman-Ford算法快。</p>
+<h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><ul>
+<li>保存两个集合S和U，<strong>S用于存放已经找到和起点之间最短距离的点，U用于存放尚未找到最短距离的点</strong>，起初S中只有起点，其余所有的点存放在U中，并根据和起点是否相邻，修改了距离起点的距离，<strong>不相邻则默认为无穷远。</strong></li>
+<li>循环遍历U中的点，<strong>找出离起点距离最近的点</strong>，该点到起点的距离就是该点到起点的最短距离，将该点从U中移除并放置到S中去，并重新计算U中的点距离起点的距离。这样每次选取的点都是剩余点中距离起点最近的点。</li>
+<li>循环上述操作，直到找到终点到起点的最短路径或则循环结束。</li>
+</ul>
+<p><strong>Dijkstra算法是一个贪心算法：每次总是选择V-S集合中最短路径估计值最小的结点加入S中。</strong></p>
+<h3 id="算法描述-1"><a href="#算法描述-1" class="headerlink" title="算法描述"></a>算法描述</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DIJKSTRA(G, w, s)</span><br><span class="line">              INITIALIZE-SINGLE-SOURCE(G, s)//对所有节点的d值和派值初始化</span><br><span class="line">              S = ∅</span><br><span class="line">              Q =G.V</span><br><span class="line">              while Q != ∅</span><br><span class="line">                     u = EXTRACT-MIN(Q)</span><br><span class="line">                     S= S ∪  &#123;u&#125;</span><br><span class="line">                     for  each vertex v ∈ G.Adj[u]//对所有从u出发的边进行松弛</span><br><span class="line">                            RELAX(u, v, w)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法证明-1"><a href="#算法证明-1" class="headerlink" title="算法证明"></a>算法证明</h3><p>利用循环不变式证明循环不变式：</p>
+<p>算法在while语句的每次循环开始前，对于每个结点u∈S，有u.d=δ(s,u)</p>
+<p>只 需 证 明： 对 于 每 个 结 点u∈V，当u被 加 入 到S时，有u.d=δ(s,u)。注：一旦u加入S，就不会再修正u.d。且根据上界性质，该等式将一直保持。</p>
+<p>证明过程：</p>
+<p>（1）初始化：初始时，S=Ø，因此循环不变式直接成立。</p>
+<p>（2）保持：在每次循环中，对于加入到集合S中的结点u而言，u.d=δ(s,u)。</p>
+<blockquote>
+<p>用反证法证明：设结点u是第一个在加入到集合S时u.d≠δ(s,u)的结点。</p>
+<p>由于s是第一个加入到集合S中的结点，并且s.d=δ(s,s)=0，所以u≠s，并且在u即将加入S时，S≠Ø，因为S中至少包含了s。故，此时必存在至少一条从s到u的路径（否则，根据非路径性质将有u.d=δ(s,u)=∞，与假设的u.d≠δ(s,u)相矛盾，故这样路径一定存在），这样也必存在一条从s到u的最短路径，记为p。</p>
+<p>取p路径上的一个点x（该点是s到u的中间点）在结点u加入到集合S时，有x.d=δ(x,y)【因为u是第一个不满足关系的点，并且每次S取的点都是剩下点中具有最短路径的点，x.d&lt;=u.d。它肯定被取入S中了】</p>
+<p>然后取p路径上的y点，该点的前驱节点为x。则有：在结点u加入到集合S时，应有y.d=δ(s,y)。这是因为x∈S，u是第一个u.d≠δ(s,u)的结点，在将x加入到集合S时，有x.d=δ(s,x)，y是x的邻接点，<strong>所以此时边(x,y)将被松弛</strong>。由于y是最短路径p上的结点，根据最短路径的最优子结构性和收敛性质，此时应有y.d=δ(s,y)。</p>
+<p>因为结点y是从结点s到结点u的一条最短路径上位于u前面的一个结点，所以应有δ(s,y)≤δ(s,u)，即y.d&lt;=u.d。</p>
+<p>但是我们注意到，此时取进S集合的是u不是y，所以u.d应该小于等于y.d。矛盾</p>
+</blockquote>
+<h3 id="时间性能-1"><a href="#时间性能-1" class="headerlink" title="时间性能"></a>时间性能</h3><p>根据算法的处理规则，每个结点u仅被加入集合S一次，邻接链表Adj[u]中的每条边在整个运行期间也只被检查一次。因此算法第7-8行的for循环执行次数总共为|E|次（即松弛判定总次数）</p>
+<p>Dijkstra算法的总运行时间依赖于最小优先队列Q的实现。</p>
+<ul>
+<li>如果用线性数组(无序或者按序插入)实现，每次找d最小的结点u需要O(V)的时间，所以算法的总运行时间为O(V^2^+E)=O(V^2^)。</li>
+<li>如果用二叉堆实现，每次找d最小的结点u需要O(lgV)的时间，所以算法的总运行时间为O((V+E)lgV)。</li>
+<li>如果用斐波那契堆实现，算法的总运行时间可以改善至O(VlgV+E)。</li>
+</ul>
+<h2 id="差分约束和最短路径"><a href="#差分约束和最短路径" class="headerlink" title="差分约束和最短路径"></a>差分约束和最短路径</h2><p>对于一组不等式：<br>$$<br>\begin{cases}<br>x_1-x_2≤0\<br>x_1-x_5≤1\<br>x_2-x_5≤1\<br>x_3-x_1≤5\<br>x_4-x_1≤4\<br>x_4-x_3≤-1\<br>x_5-x_3≤-3\<br>x_5-x_4≤-3\<br>\end{cases}<br>$$<br>特点是全都是两个未知数的差小于等于某个常数（大于等于也可以，因为左右乘 −1-1−1 就可以化成小于等于的形式），这样的不等式组称作差分约束系统。</p>
+<p>这个不等式组<strong>要么无解，要么就有无限组解</strong>。因为如果存在一组解(x<del>1</del>,·····x<del>n</del>)的话，那么对于任何一个常数 k 有</p>
+<p>(x<del>1</del>+k,·····x<del>n</del>+k)也肯定是一组解，因为任何两个数加上一个数以后，它们之间的关系（差）是不变的，这个差分约束系统中的所有不等式都不会被破坏。</p>
+<h3 id="约束图"><a href="#约束图" class="headerlink" title="约束图"></a>约束图</h3><p>每个未知数 x<del>i</del>对应图中的一个顶点v<del>i</del> ，把所有的不等式都化成图中的一条边，对于不等式<br>$$<br>x_i−x_j≤ y<br>$$<br>化成三角形不等式<br>$$<br>x_i≤ x_j+y<br>$$<br>就可以化成边 &lt;v<del>j</del>,v<del>i</del>&gt;权值为 y 。最后在这张图上求一遍单源最短路，这些三角不等式就全部满足了，因为它是最短路问题的基本性质。<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107141906600.png" alt></p>
+<blockquote>
+<p>说明：</p>
+<p>（1）结点集合：约束图中引入一个额外的结点v<del>0</del>，从其出发可以达到其他所有结点。因此结点集合V由代表每个变量x<del>i</del>的结点v<del>i</del>和<strong>额外的结点v<del>0</del></strong>组成。</p>
+<p>（2）边集合：边集合E包含代表每个差分约束的边，同时包含v0到其他所有结点的边(v<del>0</del>,v<del>i</del>)，i=1,2，…，n。</p>
+<p>（3）边的权重：如果x<del>j</del>-x<del>i</del>≤b<del>k</del>是一个差分约束条件，则边(v<del>i</del>,v<del>j</del>)的权重记为ω(v<del>i</del>,v<del>j</del>)=b<del>k</del>，而从v<del>0</del>出发到其他结点的边的权重ω(v<del>0</del>,v<del>j</del>)=0</p>
+</blockquote>
+<p>图中每一条边都代表差分约束系统的一个不等式。现在以 v<del>0</del>为源点，求单源最短路，最终得到的v<del>0</del>到 v<del>i</del>的最短路径长度就是 x<del>i</del>的一个解。如图中 v<del>0</del>到其他各个顶点的最短距离分别是 {−5,−3,0,−1,−4}{-5,-3,0,-1,-4}{−5,−3,0,−1,−4} ，因此满足上述不等式的一组解就是 {x<del>1</del>,x<del>2</del>,x<del>3</del>,x<del>4</del>,x<del>5</del>}={−5,−3,0,−1,−4} 。当然把每个数都加上 101010 也是一组解 {5,7,10,9,6}{5,7,10,9,6}{5,7,10,9,6} ，但是这组解只满足不等式组 (1) ，也就是原先的差分约束系统，而不满足不等式组 (2) ，也是我们后来加上的那些不等式。当然这是无关紧要的，因为 x<del>0</del>本来就是个局外人，并不在乎它。</p>
+<p>对于上面例子而言，它代表的解 x<del>0</del>值也在其中也就是 x<del>0</del>=0。但是 x<del>0</del>的值是无可争议的，既然是以它作为源点求最短路径，那么源点到它的最短路径当然是 0了，因此，我们解这个差分约束系统无形中存在一个条件x<del>0</del>=0那么它有什么用呢？可以限制所有的未知数的解都不大于0 。</p>
+<p>解的个数：</p>
+<p><strong>(1) 如果图G不包含权重为负值的回路，则是该系统的一个可行解。</strong></p>
+<p><strong>(2) 如果图G包含权重为负值的回路，则该系统没有可行解</strong></p>
+<p>一个有趣的结论：当我们一开始就把 v<del>0</del>的解死定为 A 的时候，所有未知数的解都不会大于 A （一开始把 dis[0]=A）</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>单元最短路径</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>运输层</title>
     <url>/2019/11/30/%E8%BF%90%E8%BE%93%E5%B1%82/</url>
     <content><![CDATA[<h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h2 id="第一部分：概述"><a href="#第一部分：概述" class="headerlink" title="第一部分：概述"></a>第一部分：概述</h2><a id="more"></a>
@@ -6624,7 +7276,7 @@ else
 <p>   因为括号方案的数量与n呈指数关系，所以通过暴力搜索穷尽所有可能的括号化方案来寻找最优方案是一个糟糕策略。</p>
 <h4 id="步骤一：最优括号化方案的结构特征"><a href="#步骤一：最优括号化方案的结构特征" class="headerlink" title="步骤一：最优括号化方案的结构特征"></a>步骤一：最优括号化方案的结构特征</h4><p>动态规划的第一步是寻找最优子结构，然后就可以利用这种子结构从子问题的最优解构造出原问题的最优解。在矩阵链乘法问题中，我们假设A(i)A(i+1)…A(j)的最优括号方案的分割点在A(k)和A(k+1)之间。那么，继续对“前缀”子链A(i)A(i+1)..A(k)，（记为A<del>i，k</del>)进行括号化时，我们应该直接采用<strong>独立求解</strong>它时所得的最优方案。<br>    我们已经看到，一个非平凡(i≠j)的矩阵链乘法问题实例的任何解都需要划分链，而任何最优解都是由子问题实例的最优解构成的。为了构造一个矩阵链乘法问题实例的最优解，我们可以将问题划分为两个子问题(A(i)A(i+1)…A(k)和A(k+1)A(k+2)..A(j)(记为A<del>k+1，j</del>)的最优括号化问题)，<strong>求出子问题实例的最优解，然后将子问题的最优解组合起来</strong>。我们必须保证在确定分割点时，已经考察了<strong>所有可能的划分点</strong>，这样就可以保证不会遗漏最优解。</p>
 <h4 id="步骤2：一个递归求解方案"><a href="#步骤2：一个递归求解方案" class="headerlink" title="步骤2：一个递归求解方案"></a>步骤2：一个递归求解方案</h4><p>对于矩阵链乘法问题，我们可以将对所有1&lt;=i&lt;=j&lt;=n确定A(i)A(i+1)…A(j)的最小代价括号化方案作为子问题。令m[i,j]表示计算矩阵A(i..j)所需标量乘法次数的最小值，那么，原问题的最优解—<strong>计算A(1..n)所需的最低代价就是m[1,n]</strong>。</p>
-<p>我们可以递归定义m[i,j]如下：<br>    对于i=j时的平凡问题，矩阵链只包含唯一的矩阵A(i..j)=A(i)，因此不需要做任何标量乘法运算。所以，对所有i=1,2,…,n，m[i,i]=0。<br>    若i&lt;j，我们利用步骤1中得到的最优子结构来计算m[i,j]。我们假设A(i)A(i+1)…A(j)的最优括号化方案的分割点在矩阵A(k)和A(k+1)之间，其中i&lt;=k&lt;j。那么，m[i,j]就等于计算A(i..k)和A(k+1..j)的代价加上两者相乘的代价的最小值。A<del>i,k</del>是一个p<del>i-1</del>×p<del>k</del>的矩阵，A<del>k+1,j</del>是一个p<del>k</del>×p<del>j</del>的矩阵。结果矩阵A<del>i,j</del>是A<del>i,k</del>和A<del>k+1,j</del>最终相乘的结果。。因此，我们得到<br>              m[i,j]=m[i,k]+m[k+1,j]+ p<del>(i-1)</del>p<del>(k)</del>p<del>(j)</del><br>    此递归公式假定最优分割点k是已知的，但实际上我们是不知道。不过，k只有j-i种可能的取值，即k=i,i+1,…,j-1。由于最优分割点必在其中，我们只需检查所有可能情况，找到最优者即可。<br>    因此，A(i)A(i+1)…A(j)的最小代价括号化方案的递归求解公式变为：</p>
+<p>我们可以递归定义m[i,j]如下：<br>    对于i=j时的平凡问题，矩阵链只包含唯一的矩阵A(i..j)=A(i)，因此不需要做任何标量乘法运算。所以，对所有i=1,2,…,n，m[i,i]=0。<br>    若i&lt;j，我们利用步骤1中得到的最优子结构来计算m[i,j]。我们假设A(i)A(i+1)…A(j)的最优括号化方案的分割点在矩阵A(k)和A(k+1)之间，其中i&lt;=k&lt;j。那么，<strong>m[i,j]就等于计算A(i..k)和A(k+1..j)的代价加上两者相乘的代价的最小值。</strong>A<del>i,k</del>是一个p<del>i-1</del>×p<del>k</del>的矩阵，A<del>k+1,j</del>是一个p<del>k</del>×p<del>j</del>的矩阵。结果矩阵A<del>i,j</del>是A<del>i,k</del>和A<del>k+1,j</del>最终相乘的结果。。因此，我们得到<br>              m[i,j]=m[i,k]+m[k+1,j]+ p<del>(i-1)</del>p<del>(k)</del>p<del>(j)</del><br>    此递归公式假定最优分割点k是已知的，但实际上我们是不知道。不过，k只有j-i种可能的取值，即k=i,i+1,…,j-1。由于最优分割点必在其中，我们只需检查所有可能情况，找到最优者即可。<br>    因此，A(i)A(i+1)…A(j)的最小代价括号化方案的递归求解公式变为：</p>
 <p>$$<br>①如果i=j，m[i,j]=0<br>$$</p>
 <p>$$<br>②如果i&lt;j，m[i,j]=\min\limits_{i&lt;=k&lt;j} (m[i,k]+m[k+1,j]+p_{i-1}p_{k}p_{j})<br>$$</p>
 <p>m[i,j]的值给出了子问题最优解的代价，但它并未提供足够的信息来构造最优解。为此，我们用s[i,j]保存最优括号化方案的分割点位置k，即使得  m[i,j]=m[i,k]+m[k+1,j]+ p<del>(i-1)</del>p<del>(k)</del>p<del>(j)</del>成立的k值。</p>
@@ -6666,15 +7318,15 @@ else
 </ul>
 <p>不失一般性，这里假设所有元素互异</p>
 <p>最优二叉搜索树的定义：</p>
-<p>给定一个n个关键字的已排序的序列K=&lt;k1,k2,…,kn&gt;（不失一般性，设k1&lt;k2&lt;…&lt;kn），对每个关键字ki，都有一个概率pi表示其被搜索的频率。根据ki和pi构建一个二叉搜索树T，每个ki对应树中的一个结点。对搜索对象x，在T中可能找到、也可能找不到：</p>
+<p>给定一个n个关键字的已排序的序列K=&lt;k<del>1</del>,k<del>2</del>,…,k<del>n</del>&gt;（不失一般性，设k<del>1</del>&lt;k<del>2</del>&lt;…&lt;k<del>n</del>），<strong>对每个关键字k<del>i</del>，都有一个概率p<del>i</del>表示其被搜索的频率</strong>。根据k<del>i</del>和p<del>i</del>构建一个二叉搜索树T，每个k<del>i</del>对应树中的一个结点。对搜索对象x，在T中可能找到、也可能找不到：</p>
 <ul>
-<li>若x等于某个ki，则一定可以在T中找到结点ki，称为成功搜索。</li>
-<li>成功搜索的情况一共有n种，分别是x恰好等于某个ki。</li>
-<li>若x&lt;k1 、或x&gt;kn、或k<del>i</del>&lt;x&lt;k<del>i+1</del> (1≤i&lt;n), 则在T中搜索x将失败，称为失败搜索。<ul>
-<li>为此引入外部结点d0,d1,…,dn，用来表示不在K中的值,称为伪关键字。</li>
-<li>伪关键字在T中对应外部结点，共有n+1个。——扩展二叉树：内结点表示关键字ki，外结点(叶子结点)表示di。</li>
-<li>这里每个di代表一个区间。（d0表示所有小于k1的值，dn表示所有大于kn的值，对于i=1,…,n-1，di表示所有在ki和k<del>i+1</del>之间的值。）</li>
-<li>每个di也有一个概率qi，表示搜索对象x恰好落入区间di的频率。</li>
+<li>若x等于某个k<del>i</del>，则一定可以在T中找到结点k<del>i</del>，称为成功搜索。</li>
+<li>成功搜索的情况一共有n种，分别是x恰好等于某个k<del>i</del>。</li>
+<li>若x&lt;k<del>1</del> 、或x&gt;kn、或k<del>i</del>&lt;x&lt;k<del>i+1</del> (1≤i&lt;n), 则在T中搜索x将失败，称为失败搜索。<ul>
+<li>为此引入外部结点d<del>0</del>,d<del>1</del>,…,d<del>n</del>，用来表示不在K中的值,称为伪关键字。</li>
+<li>伪关键字在T中对应外部结点，共有n+1个。——扩展二叉树：内结点表示关键字k<del>i</del>，外结点(叶子结点)表示d<del>i</del>。</li>
+<li>这里每个d<del>i</del>代表一个区间。（d<del>0</del>表示所有小于k<del>1</del>的值，d<del>n</del>表示所有大于k<del>n</del>的值，对于i=1,…,n-1，d<del>i</del>表示所有在k<del>i</del>和k<del>i+1</del>之间的值。）</li>
+<li><strong>每个d<del>i</del>也有一个概率q<del>i</del></strong>，表示搜索对象x恰好落入区间d<del>i</del>的频率。</li>
 </ul>
 </li>
 </ul>
@@ -6687,7 +7339,7 @@ else
 <p>问题：如何构造最优二叉搜索树？</p>
 <h4 id="步骤一：最优子结构"><a href="#步骤一：最优子结构" class="headerlink" title="步骤一：最优子结构"></a>步骤一：最优子结构</h4><blockquote>
 <p>证明最优二叉搜索树的最优子结构：</p>
-<p>如果T是一棵相对于关键字k1,…,kn和伪关键字d0,…,dn的最优二叉搜索树，则T中一棵包含关键字ki,…,kj的子树T’必然是相对于关键字ki,…,kj（和伪关键字di-1,…,dj）的最优二叉搜索子树。</p>
+<p>如果T是一棵相对于关键字k<del>1</del>,…,k<del>n</del>和伪关键字d<del>0</del>,…,d<del>n</del>的最优二叉搜索树，则T中一棵包含关键字k<del>i</del>,…,k<del>j</del>的子树T’必然是相对于关键字k<del>i</del>,…,k<del>j</del>（和伪关键字d<del>i-1</del>,…,d<del>j</del>）的最优二叉搜索子树。</p>
 </blockquote>
 <p>我们可以利用最优二叉搜索树的最优子结构性来构造最优二叉搜索树。</p>
 <h4 id="步骤二：递归算法的构建"><a href="#步骤二：递归算法的构建" class="headerlink" title="步骤二：递归算法的构建"></a>步骤二：递归算法的构建</h4><p>对给定的关键字k<del>i</del>,…,k<del>j</del>，若其最优二叉搜索（子）树的根结点是k<del>r</del>（i≤r≤j），则kr的左子树中包含关键字k<del>i</del>,…,k<del>r-1</del>及伪关键字d<del>i-1,</del>…,d<del>r-1</del>，右子树中将含关键字k<del>i+1</del>,…,k<del>j</del>及伪关键字d<del>r</del>,…,d<del>j</del>。</p>
@@ -6705,11 +7357,14 @@ else
 <ul>
 <li><p>子树的所有结点的深度+1</p>
 </li>
-<li><p>根据搜索代价期望值计算公式，子树对根为kr的树的期望搜索代价的贡献是其期望搜索代价+其所含所有结点的概率之和。</p>
-<p>所以，期望搜索代价增加量为：<br>$$<br>w[i,j]=\sum_{l=1}^jp_l+\sum_{l=j-1}^jq_l<br>$$</p>
+<li><p>根据搜索代价期望值计算公式，子树对根为k<del>r</del>的树的期望搜索代价的贡献是其期望搜索代价+其所含所有结点的概率之和。</p>
+<p>所以，期望搜索代价增加量为：<br>$$<br>w[i,j]=\sum_{l=i}^jp_l+\sum_{l=i-1}^jq_l<br>$$</p>
 </li>
 </ul>
-<p>所以若kr为包含关键字k<del>i</del>,k<del>i+1</del>,…,k<del>j</del>)的最优二叉搜索树的根，则其期望搜索代价e[i,j]与左、右子树的期望搜索代价e[i,r-1]和e[r+1,j]的递推关系为：<br>$$<br>e[i,j]=p_r+(e[i,r-1]+w[i,r-1])+(e[r+1,j]+w[r+1,j])<br>$$<br>其中，w(i,r-1)和w(r+1,j)是左右子树所有结点的概率之和。且有：<br>$$<br>w[i,j]=w[i,r-1]+w[r+1,j]+p_r<br>$$<br>所以：<br>$$<br>e[i,j]=\begin{cases} q_{i-1}， j=i-1  \\min\limits_{i&lt;=r&lt;=j}(e[i,r-1]+e[r+1,j]+w[i,j])， i&lt;=j   \end{cases}<br>$$</p>
+<p>原因：子树的每个结点的深度增加1。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95/image-20200107235711478.png" style="zoom:50%;">
+
+<p>所以若k<del>r</del>为包含关键字k<del>i</del>,k<del>i+1</del>,…,k<del>j</del>)的最优二叉搜索树的根，则其期望搜索代价e[i,j]与左、右子树的期望搜索代价e[i,r-1]和e[r+1,j]的递推关系为：<br>$$<br>e[i,j]=p_r+(e[i,r-1]+w[i,r-1])+(e[r+1,j]+w[r+1,j])<br>$$<br>其中，w(i,r-1)和w(r+1,j)是左右子树所有结点的概率之和。且有：<br>$$<br>w[i,j]=w[i,r-1]+w[r+1,j]+p_r<br>$$<br>所以：<br>$$<br>e[i,j]=\begin{cases} q_{i-1}， j=i-1  \\min\limits_{i&lt;=r&lt;=j}(e[i,r-1]+e[r+1,j]+w[i,j])， i&lt;=j   \end{cases}<br>$$</p>
 <h4 id="步骤三：计算二叉搜索树的期望搜素代价"><a href="#步骤三：计算二叉搜索树的期望搜素代价" class="headerlink" title="步骤三：计算二叉搜索树的期望搜素代价"></a>步骤三：计算二叉搜索树的期望搜素代价</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//p、q为概率列表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span>[][] Optimal_BST(<span class="keyword">double</span>[] p, <span class="keyword">double</span>[] q, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">double</span>[][] e = <span class="keyword">new</span> <span class="keyword">double</span>[n+<span class="number">2</span>][n+<span class="number">2</span>];<span class="comment">//记录二叉搜索树的期望代价</span></span><br><span class="line">        <span class="keyword">double</span>[][] w = <span class="keyword">new</span> <span class="keyword">double</span>[n+<span class="number">2</span>][n+<span class="number">2</span>];<span class="comment">//记录期望搜索代价增加量</span></span><br><span class="line">        <span class="keyword">int</span>[][] root = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">2</span>][n+<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//初始化叶子结点的值</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n+<span class="number">1</span>;i++)&#123;</span><br><span class="line">            e[i][i-<span class="number">1</span>]=q[i-<span class="number">1</span>];</span><br><span class="line">            w[i][i-<span class="number">1</span>]=q[i-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="comment">//自底向上的迭代计算</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> l=<span class="number">1</span> ; l&lt;=n ; l++)&#123;<span class="comment">//最外层循环是逐渐的将关键字个数从一个扩展到n个</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n-l+<span class="number">1</span>;i++)&#123;</span><br><span class="line">                <span class="keyword">int</span> j=i+l-<span class="number">1</span>;</span><br><span class="line">                e[i][j]=Double.MAX_VALUE;</span><br><span class="line">                w[i][j]=w[i][j-<span class="number">1</span>]+p[j]+q[j];</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> r=i;r&lt;=j;r++)&#123;</span><br><span class="line">                    <span class="keyword">double</span> t = e[i][r-<span class="number">1</span>]+e[r+<span class="number">1</span>][j]+w[i][j];</span><br><span class="line">                    <span class="keyword">if</span>(t&lt;e[i][j])&#123;</span><br><span class="line">                        e[i][j]=t;</span><br><span class="line">                        root[i][j]=r;<span class="comment">///存储根节点的位置</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="步骤四：构建最优解输出"><a href="#步骤四：构建最优解输出" class="headerlink" title="步骤四：构建最优解输出"></a>步骤四：构建最优解输出</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CONSTRUCTOR-OPTIMAL-BST(root[][],i,j,r)&#123;</span><br><span class="line">    <span class="keyword">int</span> rootChild = root[i][j];<span class="comment">//子树根节点  </span></span><br><span class="line">    <span class="keyword">if</span> (rootChild == root[<span class="number">1</span>][n])  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="comment">//输出整棵树的根  </span></span><br><span class="line">        print(<span class="string">"K"</span>+rootChild+<span class="string">"是根"</span>);      </span><br><span class="line">        CONSTRUCTOR-OPTIMAL-BST(root,i,rootChild - <span class="number">1</span>,rootChild);  </span><br><span class="line">        CONSTRUCTOR-OPTIMAL-BST(root,rootChild + <span class="number">1</span>,j,rootChild);  </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">if</span> (j &lt; i - <span class="number">1</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (j == i - <span class="number">1</span>)<span class="comment">//遇到虚拟键  </span></span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">if</span> (j &lt; r)  </span><br><span class="line">        &#123;  </span><br><span class="line">           print( <span class="string">"d"</span> +  j + <span class="string">"是"</span> + <span class="string">"k"</span> + r + <span class="string">"的左孩子"</span> );  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            print( <span class="string">"d"</span> +  j + <span class="string">"是"</span> + <span class="string">"k"</span> + r + <span class="string">"的右孩子"</span> );  </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span><span class="comment">//遇到内部结点  </span></span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="keyword">if</span> (rootChild &lt; r)  </span><br><span class="line">        &#123;  </span><br><span class="line">            print (<span class="string">"k"</span> + rootChild + <span class="string">"是"</span> + <span class="string">"k"</span> + r + <span class="string">"的左孩子"</span> );  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            print (<span class="string">"k"</span> + rootChild + <span class="string">"是"</span> + <span class="string">"k"</span> + r + <span class="string">"的右孩子"</span> );  </span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    CONSTRUCTOR-OPTIMAL-BST(root[],i,rootChild - <span class="number">1</span>,rootChild);  </span><br><span class="line">    CONSTRUCTOR-OPTIMAL-BST(root[],rootChild + <span class="number">1</span>,j,rootChild);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
