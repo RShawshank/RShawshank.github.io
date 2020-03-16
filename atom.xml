@@ -18,8 +18,8 @@
   
   <entry>
     <title>drawable</title>
-    <link href="http://rshawshank.github.io/2020/01/19/drawable/"/>
-    <id>http://rshawshank.github.io/2020/01/19/drawable/</id>
+    <link href="http://rshawshank.github.io/2020/01/19/android_drawable/"/>
+    <id>http://rshawshank.github.io/2020/01/19/android_drawable/</id>
     <published>2020-01-19T08:41:20.000Z</published>
     <updated>2020-01-22T02:17:09.935Z</updated>
     
@@ -45,8 +45,8 @@
   
   <entry>
     <title>layout</title>
-    <link href="http://rshawshank.github.io/2020/01/19/layout/"/>
-    <id>http://rshawshank.github.io/2020/01/19/layout/</id>
+    <link href="http://rshawshank.github.io/2020/01/19/android_layout/"/>
+    <id>http://rshawshank.github.io/2020/01/19/android_layout/</id>
     <published>2020-01-19T08:41:06.000Z</published>
     <updated>2020-01-25T06:23:24.328Z</updated>
     
@@ -72,8 +72,8 @@
   
   <entry>
     <title>Broadcast</title>
-    <link href="http://rshawshank.github.io/2020/01/13/Broadcast/"/>
-    <id>http://rshawshank.github.io/2020/01/13/Broadcast/</id>
+    <link href="http://rshawshank.github.io/2020/01/13/android_Broadcast/"/>
+    <id>http://rshawshank.github.io/2020/01/13/android_Broadcast/</id>
     <published>2020-01-13T11:18:18.000Z</published>
     <updated>2020-02-05T02:52:13.883Z</updated>
     
@@ -99,8 +99,8 @@
   
   <entry>
     <title>Adapter</title>
-    <link href="http://rshawshank.github.io/2020/01/13/Adapter/"/>
-    <id>http://rshawshank.github.io/2020/01/13/Adapter/</id>
+    <link href="http://rshawshank.github.io/2020/01/13/android_Adapter/"/>
+    <id>http://rshawshank.github.io/2020/01/13/android_Adapter/</id>
     <published>2020-01-13T11:15:53.000Z</published>
     <updated>2020-01-17T05:45:47.520Z</updated>
     
@@ -126,8 +126,8 @@
   
   <entry>
     <title>Activity</title>
-    <link href="http://rshawshank.github.io/2020/01/13/Activity/"/>
-    <id>http://rshawshank.github.io/2020/01/13/Activity/</id>
+    <link href="http://rshawshank.github.io/2020/01/13/android_Activity/"/>
+    <id>http://rshawshank.github.io/2020/01/13/android_Activity/</id>
     <published>2020-01-13T11:15:15.000Z</published>
     <updated>2020-01-19T01:41:44.390Z</updated>
     
@@ -153,8 +153,8 @@
   
   <entry>
     <title>最大流</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E6%9C%80%E5%A4%A7%E6%B5%81/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E6%9C%80%E5%A4%A7%E6%B5%81/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%9C%80%E5%A4%A7%E6%B5%81/"/>
+    <id>http://rshawshank.github.io/2020/01/02/Algorithm_%E6%9C%80%E5%A4%A7%E6%B5%81/</id>
     <published>2020-01-02T15:49:10.000Z</published>
     <updated>2020-01-07T12:03:38.536Z</updated>
     
@@ -180,8 +180,8 @@
   
   <entry>
     <title>所有结点对的最短路径</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/"/>
+    <id>http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</id>
     <published>2020-01-02T15:49:00.000Z</published>
     <updated>2020-01-07T10:44:05.860Z</updated>
     
@@ -207,8 +207,8 @@
   
   <entry>
     <title>最小生成树</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/"/>
+    <id>http://rshawshank.github.io/2020/01/02/Algorithm_%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</id>
     <published>2020-01-02T15:48:32.000Z</published>
     <updated>2020-01-07T16:09:56.884Z</updated>
     
@@ -240,8 +240,8 @@
   
   <entry>
     <title>基本的图算法</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/Algorithm_%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/"/>
+    <id>http://rshawshank.github.io/2020/01/02/Algorithm_%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/</id>
     <published>2020-01-02T15:48:19.000Z</published>
     <updated>2020-01-05T07:53:30.666Z</updated>
     
@@ -267,8 +267,8 @@
   
   <entry>
     <title>贪心算法</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/Algorithm_%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/"/>
+    <id>http://rshawshank.github.io/2020/01/02/Algorithm_%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/</id>
     <published>2020-01-02T15:47:35.000Z</published>
     <updated>2020-01-08T01:32:45.979Z</updated>
     
@@ -294,8 +294,8 @@
   
   <entry>
     <title>资源分配与调度</title>
-    <link href="http://rshawshank.github.io/2020/01/02/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/"/>
-    <id>http://rshawshank.github.io/2020/01/02/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/</id>
+    <link href="http://rshawshank.github.io/2020/01/02/OS_%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/"/>
+    <id>http://rshawshank.github.io/2020/01/02/OS_%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/</id>
     <published>2020-01-02T13:02:12.000Z</published>
     <updated>2020-01-05T16:37:43.331Z</updated>
     
@@ -326,8 +326,8 @@
   
   <entry>
     <title>主存管理</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/</id>
     <published>2019-12-29T22:55:22.000Z</published>
     <updated>2020-01-06T02:17:42.642Z</updated>
     
@@ -353,8 +353,8 @@
   
   <entry>
     <title>设备管理</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/</id>
     <published>2019-12-29T22:55:11.000Z</published>
     <updated>2020-01-06T02:43:37.709Z</updated>
     
@@ -390,8 +390,8 @@
   
   <entry>
     <title>文件管理</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/</id>
     <published>2019-12-29T22:54:58.000Z</published>
     <updated>2020-01-06T04:57:34.784Z</updated>
     
@@ -417,8 +417,8 @@
   
   <entry>
     <title>处理机调度</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/</id>
     <published>2019-12-29T22:54:39.000Z</published>
     <updated>2020-01-06T01:56:44.553Z</updated>
     
@@ -444,8 +444,8 @@
   
   <entry>
     <title>进程和进程管理</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</id>
     <published>2019-12-29T22:54:22.000Z</published>
     <updated>2020-01-05T15:31:34.263Z</updated>
     
@@ -475,8 +475,8 @@
   
   <entry>
     <title>操作系统概述</title>
-    <link href="http://rshawshank.github.io/2019/12/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/"/>
-    <id>http://rshawshank.github.io/2019/12/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</id>
+    <link href="http://rshawshank.github.io/2019/12/30/OS_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/"/>
+    <id>http://rshawshank.github.io/2019/12/30/OS_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</id>
     <published>2019-12-29T22:53:49.000Z</published>
     <updated>2020-01-05T13:09:42.416Z</updated>
     
@@ -502,8 +502,8 @@
   
   <entry>
     <title>选择算法</title>
-    <link href="http://rshawshank.github.io/2019/12/28/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/"/>
-    <id>http://rshawshank.github.io/2019/12/28/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/</id>
+    <link href="http://rshawshank.github.io/2019/12/28/Algorithm_%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/"/>
+    <id>http://rshawshank.github.io/2019/12/28/Algorithm_%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/</id>
     <published>2019-12-28T00:36:10.000Z</published>
     <updated>2019-12-29T12:05:57.285Z</updated>
     
@@ -533,8 +533,8 @@
   
   <entry>
     <title>概率分析和随机算法</title>
-    <link href="http://rshawshank.github.io/2019/12/26/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
-    <id>http://rshawshank.github.io/2019/12/26/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/</id>
+    <link href="http://rshawshank.github.io/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/"/>
+    <id>http://rshawshank.github.io/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/</id>
     <published>2019-12-25T23:48:52.000Z</published>
     <updated>2019-12-26T04:59:51.368Z</updated>
     
