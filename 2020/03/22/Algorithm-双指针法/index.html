@@ -48,12 +48,15 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="双指针法双指针法可以分成两个部分：快慢指针，左右指针。前者解决主要解决链表中的问题，比如典型的判定链表中是否包含环；后者主要解决数组（或者字符串）中的问题，比如二分查找。 (注：这里的指针，并非专指c中指针的概念，而是指索引，游标或指针，可迭代对象等)">
+<meta name="keywords" content="算法,双指针法">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Algorithm_双指针法">
 <meta property="og:url" content="http:&#x2F;&#x2F;rshawshank.github.io&#x2F;2020&#x2F;03&#x2F;22&#x2F;Algorithm-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95&#x2F;index.html">
 <meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="双指针法双指针法可以分成两个部分：快慢指针，左右指针。前者解决主要解决链表中的问题，比如典型的判定链表中是否包含环；后者主要解决数组（或者字符串）中的问题，比如二分查找。 (注：这里的指针，并非专指c中指针的概念，而是指索引，游标或指针，可迭代对象等)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-21T15:41:10.419Z">
+<meta property="og:updated_time" content="2020-03-22T07:33:10.615Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://rshawshank.github.io/2020/03/22/Algorithm-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/">
@@ -145,17 +148,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">36</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">40</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">12</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">44</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">53</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -233,9 +236,32 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-21 23:41:10 / 修改时间：15:41:10" itemprop="dateCreated datePublished" datetime="2020-03-21T23:41:10Z">2020-03-21</time>
+              <time title="创建时间：2020-03-21 23:41:10" itemprop="dateCreated datePublished" datetime="2020-03-21T23:41:10Z">2020-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-22 07:33:10" itemprop="dateModified" datetime="2020-03-22T07:33:10Z">2020-03-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -251,14 +277,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -270,13 +296,58 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h1 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h1><p>双指针法可以分成两个部分：<strong>快慢指针，左右指针</strong>。前者解决主要解决链表中的问题，比如典型的判定链表中是否包含环；后者主要解决数组（或者字符串）中的问题，比如二分查找。</p><p> (注：这里的指针，并非专指c中指针的概念，而是指索引，游标或指针，可迭代对象等)</p><a id="more"></a>
+
+<h2 id="快慢指针常见算法"><a href="#快慢指针常见算法" class="headerlink" title="快慢指针常见算法"></a>快慢指针常见算法</h2><h2 id="左右指针常见算法"><a href="#左右指针常见算法" class="headerlink" title="左右指针常见算法"></a>左右指针常见算法</h2><p>左右指针在数组中实际是指两个索引值，一般初始化为 left = 0, right = nums.length - 1 。</p>
+<p>一般我们会对数组进行排序，然后在进行比较时，通过移动指针来找到解。</p>
+<h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><p>两个指针的算法都是很基础的，也是很简单的，通常只要取一头一尾进行移动比较即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = nums.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (right + left) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (nums[mid] == target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[mid] &gt; target)</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h3><p><a href="https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/" target="_blank" rel="noopener">Leetcode：167——两数之和II-输入有序数组</a></p>
+<p>题目描述：在有序数组中找出两个数，使它们的和为 target。</p>
+<p>在进行数组元素相加后比较之类的问题，都可以采取双指针方式进行求解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] numbers, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left=numbers.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> []output = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">while</span>(right&lt;left)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(numbers[right]+numbers[left]==target)&#123;</span><br><span class="line">                output[<span class="number">0</span>]=right+<span class="number">1</span>;</span><br><span class="line">                output[<span class="number">1</span>]=left+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(numbers[right]+numbers[left]&lt;target)</span><br><span class="line">            &#123;</span><br><span class="line">                right++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                left--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="两数平方和"><a href="#两数平方和" class="headerlink" title="两数平方和"></a>两数平方和</h3><p><a href="https://leetcode-cn.com/problems/sum-of-square-numbers/description/?utm_source=LCUS&utm_medium=ip_redirect_q_uns&utm_campaign=transfer2china" target="_blank" rel="noopener">Leetcode：633——平方数之和</a></p>
+<p>题目描述：给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a^2^ + b^2^ = c。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">judgeSquareSum</span><span class="params">(<span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> right = <span class="number">0</span>,left =(<span class="keyword">int</span>)Math.sqrt(c);</span><br><span class="line">        <span class="keyword">while</span>(right&lt;=left)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(Math.pow(right,<span class="number">2</span>)+Math.pow(left,<span class="number">2</span>)==c)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(Math.pow(right,<span class="number">2</span>)+Math.pow(left,<span class="number">2</span>)&lt;c)</span><br><span class="line">            &#123;</span><br><span class="line">                right++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                left--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a href="https://leetcode-cn.com/problems/4sum/submissions/" target="_blank" rel="noopener">Leetcode：18</a></p>
+<p>左右指针：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; fourSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(nums==<span class="keyword">null</span>||nums.length&lt;<span class="number">4</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> length=nums.length;</span><br><span class="line">        <span class="comment">//一个指向最小的值，一个指向最大的值</span></span><br><span class="line">        <span class="keyword">int</span> head,tail;</span><br><span class="line">        <span class="keyword">int</span> left,right;</span><br><span class="line">        <span class="keyword">for</span>(head=<span class="number">0</span>;head&lt;length-<span class="number">3</span>;head++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//在有相同的数的前提下，移动到最右边的数</span></span><br><span class="line">            <span class="keyword">if</span>(head&gt;<span class="number">0</span>&amp;&amp;nums[head]==nums[head-<span class="number">1</span>])</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">                <span class="comment">//如果当前可以取得的最小值比目标值大的话，直接退出。</span></span><br><span class="line">            <span class="keyword">int</span> min=nums[head]+nums[head+<span class="number">1</span>]+nums[head+<span class="number">2</span>]+nums[head+<span class="number">3</span>];</span><br><span class="line">            <span class="keyword">if</span>(min&gt;target)<span class="keyword">break</span>;</span><br><span class="line">            <span class="comment">//如果当前取得的最大值比目标值小的话，将head往后移动</span></span><br><span class="line">            <span class="keyword">int</span> max = nums[head]+nums[length-<span class="number">1</span>]+nums[length-<span class="number">2</span>]+nums[length-<span class="number">3</span>];</span><br><span class="line">            <span class="keyword">if</span>(max&lt;target)<span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">for</span>(left=head+<span class="number">1</span>;left&lt;length-<span class="number">2</span>;left++)</span><br><span class="line">            &#123;</span><br><span class="line">                tail = length-<span class="number">1</span>;</span><br><span class="line">                right = left+<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(left&gt;head+<span class="number">1</span>&amp;&amp;nums[left-<span class="number">1</span>]==nums[left])<span class="keyword">continue</span>;</span><br><span class="line">                min = nums[head]+nums[left]+nums[left+<span class="number">1</span>]+nums[left+<span class="number">2</span>];</span><br><span class="line">                <span class="keyword">if</span>(min&gt;target)<span class="keyword">continue</span>;</span><br><span class="line">                max = nums[head]+nums[left]+nums[tail-<span class="number">1</span>]+nums[tail];</span><br><span class="line">                <span class="keyword">if</span>(max&lt;target)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">while</span>(right&lt;tail)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> all = nums[head]+nums[left]+nums[right]+nums[tail];</span><br><span class="line">                    <span class="keyword">if</span>(all==target)</span><br><span class="line">                    &#123;</span><br><span class="line">                        result.add(Arrays.asList(nums[head],nums[left],nums[right],nums[tail]));</span><br><span class="line">                        right++;</span><br><span class="line">                    <span class="keyword">while</span>(right&gt;left&amp;&amp;right&lt;tail&amp;&amp;nums[right-<span class="number">1</span>]==nums[right])</span><br><span class="line">                    &#123;</span><br><span class="line">                        right++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    tail--;</span><br><span class="line">                    <span class="keyword">while</span>(tail&gt;left&amp;&amp;nums[tail]==nums[tail+<span class="number">1</span>])</span><br><span class="line">                    &#123;</span><br><span class="line">                        tail--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(all&gt;target)</span><br><span class="line">                    &#123;</span><br><span class="line">                        tail--;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(all&lt;target)</span><br><span class="line">                    &#123;</span><br><span class="line">                        right++;</span><br><span class="line">                    &#125;</span><br><span class="line">                 </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
     
     
       
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-02</div>
+      <div class="popular-posts-title"><a href="\2019\12\02\Algorithm_单源最短路径\" rel="bookmark">单源最短路径</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-25</div>
+      <div class="popular-posts-title"><a href="\2019\12\25\Algorithm_分治策略\" rel="bookmark">分治策略</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-11-28</div>
+      <div class="popular-posts-title"><a href="\2019\11\28\Algorithm_动态规划算法\" rel="bookmark">动态规划算法</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-01-02</div>
+      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_所有结点对的最短路径\" rel="bookmark">所有结点对的最短路径</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-01-02</div>
+      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_基本的图算法\" rel="bookmark">基本的图算法</a></div>
+    </li>
+  </ul>
 <div>
     
         <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
@@ -302,6 +373,11 @@
 
 
       <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+              <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 双指针法</a>
+          </div>
 
         
 
@@ -309,8 +385,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/01/19/android_drawable/" rel="prev" title="drawable">
-      <i class="fa fa-chevron-left"></i> drawable
+    <a href="/2020/03/12/Java-%20%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6/" rel="prev" title="java_反射机制">
+      <i class="fa fa-chevron-left"></i> java_反射机制
     </a></div>
       <div class="post-nav-item">
     <a href="/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/" rel="next" title="函数式编程概述">
@@ -353,6 +429,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#双指针法"><span class="nav-number">1.</span> <span class="nav-text">双指针法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快慢指针常见算法"><span class="nav-number">1.1.</span> <span class="nav-text">快慢指针常见算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左右指针常见算法"><span class="nav-number">1.2.</span> <span class="nav-text">左右指针常见算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二分查找"><span class="nav-number">1.2.1.</span> <span class="nav-text">二分查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数之和"><span class="nav-number">1.2.2.</span> <span class="nav-text">两数之和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两数平方和"><span class="nav-number">1.2.3.</span> <span class="nav-text">两数平方和</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -368,20 +445,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -454,13 +531,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">419k</span>
+    <span title="站点总字数">579k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:21</span>
+    <span title="站点阅读时长">8:46</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
