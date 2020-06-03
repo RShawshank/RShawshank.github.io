@@ -1,6 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>计算机系统结构-多处理器</title>
+    <url>/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>计算机系统结构-互连网络</title>
+    <url>/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id="互连网络（ICN）"><a href="#互连网络（ICN）" class="headerlink" title="互连网络（ICN）"></a>互连网络（ICN）</h1><p>互连网络是计算机部件、计算机节点或计算机系统之间的连接。</p><p>例如：CPU和CPU之间、CPU内的多核之间、CPU和内存之间、内存和内存之间、计算机节点之间、网络和网络之间。</p><p>互连网络的直接设计目标是：在最少传输延迟约束内，传输尽可能多的数据，避免成为系统的瓶颈。</p><a id="more"></a>
+
+
+<p>高速互连网络（&lt;100s时钟周期）</p>
+<p>片上/系统高速互连网络是一种由网络元件按照一定的拓扑结构和控制方式构成的网络，用来实现计算机系统中部件之间的高速连接。</p>
+<ul>
+<li>三大要素：网络元件、互连结构、控制方式</li>
+<li>结点：处理器、存储模块或其它设备</li>
+<li>在拓扑上，互连网络为输入结点到输出结点之间的一组互连或映象。<ul>
+<li>互连结构是静态连接拓扑</li>
+<li>控制方式是基于静态拓扑结构的动态传输机制</li>
+</ul>
+</li>
+</ul>
+<p>互连网络的主要操作：</p>
+<ul>
+<li>置换（N-N）</li>
+<li>广播（1-N）</li>
+<li>选播（1-部分）</li>
+</ul>
+<h2 id="互连网络的结构参数和指标"><a href="#互连网络的结构参数和指标" class="headerlink" title="互连网络的结构参数和指标"></a>互连网络的结构参数和指标</h2><h3 id="结构参数"><a href="#结构参数" class="headerlink" title="结构参数"></a>结构参数</h3><p>网络通常是用有向边或无向边连接有限个结点的图来表示。</p>
+<p>互连网络的主要特性参数：</p>
+<ul>
+<li>网络规模N：网络中接点的个数</li>
+<li>结点度d：与结点相连接的边数，包括入度和出度</li>
+<li>结点距离：对于网络中任意两个结点，从一个结点出发到另一个结点终止所需要跨越的边数的最小值</li>
+<li>网络直径D：网络中任意两结点间距离的最大值<ul>
+<li>网络直径应尽可能小</li>
+</ul>
+</li>
+<li>等分宽度b：把由N个结点构成的网络切成结点数相同（N/2）的两半，在各种切法中，沿切口边数的最小值。<ul>
+<li>线等分宽度：B=b X w，w为通道宽度</li>
+<li>该参数反映了网络最大流量</li>
+</ul>
+</li>
+<li>对称性：从任何结点看到的拓扑结构都相同的网络称为对称网络。</li>
+</ul>
+<h3 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h3><p><strong>时延和带宽</strong></p>
+<ul>
+<li>通信时延：指从源节点到目的结点传送一条消息所需的总时间<br>【=软件开销+通道时延+选路时延+竞争时延】</li>
+<li>网络时延：通道时延与选路时延的和<ul>
+<li>由网络硬件特征决定，与程序行为和网络传输状态无关</li>
+</ul>
+</li>
+<li>端口带宽<ul>
+<li>对于互连网络中任意一个端口来说，其端口带宽是指单位时间内从该端口传送到其他端口的最大信息量。</li>
+</ul>
+</li>
+<li>聚集带宽<ul>
+<li>网络从一半结点向另一半结点传输时，单位时间内能够传送的最大信息量</li>
+</ul>
+</li>
+</ul>
+<h1 id="互连函数"><a href="#互连函数" class="headerlink" title="互连函数"></a>互连函数</h1><p>反映了网络输入数组和输出数组之间对应的置换关系或排列关系（置换函数或排列函数）</p>
+<p>变量x：输入  函数f(x)：输出</p>
+<p>在互连函数f的作用下，输入端x连接到输出端f(x)</p>
+<p>互连函数采用循环表示：（x<del>0</del>,x<del>1</del>,x<del>2</del>,x<del>3</del>,···x<del>j-2</del>,x<del>j-1</del>）表示f(x<del>0</del>)=x<del>1</del>,f(x<del>1</del>)=x<del>2</del>,f(x<del>j-1</del>)=x<del>0</del></p>
+<h2 id="基本的互连函数"><a href="#基本的互连函数" class="headerlink" title="基本的互连函数"></a>基本的互连函数</h2><ol>
+<li><p>恒等函数：实现同号输入端和输出端之间的连接<br>$I(X_{n-1}X_{n-2}···X_{1}X_{0})=X_{n-1}X_{n-2}···X_{1}X_{0}$</p>
+</li>
+<li><p>交换函数：实现<strong>二进制地址编码</strong>中第K位互反的输入端和输出端之间的连接<br>$E(X_{n-1}X_{n-2}···X_{k+1}X_{k}X_{k-1}···X_{1}X_{0})=X_{n-1}X_{n-2}···X_{k+1}\bar{X_{k}}X_{k-1}···X_{1}X_{0}$</p>
+<ul>
+<li><p>主要用于构造立方体互连网络和各种超立方体互连网络</p>
+</li>
+<li><p>供有n=log<del>2</del>N种互连函数（N为结点个数）</p>
+</li>
+<li><p>$$<br>Cube_0(x_2x_1x_0)=x_2x_1\overline{x_0}\<br>Cube_1(x_2x_1x_0)=x_2\overline{x_1}x_0\<br>Cube_2(x_2x_1x_0)=\overline{x_2}x_1x_0\<br>$$</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="3">
+<li><p>均匀洗牌函数（混洗函数、置换函数,shuffle函数）：将输入端分成数目相等的两半，前一半和后一半按类似均匀混洗扑克牌的方式交叉地连接到输出端（输出端相当于混洗的结果）<br>$\sigma(X_{n-1}X_{n-2}···X_{1}X_{0})=X_{n-2}X_{n-3}···X_{0}X_{n-1}$</p>
+<ul>
+<li>即把输入端的二进制编号循环左移一位</li>
+<li>$shuffle^{n}(j)=j$</li>
+<li>$shuffle_n(j)=j$</li>
+</ul>
+</li>
+<li><p>子函数和超函数</p>
+<ul>
+<li>互连函数(s)的第k个子函数s<del>k</del>：把s作用输入端的二进制编号的低k位</li>
+<li>互连函数(s)的第k个超函数s^k^：把s作用输入端的二进制编号的高k位</li>
+</ul>
+</li>
+<li><p>逆函数</p>
+<ul>
+<li>对于任意一种函数f(x),如果存在g(x)，使得$f(x)\times g(x)=I(x)$。则称g(x)是f(x)的逆函数，记作$f^{-1}(x)=g(x)$</li>
+</ul>
+</li>
+<li><p>逆均匀洗牌函数：将输入端的二进制编号<strong>循环右移一位</strong>而得到所连接的输出端编号<br>$\sigma^{-1}(X_{n-1}X_{n-2}···X_{1}X_{0})=X_{0}X_{n-1}···X_{2}X_{1}$</p>
+</li>
+<li><p>碟式函数（$\beta$）：把输入端的二进制编号的最高位与最低位互换位置得到输出端的编号。</p>
+<ul>
+<li>第k个子函数：<br>$\beta_{(k)}(X_{n-1}X_{n-2}···X_{k}X_{k-1}X_{k-2}···X_{1}X_{0})=X_{n-1}X_{n-2}···X_{k}X_{0}X_{k-2}···X_{1}X_{k-1}$</li>
+<li>第k个超函数：<br>$\beta^{(k)}(X_{n-1}X_{n-2}···X_{n-k+1}X_{n-k}X_{n-k-1}···X_{1}X_{0})=X_{n-k}X_{n-2}···X_{n-k+1}X_{n-1}X_{n-k-1}···X_{1}X_{0}$</li>
+<li>碟式变换与交换变换的多级组合是构成多级立方体网络的基础</li>
+</ul>
+</li>
+<li><p>反位序函数：将输入端二进制编号的位序颠倒过来求得相应输出端的编号<br>$\rho(X_{n-1}X_{n-2}···X_{1}X_{0})=X_{0}X_{1}···X_{n-2}X_{n-1}$</p>
+<ul>
+<li>第k个子函数<br>$\rho_{(k)}(X_{n-1}X_{n-2}···X_{k}X_{k-1}X_{k-2}···X_{1}X_{0})=X_{n-1}X_{n-2}···X_{k}X_{0}X_{1}···X_{k-2}X_{k-1}$</li>
+<li>第k个超函数<br>$\rho^{(k)}(X_{n-1}X_{n-2}···X_{n-k+1}X_{n-k}X_{n-k-1}···X_{1}X_{0})=X_{n-k}X_{n-k+1}···X_{n-2}X_{n-1}X_{n-k-1}···X_{1}X_{0}$</li>
+</ul>
+</li>
+<li><p>移数函数：将各输入端都错开一定的位置（模N）后连到输出端</p>
+</li>
+<li><p>PM2I函数（加减2^i^函数）</p>
+<ul>
+<li>P和M分别表示加和减，2I表示2^i^</li>
+<li>一种移数函数<br>$PM2_{+i}(x)=x+2^i\quad mod(N)$<br>$PM2_{-i}(x)=x-2^i\quad mod(N)$<br>$0\leq x\leq N-1\quad o\leq i\leq n-1\quad n=log_2N,N表示结点数$</li>
+<li>PM2I互连网络共有2n个互连函数</li>
+</ul>
+</li>
+</ol>
+<h1 id="静态互连网络"><a href="#静态互连网络" class="headerlink" title="静态互连网络"></a>静态互连网络</h1><p>各结点之间有固定的连接通路、且在运行中不能改变的网络。</p>
+<h2 id="1、2维互连函数"><a href="#1、2维互连函数" class="headerlink" title="1、2维互连函数"></a>1、2维互连函数</h2><h3 id="线性阵列"><a href="#线性阵列" class="headerlink" title="线性阵列"></a>线性阵列</h3><p>一种一维的线性网络，其中N个结点由N-1个链路连成一行。</p>
+<ul>
+<li>端结点的度：1</li>
+<li>其余结点的度：2</li>
+<li>直径：N-1</li>
+<li>等分宽度b=1</li>
+</ul>
+<h3 id="环和带弦环"><a href="#环和带弦环" class="headerlink" title="环和带弦环"></a>环和带弦环</h3><p>环：线性阵列的两个端点连接起来。可以单向工作也可以双向工作。</p>
+<ul>
+<li>对称</li>
+<li>结点的度：2</li>
+<li>双向环的直径：N/2</li>
+<li>单向环的直径：N-1</li>
+<li>环的等分宽度b=2</li>
+</ul>
+<h3 id="带弦环"><a href="#带弦环" class="headerlink" title="带弦环"></a>带弦环</h3><p>增加的链路越多，结点度越高，网络直径越小</p>
+<ol>
+<li><p>全连接网络：两两结点之间都有链路</p>
+</li>
+<li><p>循环移数网络：通过在环上每个结点到所有与其距离为2的整数幂的结点之间都增加一条附加链</p>
+</li>
+<li><p>树形和星形：<br>树形是二叉树</p>
+<ul>
+<li>最大结点度：3</li>
+<li>直径：2(k-1)【k层完全平衡的二叉树】</li>
+<li>等分宽度b=1</li>
+</ul>
+<p>星形：<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418185318359.png" alt></p>
+<ul>
+<li>结点度：N-1</li>
+<li>直径较小：2</li>
+<li>等分宽度b=[N/2]【向下取整】</li>
+</ul>
+</li>
+<li><p>胖树形</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418185441475.png" style="zoom:67%;">
+</li>
+<li><p>网格形和环网形</p>
+<ul>
+<li>网格形：<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418185559655.png" style="zoom:50%;">
+一个由N=n^k^个结点构成的k维网格形网络（每维n个结点）的内部结点度d=2k，网络直径D=k(n-1)</li>
+<li>Illiac网络：把2维网格形网络的每一列的两个端结点连接起来，再把每一行的尾结点与下一行的头结点连接起来，并把最后一行的尾结点与第一行的头结点连接起来<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418185935578.png" style="zoom:50%;">
+一个规模为nxn的Illiac网格：
+- 所有结点的度d=4
+- 网络直径D=n-1
+- 等分宽度：2n</li>
+<li>环网形：把2维网格形网络的每一列的两个端结点连接起来，再把每一行的两个端结点连接起来。<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418190203697.png" style="zoom:50%;">
+一个nxn的环网形网
+- 结点度：4
+- 网络直径：2x[n/2]【向下取整】
+- 等分宽度b=2n
+
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="超立方体和寻径"><a href="#超立方体和寻径" class="headerlink" title="超立方体和寻径"></a>超立方体和寻径</h2><h3 id="超立方体"><a href="#超立方体" class="headerlink" title="超立方体"></a>超立方体</h3><p>一种二元n-立方体结构，由N=2^n^个结点组成；分布在n维上，每维有两个结点。<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418190523155.png" style="zoom:50%;"></p>
+<p>为实现一个n-立方体，只要把两个（n-1）立方体中相对应的结点用链路连接起来即可。共需要2^n-1^条链路。</p>
+<p>n-立方体中结点的度都是n，直径也是n，等分宽度为b=N/2。</p>
+<h3 id="带环立方体（3-CCC）"><a href="#带环立方体（3-CCC）" class="headerlink" title="带环立方体（3-CCC）"></a>带环立方体（3-CCC）</h3><p>将k-立方体的每个结点用由k个结点的环来代替，组成带环k-立方体。<br><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418190859708.png" style="zoom:67%;"></p>
+<ul>
+<li>网络规模：$N=k\times2^k$</li>
+<li>网络直径：$D=2k-1+\lfloor k/2\rfloor$</li>
+<li>等分宽度：$b=\frac{N}{2k}$</li>
+</ul>
+<h3 id="k元n-立方体网络"><a href="#k元n-立方体网络" class="headerlink" title="k元n-立方体网络"></a>k元n-立方体网络</h3><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E4%BA%92%E8%BF%9E%E7%BD%91%E7%BB%9C/image-20200418194426267.png" style="zoom:67%;">
+
+<ul>
+<li>环形、网格、环网形、二元n-立方体（超立方体）都是k元n-立方体网络系列的拓扑同构体</li>
+<li>在k元n-立方体网络中，参数n是立方体的维数，k是基数，即每一维上的结点个数$N=N^n$</li>
+<li>k元n-立方体的结点可以用基数为k的n位地址A=a<del>1</del>a<del>2</del>a<del>3</del>a<del>4</del>来表示【a<del>i</del>表示该结点在第i维上的位置】</li>
+<li>通常把低维k元n-立方体称为环网，而把高维k元n-立方体称为超立方体</li>
+</ul>
+<h3 id="基于静态互连网络的寻径机制"><a href="#基于静态互连网络的寻径机制" class="headerlink" title="基于静态互连网络的寻径机制"></a>基于静态互连网络的寻径机制</h3><ul>
+<li>确定性寻径：通信路径完全由源结点地址和目的地址来决定，寻径路径是预先唯一确定好了的，与网络状况无关</li>
+<li>自适应寻径：通信的通路每一次都要根据资源或者网络的情况来选择【TCP/IP网络】</li>
+</ul>
+<h3 id="二维网格网络的X-Y寻径"><a href="#二维网格网络的X-Y寻径" class="headerlink" title="二维网格网络的X-Y寻径"></a>二维网格网络的X-Y寻径</h3><p>先沿X维方向进行寻径，然后再沿Y维方向寻找路径</p>
+<h3 id="超立方体E-cube寻径"><a href="#超立方体E-cube寻径" class="headerlink" title="超立方体E-cube寻径"></a>超立方体E-cube寻径</h3><h1 id="动态互连网络"><a href="#动态互连网络" class="headerlink" title="动态互连网络"></a>动态互连网络</h1><p>由交换开关构成、可按运行程序的要求动态地改变连接状态的网络。</p>
+<h2 id="总线和交叉开关"><a href="#总线和交叉开关" class="headerlink" title="总线和交叉开关"></a>总线和交叉开关</h2><h3 id="总线网络"><a href="#总线网络" class="headerlink" title="总线网络"></a>总线网络</h3><p>由一组导线和插座构成，经常被用来实现计算机系统中处理机模块、存储模块和外围设备等之间的互连。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>计算机系统结构</category>
+      </categories>
+      <tags>
+        <tag>计算机系统结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>计算机系统结构-I/O系统</title>
+    <url>/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-I-O%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h1 id="IO系统的基本概念"><a href="#IO系统的基本概念" class="headerlink" title="IO系统的基本概念"></a>IO系统的基本概念</h1><p>通常包含IO设备和IO设备与处理机的连接接口两个主要部分。</p><h1 id="系统评价"><a href="#系统评价" class="headerlink" title="系统评价"></a>系统评价</h1><p>参数指标：连接特性、IO系统的容量、响应时间和吞吐率</p><p>吞吐率反映单位时间内完成的I/O数量，响应时间则反映了完成一次I/O所花费的时间</p>]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>计算机系统结构</category>
+      </categories>
+      <tags>
+        <tag>计算机系统结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机系统结构-存储系统</title>
     <url>/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h1 id="存储系统性能量化分析"><a href="#存储系统性能量化分析" class="headerlink" title="存储系统性能量化分析"></a>存储系统性能量化分析</h1><p>存储器越靠近CPU，则CPU对它的访问频度越高，但是容量也越低，单位存储容量价格越高。</p><p>存储容量S：一般来说，整个存储系统的容量即是第二级存储器M<del>2</del> ，即S=S<del>2</del></p><p>命中率H：CPU访问存储系统时，在M<del>1</del> 中找到所需信息的概率$H=\frac{N_1}{N_1+N_2}$</p><a id="more"></a>
@@ -41,6 +266,176 @@
 </ul>
 <p>具体见《组原原理》</p>
 <h1 id="映象规则及其变换"><a href="#映象规则及其变换" class="headerlink" title="映象规则及其变换"></a>映象规则及其变换</h1><p>见《组成原理》</p>
+<h1 id="降低cache不命中率"><a href="#降低cache不命中率" class="headerlink" title="降低cache不命中率"></a>降低cache不命中率</h1><h2 id="三种类型的不命中"><a href="#三种类型的不命中" class="headerlink" title="三种类型的不命中"></a>三种类型的不命中</h2><ul>
+<li>强制性不命中：当第一次访问一个块时，该块不在cache中，需从下一级存储器中调入cache。（冷启动不命中，首次访问不命中。）</li>
+<li>容量不命中：如果程序执行时所需的块不能全部调入cache中，则当某些块被替换后，若重新被访问，就会发生不命中。</li>
+<li>冲突不命中：在组相联或者直接映象cache中，如果太多的块映象到同一组（块）中，则该组中某个块被别的块替换（即使别的组或块有空闲位置），然后又被重新访问的情况。（碰撞不命中，干扰不命中）</li>
+</ul>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>相联度越高，冲突不命中就越少；</li>
+<li>强制性不命中和容量不命中不受相联度的影响</li>
+<li>强制性不命中不受cache容量的影响，但是容量不命中却随着容量的增加而减少</li>
+</ol>
+<h2 id="减少三种不命中的方法"><a href="#减少三种不命中的方法" class="headerlink" title="减少三种不命中的方法"></a>减少三种不命中的方法</h2><ul>
+<li>强制性不命中：增加块大小，预取</li>
+<li>容量不命中：增加容量</li>
+<li>冲突不命中：提高相关度</li>
+</ul>
+<p><strong>许多降低不命中率的方法会增加命中时间或不命中开销</strong></p>
+<h3 id="增加cache块的大小"><a href="#增加cache块的大小" class="headerlink" title="增加cache块的大小"></a>增加cache块的大小</h3><p>对于给定的cache容量，当块大小增加时，不命中率开始是下降的，但是后来就上升了。</p>
+<ul>
+<li>一方面它减少了强制性不命中；</li>
+<li>另一方面，由于增加块大小会减少Cache中块的数目，可能会增加冲突不命中</li>
+</ul>
+<p><strong>增加块的大小会增加不命中开销</strong></p>
+<h3 id="增加cache的容量"><a href="#增加cache的容量" class="headerlink" title="增加cache的容量"></a>增加cache的容量</h3><p>缺点：</p>
+<ul>
+<li>增加成本</li>
+<li>增加命中时间</li>
+</ul>
+<h3 id="提高相联度"><a href="#提高相联度" class="headerlink" title="提高相联度"></a>提高相联度</h3><p>采取相联度超过8的方案实际意义不大</p>
+<p><strong>容量为N的直接映象cache的不命中率和容量为N/2的两路组相联cache的不命率差不多相同</strong></p>
+<p>提高相联度是以增加命中时间为代价的</p>
+<h2 id="伪相联cache和列相联cache"><a href="#伪相联cache和列相联cache" class="headerlink" title="伪相联cache和列相联cache"></a>伪相联cache和列相联cache</h2><p>基本思想：在逻辑上把直接映象cache分为上下两个区。对于任何一次访问，伪相联cache先按直接映象cache的方式去处理：如果命中，则其访问过程和直接映象cache的情况一样；如果不命中，则再对另一区相应的位置去查找。如果找到了，则发生了伪命中，否则只好访问下一级存储器。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417152901445.png" style="zoom:50%;">
+
+<h2 id="硬件预取"><a href="#硬件预取" class="headerlink" title="硬件预取"></a>硬件预取</h2><ol>
+<li>指令和数据都可以预取</li>
+<li>预取内容即可放入cache中，也可放在外缓冲器中</li>
+<li>指令预取通常由cache之外的硬件完成</li>
+</ol>
+<p>预取应利用存储器的空闲带宽，不能影响对正常不命中的处理，否则会降低性能。</p>
+<h2 id="编译器控制的预取"><a href="#编译器控制的预取" class="headerlink" title="编译器控制的预取"></a>编译器控制的预取</h2><p>在编译的时候加入预取指令，在数据被用到之前发出预取请求。</p>
+<ol>
+<li>按照预取数据所放的位置，可把预取分为两种类型：<ul>
+<li>寄存器预取：把数据放在寄存器中</li>
+<li>cache预取：只将数据放在cache中</li>
+</ul>
+</li>
+<li>按照预取的处理方式不同，分为：<ul>
+<li>故障性预取：在预取时，如果出现虚地址故障或违反保护权限，就会发生异常</li>
+<li>非故障性预取：不会发生异常，编译器会放弃预取，转为空操作</li>
+</ul>
+</li>
+<li>在预取数据的同时，处理器应能继续执行</li>
+<li>编译器控制预取的目的：使得执行指令和读取数据能重叠执行</li>
+<li>每次预取需要花费一条指令的开销<ul>
+<li>保证开销低于收益</li>
+<li>编译器可以通过把重点放在那些可能会导致不命中的访问上，使得程序避免不必要的预取</li>
+</ul>
+</li>
+</ol>
+<h2 id="编译器优化"><a href="#编译器优化" class="headerlink" title="编译器优化"></a>编译器优化</h2><p>通过对软件进行优化来降低不命中率</p>
+<ol>
+<li>程序代码和数据重组<ul>
+<li>重新组织程序而不影响程序的正确性<ul>
+<li>把一个程序的过程重新排序，减少冲突不命中，降低指令不命中率</li>
+<li>把基本块对齐，提高大cache块的效率</li>
+</ul>
+</li>
+<li>假设编译器知道分支指令会成功转移：<ul>
+<li>将转移目标处的基本块和紧跟着该分支指令后的基本块进行对调</li>
+<li>把该分支指令转为操作语义相反的分支指令（？）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="牺牲cache"><a href="#牺牲cache" class="headerlink" title="牺牲cache"></a>牺牲cache</h2><p>在cache和它的下一级存储器之间设置一个全相联的小cache；用来存放被替换出去的块（牺牲者），以备重新使用</p>
+<p>对于减小冲突不命中很有效，特别是对于小容量的直接映象数据cache，作用尤其明显。</p>
+<h2 id="采取两级cache"><a href="#采取两级cache" class="headerlink" title="采取两级cache"></a>采取两级cache</h2><p>第一级cache小且快；第二级cache容量大。</p>
+<p>全部不命中率和局部不命中率：$全局不命中率=不命中率<em>{L1} X 不命中率</em>{L2}$</p>
+<ul>
+<li><p>评价第二级Cache需要使用全局不命中率；</p>
+</li>
+<li><p>第二级cache不会影响CPU的时钟频率；</p>
+</li>
+</ul>
+<p>$平均访存时间=命中时间L_1+不命中率L_1X()$</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ol>
+<li>容量：第二级cache的容量一般比第一级cache的大很多</li>
+<li>相联度：第二级cache可以采用较高的相联度或伪相联方法</li>
+<li>块大小：第二级cache可以采用较大的块</li>
+</ol>
+<h2 id="让读不命中优先于写"><a href="#让读不命中优先于写" class="headerlink" title="让读不命中优先于写"></a>让读不命中优先于写</h2><ol>
+<li>cache中的写缓冲器导致对存储器访问的复杂化：在读不命中时，所读单元的最新值可能还在写缓冲器中，还没有进入主存。</li>
+<li>读不命中的处理：<ul>
+<li>推迟对读不命中的处理，直到写缓冲器清空</li>
+<li>检查写缓冲器的内容</li>
+</ul>
+</li>
+<li>在写回法cache中，可采取写缓冲器</li>
+</ol>
+<h2 id="写缓冲合并"><a href="#写缓冲合并" class="headerlink" title="写缓冲合并"></a>写缓冲合并</h2><p>写直达cache：</p>
+<p>依靠写缓冲来减少对下一级存储器写操作的时间。</p>
+<p>如果写缓冲器为空，就把数据和相应地址写入该缓冲器【从CPU的角度来看，该写操作就算完成了】</p>
+<p>如果写缓冲器中已经有了待写入数据，就要把这次写入地址与写缓冲器中已有的所有地址进行比较，看看是否有匹配的项。如果有地址匹配而对应的位置又空闲，就把这次要写入的数据与该项合并。【这就是写缓冲合并】</p>
+<p>如果写缓冲器满并且没有能进行写合并的项，就等待。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417163741394.png" style="zoom:67%;">
+
+<h2 id="请求字处理技术"><a href="#请求字处理技术" class="headerlink" title="请求字处理技术"></a>请求字处理技术</h2><p>请求字：从下一级存储器调入cache块中，只有一个字是立即需要的，该字就是请求字。</p>
+<p>应尽早把请求字发送给CPU</p>
+<ul>
+<li>尽早重启动：调块时，从块的起始位置开始读起。一旦请求字到达了，就立即发送给CPU，让CPU继续执行。【请求字优先】</li>
+</ul>
+<h2 id="非阻塞cache技术"><a href="#非阻塞cache技术" class="headerlink" title="非阻塞cache技术"></a>非阻塞cache技术</h2><p>cache不命中时依旧允许CPU进行其他的命中访问。</p>
+<h1 id="减少命中时间"><a href="#减少命中时间" class="headerlink" title="减少命中时间"></a>减少命中时间</h1><p>命中时间直接影响处理器的时钟频率。</p>
+<p>Cache的访问时间限制了处理器的时钟频率。</p>
+<h2 id="容量小、结构简单的Cache"><a href="#容量小、结构简单的Cache" class="headerlink" title="容量小、结构简单的Cache"></a>容量小、结构简单的Cache</h2><p>硬件越简单，速度就越快。</p>
+<h2 id="虚拟cache"><a href="#虚拟cache" class="headerlink" title="虚拟cache"></a>虚拟cache</h2><h3 id="物理cache"><a href="#物理cache" class="headerlink" title="物理cache"></a>物理cache</h3><p>使用物理地址进行访问的传统cache。</p>
+<p>标识存储器中存放的是物理地址，进行地址检测越是用物理地址。</p>
+<p>缺点就是：地址转换和访问cache串行进行，访问速度慢。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417185513804.png" style="zoom:67%;">
+
+<h3 id="虚拟cache-1"><a href="#虚拟cache-1" class="headerlink" title="虚拟cache"></a>虚拟cache</h3><p>直接使用虚拟地址进行访问的cache。标识存储器存放的是虚拟地址，进行地址检测用的也是虚拟地址</p>
+<p>优点：在命中时不需要进行地址转换，省去了地址转换的时间。就算是不命中，地址转换和访问cache也是并行进行的，速度比物理cache快。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417185536512.png" style="zoom:50%;">
+
+<p>虚拟地址和进程相关。</p>
+<p>虚拟地址=虚拟索引+物理标识<br>用虚地址中页内位移作为cache的索引，标识用物理地址；</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417190140461.png" style="zoom:67%;">
+
+<h2 id="Cache访问流水化"><a href="#Cache访问流水化" class="headerlink" title="Cache访问流水化"></a>Cache访问流水化</h2><p>对第一级cache访问按流水线方式组织</p>
+<p>访问cache需要多个时钟周期才能完成</p>
+<p>不能够真正减少cache命中时间，但是可以提高时钟频率，提高cache的带宽。</p>
+<h2 id="踪迹Cache"><a href="#踪迹Cache" class="headerlink" title="踪迹Cache"></a>踪迹Cache</h2><p>存放CPU所执行的动态指令序列：包含了由分支预测展开的指令，该分支预测是否需要在取到该指令时进行确认。</p>
+<ul>
+<li>地址映象机制复杂</li>
+<li>相同的指令序列有可能被当作条件分支的不同选择而重复存放</li>
+<li>能够提高指令cache的空间利用率</li>
+</ul>
+<h1 id="并行主存系统"><a href="#并行主存系统" class="headerlink" title="并行主存系统"></a>并行主存系统</h1><p>主存的主要性能指标：<strong>延迟</strong>和<strong>带宽</strong></p>
+<p>定义：是在一个访存周期内能并行访问多个存储字的存储器</p>
+<p>在单体单字宽的存储器中：存储器的访问周期为T<del>M</del> ,字长为W位，则<br>带宽为$B_M=\frac{W}{T_M}$</p>
+<h2 id="单体多字存储器"><a href="#单体多字存储器" class="headerlink" title="单体多字存储器"></a>单体多字存储器</h2><p>存储器能够每个存储周期读出m个CPU字</p>
+<p>$B_M=\frac{mW}{T_M}$</p>
+<p>单体多字存储器的实际带宽比最大带宽小</p>
+<p>缺点：访存效率不高</p>
+<ul>
+<li>如果一次去读的m个指令字中有分支指令，而且分支成功，则该分支指令之后的指令是无用的。</li>
+<li>一次取出的m个数据不一定都是有用的。此外，当前执行指令所需要的多个操作数也不一定正好都存放在同一个长存储字中</li>
+<li>写入可能变得复杂</li>
+<li>当要读出的数据字和要写入的数据字处于同一个长存储字内时，读和写的操作就无法在同一个存储周期内完成</li>
+</ul>
+<h2 id="多体交叉存储器"><a href="#多体交叉存储器" class="headerlink" title="多体交叉存储器"></a>多体交叉存储器</h2><p>由多个单字存储体构成，每个体都有自己的地址寄存器以及地址译码和读/写驱动等电路。</p>
+<p>编址方式：</p>
+<ul>
+<li>高位交叉编址</li>
+<li>低位交叉编址</li>
+</ul>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417195600835.png" style="zoom:67%;">
+
+<h3 id="高位交叉编址"><a href="#高位交叉编址" class="headerlink" title="高位交叉编址"></a>高位交叉编址</h3><p>对存储单元矩阵按列优先的方式进行编址</p>
+<h3 id="低位交叉编址"><a href="#低位交叉编址" class="headerlink" title="低位交叉编址"></a>低位交叉编址</h3><p>对存储单元矩阵按行优先进行编址</p>
+<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
+<p>进程保护：</p>
+<ol>
+<li>界地址寄存器：基地址、上界地址；检测条件：（基地址+地址）&lt;=上界地址</li>
+<li>虚拟存储器：给每个页面增加访问权限标识</li>
+<li>环形保护</li>
+<li>加锁和解锁</li>
+</ol>
+</blockquote>
 ]]></content>
       <categories>
         <category>学习笔记</category>
@@ -641,6 +1036,910 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库_关系数据理论概述</title>
+    <url>/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/</url>
+    <content><![CDATA[<h1 id="关系数据理论概述"><a href="#关系数据理论概述" class="headerlink" title="关系数据理论概述"></a>关系数据理论概述</h1><p>数据库逻辑结构设计的任务：为数据库应用构造良好的数据库模式</p><h1 id="关系模式中的异常问题"><a href="#关系模式中的异常问题" class="headerlink" title="关系模式中的异常问题"></a>关系模式中的异常问题</h1><ul>
+<li>数据冗余</li>
+<li>更新异常</li>
+<li>插入异常</li>
+<li>删除异常</li>
+</ul><p>出现异常的原因：</p><p>关系模式中存在不合适的数据依赖</p><p>解决方式：</p><p>通过分解，消除不合适的数据依赖（规范化）</p><a id="more"></a>
+
+
+
+
+
+<h1 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h1><h2 id="关系模式"><a href="#关系模式" class="headerlink" title="关系模式"></a>关系模式</h2><p>一个关系模式可以表示为一个五元组R(U,D,DOM,F)；</p>
+<ul>
+<li>R：关系名称</li>
+<li>U：R中所有属性的集合</li>
+<li>D：U中属性所来自的域的集合、</li>
+<li>DOM：属性到域的映射</li>
+<li>F：U中属性间的数据依赖的集合</li>
+</ul>
+<p>模式涉及重点关注U和F</p>
+<h2 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a>数据依赖</h2><p>是一个关系中的属性之间的某种语义约束关系</p>
+<p>知道A可以确切的找到B，这样的函数叫做函数依赖。其实就是单值函数</p>
+<h3 id="函数依赖-1"><a href="#函数依赖-1" class="headerlink" title="函数依赖"></a>函数依赖</h3><p>分类一：</p>
+<ul>
+<li>平凡函数依赖：任何情况下都成立<br>例如：在一个职工关系中,职工号总能函数决定它本身,记作“职工号→职工号”,对于任一个给定的职工号,都有它本身的职工号值唯一对应,此为平凡函数依赖。又如:职工号和性别构成的属性子集总是能够函数决定其中的职工号或性别属性,可分别记作为“(职工号,性别)→职工号”和“(职工号,性别)→性别”,因为对于任何给定的一个元组中的职工号和性别的组合值,都唯一对应一个职工号值或性别值,不可能出现其他的职工号值或性别值,此种也为平凡函数依赖。</li>
+<li>非平凡函数依赖<br>如在职工关系中,职工号函数决定其他每个属性都是非平凡函数依赖,另外“(职工号,姓名)→性别”也是非平凡函数依赖,虽然在这里由决定因素中所含的职工号单属性就能够函数决定性别,而带有的姓名属性有些多余。</li>
+</ul>
+<p>分类二：</p>
+<ul>
+<li><p>完全函数依赖：记作是f</p>
+<p>设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集。若对于R（U）的任何一个可能的关系，有x→y但x’→y，则称y完全函数依赖于x，记作X→^F^Y。<br>  所谓完全依赖是说明在依赖关系的决定项（即依赖关系的左项）中没有多余属性，有多余属性就是部分依赖。</p>
+</li>
+<li><p>部分函数依赖：记作是p</p>
+<p> 设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集，若x→y且x’→y，则称y部分依赖x，记作X→^P^Y。显然，当且仅当x为复合属性组时，才有可能出现部分函数依赖。 </p>
+<p>例如：职工号    姓名    性别    年龄    职务</p>
+<pre><code>1001    张三       男        36    正处
+1002    李四       男        38    副处
+1003    王五       男        50    正科
+1004    赵六       女        38    副处
+1005    孙七       女        49    科员</code></pre><p>职工号和其他的属性之间的函数依赖都是完全函数依赖。因为职工号是一个单属性决定因素，他不可能在包含其他任何属性，那么就不存在真子集函数决定其他每个属性的情况存在，如（职工号，性别）的值虽然能够决定相应职工的年龄，但其中的真子集“职工号”就能够函数决定其年龄，所以（职工号，性别）到年龄之间的函数为部分函数依赖（因为只通过“职工号”就可以决定）。（简单的说：真子集可以决定结果）</p>
+<p>假设存在：“学号→系号”、“系号→系名”和“系号→系主任名”<br>那么存在：“学号→系名”和“学号→系主任名”这两个函数依赖是传递函数依赖。</p>
+</li>
+</ul>
+<p>分类三：</p>
+<ul>
+<li><p>传递函数依赖</p>
+<p>一个关系R（U），X,Y,Z为属性集U上的子集，其中存在X→Y和Y→Z，但Y不决定X，同时Y不包含Z，则存在X→Z，即X传递函数决定Z，Z传递函数依赖于X。</p>
+</li>
+</ul>
+<h2 id="有关码的术语"><a href="#有关码的术语" class="headerlink" title="有关码的术语"></a>有关码的术语</h2><p>码：一个关系的所有属性</p>
+<ul>
+<li>码为单个属性，称为单属性码</li>
+<li>码为多个属性，称为多属性码</li>
+<li>码为全部属性，称为全码</li>
+<li>包含一个码的属性组，称为超码。</li>
+<li>包含在任何一个码中的属性，称为主属性</li>
+<li>不包含在任何一个码中的属性，称为非主属性</li>
+</ul>
+<blockquote>
+<p><strong>候选码：</strong> 唯一标识一个关系的属性组<br><strong>主码：</strong> 候选码多于一个，从候选码中选出的一个码作为主码。<br><strong>主属性：</strong> 候选码的所有属性。<br><strong>非主属性：</strong> 不包含在任何候选码中的属性<br><strong>全码：</strong> 极端情况下，整个属性组都是码。<br><strong>外码：</strong> X不是该关系模式的码，但是X是另一个关系模式的码。比如(Sno,Cno,Grade)中的Sno不是码，但Sno是(Sno,Sname,Sage)的码，则Sno是外码</p>
+</blockquote>
+<h1 id="1NF、2NF、3NF和BCNF"><a href="#1NF、2NF、3NF和BCNF" class="headerlink" title="1NF、2NF、3NF和BCNF"></a>1NF、2NF、3NF和BCNF</h1><p><a href="https://blog.csdn.net/jsj13263690918/article/details/79796275" target="_blank" rel="noopener">参考文章</a></p>
+<h2 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h2><p>是为了减少数据冗余和消除各种异常。</p>
+<p>范式：满足规范化要求的关系模式</p>
+<p>范式分类：</p>
+<ul>
+<li>第一范式：满足最基本的规范化要求的关系模式</li>
+<li>第二范式：在第一范式的基础上，进一步满足一些要求</li>
+<li>依次类推：第三范式、BC范式、第四范式等</li>
+</ul>
+<h3 id="第一范式（1NF）：无重复列"><a href="#第一范式（1NF）：无重复列" class="headerlink" title="第一范式（1NF）：无重复列"></a>第一范式（1NF）：无重复列</h3><p>第一范式（1NF）是指数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。如果出现重复的属性，就可能需要定义一个新的实体，新的实体由重复的属性构成，新实体与原实体之间为一对多关系。在第一范式（1NF）中表的每一行只包含一个实例的信息。简而言之，第一范式就是无重复的列。</p>
+<p>　　说明：在任何一个关系数据库中，第一范式（1NF）是对关系模式的基本要求，不满足第一范式（1NF）的数据库就不是关系数据库。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200602233716629.png" style="zoom:80%;">
+
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<h3 id="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"><a href="#第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】" class="headerlink" title="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"></a>第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】</h3><p>满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）要求数据库表中的每个实例或行必须可以被唯一地区分。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。例如员工信息表中加上了员工编号（emp_id）列，因为每个员工的员工编号是唯一的，因此每个员工可以被唯一区分。这个唯一属性列被称为主关键字或主键、主码。</p>
+<p>　　第二范式（2NF）要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性，如果存在，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与原实体之间是一对多的关系。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。简而言之，第二范式就是属性完全依赖于主键。</p>
+<p>比如给出一个表：<br>$$<br>(Sno,Sdept,Sloc,Cno,Grade)<br>$$<br>其中Sno学号，Sdept是系，Sloc是寝室地址，Cno是课程号，Grade是该学生某个课程的成绩。<br>$$<br>(Sno,Cno)\stackrel{F}{\longrightarrow}Grade\Sno→Sdept, (Sno,Cno)\stackrel{P}{\longrightarrow}Sdept\<br>    Sno→Sloc, (Sno,Cno)\stackrel{P}{\longrightarrow} Sloc<br>$$<br>那么上述存在了部分函数依赖，需要把部分函数依赖的进行消除：<br>$$<br>Sno→Sdept \<br>Sno→Sloc<br>$$<br>因此得出新的关系模式：<br>$$<br>(Sno,Sloc,Sdept)\<br>(Sno,Cno,Grade)<br>$$<br>判断的方法是：</p>
+<p>第一步：找出数据表中所有的<strong>码</strong>。<br>第二步：根据第一步所得到的码，找出所有的<strong>主属性</strong>。<br>第三步：数据表中，除去所有的主属性，剩下的就都是<strong>非主属性</strong>了。<br>第四步：查看是否存在非主属性对码的<strong>部分函数依赖</strong>。</p>
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<p>结论：<strong>对码的传递依赖不友好</strong></p>
+<h3 id="第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖"><a href="#第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖" class="headerlink" title="第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]"></a>第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]</h3><p>第三范式（3NF）要求一个数据库表中不包含已在其它表中已包含的非主关键字信息。</p>
+<p>例如，存在一个部门信息表，其中每个部门有部门编号（dept_id）、部门名称、部门简介等信息。那么在的员工信息表中列出部门编号后就不能再将部门名称、部门简介等与部门有关的信息再加入员工信息表中。如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。简而言之，第三范式就是属性不依赖于其它非主属性。</p>
+<p>结论：<strong>主属性对码的不良函数依赖也会导致异常</strong></p>
+<h3 id="BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖"><a href="#BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖" class="headerlink" title="BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖"></a>BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖</h3><ol>
+<li>所有非主属性对每一个码都是完全函数依赖；</li>
+<li>所有的主属性对每一个不包含它的码，也是完全函数依赖；</li>
+<li>没有任何属性完全函数依赖于非码的任何一组属性。</li>
+</ol>
+<h1 id="多值依赖和4NF"><a href="#多值依赖和4NF" class="headerlink" title="多值依赖和4NF"></a>多值依赖和4NF</h1><h2 id="多值依赖"><a href="#多值依赖" class="headerlink" title="多值依赖"></a>多值依赖</h2><p>多值依赖： 设R(U)是属性集U上的一个关系模式，X,Y,Z是U的子集，且Z=U−X−Y。当且仅当R(U)的任一关系r，给定的一对(x,y)值，有一组Y的值，这组值仅仅取决于X的值而与Z的值无关，则成R(U)中的多值依赖$X\rightarrow   \rightarrow Y$成立。</p>
+<p><strong>判定方法：对于任意关系中，如果存在两个元组（就是行），记为A,B，如果他们的某一属性X的值相等，那么我们交换它们另外的属性Y的值后，得到的新的两个元组，在表中是可以在原来的表中找到与它们相匹配的元组的。</strong></p>
+<p>平凡多值依赖： 若$X \rightarrow \rightarrow Y$，而$Z=\empty$，则称$X\rightarrow \rightarrow Y$为平凡多值依赖。</p>
+<p>非平凡多值依赖：若$X \rightarrow \rightarrow Y$，而$Z\neq\empty$，则称$X\rightarrow \rightarrow Y$为非平凡多值依赖。</p>
+<h3 id="多值依赖的性质"><a href="#多值依赖的性质" class="headerlink" title="多值依赖的性质"></a>多值依赖的性质</h3><p>（1）多值依赖具有对称性</p>
+<p>若X→→Y，则X→→Z，其中Z＝U－X－Y</p>
+<p>（2）多值依赖具有传递性</p>
+<p>若X→→Y，Y→→Z， 则X→→Z –Y</p>
+<p>（3）函数依赖是多值依赖的特殊情况。</p>
+<p>若X→Y，则X→→Y。</p>
+<p>（4）若X→→Y，X→→Z，则X→→YU Z。</p>
+<p>（5）若X→→Y，X→→Z，则X→→Y∩Z。</p>
+<p>（6）若X→→Y，X→→Z，则X→→Y-Z，X→→Z -Y。</p>
+<h3 id="多值依赖和函数依赖的对比"><a href="#多值依赖和函数依赖的对比" class="headerlink" title="多值依赖和函数依赖的对比"></a>多值依赖和函数依赖的对比</h3><p>1）若函数依赖X→Y在R（U）上成立，则对于任何Y’ 属于Y均有X→Y’ 成立</p>
+<p>2）多值依赖X→→Y若在R(U)上成立，不能断言对于任何Y’ 属于Y有X→→Y’ 成立，因为多值依赖中，其实就是一对一组，一个老师可能交多门课，所以不同老师可能有教相同的课，所以不能推出X→→Y’ 成立。我们可以看出，如果把一组改为一个，实际上就是函数依赖，所以所<strong>函数依赖是多值依赖的特例</strong>，多值依赖不一定是函数依赖，但函数依赖一定是多值依赖。</p>
+<h2 id="4NF"><a href="#4NF" class="headerlink" title="4NF"></a>4NF</h2><p>关系模式$R&lt;U,F&gt;\in 1NF$，如果对于R的每个非平凡多值依赖$X\rightarrow \rightarrow Y(Y \nsubseteq X)$，X都含有码，则$R&lt;U,F&gt;\in 4NF$。</p>
+<p><strong>1）不允许有非平凡且非函数依赖的多值依赖</strong> </p>
+<p><strong>2）允许的非平凡多值依赖是函数依赖</strong></p>
+<p><strong>3）平凡的多值依赖属于第四范式</strong></p>
+<h2 id="关系规范化小结"><a href="#关系规范化小结" class="headerlink" title="关系规范化小结"></a>关系规范化小结</h2><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163427186.png" style="zoom:80%;">
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163453406.png" alt></p>
+<h1 id="ArmStrong公理系统"><a href="#ArmStrong公理系统" class="headerlink" title="ArmStrong公理系统"></a>ArmStrong公理系统</h1>]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库_数据库完整性</title>
+    <url>/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="数据库完整性"><a href="#数据库完整性" class="headerlink" title="数据库完整性"></a>数据库完整性</h1><ul>
+<li><p>数据库的完整性</p>
+<ul>
+<li>数据的正确性和相容性</li>
+</ul>
+</li>
+<li><p>数据的完整性和安全性是两个不同概念：</p>
+<ul>
+<li>数据的完整性：防止数据库中存在不符合语义的数据，也就是防止数据库中存在不正确的数据</li>
+<li>数据的安全性：保护数据库防止恶意的破坏和非法的存取</li>
+</ul>
+</li>
+<li><p>为维护数据库的完整性，DBMS必须：</p>
+<ul>
+<li>提供定义完整性约束条件的机制</li>
+<li>提供完整性检查的方法</li>
+<li>违约处理</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<p>DBMS完整性控制机制应具有的功能：</p>
+<ul>
+<li>违约反应</li>
+<li>定义功能</li>
+<li>检查功能</li>
+</ul>
+<h2 id="实体完整性"><a href="#实体完整性" class="headerlink" title="实体完整性"></a>实体完整性</h2><p>实体完整性的定义机制：<br>–CREATE  TABLE中用PRIMARY KEY定义<br>–列级约束条件 或表级约束条件</p>
+<p>实体完整性的检查和违约处理：</p>
+<p>在插入或对主码列进行更新操作时，RDBMS按照实体完整性规则自动进行检查。包括：<br>–检查主码值是否唯一，如果不唯一则拒绝插入或修改<br>–检查主码的各个属性是否为空，只要有一个为空就拒绝插入或修改</p>
+<h2 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h2><p>参照完整性，指多表之间的设计，主要使用外键约束【多表设计有：一对多，多对多，一对一】</p>
+<p>主要是定义外码，将一个关系的主码放在另一个关系中，作为该关系的属性，就称其为外码。外码的取值有两种情况，一种为空，另外一种就是被参照表的主码的域。</p>
+<p>子表的删除更新策略一共有4种：</p>
+<ul>
+<li><p>CASCADE 级联策略。<br>主表的修改会被同步到子表中。</p>
+</li>
+<li><p>NO ACTION 无动作策略。<br>要删改主表，必须要先删改子表对应数据。</p>
+</li>
+<li><p>RSTRICT 主表约束策略。<br>此策略，对主表的约束跟NO ACTION一样。即删、更新主表前的主键，必须要先删、更新子表中对应的。</p>
+</li>
+<li><p>SET NO 置空策略。<br>使用此策略时，当主表主键删改，则子表中的外键 设置为NULL。<br>但如果子表的外键是主键，或者子表外键设置NOT NULL，则此时就相当于NO ACTION策略。</p>
+</li>
+</ul>
+<p>参照完整性的定义机制：<br>–在CREATE  TABLE中用FOREIGN KEY短语定义哪些列为外码，<br>–用REFERENCES短语指明这些外码参照哪些表的主码</p>
+<table>
+<thead>
+<tr>
+<th>被参照表</th>
+<th>参照表</th>
+<th>违约处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可能破坏参照完整性</td>
+<td>插入元组</td>
+<td>拒绝</td>
+</tr>
+<tr>
+<td>可能破坏参照完整性</td>
+<td>修改外码值</td>
+<td>拒绝/级联修改/设置为空值</td>
+</tr>
+<tr>
+<td>修改主码值</td>
+<td>可能破坏参照完整性</td>
+<td>拒绝/级联修改/设置为空值</td>
+</tr>
+<tr>
+<td>删除元组</td>
+<td>可能破坏参照完整性</td>
+<td>拒绝/级联修改/设置为空值</td>
+</tr>
+</tbody></table>
+<p>若要在参照完整性中采用级联更新的修改方式，则应该在<strong>外码定义</strong>中说明。</p>
+<h1 id="用户定义完整性"><a href="#用户定义完整性" class="headerlink" title="用户定义完整性"></a>用户定义完整性</h1><p>用户定义的完整性就是针对某一具体应用的数据必须满足的语义要求</p>
+<p>分为：属性上的约束和元组上的约束。</p>
+<p>属性上的约束：在CREATE TABLE中定义属性时定义<br>–列值非空（NOT NULL），列值唯一（UNIQUE），检查列值是否满足一个布尔表达式（CHECK）<br>–插入元组或修改属性值时检查，不满足则拒绝执行。</p>
+<p>元组上的约束<br>–在CREATE TABLE时可以用CHECK短语定义元组上的约束条件，即元组级的限制<br>–同属性值限制相比，元组级的限制可以设置不同属性之间的取值的相互约束条件<br>–插入元组或修改属性值时检查，不满足则拒绝执行</p>
+<p>在一张表上可以定义多个完整性约束，为方便起见，在CREATE TABLE中可用CONSTRAINT语句对所定义的约束条件命名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CONSTRAINT&lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</span><br><span class="line">其中，&lt;完整性约束条件&gt;包括：NOT  NULL、UNIQUE、PRIMARYKEY、FOREIGN KEY、CHECK短语等。</span><br></pre></td></tr></table></figure>
+
+<p>语义: 对定义的约束条件命名</p>
+<h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><p>是用户定义在关系表上的一类由事件驱动的特殊过程。亦称为：事件-条件-动作规则。</p>
+<ul>
+<li>一旦定义，触发器将被保存在数据库服务器中。</li>
+<li><strong>任何用户对表的增、删、改操作均由服务器自动激活相应的触发器</strong>，在DBMS核心层进行集中的完整性控制。</li>
+<li>比约束更为灵活，规则中的动作可以很复杂，可以包含 if/ while/case 等程序控制指令，可以涉及其他表和其他数据库对象，实施更为复杂的检查和操作，具有更精细和更强大的数据控制能力。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TRIGGER &lt;触发器名&gt;  </span><br><span class="line">&#123; BEFORE| AFTER&#125; &lt;触发事件&gt;</span><br><span class="line">ON&lt;表名&gt;</span><br><span class="line">FOR EACH  &#123; ROW | STATEMENT &#125;</span><br><span class="line">［WHEN&lt;触发条件&gt;］</span><br><span class="line">&lt;触发动作体&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>触发时机：AFTER 表示 执行条件，有 BEFORE（之前 ） AFTER（之后）</p>
+</li>
+<li><p>触发事件：INSERT ON 表示在执行了 插入操作 ,有INSERT/UPDATE/DELETE 三种 </p>
+</li>
+<li><p>触发者类型：FOR EACH ROW BEGIN 固定语法</p>
+<ul>
+<li>行级触发器（FOR EACH ROW）</li>
+<li>语句级触发器（FOR EACH STATEMENT）【那么执行完该语句后，触发动作只发生一次】</li>
+</ul>
+</li>
+<li><p>触发动作体：是一段程序。如果触发器是行级触发器，则这段程序中还可以使用NEW和OLD分别引用触发事件发生前后的元组值。</p>
+</li>
+</ul>
+<h2 id="激活触发器"><a href="#激活触发器" class="headerlink" title="激活触发器"></a>激活触发器</h2><ul>
+<li><p>触发器的执行，由触发事件激活，并由数据库服务器自动执行。</p>
+</li>
+<li><p>一个数据表上可能定义了多个触发器，同一个表上的多个触发器激活时遵循如下的执行顺序：</p>
+<p>​     （1） 执行该表上的BEFORE触发器；<br>​    （2） 执行激活触发器的SQL语句；<br>​    （3） 执行该表上的AFTER触发器。</p>
+</li>
+<li><p>有多个触发器时，按创建时间顺序依次执行。</p>
+</li>
+<li><p>任一触发器的执行失败都将中止整个操作。</p>
+</li>
+</ul>
+<h2 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h2><p>删除触发器的SQL语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP TRIGGER &lt;触发器名&gt; ON&lt;表名&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>触发器必须是一个已经创建的触发器，并且只能由具有相应权限的用户删除。</p>
+<p><strong>注意：不同的DBMS对于触发器的支持方式和语法是有所区别的！</strong></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库_数据库安全性</title>
+    <url>/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="数据库安全性概述"><a href="#数据库安全性概述" class="headerlink" title="数据库安全性概述"></a>数据库安全性概述</h1><p>1.数据库安全性定义数据库的安全性是指保护数据库以防止不合法的使用所造成的数据泄露、更改或破坏。</p><p>2.重要性</p><ul>
+<li><p>数据库的一大特点是数据可以共享</p>
+</li>
+<li><p>数据共享必然带来数据库的安全性问题</p>
+</li>
+<li><p>数据库系统中的数据共享不能是无条件的共享</p>
+</li>
+</ul><a id="more"></a>
+
+
+<p>系统的安全保护措施是否有效是数据库系统的主要性能指标之一。</p>
+<h2 id="数据库的不安全因素"><a href="#数据库的不安全因素" class="headerlink" title="数据库的不安全因素"></a>数据库的不安全因素</h2><p>1）非授权用户对数据库的恶意存取和破坏</p>
+<ul>
+<li>安全措施：用户身份鉴别、存取控制、和视图等</li>
+</ul>
+<p>2）数据库中重要或敏感数据被泄露</p>
+<ul>
+<li>安全措施：审计、日志、入侵检测、数据加密等</li>
+</ul>
+<p>3）安全环境的脆弱性，包括：硬件、OS、网络等。</p>
+<ul>
+<li>可信计算机系统</li>
+</ul>
+<h2 id="数据库安全技术"><a href="#数据库安全技术" class="headerlink" title="数据库安全技术"></a>数据库安全技术</h2><ul>
+<li>用户身份验证</li>
+<li>多层存取控制</li>
+<li>审计</li>
+<li>视图</li>
+<li>数据加密等</li>
+</ul>
+<h3 id="用户身份鉴别"><a href="#用户身份鉴别" class="headerlink" title="用户身份鉴别"></a>用户身份鉴别</h3><ul>
+<li>用户标识与鉴别（Identification &amp;  Authentication）：<ul>
+<li>系统提供的最外层安全保护措施；</li>
+<li>系统提供一定的方式让用户标识自己的名字和身份，系统进行核实，通过鉴定后才提供系统使用权。</li>
+</ul>
+</li>
+<li>常用鉴别方法：<ul>
+<li>口令：静态（易被窃取）、动态（一次一密）</li>
+<li>生物特征识别：指纹、声音、照片等</li>
+<li>智能卡</li>
+<li>回答问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="存取控制"><a href="#存取控制" class="headerlink" title="存取控制"></a>存取控制</h3><p>1.什么是存取控制？对于获得上机权的用户还要根据系统预先定义好的外模式（视图）或用户权限进行存取控制，保证用户只能存取他有权存取的数据。</p>
+<p>2.方法</p>
+<ul>
+<li>定义用户权限</li>
+<li>合法权限检查</li>
+</ul>
+<p>3.常用存取控制方法</p>
+<ul>
+<li>自主存取控制（Discretionary Access Control，DAC），C2级，灵活</li>
+<li>强制存取控制（Mandatory Access Control，MAC），B1级，严格</li>
+</ul>
+<h3 id="视图机制"><a href="#视图机制" class="headerlink" title="视图机制"></a>视图机制</h3><ul>
+<li>视图能够把要保密的数据对无权存取这些数据的用户隐藏起来，因此对数据提供一定程度的安全保护。</li>
+<li>视图机制间接实现了支持存取谓词的用户权限定义。<br>[例]  建立计算机系学生的视图，把对该视图的SELECT权限授于王平，把该视图上的所有操作权限授于张明。<br>-先建立计算机系学生的视图CS_Student<br>CREATE VIEW CS_Student AS SELECT  *    FROM   Student    WHERE  Sdept=’CS’；<br>-在视图上进一步定义存取权限：<br>GRANT  SELECT   ON   CS_Student TO 王平；<br>GRANT ALL PRIVILIGES     ON  CS_Student TO  张明</li>
+</ul>
+<h3 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h3><ul>
+<li><p>审计</p>
+<ul>
+<li>系统自动建立审计日志，将用户对数据库的所有操作记录在上面。</li>
+<li>DBA利用审计日志找出非法存取数据的人、时间和内容。</li>
+<li>C2以上安全级别的DBMS必须具有。</li>
+</ul>
+</li>
+<li><p>审计分类</p>
+<p>–用户级审计：针对自己创建的数据库表或视图进行审计。<br>记录所有用户对这些表或视图的一切成功和（或）不成功的访问要求以及各种类型的SQL操作 。</p>
+<p>–系统级审计：由DBA设置</p>
+<ul>
+<li><p>监测成功或失败的登录要求；</p>
+</li>
+<li><p>监测GRANT和REVOKE操作以及其他数据库级权限下的操作。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="审计AUDIT语句"><a href="#审计AUDIT语句" class="headerlink" title="审计AUDIT语句"></a>审计AUDIT语句</h4><ul>
+<li><p>AUDIT语句：设置审计功能</p>
+</li>
+<li><p>NOAUDIT语句：取消审计功能</p>
+</li>
+</ul>
+<h3 id="数据加密"><a href="#数据加密" class="headerlink" title="数据加密"></a>数据加密</h3><ol>
+<li>思想<br>数据库中的数据以密码形式存放，使用时由用户设计的解码程序将其转换成用户可读的数据。这样，数据库中的数据即使被窃取，也只能是一些无法辨认的代码。</li>
+<li>数据库加密：存储加密、传输加密</li>
+<li>数据库加密在哪个层次实现？<ol>
+<li>OS层</li>
+<li>DBMS内核层</li>
+<li>DBMS外层</li>
+</ol>
+</li>
+</ol>
+<h2 id="自主存取控制技术"><a href="#自主存取控制技术" class="headerlink" title="自主存取控制技术"></a>自主存取控制技术</h2><h3 id="自主存取控制"><a href="#自主存取控制" class="headerlink" title="自主存取控制"></a>自主存取控制</h3><p><strong>用户“自主”决定将数据的存取权限授予何人、决定是否将“授权”的权限授予别人，称为“自主存取控制”。</strong></p>
+<ul>
+<li>定义：用户对于不同的数据库对象有不同的存取权限，不同的用户对同一对象也有不同的权限，而且用户还可将其拥有的存取权限转授给其他用户。</li>
+<li>用户权限组成要素 ：数据对象、操作类型</li>
+<li>授权：定义用户可以在哪些数据库对象上进行哪些类型的操作。</li>
+</ul>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200358779.png" style="zoom:67%;">
+
+<h3 id="授权与回收"><a href="#授权与回收" class="headerlink" title="授权与回收"></a>授权与回收</h3><p>SQL中使用GRANT语句和REVOKE语句来实现自主存取控制。</p>
+<h4 id="GRANT语句"><a href="#GRANT语句" class="headerlink" title="GRANT语句"></a>GRANT语句</h4><ul>
+<li><p>GRANT语句的一般格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT&lt;权限&gt;[,&lt;权限&gt;]...</span><br><span class="line">[ON&lt;对象类型&gt; &lt;对象名&gt;]</span><br><span class="line">TO&lt;用户&gt;[,&lt;用户&gt;]...</span><br><span class="line">[WITH GRANT OPTION];</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>语义：将对指定操作对象的指定操作权限授予指定的用户</p>
+<ul>
+<li>授权人：DBA、数据库对象创建者、拥有该权限的用户</li>
+<li>被授权限的用户： 一个或多个具体用户、PUBLIC（全体用户）</li>
+<li>WITH GRANT OPTION子句：指定：可以再授予，没有指定：不能传播</li>
+<li>不允许循环授权</li>
+</ul>
+</li>
+</ul>
+<h4 id="REVOKE语句"><a href="#REVOKE语句" class="headerlink" title="REVOKE语句"></a>REVOKE语句</h4><ul>
+<li><p>授予的权限可以由DBA或其他授权者用REVOKE语句收回。</p>
+</li>
+<li><p>REVOKE语句的一般格式为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">REVOKE&lt;权限&gt;[,&lt;权限&gt;]...</span><br><span class="line">[ON&lt;对象类型&gt; &lt;对象名&gt;]</span><br><span class="line">FROM&lt;用户&gt;[,&lt;用户&gt;]...[CASCADE | RESTRICT];</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="创建数据库模式的权限"><a href="#创建数据库模式的权限" class="headerlink" title="创建数据库模式的权限"></a>创建数据库模式的权限</h3><p>DBA在创建用户时，可以创建数据库模式的权限。</p>
+<p>CREATE USER语句格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE  USER  &lt;username&gt; </span><br><span class="line">［WITH］［DBA| RESOURCE| CONNECT］</span><br></pre></td></tr></table></figure>
+
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200936024.png" style="zoom:67%;">
+
+<h4 id="数据库角色"><a href="#数据库角色" class="headerlink" title="数据库角色"></a>数据库角色</h4><p>被命名的一组与数据库操作相关的权限</p>
+<ul>
+<li>角色是权限的集合</li>
+<li>可以为一组具有相同权限的用户创建一个角色</li>
+<li>简化授权的过程</li>
+</ul>
+<p>1、角色的创建</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE  ROLE  &lt;角色名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2、给角色授权</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT&lt;权限&gt;［，&lt;权限&gt;］... </span><br><span class="line">ON&lt;对象类型&gt;对象名</span><br><span class="line">TO&lt;角色&gt;［，&lt;角色&gt;］...</span><br></pre></td></tr></table></figure>
+
+<p>3、将一个角色授予其他的角色或用户</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT&lt;角色1&gt;［，&lt;角色2&gt;］...</span><br><span class="line">TO&lt;角色3&gt;［，&lt;用户1&gt;］... </span><br><span class="line">［WITH ADMIN OPTION］</span><br></pre></td></tr></table></figure>
+
+<p>4、角色权限收回</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">REVOKE&lt;权限&gt;［，&lt;权限&gt;］...</span><br><span class="line">ON&lt;对象类型&gt; &lt;对象名&gt;</span><br><span class="line">FROM&lt;角色&gt;［，&lt;角色&gt;］...</span><br></pre></td></tr></table></figure>
+
+<p>示例如下：</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201218195.png" style="zoom:67%;">
+
+<h3 id="自主存取控制缺点"><a href="#自主存取控制缺点" class="headerlink" title="自主存取控制缺点"></a>自主存取控制缺点</h3><ul>
+<li>可能存在数据的“无意泄露”</li>
+<li>原因：这种机制仅仅通过对数据的存取权限来进行安全控制，而数据本身并无安全性标记</li>
+</ul>
+<h2 id="强制存取控制机制"><a href="#强制存取控制机制" class="headerlink" title="强制存取控制机制"></a>强制存取控制机制</h2><p>对系统控制下的所有主客体赋予安全性标记，系统根据标记安全策略，实施强制存取控制</p>
+<p>强制存取控制（MAC)</p>
+<ul>
+<li>保证更高程度的安全性</li>
+<li>用户不能直接感知或进行控制</li>
+<li>适用于对数据有严格而固定密级分类的部门<ul>
+<li>军事部门</li>
+<li>政府部门</li>
+</ul>
+</li>
+</ul>
+<h3 id="强制存取控制方法"><a href="#强制存取控制方法" class="headerlink" title="强制存取控制方法"></a>强制存取控制方法</h3><ul>
+<li>主体是系统中的活动实体<ul>
+<li>DBMS所管理的实际用户</li>
+<li>代表用户的各进程</li>
+</ul>
+</li>
+<li>客体是系统中的被动实体，是受主体操纵的<ul>
+<li>文件、基表、索引、视图</li>
+</ul>
+</li>
+<li>敏感度标记（Label）<ul>
+<li>绝密（Top Secret）&gt;  机密（Secret）&gt;  可信（Confidential）&gt; 公开（Public）</li>
+</ul>
+</li>
+<li>主体的敏感度标记称为许可证级别（Clearance Level）</li>
+<li>客体的敏感度标记称为密级（Classification Level）</li>
+<li>强制存取控制就是通过对比主体的许可证级别和客体的密级，最终确定主体能否存取客体。</li>
+</ul>
+<p><strong>主体可更新密级高于他的客体</strong></p>
+<h3 id="强制存取控制规则"><a href="#强制存取控制规则" class="headerlink" title="强制存取控制规则"></a>强制存取控制规则</h3><ul>
+<li>强制存取控制规则：<br>1)  仅当主体的许可证级别大于或等于客体的密级时，该主体才能读取相应的客体<br>2)  仅当主体的许可证级别小于或等于客体的密级时，该主体才能写相应的客体</li>
+<li>规则的关键点：<br><strong>禁止拥有高许可证级别的主体更新低密级的数据对象</strong></li>
+</ul>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201608002.png" style="zoom:80%;">
+
+<h3 id="强制存取控制的优点"><a href="#强制存取控制的优点" class="headerlink" title="强制存取控制的优点"></a>强制存取控制的优点</h3><ul>
+<li>禁止拥有高许可证级别的主体更新低密级的数据对象，从而保证了敏感数据的可靠性；</li>
+<li>禁止低许可证级别的主体浏览高密级的数据，避免了敏感数据的泄漏；</li>
+<li>MAC对数据本身进行密级标记，无论数据如何复制，标记与数据是不可分割的整体。只有符合密级标记要求的用户才可以操作相应数据，提高了安全性级别。</li>
+</ul>
+<h3 id="强制存取控制方法-1"><a href="#强制存取控制方法-1" class="headerlink" title="强制存取控制方法"></a>强制存取控制方法</h3><ul>
+<li>DAC与MAC共同构成DBMS的安全机制</li>
+<li>实现MAC时要首先实现DAC<ul>
+<li>原因：较高安全性级别提供的安全保护要包含较低级别的所有保护</li>
+</ul>
+</li>
+<li>先进行DAC检查，通过DAC检查的数据对象再由系统进行MAC检查，只有通过MAC检查的数据对象方可存取。</li>
+</ul>
+<p>数据库安全机制的设计目标：试图破坏安全的人所花费的代价 &gt;&gt; 得到的利益</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库_关系数据库SQL语言</title>
+    <url>/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/</url>
+    <content><![CDATA[<h1 id="SQL语言概述"><a href="#SQL语言概述" class="headerlink" title="SQL语言概述"></a>SQL语言概述</h1><p>SQL语言是面向集合的非过程化的语言。是介于关系代数和关系演算之间的标准查询语言。</p><p>集数据定义语言DDL、数据操纵语言DML、数据控制语言DCL功能于一体。</p><p>核心功能：9个动词</p><ul>
+<li><p>数据查询：SELECT（最为复杂的操作）</p>
+</li>
+<li><p>数据定义：CREATE（创建）、DROP（删除）、ALTER（更新）</p>
+</li>
+<li><p>数据操纵DML：INSERT、UPDATE、DELETE</p>
+</li>
+<li><p>数据控制DCL：GRANT（授权）、REVOKE（撤销，回收权限）</p>
+</li>
+<li><p>基本概念：</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/image-20200601223738921.png" alt></p>
+</li>
+</ul><a id="more"></a>
+
+
+
+<h1 id="数据定义概述"><a href="#数据定义概述" class="headerlink" title="数据定义概述"></a>数据定义概述</h1><p>数据定于语言DDL：是SQL中提供给用户定义DBMS支持的抽象对象的SQL语句。</p>
+<p>DBMS支持4种抽象对象：模式、表、视图、索引</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/image-20200412192059133.png" style="zoom:67%;">
+
+<p>一个RDBMS的实例中，可建立多个数据库；</p>
+<p>一个数据库中可以建立多个外模式，只有一个内模式；</p>
+<p>一个模式下可以建立多个表、视图和索引等数据库对象</p>
+<h2 id="基本表的定义、修改和删除"><a href="#基本表的定义、修改和删除" class="headerlink" title="基本表的定义、修改和删除"></a>基本表的定义、修改和删除</h2><h3 id="定义基本表"><a href="#定义基本表" class="headerlink" title="定义基本表"></a>定义基本表</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE&lt;表名&gt;（&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt; ][，&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt;]]...[，&lt;表级完整性约束条件&gt; ]）；</span><br></pre></td></tr></table></figure>
+
+<p>可以加多个列级完整性约束条件。</p>
+<p><strong>根据已有的表创建新表：</strong><br><strong>A：create table tab_new like tab_old (使用旧表创建新表)</strong><br><strong>B：create table tab_new as select col1,col2… from tab_old definition only</strong></p>
+<h4 id="模式和表"><a href="#模式和表" class="headerlink" title="模式和表"></a>模式和表</h4><ul>
+<li>每一个基本表都属于某一个模式，一个模式包含多个基本表</li>
+<li>定义基本表所属模式：<ul>
+<li>方法一：在表名中明显地给出模式名<br>CREATE TABLE S-T.Student（……）; /<em>模式名为S-T</em>/</li>
+<li>方法二：在创建模式语句中同时创建表<br>CREATE SCHEMA S-T AUTHORIZATION WANG<br>CREATE TABLE  Student（……）;</li>
+</ul>
+</li>
+</ul>
+<h3 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE&lt;表名&gt;</span><br><span class="line">[ ADD&lt;新列名&gt; &lt;数据类型&gt; [ 完整性约束 ]  ]</span><br><span class="line">[ DROP[COLUMN]&lt;列名&gt; [CASCADE|RESTRICT]]</span><br><span class="line">[ADD&lt;表级完整性约束名&gt; ] </span><br><span class="line">[DROP CONSTRAINT&lt;完整性约束名&gt; [CASCADE|RESTRICT]] </span><br><span class="line">[ALTER COLUMN&lt;列名&gt; &lt;数据类型&gt; ]；</span><br></pre></td></tr></table></figure>
+
+<p>//新增加的列一律为空值。</p>
+<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP TABLE &lt;表名&gt;［RESTRICT| CASCADE］;</span><br></pre></td></tr></table></figure>
+
+<p>RESTRICT：删除表是有限制的。欲删除的基本表不能被其他表的约束所引用，如果存在依赖该表的对象，则此表不能被删除</p>
+<p>CASCADE：删除该表没有限制。在删除基本表的同时，相关的依赖对象一起删除</p>
+<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><p>基本语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT A1,A2··· FROM R1,R2··· WHERE F</span><br></pre></td></tr></table></figure>
+
+<p>这里R1,…,Rm为关系，F是公式，A1,…,An为属性。</p>
+<p>完整语法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT[ALL|DISTINCT]&lt;目标列表达式&gt;[，&lt;目标列表达式&gt;]...</span><br><span class="line">FROM &lt;表名或视图名&gt;[，&lt;表名或视图名&gt; ] ...</span><br><span class="line">[WHERE&lt;条件表达式&gt;]</span><br><span class="line">[GROUP BY&lt;列名1&gt;[HAVING&lt;条件表达式&gt;] ]</span><br><span class="line">[ORDER BY&lt;列名2&gt;[ ASC|DESC ] ]；</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>SELECT子句，投影运算，选择表中的若干列；</li>
+<li>WHERE子句，行筛选条件，选择表中的若干行；</li>
+<li>GROUP子句，分组运算；</li>
+<li>HAVING子句，分组条件；</li>
+<li>ORDER子句，排序计算。</li>
+</ul>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/image-20200601225119003.png" alt></p>
+<h3 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h3><ul>
+<li><p>消除重复元组Distinct</p>
+</li>
+<li><p>where子句：如何从表中选择指定元组？</p>
+<ul>
+<li><p>对应于关系代数运算σ<del>P</del>，SQL提供WHERE子句解决表元组的选择。</p>
+</li>
+<li><p>格式：WHERE &lt;条件表达式&gt;【&lt;条件表达式&gt;是包含属性名的逻辑表达式P】</p>
+</li>
+<li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/image-20200601225333032.png" style="zoom:67%;">
+</li>
+<li><p>范围查询：</p>
+<ul>
+<li>比较运算符：=、&lt;、&gt;、&gt;=、&lt;=、!=、&lt;&gt;、!&gt;、!</li>
+<li>&lt;确定范围：BETWEEN …  AND  …NOT BETWEEN  …  AND  …</li>
+</ul>
+</li>
+<li><p>集合查询：</p>
+<ul>
+<li>x IN &lt;值表&gt;,  x NOT IN &lt;值表&gt;</li>
+</ul>
+</li>
+<li><p>字符匹配查询：</p>
+<ul>
+<li><p>[NOT]LIKE‘&lt;匹配串&gt;’[ESCAPE‘ &lt;换码字符&gt;’]</p>
+<p>查找指定的属性列值与&lt;匹配串&gt;相匹配的元组。&lt;匹配串&gt;可以是一个完整的字符串，也可以含有通配符。<br>通配符：SQL规定符号百分号%及下划线__ 具有其他含义:<br>百分号%：代表任意长度的字符串<br>下划线__ ：代表任意一个字符<br>ESCAPE：是将百分号% 或下划线__转回其本意</p>
+</li>
+</ul>
+</li>
+<li><p>涉及空值查询：</p>
+<ul>
+<li>IS NULL 或IS NOT NULL</li>
+</ul>
+</li>
+<li><p>多重条件查询：</p>
+<ul>
+<li>逻辑运算符：AND和OR可以用来将多个简单查询条件复合成更加复杂的条件</li>
+<li>优先级：NOT&gt;AND&gt;OR</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Order By子句：将查询结果的元组按照一个或多个属性列的排列次序显示</p>
+<ul>
+<li>格式：SELECT 块 ORDER BY 子句；<br>其中，ORDER BY子句可以按一个或多个属性列排序；<br>每列可选择：升序：ASC；降序：DESC；缺省值为升序</li>
+</ul>
+</li>
+</ul>
+<h4 id="聚集函数和分组"><a href="#聚集函数和分组" class="headerlink" title="聚集函数和分组"></a>聚集函数和分组</h4><p>1、SQL支持聚集函数来解决求集合特征值问题：如该集合的个数、最小值等</p>
+<p>基本的聚集函数如下：</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/image-20200601230516142.png" alt></p>
+<p><strong>集函数只能用于SELECT子句和HAVING子句中</strong></p>
+<p>2、GROUP BY子句：将一个查询结果集合进行分组</p>
+<ul>
+<li>GROUP BY A1，A2，…,An（其中：Ai为属性名）【按指定的一列或多列，对一个SELECT块按值分组，值相等的为一组】</li>
+</ul>
+<p>3、HAVING子句：使用限定条件选择部分分组，则可以使用HAVING子句</p>
+<p><strong>注意：HAVING短语与WHERE子句的区别：</strong><br><strong>– WHERE子句作用于基表或视图，从中选择满足条件的元组</strong><br><strong>– HAVING短语作用于组，从中选择满足条件的组。</strong></p>
+<h3 id="多表连接查询"><a href="#多表连接查询" class="headerlink" title="多表连接查询"></a>多表连接查询</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">FROM r1，r2，......rn</span><br><span class="line">WHERE [r1.]&lt;列名1&gt;&lt;比较运算符&gt;[r2.]&lt;列名2&gt;...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>合并：FROM</li>
+<li>选择：WHERE</li>
+<li>投影：SELECT</li>
+</ul>
+<h4 id="自身连接"><a href="#自身连接" class="headerlink" title="自身连接"></a>自身连接</h4><p>两种连接表示方法：</p>
+<p>1、在FROM子句中指明进行连接的表名，在WHERE子句中指明连接的列名及其连接条件</p>
+<p>2、利用关键字JOIN进行连接，通过关键词ON与JOIN相对应，指明连接条件。具体分为以下几种：</p>
+<ul>
+<li>INNER JOIN：返回符合连接条件的记录；</li>
+<li>CROSS JOIN：返回笛卡儿积。</li>
+<li>LEFT [OUTER] JOIN：返回符合连接条件的数据行以及左边表中不符合条件的数据行，此时右边数据行以NULL来显示，称为左连接；</li>
+<li>RIGHT  [OUTER]  JOIN：返回符合连接条件的数据行以及右边表中不符合条件的数据行，此时左边数据行以NULL来显示，称为右连接；</li>
+<li>FULL  [OUTER]  JOIN：返回符合连接条件的数据行以及左边表和右边表中不符合条件的数据行，此时缺乏数据的数据行会以NULL来显示</li>
+</ul>
+<h4 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h4><p>LEFT  JOIN、RIGHT  JOIN与  FULL  JOIN统称为外连接。可用来显示不满足连接条件的元组。某些查询要求只能用外连接来表达</p>
+<h3 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a>嵌套查询</h3><p>一个SELECT-FROM-WHERE语句称为一个查询块；将一个查询块嵌套在另一个查询块的WHERE子句或HAVING短语的条件中的查询称为嵌套查询，相当于在SELECT中调用另一段SELECT。</p>
+<ul>
+<li><strong>子查询不能使用ORDER BY子句；</strong></li>
+<li><strong>层层嵌套方式反映了SQL语言的结构化；</strong></li>
+<li><strong>有些嵌套查询可以用连接运算替代</strong></li>
+<li>AS的作用是起别名</li>
+</ul>
+<h4 id="带ANY、ALL谓词的子查询"><a href="#带ANY、ALL谓词的子查询" class="headerlink" title="带ANY、ALL谓词的子查询"></a>带ANY、ALL谓词的子查询</h4><p>聚集函数ANY(SOME)、ALL，能够求出一个集合的“任意一个”或“所有”元组</p>
+<ul>
+<li>ANY(R)：R的任意一个值【表示“至少比R…的某一个大”】</li>
+<li>ALL(R)： R所有值【表示“比R…所有大”】</li>
+</ul>
+<h4 id="带EXISTS谓词的子查询"><a href="#带EXISTS谓词的子查询" class="headerlink" title="带EXISTS谓词的子查询"></a>带EXISTS谓词的子查询</h4><p>EXISTS：本质上是一个返回值为“真”/“假”的集函数，用于判断一个集合是否为空。<br>EXISTS（R），R为非空则返回真。</p>
+<p>NOT EXISTS：语义与EXISTS函数相反的逻辑函数。</p>
+<p>带EXISTS的子查询的用法：</p>
+<p>1.不同形式的查询间的替换:带IN谓词、比较运算符、ANY和ALL谓词的子查询 与 带EXISTS谓词的子查询 等价替换</p>
+<p>2.用EXISTS/NOT EXISTS实现全称量词(难点)</p>
+<p>3.用EXISTS/NOT EXISTS实现逻辑蕴函(难点)</p>
+<p>作用：<strong>把带有全称量词的谓词转换为等价的带有存在量词的谓词</strong></p>
+<h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INSERT INTO &lt;表名&gt; [(&lt;属性列1&gt;[,&lt;属性列2&gt;]...)]</span><br><span class="line">VALUES （&lt;常量1&gt;[,&lt;常量2&gt;]....）</span><br><span class="line">| SELECT子查询；</span><br></pre></td></tr></table></figure>
+
+<p>INTO子句 属性列的顺序可与表定义中的顺序不一致，可以不指定或指定部分属性列</p>
+<p>VALUES子句 提供的值必须与INTO子句匹配</p>
+<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">UPDATE&lt;表名&gt; </span><br><span class="line">SET&lt;列名&gt;=&lt;表达式&gt;[, &lt;列名&gt;=&lt;表达式&gt;]...</span><br><span class="line">[WHERE&lt;条件&gt;]；</span><br></pre></td></tr></table></figure>
+
+<p>SET子句给出&lt;表达式&gt;的值用于取代相应的属性列值。</p>
+<p>省略WHERE子句，则表示要修改表中的所有元组。</p>
+<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DELETE </span><br><span class="line">FROM&lt;表名&gt;</span><br><span class="line">[WHERE&lt;条件&gt;]；</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><ul>
+<li>视图的特点：<ul>
+<li>是从一个或几个基本表（或视图）导出的表，是虚表</li>
+<li>数据库只存放视图的定义，不存放视图对应的数据</li>
+<li>基表中的数据发生变化，从视图中查询出的数据也随之改变</li>
+</ul>
+</li>
+<li>基于视图的操作：<ul>
+<li>查询</li>
+<li>删除</li>
+<li>定义基于该视图的新视图</li>
+<li>受限更新</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><p>创建视图语句格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE  VIEW &lt;视图名&gt;  [(&lt;列名&gt;  [，&lt;列名&gt;]...)]</span><br><span class="line">AS&lt;子查询&gt;</span><br><span class="line">[WITH  CHECKOPTION]；</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<ul>
+<li>组成视图的属性列名：全部省略或全部指定</li>
+<li>子查询是否可含有ORDER BY子句和DISTINCT短语，取决于具体系统的实现。</li>
+<li>WITH CHECK OPTION表示对视图进行增删改时要保证删除、插入、更新的行满足视图定义中的谓词条件（即子查询中的条件表达式）。</li>
+</ul>
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><p>删除视图语句格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP  VIEW  &lt;视图名&gt; [CASCADE]；</span><br></pre></td></tr></table></figure>
+
+<p>从数据字典中删除指定的视图定义。</p>
+<ul>
+<li>如果该视图上还导出了其他视图，使用CASCADE级联删除语句，把该视图和由它导出的所有视图一起删除</li>
+<li>删除基表时，由该基表导出的所有视图定义都必须显式删除</li>
+</ul>
+<h3 id="查询视图"><a href="#查询视图" class="headerlink" title="查询视图"></a>查询视图</h3><p>RDBMS采用视图消解法实现视图查询。</p>
+<h3 id="更新视图"><a href="#更新视图" class="headerlink" title="更新视图"></a>更新视图</h3><p>视图不实际存储数据，因此，对视图的更新最终要转换为对基本表的更新。为防止用户通过视图更新，对不属于视图范围内的基本表数据进行更新操作，在定义视图时加上WITH   CHECK   OPTION操作。</p>
+<ul>
+<li>一般RDBMS允许对行列子集视图进行更新</li>
+<li>对其他类型视图的更新不同系统有不同限制</li>
+</ul>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>视图能够简化用户的操作</li>
+<li>视图使用户能以多种角度看待同一数据</li>
+<li>视图对重构数据库提供了一定程度的逻辑独立性</li>
+<li>视图能够对机密数据提供安全保护</li>
+<li>适当的利用视图可以更清晰的表达查询</li>
+</ul>
+<h2 id="key、index、primary-key和unique-key"><a href="#key、index、primary-key和unique-key" class="headerlink" title="key、index、primary key和unique key"></a>key、index、primary key和unique key</h2><p>[参考文章](<a href="https://www.cnblogs.com/zjfjava/p/6922494.html" target="_blank" rel="noopener">https://www.cnblogs.com/zjfjava/p/6922494.html</a></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据库_关系数据库</title>
+    <url>/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/</url>
+    <content><![CDATA[<h1 id="关系模型概述"><a href="#关系模型概述" class="headerlink" title="关系模型概述"></a>关系模型概述</h1><p>关系数据理论是建立在<strong>集合代数理论基础上</strong>的，有着坚实的数学基础</p><ul>
+<li>数据结构：二维表</li>
+<li>关系操作：<ul>
+<li>增加(insert)、删除(delete)、修改(updated)</li>
+<li>查询(Query):•选择(select)、投影(project)、连接(join)<ul>
+<li>除(divide)、并(union)、交(intersection)</li>
+<li>差(difference)</li>
+</ul>
+</li>
+<li>关系代数，关系演算，SQL</li>
+</ul>
+</li>
+<li>关系的三类完整性约束：<ul>
+<li>实体完整性、参照完整性、用户自定义的完整性</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+
+<blockquote>
+<p>关系代数是用对关系的运算来表达查询要求的方式。</p>
+<p>关系演算是用谓词表达查询要求的方式。</p>
+<ul>
+<li>按谓词变元的基本对象是元组变量还是域变量分为元组关系演算和域关系演算</li>
+</ul>
+</blockquote>
+<h2 id="关系数据结构"><a href="#关系数据结构" class="headerlink" title="关系数据结构"></a>关系数据结构</h2><ul>
+<li><p>域</p>
+<ul>
+<li>域是一组具有相同数据类型的值的集合</li>
+</ul>
+</li>
+<li><p>笛卡儿积</p>
+<ul>
+<li><p>一组域D<del>1</del> , D<del>2</del> ,…, D<del>n</del>的笛卡尔积为：D<del>1</del>×D<del>2</del>×…×D<del>n</del>= {(d<del>1</del> , d<del>2</del> , … , d<del>n</del>) | d<del>i</del>∈D<del>i</del>, i=1,…,n}</p>
+</li>
+<li><p>笛卡尔积的每个元素(d<del>1</del> , d<del>2</del> , … , d<del>n</del>)称作一个n-元组（n-tuple）</p>
+</li>
+<li><p>元组的每一个值d<del>i</del>叫做一个分量（Component）</p>
+</li>
+<li><p>若D<del>i</del>的基数（元组个数）为m<del>i</del>，则笛卡尔积的基数为<br>$$<br>\prod^n_{i=1}m_i<br>$$</p>
+<blockquote>
+<p>一个域允许的不同取值个数称为这个域的基数</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>笛卡儿积可以表示成一张二维表。表中的每行对应一个元组，表中的每一列的值来自一个域。</p>
+<ul>
+<li><p>关系</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401153303890.png" style="zoom:50%;">
+
+<ul>
+<li><p>笛卡尔积D<del>1</del>×D<del>2</del>×…×D<del>n</del>的子集叫做在域D<del>1</del> , D<del>2</del> ,…, D<del>n</del>上的关系，用R(D<del>1</del> , D<del>2</del> ,…, D<del>n</del>)表示</p>
+</li>
+<li><p>R是关系的名字，n是关系的度或目</p>
+<blockquote>
+<p>当n=1时，称该关系为单元关系</p>
+</blockquote>
+</li>
+<li><p>关系是笛卡尔积中有意义的子集，关系中的每个元素是关系中的元组</p>
+<blockquote>
+<p>一般来说，笛卡儿积是没有实际语义的，只有它的某个真子集才有实际含义</p>
+</blockquote>
+</li>
+<li><p>关系也可以表示为二维表</p>
+</li>
+</ul>
+</li>
+<li><p>属性</p>
+<ul>
+<li>关系中不同列可以对应相同的域，为了加以区分，必须对每列起一个名字，称为属性</li>
+<li>n目关系必有n个属性</li>
+</ul>
+</li>
+</ul>
+<h3 id="关系数据结构-1"><a href="#关系数据结构-1" class="headerlink" title="关系数据结构"></a>关系数据结构</h3><p>关系的性质</p>
+<ul>
+<li>列是同质的；即每一列中的分量是同一类型的数据，来自同一个域。</li>
+<li>行列的顺序无关紧要；行列的次序是可以任意交换的</li>
+<li>任意两个元组不能完全相同</li>
+<li>每一分量必须是不可再分的数据</li>
+<li>不同的属性，属性名不能相同</li>
+</ul>
+<p>候选码（Candidate Key）</p>
+<ul>
+<li><strong>关系中的一个属性组，其值能唯一标识一个元组</strong>。若从属性组中去掉任何一个属性，它就不具有这一性质了，这样的属性组称作候选码如DEPT中的D#，DN都可作为候选码</li>
+<li>任何一个候选码中的属性称作主属性如SC中的S#，C#</li>
+</ul>
+<p>主码（Primary Key）</p>
+<ul>
+<li>若一个关系有多个候选码，则选定其中一个作为主码如可选定D#作为DEPT的主码</li>
+</ul>
+<p>外码（Foreign Key）</p>
+<ul>
+<li>关系R中的一个属性组，它不是R的码，但它与另一个关系S的码相对应，则称这个属性组为R的外码<br>如S关系中的D#属性</li>
+</ul>
+<h3 id="关系模式"><a href="#关系模式" class="headerlink" title="关系模式"></a>关系模式</h3><p>形式化的表示为R(U,D,DOM,F)</p>
+<blockquote>
+<p>R为关系名，U为组成该关系的属性名集合；D为U中属性所来自的域；DOM为属性向域的映象集合；F为属性间数据的依赖关系集合。</p>
+</blockquote>
+<ul>
+<li>关系的描述称作关系模式，包括关系名、关系中的属性名、属性向域的映象、属性间的数据依赖关系等，记作R(A<del>1</del> , A<del>2</del> ,…, A<del>n</del> ) </li>
+<li>属性向域的映象一般直接说明为属性的类型、长度等</li>
+<li>某一时刻对应某个关系模式的内容(元组的集合)称作关系</li>
+<li>关系模式是型，是稳定的<br>关系是某一时刻的值，是随时间不断变化的</li>
+</ul>
+<h3 id="关系数据库"><a href="#关系数据库" class="headerlink" title="关系数据库"></a>关系数据库</h3><ul>
+<li><p>其型是关系模式的集合，即数据库描述，称作数据库的内涵(Intension)，或关系数据库模式</p>
+</li>
+<li><p>其值是某一时刻关系的集合，称作数据库的外延(Extension)，或关系数据库</p>
+</li>
+</ul>
+<h2 id="关系的完整性约束"><a href="#关系的完整性约束" class="headerlink" title="关系的完整性约束"></a>关系的完整性约束</h2><h3 id="实体完整性"><a href="#实体完整性" class="headerlink" title="实体完整性"></a>实体完整性</h3><ul>
+<li>关系的主码中的属性值不能为空值</li>
+<li>空值：不知道或无意义</li>
+<li>意义：关系对应到现实世界中的实体集，元组对应到实体，实体是相互可区分的，通过主码来唯一标识，若主码为空，则出现不可标识的实体，这是不容许的</li>
+</ul>
+<h3 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h3><ul>
+<li>如果关系R<del>2</del>的外码F<del>k</del>与关系R<del>1</del>的主码P<del>k</del>相对应，则R<del>2</del>中的每一个元组的F<del>k</del>值或者等于R<del>1</del> 中某个元组的P<del>k</del>值，或者为空值【即属性Fk本身不是主属性，则可以取空值，否则不能取空值。】</li>
+<li>意义：如果关系R<del>2</del>的某个元组t<del>2</del>参照了关系R<del>1</del>的某个元组t<del>1</del>，则t<del>1</del>必须存在</li>
+<li>例如：关系S在D#上的取值有两种可能<ul>
+<li>空值，表示该学生尚未分到任何系中</li>
+<li>若非空值，则必须是DEPT关系中某个元组的D#值，表示该学生不可能分到一个不存在的系中<br>DEPT(D#, DN , DEAN)S(S#, SN , SEX , AGE , D#)</li>
+</ul>
+</li>
+</ul>
+<h3 id="用户定义的完整性"><a href="#用户定义的完整性" class="headerlink" title="用户定义的完整性"></a>用户定义的完整性</h3><ul>
+<li><p>用户定义的完整性</p>
+<ul>
+<li><p>用户针对具体的应用环境定义的完整性约束条件</p>
+</li>
+<li><p>如S#要求是8位整数，SEX要求取值为“男”或“女”</p>
+</li>
+</ul>
+</li>
+<li><p>系统支持</p>
+<ul>
+<li>实体完整性和参照完整性由系统自动支持</li>
+<li>系统应提供定义和检验用户定义的完整性的机制</li>
+</ul>
+</li>
+</ul>
+<h1 id="关系代数概述"><a href="#关系代数概述" class="headerlink" title="关系代数概述"></a>关系代数概述</h1><ul>
+<li>属于关系操作的一种</li>
+<li>关系代数是一种抽象的查询语言</li>
+<li>通过对关系的运算来表达查询操作</li>
+<li>运算对象、结果均为关系</li>
+<li>运算包括四类：<ul>
+<li>集合运算、关系运算、比较运算、逻辑运算</li>
+</ul>
+</li>
+</ul>
+<h2 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h2><h3 id="并运算"><a href="#并运算" class="headerlink" title="并运算"></a>并运算</h3><ul>
+<li><p>所有至少出现在两个关系中之一的元组集合</p>
+</li>
+<li><p>两个关系R和S若进行并运算，则它们必须是相容的:</p>
+<ul>
+<li>关系R和S必须是同元的，即它们的属性数目必须相同</li>
+<li>对i，R的第i个属性的域必须和S的第i个属性的域相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="差运算"><a href="#差运算" class="headerlink" title="差运算"></a>差运算</h3><p>所有出现在一个关系而不在另一关系中的元组集合</p>
+<p>R和S必须是相容的</p>
+<h3 id="交运算"><a href="#交运算" class="headerlink" title="交运算"></a>交运算</h3><ul>
+<li>所有同时出现在两个关系中的元组集合</li>
+<li>交运算可以通过差运算来重写</li>
+</ul>
+<h2 id="基本关系运算"><a href="#基本关系运算" class="headerlink" title="基本关系运算"></a>基本关系运算</h2><h3 id="选择运算"><a href="#选择运算" class="headerlink" title="选择运算"></a>选择运算</h3><p>在关系R中选择满足给定条件的元组（从行的角度）</p>
+<h3 id="投影运算"><a href="#投影运算" class="headerlink" title="投影运算"></a>投影运算</h3><p>投影的结果中要去掉相同的行</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401174458046.png" style="zoom:67%;">
+
+<h3 id="广义笛卡儿积"><a href="#广义笛卡儿积" class="headerlink" title="广义笛卡儿积"></a>广义笛卡儿积</h3><ul>
+<li><p>元组的连串（Concatenation）</p>
+<ul>
+<li>若r = (r<del>1</del>，…，r<del>n</del>)，s = (s<del>1</del> ，… ，s<del>m</del>)，则定义r与s的连串为：rs = (r<del>1</del>，…，r<del>n</del>，s<del>1</del> ，…，s<del>m</del>)</li>
+</ul>
+</li>
+<li><p>广义笛卡尔积两个关系R，S，其度分别为n，m，则它们的笛卡尔积是所有这样的元组集合：元组的前n个分量是R中的一个元组，后m个分量是S中的一个元组<br>RxS={rs|r属于R并且s属于S}</p>
+</li>
+<li><p>RxS的度为R与S的度之和，RxS的元组个数为R和S的元组个数的乘积</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601164930592.png" alt></p>
+</li>
+</ul>
+<h2 id="其它关系运算"><a href="#其它关系运算" class="headerlink" title="其它关系运算"></a>其它关系运算</h2><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165011840.png" alt></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165118331.png" alt></p>
+<p>0连接就是有附加条件的自然连接。</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165210237.png" alt></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165223860.png" alt></p>
+<h3 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h3><p>把上述中舍弃的元组也保存在结果关系中，在其他属性上填上NULL。</p>
+<p>左外连接：只把左边关系R中要舍弃的元组保留。同理：右外连接。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165444957.png" style="zoom:50%;">
+
+<h3 id="除运算"><a href="#除运算" class="headerlink" title="除运算"></a>除运算</h3><p>把S和R中相同的属性组拿出来，然后取R中独有的属性</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165522272.png" alt></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -1511,14 +2810,85 @@
       </tags>
   </entry>
   <entry>
+    <title>计算机系统结构-指令系统</title>
+    <url>/2020/03/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h1 id="基本概念和分类"><a href="#基本概念和分类" class="headerlink" title="基本概念和分类"></a>基本概念和分类</h1><p>ISA(指令系统)定义了软硬件交互的协约。</p><h2 id="指令系统设计原则"><a href="#指令系统设计原则" class="headerlink" title="指令系统设计原则"></a>指令系统设计原则</h2><ul>
+<li>可编程性</li>
+<li>可实现性</li>
+<li>兼容性</li>
+</ul><h2 id="指令系统设计要素"><a href="#指令系统设计要素" class="headerlink" title="指令系统设计要素"></a>指令系统设计要素</h2><ul>
+<li><p><strong>指令格式</strong>：包括了指令长度（定长或者是变长）以及编码方式</p>
+</li>
+<li><p><strong>操作数存储位置（寄存器、主存、累加器、堆栈）、类型（整型、浮点）、长度（字节、字、双字）和个数（1，2，3，多操作数）</strong></p>
+</li>
+<li><p><strong>寻址方式</strong></p>
+</li>
+<li><p><strong>支持的操作类型：加减、比较</strong></p>
+</li>
+</ul><a id="more"></a>
+
+
+<h2 id="指令系统结构分类"><a href="#指令系统结构分类" class="headerlink" title="指令系统结构分类"></a>指令系统结构分类</h2><p>根据操作数的存储位置对指令进行分类：</p>
+<ul>
+<li>主存型结构：主存</li>
+<li>累加器型结构：累加器</li>
+<li>堆栈型结构：堆栈</li>
+<li>通用寄存器结构：通用寄存器组</li>
+</ul>
+<p><strong>指令系统中操作数给出方式：</strong></p>
+<ul>
+<li>显式给出：用指令字中的操作数字段给出</li>
+<li>隐式给出：隐式给出则是使用实现约定好的单元</li>
+</ul>
+<h1 id="指令系统的发展和改进"><a href="#指令系统的发展和改进" class="headerlink" title="指令系统的发展和改进"></a>指令系统的发展和改进</h1><p>由性能公式：CPU时间=指令条数IC*CPI *周期时间</p>
+<h2 id="复杂指令系统CISC"><a href="#复杂指令系统CISC" class="headerlink" title="复杂指令系统CISC"></a>复杂指令系统CISC</h2><p><strong>改进方法：</strong></p>
+<ul>
+<li>减少指令条数，使用复杂的指令</li>
+<li>对于使用频率高的指令串，用一条新的指令来代替</li>
+</ul>
+<p><strong>问题：</strong></p>
+<ul>
+<li>设计周期长，准确性难以保证</li>
+<li>需要大量的硬件支持</li>
+<li>很多复杂指令使用频率低，造成资源浪费</li>
+<li>许多指令由于操作复杂，其CPI值比较大，执行速度慢</li>
+<li>规整性不好，不利于采用流水线技术来提高性能</li>
+</ul>
+<h2 id="精简指令系统RISC"><a href="#精简指令系统RISC" class="headerlink" title="精简指令系统RISC"></a>精简指令系统RISC</h2><p><strong>RISC遵循的原则：</strong></p>
+<ul>
+<li>指令条数少，功能简单<br>【只选取使用频率很高的指令，再补充一些其他最有用的指令】</li>
+<li>指令格式简单、规整、并减少寻址方式</li>
+<li>指令的执行在单个周期内完成（采用流水线机制）</li>
+<li>只有load和store指令才能访问存储器，其他指令的操作都是在寄存器之间进行（load-store结构）</li>
+<li>大多数指令都采用硬连逻辑来实现</li>
+<li>强调优化编译器的作用，为高级语言程序生成优化的代码</li>
+<li>充分利用流水线技术来提高性能</li>
+</ul>
+<p><strong>改进方法：</strong></p>
+<ul>
+<li>减少CPI，使用大量单周期指令</li>
+<li>增加指令条数，复杂的指令使用频率很低，实际程序的指令条数并不太多</li>
+<li>减少时钟周期时间</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+        <category>计算机系统结构</category>
+      </categories>
+      <tags>
+        <tag>计算机系统结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库</title>
     <url>/2020/03/23/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>数据模型是数据库系统的核心和基础。它是现实世界的模拟。</p><h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h3><p>信息模型，按用户的观点来对数据和信息建模。</p><ul>
+    <content><![CDATA[<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>数据模型是数据库系统的核心和基础。它是现实世界的模拟。</p><p>三要素：数据结构、数据操作、数据约束</p><h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h3><p>信息模型，按用户的观点来对数据和信息建模。</p><ul>
 <li>实体：客观存在并可相互区别的事物</li>
 <li>属性：实体所具有的某一特性</li>
 <li>码：<strong>唯一</strong>标识实体的属性集</li>
 <li>实体型：</li>
 </ul><a id="more"></a>
+
 
 
 <h3 id="逻辑模型和物理模型"><a href="#逻辑模型和物理模型" class="headerlink" title="逻辑模型和物理模型"></a>逻辑模型和物理模型</h3><ul>

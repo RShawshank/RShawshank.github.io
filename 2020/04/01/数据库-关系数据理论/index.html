@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/blog_favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/blog_favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://rshawshank.github.io').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="关系数据理论概述数据库逻辑结构设计的任务：为数据库应用构造良好的数据库模式关系模式中的异常问题 数据冗余 更新异常 插入异常 删除异常 出现异常的原因：关系模式中存在不合适的数据依赖解决方式：通过分解，消除不合适的数据依赖（规范化）">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库_关系数据理论概述">
+<meta property="og:url" content="http:&#x2F;&#x2F;rshawshank.github.io&#x2F;2020&#x2F;04&#x2F;01&#x2F;%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA&#x2F;index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="关系数据理论概述数据库逻辑结构设计的任务：为数据库应用构造良好的数据库模式关系模式中的异常问题 数据冗余 更新异常 插入异常 删除异常 出现异常的原因：关系模式中存在不合适的数据依赖解决方式：通过分解，消除不合适的数据依赖（规范化）">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+<meta property="og:updated_time" content="2020-06-03T08:36:45.691Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image&#x2F;png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK&#x2F;INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39&#x2F;fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s&#x2F;Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df&#x2F;&#x2F;&#x2F;7GrnpQAAAA&#x2F;dFJOU&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve&#x2F;pMZ2d3Z297+X7f6zFNmBAMUXa6URl&#x2F;q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX&#x2F;h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW&#x2F;WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1&#x2F;+Td&#x2F;HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV&#x2F;bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8&#x2F;I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i&#x2F;pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo&#x2F;StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY&#x2F;NXmFplyNvEuuLV&#x2F;Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv&#x2F;fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz&#x2F;v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4&#x2F;vF4uzdzrG+39f1kz&#x2F;w66Guv&#x2F;yBvw90KX&#x2F;gZKkr8Qf+2dOV+gNHC12&#x2F;7RxrabD2&#x2F;a31bLAO&#x2F;a11YbAO&#x2F;K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2&#x2F;gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f&#x2F;bQYvm&#x2F;6IPF+sF&#x2F;pVssf19Ii&#x2F;WH&#x2F;0K2WH&#x2F;uGuvEWC39gSdj9Twy+Rqri5EZx1gt&#x2F;IE7Y&#x2F;XoD1wbq9vd3w1PlufnD2OBp+ebm&#x2F;uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>数据库_关系数据理论概述 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">rhb_blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">40</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">14</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">62</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库_关系数据理论概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-01 11:12:57" itemprop="dateCreated datePublished" datetime="2020-04-01T11:12:57Z">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-03 08:36:45" itemprop="dateModified" datetime="2020-06-03T08:36:45Z">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="关系数据理论概述"><a href="#关系数据理论概述" class="headerlink" title="关系数据理论概述"></a>关系数据理论概述</h1><p>数据库逻辑结构设计的任务：为数据库应用构造良好的数据库模式</p><h1 id="关系模式中的异常问题"><a href="#关系模式中的异常问题" class="headerlink" title="关系模式中的异常问题"></a>关系模式中的异常问题</h1><ul>
+<li>数据冗余</li>
+<li>更新异常</li>
+<li>插入异常</li>
+<li>删除异常</li>
+</ul><p>出现异常的原因：</p><p>关系模式中存在不合适的数据依赖</p><p>解决方式：</p><p>通过分解，消除不合适的数据依赖（规范化）</p><a id="more"></a>
+
+
+
+
+
+<h1 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h1><h2 id="关系模式"><a href="#关系模式" class="headerlink" title="关系模式"></a>关系模式</h2><p>一个关系模式可以表示为一个五元组R(U,D,DOM,F)；</p>
+<ul>
+<li>R：关系名称</li>
+<li>U：R中所有属性的集合</li>
+<li>D：U中属性所来自的域的集合、</li>
+<li>DOM：属性到域的映射</li>
+<li>F：U中属性间的数据依赖的集合</li>
+</ul>
+<p>模式涉及重点关注U和F</p>
+<h2 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a>数据依赖</h2><p>是一个关系中的属性之间的某种语义约束关系</p>
+<p>知道A可以确切的找到B，这样的函数叫做函数依赖。其实就是单值函数</p>
+<h3 id="函数依赖-1"><a href="#函数依赖-1" class="headerlink" title="函数依赖"></a>函数依赖</h3><p>分类一：</p>
+<ul>
+<li>平凡函数依赖：任何情况下都成立<br>例如：在一个职工关系中,职工号总能函数决定它本身,记作“职工号→职工号”,对于任一个给定的职工号,都有它本身的职工号值唯一对应,此为平凡函数依赖。又如:职工号和性别构成的属性子集总是能够函数决定其中的职工号或性别属性,可分别记作为“(职工号,性别)→职工号”和“(职工号,性别)→性别”,因为对于任何给定的一个元组中的职工号和性别的组合值,都唯一对应一个职工号值或性别值,不可能出现其他的职工号值或性别值,此种也为平凡函数依赖。</li>
+<li>非平凡函数依赖<br>如在职工关系中,职工号函数决定其他每个属性都是非平凡函数依赖,另外“(职工号,姓名)→性别”也是非平凡函数依赖,虽然在这里由决定因素中所含的职工号单属性就能够函数决定性别,而带有的姓名属性有些多余。</li>
+</ul>
+<p>分类二：</p>
+<ul>
+<li><p>完全函数依赖：记作是f</p>
+<p>设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集。若对于R（U）的任何一个可能的关系，有x→y但x’→y，则称y完全函数依赖于x，记作X→^F^Y。<br>  所谓完全依赖是说明在依赖关系的决定项（即依赖关系的左项）中没有多余属性，有多余属性就是部分依赖。</p>
+</li>
+<li><p>部分函数依赖：记作是p</p>
+<p> 设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集，若x→y且x’→y，则称y部分依赖x，记作X→^P^Y。显然，当且仅当x为复合属性组时，才有可能出现部分函数依赖。 </p>
+<p>例如：职工号    姓名    性别    年龄    职务</p>
+<pre><code>1001    张三       男        36    正处
+1002    李四       男        38    副处
+1003    王五       男        50    正科
+1004    赵六       女        38    副处
+1005    孙七       女        49    科员</code></pre><p>职工号和其他的属性之间的函数依赖都是完全函数依赖。因为职工号是一个单属性决定因素，他不可能在包含其他任何属性，那么就不存在真子集函数决定其他每个属性的情况存在，如（职工号，性别）的值虽然能够决定相应职工的年龄，但其中的真子集“职工号”就能够函数决定其年龄，所以（职工号，性别）到年龄之间的函数为部分函数依赖（因为只通过“职工号”就可以决定）。（简单的说：真子集可以决定结果）</p>
+<p>假设存在：“学号→系号”、“系号→系名”和“系号→系主任名”<br>那么存在：“学号→系名”和“学号→系主任名”这两个函数依赖是传递函数依赖。</p>
+</li>
+</ul>
+<p>分类三：</p>
+<ul>
+<li><p>传递函数依赖</p>
+<p>一个关系R（U），X,Y,Z为属性集U上的子集，其中存在X→Y和Y→Z，但Y不决定X，同时Y不包含Z，则存在X→Z，即X传递函数决定Z，Z传递函数依赖于X。</p>
+</li>
+</ul>
+<h2 id="有关码的术语"><a href="#有关码的术语" class="headerlink" title="有关码的术语"></a>有关码的术语</h2><p>码：一个关系的所有属性</p>
+<ul>
+<li>码为单个属性，称为单属性码</li>
+<li>码为多个属性，称为多属性码</li>
+<li>码为全部属性，称为全码</li>
+<li>包含一个码的属性组，称为超码。</li>
+<li>包含在任何一个码中的属性，称为主属性</li>
+<li>不包含在任何一个码中的属性，称为非主属性</li>
+</ul>
+<blockquote>
+<p><strong>候选码：</strong> 唯一标识一个关系的属性组<br><strong>主码：</strong> 候选码多于一个，从候选码中选出的一个码作为主码。<br><strong>主属性：</strong> 候选码的所有属性。<br><strong>非主属性：</strong> 不包含在任何候选码中的属性<br><strong>全码：</strong> 极端情况下，整个属性组都是码。<br><strong>外码：</strong> X不是该关系模式的码，但是X是另一个关系模式的码。比如(Sno,Cno,Grade)中的Sno不是码，但Sno是(Sno,Sname,Sage)的码，则Sno是外码</p>
+</blockquote>
+<h1 id="1NF、2NF、3NF和BCNF"><a href="#1NF、2NF、3NF和BCNF" class="headerlink" title="1NF、2NF、3NF和BCNF"></a>1NF、2NF、3NF和BCNF</h1><p><a href="https://blog.csdn.net/jsj13263690918/article/details/79796275" target="_blank" rel="noopener">参考文章</a></p>
+<h2 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h2><p>是为了减少数据冗余和消除各种异常。</p>
+<p>范式：满足规范化要求的关系模式</p>
+<p>范式分类：</p>
+<ul>
+<li>第一范式：满足最基本的规范化要求的关系模式</li>
+<li>第二范式：在第一范式的基础上，进一步满足一些要求</li>
+<li>依次类推：第三范式、BC范式、第四范式等</li>
+</ul>
+<h3 id="第一范式（1NF）：无重复列"><a href="#第一范式（1NF）：无重复列" class="headerlink" title="第一范式（1NF）：无重复列"></a>第一范式（1NF）：无重复列</h3><p>第一范式（1NF）是指数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。如果出现重复的属性，就可能需要定义一个新的实体，新的实体由重复的属性构成，新实体与原实体之间为一对多关系。在第一范式（1NF）中表的每一行只包含一个实例的信息。简而言之，第一范式就是无重复的列。</p>
+<p>　　说明：在任何一个关系数据库中，第一范式（1NF）是对关系模式的基本要求，不满足第一范式（1NF）的数据库就不是关系数据库。</p>
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200602233716629.png" style="zoom:80%;">
+
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<h3 id="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"><a href="#第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】" class="headerlink" title="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"></a>第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】</h3><p>满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）要求数据库表中的每个实例或行必须可以被唯一地区分。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。例如员工信息表中加上了员工编号（emp_id）列，因为每个员工的员工编号是唯一的，因此每个员工可以被唯一区分。这个唯一属性列被称为主关键字或主键、主码。</p>
+<p>　　第二范式（2NF）要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性，如果存在，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与原实体之间是一对多的关系。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。简而言之，第二范式就是属性完全依赖于主键。</p>
+<p>比如给出一个表：<br>$$<br>(Sno,Sdept,Sloc,Cno,Grade)<br>$$<br>其中Sno学号，Sdept是系，Sloc是寝室地址，Cno是课程号，Grade是该学生某个课程的成绩。<br>$$<br>(Sno,Cno)\stackrel{F}{\longrightarrow}Grade\Sno→Sdept, (Sno,Cno)\stackrel{P}{\longrightarrow}Sdept\<br>    Sno→Sloc, (Sno,Cno)\stackrel{P}{\longrightarrow} Sloc<br>$$<br>那么上述存在了部分函数依赖，需要把部分函数依赖的进行消除：<br>$$<br>Sno→Sdept \<br>Sno→Sloc<br>$$<br>因此得出新的关系模式：<br>$$<br>(Sno,Sloc,Sdept)\<br>(Sno,Cno,Grade)<br>$$<br>判断的方法是：</p>
+<p>第一步：找出数据表中所有的<strong>码</strong>。<br>第二步：根据第一步所得到的码，找出所有的<strong>主属性</strong>。<br>第三步：数据表中，除去所有的主属性，剩下的就都是<strong>非主属性</strong>了。<br>第四步：查看是否存在非主属性对码的<strong>部分函数依赖</strong>。</p>
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<p>结论：<strong>对码的传递依赖不友好</strong></p>
+<h3 id="第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖"><a href="#第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖" class="headerlink" title="第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]"></a>第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]</h3><p>第三范式（3NF）要求一个数据库表中不包含已在其它表中已包含的非主关键字信息。</p>
+<p>例如，存在一个部门信息表，其中每个部门有部门编号（dept_id）、部门名称、部门简介等信息。那么在的员工信息表中列出部门编号后就不能再将部门名称、部门简介等与部门有关的信息再加入员工信息表中。如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。简而言之，第三范式就是属性不依赖于其它非主属性。</p>
+<p>结论：<strong>主属性对码的不良函数依赖也会导致异常</strong></p>
+<h3 id="BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖"><a href="#BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖" class="headerlink" title="BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖"></a>BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖</h3><ol>
+<li>所有非主属性对每一个码都是完全函数依赖；</li>
+<li>所有的主属性对每一个不包含它的码，也是完全函数依赖；</li>
+<li>没有任何属性完全函数依赖于非码的任何一组属性。</li>
+</ol>
+<h1 id="多值依赖和4NF"><a href="#多值依赖和4NF" class="headerlink" title="多值依赖和4NF"></a>多值依赖和4NF</h1><h2 id="多值依赖"><a href="#多值依赖" class="headerlink" title="多值依赖"></a>多值依赖</h2><p>多值依赖： 设R(U)是属性集U上的一个关系模式，X,Y,Z是U的子集，且Z=U−X−Y。当且仅当R(U)的任一关系r，给定的一对(x,y)值，有一组Y的值，这组值仅仅取决于X的值而与Z的值无关，则成R(U)中的多值依赖$X\rightarrow   \rightarrow Y$成立。</p>
+<p><strong>判定方法：对于任意关系中，如果存在两个元组（就是行），记为A,B，如果他们的某一属性X的值相等，那么我们交换它们另外的属性Y的值后，得到的新的两个元组，在表中是可以在原来的表中找到与它们相匹配的元组的。</strong></p>
+<p>平凡多值依赖： 若$X \rightarrow \rightarrow Y$，而$Z=\empty$，则称$X\rightarrow \rightarrow Y$为平凡多值依赖。</p>
+<p>非平凡多值依赖：若$X \rightarrow \rightarrow Y$，而$Z\neq\empty$，则称$X\rightarrow \rightarrow Y$为非平凡多值依赖。</p>
+<h3 id="多值依赖的性质"><a href="#多值依赖的性质" class="headerlink" title="多值依赖的性质"></a>多值依赖的性质</h3><p>（1）多值依赖具有对称性</p>
+<p>若X→→Y，则X→→Z，其中Z＝U－X－Y</p>
+<p>（2）多值依赖具有传递性</p>
+<p>若X→→Y，Y→→Z， 则X→→Z –Y</p>
+<p>（3）函数依赖是多值依赖的特殊情况。</p>
+<p>若X→Y，则X→→Y。</p>
+<p>（4）若X→→Y，X→→Z，则X→→YU Z。</p>
+<p>（5）若X→→Y，X→→Z，则X→→Y∩Z。</p>
+<p>（6）若X→→Y，X→→Z，则X→→Y-Z，X→→Z -Y。</p>
+<h3 id="多值依赖和函数依赖的对比"><a href="#多值依赖和函数依赖的对比" class="headerlink" title="多值依赖和函数依赖的对比"></a>多值依赖和函数依赖的对比</h3><p>1）若函数依赖X→Y在R（U）上成立，则对于任何Y’ 属于Y均有X→Y’ 成立</p>
+<p>2）多值依赖X→→Y若在R(U)上成立，不能断言对于任何Y’ 属于Y有X→→Y’ 成立，因为多值依赖中，其实就是一对一组，一个老师可能交多门课，所以不同老师可能有教相同的课，所以不能推出X→→Y’ 成立。我们可以看出，如果把一组改为一个，实际上就是函数依赖，所以所<strong>函数依赖是多值依赖的特例</strong>，多值依赖不一定是函数依赖，但函数依赖一定是多值依赖。</p>
+<h2 id="4NF"><a href="#4NF" class="headerlink" title="4NF"></a>4NF</h2><p>关系模式$R&lt;U,F&gt;\in 1NF$，如果对于R的每个非平凡多值依赖$X\rightarrow \rightarrow Y(Y \nsubseteq X)$，X都含有码，则$R&lt;U,F&gt;\in 4NF$。</p>
+<p><strong>1）不允许有非平凡且非函数依赖的多值依赖</strong> </p>
+<p><strong>2）允许的非平凡多值依赖是函数依赖</strong></p>
+<p><strong>3）平凡的多值依赖属于第四范式</strong></p>
+<h2 id="关系规范化小结"><a href="#关系规范化小结" class="headerlink" title="关系规范化小结"></a>关系规范化小结</h2><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163427186.png" style="zoom:80%;">
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163453406.png" alt></p>
+<h1 id="ArmStrong公理系统"><a href="#ArmStrong公理系统" class="headerlink" title="ArmStrong公理系统"></a>ArmStrong公理系统</h1>
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章推荐</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库SQL语言\" rel="bookmark">数据库_关系数据库SQL语言</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库安全性\" rel="bookmark">数据库_数据库安全性</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库完整性\" rel="bookmark">数据库_数据库完整性</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-03-23</div>
+      <div class="popular-posts-title"><a href="\2020\03\23\数据库-概述\" rel="bookmark">数据库</a></div>
+    </li>
+  </ul>
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" title="数据库_关系数据理论概述">http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/null" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"><i class="fa fa-tag"></i> 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/" rel="prev" title="数据库_数据库完整性">
+      <i class="fa fa-chevron-left"></i> 数据库_数据库完整性
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/08/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="java-设计模式">
+      java-设计模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关系数据理论概述"><span class="nav-number">1.</span> <span class="nav-text">关系数据理论概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关系模式中的异常问题"><span class="nav-number">2.</span> <span class="nav-text">关系模式中的异常问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数依赖"><span class="nav-number">3.</span> <span class="nav-text">函数依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关系模式"><span class="nav-number">3.1.</span> <span class="nav-text">关系模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据依赖"><span class="nav-number">3.2.</span> <span class="nav-text">数据依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数依赖-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">函数依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有关码的术语"><span class="nav-number">3.3.</span> <span class="nav-text">有关码的术语</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1NF、2NF、3NF和BCNF"><span class="nav-number">4.</span> <span class="nav-text">1NF、2NF、3NF和BCNF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#规范化"><span class="nav-number">4.1.</span> <span class="nav-text">规范化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一范式（1NF）：无重复列"><span class="nav-number">4.1.1.</span> <span class="nav-text">第一范式（1NF）：无重复列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"><span class="nav-number">4.1.2.</span> <span class="nav-text">第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖"><span class="nav-number">4.1.3.</span> <span class="nav-text">第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖"><span class="nav-number">4.1.4.</span> <span class="nav-text">BC范式（BCNF）消除主属性对于嘛的部分与传递函数依赖</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多值依赖和4NF"><span class="nav-number">5.</span> <span class="nav-text">多值依赖和4NF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多值依赖"><span class="nav-number">5.1.</span> <span class="nav-text">多值依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多值依赖的性质"><span class="nav-number">5.1.1.</span> <span class="nav-text">多值依赖的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多值依赖和函数依赖的对比"><span class="nav-number">5.1.2.</span> <span class="nav-text">多值依赖和函数依赖的对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4NF"><span class="nav-number">5.2.</span> <span class="nav-text">4NF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系规范化小结"><span class="nav-number">5.3.</span> <span class="nav-text">关系规范化小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ArmStrong公理系统"><span class="nav-number">6.</span> <span class="nav-text">ArmStrong公理系统</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="rhb"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+
+      </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">612k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9:16</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('div.pdf').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js', () => {
+    document.querySelectorAll('div.pdf').forEach(element => {
+      PDFObject.embed(element.getAttribute('target'), element, {
+        pdfOpenParams: {
+          navpanes: 0,
+          toolbar: 0,
+          statusbar: 0,
+          pagemode: 'thumbs',
+          view: 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height: element.getAttribute('height') || '500px'
+      });
+    });
+  }, window.PDFObject);
+}
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+</html>
