@@ -151,17 +151,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">43</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">45</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">15</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">77</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">79</span></a>
 
   </li>
         <li class="menu-item menu-item-schedule">
@@ -288,14 +288,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -394,6 +394,15 @@
 <p><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">Leetcode 22.括号生成</a></p>
 <p><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank" rel="noopener">Leetcode 395.至少有k个重复字符的最长子串</a></p>
 <p><a href="https://leetcode-cn.com/problems/integer-replacement/" target="_blank" rel="noopener">Leetcode 397.整数替换</a></p>
+<h1 id="递归改非递归的一般算法"><a href="#递归改非递归的一般算法" class="headerlink" title="递归改非递归的一般算法"></a>递归改非递归的一般算法</h1><p>递归的本质是通过栈来保存状态，然后再次调用自己进入新的状态，然后函数返回的时候回到上次保存的状态。</p>
+<p>尾递归可以直接转化成循环，这里不多做分析</p>
+<p>更一般的递归，想要转化为非递归，就需要模拟栈的行为。</p>
+<p>例如：DFS的递归和非递归算法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">假设给定图G的初态是所有顶点均未曾访问过。在G中任选一顶点v为初始出发点(源点)，则深度优先遍历可定义如下：首先访问出发点v，并将其标记为已访问过；然后依次从v出发搜索v的每个邻接点w。若w未曾访问过，则以w为新的出发点继续进行深度优先遍历，直至图中所有和源点v有路径相通的顶点(亦称为从源点可达的顶点)均已被访问为止。若此时图中仍有未访问的顶点，则另选一个尚未访问的顶点作为新的源点重复上述过程，直至图中所有顶点均已被访问为止。</span></span><br><span class="line"><span class="comment">　　图的深度优先遍历类似于树的前序遍历。采用的搜索方法的特点是尽可能先对纵深方向进行搜索。这种搜索方法称为深度优先搜索(Depth-First Search)。相应地，用此方法遍历图就很自然地称之为图的深度优先遍历</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">（1）访问顶点v；</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">（2）从v的未被访问的邻接点中选取一个顶点w，从w出发进行深度优先遍历；</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">（3）重复上述两步，直至图中所有和v有路径相通的顶点都被访问到。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreorderRecursive</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (root) &#123;</span><br><span class="line">    visit(root);</span><br><span class="line">    PreorderRecursive(root-&gt;lchild); </span><br><span class="line">    PreorderRecursive(root-&gt;rchild); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">1首先初始化待使用栈，然后将第一个结点入栈</span></span><br><span class="line"><span class="comment">2然后只要栈不空，重复下面的操作：将栈顶元素弹出，然后看该元素是否访问过</span></span><br><span class="line"><span class="comment">3若没访问过，则访问，置访问标记，然后将该元素的所有相邻顶点入栈（注意是全部，所以应用一个for或while循环来判断哪些元素该入栈）</span></span><br><span class="line"><span class="comment">4重复2，直至全部顶点均被访问过。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreorderNonRecursive</span><span class="params">(Bitree root)</span></span>&#123;</span><br><span class="line">  <span class="built_in">stack</span> stk;</span><br><span class="line">  stk.push(root);<span class="comment">//节点入栈</span></span><br><span class="line">  <span class="keyword">while</span>(!stk.empty())&#123;</span><br><span class="line">    p = stk.top();<span class="comment">//栈顶元素出栈并且访问该节点</span></span><br><span class="line">    visit(p);</span><br><span class="line">    stk.pop();</span><br><span class="line">    <span class="keyword">if</span>(p.rchild) stk.push(p.rchild);<span class="comment">//右边节点入栈</span></span><br><span class="line">    <span class="keyword">if</span>(p.lchild) stk.push(p.lchild);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的非递归中使用栈将结点的相邻结点入栈就是模拟了递归中当一个结点被访问回退时，其相邻结点是和该结点处于同一层次的，故要一起入栈</p>
 
     </div>
 
@@ -404,14 +413,6 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-25</div>
-      <div class="popular-posts-title"><a href="\2019\12\25\Algorithm_分治策略\" rel="bookmark">分治策略</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2020-01-02</div>
-      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_基本的图算法\" rel="bookmark">基本的图算法</a></div>
-    </li>
-    <li class="popular-posts-item">
         <div class="popular-posts-date">2020-01-02</div>
       <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_所有结点对的最短路径\" rel="bookmark">所有结点对的最短路径</a></div>
     </li>
@@ -421,7 +422,15 @@
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-01-02</div>
-      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_最大流\" rel="bookmark">最大流</a></div>
+      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_基本的图算法\" rel="bookmark">基本的图算法</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-23</div>
+      <div class="popular-posts-title"><a href="\2019\12\23\Algorithm_排序\" rel="bookmark">排序</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-01-02</div>
+      <div class="popular-posts-title"><a href="\2020\01\02\Algorithm_最小生成树\" rel="bookmark">最小生成树</a></div>
     </li>
   </ul>
 <div>
@@ -505,7 +514,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是递归"><span class="nav-number">1.</span> <span class="nav-text">什么是递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归和迭代的区别"><span class="nav-number">2.</span> <span class="nav-text">递归和迭代的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的基本原理"><span class="nav-number">3.</span> <span class="nav-text">递归的基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的三大要素"><span class="nav-number">4.</span> <span class="nav-text">递归的三大要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归和栈的关系"><span class="nav-number">5.</span> <span class="nav-text">递归和栈的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的优化方式"><span class="nav-number">6.</span> <span class="nav-text">递归的优化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑是否重复计算"><span class="nav-number">6.1.</span> <span class="nav-text">考虑是否重复计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑尾递归"><span class="nav-number">6.2.</span> <span class="nav-text">考虑尾递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尾递归的原理"><span class="nav-number">6.2.1.</span> <span class="nav-text">尾递归的原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些例程的学习"><span class="nav-number">7.</span> <span class="nav-text">一些例程的学习</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是递归"><span class="nav-number">1.</span> <span class="nav-text">什么是递归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归和迭代的区别"><span class="nav-number">2.</span> <span class="nav-text">递归和迭代的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的基本原理"><span class="nav-number">3.</span> <span class="nav-text">递归的基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的三大要素"><span class="nav-number">4.</span> <span class="nav-text">递归的三大要素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归和栈的关系"><span class="nav-number">5.</span> <span class="nav-text">递归和栈的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归的优化方式"><span class="nav-number">6.</span> <span class="nav-text">递归的优化方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑是否重复计算"><span class="nav-number">6.1.</span> <span class="nav-text">考虑是否重复计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑尾递归"><span class="nav-number">6.2.</span> <span class="nav-text">考虑尾递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#尾递归的原理"><span class="nav-number">6.2.1.</span> <span class="nav-text">尾递归的原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一些例程的学习"><span class="nav-number">7.</span> <span class="nav-text">一些例程的学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#递归改非递归的一般算法"><span class="nav-number">8.</span> <span class="nav-text">递归改非递归的一般算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -521,20 +530,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">79</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -607,13 +616,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">685k</span>
+    <span title="站点总字数">691k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:23</span>
+    <span title="站点阅读时长">10:28</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -708,7 +717,7 @@ if (document.querySelectorAll('div.pdf').length) {
     });
   }, window.PDFObject);
 }
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -720,5 +729,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>
