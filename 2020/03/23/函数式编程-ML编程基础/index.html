@@ -161,21 +161,6 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -430,10 +415,10 @@
 <h4 id="声明的使用"><a href="#声明的使用" class="headerlink" title="声明的使用"></a>声明的使用</h4><p>声明函数：<br>  check : int * int -&gt; bool</p>
 <p>局部声明：</p>
 <p>  let D in E end</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fun check(x:int, y:int):bool =</span><br><span class="line">let</span><br><span class="line">	val (q:int, r:int)= divmod(x, y)</span><br><span class="line">in</span><br><span class="line">	(x = q*y + r)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">check</span><span class="params">(x:<span class="type">int</span>, y:<span class="type">int</span>)</span></span>:bool =</span><br><span class="line">let</span><br><span class="line">	<span class="keyword">val</span> (q:int, r:int)= divmod(x, y)</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	(x = q*y + r)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
 <p>全局声明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">val pi : real = 3.14;</span><br><span class="line">fun square(r:real) : real = r * r;</span><br><span class="line">fun area(r:real) : real = pi * square(r);</span><br><span class="line"></span><br><span class="line">val pi : real = 3.14159;</span><br><span class="line">fun area(r:real) : real = pi * square(r);</span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pi : real = <span class="number">3.14</span>;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">square</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = r * r;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = pi * square(r);</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> pi : real = <span class="number">3.14159</span>;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = pi * square(r);</span><br></pre></td></tr></table></figure>
 
 
 
@@ -874,5 +859,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>

@@ -173,21 +173,6 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -481,7 +466,7 @@
 </blockquote>
 <h1 id="属性闭包"><a href="#属性闭包" class="headerlink" title="属性闭包"></a>属性闭包</h1><p>在关系模式R所对应的F^+^中,有α→β ,则所有β组成的集合α<del>F</del>^+^ 叫做属性集α关于F的属性闭包</p>
 <p>属性闭包算法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">result=A //此处A是一个属性集,result就是要计算的属性闭包</span><br><span class="line">for each α--&gt;β in F:</span><br><span class="line">    if α in result:   //α已经在属性闭包里了,即A--&gt;α是成立的</span><br><span class="line">    result=result+β   //增加属性闭包</span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">result</span>=A<span class="comment"> //此处A是一个属性集,result就是要计算的属性闭包</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> α<span class="comment">--&gt;β in F:</span></span><br><span class="line">    <span class="keyword">if</span> α <span class="keyword">in</span> <span class="built_in">result</span>:  <span class="comment"> //α已经在属性闭包里了,即A--&gt;α是成立的</span></span><br><span class="line">    <span class="built_in">result</span>=<span class="built_in">result</span>+β  <span class="comment"> //增加属性闭包</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="正则覆盖-F"><a href="#正则覆盖-F" class="headerlink" title="正则覆盖 F^+^"></a>正则覆盖 F^+^</h2><p> 将原函数依赖集F中的函数依赖α–&gt;β中的部分(α或β属性中)冗余属性删除。F^+^ 和 F 的函数依赖的闭包是相同的</p>
 <p>属性是否冗余判断条件,对于α–&gt;β函数依赖(哪边冗余F在哪边)</p>
@@ -564,11 +549,11 @@
   <ul class="popular-posts">
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-04-01</div>
-      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库SQL语言\" rel="bookmark">数据库_关系数据库SQL语言</a></div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-04-01</div>
-      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库SQL语言\" rel="bookmark">数据库_关系数据库SQL语言</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-06-05</div>
@@ -579,8 +564,8 @@
       <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库安全性\" rel="bookmark">数据库_数据库安全性</a></div>
     </li>
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2020-06-05</div>
-      <div class="popular-posts-title"><a href="\2020\06\05\数据库-数据库设计\" rel="bookmark">数据库_数据库设计</a></div>
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库完整性\" rel="bookmark">数据库_数据库完整性</a></div>
     </li>
   </ul>
 <div>
@@ -878,5 +863,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>

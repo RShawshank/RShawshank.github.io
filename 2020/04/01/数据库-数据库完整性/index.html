@@ -161,21 +161,6 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -382,7 +367,7 @@
 <p>属性上的约束：在CREATE TABLE中定义属性时定义<br>–列值非空（NOT NULL），列值唯一（UNIQUE），检查列值是否满足一个布尔表达式（CHECK）<br>–插入元组或修改属性值时检查，不满足则拒绝执行。</p>
 <p>元组上的约束<br>–在CREATE TABLE时可以用CHECK短语定义元组上的约束条件，即元组级的限制<br>–同属性值限制相比，元组级的限制可以设置不同属性之间的取值的相互约束条件<br>–插入元组或修改属性值时检查，不满足则拒绝执行</p>
 <p>在一张表上可以定义多个完整性约束，为方便起见，在CREATE TABLE中可用CONSTRAINT语句对所定义的约束条件命名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONSTRAINT&lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</span><br><span class="line">其中，&lt;完整性约束条件&gt;包括：NOT  NULL、UNIQUE、PRIMARYKEY、FOREIGN KEY、CHECK短语等。</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CONSTRAINT</span>&lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</span><br><span class="line">其中，&lt;完整性约束条件&gt;包括：<span class="keyword">NOT</span>  <span class="keyword">NULL</span>、<span class="keyword">UNIQUE</span>、PRIMARYKEY、<span class="keyword">FOREIGN KEY</span>、<span class="keyword">CHECK</span>短语等。</span><br></pre></td></tr></table></figure>
 
 <p>语义: 对定义的约束条件命名</p>
 <h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><p>是用户定义在关系表上的一类由事件驱动的特殊过程。亦称为：事件-条件-动作规则。</p>
@@ -391,7 +376,7 @@
 <li><strong>任何用户对表的增、删、改操作均由服务器自动激活相应的触发器</strong>，在DBMS核心层进行集中的完整性控制。</li>
 <li>比约束更为灵活，规则中的动作可以很复杂，可以包含 if/ while/case 等程序控制指令，可以涉及其他表和其他数据库对象，实施更为复杂的检查和操作，具有更精细和更强大的数据控制能力。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER &lt;触发器名&gt;  </span><br><span class="line">&#123; BEFORE| AFTER&#125; &lt;触发事件&gt;</span><br><span class="line">ON&lt;表名&gt;</span><br><span class="line">FOR EACH  &#123; ROW | STATEMENT &#125;</span><br><span class="line">［WHEN&lt;触发条件&gt;］</span><br><span class="line">&lt;触发动作体&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> &lt;触发器名&gt;  </span><br><span class="line">&#123; <span class="keyword">BEFORE</span>| <span class="keyword">AFTER</span>&#125; &lt;触发事件&gt;</span><br><span class="line"><span class="keyword">ON</span>&lt;表名&gt;</span><br><span class="line"><span class="keyword">FOR</span> <span class="keyword">EACH</span>  &#123; <span class="keyword">ROW</span> | <span class="keyword">STATEMENT</span> &#125;</span><br><span class="line">［<span class="keyword">WHEN</span>&lt;触发条件&gt;］</span><br><span class="line">&lt;触发动作体&gt;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>触发时机：AFTER 表示 执行条件，有 BEFORE（之前 ） AFTER（之后）</p>
@@ -419,7 +404,7 @@
 </li>
 </ul>
 <h2 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h2><p>删除触发器的SQL语法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TRIGGER &lt;触发器名&gt; ON&lt;表名&gt;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TRIGGER</span> &lt;触发器名&gt; <span class="keyword">ON</span>&lt;表名&gt;;</span><br></pre></td></tr></table></figure>
 
 <p>触发器必须是一个已经创建的触发器，并且只能由具有相应权限的用户删除。</p>
 <p><strong>注意：不同的DBMS对于触发器的支持方式和语法是有所区别的！</strong></p>
@@ -434,15 +419,15 @@
   <ul class="popular-posts">
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
       <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库SQL语言\" rel="bookmark">数据库_关系数据库SQL语言</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-06-04</div>
       <div class="popular-posts-title"><a href="\2020\06\04\数据库-关系数据理论\" rel="bookmark">数据库_关系数据理论概述</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2020-04-01</div>
-      <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-06-05</div>
@@ -748,5 +733,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>

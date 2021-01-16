@@ -172,21 +172,6 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -458,7 +443,7 @@
 <p>硬连接是指通过索引节点对文件的链接。<strong>保存在系统中的每一个文件都会有一个索引节点</strong>。每当有文件链接文件A时，文件A的索引节点的引用计数+1（因为文件自身对自己索引节点会链接，所以索引节点的初始值为1.）当文件系统进行删除文件的时候，对应的文件索引节点的引用计数-1。只要引用计数不等于0，文件就不会真正删除。</p>
 </blockquote>
 <h1 id="文件操作和文件备份"><a href="#文件操作和文件备份" class="headerlink" title="文件操作和文件备份"></a>文件操作和文件备份</h1><p>常用的文件操作命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create：//创建一个新文件</span><br><span class="line">delete：//从系统目录中撤消一个文件</span><br><span class="line">rename：//在系统目录中改变文件的名字</span><br><span class="line">open：//打开文件   在用户和文件(或设备)之间建立一个逻辑通路</span><br><span class="line">close：//关闭文件  在用户和文件(或设备)之间撤消一个逻辑通路</span><br><span class="line">write：//写到一个文件(或设备)上</span><br><span class="line">read：//从一个文件(或设备)读入数据信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">create</span><span class="comment">：//创建一个新文件</span></span><br><span class="line"><span class="built_in">delete</span><span class="comment">：//从系统目录中撤消一个文件</span></span><br><span class="line"><span class="built_in">rename</span><span class="comment">：//在系统目录中改变文件的名字</span></span><br><span class="line"><span class="built_in">open</span><span class="comment">：//打开文件   在用户和文件(或设备)之间建立一个逻辑通路</span></span><br><span class="line"><span class="built_in">close</span><span class="comment">：//关闭文件  在用户和文件(或设备)之间撤消一个逻辑通路</span></span><br><span class="line"><span class="built_in">write</span><span class="comment">：//写到一个文件(或设备)上</span></span><br><span class="line"><span class="built_in">read</span><span class="comment">：//从一个文件(或设备)读入数据信息</span></span><br></pre></td></tr></table></figure>
 
 <p>①打开文件操作</p>
 <p>所谓打开文件就是把<strong>该文件的有关目录表目复制到主存中约定的区域，建立文件控制块</strong>，建立用户和这个文件的联系。</p>
@@ -513,23 +498,23 @@
   <ul class="popular-posts">
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\OS_处理机调度\" rel="bookmark">处理机调度</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
       <div class="popular-posts-title"><a href="\2019\12\30\OS_主存管理\" rel="bookmark">主存管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\OS_操作系统概述\" rel="bookmark">操作系统概述</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-12-30</div>
       <div class="popular-posts-title"><a href="\2019\12\30\OS_设备管理\" rel="bookmark">设备管理</a></div>
     </li>
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-30</div>
-      <div class="popular-posts-title"><a href="\2019\12\30\OS_处理机调度\" rel="bookmark">处理机调度</a></div>
-    </li>
-    <li class="popular-posts-item">
         <div class="popular-posts-date">2020-01-02</div>
       <div class="popular-posts-title"><a href="\2020\01\02\OS_资源分配与调度\" rel="bookmark">资源分配与调度</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-30</div>
-      <div class="popular-posts-title"><a href="\2019\12\30\OS_进程和进程管理\" rel="bookmark">进程和进程管理</a></div>
     </li>
   </ul>
 <div>
@@ -828,5 +813,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>

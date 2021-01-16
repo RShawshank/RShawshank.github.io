@@ -166,21 +166,6 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
-
-  </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-fw fa-heartbeat"></i>公益 404</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -439,7 +424,7 @@
 <p>(1) 答：驳船长200 米，当驳船通过了A 桥，其船头到达B 桥，请求B 桥吊起，而此时它的尾部占据A 桥，若这个时候B 桥及B桥到A 桥之间的公路都被汽车占据，而汽车又要求通过A 桥。这样驳船和汽车都无法前进，形成死锁的局面。</p>
 <p>(2) 答：方案之一。可规定资源按序申请和分配，从而破坏了死锁的循环等待条件，防止死锁的发生。规定如B 桥的序号小于A 桥的序号，驳船和汽车都必须先申请序号小的资源B 桥，申请得到满足后，再申请序号大的资源A 桥。</p>
 <p>(3) 答：将每台车的行驶看作是进程，则有Auto1，Auto2，LAutoi i个汽车进程。将每条驳船的航行看作是进程，则有Ship1，Ship2，LShipj个驳船进程。桥A和桥B对车和船为互斥资源。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">main&#123;</span><br><span class="line">	int SA=1；//A桥的互斥信号量//</span><br><span class="line">	int SB=1；//B桥的互斥信号量//</span><br><span class="line">	cobegin</span><br><span class="line">		Auto1;Auto2;···Autoi;</span><br><span class="line">		Ship1; Ship2; ···Shipj;</span><br><span class="line">	coend</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Autoi()&#123;</span><br><span class="line">车在公路上行驶；</span><br><span class="line">P（SB）；</span><br><span class="line">过B桥；</span><br><span class="line">V（SB）；</span><br><span class="line">过弯道；</span><br><span class="line">P（SA）；</span><br><span class="line">过A桥；</span><br><span class="line">V（SA）；</span><br><span class="line">车在公路上行驶；                          </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Shipj()&#123;</span><br><span class="line">运河航行；</span><br><span class="line">P（SB）；                  </span><br><span class="line">P（SA）；                    </span><br><span class="line">吊起过A桥；                    </span><br><span class="line">运河航行；                             </span><br><span class="line">吊起过B桥；                    </span><br><span class="line">V（SA）；                         </span><br><span class="line">V（SB）；</span><br><span class="line">运河航行；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">main</span>&#123;</span><br><span class="line">	int SA<span class="number">=1</span>；//A桥的互斥信号量//</span><br><span class="line">	int <span class="built_in">SB</span><span class="number">=1</span>；//<span class="keyword">B桥的互斥信号量//</span></span><br><span class="line"><span class="keyword">	</span>cobegin</span><br><span class="line">		Auto1<span class="comment">;Auto2;···Autoi;</span></span><br><span class="line">		Ship1<span class="comment">; Ship2; ···Shipj;</span></span><br><span class="line">	coend</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="symbol">Autoi</span>()&#123;</span><br><span class="line">车在公路上行驶；</span><br><span class="line">P（<span class="built_in">SB</span>）；</span><br><span class="line">过<span class="keyword">B桥；</span></span><br><span class="line"><span class="keyword">V（SB）；</span></span><br><span class="line"><span class="keyword">过弯道；</span></span><br><span class="line"><span class="keyword">P（SA）；</span></span><br><span class="line"><span class="keyword">过A桥；</span></span><br><span class="line"><span class="keyword">V（SA）；</span></span><br><span class="line"><span class="keyword">车在公路上行驶； </span>                         </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="symbol">Shipj</span>()&#123;</span><br><span class="line">运河航行；</span><br><span class="line">P（<span class="built_in">SB</span>）；                  </span><br><span class="line">P（SA）；                    </span><br><span class="line">吊起过A桥；                    </span><br><span class="line">运河航行；                             </span><br><span class="line">吊起过<span class="keyword">B桥； </span>                   </span><br><span class="line">V（SA）；                         </span><br><span class="line">V（<span class="built_in">SB</span>）；</span><br><span class="line">运河航行；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>5-14在采用银行家算法管理资源分配的系统中，有A、B、C三类资源可供5个进程P1、P2、P3、P4、P5共享。3类资源的总量为(17, 5, 20)，即A类17个，B类5个，C类20个。假设T0时刻各进程对资源的需求和分配情况如下表所示。</p>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/clip_image002-1578241244505.png" alt="img"></p>
@@ -451,7 +436,7 @@
 <p><strong>（1）</strong> <strong>购票者之间是同步关系还是互斥关系？</strong></p>
 <p>答：互斥关系。</p>
 <p><strong>用P、V操作描述购票者的工作过程。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">semaphore empty=200;</span><br><span class="line">semaphore mutex=1;</span><br><span class="line">semaphore waiting=0；</span><br><span class="line">void buy()</span><br><span class="line">&#123;   p(waiting);</span><br><span class="line">	p(mutex);</span><br><span class="line">	买票；</span><br><span class="line">	v(mutex);</span><br><span class="line">	v(empty);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void waiting()</span><br><span class="line">&#123;</span><br><span class="line">	p(empty);</span><br><span class="line">	等待；</span><br><span class="line">	waiting++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">semaphore <span class="attribute">empty</span>=200;</span><br><span class="line">semaphore <span class="attribute">mutex</span>=1;</span><br><span class="line">semaphore <span class="attribute">waiting</span>=0；</span><br><span class="line">void buy()</span><br><span class="line">&#123;   p(waiting);</span><br><span class="line">	p(mutex);</span><br><span class="line">	买票；</span><br><span class="line">	v(mutex);</span><br><span class="line">	v(empty);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void waiting()</span><br><span class="line">&#123;</span><br><span class="line">	p(empty);</span><br><span class="line">	等待；</span><br><span class="line">	waiting++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -464,7 +449,7 @@
   <ul class="popular-posts">
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-12-30</div>
-      <div class="popular-posts-title"><a href="\2019\12\30\OS_文件管理\" rel="bookmark">文件管理</a></div>
+      <div class="popular-posts-title"><a href="\2019\12\30\OS_处理机调度\" rel="bookmark">处理机调度</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-12-30</div>
@@ -472,15 +457,15 @@
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\OS_操作系统概述\" rel="bookmark">操作系统概述</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
+      <div class="popular-posts-title"><a href="\2019\12\30\OS_文件管理\" rel="bookmark">文件管理</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2019-12-30</div>
       <div class="popular-posts-title"><a href="\2019\12\30\OS_设备管理\" rel="bookmark">设备管理</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-30</div>
-      <div class="popular-posts-title"><a href="\2019\12\30\OS_处理机调度\" rel="bookmark">处理机调度</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-30</div>
-      <div class="popular-posts-title"><a href="\2019\12\30\OS_进程和进程管理\" rel="bookmark">进程和进程管理</a></div>
     </li>
   </ul>
 <div>
@@ -779,5 +764,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
 </html>
