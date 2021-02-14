@@ -48,13 +48,13 @@
   };
 </script>
 
-  <meta name="description" content="c++动态联编与静态联编c++一般的子类和父类继承关系的时候，都是使用的是静态联编（和之前学习的指针的用法一致）。当参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;neiloid&#x2F;article&#x2F;details&#x2F;6934129">
+  <meta name="description" content="补充点引用（&amp;amp;）&amp;amp;在C语言表示的是取地址符————用在函数传参中的指针赋值在C++语言中引用是某一个变量的别名，对引用的操作与对变量直接操作完全一样。12int a;int &amp;amp;ra=a;&#x2F;&#x2F;定义引用ra,它是变量a的引用，即别名">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++语法笔记">
 <meta property="og:url" content="http:&#x2F;&#x2F;rshawshank.github.io&#x2F;2019&#x2F;12&#x2F;11&#x2F;c++-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="rhb_blog">
-<meta property="og:description" content="c++动态联编与静态联编c++一般的子类和父类继承关系的时候，都是使用的是静态联编（和之前学习的指针的用法一致）。当参考：https:&#x2F;&#x2F;blog.csdn.net&#x2F;neiloid&#x2F;article&#x2F;details&#x2F;6934129">
+<meta property="og:description" content="补充点引用（&amp;amp;）&amp;amp;在C语言表示的是取地址符————用在函数传参中的指针赋值在C++语言中引用是某一个变量的别名，对引用的操作与对变量直接操作完全一样。12int a;int &amp;amp;ra=a;&#x2F;&#x2F;定义引用ra,它是变量a的引用，即别名">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-12-10T20:40:19.000Z">
 <meta name="twitter:card" content="summary">
@@ -148,17 +148,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">46</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">49</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -270,14 +270,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -289,9 +289,120 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="c-动态联编与静态联编"><a href="#c-动态联编与静态联编" class="headerlink" title="c++动态联编与静态联编"></a>c++动态联编与静态联编</h1><p>c++一般的子类和父类继承关系的时候，都是使用的是静态联编（和之前学习的指针的用法一致）。</p><p>当</p><p>参考：<a href="https://blog.csdn.net/neiloid/article/details/6934129" target="_blank" rel="noopener">https://blog.csdn.net/neiloid/article/details/6934129</a></p><a id="more"></a>
+        <h1 id="补充点"><a href="#补充点" class="headerlink" title="补充点"></a>补充点</h1><h2 id="引用（-amp-）"><a href="#引用（-amp-）" class="headerlink" title="引用（&amp;）"></a>引用（&amp;）</h2><p>&amp;在C语言表示的是<strong>取地址符</strong>————用在<strong>函数传参</strong>中的<strong>指针赋值</strong></p><p>在C++语言中引用是某一个变量的别名，<strong>对引用的操作与对变量直接操作完全一样。</strong></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> &amp;ra=a;<span class="comment">//定义引用ra,它是变量a的引用，即别名</span></span><br></pre></td></tr></table></figure><a id="more"></a>
 
 
+
+<ul>
+<li>&amp;在此不是求地址运算，而是起标识作用。</li>
+<li>声明引用时，必须同时对其进行初始化。</li>
+<li>类型标识符是指目标变量的类型。</li>
+<li>引用声明完毕后，相当于目标变量名有两个名称————目标原名和引用名，<strong>且不能再把该引用名作为其他变量名的别名</strong></li>
+<li>引用本身不占存储单元，本身不是一种数据类型</li>
+<li>不能建立数组的引用</li>
+</ul>
+<h3 id="引用的作用"><a href="#引用的作用" class="headerlink" title="引用的作用"></a>引用的作用</h3><ul>
+<li>作为函数的参数，<strong>效果是和传递指针的效果是一样的</strong></li>
+<li>使用引用传递函数的参数，由于在内存中没有产生实参的副本，<strong>它是直接对实参操作</strong>。</li>
+</ul>
+<h4 id="常引用"><a href="#常引用" class="headerlink" title="常引用"></a>常引用</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">常引用声明方式：<span class="keyword">const</span> 类型标识符 &amp;引用名=目标变量名；</span><br><span class="line"><span class="keyword">int</span> a ;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ra=a;</span><br><span class="line">ra=<span class="number">1</span>; <span class="comment">//错误</span></span><br><span class="line">a=<span class="number">1</span>; <span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
+
+<p>不能通过引用对目标变量的值进行修改，从而使引用的目标成为const</p>
+<h4 id="引用作为返回值"><a href="#引用作为返回值" class="headerlink" title="引用作为返回值"></a>引用作为返回值</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></span><br><span class="line"><span class="keyword">float</span> temp; <span class="comment">//定义全局变量temp</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">fn1</span><span class="params">(<span class="keyword">float</span> r)</span></span>; <span class="comment">//声明函数fn1</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> &amp;<span class="title">fn2</span><span class="params">(<span class="keyword">float</span> r)</span></span>; <span class="comment">//声明函数fn2</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">fn1</span><span class="params">(<span class="keyword">float</span> r)</span> <span class="comment">//定义函数fn1，它以返回值的方法返回函数值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　temp=(<span class="keyword">float</span>)(r*r*<span class="number">3.14</span>);</span><br><span class="line">　<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">float</span> &amp;<span class="title">fn2</span><span class="params">(<span class="keyword">float</span> r)</span> <span class="comment">//定义函数fn2，它以引用方式返回函数值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　temp=(<span class="keyword">float</span>)(r*r*<span class="number">3.14</span>);</span><br><span class="line">　<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> <span class="comment">//主函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　<span class="keyword">float</span> a=fn1(<span class="number">10.0</span>); <span class="comment">//第1种情况，系统生成要返回值的副本（即临时变量）</span></span><br><span class="line">　<span class="keyword">float</span> &amp;b=fn1(<span class="number">10.0</span>); <span class="comment">//第2种情况，可能会出错（不同 C++系统有不同规定）</span></span><br><span class="line">　<span class="comment">//不能从被调函数中返回一个临时变量或局部变量的引用</span></span><br><span class="line">　<span class="keyword">float</span> c=fn2(<span class="number">10.0</span>); <span class="comment">//第3种情况，系统不生成返回值的副本</span></span><br><span class="line">　<span class="comment">//可以从被调函数中返回一个全局变量的引用</span></span><br><span class="line">　<span class="keyword">float</span> &amp;d=fn2(<span class="number">10.0</span>); <span class="comment">//第4种情况，系统不生成返回值的副本</span></span><br><span class="line">　<span class="comment">//可以从被调函数中返回一个全局变量的引用</span></span><br><span class="line">　<span class="built_in">cout</span>&lt;&lt;a&lt;&lt;c&lt;&lt;d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> &amp;<span class="title">put</span><span class="params">(<span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="keyword">int</span> vals[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> error=<span class="number">-1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="built_in">put</span>(<span class="number">0</span>)=<span class="number">10</span>; <span class="comment">//以put(0)函数值作为左值，等价于vals[0]=10;</span></span><br><span class="line"><span class="built_in">put</span>(<span class="number">9</span>)=<span class="number">20</span>; <span class="comment">//以put(9)函数值作为左值，等价于vals[9]=20;</span></span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;vals[<span class="number">0</span>];</span><br><span class="line"><span class="built_in">cout</span>&lt;&lt;vals[<span class="number">9</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> &amp;<span class="title">put</span><span class="params">(<span class="keyword">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> (n&gt;=<span class="number">0</span> &amp;&amp; n&lt;=<span class="number">9</span> ) <span class="keyword">return</span> vals[n];</span><br><span class="line"><span class="keyword">else</span> &#123; <span class="built_in">cout</span>&lt;&lt;<span class="string">"subscript error"</span>; <span class="keyword">return</span> error; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="引用和多态"><a href="#引用和多态" class="headerlink" title="引用和多态"></a>引用和多态</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> 　<span class="title">A</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> 　<span class="title">B</span>：<span class="title">public</span> <span class="title">A</span>&#123;</span>……&#125;;</span><br><span class="line">B 　b;</span><br><span class="line">A 　&amp;Ref = b; <span class="comment">// 用派生类对象初始化基类对象的引用</span></span><br></pre></td></tr></table></figure>
+
+<p>Ref 只能用来访问派生类对象中从基类继承下来的成员，是基类引用指向派生类。如果A类中定义有虚函数，并且在B类中重写了这个虚函数，就可以通过Ref产生多态效果。</p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p>抽象类是指包括至少一个纯虚函数的类。</p>
+<p>C++允许用户使用虚函数 <strong>(virtual function)</strong> 来完成 <strong>运行时决议</strong> 这一操作，这与一般的 <strong>编译时决定</strong> 有着本质的区别</p>
+<ul>
+<li>在基类用virtual声明成员函数为虚函数。这样就可以在派生类中重新定义此函数，为它赋予新的功能，并能方便被调用。<ul>
+<li>在派生类中重新定义此函数，要求函数名，函数类型，函数参数个数和类型全部与基类的虚函数相同，并根据派生类的需要重新定义函数体。</li>
+</ul>
+</li>
+<li>在类外定义虚函数时，不必在定义virtual</li>
+<li>c++规定，<strong>当一个成员函数被声明为虚函数后，其派生类的同名函数都自动成为虚函数</strong>。因此在派生类重新声明该虚函数时，可以加virtual，也可以不加，但习惯上一般在每层声明该函数时都加上virtual，使程序更加清晰。</li>
+<li>如果再派生类中没有对基类的虚函数重新定义，则派生类简单的继承起基类的虚函数。 </li>
+</ul>
+<h3 id="实现机制"><a href="#实现机制" class="headerlink" title="实现机制"></a>实现机制</h3><p>用虚表和虚指针</p>
+<p>是<strong>每个类用了一个虚表，每个类的对象用了一个虚指针。虚表是和类对应的，虚表指针是和对象对应的。</strong>  </p>
+<p>虚表</p>
+<ul>
+<li><p><em>一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数</em></p>
+</li>
+<li><p><em>没有覆盖父类的虚函数是毫无意义的。</em></p>
+</li>
+</ul>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>C++中的虚函数的作用主要是实现了多态的机制。</p>
+<p><strong>多态用虚函数来实现，结合动态绑定</strong>，<strong>此时的调用就不会在编译时候确定而是在运行时确定</strong>。不在单独考虑指针/引用的类型而是看指针/引用的对象的类型来判断函数的调用，根据对象中虚指针指向的虚表中的函数的地址来确定调用哪个函数</p>
+<p><strong>虚函数是在基类中定义的，目的是不确定它的派生类的具体行为。</strong>故可以理解成java的父类中待覆写的函数</p>
+<h1 id="混淆点"><a href="#混淆点" class="headerlink" title="混淆点"></a>混淆点</h1><h2 id="关于函数的调用机制"><a href="#关于函数的调用机制" class="headerlink" title="关于函数的调用机制"></a>关于函数的调用机制</h2><p>（1）调用过程：建立函数调用栈—保存调用函数的运行状态和返回地址—传参—进入被调函数。</p>
+<p>（2）传参机制：传参不一定会压栈！fastcall(快调)一般会由寄存器传参，另外当参数不超过4个时一般也由寄存器传参，否则会压栈。压栈顺序一般是<strong>从右到左</strong></p>
+<h2 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h2><h3 id="值传递（传副本）"><a href="#值传递（传副本）" class="headerlink" title="值传递（传副本）"></a>值传递（传副本）</h3><p>形参只是实参的拷贝</p>
+<p>在函数结束时，形参作为局部变量会被释放，对实参不会产生任何影响。若为类的对象会调用拷贝构造，这种深拷贝操作会影响到传参效率。（可理解为“单向接口”）</p>
+<h3 id="指针传递"><a href="#指针传递" class="headerlink" title="指针传递"></a>指针传递</h3><p>指针本质上是一个变量，该变量的值是一个地址，指针在逻辑上是独立的，可以被改变。</p>
+<p>传递的是实参的地址，所以函数内部对形参得操作会“同步更新”到实参。（可理解为“双向接口”）</p>
+<h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><p>传递的是实参的别名，传参时形参被绑定到实参对象上，因此函数内部对形参的操作也都会“同步更新”到源实参。（可理解为“双向接口”）</p>
+<h4 id="引用传递和值传递的异同"><a href="#引用传递和值传递的异同" class="headerlink" title="引用传递和值传递的异同"></a>引用传递和值传递的异同</h4><p>相同点</p>
+<ul>
+<li>都是地址的概念</li>
+</ul>
+<p>不同点</p>
+<ul>
+<li><p>指针是一个实体（替身）；引用只是一个别名（本体的另一个名字）</p>
+</li>
+<li><p>引用只能在定义时被初始化一次，之后不可改变，即“从一而终”；指针可以修改，即“见异思迁”；</p>
+</li>
+<li><p>引用不能为空（有本体，才有别名）；指针可以为空；</p>
+</li>
+<li><p>sizeof 引用，得到的是所指向变量的大小；sizeof 指针，得到的是指针的大小；</p>
+</li>
+<li><p>指针 ++，是指指针的地址自增；引用++是指所指变量自增；</p>
+</li>
+<li><p>引用是类型安全的，引用过程会进行类型检查；指针不会进行安全检查；</p>
+</li>
+</ul>
+<h2 id="关于static用法"><a href="#关于static用法" class="headerlink" title="关于static用法"></a>关于static用法</h2><p><strong>静态局部变量！=全局变量</strong>，二者生命周期相同，但作用域不同，静态局部变量只对函数体内部可见。</p>
+<p>static修饰全局变量：限定该变量只在该文件中可用。</p>
+<p>static修饰外部函数：往往在函数声明中加static修饰，限定该函数只在该文件可用（若在头文件中声明，则限定只在其对应的源文件中可用）</p>
+<p>类中static修饰的成员。静态成员与类的对象实体无关，是该类的<strong>共享变量</strong>。</p>
+<h2 id="关于extern用法"><a href="#关于extern用法" class="headerlink" title="关于extern用法"></a>关于extern用法</h2><p>C/C++头文件中的函数声明默认为extern，即外部可用（其他源文件只需包含头文件即可使用）。和static修饰的效果相反。</p>
+<p>带extern的变量仅仅是声明而不是定义！用extern使变量可以在<strong>多文件中共享</strong>，主要有两种做法：</p>
+<ul>
+<li>在源文件中定义，其他需要使用该变量的源文件用extern声明。（表示该变量在其它文件中定义，即一次定义，多次extern声明）</li>
+<li>在源文件中定义，其对应的头文件中extern声明，其他需要使用该变量的源文件包含该头文件即可。（更加标准的做法）</li>
+</ul>
+<h2 id="内联"><a href="#内联" class="headerlink" title="内联"></a>内联</h2><p>用途：定义或声明函数时返回值前加上inline修饰能避免函数调用带来的<strong>时间和空间开销</strong>，提高效率，适用于反复执行的核心代码。内部实现机制其实是编译时按函数体展开代码，避免了函数调用的一系列压栈出栈过程。</p>
+<p>限制：</p>
+<p>​      （1）不能出现复杂的控制结构语句；</p>
+<p>​      （2）递归函数不能用作内联函数；</p>
+<p>​      （3）内联函数体不宜代码过长，只适合数行的小函数。</p>
+<p>注：1.内联和宏定义均属于代码替换机制，但前者安全性更好，宏只是预处理做简单的符号替换而不会做类型检查。内联可以完全替代宏，反之不能。</p>
+<p>​    2.inline关键字只是一种“建议”，是否采用内联机制取决于编译器。</p>
+<h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><p>用途：C++特有机制。让同一种算法针对不同类型使用相同的函数名，提高代码可读性，重载的函数至少在参数个数或类型上有所区别，仅返回值区别不能重载！</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span>)</span></span>;和<span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span>)</span></span>;<span class="comment">//编译器无法区分</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">abs</span><span class="params">(<span class="keyword">int</span>)</span></span>;和<span class="function"><span class="keyword">double</span> <span class="title">abs</span><span class="params">(<span class="keyword">double</span>)</span></span>;<span class="comment">//C++通过名字粉碎技术自动匹配</span></span><br></pre></td></tr></table></figure>
+
+<p>ps:重写是面向对象中子类对父类虚函数的重新实现</p>
+<p>底层const修饰的参数以及常量成员函数也可以重载。</p>
+<h2 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h2><ul>
+<li>友元(frend)机制允许<strong>一个类将对其非公有成员的访问权授予指定的函数或者类</strong></li>
+<li>友元的声明以friend开始，它只能出现在类定义的内部</li>
+</ul>
+<h3 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h3><p>友元函数是一个不属于类成员的函数，但它可以访问该类的私有成员。————友元函数视作好像是该类的一个成员</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="keyword">void</span> <span class="title">set_show</span><span class="params">(<span class="keyword">int</span> x, A &amp;a)</span></span>;      <span class="comment">//该函数是友元函数的声明</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_show</span><span class="params">(<span class="keyword">int</span> x, A &amp;a)</span>  <span class="comment">//友元函数定义，为了访问类A中的成员</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a.data = x;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; a.data &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="title">a</span>;</span></span><br><span class="line"></span><br><span class="line">    set_show(<span class="number">1</span>, a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>  友元类的所有成员函数都是另一个类的友元函数，都可以访问另一个类中的隐藏信息（包括私有成员和保护成员）。</p>
+<p>关于友元类的注意事项：</p>
+<p>(1) <strong>友元关系不能被继承。</strong><br>(2) 友元关系是单向的，不具有交换性。若类B是类A的友元，类A不一定是类B的友元，要看在类中是否有相应的声明。<br>(3) 友元关系不具有传递性。若类B是类A的友元，类C是B的友元，类C不一定是类A的友元，同样要看类中是否有相应的申明。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span>;</span>                         <span class="comment">//这是友元类的声明</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>             //友元类定义，为了访问类<span class="title">A</span>中的成员</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_show</span><span class="params">(<span class="keyword">int</span> x, A &amp;a)</span> </span>&#123; a.data = x; <span class="built_in">cout</span>&lt;&lt;a.data&lt;&lt;<span class="built_in">endl</span>;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">A</span> <span class="title">a</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">C</span> <span class="title">c</span>;</span></span><br><span class="line"></span><br><span class="line">    c.set_show(<span class="number">1</span>, a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="友元成员函数"><a href="#友元成员函数" class="headerlink" title="友元成员函数"></a>友元成员函数</h3><p>使类B中的成员函数成为类A的友元函数，这样类B的该成员函数就可以访问类A的所有成员了。</p>
+<h2 id="vector用法"><a href="#vector用法" class="headerlink" title="vector用法"></a>vector用法</h2><p>vector 是向量类型，它可以容纳许多类型的数据，如若干个整数，所以称其为容器。</p>
+<p>vector是一个类模板，而不是类型。</p>
+<h1 id="动态联编与静态联编"><a href="#动态联编与静态联编" class="headerlink" title="动态联编与静态联编"></a>动态联编与静态联编</h1><p>c++一般的子类和父类继承关系的时候，都是使用的是静态联编（和之前学习的指针的用法一致）参考：<a href="https://blog.csdn.net/neiloid/article/details/6934129" target="_blank" rel="noopener">https://blog.csdn.net/neiloid/article/details/6934129</a></p>
+<p>参考：<a href="https://blog.csdn.net/neiloid/article/details/6934129" target="_blank" rel="noopener">https://blog.csdn.net/neiloid/article/details/6934129</a></p>
 <p>参考：<a href="https://blog.csdn.net/gaoxin1076/article/details/8298279" target="_blank" rel="noopener">https://blog.csdn.net/gaoxin1076/article/details/8298279</a></p>
 <p>联编是指一个计算机程序自身彼此关联的过程,在这个联编过程中,需要确定程序中的操作调用(函数调用)与执行该操作(函数)的代码段之间的映射关系;按照联编所进行的阶段不同,可分为静态联编和动态联编;</p>
 <p>仔细读读红色字体的那部分句子。我们就能很清楚的明白什么是联编了。给大家举个最通俗易懂的例子好了：</p>
@@ -330,7 +441,30 @@
 <p>在我的vs2010的反汇编调试窗口下是这样的一句代码：</p>
 <p>013B1546  call        shape::draw (13B10F5h) </p>
 <p>很明确这里指出了shape::draw，也就确定了映射关系，完成了联编。</p>
-
+<h1 id="C-和java的异同"><a href="#C-和java的异同" class="headerlink" title="C++和java的异同"></a>C++和java的异同</h1><ol>
+<li><p>Java源码会先经过一次编译，成为中间码，中间码再被解释器解释成机器码。对于Java而言，中间码就是字节码(.class)，而解释器在JVM中内置了。</p>
+<p>C++源码一次编译，直接在编译的过程中链接了，形成了机器码。</p>
+</li>
+<li><p>Java是纯面向对象的语言，所有代码（包括函数、变量）都必须在类中定义。而C++中还有面向过程的东西，比如是全局变量和全局函数。</p>
+</li>
+<li><p><strong>C++支持多继承，Java中类都是单继承的</strong>。但是继承都有传递性，同时Java中的接口是多继承，类对接口的实现也是多实现。</p>
+</li>
+</ol>
+<h2 id="变量和类型"><a href="#变量和类型" class="headerlink" title="变量和类型"></a>变量和类型</h2><ul>
+<li><p>Java没有无符号整数。（无符号右移在Java中强制用三个右尖括号表示）。</p>
+</li>
+<li><p>Java有内置类型String，而C++没有。C++的std::string是可变的，类似于Java的StringBuffer。</p>
+</li>
+<li><p>Java中不存在指针。Java的引用是功能弱化的指针，只能做“调用所指对象的方法”的操作。</p>
+</li>
+<li><p>Java中，对象只能由引用传递，C＋＋中对象可由值或引用传递。</p>
+</li>
+</ul>
+<h2 id="类机制"><a href="#类机制" class="headerlink" title="类机制"></a>类机制</h2><ul>
+<li>Java是完全面向对象的，所有方法都必须写在类中。</li>
+<li></li>
+</ul>
+<h1 id="C-标准库"><a href="#C-标准库" class="headerlink" title="C++标准库"></a>C++标准库</h1><h2 id="IO库"><a href="#IO库" class="headerlink" title="IO库"></a>IO库</h2>
     </div>
 
     
@@ -417,7 +551,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c-动态联编与静态联编"><span class="nav-number">1.</span> <span class="nav-text">c++动态联编与静态联编</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#补充点"><span class="nav-number">1.</span> <span class="nav-text">补充点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用（-amp-）"><span class="nav-number">1.1.</span> <span class="nav-text">引用（&amp;）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用的作用"><span class="nav-number">1.1.1.</span> <span class="nav-text">引用的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常引用"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">常引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用作为返回值"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">引用作为返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用和多态"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">引用和多态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚函数"><span class="nav-number">1.2.</span> <span class="nav-text">虚函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现机制"><span class="nav-number">1.2.1.</span> <span class="nav-text">实现机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">1.2.2.</span> <span class="nav-text">多态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#混淆点"><span class="nav-number">2.</span> <span class="nav-text">混淆点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于函数的调用机制"><span class="nav-number">2.1.</span> <span class="nav-text">关于函数的调用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传参方式"><span class="nav-number">2.2.</span> <span class="nav-text">传参方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#值传递（传副本）"><span class="nav-number">2.2.1.</span> <span class="nav-text">值传递（传副本）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针传递"><span class="nav-number">2.2.2.</span> <span class="nav-text">指针传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用传递"><span class="nav-number">2.2.3.</span> <span class="nav-text">引用传递</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引用传递和值传递的异同"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">引用传递和值传递的异同</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于static用法"><span class="nav-number">2.3.</span> <span class="nav-text">关于static用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于extern用法"><span class="nav-number">2.4.</span> <span class="nav-text">关于extern用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内联"><span class="nav-number">2.5.</span> <span class="nav-text">内联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重载"><span class="nav-number">2.6.</span> <span class="nav-text">重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#友元"><span class="nav-number">2.7.</span> <span class="nav-text">友元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#友元函数"><span class="nav-number">2.7.1.</span> <span class="nav-text">友元函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元类"><span class="nav-number">2.7.2.</span> <span class="nav-text">友元类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元成员函数"><span class="nav-number">2.7.3.</span> <span class="nav-text">友元成员函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector用法"><span class="nav-number">2.8.</span> <span class="nav-text">vector用法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态联编与静态联编"><span class="nav-number">3.</span> <span class="nav-text">动态联编与静态联编</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-和java的异同"><span class="nav-number">4.</span> <span class="nav-text">C++和java的异同</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量和类型"><span class="nav-number">4.1.</span> <span class="nav-text">变量和类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类机制"><span class="nav-number">4.2.</span> <span class="nav-text">类机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-标准库"><span class="nav-number">5.</span> <span class="nav-text">C++标准库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IO库"><span class="nav-number">5.1.</span> <span class="nav-text">IO库</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -433,20 +567,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -519,13 +653,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">693k</span>
+    <span title="站点总字数">728k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:30</span>
+    <span title="站点阅读时长">11:02</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -620,7 +754,7 @@ if (document.querySelectorAll('div.pdf').length) {
     });
   }, window.PDFObject);
 }
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -632,5 +766,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

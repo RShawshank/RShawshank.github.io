@@ -49,7 +49,7 @@
 </script>
 
   <meta name="description" content="本文希望总结一下递归的用法和理解。">
-<meta name="keywords" content="算法,递归">
+<meta name="keywords" content="算法,递归,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="递归">
 <meta property="og:url" content="http:&#x2F;&#x2F;rshawshank.github.io&#x2F;2019&#x2F;11&#x2F;28&#x2F;Algorithm_%E9%80%92%E5%BD%92&#x2F;index.html">
@@ -151,17 +151,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">46</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">49</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">17</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">80</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -273,14 +273,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
+              <span>9.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -335,7 +335,7 @@
 <p>e.g.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">n</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(n &lt;= <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> n * test(n<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(test(<span class="number">5</span>));</span><br></pre></td></tr></table></figure>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E9%80%92%E5%BD%92/20180929205852699-1574928271280.dib" alt="在这里插入图片描述"></p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsCAMAAABOo35HAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9UExURVlZWdPT07KysmRkZIWFhfT09JmZmWZmZm9vb39/fxkZGUxMTDMzM3p6epCQkKamppubm729venp6cjIyN7e3tbW1s/Pz8LCwnx8fLS0tFZWVoiIiI+Pj6GhoeTk5Glpabu7u93d3evr66CgoJSUlKqqqsnJyeDg4Hd3d8PDw+Xl5bi4uNHR0dvb26Ojo6urq+fn51hYWDg4OCgoKHBwcK2traenp0FBQe7u7vHx8U5OTre3t8zMzHV1df///7GrnpQAAAA/dFJOU///////////////////////////////////////////////////////////////////////////////////AI4mfBcAAAUGSURBVHja7NoJb6M4GMZxY0NCD64kve/pMZ2d3Z297+X7f6zFNmBAMUXa6URl/q9UJSWPUPzrizFWRUlNLgEBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYYIEFAVhggQUWWGBBABZYYIEFFlgQgAUWWGCBBRYEYIEFFlhggQUBWGCBBRZYYEEAFlhggQUWWBCABRZYYIEFFgRggQUWWGCBBQFYYIEFFlhgQQAWWGCBBRZYEIAFFlhggQUWBGCBBRZYn6cCIcRXgvX/h9qcIVBqDdbEM8RCxGCB9QqXYRwHYDHBgwXWl8eKZKiESHI3Ba1kWs3fKixcaJUl1YyeBm7Ocq+yLItUiVBGnXxenSHJolIKEcwHq6ikbOX1YGVzQCTN8LPmSLreghUl9sN4Uw7yajMrLC0TZ1ImzqY6FEop0+pIaEN5HaoOxVuwEqFyc4I46uSlzOLqgxlh6UaR9l3VYWl9Fdoxb1Q90KJtu41pwwFW/WHhTtW8i7TafLCqRsk6bsGw63L9qurXRmuIlbT9lDQnlXU+nBFW1Q2qnZbDprWa2tjR90LZFqx1/+Td/HpGWLlrLDvIwTcx6dQ1Vrntbig68cDms3JwbA5Y1azs1ger6sNV/bbIw1jU81MvNAGrl58RVn8ozW+btF08iGFoAlYvP3csfVur1gJBEIA1uBmue5dhZDOyO2epbmgCVi8/I6x0MMHH9pjsTfBhNzQBq5uPZoQlB0uH3DZG4EZqQ26fL3sZq5uf09Ih6qw3i/pm6BZO0qZX7rrUS68Xsbr5ZE4rePMk08pk9aUZugfqppvs6AM1Acvlo/StP+6EbW06z8hJqxbYp2BZPQUnFsLsKuhQdaHqn5ewbF7KXIn0jWO5MqOQ7RaNLPtbNMmmhimj0GUmYLl8Gs0Lq4wyPbTu1l2QKqHSouzs3OlDIslW5SQsnY/NXmFplyNvEuuLV/Tau9BzwiraDUSwXmysztYWWNtL1psXeumgIrDGaqXvBfUuvtqUYI3V2t1wk1e2msFluJJm6zDJXv/fIfjPP7DAAgsssCiwwAILLLDAosACCyywwAKLAgsssMACC6zt9fDz/v75tyOB+98PD2+ORgKffjw4OP1uJPDxl+Xy8v1I4MPF3t7VNyOB4/vF4uzdzrG+39f1kz/w66Guv/yBvw90KX/gZKkr8Qf+2dOV+gNHC12/7RxrabD2/a31bLAO/a11YbAO/K21MFhLf2s9Gqw9f2vdGqzFu11jnVusE2/gxmI9eQOnFuvYG7i0WH7uK4t15w2cWazrXWP9a7H8f/bQYvm/6IPF+sF/pVssf19Ii/WH/0K2WH/uGuvEWC39gSdj9Twy+Rqri5EZx1gt/IE7Y/XoD1wbq9vd3w1PlufnD2OBp+ebm/uxwPHF6emnscDR4vLy41jg7vHq6sNY4Pr27OyYdRaLUrDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssMCiwAILLLDAAosCCyywwAILLAossMACCyywKLDAAgsssL6u+k+AAQCR9eHtLKvLfwAAAABJRU5ErkJggg==" data-original="/images/%E9%80%92%E5%BD%92/20180929205852699-1574928271280.dib" alt=""></p>
 <p>test(5)先调用，然后栈帧填入递归调用函数的信息。</p>
 <p>分析：<br>要求计算5的阶乘；<br>1）：调用test函数时传入5，即首先在栈中划出一个记录块做为函数test（5）的执行环境；执行到最后结果为： 5 * test（4）；<br>2）：上一个函数的返回值中调用函数test（4），因此继续指向新的记录块，用于执行函数test（4）；执行到最后结果为： 4 * test（3）；<br>3）：上一个函数的返回值中调用函数test（3），因此继续指向新的记录块，用于执行函数test（3）；执行到最后结果为： 3 * test（2）；<br>4）：上一个函数的返回值中调用函数test（2），因此继续指向新的记录块，用于执行函数test（2）；执行到最后结果为： 2 * test（1）；<br>5）：上一个函数的返回值中调用函数test（1），因此继续指向新的记录块，用于执行函数test（1）；执行到最后test（1）=1；<br>此时进栈操作已经到达了递归终止的条件，为了计算出最后的test（5）的值需要执行出栈操作；</p>
 <p>如上图，我画了一幅出栈示意图；栈是先进后出的，所以最后进的要先出。<br>1）：test（1）出栈，返回值为1；<br>2）：栈帧test（2）接收test（1）返回值进行计算得出test（2） = 2 * 1 = 2；<br>3）：test（2）出栈，栈帧test（3）接收test（2）返回值进行计算得出test（3） = 3 * 2 = 6；<br>4）：test（3）出栈，栈帧test（4）接收test（3）返回值进行计算得出test（4） = 4 * 6 = 24；<br>5）：test（4）出栈，栈帧test（5）接收test（4）返回值进行计算得出test（5） = 5 * 24 = 120；<br>6）：test（5）出栈，返回值120，此时表示这一段程序已经执行完毕，计算得出5的阶乘是120；<br><strong>总结：在每一次递归函数调用的时候，栈帧都要记录下一个栈帧的返回值，所以调用的层数就和栈帧数相同</strong></p>
@@ -377,8 +377,19 @@
 <p><a href="https://leetcode-cn.com/problems/combination-sum/" target="_blank" rel="noopener">Leetcode 39.组合总和</a></p>
 <p><a href="https://leetcode-cn.com/problems/combination-sum-ii/" target="_blank" rel="noopener">Leetcode 40.组合总和2</a></p>
 <p><a href="https://leetcode-cn.com/problems/generate-parentheses/" target="_blank" rel="noopener">Leetcode 22.括号生成</a></p>
+<p><a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" target="_blank" rel="noopener">Leetcode 98.验证二叉搜索树</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//下列做法不能满足节点的左右子树中的所有节点都满足要求</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    TreeNode pre = <span class="keyword">new</span> TreeNode();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>&amp;&amp;root.left.val&gt;=root.val)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>&amp;&amp;root.right.val&lt;=root.val)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">boolean</span> left = isValidBST(root.left);</span><br><span class="line">        <span class="keyword">boolean</span> right = isValidBST(root.right);</span><br><span class="line">        <span class="keyword">return</span> left&amp;&amp;right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//正确做法</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    TreeNode pre = <span class="keyword">new</span> TreeNode();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>)&#123;<span class="comment">//保证右子树中的所有节点都满足要求</span></span><br><span class="line">            pre=root.right;</span><br><span class="line">            <span class="keyword">while</span>(pre.left!=<span class="keyword">null</span>)&#123;pre=pre.left;&#125;</span><br><span class="line">            <span class="keyword">if</span>(pre.val&lt;=root.val)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>)&#123;<span class="comment">//保证左子树中的所有节点都满足要求</span></span><br><span class="line">            pre=root.left;</span><br><span class="line">            <span class="keyword">while</span>(pre.right!=<span class="keyword">null</span>)&#123;pre=pre.right;&#125;</span><br><span class="line">            <span class="keyword">if</span>(pre.val&gt;=root.val)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">boolean</span> left = isValidBST(root.left);</span><br><span class="line">        <span class="keyword">boolean</span> right = isValidBST(root.right);</span><br><span class="line">        <span class="keyword">return</span> left&amp;&amp;right;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//中序遍历递归版本</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> pre = Long.MIN_VALUE; <span class="comment">// 记录上一个节点的值，初始值为Long的最小值</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inorder(root);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 中序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">inorder</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">//访问左子树</span></span><br><span class="line">        <span class="keyword">boolean</span> l = inorder(node.left);</span><br><span class="line">        <span class="comment">//访问当前节点：如果当前节点小于等于中序遍历的前一个节点，说明不满足BST，返回 false；否则继续遍历。</span></span><br><span class="line">        <span class="keyword">if</span>(node.val &lt;= pre) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        pre = node.val;</span><br><span class="line">        <span class="keyword">boolean</span> r = inorder(node.right);</span><br><span class="line">        <span class="keyword">return</span> l &amp;&amp; r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><a href="https://leetcode-cn.com/problems/longest-substring-with-at-least-k-repeating-characters/" target="_blank" rel="noopener">Leetcode 395.至少有k个重复字符的最长子串</a></p>
 <p><a href="https://leetcode-cn.com/problems/integer-replacement/" target="_blank" rel="noopener">Leetcode 397.整数替换</a></p>
+<p><a href="https://leetcode-cn.com/problems/convert-bst-to-greater-tree/" target="_blank" rel="noopener">leetcode 538.把二叉搜索树转换为累加树</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将每个节点的值修改为原来的节点值加上所有大于它的节点值之和</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;        </span><br><span class="line">    <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">convertBST</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root!=<span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            convertBST(root.right);</span><br><span class="line">            sum+=root.val;</span><br><span class="line">            root.val=sum;</span><br><span class="line">            convertBST(root.left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://leetcode-cn.com/problems/trim-a-binary-search-tree/submissions/" target="_blank" rel="noopener">Leetcode 669.修剪二叉搜索树</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val, TreeNode left, TreeNode right) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = left;</span></span><br><span class="line"><span class="comment"> *         this.right = right;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">trimBST</span><span class="params">(TreeNode root, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (root.val &lt; low) &#123;</span><br><span class="line">            <span class="comment">//因为是二叉搜索树,节点.left &lt; 节点 &lt; 节点.right</span></span><br><span class="line">            <span class="comment">//节点数字比low小,就把左节点全部裁掉.</span></span><br><span class="line">            root = root.right;</span><br><span class="line">            <span class="comment">//裁掉之后,继续看右节点的剪裁情况.剪裁后重新赋值给root.</span></span><br><span class="line">            root = trimBST(root, low, high);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (root.val &gt; high) &#123;</span><br><span class="line">            <span class="comment">//如果数字比high大,就把右节点全部裁掉.</span></span><br><span class="line">            root = root.left;</span><br><span class="line">            <span class="comment">//裁掉之后,继续看左节点的剪裁情况</span></span><br><span class="line">            root = trimBST(root, low, high);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果数字在区间内,就去裁剪左右子节点.</span></span><br><span class="line">            root.left = trimBST(root.left, low, high);</span><br><span class="line">            root.right = trimBST(root.right, low, high);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 <h1 id="递归改非递归的一般算法"><a href="#递归改非递归的一般算法" class="headerlink" title="递归改非递归的一般算法"></a>递归改非递归的一般算法</h1><p>递归的本质是通过栈来保存状态，然后再次调用自己进入新的状态，然后函数返回的时候回到上次保存的状态。</p>
 <p>尾递归可以直接转化成循环，这里不多做分析</p>
 <p>更一般的递归，想要转化为非递归，就需要模拟栈的行为。</p>
@@ -398,20 +409,20 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+        <div class="popular-posts-date">2021-02-11</div>
+      <div class="popular-posts-title"><a href="\2021\02\11\Algorithm-链表\" rel="bookmark">Algorithm__链表</a></div>
+    </li>
+    <li class="popular-posts-item">
         <div class="popular-posts-date">2020-03-22</div>
       <div class="popular-posts-title"><a href="\2020\03\22\Algorithm-双指针法\" rel="bookmark">Algorithm_双指针法</a></div>
     </li>
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-25</div>
-      <div class="popular-posts-title"><a href="\2019\12\25\Algorithm_分治策略\" rel="bookmark">分治策略</a></div>
+        <div class="popular-posts-date">2021-01-24</div>
+      <div class="popular-posts-title"><a href="\2021\01\24\Algorithm-字符匹配算法\" rel="bookmark">Algorithm_字符匹配算法</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2019-11-28</div>
       <div class="popular-posts-title"><a href="\2019\11\28\Algorithm_动态规划算法\" rel="bookmark">动态规划算法</a></div>
-    </li>
-    <li class="popular-posts-item">
-        <div class="popular-posts-date">2019-12-02</div>
-      <div class="popular-posts-title"><a href="\2019\12\02\Algorithm_单源最短路径\" rel="bookmark">单源最短路径</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-01-02</div>
@@ -447,6 +458,7 @@
           <div class="post-tags">
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
               <a href="/tags/%E9%80%92%E5%BD%92/" rel="tag"><i class="fa fa-tag"></i> 递归</a>
+              <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
           </div>
 
         
@@ -515,20 +527,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -601,13 +613,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">693k</span>
+    <span title="站点总字数">728k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">10:30</span>
+    <span title="站点阅读时长">11:02</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -702,7 +714,7 @@ if (document.querySelectorAll('div.pdf').length) {
     });
   }, window.PDFObject);
 }
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -714,5 +726,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script></body>
+<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
