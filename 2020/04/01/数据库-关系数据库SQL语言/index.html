@@ -154,7 +154,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">49</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">51</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -164,7 +164,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">88</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">92</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -276,14 +276,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
+              <span>5.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -503,6 +503,20 @@
 <li>适当的利用视图可以更清晰的表达查询</li>
 </ul>
 <h2 id="key、index、primary-key和unique-key"><a href="#key、index、primary-key和unique-key" class="headerlink" title="key、index、primary key和unique key"></a>key、index、primary key和unique key</h2><p>[参考文章](<a href="https://www.cnblogs.com/zjfjava/p/6922494.html" target="_blank" rel="noopener">https://www.cnblogs.com/zjfjava/p/6922494.html</a></p>
+<h2 id="SQL-约束（Constraints）"><a href="#SQL-约束（Constraints）" class="headerlink" title="SQL 约束（Constraints）"></a>SQL 约束（Constraints）</h2><p>SQL 约束用于规定表中的数据规则。</p>
+<p>如果存在违反约束的数据行为，行为会被约束终止。</p>
+<p>约束可以在创建表时规定（通过 CREATE TABLE 语句），或者在表创建之后规定（通过 ALTER TABLE 语句）。</p>
+<h3 id="SQL-CREATE-TABLE-CONSTRAINT-语法"><a href="#SQL-CREATE-TABLE-CONSTRAINT-语法" class="headerlink" title="SQL CREATE TABLE + CONSTRAINT 语法"></a>SQL CREATE TABLE + CONSTRAINT 语法</h3><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE table_name</span><br><span class="line">(</span><br><span class="line">column_name1 data_type(<span class="name">size</span>) constraint_name,</span><br><span class="line">column_name2 data_type(<span class="name">size</span>) constraint_name,</span><br><span class="line">column_name3 data_type(<span class="name">size</span>) constraint_name,</span><br><span class="line">....</span><br><span class="line">)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 SQL 中，我们有如下约束：</p>
+<ul>
+<li><strong>NOT NULL</strong> - 指示某列不能存储 NULL 值。</li>
+<li><strong>UNIQUE</strong> - 保证某列的每行必须有唯一的值。</li>
+<li><strong>PRIMARY KEY</strong> - NOT NULL 和 UNIQUE 的结合。确保某列（或两个列多个列的结合）有唯一标识，有助于更容易更快速地找到表中的一个特定的记录。</li>
+<li><strong>FOREIGN KEY</strong> - 保证一个表中的数据匹配另一个表中的值的参照完整性。</li>
+<li><strong>CHECK</strong> - 保证列中的值符合指定的条件。</li>
+<li><strong>DEFAULT</strong> - 规定没有给列赋值时的默认值。</li>
+</ul>
 
     </div>
 
@@ -513,16 +527,12 @@
   <div class="popular-posts-header">相关文章推荐</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2020-06-04</div>
-      <div class="popular-posts-title"><a href="\2020\06\04\数据库-关系数据理论\" rel="bookmark">数据库_关系数据理论概述</a></div>
-    </li>
-    <li class="popular-posts-item">
         <div class="popular-posts-date">2020-04-01</div>
       <div class="popular-posts-title"><a href="\2020\04\01\数据库-关系数据库\" rel="bookmark">数据库_关系数据库</a></div>
     </li>
     <li class="popular-posts-item">
-        <div class="popular-posts-date">2020-04-01</div>
-      <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库安全性\" rel="bookmark">数据库_数据库安全性</a></div>
+        <div class="popular-posts-date">2020-06-04</div>
+      <div class="popular-posts-title"><a href="\2020\06\04\数据库-关系数据理论\" rel="bookmark">数据库_关系数据理论概述</a></div>
     </li>
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-06-05</div>
@@ -531,6 +541,10 @@
     <li class="popular-posts-item">
         <div class="popular-posts-date">2020-04-01</div>
       <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库完整性\" rel="bookmark">数据库_数据库完整性</a></div>
+    </li>
+    <li class="popular-posts-item">
+        <div class="popular-posts-date">2020-04-01</div>
+      <div class="popular-posts-title"><a href="\2020\04\01\数据库-数据库安全性\" rel="bookmark">数据库_数据库安全性</a></div>
     </li>
   </ul>
 <div>
@@ -613,7 +627,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言概述"><span class="nav-number">1.</span> <span class="nav-text">SQL语言概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据定义概述"><span class="nav-number">2.</span> <span class="nav-text">数据定义概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本表的定义、修改和删除"><span class="nav-number">2.1.</span> <span class="nav-text">基本表的定义、修改和删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义基本表"><span class="nav-number">2.1.1.</span> <span class="nav-text">定义基本表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模式和表"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">模式和表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表"><span class="nav-number">2.1.2.</span> <span class="nav-text">修改表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除表"><span class="nav-number">2.1.3.</span> <span class="nav-text">删除表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据查询"><span class="nav-number">2.2.</span> <span class="nav-text">数据查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单表查询"><span class="nav-number">2.2.1.</span> <span class="nav-text">单表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#聚集函数和分组"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">聚集函数和分组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多表连接查询"><span class="nav-number">2.2.2.</span> <span class="nav-text">多表连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自身连接"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">自身连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外连接"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">外连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套查询"><span class="nav-number">2.2.3.</span> <span class="nav-text">嵌套查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#带ANY、ALL谓词的子查询"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">带ANY、ALL谓词的子查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带EXISTS谓词的子查询"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">带EXISTS谓词的子查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据更新"><span class="nav-number">2.3.</span> <span class="nav-text">数据更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">2.3.1.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改数据"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">2.3.3.</span> <span class="nav-text">删除数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">2.4.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建视图"><span class="nav-number">2.4.1.</span> <span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">2.4.2.</span> <span class="nav-text">删除视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询视图"><span class="nav-number">2.4.3.</span> <span class="nav-text">查询视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新视图"><span class="nav-number">2.4.4.</span> <span class="nav-text">更新视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">2.4.5.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key、index、primary-key和unique-key"><span class="nav-number">2.5.</span> <span class="nav-text">key、index、primary key和unique key</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语言概述"><span class="nav-number">1.</span> <span class="nav-text">SQL语言概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据定义概述"><span class="nav-number">2.</span> <span class="nav-text">数据定义概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本表的定义、修改和删除"><span class="nav-number">2.1.</span> <span class="nav-text">基本表的定义、修改和删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义基本表"><span class="nav-number">2.1.1.</span> <span class="nav-text">定义基本表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模式和表"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">模式和表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改表"><span class="nav-number">2.1.2.</span> <span class="nav-text">修改表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除表"><span class="nav-number">2.1.3.</span> <span class="nav-text">删除表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据查询"><span class="nav-number">2.2.</span> <span class="nav-text">数据查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单表查询"><span class="nav-number">2.2.1.</span> <span class="nav-text">单表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#聚集函数和分组"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">聚集函数和分组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多表连接查询"><span class="nav-number">2.2.2.</span> <span class="nav-text">多表连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自身连接"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">自身连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#外连接"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">外连接</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套查询"><span class="nav-number">2.2.3.</span> <span class="nav-text">嵌套查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#带ANY、ALL谓词的子查询"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">带ANY、ALL谓词的子查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#带EXISTS谓词的子查询"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">带EXISTS谓词的子查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据更新"><span class="nav-number">2.3.</span> <span class="nav-text">数据更新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">2.3.1.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改数据"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除数据"><span class="nav-number">2.3.3.</span> <span class="nav-text">删除数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图"><span class="nav-number">2.4.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建视图"><span class="nav-number">2.4.1.</span> <span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除视图"><span class="nav-number">2.4.2.</span> <span class="nav-text">删除视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询视图"><span class="nav-number">2.4.3.</span> <span class="nav-text">查询视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新视图"><span class="nav-number">2.4.4.</span> <span class="nav-text">更新视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">2.4.5.</span> <span class="nav-text">作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#key、index、primary-key和unique-key"><span class="nav-number">2.5.</span> <span class="nav-text">key、index、primary key和unique key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-约束（Constraints）"><span class="nav-number">2.6.</span> <span class="nav-text">SQL 约束（Constraints）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL-CREATE-TABLE-CONSTRAINT-语法"><span class="nav-number">2.6.1.</span> <span class="nav-text">SQL CREATE TABLE + CONSTRAINT 语法</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -629,7 +643,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-count">92</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -642,7 +656,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -715,13 +729,13 @@
       <i class="fa fa-area-chart"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">728k</span>
+    <span title="站点总字数">755k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">11:02</span>
+    <span title="站点阅读时长">11:26</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
@@ -816,7 +830,7 @@ if (document.querySelectorAll('div.pdf').length) {
     });
   }, window.PDFObject);
 }
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
 
@@ -828,5 +842,5 @@ if (document.querySelectorAll('div.pdf').length) {
 
   
 
-<script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script><script>!function(e){var r=Array.prototype.slice.call(document.querySelectorAll("img[data-original]"));function t(){for(var c=0;c<r.length;c++)t=r[c],void 0,0<=(n=t.getBoundingClientRect()).top&&0<=n.left&&n.top<=(e.innerHeight||document.documentElement.clientHeight)&&function(){var t,n,e,i,o=r[c];t=o,n=function(){r=r.filter(function(t){return o!==t})},e=new Image,i=t.getAttribute("data-original"),e.onload=function(){t.src=i,n&&n()},e.src=i}();var t,n}t(),e.addEventListener("scroll",function(){!function(t,n){clearTimeout(t.tId),t.tId=setTimeout(function(){t.call(n)},500)}(t,e)})}(this);</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
