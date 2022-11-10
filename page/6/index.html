@@ -1,0 +1,2642 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="rhb_blog">
+<meta property="og:url" content="http://rshawshank.github.io/page/6/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="rhb">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-组成原理-计算机系统概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time class="dt-published" datetime="2020-07-01T21:36:18.000Z" itemprop="datePublished">2020-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">组成原理-计算机系统概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="计算机系统概述"><a href="#计算机系统概述" class="headerlink" title="计算机系统概述"></a>计算机系统概述</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190109093356418.png"></p>
+<h2 id="计算机发展历程"><a href="#计算机发展历程" class="headerlink" title="计算机发展历程"></a>计算机发展历程</h2><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.png" alt="计算机发展历程"></p>
+<h2 id="计算机系统的层次结构"><a href="#计算机系统的层次结构" class="headerlink" title="计算机系统的层次结构"></a>计算机系统的层次结构</h2><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190329161804884.png"></p>
+<p>M4<br>高级语言级，它时面向用户的为方面用户编写应用程序而设置的。这一级由各种高级语言编译程序支持和执行。如C语言,c++等。它们编写的程序会由相应的编译器编写成汇编语言。实现高级语言的语法和语义等的执行过程对该层的程序员是透明的。</p>
+<p>M3<br>汇编语言级，它给程序人员提供一种符号式的程序设计语言，以减少程序编写的复杂性。一个机器都有自己的汇编语言，上层的高级语言首先被翻译成汇编语言，再进一步翻译（翻译过程由机器系统软件中的汇编软件完成）成机器直接识别的机器语言。机器通过执行机器语言程序来最终完成用户所要求的功能。 </p>
+<p>M2<br>操作系统级，它由操作系统程序实现。这些操作系统由机器指令和广义指令组成，广义指令是操作系统定义和解释的软件指令，所以这一级也成为混合级，计算机中所有机器指令的集合成为这台计算机的指令系统，指令系统又分为精简指令系统（RISC)和复杂指令系统（CISC)。</p>
+<p>操作系统对用户程序使用机器的各种资源（CPU、存储器、输入输出设备等）进行管理和分配。例如，当某一用户程序需要运行时，首先由操作系统将其调入内存中，这其中需要操作系统为其分配内存空间进行存储。再如某程序需要使用某一输出设备进行结果的输出时，需要操作系统为其提供对该设备的控制等。 </p>
+<p>M1<br>一般机器级，也称机器语言级，它<strong>由微程序解释机器指令系统</strong>，这一级也是硬件级，如二进制代码01010100101人真的很难看懂的 。</p>
+<p>M0<br>微程序设计级或逻辑电路级，这是一个实在的硬件级，<strong>由硬件直接执行</strong>，如果某一个应用程序直接用微指令来编写，那么可再这一级上运行应用程序。</p>
+<p>这一层的核心是计算机硬件控制单元。控制单元会逐条接收来自上层的机器指令，然后分析译码，产生一系列的操作控制信号，并由这些控制信号控制下层的逻辑部件按照一定的时间顺序有序地工作。 </p>
+<p><strong>解释程序由于是翻译一句执行一句，是不会有目标程序生成的</strong></p>
+<h2 id="计算机的组成"><a href="#计算机的组成" class="headerlink" title="计算机的组成"></a>计算机的组成</h2><p>一个完整的计算机系统，是由硬件系统和软件系统两大部分组成的。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20180923212410372" alt="计算机系统组成"></p>
+<h3 id="硬件系统"><a href="#硬件系统" class="headerlink" title="硬件系统"></a>硬件系统</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cc_net/article/details/10419645?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase">参考文章</a></p>
+<p>主要分为<strong>主机（CPU+主存储器）和外设（I&#x2F;O设备）两部分</strong>，是指那些构成计算机系统的物理实体，它们主要由各种各样的电子器件和机电装置组成。<br>从ENIAC(世界上第一台计算机)到当前最先进的计算机，硬件系统的设计采用的都是冯·诺依曼体系结构。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190318201755609.png" alt="经典冯诺依曼体系结构"></p>
+<ul>
+<li><p>运算器:　负责数据的算术运算和逻辑运算，即数据的加工处理。</p>
+</li>
+<li><p>控制器:　是整个计算机的中枢神经，分析程序规定的控制信息，并根据程序要求进行控制，协调计算机各部分组件工作及内存与外设的访问等。<br>运算器和控制器统称中央处理器（即CPU)</p>
+<blockquote>
+<ul>
+<li><p>处理单元（Processing Unit，PU）：又称数据通路（Datapath）或运算器，包含了算术逻辑单元（Arithmetic Logic Unit，ALU）和处理器寄存器（Processor Register）。用于完成各种算术和逻辑运算。</p>
+</li>
+<li><p>控制器单元（Control Unit，CU）：包含了指令寄存器（Instruction Register）和程序计数器（Program Counter）。用于控制程序的流程（程序流），通常是条件判断和跳转。</p>
+</li>
+</ul>
+<p>PU 和 CU 就组成了 CPU（Central Processing Unit，中央处理器）。</p>
+</blockquote>
+</li>
+<li><p>存储器：包括用于存储数据（Data）和指令（Instruction）的主存储器和容量更大但速度却慢的外部存储器。</p>
+</li>
+<li><p>输入设备:　实现将程序、原始数据、文字、字符、控制命令或现场采集的数据等信息输入到计算机。</p>
+</li>
+<li><p>输出设备:　实现将计算机处理后生成的中间结果或最后结果（各种数据符号及文字或各种控制信号等信息）输出出来。</p>
+</li>
+</ul>
+<!--重点-->
+
+<blockquote>
+<p><strong>冯诺依曼体系结构的核心思想是存储程序原理：</strong></p>
+<p><strong>将程序指令以代码形式提前输入计算机主存储器，然后按照其在存储器中的首地址执行程序的第一条指令，以后就按该程序的规定顺序执行其他指令，直至程序执行结束</strong></p>
+<p>计算机按照此原理应该具有：<strong>数据传送功能、数据存储功能、数据处理功能、操作控制功能、操作判断功能</strong></p>
+</blockquote>
+<h3 id="软件系统"><a href="#软件系统" class="headerlink" title="软件系统"></a>软件系统</h3><ul>
+<li>主要分为系统软件和应用软件，是指计算机证运行所需的各种各样的计算机程序。<ul>
+<li>系统软件：OS、DBMS、语言处理程序、分布式软件系统、网络软件系统、标准库程序、服务性程序等</li>
+</ul>
+</li>
+<li>系统软件的任务是既要保证计算机硬件的正常工作，又要使计算机硬件的性能得到充分发挥，并且为计算机用户提供一个比较直观、方便和友好的使用界面。</li>
+</ul>
+<h3 id="操作系统（Operation-System，OS）"><a href="#操作系统（Operation-System，OS）" class="headerlink" title="操作系统（Operation System，OS）"></a>操作系统（Operation System，OS）</h3><p>没有安装操作系统的计算机，通常被称为<strong>裸机</strong><br>如果想在 裸机 上运行自己所编写的程序，就必须用机器语言书写程序。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20180923213658380" alt="操作系统作为接口的示意图"></p>
+<h4 id="操作系统的作用"><a href="#操作系统的作用" class="headerlink" title="操作系统的作用"></a>操作系统的作用</h4><ul>
+<li>是现代计算机系统中 最基本和最重要 的系统软件</li>
+<li>主要作用是管理好硬件设备，并为用户和应用程序提供一个简单的接口，以便于使用</li>
+<li>而其他的诸如驱动程序、编译程序、数据库管理系统，以及大量的应用软件，都直接依赖于操作系统的支持</li>
+</ul>
+<h3 id="其他系统程序"><a href="#其他系统程序" class="headerlink" title="其他系统程序"></a>其他系统程序</h3><ul>
+<li>驱动程序：真正管理和控制硬件的程序，往往操作系统会携带一些默认版本</li>
+<li>语言处理程序：也称为编译程序，作用是把程序员用某种编程语言(如Python)所编写的程序，翻译成计算机可执行的机器语言。机器语言也被称为机器码，是可以通过CPU进行分析和执行的指令集。</li>
+</ul>
+<h2 id="计算机硬件的主要技术指标"><a href="#计算机硬件的主要技术指标" class="headerlink" title="计算机硬件的主要技术指标"></a>计算机硬件的主要技术指标</h2><ul>
+<li><p>机器字长：CPU一次能处理数据的位数，一般和CPU的寄存器位数有关</p>
+<ul>
+<li>太短了会使得计算机运行的速度变慢</li>
+<li>太长了会使得硬件的造价太高，但是可以提高精度和数的表示范围</li>
+</ul>
+</li>
+<li><p>存储容量：存储单元个数X存储字长</p>
+</li>
+</ul>
+<p>![](&#x2F;images&#x2F;组成原理-计算机系统概述&#x2F;FireShot Capture 025 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-id="claaf6qj1009utkup5jre3wfm" data-title="组成原理-计算机系统概述" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据结构-线性表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2020-06-29T21:27:58.000Z" itemprop="datePublished">2020-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/">数据结构_线性表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/2019120617574622.png"></p>
+<h2 id="线性表的定义"><a href="#线性表的定义" class="headerlink" title="线性表的定义"></a>线性表的定义</h2><p>线性表是<strong>具有相同特性的数据元素</strong>的一个<strong>有限</strong>序列。线性表<strong>属于逻辑结构中的线性结构</strong>，它包括顺序表、链表、栈、队列等。</p>
+<p>线性表在存储结构上有顺序存储和链式存储两种方式，但不管哪种存储方式，它们的结构都有如下特点：</p>
+<ol>
+<li>均匀性：虽然不同数据表的数据元素可以是各种各样的，但对于同一个线性表来说，<strong>数据元素必须具有相同的数据类型和长度</strong>。每个数据元素都是单个元素。</li>
+<li>有序性：各数据元素在线性表中的位置只取决于它们的序号，数据元素之间的相对位置是线性的，即存在唯一的”第一个”和”最后一个”数据元素。除了第一个和最后一个外，其他元素前面均只有一个数据元素(直接前驱)，后面均只有一个数据元素(直接后继)。</li>
+<li>有限性：表中元素的个数是有限的</li>
+<li>抽象性：只讨论表中元素间的关系，不考虑元素究竟表示什么内容</li>
+</ol>
+<h2 id="有序表"><a href="#有序表" class="headerlink" title="有序表"></a>有序表</h2><p>我们很容易把有序表与顺序表、链表相提并论，其实这是错误的。因为顺序表、链表是根据线性表的存储结构(顺序或链式)来划分概念的，而<u>有序表是根据线性表的数据元素的数值大小来划分概念，故有序表与顺序表、链表不是相互独立的，而是内容互相交错的</u>。</p>
+<p>有序表是指表中所有数据元素的数值以<strong>递增或递减方式有序排列</strong>，是数据元素的数值的有序性。<br>有序表只描述元素之间的逻辑关系，故为逻辑结构，因此有序表既可以顺序存储也可以链式存储。</p>
+<blockquote>
+<p>例如，数组int array[3]&#x3D;[1,2,3];是顺序存储结构的有序表。因为是数组，所以是顺序存储结构；因为数据元素[1,2,3]是从小到大排列，故是有序表。而单链表1-&gt;2-&gt;3则是链式存储结构的有序表。由这个例子可见：有序表与顺序表、链表不是相互独立的，而是内容互相交错的，我们不能把他们相提并论。</p>
+</blockquote>
+<h2 id="线性表的顺序存储（顺序表）"><a href="#线性表的顺序存储（顺序表）" class="headerlink" title="线性表的顺序存储（顺序表）"></a>线性表的顺序存储（顺序表）</h2><p>顺序表是顺序存储结构的线性表，是把线性表中的所有元素按照其逻辑顺序依次存储到计算机存储器中指定位置开始的一块<strong>连续的物理地址的空间中。由于顺序表的逻辑地址与其物理地址皆相邻</strong>，故称为顺序表。</p>
+<blockquote>
+<p>编程语言中的数组就是顺序表的一个典型实例。</p>
+</blockquote>
+<p>表中的任一元素的地址都可以通过这个公式得到：$LOC(d_i)&#x3D;LOC(d_1)+(i-1)*L 　1≤i≤n $其中，L是元素占用存储单元的长度。     </p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/20180414135155413"></p>
+<h3 id="顺序表的特点"><a href="#顺序表的特点" class="headerlink" title="顺序表的特点"></a>顺序表的特点</h3><p><strong>优点</strong>：</p>
+<p>1.空间利用率高，数据是连续存放，命中率比较高</p>
+<p>2.不用为表示结点间的逻辑关系而增加额外的开销</p>
+<p>3.顺序表可以按照元素下标**&#x3D;&#x3D;随机访问&#x3D;&#x3D;**</p>
+<p><strong>缺点</strong>：</p>
+<p>1.在插入和删除时大约移动平均一半的元素，对比较大的顺序表操作时效率很低</p>
+<blockquote>
+<p>最好情况是：在表尾插入和删除<br>最坏情况是：在表头插入和删除</p>
+</blockquote>
+<p>2.需要预先分配足够大的空间，估计过大，导致空间浪费；估计过小，会造成溢出</p>
+<blockquote>
+<p>此处需要注意的是：数组的动态分配还是顺序存储结构，并不是链式存储。<strong>数组的动态分配是开辟一块更大的存储空间来替换原本的存储空间。</strong></p>
+</blockquote>
+<p>**时间复杂度 :**插入和删除操作为O(n)。</p>
+<blockquote>
+<p>查找操作：<br>如果是按照元素序号和首地址来查找的话，时间复杂度是O(1)；</p>
+<p>如果是按照元素值查找的话，时间复杂度是O(n)。</p>
+</blockquote>
+<h2 id="线性表的链式存储-链表"><a href="#线性表的链式存储-链表" class="headerlink" title="线性表的链式存储(链表)"></a>线性表的链式存储(链表)</h2><p>链表是链式存储结构的线性表，是用任意一组物理地址来存储数据元素，而数据元素之间的逻辑关系通过指针来表示。所以它的<strong>存储结构可以是连续的，也可以不是连续的</strong>。<br>一般我们说的链表都是不连续的。有一种用数组来表示的特殊链表，叫做<strong>静态链表</strong>，它的存储结构就是连续的。</p>
+<p><strong>优点：</strong></p>
+<p>1.插入和删除速度快，保留原有的物理顺序，在插入或者删除一个元素的时候，只需要改变指针指向即可。</p>
+<p>2.没有空间限制,存储元素无上限,只与内存空间大小有关. </p>
+<p>3.动态分配内存空间，不用事先开辟内存</p>
+<p>4.是内存的利用率变高</p>
+<p><strong>缺点：</strong></p>
+<p>1.占用额外的空间以存储指针，比较浪费空间，不连续存储，malloc函数开辟空间碎片比较多)</p>
+<p>2.查找速度比较慢，因为在查找时，需要循环链表。</p>
+<p>**时间复杂度 :**查找操作为O(n) ,插入和删除操作为O(1)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="claaf6qiu0090tkup7kxb5va5" data-title="数据结构_线性表" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据结结构-线性表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2020-06-29T21:27:58.000Z" itemprop="datePublished">2020-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/">数据结构_线性表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/2019120617574622.png"></p>
+<h2 id="线性表的定义"><a href="#线性表的定义" class="headerlink" title="线性表的定义"></a>线性表的定义</h2><p>线性表是<strong>具有相同特性的数据元素</strong>的一个<strong>有限</strong>序列。线性表<strong>属于逻辑结构中的线性结构</strong>，它包括顺序表、链表、栈、队列等。</p>
+<p>线性表在存储结构上有顺序存储和链式存储两种方式，但不管哪种存储方式，它们的结构都有如下特点：</p>
+<ol>
+<li>均匀性：虽然不同数据表的数据元素可以是各种各样的，但对于同一个线性表来说，<strong>数据元素必须具有相同的数据类型和长度</strong>。每个数据元素都是单个元素。</li>
+<li>有序性：各数据元素在线性表中的位置只取决于它们的序号，数据元素之间的相对位置是线性的，即存在唯一的”第一个”和”最后一个”数据元素。除了第一个和最后一个外，其他元素前面均只有一个数据元素(直接前驱)，后面均只有一个数据元素(直接后继)。</li>
+<li>有限性：表中元素的个数是有限的</li>
+<li>抽象性：只讨论表中元素间的关系，不考虑元素究竟表示什么内容</li>
+</ol>
+<h2 id="线性表的顺序存储（顺序表）"><a href="#线性表的顺序存储（顺序表）" class="headerlink" title="线性表的顺序存储（顺序表）"></a>线性表的顺序存储（顺序表）</h2><p>顺序表是顺序存储结构的线性表，是把线性表中的所有元素按照其逻辑顺序依次存储到计算机存储器中指定位置开始的一块<strong>连续的物理地址的空间中。由于顺序表的逻辑地址与其物理地址皆相邻</strong>，故称为顺序表。</p>
+<blockquote>
+<p>编程语言中的数组就是顺序表的一个典型实例。</p>
+</blockquote>
+<p>表中的任一元素的地址都可以通过这个公式得到：$LOC(d_i)&#x3D;LOC(d_1)+(i-1)*L 　1≤i≤n $其中，L是元素占用存储单元的长度。     </p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/20180414135155413"></p>
+<h3 id="顺序表的特点"><a href="#顺序表的特点" class="headerlink" title="顺序表的特点"></a>顺序表的特点</h3><p><strong>优点</strong>：</p>
+<p>1.空间利用率高，数据是连续存放，命中率比较高</p>
+<p>2.不用为表示结点间的逻辑关系而增加额外的开销</p>
+<p>3.顺序表可以按照元素下标**&#x3D;&#x3D;随机访问&#x3D;&#x3D;**</p>
+<p><strong>缺点</strong>：</p>
+<p>1.在插入和删除时大约移动平均一半的元素，对比较大的顺序表操作时效率很低</p>
+<blockquote>
+<p>最好情况是：在表尾插入和删除<br>最坏情况是：在表头插入和删除</p>
+</blockquote>
+<p>2.需要预先分配足够大的空间，估计过大，导致空间浪费；估计过小，会造成溢出</p>
+<blockquote>
+<p>此处需要注意的是：数组的动态分配还是顺序存储结构，并不是链式存储。<strong>数组的动态分配是开辟一块更大的存储空间来替换原本的存储空间。</strong></p>
+</blockquote>
+<p>**时间复杂度 :**插入和删除操作为O(n)。</p>
+<blockquote>
+<p>查找操作：<br>如果是按照元素序号和首地址来查找的话，时间复杂度是O(1)；</p>
+<p>如果是按照元素值查找的话，时间复杂度是O(n)。</p>
+</blockquote>
+<h2 id="线性表的链式存储-链表"><a href="#线性表的链式存储-链表" class="headerlink" title="线性表的链式存储(链表)"></a>线性表的链式存储(链表)</h2><p>链表是链式存储结构的线性表，是用任意一组物理地址来存储数据元素，而数据元素之间的逻辑关系通过指针来表示。所以它的<strong>存储结构可以是连续的，也可以不是连续的</strong>。<br>一般我们说的链表都是不连续的。有一种用数组来表示的特殊链表，叫做<strong>静态链表</strong>，它的存储结构就是连续的。</p>
+<p><strong>优点：</strong></p>
+<p>1.插入和删除速度快，保留原有的物理顺序，在插入或者删除一个元素的时候，只需要改变指针指向即可。</p>
+<p>2.没有空间限制,存储元素无上限,只与内存空间大小有关. </p>
+<p>3.动态分配内存空间，不用事先开辟内存</p>
+<p>4.是内存的利用率变高</p>
+<p><strong>缺点：</strong></p>
+<p>1.占用额外的空间以存储指针，比较浪费空间，不连续存储，malloc函数开辟空间碎片比较多)</p>
+<p>2.查找速度比较慢，因为在查找时，需要循环链表。</p>
+<p>**时间复杂度 :**查找操作为O(n) ,插入和删除操作为O(1)。</p>
+<p><strong>4.有序表</strong></p>
+<p>我们很容易把有序表与顺序表、链表相提并论，其实这是错误的。因为顺序表、链表是根据线性表的存储结构(顺序或链式)来划分概念的，而<u>有序表是根据线性表的数据元素的数值大小来划分概念，故有序表与顺序表、链表不是相互独立的，而是内容互相交错的</u>。</p>
+<p>有序表是指表中所有数据元素的数值以<strong>递增或递减方式有序排列</strong>，是数据元素的数值的有序性。<br>有序表只描述元素之间的逻辑关系，故为逻辑结构，因此有序表既可以顺序存储也可以链式存储。</p>
+<blockquote>
+<p>例如，数组int array[3]&#x3D;[1,2,3];是顺序存储结构的有序表。因为是数组，所以是顺序存储结构；因为数据元素[1,2,3]是从小到大排列，故是有序表。而单链表1-&gt;2-&gt;3则是链式存储结构的有序表。由这个例子可见：有序表与顺序表、链表不是相互独立的，而是内容互相交错的，我们不能把他们相提并论。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" data-id="claaf6qiv0094tkup180vbklp" data-title="数据结构_线性表" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据结构-绪论" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/" class="article-date">
+  <time class="dt-published" datetime="2020-06-29T16:40:45.000Z" itemprop="datePublished">2020-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/">数据结构_绪论</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本概念和术语"><a href="#基本概念和术语" class="headerlink" title="基本概念和术语"></a>基本概念和术语</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20200320110023842.png"></p>
+<h2 id="区别和详细解释"><a href="#区别和详细解释" class="headerlink" title="区别和详细解释"></a>区别和详细解释</h2><p>1、数据(Data)：描述客观事物属性的数、字符及所有能被输入到计算机中并被计算机程序识别和处理的符号的集合。</p>
+<blockquote>
+<p>数据不仅包括整形、实型等数值类型，还包括字符及声音、图像、视频等非数值类型。 数据必须具备两个前提：<br>（1）可以输入到计算机中；<br>（2）能被计算机程序处理。对于整型、实型等数值类型，可以进行数值计算；而对于字符数据类型，就需要非数值的处理；而声音、图像、视频等可以通过编码的手段变成字符数据来处理。</p>
+</blockquote>
+<p>2、数据对象(Data Object)：具有相同性质的数据元素的集合。数据对象是数据的一个子集。</p>
+<blockquote>
+<p>什么叫性质相同呢？是指数据元素具有相同数量和类型的数据项，比如人 这个例子，都有姓名、生日、性别等相同的数据项。 既然数据对象是数据的子集，在实际应用中，处理的数据元素通常具有相同性质，在不产生混淆的情况下，我们将数据对象简称为数据。</p>
+</blockquote>
+<p>3、数据元素(Data element)：数据的基本单位，也称结点(node)或记录(record)。</p>
+<blockquote>
+<p>比如 畜类 牛、马、羊、鸡、猪、狗等动物当然就是畜类的数据元素。</p>
+</blockquote>
+<p>4、数据项(Data item)：构成数据元素的不可分割、有独立含义的最小单位，也称域(field)。</p>
+<blockquote>
+<p>一个数据元素由若干个数据项组成。</p>
+</blockquote>
+<p>5、数据结构(Data Structure)：相互之间存在一种或多种特定关系的<strong>数据元素</strong>的集合。</p>
+<blockquote>
+<p>数据元素都不是孤立存在的，它们之间存在某种关系，这些数据元素之间的关系称为结构(structure)。</p>
+</blockquote>
+<h2 id="数据结构三要素"><a href="#数据结构三要素" class="headerlink" title="数据结构三要素"></a>数据结构三要素</h2><p>逻辑结构（数据元素之间的关系）+数据结构（数据结构在计算机中的表示）+数据的运算（运算的定义和实现）。</p>
+<p>PS:通常需要用（数据对象、数据关系、基本操作集）这样的三元组来定义数据结构</p>
+<h3 id="逻辑结构、数据结构的区分方法"><a href="#逻辑结构、数据结构的区分方法" class="headerlink" title="逻辑结构、数据结构的区分方法"></a>逻辑结构、数据结构的区分方法</h3><p>逻辑结构与数据结构的区分判定方法：当一个结构(如数组、链表、树、图)，在逻辑结构中只有一种定义，而在存储结构中却有两种或多种定义，那么这个结构就属于逻辑结构；相反，当此结构在原有基础上加上了某种限定词(如二叉树-&gt;线索二叉树)，使得其在存储结构中只有一种定义，那么这个结构就称为数据结构。</p>
+<blockquote>
+<p>举例1：栈属于什么结构？<br>分析：栈在逻辑结构中只能属于线性结构，而在存储结构中它可以使用顺序存储（数组），也可以使用链式存储（链表），所以说栈是一种逻辑结构。</p>
+</blockquote>
+<blockquote>
+<p>举例2：线索二叉树属于什么结构？<br>分析：首先因为二叉树既可以顺序存储又可链式存储，故可以得到二叉树是一种逻辑结构。但是线索二叉树是二叉树加上限定词线索后的链表结构（不能用顺序存储），也就是说，线索二叉树在计算机内部的只有一种存储结构，所以线索二叉树是数据结构。</p>
+</blockquote>
+<p>逻辑结构和数据结构的区别点在于：<strong>数据的逻辑结构是独立于在计算机中的存储结构</strong>的，数据的存储方式有多种不同的选择。例如栈是一种逻辑结构，它可以用顺序存储也可以用链式存储；而<strong>数据结构是既可以描述逻辑结构又可以描述存储结构和数据运算，必须包含这三种元素。</strong>所以像顺序表、哈希表、单链表都是数据结构。</p>
+<h1 id="算法和算法分析"><a href="#算法和算法分析" class="headerlink" title="算法和算法分析"></a>算法和算法分析</h1><p><strong>程序 &#x3D; 数据结构 + 算法</strong> </p>
+<p><strong>算法（algorithm）</strong> 是为了解决某类问题而规定的一个有限长的操作序列。</p>
+<p><strong>算法的五个特性：</strong></p>
+<ul>
+<li><strong>有穷性：</strong>指算法在执行完有限步骤之后，自动结束而不会出现死循环，并且每个步骤都在可接受时间内完成。</li>
+<li><strong>确定性：</strong>算法的每一步骤都具有正确的含义，不会出现二义性。</li>
+<li><strong>可行性：</strong>算法的每一步都是可行的，也就是说，每一步都能通过执行有限次数完成。</li>
+<li><strong>输入：</strong>一个算法有零个或多个输入。</li>
+<li><strong>输出：</strong>一个算法有一个或多个输出。</li>
+</ul>
+<p><strong>算法设计的要求：</strong></p>
+<ul>
+<li><strong>正确性：</strong>没有歧义，能正确反映问题需求、能够得到问题的正确答案。</li>
+<li><strong>可读性</strong>：便于阅读、理解和交流。</li>
+<li><strong>健壮性：</strong>当输入数据不合法时，也能做出相关处理，而不至于出现莫名其妙的结果。</li>
+<li><strong>高效性和低存储量需求：</strong>时间高效、空间高效。</li>
+</ul>
+<blockquote>
+<p>衡量算法效率的度量方法分为<strong>时间复杂度</strong>和<strong>空间复杂度。</strong></p>
+</blockquote>
+<h2 id="时间和空间复杂度"><a href="#时间和空间复杂度" class="headerlink" title="时间和空间复杂度"></a>时间和空间复杂度</h2><p><strong>时间复杂度：</strong>在进行算法分析时，语句总的执行次数T（n）是关于问题规模n的函数，进而分析T（n）随n的变化情况并确定T（n）的数量级。算法的时间复杂度，也就是算法的时间量度，记作：T（n）&#x3D; O（f（n））。它表示随问题规模的增大，算法执行时间的增长率和f（n）的增长率相同，称为算法的渐进复杂度，简称为时间复杂度。其中f（n）是问题规模n的某个函数。这样用大写 O（） 来体现算法时间复杂度的记法，我们称为大O记法。</p>
+<h3 id="推导大O阶的方法"><a href="#推导大O阶的方法" class="headerlink" title="推导大O阶的方法"></a>推导大O阶的方法</h3><ul>
+<li><em><strong>*用常数1取代运行时间中的所有加法常数。*</strong></em></li>
+<li><em><strong>*在修改后的运行次数函数中，只保留最高阶项。*</strong></em></li>
+<li><em><strong>*如果最高阶项存在且不是1，则去除与这个项目相乘的常数。*</strong></em></li>
+<li><em><strong>*最后得到的结果就是大O阶。*</strong></em></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wq6ylg08/article/details/104242142">参考文章</a></p>
+<p><strong>算法的空间复杂度</strong>：通过计算算法所需的存储空间实现，算法空间复杂度的计算公式记作：S（n）&#x3D; O（f（n）），其中，n为问题规模，f（n）为语句关于n所占存储空间的函数。</p>
+<h1 id="存储和存取"><a href="#存储和存取" class="headerlink" title="存储和存取"></a>存储和存取</h1><h2 id="存取结构：随机存取和顺序存取"><a href="#存取结构：随机存取和顺序存取" class="headerlink" title="存取结构：随机存取和顺序存取"></a>存取结构：随机存取和顺序存取</h2><h3 id="随机存取"><a href="#随机存取" class="headerlink" title="随机存取"></a>随机存取</h3><p>随机存取（直接存取,Random Access）指的是当存储器中的数据被读取或写入时，所需要的时间与该数据所在的物理地址无关。</p>
+<p>随机存取的微观现实例子就是编程语言中的数组。<br>随机存取的宏观现实例子就是我们的随机存取存储器(RAM:Random Access Memory)，通俗的说也就是我们电脑的内存条。因为RAM利用电容存储电荷的原理保存信息，所以RAM可以高速存取，且与物理地址无关。</p>
+<h3 id="顺序存取"><a href="#顺序存取" class="headerlink" title="顺序存取"></a>顺序存取</h3><p>顺序存取(Sequential Access)是一种按记录的逻辑顺序进行读、写操作的存取方法，所需要的时间与该数据所在的物理地址有关。顺序存取表现为:在存取第N个数据时，必须先访问前（N-1）个数据。<br>顺序存取的微观现实例子就是数据结构中的链表。<br>顺序存取的现实例子就是我们的录音磁带、光盘、机械硬盘里面的磁盘。磁带、光盘、磁盘上的数据分别存储在不同扇区、不同磁道上，磁盘的读写磁头通过切换不同扇区和磁道来读取物理地址不连续的数据时，该过程中要经过不同扇区和不同磁道上的无关数据，磁盘的读写磁头在切换不同扇区和磁道所需时间也不同，故为顺序存取。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/2019120223070074-1593445162462.png"></p>
+<h3 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h3><p>顺序存储是把逻辑上相邻的数据元素存储在物理位置上相邻的存储单元中，数据元素之间的逻辑关系由存储单元的邻接关系来体现。</p>
+<p><strong>顺序存储的主要优点：</strong></p>
+<ul>
+<li>节省存储空间。因为分配给数据的存储单元全用存放数据元素（不考虑c&#x2F;c++语言中数组需指定大小的情况），数据元素之间的逻辑关系没有占用额外的存储空间。</li>
+<li>可实现对数据元素的随机存取(直接存取)。即每一个数据元素对应一个元素下标，由该元素下标可以直接计算出来数据元素的物理存储地址。</li>
+</ul>
+<p><strong>顺序存储的主要缺点：</strong></p>
+<ul>
+<li><p>不便于数据修改。对数据元素的插入、删除运算时，可能要移动一系列的数据元素。</p>
+</li>
+<li><p>产生磁盘碎片。因为顺序存储只能使用相邻的一整块存储单元，因此会产生较多的磁盘碎片。</p>
+<p>顺序存储的典型实例就是编程语言中的数组。例如，使用顺序表存储集合 {1,2,3,4,5}，数据最终的存储状态如下图所示：<img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203201006798-1593445162462.png"></p>
+</li>
+</ul>
+<blockquote>
+<p>数组中的所有元素存储在一个连续性的内存块中，并通过数组的首地址和元素下标来访问。因此一个数组就是由1个数组首地址和N个数组元素构成，数组不需要像链表一样，链表的每个节点必须存储下一个结点的物理地址，在存储同样多的数据下，数组比链表节省空间。</p>
+<p>数组可通过数组的首地址和元素下标来直接存取数组中的没每一个元素，而不需要像链表一样，在存取第N个链表结点的数据时，必须先访问前（N-1）个链表结点。</p>
+<p>但对数组的数据元素的插入、删除运算时，可能要移动一系列的数据元素，特别的麻烦，因此顺序存储结构的数组不便于修改。</p>
+</blockquote>
+<h3 id="随机存储"><a href="#随机存储" class="headerlink" title="随机存储"></a>随机存储</h3><p>在计算机中用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）。它不要求逻辑上相邻的元素在物理位置上也相邻，而是借助指示元素存储地址的指针来表示元素之间的逻辑关系。</p>
+<p><strong>随机存储的主要优点：</strong></p>
+<ul>
+<li>不会产生磁盘碎片。因为随机存储不要求逻辑上相邻的元素在物理位置上也相邻，而是借助指示元素存储地址的指针来表示元素之间的逻辑关系，因此不会产生磁盘碎片。</li>
+<li>数据修改方便。对数据元素的插入、删除运算时，随机存储不必移动结点，只要改变结点中的指针。</li>
+</ul>
+<p><strong>随机存储的主要缺点：</strong></p>
+<ul>
+<li><p>占用空间大。随机存储的每个结点都由数据域和指针域组成，所以相同空间内假设全存满，顺序存储比随机存储可存更多数据。</p>
+</li>
+<li><p>查找结点时链式存储要比顺序存储慢，且只能实现顺序存取。</p>
+</li>
+</ul>
+<h4 id="随机存储——链式存储"><a href="#随机存储——链式存储" class="headerlink" title="随机存储——链式存储"></a>随机存储——链式存储</h4><p>链式存储是随机存储最典型的代表，因此链式存储的定义、优点和缺点就是2.2随机存储中的定义、优点和缺点。</p>
+<h4 id="随机存储——索引存储"><a href="#随机存储——索引存储" class="headerlink" title="随机存储——索引存储"></a>随机存储——索引存储</h4><p>除建立存储结点信息外，还建立附加的索引表来标识结点的地址，索引表由若干索引项组成，索引项的一般形式是(关键字，地址)。</p>
+<p>索引存储的主要优点：检索速度快。<br>索引存储的主要缺点：增加了附加的索引表,会占用较多的存储空间。</p>
+<h4 id="随机存储——散列存储"><a href="#随机存储——散列存储" class="headerlink" title="随机存储——散列存储"></a>随机存储——散列存储</h4><p>散列存储，又称Hash存储，是一种将数据元素的存储位置与关键码之间建立确定对应关系的查找技术，即根据元素的关键字直接计算出该元素的存储地址。</p>
+<p>散列存储的主要优点：检索、增加和删除节点的操作更快。<br>散列存储的主要缺点：若散列函数不好，则可能出现元素存储单元的冲突。</p>
+<h1 id="电脑磁盘碎片的定义、产生原理和清理原因"><a href="#电脑磁盘碎片的定义、产生原理和清理原因" class="headerlink" title="电脑磁盘碎片的定义、产生原理和清理原因"></a>电脑磁盘碎片的定义、产生原理和清理原因</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wq6ylg08/article/details/103363478">参考文章</a></p>
+<h2 id="文件碎片的定义"><a href="#文件碎片的定义" class="headerlink" title="文件碎片的定义"></a>文件碎片的定义</h2><p>电脑碎片即磁盘碎片，磁盘碎片应称为文件碎片。文件碎片是由于文件被分散保存到整个磁盘的不同地方，而不是连续地保存在磁盘连续的簇中而形成的。</p>
+<h3 id="文件碎片产生的原因"><a href="#文件碎片产生的原因" class="headerlink" title="文件碎片产生的原因"></a>文件碎片产生的原因</h3><p>百度百科中对文件碎片产生列出了以下三大原因：</p>
+<p>当应用程序所需的物理内存不足时，一般操作系统会在硬盘中产生磁盘临时交换文件，用该文件所占用的硬盘空间虚拟成内存。虚拟内存通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上。虚拟内存管理程序会对硬盘频繁读写，产生大量的碎片，这是产生硬盘碎片的主要原因。<br>还有一种情况就是当中间的一个扇区内容被删除后，新写入一个较小的文件，这样在这个文件两边就会出现一些空间，这时候再写入一个文件，两段空间的任意一部分都不能容纳该文件，这时候就需要将文件分割成两个部分，碎片再次产生了。<br>最常见的就是下载电影之类的大文件，这期间大家一般都会处理一下其它事情，而下载下来的电影文件被迫分割成若干个碎片存储于硬盘中。因此下载是产生碎片的一个重要源头。还有就是经常删除、添加文件，这时候如果文件空间不够大，就会产生大量的文件碎片，随着文件的删改频繁，这种情况会日益严重。<br>文件碎片产生的原因：</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203170952568.png"></p>
+<h2 id="清理文件碎片的原因-为什么要清理文件碎片"><a href="#清理文件碎片的原因-为什么要清理文件碎片" class="headerlink" title="清理文件碎片的原因(为什么要清理文件碎片?)"></a>清理文件碎片的原因(为什么要清理文件碎片?)</h2><p>知道了文件碎片的产生原因之后，我们还有必要了解一下程序运行时磁盘的读写动作。一般运行一个程序时，磁盘驱动器的磁头所做的工作是先搜索该程序运行必需的文件，然后读取数据，最后做读后处理——将数据传送至磁盘高速缓存(Cache)和内存中。搜索时间在硬盘性能指标中被称为平均寻道时间（Average seek time），单位为毫秒（ms），当下主流硬盘的平均寻道时间小于9.5ms。如果能将应用程序的相关文件放在磁盘的连续空间内，磁头搜索的时间将会减少很多。读取时也是如此，磁盘读取位于磁头下方扇区的数据所需时间仅为将磁头移到另一地点再读取相同数据所需时间的五分之一。读盘时，系统先检查数据是否在高速缓存中，如果有则直接读取；如果没有则访问磁盘，也就是读盘。当需要多次读取同一份数据时，Cache的作用很大，但对于第一次读取某个文件，Cache就无能为力了。于是搜索时间和读取时间在很大程度上影响着程序执行的效率。</p>
+<p>而磁盘碎片整理是将电脑使用中产生的碎片和冗杂的文件重新整理，让碎片文件融为一体，从而减少了磁盘的寻道时间，因此整体上使得电脑的运行速度得以提升。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203171556120.png"></p>
+<h2 id="机械硬盘-x2F-固态硬盘都需要清理文件碎片吗？"><a href="#机械硬盘-x2F-固态硬盘都需要清理文件碎片吗？" class="headerlink" title="机械硬盘&#x2F;固态硬盘都需要清理文件碎片吗？"></a>机械硬盘&#x2F;固态硬盘都需要清理文件碎片吗？</h2><p>先说结论：机械硬盘需要清理文件碎片，固态硬盘不需要清理文件碎片。</p>
+<p>机械硬盘需要清理文件碎片的原因已经在上述的四、清理文件碎片的原因(为什么要清理文件碎片?)解释了，因为磁盘碎片整理是将电脑使用中产生的碎片和冗杂的文件重新整理，让碎片文件融为一体，从而减少了磁盘的寻道时间，因此整体上使得电脑的运行速度得以提升。</p>
+<p>而为什么说固态硬盘不需要磁盘碎片整理呢？</p>
+<p>固态硬盘的擦写次数是有限的。闪存完全擦写一次叫做1次P&#x2F;E，25nm的固态硬盘寿命约是3000次P&#x2F;E。碎片整理会大大减少固态硬盘的使用寿命。其实，固态硬盘的垃圾回收机制就已经是一种很好的“磁盘整理”，再多的整理完全没必要。Windows的“磁盘整理”功能是机械硬盘时代的产物，并不适用于固态硬盘。<br>固态硬盘电荷寻道耗时几乎为0。固态硬盘不用磁头，又因为固态硬盘的存储单元是基于闪存颗粒的电子存储，所以寻道时间几乎为0。持续写入的速度非常惊人，大部分固态硬盘读写速度在500MB&#x2F;s。<br>固态硬盘具有TRIM功能。这一功能充当了SSD的军师，它会发出指令让系统告诉固态硬盘哪些数据块不再使用了，否则SSD控制器不知道可以回收这些闲置的数据块。从某种意义上来说，这个功能已经是承担了磁盘碎片整理的工作了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/" data-id="claaf6qiu008xtkup2fswc0bt" data-title="数据结构_绪论" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-编译原理-静态语义分析和中间代码生成" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" class="article-date">
+  <time class="dt-published" datetime="2020-06-07T16:36:23.000Z" itemprop="datePublished">2020-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">编译原理-静态语义分析和中间代码生成</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><h2 id="符号表的作用"><a href="#符号表的作用" class="headerlink" title="符号表的作用"></a>符号表的作用</h2><ul>
+<li><p>用来存放有关<strong>标识符（符号）</strong>的属性信息</p>
+<ul>
+<li>这些信息会在编译的不同阶段用到</li>
+<li>符号表的内容将用于<strong>静态语义检查和产生中间代码</strong></li>
+<li>在目标代码生成阶段，<strong>符号表是对符号名进行地址分配的依据</strong></li>
+<li>对一个多遍扫描的编译程序，不同遍所用的符号表也会有所不同，因为每遍所关心的信息或所能得到的信息会有差异</li>
+</ul>
+</li>
+<li><p>用来体现作用域与可见性信息</p>
+</li>
+</ul>
+<h2 id="符号的常见属性"><a href="#符号的常见属性" class="headerlink" title="符号的常见属性"></a>符号的常见属性</h2><p>① 符号名</p>
+<p>② 符号的类型：常量、变量、过程&#x2F;函数、类的名称等</p>
+<p>③ 符号的存储类别：常量、变量的数据类型，过程函数的返回类型等【决定了其存储格式和允许的操作】</p>
+<p>④ 符号的作用域及可视性</p>
+<p>⑤ 符号变量的存储类别和存储分配信息<br>存储类别确定其分配的区域，静态或动态数据区，堆区或栈区，存储分配信息如单元的大小，相对于某个存储区域的偏移位置等等</p>
+<p>⑥ 符号的其它属性</p>
+<ul>
+<li>数组内情向量</li>
+<li>记录结构的成员信息</li>
+<li>函数及过程的形参</li>
+</ul>
+<h2 id="符号表的实现"><a href="#符号表的实现" class="headerlink" title="符号表的实现"></a>符号表的实现</h2><h4 id="针对符号表的常见操作"><a href="#针对符号表的常见操作" class="headerlink" title="针对符号表的常见操作"></a>针对符号表的常见操作</h4><ul>
+<li>创建符号表：在编译开始，或进入一个作用域</li>
+<li>插入表项：在遇到新的标识符声明时进行</li>
+<li>查询表项：在引用标识符时进行</li>
+<li>修改表项：在获得新的语义值信息时进行</li>
+<li>删除表项：在标识符成为不可见或不再需要它的任何信息时进行</li>
+<li>释放符号表空间：在编译结束前或退出一个作用域</li>
+</ul>
+<h4 id="实现符号表的常用数据结构"><a href="#实现符号表的常用数据结构" class="headerlink" title="实现符号表的常用数据结构"></a>实现符号表的常用数据结构</h4><ul>
+<li>一般的线性表<br>如：数组，链表，等</li>
+<li>有序表<br>查询较无序表快，如可以采用折半查找</li>
+<li>二叉搜索树</li>
+<li>Hash表</li>
+</ul>
+<h4 id="作用域与符号表组织"><a href="#作用域与符号表组织" class="headerlink" title="作用域与符号表组织"></a>作用域与符号表组织</h4><ul>
+<li><p>所有作用域共用一个全局符号表</p>
+</li>
+<li><p>每个作用域都有各自的符号表</p>
+</li>
+</ul>
+<h2 id="作用域与可见性"><a href="#作用域与可见性" class="headerlink" title="作用域与可见性"></a>作用域与可见性</h2><ul>
+<li><p>嵌套的作用域（nested scopes）</p>
+</li>
+<li><p>开作用域与闭作用域（相应于程序中特殊点）</p>
+<ul>
+<li>该点所在的作用域为当前作用域</li>
+<li>当前作用域与包含它的程序单元所构成的作用域称为开作用域（open scopes）,即嵌套重叠的作用域</li>
+<li>不属于开作用域的作用域称为闭作用域（close  scopes）</li>
+</ul>
+</li>
+<li><p>常用的可见性规则（visibility rules）</p>
+<ul>
+<li>在程序的任何一点，只有在该点的开作用域中声明的名字才是可访问的</li>
+<li>若一个名字在多个开作用域中被声明，则把离该名字的某个引用最近的声明作为该引用的解释</li>
+<li>新的声明只能出现在当前作用域</li>
+</ul>
+</li>
+</ul>
+<h2 id="作用域与符号表组织-1"><a href="#作用域与符号表组织-1" class="headerlink" title="作用域与符号表组织"></a>作用域与符号表组织</h2><ul>
+<li>作用域与多符号表组织<ul>
+<li>每个作用域都有各自的符号表</li>
+<li>维护一个符号表的作用域栈，每个开作用域对应栈中的一个入口，当前的开作用域出现在该栈的栈顶</li>
+<li>当一个新的作用域开放时，新符号表将被创建，并将其入栈</li>
+<li>在当前作用域成为闭作用域时，从栈顶弹出相应的符号表</li>
+</ul>
+</li>
+</ul>
+<h1 id="静态语义分析"><a href="#静态语义分析" class="headerlink" title="静态语义分析"></a>静态语义分析</h1><p><strong>静态语义： 刻画程序在静态一致性或完整性方面的特征；仅当程序通过了静态语义检查，才能完成后续的中间代码生成和目标代码优化。</strong></p>
+<blockquote>
+<p>动态语义： 刻画程序执行时的行为。比如除数为0，数组越界等错误，需要生成相应代码</p>
+</blockquote>
+<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li><p>类型检查（type checks）<br>检查每个操作是否遵守语言类型系统的定义</p>
+</li>
+<li><p>名字的作用域（scope）分析<br>建立名字的定义和使用之间联系</p>
+</li>
+<li><p>控制流检查（flow-of-control checks）<br>控制流语句必须使控制转移到合法的地方（如break语句必须有合法的语句包围它）</p>
+</li>
+<li><p>唯一性检查（uniqueness checks）<br>很多场合要求对象只能被定义一次（如枚举类型的元素不能重复出现）</p>
+</li>
+<li><p>名字的上下文相关性检查（name-related checks）<br>某些名字的多次出现之间应该满足一定的上下文相关性</p>
+</li>
+</ul>
+<h3 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h3><p>类型检查程序（type checker）：负责类型检查</p>
+<ul>
+<li>验证程序的结构是否匹配上下文所期望的类型</li>
+<li>为相关阶段搜集及建立必要的类型信息</li>
+<li>实现某个类型系统（type system）</li>
+</ul>
+<h1 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h1><p><strong>源程序的不同表示形式,也称为中间表示。其作用：</strong></p>
+<ul>
+<li>源语言和目标语言之间的桥梁，避开二者之间较大的语义跨度，使编译程序的逻辑结构更加简单明确</li>
+<li>有利于编译程序的重定向</li>
+<li>有利于进行与目标机无关的优化</li>
+</ul>
+<h2 id="常见的中间表示的形式"><a href="#常见的中间表示的形式" class="headerlink" title="常见的中间表示的形式"></a>常见的中间表示的形式</h2><p>有不同层次不同目的之分。常见中间表示形式：</p>
+<ul>
+<li>AST（Abstract syntax tree，抽象语法树）<br>DAG（Directed Acyclic Graph,有向无圈图，通过优化技术得到改进型 AST）</li>
+<li>TAC（Three-address code,三地址码，四元式）</li>
+<li>P-code （特别用于 Pasal 语言实现）</li>
+<li>Bytecode（Java 编译器的输出, Java 虚拟机的输入）</li>
+<li>SSA（Static single assignment form，静态单赋值形式）【<strong>静态单赋值形式，程序中的名字只有一次赋值。</strong>】</li>
+</ul>
+<h3 id="生成抽象语法树"><a href="#生成抽象语法树" class="headerlink" title="生成抽象语法树"></a>生成抽象语法树</h3><p><strong>(1) 树的根节点是开始符</strong></p>
+<p><strong>(2) 所有的内节点都是非终结符</strong></p>
+<p><strong>(3) 所有的叶子节点都是终结符</strong></p>
+<h3 id="生成三地址码"><a href="#生成三地址码" class="headerlink" title="生成三地址码"></a>生成三地址码</h3><p>通过遍历语法树或在归约时，生成三地址码，后续要用到的四元式：</p>
+<p>• 赋值语句  x :&#x3D; y op z  （op 代表二元算术&#x2F;逻辑运算）</p>
+<p>• 赋值语句  x :&#x3D; op y  （op 代表一元运算）</p>
+<p>• 复写语句  x :&#x3D; y  （y 的值赋值给 x）</p>
+<p>• 无条件跳转语句  goto L （无条件跳转至标号 L）</p>
+<p>• 条件跳转语句  if x rop y goto L （rop 代表关系运算）</p>
+<p>• 标号语句 L : （定义标号 L）</p>
+<p>• 过程调用语句序列  param x<del>1</del> … param x<del>n</del> call p,n</p>
+<p>• 过程返回语句 return y （y 可选，存放返回值）</p>
+<p>• 下标赋值语句 x :&#x3D; y[i] 和 x[i] :&#x3D; y （前者表示将地址 y 起第i个存储单元的值赋给 x，后者类似）</p>
+<p>• 指针赋值语句 x :&#x3D; *y 和 *x :&#x3D; y</p>
+<h3 id="赋值语句及算术表达式的语法制导翻译"><a href="#赋值语句及算术表达式的语法制导翻译" class="headerlink" title="赋值语句及算术表达式的语法制导翻译"></a>赋值语句及算术表达式的语法制导翻译</h3><h1 id="中间代码（中间语言）"><a href="#中间代码（中间语言）" class="headerlink" title="中间代码（中间语言）"></a>中间代码（中间语言）</h1><p> 中间代码也叫中间语言（Intermediate code &#x2F;language）是：源程序的一种内部表示，不依赖目标机的结构。介于<strong>源语言</strong>和<strong>目标语言</strong>的中间语言形式。</p>
+<p>中间代码的特点：</p>
+<p>1、独立于机器</p>
+<p>2、复杂性界于源语言和目标语言之间</p>
+<p>中间代码的优点</p>
+<p>1、使得编译程序的逻辑结构清楚；</p>
+<p>2、利于不同目标机上实现同一种语言；</p>
+<p>3、利于进行与机器无关的优化；</p>
+<p>中间语言将编译程序分为前端和后端有利于编译程序的移植。例如：保持编译程序的前端不变，替换其后端，就可以将原来的某个语言的编译程序改造成同一个语言，不同目标机器的程序。如果保持后端不变，替换前端，就可以将某个机器上的某个语言的编译程序改造成同一个机器上的另一个语言的编译程序。</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/image-20200507193159453.png"></p>
+<h2 id="常用的中间语言"><a href="#常用的中间语言" class="headerlink" title="常用的中间语言"></a>常用的中间语言</h2><ul>
+<li>后缀式：逆波兰表示</li>
+<li>图表示：抽象语法树AST、有向无环图DAG</li>
+<li>三地址代码：<ul>
+<li>三元式</li>
+<li>四元式</li>
+<li>间接三元式</li>
+</ul>
+</li>
+</ul>
+<h3 id="后缀式"><a href="#后缀式" class="headerlink" title="后缀式"></a>后缀式</h3><p>逆波兰表示法即为<strong>后缀表示法</strong>，而默认我们使用的表达式是<strong>中缀表示法</strong></p>
+<table>
+<thead>
+<tr>
+<th>程序设计语言中的表示</th>
+<th>—–逆波兰表示—–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a+ba+b</td>
+<td>ab+ab+</td>
+</tr>
+<tr>
+<td>−a−a</td>
+<td>a@a@</td>
+</tr>
+<tr>
+<td>a+b∗ca+b∗c</td>
+<td>abc∗+abc∗+</td>
+</tr>
+<tr>
+<td>(a+b)∗c(a+b)∗c</td>
+<td>ab+c∗ab+c∗</td>
+</tr>
+<tr>
+<td>a:&#x3D;b∗c+b∗da:&#x3D;b∗c+b∗d</td>
+<td>abc∗bd∗+:&#x3D;abc∗bd∗+:&#x3D;</td>
+</tr>
+<tr>
+<td>a:&#x3D;b∗(c+b)∗(−d)a:&#x3D;b∗(c+b)∗(−d)</td>
+<td>bcb+∗d@∗:&#x3D;</td>
+</tr>
+</tbody></table>
+<p><strong>逆波兰式的使用</strong>：需使用额外的标识符栈。顺序扫描逆波兰表达式的时候，遇到<strong>标识符</strong>直接入栈。</p>
+<p>遇到运算符时：</p>
+<ol>
+<li>根据运算符目数，从栈顶取出相应数目的标识符做运算，并把运算结果压栈</li>
+<li>运算结束时，标识符栈应该只剩下一个元素，且为运算结果</li>
+</ol>
+<h3 id="图表示法"><a href="#图表示法" class="headerlink" title="图表示法"></a>图表示法</h3><p>抽象语法树和有向无环图</p>
+<h4 id="抽象语法树"><a href="#抽象语法树" class="headerlink" title="抽象语法树"></a>抽象语法树</h4><p>在语法树中去掉一些对翻译不必要的信息后，获得的更有效的源程序的中间表示，这种经过变换后的语法树称为抽象语法树。</p>
+<p> 在抽象语法树中，操作符和关键字都不作为叶子节点出现，而是把它们作为内部节点，即这些叶子节点的父节点。</p>
+<h4 id="有向无环图"><a href="#有向无环图" class="headerlink" title="有向无环图"></a>有向无环图</h4><p>对表达式中的每个子表达式，DAG都有一个结点，一个内部结点代表一个操作符，他的孩子代表操作数。</p>
+<p>在一个DAG中代表公共子表达式的节点具有多个父结点（与抽象语法树中公共子表达式被表示为重复的子树不同）</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150738632.png"></p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150935263.png"></p>
+<h3 id="树形表示"><a href="#树形表示" class="headerlink" title="树形表示"></a>树形表示</h3><p>树形表示和三元式表示非常相似，如a:&#x3D;b∗c+b∗d表示为：<br><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114115900-1721715496.png" alt="img"><br>注意赋值表达式中被赋值对象在树的左孩子节点位置</p>
+<p>单目运算−T<del>1</del>直接表示成：</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114320833-1111479180.png" alt="img"></p>
+<h3 id="三地址代码表示"><a href="#三地址代码表示" class="headerlink" title="三地址代码表示"></a>三地址代码表示</h3><p>三地址代码可以看作是抽象语法树或有向无环图的一种线性表示</p>
+<p>三地址代码最基本的用法形式:</p>
+<p>  x:&#x3D;y op z</p>
+<p>​     其中x、y、z为名字、常数或编译时产生的临时变量；op代表运算符号。每个语句的右边只能有一个运算符。</p>
+<p>三地址代码可以看成是抽象语法树一种线性表示</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114161937112.png"></p>
+<p>三地址代码可以看成是DAG的一种线性表示</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114162122651.png"></p>
+<p>三地址码的各种形式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>x:=yop z          x := op z                         x:=y</span><br><span class="line"><span class="number">2.</span>Goto L             ifx relopy gotoL         <span class="keyword">if</span> a <span class="keyword">goto</span> L</span><br><span class="line"><span class="number">3</span>【传参、转子】.Param x         call p,n                           </span><br><span class="line"><span class="number">4</span>【返回语句】.<span class="keyword">return</span> y</span><br><span class="line"><span class="number">5</span>【索引赋值】.x:=y[i]             x[i]:=y</span><br><span class="line"><span class="number">6</span>【地址和指针赋值】.x:=&amp;y            x:=*y                  *x:=y     </span><br><span class="line">赋值语句翻译为三地址码的属性文法</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="三元式"><a href="#三元式" class="headerlink" title="三元式"></a>三元式</h4><p>三元式$(op,A_1,A_2)$</p>
+<p>op为运算符<br>A<del>1</del>为第一运算对象<br>A<del>2</del>为第二运算对象</p>
+<p>例如$a:&#x3D;b∗c+b∗d$表示为：<br>$(1)(∗,b,c)\<br>(2)(∗,b,d)\<br>(3)(+,(1),(2)) 这里用(1)和(2)来表示<strong>中间计算结果</strong>的显式引用\<br>(4)(:&#x3D;,(3),a)( 这里相当于a:&#x3D;(3)$</p>
+<p>而单目运算的−b可以表示成(−,b,&#x2F;)</p>
+<h4 id="四元式"><a href="#四元式" class="headerlink" title="四元式"></a>四元式</h4><p>四元式实际上是一种“三地址语句”的等价表示，是一个带有四个域的记录结构。</p>
+<p>四元式$(op,A_1,A_2,R)$</p>
+<p>op为运算符<br>A<del>1</del>为第一运算对象<br>A<del>2</del>为第二运算对象<br>R为运算结果</p>
+<p>例如$a:&#x3D;b∗c+b∗d$的四元式表示：<br>$(1)(∗,b,c,t_1)\<br>(2)(∗,b,d,t_2)\<br>(3)(+,t_1,t_2,t_3)\<br>(4)(:&#x3D;,t_3,−,a)$</p>
+<p>和三元式的差别在于，四元式对中间结果的引用必须通过<strong>给定的名字(临时变量)</strong></p>
+<p>它的三地址码写法为：<br>$t_1:&#x3D;b∗c\<br>t_2:&#x3D;b∗d\<br>t_3:&#x3D;t_1∗t_2\a:&#x3D;t_3$</p>
+<h4 id="三元式和四元式的比较"><a href="#三元式和四元式的比较" class="headerlink" title="三元式和四元式的比较"></a>三元式和四元式的比较</h4><p>相同点：</p>
+<p>1、无论在一个三元式序列还是四元式序列中，各个三元式或四元式都是按相应表达式的实际运算顺序出现的；</p>
+<p>2、对同一表达式而言，所需的三元式或四元式的个数一般都是相同的。</p>
+<p>不同点：</p>
+<p>1、由于三元式没有result字段，且不需要临时变量，故三元式比四元式占用的存储空间少；</p>
+<p>2、在进行代码优化处理时，常常需要挪动一些运算的位置，这对于三元式序列来说是很困难的，但对于四元式来说，由于四元式之间的相互联系是通过临时变量来实现的，所以，更改其中一些四元式给整个系列带来的影响就比较小。</p>
+<h4 id="三地址代码-间接三元式"><a href="#三地址代码-间接三元式" class="headerlink" title="三地址代码-间接三元式"></a>三地址代码-间接三元式</h4><p> 建立两个与三元式有关的表格，一个称为三元式表，用于存放各三元式本身；另一个称为执行表，它按照三元式的执行顺序，依次列出相应各三元式在三元式表中的位置，也就是说我们用一个三元式表连同执行表来表示中间代码。通常我们称这种表示方法为间接三元式。</p>
+<p>三元式</p>
+<p>$x：&#x3D;（a+b）<em>c\<br>b：&#x3D;a+b\<br>y：&#x3D;c</em>（a+b$</p>
+<p>（1）（+，a，b）             （5） （+，a，b）<br>（2）（ *，（1），c）      （6）（ *，c，（5））<br>（3）（：&#x3D;，x，（2））   （7）（：&#x3D;，y，（6））<br>（4）（：&#x3D;，b，（1））</p>
+<p>间接三元式   </p>
+<p>执行表                           三元式表</p>
+<p> （1）                  （1）（+，a，b）<br> （2）                  （2）（*，（1），c）<br> （3）                  （3）（：&#x3D;，x，（2））<br> （4）                  （4）（：&#x3D;，b，（1））<br> （1）                  （5）（：&#x3D;，y，（2））<br> （2）<br> （5）</p>
+<p>三元式与间接三元式之间的区别</p>
+<p>1、由于间接三元式在执行表中已经依次列出每次要执行的那个三元式，若其中有相同的三元式，则仅需在三元式表中保存其中之一，即三元式的项数一般比执行表的项数少；</p>
+<p>2、当进行代码优化需要挪动运算顺序时，则只需对执行表进行相应地调整，而不必再改动三元式本身，这样，就避免了前面讲到的因改变三元式的顺序所引起的麻烦。</p>
+<h1 id="赋值语句的翻译"><a href="#赋值语句的翻译" class="headerlink" title="赋值语句的翻译"></a>赋值语句的翻译</h1><h2 id="布尔表达式的翻译"><a href="#布尔表达式的翻译" class="headerlink" title="布尔表达式的翻译"></a>布尔表达式的翻译</h2><p>布尔表达式在程序设计语言中有两个作用：</p>
+<ol>
+<li>计算<strong>逻辑值</strong></li>
+<li>用于<strong>改变控制流语句</strong>中的条件表达式</li>
+</ol>
+<p>控制流语句包含循环、分支两大类。</p>
+<p>通常我们只考虑如下文法生成的布尔表达式：<br>$E→EandE∣EorE∣notE∣idropid∣id∣true∣falseE→EandE∣EorE∣notE∣idropid∣id∣true∣false$<br>其中$rop$是关系符，如$&lt;&#x3D;,&lt;,&#x3D;,&gt;,&gt;&#x3D;&lt;&#x3D;,&lt;,&#x3D;,&gt;,&gt;&#x3D;$等<br>布尔运算符的<strong>优先顺序</strong>为$not&gt;and&gt;ornot&gt;and&gt;or$<br>并且$and$和$not$服从<strong>左结合</strong></p>
+<p>布尔表达式的计算有两种方法：</p>
+<ol>
+<li>计算各部分的真假值，最后计算出整个表达式的值<br>$(1and0)and(0or1)&#x3D;0and1&#x3D;0$</li>
+<li>短路法：AandB如果A&#x3D;0则直接得到0；AorB如果A&#x3D;1则直接得到1。这种方式若B为一个带返回值的过程调用会引发<strong>副作用</strong></li>
+</ol>
+<p><strong>布尔表达式翻译成四元式序列</strong>，如a or b and not c的翻译结果为：<br>(1)t1:&#x3D;not c<br>(2)t2:&#x3D;b and t1<br>(3)t3:&#x3D;a or t2</p>
+<h2 id="条件语句中布尔表达式的翻译"><a href="#条件语句中布尔表达式的翻译" class="headerlink" title="条件语句中布尔表达式的翻译"></a>条件语句中布尔表达式的翻译</h2><p>现在有文法：<br>S→if E then S1∣if E then S1 else S2∣while E do S1</p>
+<p>翻译这部分的题目主要是以给定四元式序列，然后填空。</p>
+<p>对布尔表达式E&#x3D;a rop b，可以翻译成：<br>(1)if a rop b goto E.true<br>(2)goto E.false</p>
+<p>但此时E.true和E.false的值仍不能被确定。例如：<br>S→if E then S1 else S2</p>
+<p>E.true的值为S1的第一条四元式的地址<br>E.false的值为S2的第一条四元式的地址</p>
+<p>例如：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//假设要翻译 <span class="keyword">if</span> a&lt;b <span class="keyword">or</span> c&lt;d <span class="keyword">and</span> e&gt;f ...这段程序</span><br><span class="line"></span><br><span class="line">//理想的情况是翻译成下面这样</span><br><span class="line">（<span class="number">1</span>）　<span class="keyword">if</span> a＜b <span class="keyword">goto</span> E.<span class="literal">true</span> //E.<span class="literal">true</span>代表该<span class="keyword">if</span>...<span class="keyword">else</span>...逻辑的正向逻辑段入口地址，但是翻译当前bool表达式显然是暂且还不能确定E.<span class="literal">true</span>的</span><br><span class="line">（<span class="number">2</span>）　<span class="keyword">goto</span> （<span class="number">3</span>）</span><br><span class="line">（<span class="number">3</span>）　<span class="keyword">if</span> c＜d　<span class="keyword">goto</span> （<span class="number">5</span>）</span><br><span class="line">（<span class="number">4</span>）　<span class="keyword">goto</span> E．<span class="literal">false</span>       //E.<span class="literal">false</span>代表<span class="keyword">if</span>...<span class="keyword">else</span>...的反向逻辑段入口地址</span><br><span class="line">（<span class="number">5</span>）　<span class="keyword">is</span> e＞f <span class="keyword">goto</span> E．<span class="literal">true</span></span><br><span class="line">（<span class="number">6</span>）　<span class="keyword">goto</span> E．<span class="literal">false</span> //到bool表达式翻译完成时，才能确定原来逻辑块的正向段入口地址是<span class="number">7</span></span><br><span class="line">（<span class="number">7</span>） ...</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面的出现E.true和E.false的地方是需要回填的逻辑地址，这里比较常见的思路可能是额外为每个逻辑地址保存一个数组用来记录需要的所有地址，比如定义一个E.true-speicific-array并将(1）（2）填入该数组中。这种做法显然是很笨的，有没有比较好的方法？这便是”拉链“式解决方案，借鉴自链表的思想，为所有需要回填E.true的指令行首尾串在一起。</p>
+<p>……<br>(p−1)…S1 end<br>(p) goto q<br>(p+1) S2 begin…<br>……<br>(q−1)… S2 end<br>(q)…</p>
+<p>在产生出S1和S2的状态块后，才能进行地址回填。上面的E.true应填(7)，而E.false应填(p+1)。</p>
+<p>为了解决地址回填的问题，需要采用<strong>拉链法</strong>，把需要回填E.true的所有四元式构造并维护一条<strong>真链</strong>的链表，把需要回填E.false的所有四元式构造一条<strong>假链</strong>的链表</p>
+<p>对于上面的例子，真链和假链如下图：</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190619191054300-334335601.png" alt="img"></p>
+<p>其中(5)为真链的链首，(6)为假链的链首。一旦确定S1和S2的地址，就可以沿着链作地址回填</p>
+<p>但还有3种情况会使得四元式序列变得十分复杂，这里不讨论：</p>
+<ol>
+<li>连续的or或连续的and</li>
+<li>连续的if−else if−else if…</li>
+<li>嵌套条件语句</li>
+</ol>
+<h2 id="循环语句中布尔表达式翻译"><a href="#循环语句中布尔表达式翻译" class="headerlink" title="循环语句中布尔表达式翻译"></a>循环语句中布尔表达式翻译</h2><p>现需要翻译语句：while a&lt;b do if c&lt;d then X:&#x3D;Y+Z</p>
+<p>100:if a&lt;b goto E.true<br>101:goto E.false<br>102:if c&lt;d goto 104<br>103:goto 106<br>104:t1:&#x3D;Y+Z<br>105:X:&#x3D;t1<br>106:goto 100<br>107:…</p>
+<p>分析到状态块的开始就可以确认E.true&#x3D;102，而分析完状态块的结束之后就可以确认E.false&#x3D;107</p>
+<h3 id="for循环语句翻译"><a href="#for循环语句翻译" class="headerlink" title="for循环语句翻译"></a>for循环语句翻译</h3><p>现需要翻译语句：for I :&#x3D;1 step 1 until Y do X:&#x3D;X+1<br>等价于C语言的：for(I&#x3D;1;I&lt;&#x3D;Y;++I) X&#x3D;X+1;</p>
+<p>100:I:&#x3D;1<br>101:goto 103<br>102:I:&#x3D;I+1<br>103:if I&lt;&#x3D;Y goto 105<br>104:goto 108<br>105:T:&#x3D;X+1<br>106:X:&#x3D;T<br>107:goto 102<br>108:…</p>
+<h3 id="数组的翻译"><a href="#数组的翻译" class="headerlink" title="数组的翻译"></a>数组的翻译</h3><p>对于一个静态的n维数组，要访问其中一个元素，可以使用下标法：</p>
+<p>A[i1,i2,…,in]</p>
+<p>由于内存是一维连续空间，对于行主数组，比如一个2×32×3的二维数组，在内存中的布局为:</p>
+<p>A[1,1]A[1,2]A[1,3]A[2,1]A[2,2]A[2,3]</p>
+<p>现知道数组A的地址为a，那A[i,j]的地址为：</p>
+<p>a+(i−1)×3+(j−1)</p>
+<p>设B为n维数组B[l1:u1,l2:u2,…,ln:un]</p>
+<p>显然di&#x3D;ui−li+1。令b是数组首元素地址，那么行主数组下B[i1,i2,…,in]的地址D为：</p>
+<p>D&#x3D;b+(i1−l1)d2d3…dn+(i2−l2)d3…dn+(in−1−ln−1)dn+(in−ln)</p>
+<p>对式子展开可以提取出式子中的固定部分和变化部分：<br>D&#x3D;constPart+varPart<br>constPart&#x3D;b−C<br>C&#x3D;l1d2d3…dn+l2d3…dn+…+ln−1dn−1+lndn<br>varPart&#x3D;i1d2d3…dn+i2d3…dn+…+in−1dn−1+indn</p>
+<p>访问数组元素A[i1,i2,…,in]需要产生两组计算数组的四元式：</p>
+<ol>
+<li>一组计算varPart，存放结果到临时单元T中</li>
+<li>一组计算constPart，存放结果到另一个临时单元T1中</li>
+</ol>
+<p>用T1[T]表示数组元素的地址</p>
+<p><strong>变址取数的四元式</strong>：(&#x3D;[],T1[T],−,X),相当于X:&#x3D;T1[T]<br><strong>变址存数的四元式</strong>：([]&#x3D;,X1,−,T1[T]),相当于T1[T]:&#x3D;X</p>
+<p>现在有一个10*20的数组A，即d1&#x3D;10,d2&#x3D;20。则X:&#x3D;A[I,J]的四元式序列为：<br>(∗,I,20,T1)<br>(+,T1,J,T1)<br>(−,A,21,T2)<br>(&#x3D;[],T2[T1],−,T3)<br>(:&#x3D;,T3,−,X)</p>
+<p>对应：<br>varPart&#x3D;20∗I+J<br>constPart&#x3D;A−(1∗20+1)&#x3D;A−21</p>
+<h1 id="符号表-1"><a href="#符号表-1" class="headerlink" title="符号表"></a>符号表</h1><h2 id="符号表的作用-1"><a href="#符号表的作用-1" class="headerlink" title="符号表的作用"></a>符号表的作用</h2><p>符号表用来体现作用域与可见性信息</p>
+<ul>
+<li>登记各类名字的信息</li>
+<li>编译各阶段都需要使用符号表<ul>
+<li>一致性检查和作用域分析</li>
+<li>辅助代码生成</li>
+</ul>
+</li>
+</ul>
+<p>符号表的作用：<br>① 收集符号属性；（词法分析）<br>② 上下文语义的合法性检查的依据；（语法分析）<br>③ 作为目标代码生成阶段地址分配的依据；（语义分析）</p>
+<h2 id="符号表的组织"><a href="#符号表的组织" class="headerlink" title="符号表的组织"></a>符号表的组织</h2><p>符号表的每一项（入口）包含两大栏</p>
+<ul>
+<li>名字栏：主栏、关键字栏</li>
+<li>信息栏：记录相应的不同属性、分为若干子栏</li>
+</ul>
+<p>按名字的不同种属建立多张符号表，如常数表、变量名表、过程名表</p>
+<p>符号表中语言符号可分为关键字（保留字）符号，操作符符号及标识符符号</p>
+<p>符号表中的标识符一般设置的属性项目有：<br>① 符号名<br>② 符号的类型<br>③ 符号的存储类别<br>④ 符号的作用域及可视性<br>⑤ 符号变量的存储分配信息<br>⑥ 符号的其它属性</p>
+<h3 id="符号表操作"><a href="#符号表操作" class="headerlink" title="符号表操作"></a>符号表操作</h3><p>针对符号表的常见操作：</p>
+<p>• 创建符号表  在编译开始，或进入一个作用域</p>
+<p>• 插入表项  在遇到新的标识符声明时进行</p>
+<p>• 查询表项  在引用标识符时进行</p>
+<p>• 修改表项  在获得新的语义值信息时进行</p>
+<p>• 删除表项  在标识符成为不可见或不再需要它的任何信息时进行</p>
+<p> 释放符号表空间  在编译结束前或退出一个作用域</p>
+<h3 id="对符号表进行操作的时机"><a href="#对符号表进行操作的时机" class="headerlink" title="对符号表进行操作的时机"></a>对符号表进行操作的时机</h3><ul>
+<li>定义性出现：int index</li>
+<li>使用性出现：if index &lt; 100</li>
+</ul>
+<h3 id="实现符号表的常用数据结构-1"><a href="#实现符号表的常用数据结构-1" class="headerlink" title="实现符号表的常用数据结构"></a>实现符号表的常用数据结构</h3><p>• 一般的线性表：如：数组，链表，等<br>• 有序表：查询较无序表快，如可以采用折半查找<br>• 二叉搜索树<br>• Hash表</p>
+<h2 id="作用域和可见性"><a href="#作用域和可见性" class="headerlink" title="作用域和可见性"></a>作用域和可见性</h2><h1 id="静态语义分析-1"><a href="#静态语义分析-1" class="headerlink" title="静态语义分析"></a>静态语义分析</h1><p><strong>静态语义： 刻画程序在静态一致性或完整性方面的特征；仅当程序通过了静态语义检查，才能完成后续的中间代码生成和目标代码优化。</strong></p>
+<h2 id="主要任务-1"><a href="#主要任务-1" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li><p>类型检查（type checks）<br>检查每个操作是否遵守语言类型系统的定义</p>
+</li>
+<li><p>名字的作用域（scope）分析<br>建立名字的定义和使用之间联系</p>
+</li>
+<li><p>控制流检查（flow-of-control checks）<br>控制流语句必须使控制转移到合法的地方（如 break语句必须有合法的语句包围它）</p>
+</li>
+<li><p>唯一性检查（uniqueness checks）<br>很多场合要求对象只能被定义一次（如枚举类型的元素不能重复出现）</p>
+</li>
+<li><p>名字的上下文相关性检查（name-related checks）<br>某些名字的多次出现之间应该满足一定的上下文相关性</p>
+</li>
+</ul>
+<h3 id="类型检查-1"><a href="#类型检查-1" class="headerlink" title="类型检查"></a>类型检查</h3><p>类型检查程序（<em>type checker</em>）负责类型检查</p>
+<p>• 验证程序的结构是否匹配上下文所期望的类</p>
+<p>• 为相关阶段搜集及建立必要的类型信息</p>
+<p>• 实现某个类型系统（<em>type system</em>）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" data-id="claaf6qjc00awtkup0i0s2kik" data-title="编译原理-静态语义分析和中间代码生成" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据库-并发控制" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" class="article-date">
+  <time class="dt-published" datetime="2020-06-05T11:14:28.000Z" itemprop="datePublished">2020-06-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/">数据库_并发控制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="并发控制概述"><a href="#并发控制概述" class="headerlink" title="并发控制概述"></a>并发控制概述</h1><p>并发的背景：</p>
+<ul>
+<li>DBMS作为系统软件，对外提供数据访问服务</li>
+<li>多个用户同时访问一个数据库</li>
+<li>各种任务以事务为逻辑单位运行</li>
+<li>同一时间并发运行的事务数可达数百个</li>
+</ul>
+<h2 id="多个事务的运行过程"><a href="#多个事务的运行过程" class="headerlink" title="多个事务的运行过程"></a>多个事务的运行过程</h2><h3 id="串行执行"><a href="#串行执行" class="headerlink" title="串行执行"></a>串行执行</h3><p>——事务依次执行，且每个事务必须等待前一个事务结束后方能运行</p>
+<p>事务串行执行降低了系统资源利用率</p>
+<p>事务执行过程中会占用多种资源：</p>
+<ul>
+<li>CPU——比较、计算、统计等</li>
+<li>数据</li>
+<li>网络——收发指令和数据</li>
+</ul>
+<p>单个事务执行过程中部分资源可能处于空闲状态</p>
+<h3 id="并行执行"><a href="#并行执行" class="headerlink" title="并行执行"></a>并行执行</h3><ul>
+<li>单处理机——CPU时间片轮转，多道程序交替运行</li>
+<li>多CPU——并行处理技术，多种共享内存以及硬盘策略</li>
+</ul>
+<p>注意，数据是临界资源。在事务执行过程中，它所访问的数据集合应该在事务终止前是一致的、相容的</p>
+<h3 id="数据库事务并发带来的问题"><a href="#数据库事务并发带来的问题" class="headerlink" title="数据库事务并发带来的问题"></a>数据库事务并发带来的问题</h3><p>操作系统层面的并发控制手段：信号量<br>——保护对象明确、相对集中<br>——控制保护时间一般较短<br>——直接阻塞任务进程——信号量资源有限</p>
+<p>数据库事务并发控制：<br>——事务访问的数据对象及其范围相对灵活，一致性所涉及的范围更广。<br>——事务的执行一般包括一个读写操作的序列，时间相对比简单的应用程序变量操作要长。<br>——需要被保护的对象个数可能远多于信号量数目。<br>——事务的执行可能涉及DBMS的多个进程。</p>
+<h1 id="数据库系统中的并发错误"><a href="#数据库系统中的并发错误" class="headerlink" title="数据库系统中的并发错误"></a>数据库系统中的并发错误</h1><p>事务是数据库中并发控制的基本单位，事务处理需要保证事务的ACID特性，并发控制要能保证事务的隔离性和一致性。</p>
+<p>当多个用户&#x2F;进程&#x2F;线程同时对数据库进行操作时，会出现3种冲突情形：</p>
+<ol>
+<li>读-读，不存在任何问题</li>
+<li>读-写，有隔离性问题，可能遇到脏读（会读到未提交的数据） ，幻影读等。</li>
+<li>写-写，可能丢失更新</li>
+</ol>
+<p>要解决冲突，一种办法是是锁，即基于锁的并发控制，比如2PL，这种方式开销比较高，而且无法避免死锁。</p>
+<p>多版本并发控制（MVCC）是一种用来<strong>解决读-写冲突</strong>的无锁并发控制，也就是为事务分配单向增长的时间戳，为每个修改保存一个版本，版本与事务时间戳关联，读操作只读该事务开始前的数据库的快照。 这样在读操作不用阻塞写操作，写操作不用阻塞读操作的同时，避免了脏读和不可重复读</p>
+<p>乐观并发控制（OCC）是一种用来<strong>解决写-写冲突</strong>的无锁并发控制，认为事务间争用没有那么多，所以先进行修改，在提交事务前，检查一下事务开始后，有没有新提交改变，如果没有就提交，如果有就放弃并重试。乐观并发控制类似自选锁。乐观并发控制适用于低数据争用，写冲突比较少的环境。</p>
+<p>多版本并发控制可以结合基于锁的并发控制来解决写-写冲突，即MVCC+2PL，也可以结合乐观并发控制来解决写-写冲突。</p>
+<h1 id="基于封锁的并发控制"><a href="#基于封锁的并发控制" class="headerlink" title="基于封锁的并发控制"></a>基于封锁的并发控制</h1><h2 id="封锁概述"><a href="#封锁概述" class="headerlink" title="封锁概述"></a>封锁概述</h2><h3 id="封锁的基本思想"><a href="#封锁的基本思想" class="headerlink" title="封锁的基本思想"></a>封锁的基本思想</h3><p>封锁是数据库管理系统实现并发控制的一种重要技术。</p>
+<p>并发控制方法：<br>① 锁（Locking）——商用数据库典型方法<br>② 时间戳（timestamping）<br>③ 乐观（Optimistic）</p>
+<p>流程——事务在对某个数据对象（表、记录集合等）进行读写操作之前，先向系统发出封锁请求，系统依据请求对数据对象加锁，事务在获得锁后才能对数据对象进行操作，操作完成后在适当时机释放锁。</p>
+<p>约束——系统在事务持有锁期间提供与锁配套的对数据的并发访问保护功能，其他事务不能违反保护规则进行与锁互斥的数据操作。</p>
+<h3 id="封锁的基本规则"><a href="#封锁的基本规则" class="headerlink" title="封锁的基本规则"></a>封锁的基本规则</h3><p>① 将要存取的数据须先申请加锁；</p>
+<p>② 已被加锁的数据不能再加不相容锁；</p>
+<p>③ 一旦完成使用应“尽早”释放锁；</p>
+<p>④ 未被加锁的数据不可对之解锁。</p>
+<h3 id="申请的时机"><a href="#申请的时机" class="headerlink" title="申请的时机"></a>申请的时机</h3><p>①针对事务执行确定一个时间点整体申请<br>一次封锁——无死锁<br>锁开销少——用少数的锁保护较大范围的数据<br>并发度低——锁冲突概率增加。</p>
+<p>②针对单条SQL语句执行申请<br>申请频繁——申请时机增多<br>死锁——部分占有与互斥等待<br>锁开销大——被保护的数据对象集合增多<br>并发度高——细粒度的封锁</p>
+<h3 id="申请的方式"><a href="#申请的方式" class="headerlink" title="申请的方式"></a>申请的方式</h3><p>①显式</p>
+<p>应事务的要求直接加到数据对象上。</p>
+<p>②隐式</p>
+<p>该数据对象没有直接加锁，<strong>由于数据对象的多粒度层次结构中的上级结点加了锁，使该数据对象隐含的加了相同类型的锁</strong>。</p>
+<h2 id="封锁的类型"><a href="#封锁的类型" class="headerlink" title="封锁的类型"></a>封锁的类型</h2><p>基本的封锁类型有两种：排它锁（exclusive locks，简称X锁）和共享锁（share locks，简称S锁）。</p>
+<p>（1）排它锁（X锁）<br>若事务T持有数据D的X锁，则T可读、写D，其它任何事务不能再对D加任何锁，直至T释放该X锁。X锁一般用于写保护，可防止丢失更新。</p>
+<p>（2）共享锁（S锁）<br>若事务T持有数据D的S锁，则T仅能够对D进行读操作，其它事务仍可对D加S锁，但不可加X锁，直到T释放该S锁。</p>
+<p>S锁一般用于读操作，一旦施加S锁，读可共享，但其它事务不可改。</p>
+<blockquote>
+<p>除了X锁和S锁外，还有：</p>
+<p>更新锁（U锁）：</p>
+<p>意向锁：对多粒度树中的结点加意向锁，则说明该结点的下层结点正在被加锁；对任一结点加锁时，必须先对它的上层结点加意向锁。</p>
+<p><strong>注：当出现解锁时，就认定解锁任务开始，在解锁阶段不能再加任何锁</strong></p>
+</blockquote>
+<h2 id="封锁的协议"><a href="#封锁的协议" class="headerlink" title="封锁的协议"></a>封锁的协议</h2><p>在运用X锁和S锁时，针对并发操作不正确调度可能产生的丢失修改、不可重复读和读脏问题，可以通过三级封锁协议不同程度上解决这些问题。不同的封锁协议达到的系统一致性级别是不同的。</p>
+<blockquote>
+<p>发生丢失更新的过程</p>
+<p>T1读取库存后，T2也读取了同一个库存；T1修改库存，回写更新后的值；T2修改库存，也回写更新后的值。此时库存为T2回写的值，T1对库存的更新丢失。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>２</td>
+<td>T2</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>３</td>
+<td>T1</td>
+<td>库存量&#x3D;50+100</td>
+<td></td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>库存量&#x3D;50-40</td>
+<td></td>
+</tr>
+<tr>
+<td>５</td>
+<td>T1</td>
+<td>写库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>６</td>
+<td>T2</td>
+<td>写库存量</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p> T2使用T1的“脏数据”的过程</p>
+<p>当T1和T2并发执行时，在T1对数据库更新的结果没有提交之前，T2使用了T1的结果，而在T2操作之后T1又回滚，这时引起的错误是T2读取了T1的“脏数据”。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>２</td>
+<td>T1</td>
+<td>库存量&#x3D;50+100</td>
+<td></td>
+</tr>
+<tr>
+<td>３</td>
+<td>T1</td>
+<td>写库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>读库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>５</td>
+<td>T2</td>
+<td>库存量&#x3D;150-40</td>
+<td></td>
+</tr>
+<tr>
+<td>６</td>
+<td>T1</td>
+<td>ROLLBACK</td>
+<td>50</td>
+</tr>
+<tr>
+<td>７</td>
+<td>T2</td>
+<td>写库存量</td>
+<td>110</td>
+</tr>
+</tbody></table>
+<p> T1对数据A“不可重复读”的过程</p>
+<p>当T1读取数据A后，T2执行了对A的更新，当T1 再次读取数据A（希望与第一次是相同的值）时，得到的数据与前一次不同，这时引起的错误称为“不可重复读”。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量A</th>
+<th>入库量B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读A&#x3D;50</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T1</td>
+<td>读B&#x3D;100</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>T1</td>
+<td>求和&#x3D;50+100</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>读B&#x3D;100</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>５</td>
+<td>T2</td>
+<td>B←B×4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>６</td>
+<td>T2</td>
+<td>回写B&#x3D;400</td>
+<td>50</td>
+<td>400</td>
+</tr>
+<tr>
+<td>７</td>
+<td>T1</td>
+<td>读A&#x3D;50</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>T1</td>
+<td>读B&#x3D;400</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>T1</td>
+<td>和&#x3D;450（验算不对）</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>（1）1级封锁协议<br>①策略<br>事务T在修改数据D之前须先对其加X锁，直到事务T结束（commit&#x2F;rollback）才释放。<br>②功能<br>防止<strong>丢失修改</strong>；并保证事务T是可恢复的。<br>③问题<br><strong>不能防止不可重复读和读“脏”数据</strong>。（仅对修改操作申请加锁保护，若读则不加锁）</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">D值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">X lock D;<br>R(D)&#x3D;100<br></td>
+<td align="left">100</td>
+<td align="left"></td>
+<td>T<del>A</del>对X加锁成功后读D</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock D<br />等待</td>
+<td>T<del>B</del>对X加锁未成功后等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">W(D)&#x3D;D-1</td>
+<td align="left">99</td>
+<td align="left">等待</td>
+<td>T<del>A</del>修改，D结果写回数据库并释放X锁</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock D<br />R(D)&#x3D;99<br />W(D)&#x3D;D-1<br />COMMIT<br />Unlock D</td>
+<td>T<del>B</del>获得D的X锁读D得99（已更新后结果）将修改后D（98）写回数据库</td>
+</tr>
+</tbody></table>
+<p>上述过程发生了脏数据的读取</p>
+<p>1级封锁协议为什么不能避免读脏数据？</p>
+<p><strong>排它锁X只能防止该数据无法被其他线程写，不能防止该数据被其他线程读。在改数据和回滚的过程有可能会产生脏数据</strong></p>
+<p>（2）2级封锁协议<br>①策略<br>在1级封锁协议基础上，再<strong>加上约束</strong>：事务T在读取D之前<strong>先对D加S锁</strong>，读完后即可释放该S锁。[<strong>无需等待事务结束</strong>]<br>②功能<br>防止丢失修改；防止读脏。<br>③问题<br>不能防止读不可重复（读完即释放，重读可能其它事务对之修改）。</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">D值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">X lock D;<br>R(D)&#x3D;100<br>W(D)&#x3D;X*2</td>
+<td align="left">100<br><br>200</td>
+<td align="left"></td>
+<td>T<del>A</del>对X加锁成功</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">S lock D<br />等待</td>
+<td>T<del>B</del>申请S锁T<del>A</del>未释放，T<del>B</del>等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">Rollback<br>(W(X)&#x3D;100)<br>UnLock D</td>
+<td align="left">100</td>
+<td align="left">等待</td>
+<td>T<del>A</del>因故撤消D值恢复为100</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">S lock D<br />R(D)&#x3D;100<br />Unlock D</td>
+<td>T<del>B</del>获得S锁T<del>B</del>读到值与数据库中值一致，防止了读脏</td>
+</tr>
+</tbody></table>
+<p>为什么二级封锁协议可以解决脏读？</p>
+<p>​       前面我们说过脏读产生的原因：因为B事务读取到了A事务修改过尚未提交的数据，根据二级封锁协议要求：读数据的时候必须加S锁，但因为A事务在修改的时候已经加了X锁，在X锁的基础上是不能加S锁的，所以B事务无法获取S锁，就会导致B事务无法读取A事务中正在操作的数据，从而避免了脏读的发生。</p>
+<p>（3）3级封锁协议<br>①策略<br>在1级封锁协议的基础上，加上约束：T读D前须先对D加S锁，<strong>直至T结束后才释放该S锁</strong>。<br>②功能<br><strong>防止丢失修改；防止读脏；防止不可重复读。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">数据库中A和B的值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">S Lock A <br />R(A)&#x3D;50<br />S Lock B<br />R(B)&#x3D;100<br />C &#x3D; A+B</td>
+<td align="left">A：50<br />B：100<br /><br />A：50</td>
+<td align="left"></td>
+<td>T<del>A</del>对A、B加S锁T<del>B</del>不能再对之加X锁</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock B<br />等待</td>
+<td>T<del>B</del>对B加X锁不成功T<del>B</del>等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">R(A)&#x3D;50<br />R(B)&#x3D;100<br />D&#x3D;A+B<br />COMMIT<br />Unlock A<br />Unlock B</td>
+<td align="left"><br /><br />A：50<br />B：100</td>
+<td align="left">等待</td>
+<td>T<del>B</del>等待T<del>B</del>重读A、B，结果相同</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"><br /><br />A：50<br />B：200</td>
+<td align="left">X Lock B<br />R(B)&#x3D;100<br />W(B)：&#x3D;B*2<br />写回B&#x3D;200</td>
+<td>T<del>B</del>获得B的X锁</td>
+</tr>
+</tbody></table>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605163246424.png"></p>
+<p>为什么三级封锁协议可以解决不可重复读？</p>
+<p>​       前面我们也说过了不可重复读产生的原因：是因为B事务读取到了A事务已经修改过的数据，导致前后两次读取的数据不一致。现根据三级封锁协议的要求：读取数据时必须加S锁，在S锁的基础上只能加S锁，不能加X锁，所以在B事务读取数据期间，A事务无法对数据进行修改，从而避免了不可重复读问题的发生。</p>
+<h1 id="并行调度的可串行性"><a href="#并行调度的可串行性" class="headerlink" title="并行调度的可串行性"></a>并行调度的可串行性</h1><h2 id="正确性标准"><a href="#正确性标准" class="headerlink" title="正确性标准"></a>正确性标准</h2><p>（1）单个事务</p>
+<p>——若非并发的执行，每个事务都能保证DB的正确性。<br>（丢失修改、不可重复读、读脏数据，都是因事务并发执行产生）</p>
+<p>（2）多个事务</p>
+<p>——多个事务以任意串行方式执行都能保证DB的正确性。<br>给定三个事务：T1，T2，T3。<br>T1→T2→T3         T1→T3→T2<br>T2→T1→T3         T2→T3→T1<br>T3→T1→T2          T3→T2→T1<br>显然，任何一事务并发执行时禁止其它事务执行，总能保证DB正确性，但不利于数据共享。</p>
+<p>（3）可串行化调度（serializable）</p>
+<p>——当且仅当多个事务并发执行的结果与这些事务按某一顺序串行执行的结果相同时，则该并发执行是可串行化的。<br>（可串行化调度是并发事务正确性的唯一准则）</p>
+<p>例：有两个事务TA，TB （A&#x3D;10, B&#x3D;2, C&#x3D;0）包含如下操作序列<br>TA：读B；A:&#x3D;B+1；写回A；<br>TB：读C；读A；B:&#x3D;A+C+1；写回B；<br>则至少可能有四种不同的调度方式:</p>
+<p>1、先执行TA，再执行TB——RA(B) WA(A) RB(C) RB(A) WB(B)；结果：A&#x3D;3，B&#x3D;4，C&#x3D;0。【串行调度】</p>
+<p>2、先执行TB，再执行TA——RB(C) RB(A) WB(B) RA(B) WA(A) ；执行结果：A&#x3D;12，B&#x3D;11，C&#x3D;0。【串行调度】</p>
+<p>3、两事务TA、TB按ti并发执行——RA(B) RB(C) RB(A) WA(A) WB(B)，结果为A&#x3D;3，B&#x3D;11。<br>按事务并发可串行化的正确性准则，该结果与TA、TB两个串行执行的任何结果（A&#x3D;3，B&#x3D;4；A&#x3D;12，B&#x3D;11）均不同，调度结果错误。【交错执行（不可串行化）调度】</p>
+<p>4、按ti交错执行——RA(B) RB(C)WA(A)RB(A)WB(B)；执行结果：A&#x3D;3，B&#x3D;4。该结果正确，因为与串行化调度1结果相同，该调度是可串行化调度【交错执行(可串行化)调度】</p>
+<h2 id="冲突可串行化调度"><a href="#冲突可串行化调度" class="headerlink" title="冲突可串行化调度"></a>冲突可串行化调度</h2><p>——可串行化调度的充分而非必要条件。</p>
+<p>冲突操作：① R<del>i</del>(x)与W<del>j</del>(x)    ② W<del>i</del>(x)与W<del>j</del>(x)</p>
+<p>操作顺序的交换（可交换、不可交换）<br>——不同事务的冲突操作和同一事务的两个操作均是不可交换的。否则可能使操作序列的结果不等价。</p>
+<p>在可交换的前提下，若干事务的操作交换顺序的结果是一个串行调度，则称这个调度是冲突可串行化的。</p>
+<blockquote>
+<p>前趋图：事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
+<p><strong>前驱图中不存在环路等价于调度是冲突可串行化的</strong></p>
+<p>冲突可串行化是可串行化的充分条件，不是必要条件。</p>
+</blockquote>
+<h1 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h1><p><a target="_blank" rel="noopener" href="https://draveness.me/database-concurrency-control/">参考文章</a></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li><p>并发调度的正确性标准：可串行化调度<br>n个事务的可串行化调度结果——n！种<br>可串行化的充分而非必要条件：冲突可串行化调度</p>
+</li>
+<li><p>基于封锁的并发控制：一种基于悲观思想的并发控制策略。<br>操作之前先查验冲突</p>
+</li>
+<li><p>封锁如何解决并发错误？<br>三级封锁协议<br>排它锁保护写操作——写之前申请，事务结束时释放。<br>在此基础上，共享锁保护读操作——读之前申请，释放时机（读完之后即可释放、事务结束时释放）</p>
+</li>
+</ul>
+<h3 id="三级封锁协议的选择依据"><a href="#三级封锁协议的选择依据" class="headerlink" title="三级封锁协议的选择依据"></a>三级封锁协议的选择依据</h3><p>权衡并发调度正确性和并发性能。</p>
+<p>三级封锁协议的特点之一：事务对数据的保护时间较为统一，其中比较强的往往保护至事务结束。</p>
+<p>能否制定相对灵活的封锁协议?<br>                    两阶段封锁（TwoPhase Locking，简称2PL）</p>
+<h2 id="基于2PL协议的调度"><a href="#基于2PL协议的调度" class="headerlink" title="基于2PL协议的调度"></a>基于2PL协议的调度</h2><p>基本思想：所有事务必须分为两个阶段对数据项加锁和解锁，第一阶段称为扩展阶段（获得锁）；第二阶段称为收缩阶段（释放锁）。</p>
+<p>协议内容：<br>（1）在对任何数据读、写之前，须先获得该数据的锁；<br>（2）在释放一个封锁之后，该事务不能再申请任何其它锁。【正确的遵守2PL协议，所有获得锁均在释放锁之前。】</p>
+<p>两个阶段：事务的第一个释放锁操作成为分界线。<br>扩张和收缩：事务对数据资源的占有。</p>
+<p>两段锁协议的目标：实现并发事务调度的可串行化。</p>
+<h2 id="两阶段锁协议的特点"><a href="#两阶段锁协议的特点" class="headerlink" title="两阶段锁协议的特点"></a>两阶段锁协议的特点</h2><ul>
+<li>定理：若所有事务都遵守2PL协议，则对这些事务的所有并发调度策略都是可串行化的。</li>
+</ul>
+<p>证明思路：<br>前趋图——事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
+<p>前驱图中不存在环路等价于调度是冲突可串行化的</p>
+<p>反证法：假设调度遵循2PL协议但不是可串行化的 → 与2PL有矛盾。冲突可串行化是可串行化的充分而非必要条件。</p>
+<p>假如调度不是可串行化的，则该调度也不是冲突可串行化的。<br>① 假设某个遵守2PL的调度不是可串行化调度；<br>② 按Lock、UnLock操作中因锁不兼容而等待的关系构造调度的前趋图G；<br>③ 依据假设，若调度不是可串行化，则G中必存在环路，不妨设为：Ti<del>1</del>→Ti<del>2</del>→……→Tj<del>p</del>→Ti<del>n</del>。<br>④ 其中某个冲突事务获得锁的前提是前面的冲突事务释放锁，则意味着Ti<del>1</del>解锁后Tj<del>p</del>才能获得锁，之后在环路中又出现Ti<del>n</del>加锁；<br>⑤ “④”中Ti违反了两阶段锁协议。</p>
+<ul>
+<li>2PL协议是可串行化的充分条件，不是必要条件。</li>
+<li>遵守两阶段锁协议的事务可能<strong>发生死锁</strong>。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>两阶段锁（2PL）：通过事务的扩张和收缩阶段的划分，而不是提交之前与提交之时的这种划分，对锁的申请和释放流程进行的一种约定，从而实现了调度正确性的一个充分而非必要条件。</p>
+<h1 id="封锁的粒度"><a href="#封锁的粒度" class="headerlink" title="封锁的粒度"></a>封锁的粒度</h1><p>到目前为止我们都没有对不同粒度的锁进行讨论，一直以来我们都讨论的都是数据行锁，但是在有些时候我们希望将多个节点看做一个数据单元，使用锁直接将这个数据单元、表甚至数据库锁定起来。这个目标的实现需要我们在数据库中定义不同粒度的锁</p>
+<h2 id="多粒度封锁"><a href="#多粒度封锁" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h2><p>封锁的粒度：封锁对象的大小。<br>（1）逻辑单元：整个数据库、整个关系、整个索引、关系的分区、元组、索引项、属性值集、属性值。<br>（2）物理单元：数据页（块）、索引页</p>
+<p>封锁的粒度与数据库并发性能的两个重要因素相关：</p>
+<ul>
+<li>并发度</li>
+<li>并发控制的开销</li>
+</ul>
+<p>粒度小——封锁开销大——并发度大</p>
+<h3 id="封锁的基本策略"><a href="#封锁的基本策略" class="headerlink" title="封锁的基本策略"></a>封锁的基本策略</h3><p>宜采用多粒度封锁：<br>1）需常存取多个关系的大量元组时宜采用数据库级粒度；<br>2）需常存取单个关系大量元组时宜采用关系级；<br>3）需常存取单个关系少量元组时宜采用元组级；<br>4）一般不采用属性级；<br>5）物理单元一般不宜采用。</p>
+<p>多粒度锁提供了并发度和锁开销的权衡空间。</p>
+<h3 id="多粒度封锁-1"><a href="#多粒度封锁-1" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h3><p>隐式封锁：某个数据对象被显式封锁后，它在多粒度层次结构中的子孙节点被隐含的加了相同类型的锁</p>
+<h3 id="多粒度锁的冲突检测"><a href="#多粒度锁的冲突检测" class="headerlink" title="多粒度锁的冲突检测"></a>多粒度锁的冲突检测</h3><ul>
+<li><p>显式封锁和隐式封锁的效果是一样的，因此检查封锁冲突时需要对两种封锁的结果都进行检测。</p>
+<p>1）检查数据对象本身有无显式封锁与申请冲突；</p>
+<p>2）检查上级结点有无封锁与本结点冲突；</p>
+<p>3）检查后代结点有无封锁与本结点冲突</p>
+</li>
+</ul>
+<h2 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h2><p>对任一结点加锁时，必须先对它的上层结点加意向锁。如果对某个结点加意向锁，则表示该结点的某个子孙结点正在或拟施加相应的非意向锁。作用：提高系统并发度，减少加锁和解锁的开销。被商用产品广泛采用。</p>
+<p>意向锁的类型：<br>1）IS锁：表示某个子孙结点拟加S锁<br>2）IX锁：表示某个子孙结点拟加X锁<br>3）SIX锁：表示对结点施加S锁的同时，再施加IX锁&#x3D; S+IX</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605173311455.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" data-id="claaf6qin007ytkup9g5bbq91" data-title="数据库_并发控制" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据库-查询处理和查询优化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2020-06-05T11:13:49.000Z" itemprop="datePublished">2020-06-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">数据库_查询处理和查询优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="查询优化概述"><a href="#查询优化概述" class="headerlink" title="查询优化概述"></a>查询优化概述</h1><h2 id="查询优化的意义"><a href="#查询优化的意义" class="headerlink" title="查询优化的意义"></a>查询优化的意义</h2><ul>
+<li>SQL语言具有非过程化特性（必要性）</li>
+<li>查询操作存在多解性（可能性）<ul>
+<li>同一个查询语句可以用多种关系代数表达式来表达</li>
+<li>同一个关系操作可以有多种实现算法或存取路径<ul>
+<li>选择——全表扫描、索引扫描</li>
+<li>自然连接——嵌套循环、排序-合并、索引连接、哈希连接</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="自然连接算法"><a href="#自然连接算法" class="headerlink" title="自然连接算法"></a>自然连接算法</h2><p>自然连接：是一种特殊的等值连接，它要求两个关系进行比较的分量必须是相同的属性组，并且在结果集中将重复属性列去掉。</p>
+<blockquote>
+<p>1）等值连接必须要有等值的条件，当条件不同时连接的结果也不相同，两个关系可以没有相同的属性列<br>2）自然连接必须要有相同的属性列才能进行，即等值连接之后要去除相同的属性列</p>
+</blockquote>
+<h3 id="嵌套循环算法"><a href="#嵌套循环算法" class="headerlink" title="嵌套循环算法"></a>嵌套循环算法</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> row1 <span class="keyword">from</span> T1</span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">each</span> row2 <span class="keyword">from</span> T2</span><br><span class="line">	<span class="keyword">if</span> row2 match row1<span class="comment">//如果row2与row1满足连接条件</span></span><br><span class="line">	<span class="keyword">join</span> row1 <span class="keyword">and</span> row2 <span class="keyword">into</span> <span class="keyword">result</span><span class="comment">//加入结果集</span></span><br></pre></td></tr></table></figure>
+
+<p>简单通用，对参与连接的表没有要求。由于对内层循环表需要进行多次扫描。因此性能较差</p>
+<h3 id="排序—合并算法"><a href="#排序—合并算法" class="headerlink" title="排序—合并算法"></a>排序—合并算法</h3><p>访问次数：两张表都只会访问0次或1次。<br>驱动表是否有顺序：无。<br>是否要排序：是。<br>应用场景：当结果集已经排过序。</p>
+<p>如果A表的数据为（2,1,4,5,2）,B表的数据为(2,2,1,3,1) ,首先将A表和B表<strong>全扫描后排序</strong>，如下：</p>
+<p>​       A   B</p>
+<p>​       1   1</p>
+<p>​       2   1</p>
+<p>​       2   2</p>
+<p>​       4   2</p>
+<p>​       5   3</p>
+<p>因为没有驱动表，所以数据库会随机选择一张表驱动，如果选择了A扫描到1，然后扫描B，当扫描&#x3D;1的时候则匹配</p>
+<p>当扫描到B&#x3D;2时，再以B&#x3D;2为驱动扫描A表，不是从1开始扫，而是从2开始扫描，交替的进行扫描、关联。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/231153163007245.jpg"></p>
+<p>也就是说：不是从1重新开始扫，而是从2开始扫描</p>
+<p>对于左表和右表只需要扫描一遍，性能比较高。但是只适用于参与连接的表已经有序的情况。</p>
+<h3 id="索引连接算法"><a href="#索引连接算法" class="headerlink" title="索引连接算法"></a>索引连接算法</h3><p>利用索引提高连接过程中的元组查找速度，适用于参加连接的表的连接属性上存在索引的情况。</p>
+<h3 id="哈希连接算法"><a href="#哈希连接算法" class="headerlink" title="哈希连接算法"></a>哈希连接算法</h3><p>通过对连接属性进行哈希分桶来提高连接阶段的匹配速度，适用于较小的那个连接表在散列后能完全放入内存的情况</p>
+<p>简单的对于两个表来讲，hash-join就算讲两表中的小表（称S）作为hash表，然后去扫描另一个表(称M)的每一行数据，用得出来的行数据根据连接条件去映射建立的hash表，hash表是放在内存中的，这样可以很快的得到对应的S表与M表相匹配的行。</p>
+<blockquote>
+<p>对于结果集很大的情况，merge-join需要对其排序效率并不会很高，而nested loop join是一种嵌套循环的查询方式无疑更不适合大数据集的连接，而hash-join正是为处理这种棘手的查询方式而生，尤其是对于一个大表和一个小表的情况，基本上只需要将大小表扫描一遍就可以得出最终的结果集。</p>
+<p>　　不过hash-join<strong>只适用于等值连接</strong>，对于&gt;, &lt;, &lt;&#x3D;, &gt;&#x3D;这样的查询连接还是需要nested loop这种通用的连接算法来处理。如果连接key本来就是有序的或者需要排序，那么可能用merge-join的代价会比hash-join更小，此时merge-join会更有优势。</p>
+</blockquote>
+<h1 id="代数优化"><a href="#代数优化" class="headerlink" title="代数优化"></a>代数优化</h1><p>是指通过对关系代数表达式的等价变换来提高查询效率</p>
+<p>就是查询语法树的等价变形</p>
+<h2 id="变换五大核心规则"><a href="#变换五大核心规则" class="headerlink" title="变换五大核心规则"></a>变换五大核心规则</h2><p>总结起来就是: “(连接类的)交换律, 结合律; (投影和选择类的)串接律, (这两大类相互之间)分配率”</p>
+<ol>
+<li>E1 X E2 &#x3D; E2 X E1, (E1 X E2) X E3 &#x3D; E1 X (E2 X E3)做笛卡尔积, 多个表做连接是满足交换律和结合律的</li>
+<li>投影和选择的串接定律<br> 多层的投影可以取小的那个<br> 多层的选择可以取交集(其实也是那个范围比较小的), 这样能够把多次选择  多次表的扫描, 改成一次.</li>
+<li>选择与投影交换律: 选择和投影的顺序可以随意改变</li>
+<li>选择与笛卡尔积, 并, 自然连接, 差的分配律: 处在后面的选择, 可以与处在前面的二目运算顺序进行调整, 使得对相应的表先实施选择, 再实现连接等二目运算. 这个非常重要, 是先选择后进行二目运算的依据, 又名”选择提前”.</li>
+<li>选择与笛卡尔积, 并的分配率: 可以先投影, 也可以先进行二目运算</li>
+</ol>
+<blockquote>
+<p>导致关系数据库查询性能低的主要原因是笛卡尔积运算</p>
+<p>投影与交运算不属于关系代数表达式等价规则</p>
+</blockquote>
+<h2 id="经验性优化五大策略"><a href="#经验性优化五大策略" class="headerlink" title="经验性优化五大策略"></a>经验性优化五大策略</h2><p>其实就是”选择, 合并, 视图”</p>
+<ol>
+<li><strong>选择运算尽可能先做</strong>, 这是最最最最重要和基本的, 这样往往使得执行代价减少了几个数量级, 主要的原理就是<strong>选择运算能够大大降低参与连接的元组的行数</strong>, 使得连接生成的A•B结果也大大被缩小.</li>
+<li><strong>把选择和投影运算同时进行</strong>, 如果有若干投影和选择运算, 并且他们都是针对同一个表, 那么可以在扫描这个表的时候同时完成这些所有的运算, 以此避免重复扫描这张表.</li>
+<li>把投影与其前或者后的双目运算(笛卡尔积, 等值连接, 并集, 差集)结合起来, 也就是说, 没有必要为了选择出几个字段而单独再重新扫描全表.</li>
+<li>把某些选择和在它前面要执行的笛卡尔积结合起来成为一个连接运算(比如变成等值连接), 这是因为连接运算要比同样情形下的笛卡尔积节省很多时间.</li>
+</ol>
+<blockquote>
+<p>笛卡尔积先进行了 O(N • M)操作 生成了A•B大小的中间文件, 存盘, 然后读盘, 然后再按照where选择进行筛选得到结果; 对比之下, 等值连接运算也进行了O(N•M)操作, 但是还进行了筛选, 只生成比较小的中间文件, 存盘和读盘的是一个非常小的结果集合. 大大减少了IO开销.</p>
+</blockquote>
+<ol>
+<li>找出公共子表达式(一次计算, 多次使用). 比如很多的查询都基于某个公共部分, 那么可以定义一个公共子表达式, 然后先计算一次公共子表达式, 然后把它存盘, 供其他大量的表达式来使用. 我们定义视图其实就是在实践这种策略.</li>
+</ol>
+<h1 id="物理优化"><a href="#物理优化" class="headerlink" title="物理优化"></a>物理优化</h1><h2 id="基于经验规则的优化"><a href="#基于经验规则的优化" class="headerlink" title="基于经验规则的优化"></a>基于经验规则的优化</h2><ul>
+<li><p><strong>对于小的表, 直接全表扫描, 即使列上有索引.</strong></p>
+</li>
+<li><p>对于大的表：</p>
+<ul>
+<li>如果是选择条件涉及主键, 那么使用主键索引(MySQL等主流关系数据库都会对主键建立索引);</li>
+<li>如果不是涉及主键：<ul>
+<li>如果是等值查询, 列上有索引, 就使用索引; </li>
+<li>如果非等值查询, 而是范围值查询, 那么范围&lt;&#x3D;10%用索引, 范围比较大的, 直接全表扫描.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>And 和 OR: </p>
+<ul>
+<li>AND连接的, 优先考虑使用索引; </li>
+<li>OR连接的, 优先考虑使用顺序扫描, 毕竟OR可能性非常多.</li>
+</ul>
+</li>
+<li><p>连接操作:</p>
+<ul>
+<li>如果两个表都按照连接属性排序, 用sort-merge算法</li>
+<li>如果其中一个表在连接属性上有索引,采用索引连接算法; </li>
+<li>如果啥都没有, 对小的表建立哈希表, 使用hash join方法; 或者使用基本的嵌套循环, 不过外层循环(i循环)使用小表, 这样能稍微减小代价.</li>
+</ul>
+</li>
+</ul>
+<h2 id="基于代价的优化"><a href="#基于代价的优化" class="headerlink" title="基于代价的优化"></a>基于代价的优化</h2><p>基于代价的优化需要依赖数据库表的各种”情报”, 来计算出不同方案的代价, 从中选择最优的.<br> 这些信息(meta info)包括:</p>
+<ol>
+<li>对每个表来说:<br> 表的元组行数 N,<br> 元组的长度, 即列的维度数目 P,<br> 表占用的block数目 B,<br> 表占用的溢出块的块数 BO,</li>
+<li>对表中的每个列,<br> 该列的不同值的个数 k<br> 列的最大值, 最小值max, min<br> 列上有什么类型的索引 index: 按照实现方式有B+, Hash, Cluster &#x2F; 按照类型来说有普通索引, 唯一索引, 主键索引, 聚集索引<br> 列上的数值分布情况 (直方图)</li>
+</ol>
+<p>那么对于不同情况, 我们有如下的代价估算:</p>
+<ol>
+<li>全表扫描 cost &#x3D; B</li>
+<li>有索引的扫描<br> 如果选择条件是key &#x3D; value, 能适用唯一索引: L + 1<br> 如果选择条件是attr &#x3D; value, 能使用普通索引: L + S (可能有S个元组满足)<br> 如果条件是范围类的, 比如&gt;, &lt;, between A and B, 那么基本上就是接近全表扫描B;</li>
+<li>连接算法的代价<br> 如果用嵌套循环: 读入Capacity-1块B[a], 遍历连接b表所有B[b], 再换下一批B[a], 直到a表结束. 所以, cost &#x3D; B[a] + ( B[a]&#x2F;(C-1) ) • B[b] &#x3D; a表IO次数 + b表IO次数, 假如要生成中间文件的话, 那么还得加上存下所有连接好的元组的磁盘IO开销.</li>
+</ol>
+<p>如果用sort-merge: cost &#x3D; B[a] + B[b], 如果要把中间结果写入外存, 那么还要加上存下所有连接好的元组的磁盘IO开销, 这个开销和上面嵌套循环的是一样的.<br> 假如表本身没有排序, 那么排序的代价是B[a]logB[a] + B[b]logB[b]</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.icourse163.org/course/RUC-1001655006">数据库系统概论（高级篇）</a></li>
+<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.jb51.net/article/33535.htm">脚本之家: SQL语句的各个关键字的解析过程详细总结</a></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" data-id="claaf6qir008jtkupbssn6gyb" data-title="数据库_查询处理和查询优化" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据库-数据库设计" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/" class="article-date">
+  <time class="dt-published" datetime="2020-06-04T19:13:08.000Z" itemprop="datePublished">2020-06-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/">数据库_数据库设计</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="数据库设计概述"><a href="#数据库设计概述" class="headerlink" title="数据库设计概述"></a>数据库设计概述</h1><h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
+<li>反复性：反复设计、逐步求精</li>
+<li>多解性：设计结果不唯一，多种方案并存</li>
+<li>分步进行：数据库设计分为多个阶段</li>
+<li>结构设计与行为设计相结合<ul>
+<li>面向数据的设计方法（以信息需求为主）</li>
+<li>面向过程的设计方法（以处理需求为主）</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据库设计方法"><a href="#数据库设计方法" class="headerlink" title="数据库设计方法"></a>数据库设计方法</h2><ul>
+<li>直观设计法（手工试凑法）</li>
+<li>规范设计法<ul>
+<li>新奥尔良法：运用软件工程的思想和方法进行数据库设计</li>
+<li>基于E-R模型的设计法：先用E-R图构造企业模式，然后转换为特的那个数据库模式</li>
+<li>基于3NF的设计法：确定数据库模式中的全部属性和属性间的依赖关系，将它们组织在一个单一的关系模式中，然后再分解成若干个3NF关系模式的集合</li>
+<li>基于视图的设计法：先为每个应用建立视图，再将这些视图合并为全局概念模式</li>
+</ul>
+</li>
+<li>计算机辅助设计法：<ul>
+<li>以人的知识或经验为主导，通过人机交互方式实现设计中的某些部分</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/image-20200604195650588.png"></p>
+<h1 id="E-R模型"><a href="#E-R模型" class="headerlink" title="E-R模型"></a>E-R模型</h1><h2 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h2><p>1、语义表达能力丰富</p>
+<p>2、易于理解和交流</p>
+<p>3、易于修改和扩充</p>
+<p>4、易于向各种数据模型转换</p>
+<p>可以使用E-R模型、UML、ODL</p>
+<p>E-R模型的基本观点：现实世界是由实体和实体间的联系构成的。</p>
+<ul>
+<li><p>实体：客观存在并且可以相互区分的物体。</p>
+</li>
+<li><p>实体集：具有相同类型、相同属性的实体集合 。</p>
+</li>
+<li><p>属性：实体集中每个成员具有的描述性性质。</p>
+<ul>
+<li>原子属性——不可再分的属性</li>
+<li>复合属性——由多个原子属性构成，如：生日（年、月、日）</li>
+<li>多值属性——多个同类原子&#x2F;复合属性值，如：买家有多个收货地址</li>
+</ul>
+</li>
+<li><p>域：属性的取值范围。</p>
+</li>
+<li><p>码：能唯一标识实体集的属性或属性组，称为超码。而最小的超码（就是任意真子集都不能称为超码的超码）称为候选码。从候选码中选出一个来区别同一实体集中的不同实体称为主码（比如学生实体集中的学号）。主码在E-R图中用_____表示。</p>
+</li>
+<li><p>联系：实体之间相互的关联，如学生和老师的授课关系，同类联系的集合称为联系集。</p>
+</li>
+<li><p>元或度：参与联系的实体集的个数称为元。参与联系的实体集的主码的集合形成了联系集的超码。</p>
+</li>
+<li><p>参与：实体集之间的关联称为参与，实体参与联系。如学生选修课程，学生和课程参与了联系选修。</p>
+<p>E中所有实体均参与R称为E全部参与R（用实体集合联系间的双线表示），否则称为E部分参与R。</p>
+</li>
+<li><p>映射基数：实体之间的联系数量，即一个实体通过一份联系集能与另一实体集相关联的实体数目。</p>
+<ul>
+<li><p>一对一</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/20190627104254145.png"></p>
+<p>注意箭头：带箭头的表示1</p>
+</li>
+<li><p>一对多</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/2019062710455293.png"></p>
+<p>不带箭头的线段表示n</p>
+</li>
+<li><p>多对多</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/20190627104836953.png"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="E-R模型的表示方法"><a href="#E-R模型的表示方法" class="headerlink" title="E-R模型的表示方法"></a>E-R模型的表示方法</h2><p>总结来说，E-R图的四个组成的部分</p>
+<p>1、<strong>矩形框</strong>:表示<strong>实体</strong>，在矩形框中写上实体的名字</p>
+<p>2、<strong>椭圆形框</strong>:表示实体或联系的<strong>属性</strong></p>
+<p>3、<strong>菱形框</strong>:表示<strong>联系，</strong>在框中记入联系名</p>
+<p>4、连线:实体与属性之间;实体与联系之间;联系与属性之间用直线相连，(对于一对一联系，要在两个实体连线方向各写1; 对于一对多联系，要在一的一方写1，多的一方写N;对于多对多关系，则要在两个实体连线方向各写N,M。)。<br><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/132158066981840.png"></p>
+<h2 id="E-R模型的设计原则"><a href="#E-R模型的设计原则" class="headerlink" title="E-R模型的设计原则"></a>E-R模型的设计原则</h2><ul>
+<li><strong>避免冗余</strong>，避免浪费空间和操作异常。</li>
+<li>一般情况下，凡是可以作为属性对待的，应该尽量作为属性</li>
+<li>作为实体对待，应该满足如下条件中的一个：<ul>
+<li>该实体具有除码以为的其他属性</li>
+<li>该实体是某个一对多或多对多联系的”多“端</li>
+</ul>
+</li>
+</ul>
+<h1 id="概念结构设计"><a href="#概念结构设计" class="headerlink" title="概念结构设计"></a>概念结构设计</h1><h2 id="概念结构设计的方法与步骤"><a href="#概念结构设计的方法与步骤" class="headerlink" title="概念结构设计的方法与步骤"></a>概念结构设计的方法与步骤</h2><ul>
+<li><p>设计概念结构的E-R模型可采用四种方法</p>
+<ul>
+<li>自顶向下</li>
+<li>自底向上</li>
+<li>逐步扩张</li>
+<li>混合策略</li>
+</ul>
+</li>
+<li><p>最常用的方法是自底向上设计法，包含两个步骤：</p>
+<ul>
+<li>设计局部E-R模型，即设计用户视图</li>
+<li>集成各局部E-R模型，形成全局E-R模型</li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤一"><a href="#步骤一" class="headerlink" title="步骤一"></a>步骤一</h3><p>设计局部E-R模型</p>
+<h3 id="步骤二"><a href="#步骤二" class="headerlink" title="步骤二"></a>步骤二</h3><p>1、合并局部E-R图，消除冲突，生成初步E-R图</p>
+<h4 id="属性冲突"><a href="#属性冲突" class="headerlink" title="属性冲突"></a>属性冲突</h4><ul>
+<li>属性域冲突——属性值的类型、取值范围或是取值集合不同</li>
+<li>属性取值单位冲突</li>
+</ul>
+<p>属性冲突属于用户业务上的约定，必须与用户协商后解决</p>
+<h4 id="命名冲突"><a href="#命名冲突" class="headerlink" title="命名冲突"></a>命名冲突</h4><ul>
+<li>同名异义</li>
+<li>异名同义</li>
+</ul>
+<p>命名冲突的解决方式同属性冲突</p>
+<h4 id="结构冲突"><a href="#结构冲突" class="headerlink" title="结构冲突"></a>结构冲突</h4><ul>
+<li>同一对象在不同应用中有不同的抽象</li>
+<li>同一实体在不同应用中属性组成不同</li>
+<li>同一联系在不同应用中呈现不同的类型</li>
+</ul>
+<p>2、消除不必要的冗余，生成基本的E-R图</p>
+<ul>
+<li><p>冗余包括冗余的数据和冗余的联系</p>
+<ul>
+<li>冗余的数据是指可由基本数据导出的数据</li>
+<li>冗余的联系是指可由其他联系导出的联系</li>
+</ul>
+</li>
+<li><p>通常采用分析的方法消除冗余。依据为数据字典和数据流图。</p>
+</li>
+</ul>
+<h1 id="逻辑结构设计"><a href="#逻辑结构设计" class="headerlink" title="逻辑结构设计"></a>逻辑结构设计</h1><h2 id="任务和步骤"><a href="#任务和步骤" class="headerlink" title="任务和步骤"></a>任务和步骤</h2><ul>
+<li>数据库逻辑设计的任务是将概念结构转换成特定DBMS所支持的数据模型</li>
+<li>步骤<ul>
+<li>初始化关系模式设计</li>
+<li>关系模式优化</li>
+<li>设计子模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="步骤一：初始关系模式设计"><a href="#步骤一：初始关系模式设计" class="headerlink" title="步骤一：初始关系模式设计"></a>步骤一：初始关系模式设计</h2><p>1、E-R图向关系模型转换</p>
+<ul>
+<li>实体的转换<ul>
+<li>一个实体转换为一个关系</li>
+<li>关系的属性就是该实体的属性</li>
+<li>关系的码就是该实体的码</li>
+</ul>
+</li>
+<li>联系的转换<ul>
+<li>一个联系转换为一个关系</li>
+<li>关系的属性：与该联系相连的各实体的码和该联系自身的属性</li>
+<li>关系的码<ul>
+<li>一对一的二元联系：两端实体的码都是候选码</li>
+<li>一对多的二元联系：”多“端实体的码</li>
+<li>多对多的二元联系：至少包含两端实体的码的并集</li>
+<li>存在”一“端的多元联系：除了一端以外的其他实体的码的并集</li>
+<li>不存在一端的多元联系：至少包含所有相关尸体的码的并集</li>
+</ul>
+</li>
+<li>关系的外码：对于每个与联系相连的实体，建立与该实体关系的外码约束</li>
+</ul>
+</li>
+</ul>
+<p>1对多或者多对1的联系可以被合并到1端实体对应的关系中</p>
+<h2 id="步骤二：关系模式优化"><a href="#步骤二：关系模式优化" class="headerlink" title="步骤二：关系模式优化"></a>步骤二：关系模式优化</h2><ul>
+<li>进行规范化，消除关系模式中存在的各种异常，改善完整性、一致性和存储效率</li>
+<li>进行反规范化设计，是为了提高查询效率</li>
+</ul>
+<h3 id="垂直分解"><a href="#垂直分解" class="headerlink" title="垂直分解"></a>垂直分解</h3><p>把关系模式的属性分解为若干个子集</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/image-20200604213654671.png"></p>
+<h3 id="水平分解"><a href="#水平分解" class="headerlink" title="水平分解"></a>水平分解</h3><p>把关系中的元组分解为若干个子集</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/image-20200604213640636.png"></p>
+<h2 id="步骤三：设计子模式"><a href="#步骤三：设计子模式" class="headerlink" title="步骤三：设计子模式"></a>步骤三：设计子模式</h2><p>制导思想：注重局部用户的要求</p>
+<p>具体方法：</p>
+<ul>
+<li>使用更符合用户习惯的别名、计量单位等</li>
+<li>从安全性出发，对不同级别的用户定义不同的视图</li>
+<li>从易用性触发，将复杂查询语句定义为视图</li>
+</ul>
+<h1 id="物理结构设计"><a href="#物理结构设计" class="headerlink" title="物理结构设计"></a>物理结构设计</h1><h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p>对于给定的逻辑模型，设计一个最合适应用要求的物理结构</p>
+<p>约束条件：</p>
+<ul>
+<li>应用需求（响应时间、吞吐率、存储空间利用率、安全）</li>
+<li>应用特征（数据量、事务频率、涉及的关系和属性）</li>
+<li>具体DBMS产品的特点（存取方法，存储结构，参数）</li>
+<li>存储设备特性</li>
+</ul>
+<p>设计内容：</p>
+<ul>
+<li>设计存取方法</li>
+<li>设计存储方案</li>
+<li>确定系统配置参数</li>
+</ul>
+<h2 id="设计存取方法"><a href="#设计存取方法" class="headerlink" title="设计存取方法"></a>设计存取方法</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/tfstone/article/details/81197921">参考文章</a></p>
+<ul>
+<li>索引</li>
+<li>聚簇</li>
+</ul>
+<p>聚簇索引的叶子节点就是数据节点，而非聚簇索引的叶子节点仍然是索引节点，只不过有指向对应数据块的指针。</p>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>是与基表的属性组相关的数据对象，能够提供对基表数据的快速访问。</p>
+<p>同一个基表上可键多个索引，执行查询语句，DBMS自动选择合适的索引访问数据</p>
+<p>当表中的数据更新时，DBMS自动更新索引</p>
+<p>数据越多，索引的优势越明显</p>
+<p>索引可以提高查询效率，但是增加了空间开销以及维护的代价</p>
+<h4 id="B-树索引"><a href="#B-树索引" class="headerlink" title="B+树索引"></a>B+树索引</h4><blockquote>
+<p><strong>B-Tree介绍</strong></p>
+<p>B-Tree是一种多路搜索树（并不是二叉的）：<br>    1.定义任意非叶子结点最多只有M个儿子；且M&gt;2；<br>    2.根结点的儿子数为[2, M]；<br>    3.除根结点以外的非叶子结点的儿子数为[M&#x2F;2, M]；<br>    4.每个结点存放至少M&#x2F;2-1（取上整）和至多M-1个关键字；（至少2个关键字）<br>    5.非叶子结点的关键字个数&#x3D;指向儿子的指针个数-1；<br>    6.非叶子结点的关键字：K[1], K[2], …, K[M-1]；且K[i] &lt; K[i+1]；<br>    7.非叶子结点的指针：P[1], P[2], …, P[M]；其中P[1]指向关键字小于K[1]的子树，P[M]指向关键字大于K[M-1]的子树，其它P[i]指向关键字属于(K[i-1], K[i])的子树；<br>    8.所有叶子结点位于同一层；<br>    如：（M&#x3D;3）</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/4.JPG"><br>B-树的特性：<br>    1.关键字集合分布在整颗树中；<br>    2.<strong>任何一个关键字出现且只出现在一个结点中</strong>；<br>    3.搜索有可能在非叶子结点结束；<br>    4.其搜索性能等价于在关键字全集内做一次二分查找；<br>    5.自动层次控制；</p>
+<p>B-树的搜索，从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点；</p>
+</blockquote>
+<p>B+树是B-树的变体，也是一种多路搜索树：</p>
+<p>​    1.其定义基本与B-树同，除了：</p>
+<p>​    2.非叶子结点的子树指针与关键字个数相同；</p>
+<p>​    3.非叶子结点的子树指针P[i]，指向关键字值属于[K[i], K[i+1])的子树（B-树是开区间）；</p>
+<p>​    5.为所有叶子结点增加一个链指针；</p>
+<p>​    6.所有关键字都在叶子结点出现；</p>
+<p>​    如：（M&#x3D;3）</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/5.JPG"></p>
+<p>B+的搜索与B-树也基本相同，区别是B+树只有达到叶子结点才命中（B-树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找；</p>
+<p>​    B+的特性：</p>
+<p>​    1.所有关键字都出现在叶子结点的链表中（稠密索引），且链表中的关键字恰好是有序的；</p>
+<p>​    2.不可能在非叶子结点命中；</p>
+<p>​    3.非叶子结点相当于是叶子结点的索引（稀疏索引），叶子结点相当于是存储（关键字）数据的数据层；</p>
+<p>​    4.更适合文件索引系统；</p>
+<p>适用范围广：</p>
+<ul>
+<li>等值查询</li>
+<li>范围查询</li>
+<li>聚集函数计算</li>
+<li>排序</li>
+<li>遍历</li>
+</ul>
+<h4 id="hash索引"><a href="#hash索引" class="headerlink" title="hash索引"></a>hash索引</h4><p>适用于：</p>
+<ul>
+<li>等值查询</li>
+<li>等值连接</li>
+</ul>
+<p>不适用于：</p>
+<ul>
+<li>范围查询</li>
+<li>排序</li>
+<li>模糊</li>
+</ul>
+<h3 id="聚簇"><a href="#聚簇" class="headerlink" title="聚簇"></a>聚簇</h3><p>为了提高查询速度，把在某个属性组上具有相同值的元组集中地存放在<strong>相邻</strong>的物理块中。该属性组称为聚簇码。</p>
+<ul>
+<li>单表聚簇：将单个表的数据按聚簇码分组有序的存储</li>
+<li>多表聚簇：把多个表的数据按聚簇码集中存储在一起</li>
+</ul>
+<h4 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h4><ul>
+<li>一个表最多只能属于一个聚簇</li>
+<li>聚簇维护的开销很大</li>
+<li>频繁更新的属性不适合作为聚簇码</li>
+<li>单表聚簇：最常用于等值比较的属性，且该属性上的重复取值较多</li>
+<li>多表聚簇：经常进行连接操作的表可以建立聚簇</li>
+</ul>
+<h2 id="设计存储方案"><a href="#设计存储方案" class="headerlink" title="设计存储方案"></a>设计存储方案</h2><ul>
+<li>确定数据的存放位置：<ul>
+<li>将表和索引分别存放在不同的磁盘上</li>
+<li>将日志文件和数据库对象放在不同的磁盘上</li>
+<li>将数据库的备份文件存放在磁盘上</li>
+</ul>
+</li>
+<li>对空间效率要求较高的应用，考虑压缩存储</li>
+<li>对安全需求较高的应用，考虑加密存储</li>
+</ul>
+<h2 id="确定系统配置参数"><a href="#确定系统配置参数" class="headerlink" title="确定系统配置参数"></a>确定系统配置参数</h2><p>根据应用特点和运行环境重新配置系统配置参数：</p>
+<ul>
+<li>最大连接数</li>
+<li>内存配置参数（查询缓存、日志缓存、数据缓存······）受总的物理内存大小的约束，参数之间相关制约</li>
+<li>存储配置参数（数据文件的大小、日志文件的大小、物理块大小、物理块装填因子）</li>
+<li>其他</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/" data-id="claaf6qiq008ctkup39cu5u5h" data-title="数据库_数据库设计" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据库-关系数据理论" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/04/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" class="article-date">
+  <time class="dt-published" datetime="2020-06-04T11:12:57.000Z" itemprop="datePublished">2020-06-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/04/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/">数据库_关系数据理论概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="关系数据理论概述"><a href="#关系数据理论概述" class="headerlink" title="关系数据理论概述"></a>关系数据理论概述</h1><p>数据库逻辑结构设计的任务：为数据库应用构造良好的数据库模式</p>
+<h1 id="关系模式中的异常问题"><a href="#关系模式中的异常问题" class="headerlink" title="关系模式中的异常问题"></a>关系模式中的异常问题</h1><ul>
+<li>数据冗余</li>
+<li>更新异常</li>
+<li>插入异常</li>
+<li>删除异常</li>
+</ul>
+<p>出现异常的原因：</p>
+<p>关系模式中存在不合适的数据依赖</p>
+<p>解决方式：</p>
+<p>通过分解，消除不合适的数据依赖（规范化）</p>
+<h1 id="函数依赖"><a href="#函数依赖" class="headerlink" title="函数依赖"></a>函数依赖</h1><h2 id="关系模式"><a href="#关系模式" class="headerlink" title="关系模式"></a>关系模式</h2><p>一个关系模式可以表示为一个五元组R(U,D,DOM,F)；</p>
+<ul>
+<li>R：关系名称</li>
+<li>U：R中所有属性的集合</li>
+<li>D：U中属性所来自的域的集合、</li>
+<li>DOM：属性到域的映射</li>
+<li>F：U中属性间的数据依赖的集合</li>
+</ul>
+<p>模式涉及重点关注U和F</p>
+<h2 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a>数据依赖</h2><p>是一个关系中的属性之间的某种语义约束关系</p>
+<p>知道A可以确切的找到B，这样的函数叫做函数依赖。其实就是单值函数</p>
+<h3 id="函数依赖-1"><a href="#函数依赖-1" class="headerlink" title="函数依赖"></a>函数依赖</h3><p>分类一：</p>
+<ul>
+<li>平凡函数依赖：任何情况下都成立<br>例如：在一个职工关系中,职工号总能函数决定它本身,记作“职工号→职工号”,对于任一个给定的职工号,都有它本身的职工号值唯一对应,此为平凡函数依赖。又如:职工号和性别构成的属性子集总是能够函数决定其中的职工号或性别属性,可分别记作为“(职工号,性别)→职工号”和“(职工号,性别)→性别”,因为对于任何给定的一个元组中的职工号和性别的组合值,都唯一对应一个职工号值或性别值,不可能出现其他的职工号值或性别值,此种也为平凡函数依赖。</li>
+<li>非平凡函数依赖<br>如在职工关系中,职工号函数决定其他每个属性都是非平凡函数依赖,另外“(职工号,姓名)→性别”也是非平凡函数依赖,虽然在这里由决定因素中所含的职工号单属性就能够函数决定性别,而带有的姓名属性有些多余。</li>
+</ul>
+<p>分类二：</p>
+<ul>
+<li><p>完全函数依赖：记作是f</p>
+<p>设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集。若对于R（U）的任何一个可能的关系，有x→y但x’→y，则称y完全函数依赖于x，记作X→^F^Y。<br>  所谓完全依赖是说明在依赖关系的决定项（即依赖关系的左项）中没有多余属性，有多余属性就是部分依赖。</p>
+</li>
+<li><p>部分函数依赖：记作是p</p>
+<p> 设R（U）是属性集U上的关系，x、y是U的子集，x’是x的真子集，若x→y且x’→y，则称y部分依赖x，记作X→^P^Y。显然，当且仅当x为复合属性组时，才有可能出现部分函数依赖。 </p>
+<p>例如：职工号	姓名	性别	年龄	职务<br>         1001	张三	   男	    36	正处<br>         1002	李四	   男	    38	副处<br>         1003	王五	   男	    50	正科<br>         1004	赵六	   女	    38	副处<br>         1005	孙七	   女	    49	科员<br>职工号和其他的属性之间的函数依赖都是完全函数依赖。因为职工号是一个单属性决定因素，他不可能在包含其他任何属性，那么就不存在真子集函数决定其他每个属性的情况存在，如（职工号，性别）的值虽然能够决定相应职工的年龄，但其中的真子集“职工号”就能够函数决定其年龄，所以（职工号，性别）到年龄之间的函数为部分函数依赖（因为只通过“职工号”就可以决定）。（简单的说：真子集可以决定结果）</p>
+<p>假设存在：“学号→系号”、“系号→系名”和“系号→系主任名”<br>那么存在：“学号→系名”和“学号→系主任名”这两个函数依赖是传递函数依赖。</p>
+</li>
+</ul>
+<p>分类三：</p>
+<ul>
+<li><p>传递函数依赖</p>
+<p>一个关系R（U），X,Y,Z为属性集U上的子集，其中存在X→Y和Y→Z，但Y不决定X，同时Y不包含Z，则存在X→Z，即X传递函数决定Z，Z传递函数依赖于X。</p>
+</li>
+</ul>
+<h2 id="有关码的术语"><a href="#有关码的术语" class="headerlink" title="有关码的术语"></a>有关码的术语</h2><p>码：一个关系的所有属性</p>
+<ul>
+<li>码为单个属性，称为单属性码</li>
+<li>码为多个属性，称为多属性码</li>
+<li>码为全部属性，称为全码</li>
+<li>包含一个码的属性组，称为超码。</li>
+<li>包含在任何一个码中的属性，称为主属性</li>
+<li>不包含在任何一个码中的属性，称为非主属性</li>
+</ul>
+<blockquote>
+<p><strong>候选码：</strong> 唯一标识一个关系的属性组<br><strong>主码：</strong> 候选码多于一个，从候选码中选出的一个码作为主码。<br><strong>主属性：</strong> 候选码的所有属性。<br><strong>非主属性：</strong> 不包含在任何候选码中的属性<br><strong>全码：</strong> 极端情况下，整个属性组都是码。<br><strong>外码：</strong> X不是该关系模式的码，但是X是另一个关系模式的码。比如(Sno,Cno,Grade)中的Sno不是码，但Sno是(Sno,Sname,Sage)的码，则Sno是外码</p>
+</blockquote>
+<h1 id="1NF、2NF、3NF和BCNF"><a href="#1NF、2NF、3NF和BCNF" class="headerlink" title="1NF、2NF、3NF和BCNF"></a>1NF、2NF、3NF和BCNF</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jsj13263690918/article/details/79796275">参考文章</a></p>
+<h2 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h2><p>是为了减少数据冗余和消除各种异常。</p>
+<p>范式：满足规范化要求的关系模式</p>
+<p>范式分类：</p>
+<ul>
+<li>第一范式：满足最基本的规范化要求的关系模式</li>
+<li>第二范式：在第一范式的基础上，进一步满足一些要求</li>
+<li>依次类推：第三范式、BC范式、第四范式等</li>
+</ul>
+<h3 id="第一范式（1NF）：无重复列"><a href="#第一范式（1NF）：无重复列" class="headerlink" title="第一范式（1NF）：无重复列"></a>第一范式（1NF）：无重复列</h3><p><strong>1NF的定义为：符合1NF的关系中的每个属性都不可再分。</strong></p>
+<p>第一范式（1NF）是指数据库表的每一列都是不可分割的基本数据项，同一列中不能有多个值，即实体中的某个属性不能有多个值或者不能有重复的属性。如果出现重复的属性，就可能需要定义一个新的实体，新的实体由重复的属性构成，新实体与原实体之间为一对多关系。在第一范式（1NF）中表的每一行只包含一个实例的信息。简而言之，第一范式就是无重复的列。</p>
+<p>　　说明：在任何一个关系数据库中，第一范式（1NF）是对关系模式的基本要求，不满足第一范式（1NF）的数据库就不是关系数据库。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200602233716629.png" style="zoom:80%;" />
+
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<h3 id="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"><a href="#第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】" class="headerlink" title="第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】"></a>第二范式（2NF）：属性完全依赖于主键【消除部分子函数依赖】</h3><p>满足第二范式（2NF）必须先满足第一范式（1NF）。第二范式（2NF）<strong>要求数据库表中的每个实例或行必须可以被唯一地区分</strong>。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。例如员工信息表中加上了员工编号（emp_id）列，因为每个员工的员工编号是唯一的，因此每个员工可以被唯一区分。这个唯一属性列被称为主关键字或主键、主码。</p>
+<p>　　第二范式（2NF）要求实体的属性完全依赖于主关键字。所谓完全依赖是指不能存在仅依赖主关键字一部分的属性，如果存在，那么这个属性和主关键字的这一部分应该分离出来形成一个新的实体，新实体与原实体之间是一对多的关系。为实现区分通常需要为表加上一个列，以存储各个实例的唯一标识。简而言之，<strong>第二范式就是属性完全依赖于主键。</strong></p>
+<p>比如给出一个表：<br>$$<br>(Sno,Sdept,Sloc,Cno,Grade)<br>$$<br>其中Sno学号，Sdept是系，Sloc是寝室地址，Cno是课程号，Grade是该学生某个课程的成绩。<br>$$<br>(Sno,Cno)\stackrel{F}{\longrightarrow}Grade\Sno→Sdept, (Sno,Cno)\stackrel{P}{\longrightarrow}Sdept\<br>    Sno→Sloc, (Sno,Cno)\stackrel{P}{\longrightarrow} Sloc<br>$$<br>那么上述存在了部分函数依赖，需要把部分函数依赖的进行消除：<br>$$<br>Sno→Sdept \<br>Sno→Sloc<br>$$<br>因此得出新的关系模式：<br>$$<br>(Sno,Sloc,Sdept)\<br>(Sno,Cno,Grade)<br>$$<br>判断的方法是：</p>
+<p>第一步：找出数据表中所有的<strong>码</strong>。<br>第二步：根据第一步所得到的码，找出所有的<strong>主属性</strong>。<br>第三步：数据表中，除去所有的主属性，剩下的就都是<strong>非主属性</strong>了。<br>第四步：查看是否存在非主属性对码的<strong>部分函数依赖</strong>。</p>
+<p>问题：可能会出现：数据冗余、更新异常、插入异常、删除异常</p>
+<p>结论：<strong>对码的传递依赖不友好</strong></p>
+<h3 id="第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖"><a href="#第三范式（3NF）属性不依赖于其它非主属性-消除传递依赖" class="headerlink" title="第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]"></a>第三范式（3NF）属性不依赖于其它非主属性[消除传递依赖]</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43371004/article/details/88970261">https://blog.csdn.net/qq_43371004/article/details/88970261</a></p>
+<p><strong>第三范式（3NF）</strong> <strong>3NF在2NF的基础之上，消除了非主属性对于码的传递函数依赖</strong>。</p>
+<p>第三范式（3NF）要求一个数据库表中不包含已在其它表中已包含的非主关键字信息。</p>
+<p>例如，存在一个部门信息表，其中每个部门有部门编号（dept_id）、部门名称、部门简介等信息。那么在的员工信息表中列出部门编号后就不能再将部门名称、部门简介等与部门有关的信息再加入员工信息表中。如果不存在部门信息表，则根据第三范式（3NF）也应该构建它，否则就会有大量的数据冗余。简而言之，第三范式就是属性不依赖于其它非主属性。</p>
+<p>结论：<strong>主属性对码的不良函数依赖也会导致异常</strong></p>
+<h3 id="BC范式（BCNF）消除主属性对于码的部分与传递函数依赖"><a href="#BC范式（BCNF）消除主属性对于码的部分与传递函数依赖" class="headerlink" title="BC范式（BCNF）消除主属性对于码的部分与传递函数依赖"></a>BC范式（BCNF）消除主属性对于码的部分与传递函数依赖</h3><ol>
+<li>所有非主属性对每一个码都是完全函数依赖；</li>
+<li>所有的主属性对每一个不包含它的码，也是完全函数依赖；</li>
+<li>没有任何属性完全函数依赖于非码的任何一组属性。</li>
+</ol>
+<h1 id="多值依赖和4NF"><a href="#多值依赖和4NF" class="headerlink" title="多值依赖和4NF"></a>多值依赖和4NF</h1><h2 id="多值依赖"><a href="#多值依赖" class="headerlink" title="多值依赖"></a>多值依赖</h2><p>多值依赖： 设R(U)是属性集U上的一个关系模式，X,Y,Z是U的子集，且Z&#x3D;U−X−Y。当且仅当R(U)的任一关系r，给定的一对(x,y)值，有一组Y的值，这组值仅仅取决于X的值而与Z的值无关，则成R(U)中的多值依赖$X\rightarrow   \rightarrow Y$成立。</p>
+<p><strong>判定方法：对于任意关系中，如果存在两个元组（就是行），记为A,B，如果他们的某一属性X的值相等，那么我们交换它们另外的属性Y的值后，得到的新的两个元组，在表中是可以在原来的表中找到与它们相匹配的元组的。</strong></p>
+<p>平凡多值依赖： 若$X \rightarrow \rightarrow Y$，而$Z&#x3D;\empty$，则称$X\rightarrow \rightarrow Y$为平凡多值依赖。</p>
+<p>非平凡多值依赖：若$X \rightarrow \rightarrow Y$，而$Z\neq\empty$，则称$X\rightarrow \rightarrow Y$为非平凡多值依赖。</p>
+<h3 id="多值依赖的性质"><a href="#多值依赖的性质" class="headerlink" title="多值依赖的性质"></a>多值依赖的性质</h3><p>（1）多值依赖具有对称性</p>
+<p>若X→→Y，则X→→Z，其中Z＝U－X－Y</p>
+<p>（2）多值依赖具有传递性</p>
+<p>若X→→Y，Y→→Z， 则X→→Z –Y</p>
+<p>（3）函数依赖是多值依赖的特殊情况。</p>
+<p>若X→Y，则X→→Y。</p>
+<p>（4）若X→→Y，X→→Z，则X→→YU Z。</p>
+<p>（5）若X→→Y，X→→Z，则X→→Y∩Z。</p>
+<p>（6）若X→→Y，X→→Z，则X→→Y-Z，X→→Z -Y。</p>
+<h3 id="多值依赖和函数依赖的对比"><a href="#多值依赖和函数依赖的对比" class="headerlink" title="多值依赖和函数依赖的对比"></a>多值依赖和函数依赖的对比</h3><p>1）若函数依赖X→Y在R（U）上成立，则对于任何Y’ 属于Y均有X→Y’ 成立</p>
+<p>2）多值依赖X→→Y若在R(U)上成立，不能断言对于任何Y’ 属于Y有X→→Y’ 成立，因为多值依赖中，其实就是一对一组，一个老师可能交多门课，所以不同老师可能有教相同的课，所以不能推出X→→Y’ 成立。我们可以看出，如果把一组改为一个，实际上就是函数依赖，所以所<strong>函数依赖是多值依赖的特例</strong>，多值依赖不一定是函数依赖，但函数依赖一定是多值依赖。</p>
+<h2 id="4NF"><a href="#4NF" class="headerlink" title="4NF"></a>4NF</h2><p>关系模式$R&lt;U,F&gt;\in 1NF$，如果对于R的每个非平凡多值依赖$X\rightarrow \rightarrow Y(Y \nsubseteq X)$，X都含有码，则$R&lt;U,F&gt;\in 4NF$。</p>
+<p><strong>1）不允许有非平凡且非函数依赖的多值依赖</strong> </p>
+<p><strong>2）允许的非平凡多值依赖是函数依赖</strong></p>
+<p><strong>3）平凡的多值依赖属于第四范式</strong></p>
+<h2 id="关系规范化小结"><a href="#关系规范化小结" class="headerlink" title="关系规范化小结"></a>关系规范化小结</h2><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163427186.png" style="zoom:80%;" />
+
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200603163453406.png"></p>
+<h1 id="ArmStrong公理系统"><a href="#ArmStrong公理系统" class="headerlink" title="ArmStrong公理系统"></a>ArmStrong公理系统</h1><h2 id="逻辑蕴涵和闭包"><a href="#逻辑蕴涵和闭包" class="headerlink" title="逻辑蕴涵和闭包"></a>逻辑蕴涵和闭包</h2><p>函数依赖:</p>
+<p>属性集 α 决定属性集 β ,则称有函数依赖 α→β</p>
+<p>逻辑蕴含:</p>
+<p>F能推出原不直观存在于函数依赖集F 中的函数依赖 α → β,则成α→β被函数依赖集F逻辑蕴含</p>
+<p>函数依赖的闭包 F^+^:</p>
+<p>由关系模式R直观得到的函数依赖F所推出的所有隐含的或未隐含的(直观的)函数依赖的集合<br>举例:</p>
+<blockquote>
+<p>F中有α–&gt;β,β–&gt;ω<br>则函数闭包F^+^中存在α–&gt;ω</p>
+</blockquote>
+<p>若F&#x3D;F^+^，则称F是函数依赖的完备集</p>
+<p>理论上，如果能求出F的闭包，就能求出R的所有码</p>
+<h2 id="Armstrong公理系统"><a href="#Armstrong公理系统" class="headerlink" title="Armstrong公理系统"></a>Armstrong公理系统</h2><p>设关系模式R&lt;U,F&gt;，其中U为属性集，F是U上的一组函数依赖，Y,X,Z⊆U那么有如下推理规则：</p>
+<ol>
+<li>自反律(叫大推小更确切):<br>$若Y⊆X⊆U，则X→Y$ </li>
+<li>增广律(加了也不影响)<br> $若X-&gt;Y,则XZ–&gt;YZ$ </li>
+<li>传递律(一传十十传百)<br>$X-&gt;Y,Y-&gt;Z,则X-&gt;Z$</li>
+</ol>
+<h2 id="Armstrong公理的推论"><a href="#Armstrong公理的推论" class="headerlink" title="Armstrong公理的推论"></a>Armstrong公理的推论</h2><ul>
+<li><p>合并规则（合并右边）：<br>$X-&gt;Y,X-&gt;Y,则X-&gt;YZ$</p>
+</li>
+<li><p>分解规则（分解右边）：<br>$X-&gt;YZ,则X-&gt;Y,X-&gt;Z$</p>
+</li>
+<li><p>伪传递规则（左边加一点）：<br>$X-&gt;Y,YW-&gt;Z则XW-&gt;Z$</p>
+</li>
+</ul>
+<p>引理：$X→A_1A_2…A_k成立的充分必要条件是X→A_i成立(i&#x3D;1,2,…,k)。$</p>
+<h2 id="Armstrong公理系统的证明"><a href="#Armstrong公理系统的证明" class="headerlink" title="Armstrong公理系统的证明"></a>Armstrong公理系统的证明</h2><p>1、自反律：若Y,X⊆U，则X→Y为F所蕴含<br>证明:</p>
+<blockquote>
+<p>设Y⊆X⊆U。<br>对R&lt;U,F&gt;的任一关系r中的任意两个元组t,s：<br>若t[X]&#x3D;s[X]，由于Y X，则有t[Y]&#x3D;s[Y]，所以X→Y成立，自反律得证。</p>
+</blockquote>
+<p>2、增广律：若X→Y为F所蕴含，且Z U，则XZ→YZ为F所蕴含<br>证明:</p>
+<blockquote>
+<p>设X→Y为F所蕴含，且Z⊆U。<br>对R&lt;U,F&gt;的任一关系r中的任意两个元组t,s：<br>若t[XZ]&#x3D;s[XZ]，由于X ⊆XZ，Z⊆ XZ，根据自反律，则有t[X]&#x3D;s[X]和t[Z]&#x3D;s[Z]；<br>由于X→Y，于是t[Y]&#x3D;s[Y]，所以t[YZ]&#x3D;s[YZ]；所以XZ→YZ成立，增广律得证。</p>
+</blockquote>
+<p>3、传递律：若X→Y，Y→Z为F所蕴含，则X→Z为F所蕴含<br>证明：</p>
+<blockquote>
+<p>设X→Y及Y→Z为F所蕴含。<br>对R&lt;U,F&gt;的任一关系r中的任意两个元组t,s：<br>若t[X]&#x3D;s[X]，由于X→Y，有t[Y]&#x3D;s[Y]；<br>再由于Y→Z，有t[Z]&#x3D;s[Z]，所以X→Z为F所蕴含，传递律得证。</p>
+</blockquote>
+<p>4、合并规则：若X→Y，X→Z，则X→YZ为F所蕴含<br>证明：</p>
+<blockquote>
+<p>因X→Y ，所以X→XY （增广律 XX→XY即X→XY）<br>因X→Z ，所以XY→YZ （增广律）<br>因X→XY，XY→YZ<br>故X→YZ （传递律）</p>
+</blockquote>
+<p>5、伪传递规则：若X→Y，WY→Z，则XW→Z为F所蕴含</p>
+<p>证明：</p>
+<blockquote>
+<p>因X→Y ，所以WX→WY （增广律）<br>因WY→Z ，所以XW→Z （传递律）</p>
+</blockquote>
+<p>6、分解规则：若X→Y，Z∈Y，则X→Z为F所蕴含</p>
+<p>证明：</p>
+<blockquote>
+<p>因Z∈Y 　所以Y→Z （自反律）<br>因X→Y 所以X→Z （传递律）</p>
+</blockquote>
+<h1 id="属性闭包"><a href="#属性闭包" class="headerlink" title="属性闭包"></a>属性闭包</h1><p>在关系模式R所对应的F^+^中,有α→β ,则所有β组成的集合α<del>F</del>^+^ 叫做属性集α关于F的属性闭包</p>
+<p>属性闭包算法:</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">result</span>=A<span class="comment"> //此处A是一个属性集,result就是要计算的属性闭包</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> α<span class="comment">--&gt;β in F:</span></span><br><span class="line">    <span class="keyword">if</span> α <span class="keyword">in</span> <span class="built_in">result</span>:  <span class="comment"> //α已经在属性闭包里了,即A--&gt;α是成立的</span></span><br><span class="line">    <span class="built_in">result</span>=<span class="built_in">result</span>+β  <span class="comment"> //增加属性闭包</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="正则覆盖-F"><a href="#正则覆盖-F" class="headerlink" title="正则覆盖 F^+^"></a>正则覆盖 F^+^</h2><p> 将原函数依赖集F中的函数依赖α–&gt;β中的部分(α或β属性中)冗余属性删除。F^+^ 和 F 的函数依赖的闭包是相同的</p>
+<p>属性是否冗余判断条件,对于α–&gt;β函数依赖(哪边冗余F在哪边)</p>
+<p>1、α属性集中有属性A是冗余的,$(α−A)→β$成立:<br>        F 逻辑蕴含 $(F−(α→β))∪((α−A)→β)$</p>
+<p>2、β属性集中有属性b是冗余的,$α→(β−b)$成立<br>      $(F−(α→β))∪(α→(β−b))$ 逻辑蕴含 F</p>
+<h2 id="无损分解"><a href="#无损分解" class="headerlink" title="无损分解"></a>无损分解</h2><p>将关系模式R分解成 关系模式R<del>1</del>和R<del>2</del>,则:</p>
+<p>$R_1∩R_2→R_1或R_2$ ;即$R_1$和$R_2$的交集是R<del>1</del>或R<del>2</del>的super key</p>
+<h1 id="最小函数依赖集"><a href="#最小函数依赖集" class="headerlink" title="最小函数依赖集"></a>最小函数依赖集</h1><h2 id="函数依赖集的等价"><a href="#函数依赖集的等价" class="headerlink" title="函数依赖集的等价"></a>函数依赖集的等价</h2><p>定义：设F和G是关系模式R的两个函数依赖集，如果F^+^&#x3D;G^+^,则称F和G等价。也称F是G的覆盖，或G是F的覆盖。</p>
+<p>定理：设F和G是R的两个函数依赖集，则F和G等价的充要条件是F⊆G^+^且G⊆F^+^.</p>
+<p>问题：给定两个函数依赖集G和F，判断F和G是否等价？</p>
+<blockquote>
+<p>方法：</p>
+<p>1、对于F中的每个函数依赖X-&gt;Y,求X<del>G</del>^+^，若都有Y⊆X<del>G</del>^+^，则说明F⊆X<del>G</del>^+^</p>
+<p>2、对于G中的每个函数依赖X-&gt;Y,求X<del>F</del>^+^，若都有Y⊆X<del>F</del>^+^，则说明G⊆X<del>F</del>^+^</p>
+</blockquote>
+<h2 id="最小函数依赖集（最小覆盖）"><a href="#最小函数依赖集（最小覆盖）" class="headerlink" title="最小函数依赖集（最小覆盖）"></a>最小函数依赖集（最小覆盖）</h2><p>1、定义：</p>
+<p>如果函数依赖集F满足以下条件，则称F为一个极小函数依赖集。也称为最小依赖集或最小覆盖。</p>
+<p>(1)F中任一函数依赖的右部仅含有一个属性（右部都是单属性）。</p>
+<p>(2)F中不存在这样的函数依赖X→A，使得F与F-{X→A}等价（没有多余的依赖）。</p>
+<p>(3)F中不存在这样的函数依赖X→A，X有真子集Z使得(F-{X→A})U{Z→A}与F等价（左部不存在多余属性）。</p>
+<h2 id="最小依赖集通用算法"><a href="#最小依赖集通用算法" class="headerlink" title="最小依赖集通用算法"></a>最小依赖集通用算法</h2><p>① 用分解的法则，使F中的任何一个函数依赖的右部仅含有一个属性；</p>
+<p>② 去掉多余的函数依赖：从第一个函数依赖X→Y开始将其从F中去掉，然后在剩下的函数依赖中求X的闭包X+，看X+是否包含Y，若是，则去掉X→Y；否则不能去掉，依次做下去。直到找不到冗余的函数依赖；</p>
+<p>③ 去掉各依赖左部多余的属性。一个一个地检查函数依赖左部非单个属性的依赖。例如XY→A，若要判Y为多余的，则以X→A代替XY→A是否等价？若A属于(X)+，则Y是多余属性，可以去掉。（以上步骤中，求出关系依赖集F,此时，再F的基础上，求出X或者Y的闭包，是否包含A）</p>
+<p>反复执行步骤2、3，直至F不再变化</p>
+<p>注意：最小函数依赖集不是唯一的。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604170542264.png" style="zoom:80%;" />
+
+<h1 id="模式分解概述"><a href="#模式分解概述" class="headerlink" title="模式分解概述"></a>模式分解概述</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sumaliqinghua/article/details/86246762?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase">参考文章</a></p>
+<p>当模式不符合关系范式时，需要进行模式分解。</p>
+<h2 id="模式分解"><a href="#模式分解" class="headerlink" title="模式分解"></a>模式分解</h2><h2 id="函数依赖的投影"><a href="#函数依赖的投影" class="headerlink" title="函数依赖的投影"></a>函数依赖的投影</h2><h2 id="投影的计算方法"><a href="#投影的计算方法" class="headerlink" title="投影的计算方法"></a>投影的计算方法</h2><h1 id="分解正确性检验"><a href="#分解正确性检验" class="headerlink" title="分解正确性检验"></a>分解正确性检验</h1><h2 id="无损连接性"><a href="#无损连接性" class="headerlink" title="无损连接性"></a>无损连接性</h2><p>分解所得到的各个关系模式，经过自然连接可以还原成被分解的关系模式。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604171832489.png"></p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zxcoder/p/11963759.html">参考文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangyige/p/6786047.html">参考</a></p>
+<ul>
+<li>对于一个分解，有k个子集，n个属性，建立一张k行n列的初始表，对于每一行也就是分解的每个子集，把该分解子集出现的属性对应的列写上a<del>j</del>，否则写上b<del>ij</del></li>
+<li>对于每一个依赖，找到左部属性对应的列，根据行的值分组，对于行的值相同的这些行，查看对应右部属性的列，如果这些格子里有a值，那把所有这些格子改成a值，如果没有，改成行最小的b值。<strong>如果某个b值改成a值，那么其他行(不属于当前操作的行)的相同b值也要改成a值</strong>。</li>
+<li>如果不变则停止，如果出现有一行为a<del>1</del> a<del>2</del> … a<del>n</del>，那么说明该连接为无损连接。</li>
+</ul>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604171909544.png"></p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604171943983.png"></p>
+<h2 id="依赖保持性"><a href="#依赖保持性" class="headerlink" title="依赖保持性"></a>依赖保持性</h2><p>分解所得到的各个关系模式上的函数依赖集的并集，与被分解关系模式原有的函数依赖集等价。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604171932832.png"></p>
+<h1 id="模式分解算法"><a href="#模式分解算法" class="headerlink" title="模式分解算法"></a>模式分解算法</h1><h2 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h2><ul>
+<li>无损连接法：可保证分解达到BCNF</li>
+<li>无损连接法+依赖保持法：可保证分解达到3NF</li>
+<li>依赖保持性：可保证分解达到3NF</li>
+</ul>
+<h2 id="3NF和保持函数依赖的分解"><a href="#3NF和保持函数依赖的分解" class="headerlink" title="3NF和保持函数依赖的分解"></a>3NF和保持函数依赖的分解</h2><h3 id="算法-1"><a href="#算法-1" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>F&#x3D;F的最小依赖集</li>
+<li>U<del>0</del>&#x3D;{不在F出现的属性}</li>
+<li>U&#x3D;U-U<del>0</del></li>
+<li>若F中有函数依赖X-&gt;A，使得XA&#x3D;U，那么分解就是R本身</li>
+<li>如果没有，将剩下的F按左部分组，得到U<del>i</del>，分解就是{R<del>1</del>&lt;U<del>1</del>,F<del>1</del>&gt;，…} ∪ R<del>0</del>&lt;U<del>0</del>,F<del>0</del>&gt;</li>
+</ul>
+<h2 id="3NF和保持函数依赖和具有无损连接性的分解"><a href="#3NF和保持函数依赖和具有无损连接性的分解" class="headerlink" title="3NF和保持函数依赖和具有无损连接性的分解"></a>3NF和保持函数依赖和具有无损连接性的分解</h2><h3 id="算法-2"><a href="#算法-2" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>求出3NF和保持函数依赖的分解。</li>
+<li>X是R的码，让已有的分解∪上一个{R^∗^&lt;X,F<del>X</del>&gt;}。</li>
+<li>如果分解中有某个U<del>i</del>属于X，那么删掉该U<del>i</del>，如果X属于某个U<del>i</del>，那么删掉。</li>
+</ul>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604184803328.png"></p>
+<h2 id="BCNF和具有无损连接性的分解"><a href="#BCNF和具有无损连接性的分解" class="headerlink" title="BCNF和具有无损连接性的分解"></a>BCNF和具有无损连接性的分解</h2><h3 id="算法-3"><a href="#算法-3" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>类似递归的方法，首先判断自身是不是BC范式，如果是，无需分解。</li>
+<li>否则，找到当前关系R的主码，找到一个左边不含主码的依赖X-&gt;A，设U<del>1</del>&#x3D;A，分解出去，**剩下的U<del>2</del>&#x3D;U-{A}**作为一个关系模式，继续重复上面的步骤。</li>
+<li>根据X-&gt;A的选择的不同，得到的分解也是不同。</li>
+</ul>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604184820756.png"></p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/image-20200604184837656.png"></p>
+<h2 id="4NF和具有无损连接性的分解"><a href="#4NF和具有无损连接性的分解" class="headerlink" title="4NF和具有无损连接性的分解"></a>4NF和具有无损连接性的分解</h2><h3 id="算法-4"><a href="#算法-4" class="headerlink" title="算法"></a>算法</h3><ul>
+<li>求出BCNF和具有无损连接性的分解。</li>
+<li>对于一个关系R&lt;U,F&gt;，如果多值依赖X–&gt;Y成立，则分解{R1&lt;X,Y&gt;,R2&lt;X,Z&gt;)}具有无损连接性，其中Z&#x3D;U-X-Y。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/04/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA/" data-id="claaf6qil007ntkup50644ku9" data-title="数据库_关系数据理论概述" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-数据库-数据库恢复技术" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/03/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/" class="article-date">
+  <time class="dt-published" datetime="2020-06-03T11:14:02.000Z" itemprop="datePublished">2020-06-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/03/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/">数据库_数据库恢复技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="事务的基本概念"><a href="#事务的基本概念" class="headerlink" title="事务的基本概念"></a>事务的基本概念</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wzhao-cn/p/11557698.html">参考文章</a></p>
+<p>事务（trancaction）：用户定义的一个数据库操作序列，该序列构成一个独立的、不可分割的逻辑处理任务。<strong>要么全做，要么全不做。</strong></p>
+<p>一个数据库事务通常包含对数据库进行读或写的一个操作序列。它的存在包含有以下两个目的：</p>
+<blockquote>
+<p>1、为数据库操作提供了一个从失败中恢复到正常状态的方法，同时提供了数据库即使在异常状态下仍能保持一致性的方法。<br>2、当多个应用程序在并发访问数据库时，可以在这些应用程序之间提供一个隔离方法，以防止彼此的操作互相干扰。</p>
+</blockquote>
+<h2 id="事务的组成"><a href="#事务的组成" class="headerlink" title="事务的组成"></a>事务的组成</h2><p>1、一条SQL语句</p>
+<p>2、一组SQL语句序列</p>
+<h2 id="事务的描述方式"><a href="#事务的描述方式" class="headerlink" title="事务的描述方式"></a>事务的描述方式</h2><h3 id="显式"><a href="#显式" class="headerlink" title="显式"></a>显式</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> TRANSACTION</span><br><span class="line">	update...</span><br><span class="line">	insert...</span><br><span class="line"><span class="keyword">COMMIT</span> 或者<span class="keyword">ROLLBACK</span></span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<p>COMMIT：提交。事务对数据库的所有修改操作写回到磁盘上的数据库文件中。</p>
+<p>ROLLBACK：回滚。撤销所有已实施的对数据库的修改，数据库回滚到事务开始状态。</p>
+<h3 id="隐式"><a href="#隐式" class="headerlink" title="隐式"></a>隐式</h3><p>一条SQL语句，例如execDirect（）。</p>
+<p>程序隐式定义，例如会话结束、程序对象关闭时其中隐藏的COMMIT&#x2F;ROLLBACK。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200603165222252.png"></p>
+<h2 id="事务的ACID性质"><a href="#事务的ACID性质" class="headerlink" title="事务的ACID性质"></a>事务的ACID性质</h2><p>并非任意的对数据库的操作序列都是数据库事务。事务应该具有4个属性：原子性、一致性、隔离性、持久性。这四个属性通常称为ACID特性。</p>
+<h3 id="原子性（Atomicity）"><a href="#原子性（Atomicity）" class="headerlink" title="原子性（Atomicity）"></a>原子性（Atomicity）</h3><p>定义：事务作为一个整体被执行，包含在其中的对数据库的操作要么全部被执行，要么都不执行。</p>
+<p>目标：保证数据库中数据的正确性</p>
+<p>技术：</p>
+<ul>
+<li>日志+COMMIT&#x2F;ROLLBACK（UNDO）；</li>
+<li>并发控制（交叉执行）。</li>
+</ul>
+<h3 id="一致性（Consistency）"><a href="#一致性（Consistency）" class="headerlink" title="一致性（Consistency）"></a>一致性（Consistency）</h3><p>定义：事务应确保数据库（DB）的状态从一个一致（正确）状态转变为另一个一致状态。一致状态的含义是数据库中的数据应满足完整性约束。</p>
+<p>目标：保证数据库中数据的正确性（有效、相容，防止对数据的更新结果被丢失、读到无效的数据、读到不一致的数据）。</p>
+<p>技术：</p>
+<ul>
+<li>并发控制（保护临界资源）</li>
+</ul>
+<h3 id="隔离性（Isolation）"><a href="#隔离性（Isolation）" class="headerlink" title="隔离性（Isolation）"></a>隔离性（Isolation）</h3><p>定义：多个事务并发执行时，一个事务的执行不应影响其他事务的执行。</p>
+<p>目标：防止事务之间由于相互干扰而出现并发错误、链式夭折。</p>
+<p>技术</p>
+<ul>
+<li>并发控制</li>
+</ul>
+<blockquote>
+<p><strong>原子性与隔离行</strong></p>
+<p>一致性与原子性是密切相关的,原子性的破坏可能导致数据库的不一致，数据的一致性问题并不都和原子性有关。<br>比如刚刚的例子，在第五步的时候，对B账户做加法时只加了50元。那么该过程可以符合原子性，但是数据的一致性就出现了问题。</p>
+<p>因此，事务的原子性与一致性缺一不可。</p>
+</blockquote>
+<h3 id="持久性（Durability）"><a href="#持久性（Durability）" class="headerlink" title="持久性（Durability）"></a>持久性（Durability）</h3><p>定义：一个事务一旦提交，他对数据库的修改应该<strong>永久保存</strong>在数据库中。</p>
+<p>目标：保证数据库的可靠性</p>
+<p>技术：</p>
+<p>（事务终止前应完成commit）</p>
+<ul>
+<li>提交的持久化（内存是挥发性存储装置，外存是非挥发性存储装置）。</li>
+<li>备份+日志。（外存）</li>
+</ul>
+<h1 id="数据库系统故障分类"><a href="#数据库系统故障分类" class="headerlink" title="数据库系统故障分类"></a>数据库系统故障分类</h1><h2 id="数据库系统故障种类"><a href="#数据库系统故障种类" class="headerlink" title="数据库系统故障种类"></a>数据库系统故障种类</h2><ul>
+<li>事务故障</li>
+<li>系统故障</li>
+<li>介质故障</li>
+<li>计算机病毒</li>
+</ul>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200603171227161.png" style="zoom:80%;" />
+
+<h3 id="事务故障"><a href="#事务故障" class="headerlink" title="事务故障"></a>事务故障</h3><p>1、表现形式：</p>
+<ul>
+<li>应用处理异常<ul>
+<li>可能产生自程序预留的异常情况的应对方案。</li>
+<li>可能来自于非预期的、不能由应用程序处理的故障<ul>
+<li>断网</li>
+<li>应用程序进程僵死</li>
+<li>应用程序进行被意外杀死</li>
+<li>应用程序端电脑死机、断电</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>系统异常<ul>
+<li>事务超时、死锁、活锁等【为避免过久占用资源、DBMS系统按照事先设定的系统参数强行终止事务。】</li>
+</ul>
+</li>
+</ul>
+<p>2、特征：</p>
+<ol>
+<li>特定的事务没有到达预期的终点（COMMIT），事务夭折；</li>
+<li>夭折事务对数据库的部分修改可能已写入数据文件。<br>（数据库可能因此处于不正确、不一致状态）</li>
+</ol>
+<h3 id="系统故障"><a href="#系统故障" class="headerlink" title="系统故障"></a>系统故障</h3><p>1、表现形式</p>
+<ul>
+<li>某些类型的硬件故障<ul>
+<li>CPU、内存、主板。。。<br>【服务器上的硬件，其故障影响到DBMS系统的正常运行，但不涉及外存储设备】</li>
+</ul>
+</li>
+<li>系统软件故障<ul>
+<li>DBMS：ORACLE、SQL SERVER、MYSQL、DB2。。。</li>
+<li>OS：UNIX、WINDOWS、LINUX。。。</li>
+<li>死机、蓝屏、意外重启、某系统功能意外退出</li>
+<li>服务器上的系统软件，其故障影响到DBMS系统的正常运行，但不涉及外存储设备。</li>
+</ul>
+</li>
+<li>系统操作失误<ul>
+<li>非正常关机\重启、强行终止系统进程、意外卸载相关系统运行环境。。。</li>
+</ul>
+</li>
+<li>系统异常断电<ul>
+<li>重启之后系统未发现数据库的存储文件错误或者磁盘错误。</li>
+</ul>
+</li>
+</ul>
+<p>2、特征</p>
+<ul>
+<li>内存数据丢失或不再可靠</li>
+<li>外存数据未受到破坏</li>
+<li>一些尚未完成事务的更新结果可能已写入数据库存储介质</li>
+<li>已完成事务的更新结果可能部分还未写入数据库（数据文件，也可能正处于提交过程中）</li>
+<li>已完成事务的结果可能全部未写入数据库（例如正在等待检查点）<br>数据库的数据存储介质依旧可靠，但是数据处于不正确或不一致状态</li>
+</ul>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200603202249629.png"></p>
+<h3 id="介质故障"><a href="#介质故障" class="headerlink" title="介质故障"></a>介质故障</h3><p>1、表现形式</p>
+<ul>
+<li>磁盘故障<ul>
+<li>磁盘损坏（磁道、扇区、分区、文件分配信息）</li>
+<li>磁盘读写装置损坏（磁头、电机）</li>
+</ul>
+</li>
+<li>外界干扰<ul>
+<li>强磁场干扰（磁性数据被清洗），灾害</li>
+</ul>
+</li>
+</ul>
+<p>2、特征</p>
+<p>硬故障，外存中数据的部分或全部丢失，数据相关存储文件本身异常。<br>（目前比较成熟的DBMS软件一般能够在服务启动时校验存储介质上的数据文件是否异常）</p>
+<h3 id="计算机病毒"><a href="#计算机病毒" class="headerlink" title="计算机病毒"></a>计算机病毒</h3><p>1、表现形式</p>
+<ul>
+<li>消耗资源<ul>
+<li>内存、磁盘、网络端口，破坏系统的正常运行</li>
+</ul>
+</li>
+<li>泄露信息<ul>
+<li>系统信息、数据库信息</li>
+</ul>
+</li>
+<li>篡改数据</li>
+<li>篡改程序<ul>
+<li>植入木马、埋下隐患</li>
+</ul>
+</li>
+</ul>
+<p>2、特征</p>
+<p>计算机病毒是一种人为造成的技术故障或破坏，含有非法或者恶意企图，在执行某个功能时启动病毒代码，可能造成对数据库系统的危害</p>
+<p>系统不再可靠、可信</p>
+<h3 id="各类故障对数据库的影响"><a href="#各类故障对数据库的影响" class="headerlink" title="各类故障对数据库的影响"></a>各类故障对数据库的影响</h3><ul>
+<li><p>数据本身被破坏</p>
+<p>需要去寻找可用的数据，重建数据库状态</p>
+</li>
+<li><p>数据可能不正确（事务的运行被恶意干扰或非正常终止）<br>需要截至系统的容错机制，恢复数据的正确性</p>
+<p>不同的故障影响的范围不同，采取的恢复策略也不同<br>自动、人工启动、借助外部资源</p>
+</li>
+</ul>
+<p>恢复的基本原理：冗余</p>
+<h1 id="数据库备份和日志"><a href="#数据库备份和日志" class="headerlink" title="数据库备份和日志"></a>数据库备份和日志</h1><h2 id="数据转储"><a href="#数据转储" class="headerlink" title="数据转储"></a>数据转储</h2><p>一般由数据库管理员制定计划，定期的将数据库内容复制到磁带、磁盘或者其他存储介质上保存起来，成为后备副本或后援副本。</p>
+<p>转储需要考虑的问题：耗费时间和资源，不宜频繁进行。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/1962436-20200309193857188-954650598.png" style="zoom:80%;" />
+
+<h3 id="转储状态"><a href="#转储状态" class="headerlink" title="转储状态"></a>转储状态</h3><h4 id="静态转储"><a href="#静态转储" class="headerlink" title="静态转储"></a>静态转储</h4><p>数据库系统中无事务运行时进行转储。</p>
+<p>①特征：转储期间不对数据库进行任何联机事务操作。一定得到一个数据一致性付本。</p>
+<p>②优点——简单</p>
+<p>③ 缺点：停止一切事务运行；降低数据库的可用性</p>
+<h4 id="动态转储"><a href="#动态转储" class="headerlink" title="动态转储"></a>动态转储</h4><p>转储与事务同时（并发）执行。</p>
+<p>①特征：转储期间可对数据库进行读写操作。</p>
+<p>②优点：不用等待正在运行的事务结束，也不影响新事务的运行。</p>
+<p>③缺点：获得一致性副本比较麻烦。<br>解决思路：把转储期间各事务对数据库的修改活动登记下来——日志文件</p>
+<h3 id="转储方式"><a href="#转储方式" class="headerlink" title="转储方式"></a>转储方式</h3><h4 id="海量备份"><a href="#海量备份" class="headerlink" title="海量备份"></a>海量备份</h4><p>① 方法：将数据库的全部数据转储。</p>
+<p>② 优点：简单——备份简单，恢复简单</p>
+<p>③ 缺点：重复执行全部数据的转储动作<br>                                        转储量大；<br>                                        停止运行（多为静态转储）。</p>
+<h4 id="增量备份"><a href="#增量备份" class="headerlink" title="增量备份"></a>增量备份</h4><p>① 方法：每次转储上次转储后更新过的数据。</p>
+<p>② 优点：备份量小。</p>
+<p>③ 缺点：恢复过程相对复杂。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200603204933157.png" style="zoom:80%;" />
+
+<h2 id="登记日志文件"><a href="#登记日志文件" class="headerlink" title="登记日志文件"></a>登记日志文件</h2><p>在数据库系统中，数据文件也是一种设备，里面的数据是资源，也有类似的需求，相应的有日志文件及其维护机制。</p>
+<p>日志——数据库恢复子系统“自己的数据”。</p>
+<h3 id="日志文件及其类型"><a href="#日志文件及其类型" class="headerlink" title="日志文件及其类型"></a>日志文件及其类型</h3><h4 id="日志文件的概念"><a href="#日志文件的概念" class="headerlink" title="日志文件的概念"></a>日志文件的概念</h4><p>记录事务对数据库的更新操作的文件称之为日志文件。</p>
+<h4 id="日志文件类型"><a href="#日志文件类型" class="headerlink" title="日志文件类型"></a>日志文件类型</h4><p>①记录为单位的日志文件</p>
+<p>②数据块为单位的日志文件</p>
+<h4 id="以记录为单位的日志文件内容"><a href="#以记录为单位的日志文件内容" class="headerlink" title="以记录为单位的日志文件内容"></a>以记录为单位的日志文件内容</h4><p>①事务开始标记（一个日志记录，Begin Transaction）；</p>
+<p>②事务结束标记（一个日志记录，Commit，或者Rollback）；</p>
+<p>③每个事务的所有更新操作（每个操作一个日志记录）。</p>
+<p>每个日志记录内容：</p>
+<p>1）事务标识（TRID）；<br>2）操作类型；<br>3）操作对象；<br>4）更新前数据旧值；<br>5）更新后数据新值。</p>
+<h4 id="以数据块为单位的日志文件内容"><a href="#以数据块为单位的日志文件内容" class="headerlink" title="以数据块为单位的日志文件内容"></a>以数据块为单位的日志文件内容</h4><p>事务标识+数据块</p>
+<p>①数据块（整块）更新前内容；</p>
+<p>②数据块更新后内容。</p>
+<h3 id="日志文件的作用"><a href="#日志文件的作用" class="headerlink" title="日志文件的作用"></a>日志文件的作用</h3><p>1）事务恢复<br>2）数据库故障恢复<br>3）系统分析</p>
+<h3 id="日志文件的登记"><a href="#日志文件的登记" class="headerlink" title="日志文件的登记"></a>日志文件的登记</h3><p>为保证数据库的恢复能正确进行，日志文件的登记必须遵循两条原则：<br>1）按事务操作执行时间顺序登记日志（多个事务操作并发）<br>如实记录数据库的状态变化过程，从而保障恢复时能按照逻辑顺序定位到相应的状态。</p>
+<p>2）须先写日志文件，后写数据库文件！！！！！<br>（先写日志协议——WAL）</p>
+<p>日志包含了状态变化过程的与事务相关的完整信息，数据块则未必。因此，恢复的依据必须首先是日志。若先写数据文件之后日志文件因故障未能写出，则无法判断相关数据块在恢复时应该采取的动作。</p>
+<h1 id="故障恢复策略"><a href="#故障恢复策略" class="headerlink" title="故障恢复策略"></a>故障恢复策略</h1><p>事务故障恢复：UNDO</p>
+<p>系统故障恢复：REDO+UNDO</p>
+<p>介质故障恢复：装入后备副本+REDO</p>
+<h2 id="恢复的背景需求"><a href="#恢复的背景需求" class="headerlink" title="恢复的背景需求"></a>恢复的背景需求</h2><p>1）文件管理系统和数据库管理系统都有备份与恢复技术</p>
+<p>文件管理系统<br>Ghost、副本文件、操作系统补丁更新时的备份、平台提供的备份软件（例如：手机和电脑数据云备份）</p>
+<p>数据库管理系统<br>转储备份+日志、镜像、逻辑备份（数据导出）</p>
+<p>2）恢复的需求存在差异</p>
+<p>文件管理系统<br>恢复到某个版本或某个时间点、恢复某个文件集合【数据的正确性一般由应用程序或人工判断】</p>
+<p>数据库管理系统<br>以数据库为单位，恢复到某个时刻的数据库正确状态【数据的正确性由DBMS判断】</p>
+<p>3）数据库恢复的任务</p>
+<p>将因破坏或故障而导致的数据库数据的错误状态恢复到最近一个正确状态。</p>
+<p>4）目标</p>
+<p>①保持事务原子性（Atomicity）<br>②保持事务持久性（Durability）</p>
+<p>5）恢复的数据基础</p>
+<p>当前可用的数据文件——当前可看到的正确以及错误的数据<br>转储的数据文件——转储时可以看到的正确以及错误的数据<br>日志——用于分析可看到的数据的错误以及看不到的正确数据</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200603212521281.png" style="zoom:80%;" />
+
+<h2 id="事务故障的恢复【事务在运行至正常终点前被终止】"><a href="#事务故障的恢复【事务在运行至正常终点前被终止】" class="headerlink" title="事务故障的恢复【事务在运行至正常终点前被终止】"></a>事务故障的恢复【事务在运行至正常终点前被终止】</h2><p>——因各种异常或错误导致事务未执行完而夭折时的恢复。</p>
+<p>此时，数据库管理系统正常运行，数据文件和日志文件均未损坏；可能存在其他并发执行的事务，这些事务不受影响。</p>
+<p>1）目标：维护原子性</p>
+<p>2）动作特征：执行已有操作的“逆向”操作，称为撤销，或者undo。</p>
+<p>3）恢复步骤</p>
+<p>① 反向扫描日志文件（从日志文件尾向文件头）：<br>——<strong>查找事务执行过最后一条更新操作记录</strong>；</p>
+<p>② 执行上述找到的最后一条日志记录的UNDO操作【插入→删除，删除→插入，修改前的值→修改后】；</p>
+<p>③ 循环执行上述扫描及undo操作，直至事务开始标记。</p>
+<p>4）执行方式DBMS自动完成</p>
+<h2 id="系统故障的恢复【系统终止造成数据库不一致状态】"><a href="#系统故障的恢复【系统终止造成数据库不一致状态】" class="headerlink" title="系统故障的恢复【系统终止造成数据库不一致状态】"></a>系统故障的恢复【系统终止造成数据库不一致状态】</h2><p>——撤消故障发生时未完成事务和重做已完成事务的恢复。</p>
+<p>此时，数据文件和日志文件均未损坏，但数据库管理系统出现异常，可能存在多个并发执行的事务，一些已提交事务的日志已写到日志文件，但最新数据却有可能遗留在数据缓冲区。</p>
+<p>1）目标：原子性、持久性</p>
+<p>2）动作特征：未完成事务已有操作需落实其逆向操作，称为撤销，或者undo；已完成事务需落实其全部操作动作，确保其原子性、持久性，称为“重做”，或者redo。</p>
+<p>3）步骤</p>
+<p>①正向扫描日志文件（从日志文件头向文件尾）：</p>
+<ul>
+<li><p>找出故障发生前已提交事务，该事务标识记入REDO队列；<br>【有BEGIN TRANSANCTION和COMMIT的加入REDO队列】</p>
+</li>
+<li><p>找出故障发生时未完成事务，该事务标识记入UNDO队列；<br>【只有BEGIN TRANSANCTION没有COMMIT的加入UNDO队列】</p>
+</li>
+</ul>
+<p>②执行undo和redo操作</p>
+<ul>
+<li><p>依照日志记录反向顺序对UNDO队列中事务进行UNDO操作（写入修改前的值）：<br>（反向扫描日志文件，执行队列中事务的undo操作）；</p>
+</li>
+<li><p>依照日志记录正向顺序对REDO队列中事务进行REDO操作（写入修改后的值）：<br>（正向扫描日志文件，执行队列中事务的redo操作）。</p>
+</li>
+</ul>
+<p>4）执行方式：一般是DBMS重启后自动完成。</p>
+<h2 id="介质故障的恢复【需要DBA介入】"><a href="#介质故障的恢复【需要DBA介入】" class="headerlink" title="介质故障的恢复【需要DBA介入】"></a>介质故障的恢复【需要DBA介入】</h2><p>——数据库文件和日志文件被破环时的恢复。</p>
+<p>数据库管理系统发现数据文件或日志文件读写异常，系统无法正常运行，并且依靠重启也无法恢复到正确状态。</p>
+<p>此时，需要以往转储的后备副本数据，以及相应的日志文件（包括归档日志文件和联机日志文件）。<br>如果联机日志文件损坏，则有可能丢失数据。</p>
+<p>1）目标：原子性、持久性</p>
+<p>2）动作特征：寻找、装载副本；未完成事务已有操作需落实其逆向操作，undo；已完成事务需落实其全部动作，确保其持久化，redo。</p>
+<p>3）恢复步骤</p>
+<p>①装入后备数据副本（一般选择最新的转储副本）</p>
+<p>②运用与后备数据副本配套的归档日志<br>采用系统故障的恢复方法，通过归档日志中的事务的redo和undo操作，将数据恢复到和转储副本配套的数据库正确状态。</p>
+<p>③运用后期的归档日志和联机日志副本<br>依次装入日志文件，正向扫描日志，直至日志文件尾，建立UNDO和REDO队列，按照系统故障的恢复动作，执行两个队列的redo和undo操作。</p>
+<p>4）执行方式：人工介入、通过恢复子系统完成。</p>
+<h1 id="检查点技术"><a href="#检查点技术" class="headerlink" title="检查点技术"></a>检查点技术</h1><h2 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h2><p>利用日志恢复系统故障的过程需要扫描全部的日志记录，进行相关的恢复操作，因而较大的日志文件将带来大量的日志扫描和恢复操作。</p>
+<p>Undo——为了确保夭折事务的更新影响不生效，逻辑上可看作一种撤销操作。</p>
+<blockquote>
+<p>DBMS缓存中的数据会因为内外存交换机制写出到磁盘，不一致的数据必须物理上更新回正确状态，undo恢复是唯一能够执行此类撤销操作的系统机制。</p>
+</blockquote>
+<p>Redo——为了确保已提交事务的更新的持久性。</p>
+<blockquote>
+<p>事务提交时它所更新的数据可能仍在缓存中，缓存数据不具备持久化状态，此时，日志的redo功能可以看做其持久性的保障，所以需要先写日志协议。</p>
+</blockquote>
+<p>如果数据存在不违背先写日志的前提下，及时的被写出到磁盘文件，结果会怎样？</p>
+<blockquote>
+<p>许多需要redo的事务的数据更新结果（后像数据）已被写入磁盘文件中，对其redo只是重复的将数据再次设置为后像的值，没有必要。</p>
+</blockquote>
+<p>可以将这一思想用于恢复的优化</p>
+<p>优化机制——定期的在不违背先写日志的前提下，将缓存中的数据写出到磁盘文件——检查点（checkpoint）。【周期性、先写日志、缓存写出、记录优化完成】</p>
+<p>优化了redo任务，undo的相关开销是否减少？</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200604013806672.png" style="zoom:80%;" />
+
+<h2 id="检查点机制"><a href="#检查点机制" class="headerlink" title="检查点机制"></a>检查点机制</h2><p>生成检查点的时机——周期性</p>
+<p>①时间周期；</p>
+<p>②日志记录周期（日志文件写满或者到达一定数量）。</p>
+<p>两个“增加”：</p>
+<p>（1）在日志中增加一类记录（检查点记录）</p>
+<p>​		检查点记录内容：</p>
+<p>​			① 建立检查点时刻所有正在执行的（active）事务清单；</p>
+<p>​			②上述事务的最早一条日志记录的地址。</p>
+<p>（2）增设重新开始文件。<br>            用来记录各个检查点记录在日志文件中的地址。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200604013938573.png" style="zoom:80%;" />
+
+<h2 id="检查点动作"><a href="#检查点动作" class="headerlink" title="检查点动作"></a>检查点动作</h2><p>——保存数据库状态，建立检查点。</p>
+<p>1）将当前日志缓冲区中的所有日志记录写入磁盘的日志文件；</p>
+<p>2）在日志文件中写入一个检查点记录；</p>
+<p><strong>3）把当前数据缓冲区的所有数据写入磁盘数据文件；</strong></p>
+<p>4）在重新开始文件中记录检查点记录的地址。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200604014019727.png" style="zoom:67%;" />
+
+<h2 id="使用检查点的恢复技术"><a href="#使用检查点的恢复技术" class="headerlink" title="使用检查点的恢复技术"></a>使用检查点的恢复技术</h2><p>恢复子系统可以定期或不定期地建立检查点,保存数据库状态</p>
+<ol>
+<li>定期：按照预定的一个时间间隔，如每隔一小时建立一个检查点</li>
+<li>不定期：按照某种规则，如日志文件已写满一半建立一个检查点</li>
+</ol>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/image-20200604014443958.png"></p>
+<p>T1：在检查点之前提交</p>
+<p>T2：在检查点之前开始执行，在检查点之后故障点之前提交</p>
+<p>T3：在检查点之前开始执行，在故障点时还未完成</p>
+<p>T4：在检查点之后开始执行，在故障点之前提交</p>
+<p>T5：在检查点之后开始执行，在故障点时还未完成</p>
+<h3 id="采用检查点的恢复步骤"><a href="#采用检查点的恢复步骤" class="headerlink" title="采用检查点的恢复步骤"></a>采用检查点的恢复步骤</h3><p>1）从重新开始文件中找到最后一个检查点记录在日志文件中的地址，由该地址在日志文件中找到最后一个检查点记录；</p>
+<p>2）由该检查点记录得到检查点建立时刻所有正在执行的事务清单ACTIVE-LIST</p>
+<ol>
+<li>建立两个事务队列<ul>
+<li>UNDO-LIST</li>
+<li>REDO-LIST</li>
+</ul>
+</li>
+<li>把ACTIVE-LIST暂时放入UNDO-LIST队列，REDO队列暂为空。</li>
+</ol>
+<p>3）从检查点开始正向扫描日志文件，直到日志文件结束</p>
+<ol>
+<li>如有新开始的事务Ti，把Ti暂时放入UNDO-LIST队列</li>
+<li>如有提交的事务Tj，把Tj从UNDO-LIST队列移到REDO-LIST队列</li>
+</ol>
+<p>4）以检查点记载的最早日志记录和日志文件末尾为界</p>
+<ol>
+<li>对UNDO-LIST中的每个事务执行UNDO操作</li>
+<li>对REDO-LIST中的每个事务执行REDO操作</li>
+</ol>
+<h2 id="问题回答"><a href="#问题回答" class="headerlink" title="问题回答"></a>问题回答</h2><p>1、为什么需要检查点？</p>
+<ul>
+<li>搜索整个日志文件需要耗费的时间很多</li>
+<li>重做处理，重新执行，耗费了大量的时间</li>
+</ul>
+<p>2、解决方案是什么？</p>
+<ul>
+<li><p>在日志文件中增加检查点（check point）记录</p>
+</li>
+<li><p>增加重新开始文件</p>
+</li>
+<li><p>恢复子系统在登录日志文件期间动态的维护日志</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/1752663-20190920153317447-1216888502.png" style="zoom:80%;" /></li>
+</ul>
+<p>3、检查点记录的内容有哪些？</p>
+<ul>
+<li>建立检查点时刻，所有正在执行的事务清单</li>
+<li>这些事务最近一个日志记录的地址</li>
+</ul>
+<p>4、重新开始文件的内容有哪些？</p>
+<ul>
+<li>记录各个检查点记录在日志文件中的地址</li>
+</ul>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>事务是数据库的逻辑工作单位</p>
+<p>DBMS保证系统中一切事务的原子性、一致性、隔离性和持续性</p>
+<p>DBMS必须对事务故障、系统故障和介质故障进行恢复<br>恢复中最经常使用的技术：数据库转储和登记日志文件<br>恢复的基本原理：利用存储在后备副本、日志文件和数据库镜像中的冗余数据来重建数据库<br>常用恢复技术<br>事务故障的恢复（UNDO）<br>系统故障的恢复（UNDO + REDO）<br>介质故障的恢复（重装备份并恢复到一致性状态 + REDO）<br>提高恢复效率的技术<br>检查点技术（<br>Ø可以提高系统故障的恢复效率<br>Ø可以在一定程度上提高利用动态转储备份进行介质故障恢复的效率<br>）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/03/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/" data-id="claaf6qip0085tkupe4rc5fgp" data-title="数据库_数据库恢复技术" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; 上一页</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/7/">下一页 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

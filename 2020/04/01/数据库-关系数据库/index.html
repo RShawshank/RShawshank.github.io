@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>数据库_关系数据库 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="关系模型概述关系数据理论是建立在集合代数理论基础上的，有着坚实的数学基础  数据结构：二维表 关系操作： 增加(insert)、删除(delete)、修改(updated) 查询(Query):•选择(select)、投影(project)、连接(join) 除(divide)、并(union)、交(intersection) 差(difference)   关系代数，关系演算，SQL   关系的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库_关系数据库">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="关系模型概述关系数据理论是建立在集合代数理论基础上的，有着坚实的数学基础  数据结构：二维表 关系操作： 增加(insert)、删除(delete)、修改(updated) 查询(Query):•选择(select)、投影(project)、连接(join) 除(divide)、并(union)、交(intersection) 差(difference)   关系代数，关系演算，SQL   关系的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401153303890.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401174458046.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601164930592.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165011840.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165118331.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165210237.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165223860.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165444957.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165522272.png">
+<meta property="article:published_time" content="2020-04-01T11:11:23.000Z">
+<meta property="article:modified_time" content="2020-06-01T08:56:32.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401153303890.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-数据库-关系数据库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
+  <time class="dt-published" datetime="2020-04-01T11:11:23.000Z" itemprop="datePublished">2020-04-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      数据库_关系数据库
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="关系模型概述"><a href="#关系模型概述" class="headerlink" title="关系模型概述"></a>关系模型概述</h1><p>关系数据理论是建立在<strong>集合代数理论基础上</strong>的，有着坚实的数学基础</p>
+<ul>
+<li>数据结构：二维表</li>
+<li>关系操作：<ul>
+<li>增加(insert)、删除(delete)、修改(updated)</li>
+<li>查询(Query):•选择(select)、投影(project)、连接(join)<ul>
+<li>除(divide)、并(union)、交(intersection)</li>
+<li>差(difference)</li>
+</ul>
+</li>
+<li>关系代数，关系演算，SQL</li>
+</ul>
+</li>
+<li>关系的三类完整性约束：<ul>
+<li>实体完整性、参照完整性、用户自定义的完整性</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>关系代数是用对关系的运算来表达查询要求的方式。</p>
+<p>关系演算是用谓词表达查询要求的方式。</p>
+<ul>
+<li>按谓词变元的基本对象是元组变量还是域变量分为元组关系演算和域关系演算</li>
+</ul>
+</blockquote>
+<h2 id="关系数据结构"><a href="#关系数据结构" class="headerlink" title="关系数据结构"></a>关系数据结构</h2><ul>
+<li><p>域</p>
+<ul>
+<li>域是一组具有相同数据类型的值的集合</li>
+</ul>
+</li>
+<li><p>笛卡儿积</p>
+<ul>
+<li><p>一组域D<del>1</del> , D<del>2</del> ,…, D<del>n</del>的笛卡尔积为：D<del>1</del>×D<del>2</del>×…×D<del>n</del>&#x3D; {(d<del>1</del> , d<del>2</del> , … , d<del>n</del>) | d<del>i</del>∈D<del>i</del>, i&#x3D;1,…,n}</p>
+</li>
+<li><p>笛卡尔积的每个元素(d<del>1</del> , d<del>2</del> , … , d<del>n</del>)称作一个n-元组（n-tuple）</p>
+</li>
+<li><p>元组的每一个值d<del>i</del>叫做一个分量（Component）</p>
+</li>
+<li><p>若D<del>i</del>的基数（元组个数）为m<del>i</del>，则笛卡尔积的基数为<br>$$<br>\prod^n_{i&#x3D;1}m_i<br>$$</p>
+<blockquote>
+<p>一个域允许的不同取值个数称为这个域的基数</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>笛卡儿积可以表示成一张二维表。表中的每行对应一个元组，表中的每一列的值来自一个域。</p>
+<ul>
+<li><p>关系</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401153303890.png" style="zoom:50%;" />
+
+<ul>
+<li><p>笛卡尔积D<del>1</del>×D<del>2</del>×…×D<del>n</del>的子集叫做在域D<del>1</del> , D<del>2</del> ,…, D<del>n</del>上的关系，用R(D<del>1</del> , D<del>2</del> ,…, D<del>n</del>)表示</p>
+</li>
+<li><p>R是关系的名字，n是关系的度或目</p>
+<blockquote>
+<p>当n&#x3D;1时，称该关系为单元关系</p>
+</blockquote>
+</li>
+<li><p>关系是笛卡尔积中有意义的子集，关系中的每个元素是关系中的元组</p>
+<blockquote>
+<p>一般来说，笛卡儿积是没有实际语义的，只有它的某个真子集才有实际含义</p>
+</blockquote>
+</li>
+<li><p>关系也可以表示为二维表</p>
+</li>
+</ul>
+</li>
+<li><p>属性</p>
+<ul>
+<li>关系中不同列可以对应相同的域，为了加以区分，必须对每列起一个名字，称为属性</li>
+<li>n目关系必有n个属性</li>
+</ul>
+</li>
+</ul>
+<h3 id="关系数据结构-1"><a href="#关系数据结构-1" class="headerlink" title="关系数据结构"></a>关系数据结构</h3><p>关系的性质</p>
+<ul>
+<li>列是同质的；即每一列中的分量是同一类型的数据，来自同一个域。</li>
+<li>行列的顺序无关紧要；行列的次序是可以任意交换的</li>
+<li>任意两个元组不能完全相同</li>
+<li>每一分量必须是不可再分的数据</li>
+<li>不同的属性，属性名不能相同</li>
+</ul>
+<p>候选码（Candidate Key）</p>
+<ul>
+<li><strong>关系中的一个属性组，其值能唯一标识一个元组</strong>。若从属性组中去掉任何一个属性，它就不具有这一性质了，这样的属性组称作候选码如DEPT中的D#，DN都可作为候选码</li>
+<li>任何一个候选码中的属性称作主属性如SC中的S#，C#</li>
+</ul>
+<p>主码（Primary Key）</p>
+<ul>
+<li>若一个关系有多个候选码，则选定其中一个作为主码如可选定D#作为DEPT的主码</li>
+</ul>
+<p>外码（Foreign Key）</p>
+<ul>
+<li>关系R中的一个属性组，它不是R的码，但它与另一个关系S的码相对应，则称这个属性组为R的外码<br>如S关系中的D#属性</li>
+</ul>
+<h3 id="关系模式"><a href="#关系模式" class="headerlink" title="关系模式"></a>关系模式</h3><p>形式化的表示为R(U,D,DOM,F)</p>
+<blockquote>
+<p>R为关系名，U为组成该关系的属性名集合；D为U中属性所来自的域；DOM为属性向域的映象集合；F为属性间数据的依赖关系集合。</p>
+</blockquote>
+<ul>
+<li>关系的描述称作关系模式，包括关系名、关系中的属性名、属性向域的映象、属性间的数据依赖关系等，记作R(A<del>1</del> , A<del>2</del> ,…, A<del>n</del> ) </li>
+<li>属性向域的映象一般直接说明为属性的类型、长度等</li>
+<li>某一时刻对应某个关系模式的内容(元组的集合)称作关系</li>
+<li>关系模式是型，是稳定的<br>关系是某一时刻的值，是随时间不断变化的</li>
+</ul>
+<h3 id="关系数据库"><a href="#关系数据库" class="headerlink" title="关系数据库"></a>关系数据库</h3><ul>
+<li><p>其型是关系模式的集合，即数据库描述，称作数据库的内涵(Intension)，或关系数据库模式</p>
+</li>
+<li><p>其值是某一时刻关系的集合，称作数据库的外延(Extension)，或关系数据库</p>
+</li>
+</ul>
+<h2 id="关系的完整性约束"><a href="#关系的完整性约束" class="headerlink" title="关系的完整性约束"></a>关系的完整性约束</h2><h3 id="实体完整性"><a href="#实体完整性" class="headerlink" title="实体完整性"></a>实体完整性</h3><ul>
+<li>关系的主码中的属性值不能为空值</li>
+<li>空值：不知道或无意义</li>
+<li>意义：关系对应到现实世界中的实体集，元组对应到实体，实体是相互可区分的，通过主码来唯一标识，若主码为空，则出现不可标识的实体，这是不容许的</li>
+</ul>
+<h3 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h3><ul>
+<li>如果关系R<del>2</del>的外码F<del>k</del>与关系R<del>1</del>的主码P<del>k</del>相对应，则R<del>2</del>中的每一个元组的F<del>k</del>值或者等于R<del>1</del> 中某个元组的P<del>k</del>值，或者为空值【即属性Fk本身不是主属性，则可以取空值，否则不能取空值。】</li>
+<li>意义：如果关系R<del>2</del>的某个元组t<del>2</del>参照了关系R<del>1</del>的某个元组t<del>1</del>，则t<del>1</del>必须存在</li>
+<li>例如：关系S在D#上的取值有两种可能<ul>
+<li>空值，表示该学生尚未分到任何系中</li>
+<li>若非空值，则必须是DEPT关系中某个元组的D#值，表示该学生不可能分到一个不存在的系中<br>DEPT(D#, DN , DEAN)S(S#, SN , SEX , AGE , D#)</li>
+</ul>
+</li>
+</ul>
+<h3 id="用户定义的完整性"><a href="#用户定义的完整性" class="headerlink" title="用户定义的完整性"></a>用户定义的完整性</h3><ul>
+<li><p>用户定义的完整性</p>
+<ul>
+<li><p>用户针对具体的应用环境定义的完整性约束条件</p>
+</li>
+<li><p>如S#要求是8位整数，SEX要求取值为“男”或“女”</p>
+</li>
+</ul>
+</li>
+<li><p>系统支持</p>
+<ul>
+<li>实体完整性和参照完整性由系统自动支持</li>
+<li>系统应提供定义和检验用户定义的完整性的机制</li>
+</ul>
+</li>
+</ul>
+<h1 id="关系代数概述"><a href="#关系代数概述" class="headerlink" title="关系代数概述"></a>关系代数概述</h1><ul>
+<li>属于关系操作的一种</li>
+<li>关系代数是一种抽象的查询语言</li>
+<li>通过对关系的运算来表达查询操作</li>
+<li>运算对象、结果均为关系</li>
+<li>运算包括四类：<ul>
+<li>集合运算、关系运算、比较运算、逻辑运算</li>
+</ul>
+</li>
+</ul>
+<h2 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h2><h3 id="并运算"><a href="#并运算" class="headerlink" title="并运算"></a>并运算</h3><ul>
+<li><p>所有至少出现在两个关系中之一的元组集合</p>
+</li>
+<li><p>两个关系R和S若进行并运算，则它们必须是相容的:</p>
+<ul>
+<li>关系R和S必须是同元的，即它们的属性数目必须相同</li>
+<li>对i，R的第i个属性的域必须和S的第i个属性的域相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="差运算"><a href="#差运算" class="headerlink" title="差运算"></a>差运算</h3><p>所有出现在一个关系而不在另一关系中的元组集合</p>
+<p>R和S必须是相容的</p>
+<h3 id="交运算"><a href="#交运算" class="headerlink" title="交运算"></a>交运算</h3><ul>
+<li>所有同时出现在两个关系中的元组集合</li>
+<li>交运算可以通过差运算来重写</li>
+</ul>
+<h2 id="基本关系运算"><a href="#基本关系运算" class="headerlink" title="基本关系运算"></a>基本关系运算</h2><h3 id="选择运算"><a href="#选择运算" class="headerlink" title="选择运算"></a>选择运算</h3><p>在关系R中选择满足给定条件的元组（从行的角度）</p>
+<h3 id="投影运算"><a href="#投影运算" class="headerlink" title="投影运算"></a>投影运算</h3><p>投影的结果中要去掉相同的行</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200401174458046.png" style="zoom:67%;" />
+
+<h3 id="广义笛卡儿积"><a href="#广义笛卡儿积" class="headerlink" title="广义笛卡儿积"></a>广义笛卡儿积</h3><ul>
+<li><p>元组的连串（Concatenation）</p>
+<ul>
+<li>若r &#x3D; (r<del>1</del>，…，r<del>n</del>)，s &#x3D; (s<del>1</del> ，… ，s<del>m</del>)，则定义r与s的连串为：rs &#x3D; (r<del>1</del>，…，r<del>n</del>，s<del>1</del> ，…，s<del>m</del>)</li>
+</ul>
+</li>
+<li><p>广义笛卡尔积两个关系R，S，其度分别为n，m，则它们的笛卡尔积是所有这样的元组集合：元组的前n个分量是R中的一个元组，后m个分量是S中的一个元组<br>RxS&#x3D;{rs|r属于R并且s属于S}</p>
+</li>
+<li><p>RxS的度为R与S的度之和，RxS的元组个数为R和S的元组个数的乘积</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601164930592.png"></p>
+</li>
+</ul>
+<h2 id="其它关系运算"><a href="#其它关系运算" class="headerlink" title="其它关系运算"></a>其它关系运算</h2><p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165011840.png"></p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165118331.png"></p>
+<p>0连接就是有附加条件的自然连接。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165210237.png"></p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165223860.png"></p>
+<h3 id="外连接"><a href="#外连接" class="headerlink" title="外连接"></a>外连接</h3><p>把上述中舍弃的元组也保存在结果关系中，在其他属性上填上NULL。</p>
+<p>左外连接：只把左边关系R中要舍弃的元组保留。同理：右外连接。</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165444957.png" style="zoom:50%;" />
+
+<h3 id="除运算"><a href="#除运算" class="headerlink" title="除运算"></a>除运算</h3><p>把S和R中相同的属性组拿出来，然后取R中独有的属性</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200601165522272.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93/" data-id="claaf6qik007ftkupcgp97940" data-title="数据库_关系数据库" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          数据库_关系数据库SQL语言
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-LR%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">编译原理-LR分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

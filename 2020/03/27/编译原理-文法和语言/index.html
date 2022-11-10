@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>编译原理-文法和语言 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="文法的直接概念文法是阐述语法的一个工具，语句是语法的实例 。  语言的构成：组成语言的基本形式是句子，句子是由单词序列构成的，单词是由语言基本符号（字母或单字）组成的。 语言既包含单词和句子这样的语言成分，又包含将这些成分组织起来的语言规则，如词法规则、句法规则等。  语法：是一组规则，定义符号如何排列，排列与符号含义无关。 语句：是一组规则，定义符号如何排列，排列与符号含义无关。 语义：研究语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理-文法和语言">
+<meta property="og:url" content="http://rshawshank.github.io/2020/03/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="文法的直接概念文法是阐述语法的一个工具，语句是语法的实例 。  语言的构成：组成语言的基本形式是句子，句子是由单词序列构成的，单词是由语言基本符号（字母或单字）组成的。 语言既包含单词和句子这样的语言成分，又包含将这些成分组织起来的语言规则，如词法规则、句法规则等。  语法：是一组规则，定义符号如何排列，排列与符号含义无关。 语句：是一组规则，定义符号如何排列，排列与符号含义无关。 语义：研究语法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134034228.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134255807.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134758183.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328140215540.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328144445764.png">
+<meta property="article:published_time" content="2020-03-27T15:17:55.000Z">
+<meta property="article:modified_time" content="2020-07-04T08:07:22.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134034228.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-编译原理-文法和语言" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/03/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E8%A8%80/" class="article-date">
+  <time class="dt-published" datetime="2020-03-27T15:17:55.000Z" itemprop="datePublished">2020-03-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      编译原理-文法和语言
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="文法的直接概念"><a href="#文法的直接概念" class="headerlink" title="文法的直接概念"></a>文法的直接概念</h1><p>文法是阐述语法的一个工具，语句是语法的实例 。</p>
+<blockquote>
+<p>语言的构成：组成语言的基本形式是句子，句子是由单词序列构成的，单词是由语言基本符号（字母或单字）组成的。</p>
+<p>语言既包含单词和句子这样的语言成分，又包含将这些成分组织起来的语言规则，如词法规则、句法规则等。</p>
+<ul>
+<li>语法：是一组规则，定义符号如何排列，排列与符号含义无关。</li>
+<li>语句：是一组规则，定义符号如何排列，排列与符号含义无关。</li>
+<li>语义：研究语法的含义</li>
+</ul>
+</blockquote>
+<p><strong>约定（1）:符号”::&#x3D;”表示“···是由···组成的”</strong></p>
+<p><strong>约定（2):符号”|”表示“或者”的意义</strong></p>
+<p><strong>约定（3):符号”&#x3D;&gt;”表示“推导”</strong></p>
+<p>eg：</p>
+<blockquote>
+<p>&lt;句子&gt; ∷＝&lt;主语&gt; &lt;谓语&gt; &lt;宾语&gt;<br>&lt;主语&gt; ∷＝&lt;名词&gt;<br>&lt;主语&gt; ∷＝&lt;代词&gt;<br>&lt;谓语&gt; ∷＝&lt;动词&gt;<br>&lt;宾语&gt; ∷＝&lt;名词&gt;<br>&lt;宾语&gt; ∷＝&lt;代词&gt;<br>&lt;代词&gt; ∷＝ 我<br>&lt;代词&gt; ∷＝ 你<br>&lt;动词&gt; ∷＝ 吃<br>&lt;动词&gt; ∷＝ 做<br>&lt;名词&gt; ∷＝ 饭<br>&lt;名词&gt; ∷＝ 菜</p>
+</blockquote>
+<blockquote>
+<p>&lt;句子&gt; &#x3D;&gt; &lt;主语&gt; &lt;谓语&gt; &lt;宾语&gt;<br>&#x3D;&gt; &lt;代词&gt; &lt;谓语&gt; &lt;宾语&gt;<br>&#x3D;&gt; 我 &lt;谓语&gt; &lt;宾语&gt;<br>&#x3D;&gt; 我&lt;动词&gt; &lt;宾语&gt;<br>&#x3D;&gt; 我吃&lt;宾语&gt;<br>&#x3D;&gt; 我吃&lt;名词&gt;<br>&#x3D;&gt; 我吃饭</p>
+</blockquote>
+<blockquote>
+<p>1、推导过程不唯一</p>
+<p>2、推导起点的不同，导致语法意义上差异的推导结果</p>
+</blockquote>
+<p>语法形式化方法要点：</p>
+<ul>
+<li>语法规则的形式化</li>
+<li>语法规则含有语法单位符号</li>
+<li>语法规则含有构成语句的单词符号</li>
+<li>特殊的语法单位符号——开始符号</li>
+</ul>
+<p><strong>语法形式化的最终目的在于将语法分析的问题将装换成形式化的推导过程。</strong></p>
+<h1 id="符号和符号串"><a href="#符号和符号串" class="headerlink" title="符号和符号串"></a>符号和符号串</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li><strong>字母表：字母表∑是非空有穷集合，其元素称为符号。</strong> </li>
+<li><strong>符号串 由字母表∑中的符号组成的有穷序列称为 (字母表∑上的)符号串。特别地，不含任何符号的有穷序列称为空串，记为ε。单词和源程序都是符号串！</strong></li>
+</ul>
+<p>eg</p>
+<blockquote>
+<p>设字母表∑＝｛0，1｝，则</p>
+<p>​     101是∑上的符号串，201不是∑上的符号串。</p>
+</blockquote>
+<ul>
+<li><strong>符号串长度：符号串α的长度是指符号串α中含有符号的个数，记为︱α︱。特别约定，空串ε为零，即︱α︱＝0。</strong></li>
+<li><strong>符号串集合：如果集合A的元素都是字母表∑上的符号串，则称集合A为∑上的符号串集合，简称串集。</strong></li>
+</ul>
+<p>eg</p>
+<blockquote>
+<p>  设字母表∑＝｛a，b，c｝，A＝｛ε，a，ba，cab｝，B＝｛a1，ba，cab｝，则</p>
+<p>   A是∑上的符号串集合，B不是∑上的符号串集合。</p>
+</blockquote>
+<h2 id="基本运算"><a href="#基本运算" class="headerlink" title="基本运算"></a>基本运算</h2><ul>
+<li><strong>符号串连接运算：设x和y是字母表∑上的符号串，在符号串x的最后一个符号之后顺序接上符号串y的符号得到的新符号串z，则称符号串z是由符号串x和符号串y经过连接运算的结果，记为z＝x·y，其中，·是连接运算符。</strong></li>
+</ul>
+<blockquote>
+<p>设字母表∑＝｛a，b，c，0，1｝，x＝abc，y＝01cba，则  z＝x·y＝ abc01cba</p>
+</blockquote>
+<ul>
+<li><p><strong>符号串方幂运算 设x是字母表∑上的符号串，z是由n(≥0)个x自身连接得到的符号串，则称符号串z是由符号串x的n次方幂运算的结果，记为z ＝ x^n^ 。特别约定，x^0^ ＝ε, x^1^＝x 。</strong></p>
+</li>
+<li><p><strong>符号串集连接运算 设A，B是字母表∑上的符号串集，·是符号串集连接运算，则C＝A·B＝｛x·y︱x∈A ，y∈B｝。 笛卡尔积</strong></p>
+</li>
+<li><p><strong>符号串集方幂运算 设A是字母表∑上的符号串集，则C是由n(≥0)个A自身连接得到的符号串集，则称符号串集C是由符号串A的n次方幂运算的结果，记为C ＝ A^n^ 。特别约定，A^0^ ＝｛ε｝,A^1^＝A 。</strong></p>
+</li>
+<li><p><strong>符号串集正闭包运算 设A是字母表∑上的符号串集， A+是A的正闭包，则: A+＝A^1^∪A^2^∪A^3^∪···∪A^n^··· 。</strong></p>
+</li>
+<li><p><strong>符号串集闭包运算 设A是字母表∑上的符号串集， A*是A的闭包，则 : A* ＝A0∪A+ ，</strong></p>
+<p>​     <strong>即：A* ＝A^0^∪A^1^∪A^2^∪A^3^∪···∪A^n^··· 。</strong></p>
+</li>
+</ul>
+<h2 id="文法和语言的形式定义"><a href="#文法和语言的形式定义" class="headerlink" title="文法和语言的形式定义"></a>文法和语言的形式定义</h2><p>规则是字母表V上形如 a∷＝b的式子，可以简写成a→b。其中，符号串a∈V^+^称为规则的左部，符号串b∈V*称为规则的右部。<strong>规则也称为重写规则、产生式或生成式。</strong></p>
+<p>特别地，a∷＝ε（ε空串）称为a的空规则。</p>
+<p>对于相同左部的多个规则，可以使用符号∣简写。如，规则a∷＝b和a∷＝δ，简写成a∷＝b∣δ。 简写为a → b∣δ</p>
+<h3 id="文法"><a href="#文法" class="headerlink" title="文法"></a>文法</h3><p>文法G定义为一个四元组（V<del>N</del>，V<del>T</del>，P，S），记为G＝（V<del>N</del>，V<del>T</del>，P，S）。其中，</p>
+<p> ① V<del>N</del>是非空有穷集合，称为非终结符集，其元素称为非终结符；</p>
+<p> ② V<del>T</del>是有穷集合，称为终结符集，其元素称为终结符；</p>
+<p> ③ P是非空有穷集合，称为规则集，其元素是字母表V<del>N</del>∪V<del>T</del>上的规则，<strong>V<del>N</del>∪V<del>T</del>称为文法的字母表V，且V<del>N</del>∩V<del>T</del>＝空集；</strong></p>
+<p> ④ S∈V<del>N</del>，称为开始符。</p>
+<h3 id="直接推导、直接归约"><a href="#直接推导、直接归约" class="headerlink" title="直接推导、直接归约"></a>直接推导、直接归约</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），<strong>如果α→β∈P，则称γ α δ推导出γ β δ，记为γ α δ&#x3D;&gt;γ β δ</strong>，其中,γ,δ∈V。</p>
+<p>γ α δ&#x3D;&gt;γ β δ也称为直接推导或一步推导。</p>
+<p>如果γ α δ&#x3D;&gt;γ β δ，则也称为γ β δ归约到γ α δ，也称为直接归约或一步归约。</p>
+<blockquote>
+<p>例如，例3.1 定义的文法G1＝({S}，{a，b}，{S→aSb，S→ab}，S)，推导例子有：</p>
+<p>（1）S&#x3D;&gt; aSb (α＝S，β＝aSb，γ＝ε，δ＝ε)【ε是空集】</p>
+<p>（2）aSb &#x3D;&gt; aaSbb (α＝S，β＝aSb，γ＝a，δ＝b)</p>
+<p>（3）aSb &#x3D;&gt; aabb (α＝S，β＝ab，γ＝a，δ＝b)</p>
+<p>（4）aSbSb &#x3D;&gt; aaSbbSb (α＝S，β＝aSb，γ＝a，δ＝bSb )</p>
+</blockquote>
+<h3 id="多步推导、多步归约"><a href="#多步推导、多步归约" class="headerlink" title="多步推导、多步归约"></a>多步推导、多步归约</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），α,β∈（V<del>N</del>∪V<del>T</del>）*， 如果α,β之间存在推导序列：</p>
+<p>α＝ W<del>0</del> &#x3D;&gt; W<del>1</del> &#x3D;&gt; W<del>2</del> ··· &#x3D;&gt; W<del>n</del> ＝β（n≥1）,</p>
+<p>则称α经过n步推导出β，记为α&#x3D;&gt;^+^β。其中，W<del>i</del>∈(V<del>N</del>∪V<del>T</del>)*</p>
+<p>(1≤i≤n)。α&#x3D;&gt;^+^β也称n步推导或多步推导。</p>
+<p>如果α&#x3D;&gt;^+^β，也称为β归约到α，也称为n步归约或多步归约。</p>
+<blockquote>
+<p>例如，例3.1 定义的文法G1＝({S}，{a，b}，{S→aSb，S→ab}，S) ，多步推导(Þ)例子有：</p>
+<p>（1）S&#x3D;&gt;^+^ ab (∵S&#x3D;&gt; ab)</p>
+<p>（2）S&#x3D;&gt;^+^ aabb (∵ S&#x3D;&gt; aSb&#x3D;&gt; aabb)</p>
+<p>（3）S&#x3D;&gt;^+^ aaaSbbb (∵ S&#x3D;&gt; aSb&#x3D;&gt; aaSbb&#x3D;&gt; aaaSbbb)</p>
+<p>（4）aSb &#x3D;&gt;^+^ aaabbb (∵ aSb&#x3D;&gt; aaSbb&#x3D;&gt; aaabbb)</p>
+</blockquote>
+<h3 id="0步或0步以上推导与归约"><a href="#0步或0步以上推导与归约" class="headerlink" title="0步或0步以上推导与归约"></a>0步或0步以上推导与归约</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），α,β∈（V<del>N</del>∪V<del>T</del> ) ^*^，如果有α→β或α&#x3D;&gt;^+^β，则称α经过0步或0步以上推导出β，记为α&#x3D;&gt;*β。亦称β经过0步或0步以上归约到α。</p>
+<blockquote>
+<p>例如，例3.1 定义的文法G1＝({S}，{a，b}，{S→aSb，S→ab}，S) ， 0步或0步以上推导(Þ)例子有：</p>
+<p>   （1）S&#x3D;&gt;* ab，因为有S&#x3D;&gt;^+^ ab</p>
+<p>   （2）S&#x3D;&gt;* aabb， 因为有S&#x3D;&gt;^+^aabb</p>
+<p>   （3）S&#x3D;&gt;* aaabbb，因为有S&#x3D;&gt;^+^aaabbb</p>
+<p>   （4）aSb &#x3D;&gt;* aaabbb，因为有aSb&#x3D;&gt;^+^ aaabbb</p>
+<p>   （5）aSbSb &#x3D;&gt;*aSbSb，因为有aSbSb &#x3D;&gt;^+^ aSbSb</p>
+</blockquote>
+<h3 id="句型、句子"><a href="#句型、句子" class="headerlink" title="句型、句子"></a>句型、句子</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果有S&#x3D;&gt;* β，则称β是文法G的句型。如果有S&#x3D;&gt;* β，且β∈V<del>T</del>*，则称β是文法G的句子。</p>
+<blockquote>
+<p>例如，例3.1 定义的文法G1＝({S}，{a，b}，{S→aSb，S→ab}，S) ，句型和句子例子有：</p>
+<p>（1）ab是G的句子，因为有S&#x3D;&gt;* ab ，ab∈VT*</p>
+<p>（2）aabb是G的句子，因为有S&#x3D;&gt;*  aabb，aabb∈VT*</p>
+<p>（3）aaaSbbb是G的句型，因为有S&#x3D;&gt;* aaaSbbb(aaaSbbb ∉ VT*)</p>
+</blockquote>
+<h3 id="语言"><a href="#语言" class="headerlink" title="语言"></a>语言</h3><p>文法G＝（V<del>N</del>，V<del>T</del>，P，S）的产生<strong>语言定义为文法G的句子集合</strong>，记为L(G)。即：</p>
+<p>L(G)＝｛β︱S&#x3D;&gt;^<em>^β，β∈V<del>T</del>^</em>^｝。</p>
+<h3 id="文法等价"><a href="#文法等价" class="headerlink" title="文法等价"></a>文法等价</h3><p>设G1和G2是两个文法，如果L(G1)＝L(G2)，则称文法G1和G2是等价的。</p>
+<blockquote>
+<p>例如，下列文法G2和G3是等价的。因为它们产生的语言都是以字母a开头、字母a和b构成的符号串的集合。即L(G2)＝L(G2）＝{a}{a，b}*。</p>
+<p>G2＝(｛S，C｝，｛a，b｝，P，S），</p>
+<p>  其中，P＝｛S→aC，C→aC ，C→bC, C→ε｝。</p>
+<p>G3＝(｛S｝，｛a，b｝，P，S），</p>
+<p>  其中，P＝｛S→Sa，S→Sb ，S→a｝。</p>
+</blockquote>
+<h2 id="文法类型"><a href="#文法类型" class="headerlink" title="文法类型"></a>文法类型</h2><h3 id="0型文法"><a href="#0型文法" class="headerlink" title="0型文法"></a>0型文法</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果任意α→β∈P，α中至少含有一个非终结符，则称文法G属于0型文法。0型文法，也称为短语文法。</p>
+<h3 id="1型文法"><a href="#1型文法" class="headerlink" title="1型文法"></a>1型文法</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果任意α→β∈P，α中至少含有一个非终结符，且除空规则之外，α的长度不大于β的长度，即︱α︱≤︱β︱，则称文法G属于1型文法。1型文法，也称为上下文有关文法。</p>
+<blockquote>
+<p>文法G5定义如下，显然G5是1型文法。</p>
+<p>​      L(G5）＝｛a^n^b^n^c^n^︱n≥1｝。</p>
+<p>G5 ＝（V<del>N</del>，V<del>T</del>，P，S），</p>
+<p>  其中，V<del>N</del>＝｛S，B，C｝，</p>
+<p>   V<del>T</del>＝｛a，b，c｝，</p>
+<p>   P ＝｛S→aSBC︱aBC，CB→BC，</p>
+<p>​        aB→ab，bB→bb，</p>
+<p>​        bC→bc，cC→cc｝</p>
+</blockquote>
+<h3 id="2型文法"><a href="#2型文法" class="headerlink" title="2型文法"></a>2型文法</h3><p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果任意α→β∈ P，α∈V<del>N</del> ，则称文法G属于2型文法。2型文法，也称为上下文无关文法。</p>
+<blockquote>
+<p>例3.6 文法G6定义如下，显然G6是2型文法。</p>
+<p>  L(G6）＝｛w$w^R^︱n≥0, w^R^ 为w之逆，w∈{0，1}*｝</p>
+<p>G6 ＝（V<del>N</del>，V<del>T</del>，P，S），</p>
+<p>   其中，V<del>N</del>＝｛S｝，</p>
+<p>​      V<del>T</del> ＝｛$，0，1｝，</p>
+<p>​      P ＝｛S→0S0︱1S1︱$ ｝</p>
+</blockquote>
+<h3 id="3型文法"><a href="#3型文法" class="headerlink" title="3型文法"></a>3型文法</h3><p>文法  设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果任意α→β∈ P，α∈ V<del>N</del> ，且β只能是aB或a（除空规则之外），则称文法G属于右线性3型文法。【B是非终结符】</p>
+<p>设文法G＝（V<del>N</del>，V<del>T</del>，P，S），如果任意α→β∈ P，α∈ V<del>N</del> ，且β只能是Ba或a（除空规则之外），则称文法G属于左线性3型文法。</p>
+<p>左线性3型文法和右线性3型文法，统称3型文法，也称为正规文法。</p>
+<blockquote>
+<p>例2.7 文法G7定义如下。显然G7是3型文法。</p>
+<p>​      L(G7）＝｛00，01，10，11｝。</p>
+<p>G7 ＝（V<del>N</del>，V<del>T</del>，P，S），</p>
+<p> 其中，V<del>N</del>＝｛S，A，B｝，</p>
+<p> V<del>T</del>＝｛0，1｝，</p>
+<p>  P ＝｛S→A0︱B1，A→0︱1，B→0︱1｝</p>
+</blockquote>
+<p>文法分类是对规则形式逐步加以限制而得。换言之，从0型文法到1型文法、2型文法和3型文法，其规则形式逐步简单。自然，其表达力也随之逐步减弱。</p>
+<p>如果L0、L1、L2和L3分别是0型文法、1型文法、2型文法和3型文法能产生的语言之集，则有如下关系：</p>
+<p>L0 ⊋ L1 ⊋ L2 ⊋ L3。</p>
+<h2 id="上下无关文法及其语法树"><a href="#上下无关文法及其语法树" class="headerlink" title="上下无关文法及其语法树"></a>上下无关文法及其语法树</h2><p>上下无关文法一个显著特征是<strong>规则左部一定有且仅有一个非终结符</strong>。利用这个特征，可以不列出V<del>N</del>和V<del>T</del> ，给出一个上下无关文法的简洁描述方法：①文法名G改写成G[S]，其中，S表示开始符；②规则集P，仅书写其具体规则。</p>
+<h3 id="最左推导、最右推导"><a href="#最左推导、最右推导" class="headerlink" title="最左推导、最右推导"></a>最左推导、最右推导</h3><p>如果在推导的每一步<strong>总是选择当前句型的最左（最右）边非终结符进行推导</strong>，则称这种推导过程为最左（最右）推导。最右推导，也叫规范推导。由规范推导所得的句型，叫做规范句型。规范推导的逆过程，叫做规范归约。</p>
+<blockquote>
+<p>G[S]：S→aAS︱a</p>
+<p>   A→SbA︱SS︱ba</p>
+<p>最左推导：S &#x3D;&gt; aAS &#x3D;&gt; aSbAS &#x3D;&gt; aabAS &#x3D;&gt; aabbaS &#x3D;&gt; aabbaa</p>
+<p>最右推导：S &#x3D;&gt; aAS &#x3D;&gt; aAa &#x3D;&gt; aSbAa &#x3D;&gt; aSbbaa &#x3D;&gt; aabbaa</p>
+<p>一般推导：S &#x3D;&gt; aAS &#x3D;&gt; aSbAS &#x3D;&gt; aSbAa &#x3D;&gt; aabAa &#x3D;&gt; aabbaa</p>
+</blockquote>
+<h3 id="语法树"><a href="#语法树" class="headerlink" title="语法树"></a>语法树</h3><p>假设文法G＝（V<del>N</del>，V<del>T</del>，P，S），则文法G的语法树是一个满足下列条件的多叉树：</p>
+<p>（1）以文法开始符S做为树根；</p>
+<p>（2）以终结符号或非终结符号做为树的其他结点，且子树根和其孩子结点分别是某规则的左部和右部。</p>
+<img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134034228.png" style="zoom: 67%;" />
+
+<p><strong>推论： ①非叶子结点一定是非终结符</strong></p>
+<pre><code>           **②全部叶子结点组成的符号串是文法的句子**
+</code></pre>
+<h3 id="语义二义性"><a href="#语义二义性" class="headerlink" title="语义二义性"></a>语义二义性</h3><p>如果一个文法G，某个句子存在对应的至少两棵不同的语法树，则称文法G是二义性的。</p>
+<img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134255807.png" alt="image-20200328134255807" style="zoom:67%;" />
+
+<p><strong>推论</strong>： </p>
+<p> <strong>① 如果文法是无二义性的，一个句子的语法树反映了该句子的全部推导过程；</strong></p>
+<p> <strong>②</strong> <strong>如果文法是无二义性的，一个句子的最左（最右）推导是唯一的。</strong></p>
+<h3 id="语义的先天二义性"><a href="#语义的先天二义性" class="headerlink" title="语义的先天二义性"></a>语义的先天二义性</h3><p>文法的二义性，并不等同于语言的二义性，尽管两者之间可能存在非必然的联系。</p>
+<p>因为二义性文法G，可能存在与之等价的无二义性的文法G′，即L(G)＝L(G′）。 </p>
+<p>如果一个语言不存在无二义性的文法，则称该语言是先天二义性的。</p>
+<blockquote>
+<p>例如，语言L＝{a^i^b^j^c^k^︱(i＝j 或i＝k)，(i，j，k≥1)}不存在无二义性的文法，是先天二义性的语言。</p>
+</blockquote>
+<p><strong>已经证明：文法的二义性判定问题是递归不可解的。即不存在这个判定问题的算法。</strong></p>
+<h2 id="句型分析"><a href="#句型分析" class="headerlink" title="句型分析"></a>句型分析</h2><p>假设文法G[S]是语言L之文法，即L(G)＝L，则“符号串α是否符合语言L的语法问题”被等价地转化成“推导或归约问题”，即：</p>
+<img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328134758183.png" style="zoom:50%;" />
+
+<p>【从起始符推导出α，并且α是非终结符组成的串，也就是α不能再细分】</p>
+<p>【归约和推导可以视作是一个相反的过程】</p>
+<p>这样，自然地形成了推导法和归约法两大类分析方法。推导法和归约法，也分别称为自上而下的分析方法和自下而上的分析方法。</p>
+<h3 id="自上而下的分析方法"><a href="#自上而下的分析方法" class="headerlink" title="自上而下的分析方法"></a>自上而下的分析方法</h3><p>从文法开始符号出发，反复使用规则，寻找匹配符号串（推导）的句型，直到推导出句子或规则用遍。<strong>进行每步推导时，存在两个选择问题：</strong></p>
+<p>  <strong>⑴ 选择句型中哪一个非终结符进行推导</strong></p>
+<p>  <strong>⑵ 选择非终结符的哪一个规则进行推导</strong></p>
+<p><strong>问题⑴可以采用最左推导解决。问题⑵通常需要穷举每一个规则的可能推导。</strong></p>
+<p><strong>成功：在推到过程中一旦出现个符号串α，便结束穷举过程，断定符号串α是句子。</strong></p>
+<p><strong>失败：当穷举全部可能的推导，而不存在一个符号串α之推导过程的时候，才可以断定符号串α不是句子。</strong></p>
+<img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328140215540.png" style="zoom:67%;" />
+
+<h3 id="自下而上的分析方法"><a href="#自下而上的分析方法" class="headerlink" title="自下而上的分析方法"></a>自下而上的分析方法</h3><p>从输入符号串α开始，逐步进行“归约”，直至归约出文法的开始符号 S，则输入串α是文法G定义的语言的句子。否则不是。</p>
+<p>这种分析方法在进行每步归约时，存在两个如何选择句型α的子串β进行归约的问题(α&#x3D;β δ)。</p>
+<p>如果文法规则没有相同的右部，则在语法分析的过程中，一旦出现子串β与某条规则的右部相同，就可以使用这条规则进行归约,简单优先分析法就是采用此方法进行归约。</p>
+<p>但这种限制，实际上也限制了文法的表达能力，所以通常是通过在句型中寻找所谓的“句柄”的途径解决的。</p>
+<h3 id="短语、直接短语、句柄"><a href="#短语、直接短语、句柄" class="headerlink" title="短语、直接短语、句柄"></a>短语、直接短语、句柄</h3><p>设G[S]是一文法，αβδ是文法G的句型，如果有S&#x3D;&gt;^*^αAδ且A&#x3D;&gt;^+^β，则称β是句型αβδ的、相对于非终结符A的短语。</p>
+<p>特别地，当A&#x3D;&gt;^+^β实际是A&#x3D;&gt;β即<strong>一步推导时</strong>，则又称β是句型αβδ的、相对于非终结符A的直接短语（或简单短语）。</p>
+<p><strong>句型的最左直接短语，称为该句型的句柄。</strong></p>
+<blockquote>
+<p>短语的理解：</p>
+<p> “αβδ是文法G的句型”，即S &#x3D;&gt;^*^αβδ</p>
+<p> “S&#x3D;&gt;^*^αAδ且A&#x3D;&gt;^+^β”，即S&#x3D;&gt; … &#x3D;&gt;αAδ&#x3D;&gt; … &#x3D;&gt;αβδ</p>
+<p>  这表明，如果β是句型αβδ的、相对于A的短语，则至少存在一个推导，使得αAδ &#x3D;&gt;^+^ αβδ，或者αβδ&lt;&#x3D;^+^ αAδ。</p>
+<p>  特别地，如果β是直接短语，则αAδ &#x3D;&gt; αβδ，或者αβδ&lt;&#x3D;αAδ。</p>
+</blockquote>
+<p>【直接短语、短语都是某一个句型的子串】</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E9%9F%B3/image-20200328144445764.png"></p>
+<p>在语法树中，<strong>短语是子树的叶子的组合</strong>；<strong>直接短语是两层子树的末端</strong>【i3和F1是两层子树】</p>
+<h2 id="文法在实用中的一些说明"><a href="#文法在实用中的一些说明" class="headerlink" title="文法在实用中的一些说明"></a>文法在实用中的一些说明</h2><p>在实际应用中，对于文法规则提出了一些限制条件，但这些并没有限制文法的语言描述能力。限制下列 3种规则的使用：</p>
+<p><strong>（1）有害规则 形如U→U的规则，称为有害规则。</strong></p>
+<p><strong>（2）不可达规则 不在任何规则右部出现的非终结符对应的规则，称为不可达规则。</strong></p>
+<p><strong>（3）不可终止规则  如果从某非终结符开始，不可能推导出任意终结串来，则该非终结符对应的规则称为不可终止规则。</strong></p>
+<p><strong>不含有多余规则的文法，称为压缩过的文法。在后面讨论的文法时，都假设是压缩过的的文法。</strong></p>
+<h3 id="ε规则问题"><a href="#ε规则问题" class="headerlink" title="ε规则问题"></a>ε规则问题</h3><p>在文法设计中，使用ε规则有时会带来方便，但会导致文法讨论和证明的复杂。</p>
+<p>一个上下文无关文法G是否必须使用ε规则，完全取决于文法G产生的语言L(G[S])中是否含有ε语句。</p>
+<p>可以证明，如果ε不属于L(G[S]),则存在一个等价的文法G’[S’] ，且G’ 不含ε规则。</p>
+<p>如果ε∈ L(G[S]),则存在一个等价的文法G’[S’] ，且G’ 仅含S’ →ε的一个空规则。</p>
+<p><strong>提示：使用“代入法”，即可得到等价的文法G’(S’)</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/03/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%96%87%E6%B3%95%E5%92%8C%E8%AF%AD%E8%A8%80/" data-id="claaf6qj700abtkuph63c0rnb" data-title="编译原理-文法和语言" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/27/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          编译原理-语法分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/23/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E6%A6%82%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">编译原理-概述</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

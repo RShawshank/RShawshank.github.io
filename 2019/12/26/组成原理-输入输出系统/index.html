@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>组成原理-输入输出系统 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="输入输出系统  概述IO系统具有的特点 异步性：外围设备相对于处理机是异步工作的。 实时性：当外围设备与处理机交互时，由于设备的类型不同，它们的工作步调是不同的，处理机必须按照不同设备所要求传送方式和传输速率不失时机地为设备提供服务，这就要求实时性控制； 与设备无关性：各种外部设备必须根据其特点和要求选择一种标准接口和处理机进行连接，它们之间的差别必须由设备本身的控制器通过硬件和软件来填补；这样，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="组成原理-输入输出系统">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/26/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="输入输出系统  概述IO系统具有的特点 异步性：外围设备相对于处理机是异步工作的。 实时性：当外围设备与处理机交互时，由于设备的类型不同，它们的工作步调是不同的，处理机必须按照不同设备所要求传送方式和传输速率不失时机地为设备提供服务，这就要求实时性控制； 与设备无关性：各种外部设备必须根据其特点和要求选择一种标准接口和处理机进行连接，它们之间的差别必须由设备本身的控制器通过硬件和软件来填补；这样，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155751236.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155821404.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226161108043.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226165258341.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226170332390.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20171130091852029">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173353103.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173426866.png">
+<meta property="article:published_time" content="2019-12-25T23:30:39.000Z">
+<meta property="article:modified_time" content="2020-07-30T13:20:14.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="组成原理">
+<meta property="article:tag" content="输入输出系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155751236.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-组成原理-输入输出系统" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/26/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" class="article-date">
+  <time class="dt-published" datetime="2019-12-25T23:30:39.000Z" itemprop="datePublished">2019-12-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      组成原理-输入输出系统
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="输入输出系统"><a href="#输入输出系统" class="headerlink" title="输入输出系统"></a>输入输出系统</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155751236.png"></p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155821404.png"></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="IO系统具有的特点"><a href="#IO系统具有的特点" class="headerlink" title="IO系统具有的特点"></a>IO系统具有的特点</h3><ul>
+<li>异步性：外围设备相对于处理机是异步工作的。</li>
+<li>实时性：当外围设备与处理机交互时，由于设备的类型不同，它们的工作步调是不同的，处理机必须按照不同设备所要求传送方式和传输速率不失时机地为设备提供服务，这就要求实时性控制；</li>
+<li>与设备无关性：各种外部设备必须根据其特点和要求选择一种标准接口和处理机进行连接，它们之间的差别必须由设备本身的控制器通过硬件和软件来填补；这样，处理机本身无须了解外设的具体细节，可以采用统一的硬件和软件对其管理。</li>
+</ul>
+<h3 id="输入过程"><a href="#输入过程" class="headerlink" title="输入过程"></a>输入过程</h3><p>1、CPU将一个地址放在地址总线上，选择设备</p>
+<p>2、CPU等候输入设备的数据成为有效</p>
+<p>3、CPU从数据总线读入数据</p>
+<h3 id="输出过程"><a href="#输出过程" class="headerlink" title="输出过程"></a>输出过程</h3><p>1、CPU将一个地址放在地址总线上，选择设备</p>
+<p>2、CPU把数据放在数据总线上；</p>
+<p>3、输出设备认为数据有效，取走数据</p>
+<h2 id="输入输出方式"><a href="#输入输出方式" class="headerlink" title="输入输出方式"></a>输入输出方式</h2><ul>
+<li>无条件IO方式难做到</li>
+</ul>
+<p>在程序的适当位置直接安排I&#x2F;O指令，当程序执行到这些I&#x2F;O指令时，<strong>CPU默认外设始终是准备就绪的</strong>（I&#x2F;O总是准备好接收CPU的输出数据，或总是准备好向CPU输入数据），无需检查I&#x2F;O的状态，就进行数据的传输；</p>
+<p>硬件接口电路和软件控制程序都比较简单。输入时，必须确保CPU执行I&#x2F;O指令读取数据时，外设已将数据准备好；输出时，必须确保外部设备的数据锁存器为空，即外设已将上次的数据取走，等待接收新的数据，否则会导致数据传送出错，但一般的外设难以满足这种要求。</p>
+<ul>
+<li>程序控制IO方式</li>
+</ul>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226161108043.png"></p>
+<p>如果不设置查询次数，就可能会无限次循环导致死机。</p>
+<p><strong>设备状态字寄存器：</strong></p>
+<ol>
+<li>用来标志设备的工作状态，以便接口对外部设备进行监视。</li>
+<li>CPU通过程序查询设备状态位来判断设备的状态。</li>
+<li>因此，设备状态寄存器是设备对主机的窗口，主机通过它了解设备的状态，并对设备设置操作方式。</li>
+<li>设备状态寄存器又叫设备状态字（DSW）是设备所有状态的集合，每种状态均用一个触发器来表示。</li>
+</ol>
+<p>程序控制I&#x2F;O方式特点：<strong>何时对何设备进行输入输出操作完全受CPU控制</strong>，外围设备与CPU处于异步工作关系，数据的输入&#x2F;输出都要经过CPU。</p>
+<ul>
+<li>中断IO方式</li>
+</ul>
+<p>当外设准备好后，<strong>主动</strong>通知CPU并进行接收或输出数据的方法；</p>
+<p>CPU接到外设的通知后暂停现行的工作，转入中断服务程序，和外设交换数据，等中断程序处理完毕后，再返回到被中断的原程序中继续以前被暂停的工作。</p>
+<ul>
+<li>DMA</li>
+</ul>
+<p>是一种完全由硬件执行的I&#x2F;O交换方式</p>
+<ul>
+<li>通道方式和IO处理机方式</li>
+</ul>
+<p>在复杂的计算机系统中，外围设备的台数一般比较多，设备的种类、工作方式和工作速度的差别很大，为了把对外围设备的管理工作从CPU中分离出来，采用通道或I&#x2F;O处理机方式。</p>
+<p>通道是能够专门执行I&#x2F;O指令的处理机，它可以实现对外围设备的统一管理，以及外设与主存之间的数据传输。</p>
+<p>（通道可以跑简单的IO程序）</p>
+<p>I&#x2F;O处理机是通道方式的进一步发展，它的结构更接近于一般处理机。</p>
+<h2 id="中断请求和响应"><a href="#中断请求和响应" class="headerlink" title="中断请求和响应"></a>中断请求和响应</h2><p>可以实现主机和外设之间的并行工作。</p>
+<h3 id="中断的类型"><a href="#中断的类型" class="headerlink" title="中断的类型"></a>中断的类型</h3><p>内部中断：来自于CPU内部的指令中断请求，分为软件中断和异常。</p>
+<p>外部中断：中断请求来自CPU外部，又分为可屏蔽和不可屏蔽中断。</p>
+<p>不可屏蔽中断NMI：由系统内部硬件引发的中断，优先级高于外部硬件中断，且不受中断允许标志位的影响，所以是不可屏蔽中断。</p>
+<p>可屏蔽中断：由外设通过中断请求线向处理器申请而产生的中断，处理器可以用指令来屏蔽（禁止），即不响应它的中断请求。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226165258341.png"></p>
+<h3 id="中断的基本功能"><a href="#中断的基本功能" class="headerlink" title="中断的基本功能"></a>中断的基本功能</h3><h4 id="中断请求信号保持与清除"><a href="#中断请求信号保持与清除" class="headerlink" title="中断请求信号保持与清除"></a>中断请求信号保持与清除</h4><p>使用硬件方式实现</p>
+<h4 id="中断源识别"><a href="#中断源识别" class="headerlink" title="中断源识别"></a>中断源识别</h4><p>识别中断号。</p>
+<h4 id="中断控制"><a href="#中断控制" class="headerlink" title="中断控制"></a>中断控制</h4><p>中断触发方式：是指外设以什么逻辑信号去申请中断，即边沿触发和电平触发两种方式。</p>
+<p>中断排队方式：当系统有多个中断源时，就可能出现同时有几个中断源都申请中断，而处理器在一个时刻只能响应并处理一个中断请求；为此，要进行中断排队。处理器按“优先级高的先服务”的原则提供服务。</p>
+<ul>
+<li>按优先级排队：根据任务的轻重缓急，给每个中断源指定CPU响应的优先级，任务紧急的先响应，可以暂缓的后响应。</li>
+<li>循环轮流排队：不分级别高低，CPU轮流响应各个中断源的中断请求。</li>
+</ul>
+<h4 id="中断嵌套"><a href="#中断嵌套" class="headerlink" title="中断嵌套"></a>中断嵌套</h4><p>当CPU正在处理某个中断时，会出现优先级更高的中断源申请中断；为了使更紧急的、级别更高的中断源及时得到服务，需要暂时打断（挂起）当前正在执行的中断服务程序，去处理级别更高的中断请求，处理完成后再返回被打断了的中断服务程序继续执行。</p>
+<p>但级别相同或级别低的中断源不能打断级别高的中断服务，这就是所谓的中断嵌套。</p>
+<p>可屏蔽中断可以进行中断嵌套。NMI不可以进行中断嵌套。</p>
+<h4 id="中断屏蔽"><a href="#中断屏蔽" class="headerlink" title="中断屏蔽"></a>中断屏蔽</h4><p>处理器用指令来控制中断屏蔽触发器的状态，从而控制是否接受某个特殊外设的中断请求。</p>
+<p>处理器内部也有一个中断允许触发器，只有当其为“1”（即开中断），CPU才能响应外部中断。</p>
+<h4 id="中断优先级"><a href="#中断优先级" class="headerlink" title="中断优先级"></a>中断优先级</h4><p>硬件<strong>响应</strong>优先序：未被屏蔽的几个中断源同时提出申请时，CPU选择服务对象的顺序由硬件电路实现，<strong>用户不能修改。</strong></p>
+<ul>
+<li>响应优先序是指CPU对设备中断请求进行响应的先后次序</li>
+</ul>
+<p>软件<strong>服务</strong>优先序：在各中断服务程序开头，用软件设置自己的中断屏蔽字，以此改变实际服务顺序。</p>
+<ul>
+<li>服务优先序是指CPU实际完成中断处理程序的先后次序</li>
+</ul>
+<h4 id="中断的处理"><a href="#中断的处理" class="headerlink" title="中断的处理"></a>中断的处理</h4><p>注意多重中断处理流程。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226170332390.png"></p>
+<h2 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h2><p>DMA的设计是为了解决中断处理程序中每次传送一个字节、字就要响应中断的麻烦。</p>
+<p>方式：</p>
+<ul>
+<li>外设与主存间建立一个由硬件管理的数据通路</li>
+<li>CPU不介入外设与主存的数据传送操作</li>
+<li>减少CPU开销，提升效率</li>
+</ul>
+<p>通常系统总线是由CPU管理的，在ＤＭＡ方式时，就希望CPU把这些总线让出来，即CPU连到这些总线上的线处于第三态(高阻状态)，而由DMA控制器接管，控制传送的字节数，判断DMA是否结束，以及发出DMA结束信号。因此DMA控制器必须有以下功能:</p>
+<p>1、能向CPU发出系统保持(HOLD)信号，提出总线接管请求；</p>
+<p>2、当CPU发出允许接管信号后，负责对总线的控制，进入DMA方式;</p>
+<p>3、能对存储器寻址及能修改地址指针，实现对内存的读写；</p>
+<p>4、能决定本次DMA传送的字节数，判断DMA传送是否借宿。</p>
+<p>5、发出DMA结束信号，使CPU恢复正常工作状态。</p>
+<p>DMA传输将从一个地址空间复制到另外一个地址空间。当CPU初始化这个传输动作，传输动作本身是由DMA控制器来实行和完成。  典型例子—移动一个外部内存的区块到芯片内部更快的内存区。</p>
+<p>对于实现ＤＭＡ传输，它是由DMA控制器直接掌管总线（地址总线、数据总线和控制总线），因此，存在一个总线控制权转移问题</p>
+<p>DMA传输开始前：　　　　CPU——&gt;DMA控制器</p>
+<p>DMA传输结束后：              DMA控制器——&gt;CPU</p>
+<p>一个完整的DMA传输过程必须经历DMA请求、DMA响应、DMA传输、DMA结束4个步骤。</p>
+<p>DMA方式是一种完全由硬件进行组信息传送的控制方式，具有中断方式的优点，<strong>即在数据准备阶段，CPU与外设并行工作。</strong></p>
+<h3 id="DMA传输步骤"><a href="#DMA传输步骤" class="headerlink" title="DMA传输步骤"></a>DMA传输步骤</h3><p>申请阶段：一个设备接口试图通过总线直接向另一个设备发送数据(一般是大批量的数据)，它会先向CPU发送DMA请求信号；</p>
+<p>响应阶段：CPU收到DMA请求信号后，在当前的总线周期结束后，会按DMA信号的优先级和提出DMA请求的先后顺序响应DMA信号；</p>
+<p>数据传送阶段：CPU对某个设备接口响应DMA请求时，会让出总线控制权；于是在DMA控制器的管理下，外设和存储器直接进行数据交换，而不需CPU干预；</p>
+<p>传送结束阶段：数据传送完毕后，设备接口会向CPU发送DMA结束信号，交还总线控制权。</p>
+<h3 id="DMA传输模式"><a href="#DMA传输模式" class="headerlink" title="DMA传输模式"></a>DMA传输模式</h3><h4 id="停止CPU访问内存"><a href="#停止CPU访问内存" class="headerlink" title="停止CPU访问内存"></a>停止CPU访问内存</h4><p>当需要传送一批数据时，DMA控制器首先要求CPU放弃对总线的控制权；然后开始进行数据传送。在一批数据传送完毕后，DMA控制器通知CPU可以使用内存，并把总线控制权交还给CPU。<strong>在这种DMA传送过程中，CPU基本处于不工作状态或者说保持状态。</strong></p>
+<h4 id="周期挪用"><a href="#周期挪用" class="headerlink" title="周期挪用"></a>周期挪用</h4><p>停止CPU访问内存会导致内存使用效率不高。</p>
+<p>当I&#x2F;O设备没有DMA请求时，CPU按程序要求访问内存；一旦I&#x2F;O设备有DMA请求，则由I&#x2F;O设备挪用一个或几个内存周期。</p>
+<blockquote>
+<p>DMA要求访问主存时，CPU暂停<strong>一个或多个存储周期</strong>。一个数据传送结束后，CPU继续运行。</p>
+<p>CPU现场没有变动，仅延缓了指令的执行</p>
+</blockquote>
+<p>I&#x2F;O设备要求DMA传送时可能遇到两种情况：</p>
+<ul>
+<li>当CPU不需要访问内存时，此时I&#x2F;O访内与CPU访内没有冲突，即I&#x2F;O设备挪用一二个内存周期对CPU执行程序没有任何影响；</li>
+<li>CPU也同时要求访问内存，这就产生了访存冲突，在这种情况下<strong>I&#x2F;O设备访存优先</strong>。</li>
+</ul>
+<h4 id="DMA和CPU交替访问内存"><a href="#DMA和CPU交替访问内存" class="headerlink" title="DMA和CPU交替访问内存"></a>DMA和CPU交替访问内存</h4><p>如果CPU的工作周期比内存存取周期长很多，此时采用交替访存的方法，可以使DMA传送和CPU同时发挥最高的效率。</p>
+<p>将主存的存取周期分成两段：一段给CPU使用，一段给DMAC使用。</p>
+<p>缺点是硬件的代价很大，会很复杂。</p>
+<h3 id="DMA和中断的区别"><a href="#DMA和中断的区别" class="headerlink" title="DMA和中断的区别"></a>DMA和中断的区别</h3><ol>
+<li>中断通过程序传送数据，DMA靠硬件来实现。</li>
+<li>中断时机为两指令之间，DMA响应时机为两存储周期之间。</li>
+<li>中断不仅具有数据传送能力，还能处理异常事件。DMA只能进行数据传送。</li>
+<li>DMA仅挪用了一个存储周期，不改变CPU现场。</li>
+<li>DMA请求的优先权比中断请求高。CPU优先响应DMA请求，是为了避免DMA所连接的高速外设丢失数据。</li>
+<li>DMA利用了中断技术</li>
+</ol>
+<h2 id="通道方式"><a href="#通道方式" class="headerlink" title="通道方式"></a>通道方式</h2><p>DMA方式依赖硬件逻辑支持，随着设备数量的增加，DMA控制器增加，成本也相应增加。</p>
+<p>设置专用的输入输出处理机（通道），分担输入输出管理的全部或大部分工作。</p>
+<p>吸取了DMA技术，增加了软件管理，设有专用通道指令</p>
+<p>层次性的I&#x2F;O系统</p>
+<ul>
+<li>一个主机可以连接多个通道</li>
+<li>一个通道可以管理<strong>多个设备控制器</strong></li>
+<li>一个设备控制器又可以控制多台设备。</li>
+</ul>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20171130091852029"></p>
+<p>⑴字节多路通道<br>　　它适用于连接打印机、终端等低速或中速的I&#x2F;O设备。这种通道以字节为单位交叉工作：当为一台设备传送一个字节后，立即转去为另一它设备传送一个字节。</p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173353103.png"></p>
+<p>⑵选择通道<br>　　它适用于连接磁盘、磁带等高速设备。这种通道以“组方式”工作，每次传送一批数据，传送速率很高，但在一段时间<strong>只能为一台设备服务。每当一个I&#x2F;O请求处理完之后，就选择另一台设备并为其服务。</strong></p>
+<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173426866.png"></p>
+<p>⑶成组多路通道<br>　　这种通道综合了字节多路通道分时工作和选择通道传输速率高的特点，其实质是：对通道程序采用多道程序设计技术，使得与通道连接的设备可以并行工作。</p>
+<ul>
+<li>多个设备以数据组（块）为单位交叉使用通道。</li>
+<li>设备占用通道时，连续传送一组数据，然后将出让通道使用权</li>
+<li>数据组的大小因设备而异，有256B、512B或1KB等。</li>
+</ul>
+<h3 id="通道控制方式与DMA控制方式的区别"><a href="#通道控制方式与DMA控制方式的区别" class="headerlink" title="通道控制方式与DMA控制方式的区别"></a>通道控制方式与DMA控制方式的区别</h3><p>1）DMA控制方式中需要CPU来控制所传输数据块的大小，传输的内存地址；通道控制方式中这些信息都是由通道来控制管理的。</p>
+<p>2）一个DMA控制器对应一台设备与内存传递数据，而一个通道可以控制多台设备与内存的数据交换。</p>
+<p>—– I&#x2F;O通道与一般处理器的区别：I&#x2F;O通道的指令类型单一，其所能执行的命令主要局限于与I&#x2F;O操作有关的指令；通道没有自己的内存，通道所执行的通道程序放在主机的内存中，也就是说通道是与CPU共享内存的。</p>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><p>(1)接口：接口是两个不同部件或系统之间的连接部分，可以是两个硬设备(可以都是计算机，也可以都是外部设备)之间的连接，也可以是软件系统中两个独立程序块之间的连接。</p>
+<p>(2)中断：计算机系统运行时，若系统外部、内部或现行程序本身出现某种非预期的事件，CPU将暂时停下现行程序，转向为该事件服务，待事件处理完毕，再恢复执行原来被终止的程序，这个过程称为中断。</p>
+<p>(3) 中断处理优先级:处理优先级是指CPU实际完成中断处理程序的先后次序。对单级中断而言,先被CPU响应的中断服务程序先完成；对多重中断而言，先被CPU响应的中断不一定先完成，这与中断屏蔽密切相关。</p>
+<p>(4) 中断屏蔽: 为了便于利用程序控制中断处理的先后顺序，可通过程序有选择地封锁部分中断源发出的中断请求，而允许其余部分中断仍得到响应，这种方式称为中断屏蔽。</p>
+<p>(5) 多重中断: 若在中断服务程序执行过程中，如果允许CPU响应其它中断请求，则这种中断称为多重中断，也称中断嵌套。</p>
+<p>(6) 中断向量: 通常将中断服务程序的入口地址和程序状态字(有的机器不包含此项)称为中断向量。</p>
+<p>(7) 中断响应优先级: 响应优先级是指CPU对各设备中断请求进行响应的先后次序，它根据中断事件的重要性和迫切性而定。当几个设备同时有中断请求时，优先级高的先响应，优先级低的后响应。</p>
+<p>(8) 中断隐指令: CPU响应中断之后，经过某些操作，转去执行中断服务程序。这些操作是由硬件直接实现的，把它称为中断隐指令。中断隐指令并不是指令系统中的一条真正的指令，它没有操作码，所以中断隐指令是一种不允许、也不可能为用户使用的特殊指令。</p>
+<p>(9) 程序中断I&#x2F;O: 当主机启动外设后，无需等待查询，而是继续执行原来的程序，外设在做好输入输出准备时，向主机发出中断请求，主机接到请求后就暂时中止原来执行的程序，转去执行中断服务程序对外部请求进行处理，在中断处理完毕后返回原来的程序继续执行。</p>
+<p>(10)程序查询I&#x2F;O: 程序查询方式是一种程序直接控制方式,这是主机与外设间进行信息交换的最简单的方式,输入和输出完全是通过CPU执行程序来完成的。一旦某一外设被选中并启动后，主机将查询这个外设的某些状态位，看其是否准备就绪？若外设未准备就绪，主机将再次查询；若外设已准备就绪，则执行一次I&#x2F;O操作。</p>
+<p>(11)DMA: 直接存储器存取控制方式DMA方式下外设与主存之间传送数据时，CPU仍可执行主程序.</p>
+<p>(12)周期挪用:周期挪用是指利用CPU不访问存储器的那些周期来实现DMA操作，此时DMAC可以使用总线而不用通知CPU也不会妨碍CPU的工作。</p>
+<p>(13)通道: 通道方式是DMA方式的发展，在通道方式下，数据的传送方向、存取数据的内存起始地址及传送的数据块长度等都由独立于CPU的通道来进行控制，因此，通道方式可进一步减少CPU的干预。</p>
+<p>(14)选择型通道: 对于这种高速传输，通道难以同时对多个这样的设备进行操作，只能一次对一个设备进行操作,这种通道称为选择通道。</p>
+<p>(15)通道指令: 通道程序是由一系列通道指令组成的，通道指令一般包含被交换数据在内存中应占据的位置、传送方向、数据块长度及被控制的I&#x2F;O设备的地址信息、特征信息（例如是磁带设备还是磁盘设备）等.</p>
+<p>(16)输入设备:向计算机输入数据和信息的设备.</p>
+<p>(17)输出设备:是人与计算机交互的一种部件，用于数据的输出。</p>
+<p>(18)显示分辨率:显示分辨率是显示器在显示图像时的分辨率，分辨率是用点来衡量的，显示器上这个“点”就是指像素(pixel)。</p>
+<p>(19)点距: 点距指屏幕上相邻两个同色像素单元之间的距离，即两个红色（或绿、蓝）像素单元之间的距离。</p>
+<p>(20)行反转扫描法: 先对所有行线送”1”，所有列线送“0”，读键盘行扫描值；然后反过先对所有行线送”0”，然后对所有列线送“1”，并读键盘列扫描值。</p>
+<h3 id="简要问题"><a href="#简要问题" class="headerlink" title="简要问题"></a>简要问题</h3><p>1)什么是接口?它有哪些功能?</p>
+<p>2)主机与外部设备之间如何连接?</p>
+<p>3)主机与外部设备信息交换的控制方式有哪些?各有什么特点?</p>
+<p>4)什么是程序程序查询I&#x2F;O方式,简要说明其工作原理.</p>
+<p>5)比较单级中断和多重中断处理流程的异同点.</p>
+<p>6)中断隐指令完成什么功能?</p>
+<p>7)为什么在保护现场和恢复现场的过程中,CPU必须关中断?</p>
+<p>8)CPU响应中断的条件有哪些?</p>
+<p>9)什么是中断向量,简要分析中断向量方式下形成中断向量的基本方法.</p>
+<p>10)为什么采用DMA方式能提高成组数据传送的速度?</p>
+<p>11)什么是中断优先级?它具有哪两层含义?划分优先等级的原则是什么?</p>
+<p>12)计算机中断系统中使用屏蔽技术有什么好处?</p>
+<p>13)计算机中断响应后，如何调出中断服务程序?</p>
+<p>14)DMA方式传送数据前，主机应向DMA接口输送哪些参数?</p>
+<p>15)比较中断I&#x2F;O和DMA的一统点。</p>
+<p>16)比较DMA与通道的异同点。</p>
+<p>17)中断系统中设计中断允许和中断屏蔽的作用分别是什么?两者是否可以合二为一?</p>
+<p>解：(1)接口是两个不同部件或系统之间的连接部分，可以是两个硬设备(可以都是计算机，也可以都是外部设备)之间的连接，也可以是软件系统中两个独立程序块之间的连接。</p>
+<p>具有的功能：1)寻址功能。2)数据输入&#x2F;输出功能。3)匹配主机与外设的速度差距。4)实现数据格式转换或逻辑电平转换。5)传送主机命令。6)反映设备的工作状态。</p>
+<p>(2)主机通过接口连接I&#x2F;O设备，接口实现主机与外设的连接和信息的交换。</p>
+<p>(3) 主机与外部设备信息交换的控制方式有:程序查询控制方式、程序中断控制方式、直接存储器存取控制方式(DMA)、通道方式、外围处理机方式。</p>
+<p>特点：程序查询控制方式接口设计简单，但是CPU与外设只能串行工作，由于CPU的速度比外设的速度要高得多，所以在信息传送过程中，CPU的大量时间是花费在查询和等待上，从而使系统效率大大降低。</p>
+<p>程序中断控制方式：允许外部设备用“中断”信号中止CPU正在执行的程序。具体他说，当接口电路需要与CPU进行数据交换（输入、输出等）时，便由接口电路向CPU发出一个中断请求信号，CPU响应这一中断请求，并调用中断服务程序完成一个或多个字节的信息交换。这种方式不需要接口软件主动查询，而是由接口电路主动通知CPU，即在设备准备数据阶段，CPU与外设能并行工作，使得接口软件的效率比较高。</p>
+<p>直接存储器存取控制方式：数据传输的基本单位是数据块；所传输的数据是从设备直接送入内存的,或者相反；整块数据的传送是在控制器的控制下完成的；</p>
+<p>通道方式：CPU发出启动通道的指令，通道就开始工作。I&#x2F;O通道控制I&#x2F;O控制器工作，I&#x2F;O控制器又控制I&#x2F;O设备。这样，一个通道可以连接多个I&#x2F;O控制器，而一个I&#x2F;O控制器又可以连接若干台同类型的外部设备。</p>
+<p>外围处理机方式: 通常用于大、中型计算机系统中。由于PPU基本上独立于主机工作，其结构更接近一般处理机，甚至就是一般的通用微小型计算机。它可以完成IOP的功能，还可以完成码制变换、格式处理、数据块检错、纠错等操作。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2019/12/26/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" data-id="claaf6qj3009xtkup0bwffekn" data-title="组成原理-输入输出系统" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          概率分析和随机算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/25/Algorithm_%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">分治策略</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

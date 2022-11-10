@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>主存管理 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="主存管理概述现代操作系统将主存区分为物理主存和逻辑主存2类。 物理主存是共享的物质基础。由多个物理地址构成。 主存共享方式—-分片共享分片的方式(1) 大小不等的区域—根据用户程序的实际需要决定分区的大小 ①分区存储管理 ②段式存储管理 (2) 大小相等的区域—以块为单位，根据用户程序的实际需要决定应分配的块数 页式存储管理 (3) 二者结合 段页式存储管理 由于不同程序的物理地址的首地址都是乱七">
+<meta property="og:type" content="article">
+<meta property="og:title" content="主存管理">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="主存管理概述现代操作系统将主存区分为物理主存和逻辑主存2类。 物理主存是共享的物质基础。由多个物理地址构成。 主存共享方式—-分片共享分片的方式(1) 大小不等的区域—根据用户程序的实际需要决定分区的大小 ①分区存储管理 ②段式存储管理 (2) 大小相等的区域—以块为单位，根据用户程序的实际需要决定应分配的块数 页式存储管理 (3) 二者结合 段页式存储管理 由于不同程序的物理地址的首地址都是乱七">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104213759918.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214348973.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214534920.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214549857.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222505368.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222944954.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222548961.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222959824.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222639015.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104223012937.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104232557824.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104233939211.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234642517.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234749807.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001339566.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105000832513.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001323037.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001435733.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/clip_image002.png">
+<meta property="article:published_time" content="2019-12-29T22:55:22.000Z">
+<meta property="article:modified_time" content="2020-01-06T02:17:44.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="主存管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104213759918.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-OS_主存管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2019-12-29T22:55:22.000Z" itemprop="datePublished">2019-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      主存管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="主存管理概述"><a href="#主存管理概述" class="headerlink" title="主存管理概述"></a>主存管理概述</h1><p>现代操作系统将主存区分为物理主存和逻辑主存2类。</p>
+<p>物理主存是共享的物质基础。由多个物理地址构成。</p>
+<h2 id="主存共享方式—-分片共享"><a href="#主存共享方式—-分片共享" class="headerlink" title="主存共享方式—-分片共享"></a>主存共享方式—-分片共享</h2><h3 id="分片的方式"><a href="#分片的方式" class="headerlink" title="分片的方式"></a>分片的方式</h3><p>(1) 大小不等的区域—根据用户程序的实际需要决定分区的大小</p>
+<p>①分区存储管理</p>
+<p>②段式存储管理</p>
+<p>(2) 大小相等的区域—以块为单位，根据用户程序的实际需要决定应分配的块数</p>
+<p>页式存储管理</p>
+<p>(3) 二者结合</p>
+<p>段页式存储管理</p>
+<p>由于不同程序的物理地址的首地址都是乱七八糟的，不方便用户使用。所以采用逻辑地址（虚地址）将首地址设置为0。逻辑地址和物理地址之间的映射就是地址映射。</p>
+<h3 id="程序的逻辑组织"><a href="#程序的逻辑组织" class="headerlink" title="程序的逻辑组织"></a>程序的逻辑组织</h3><h4 id="一维地址结构"><a href="#一维地址结构" class="headerlink" title="一维地址结构"></a>一维地址结构</h4><p>一个程序是一个连续、线性的地址结构；确定线性地址空间中的指令地址或操作数地址只需要一个信息。</p>
+<h4 id="二维地址结构"><a href="#二维地址结构" class="headerlink" title="二维地址结构"></a>二维地址结构</h4><p>一个程序由<strong>若干个分段组成</strong>（数据段、代码段、栈段······），每个分段是一个连续的地址区；</p>
+<p>确定线性地址空间中的指令地址或操作数地址需要两个信息，一是该信息所在的分段，另一个是该信息在段内的偏移量。</p>
+<h1 id="主存管理功能"><a href="#主存管理功能" class="headerlink" title="主存管理功能"></a>主存管理功能</h1><p>实现的功能：主存分配、主存保护、虚拟主存</p>
+<ul>
+<li>地址映射—-将逻辑地址映射成物理地址</li>
+<li>主存分配—-在多用户之间分配物理主存</li>
+<li>存储保护—-对各用户区的信息提供保护措施</li>
+<li>主存扩充&#x2F;虚拟主存—-扩充逻辑主存区</li>
+</ul>
+<h2 id="地址映射"><a href="#地址映射" class="headerlink" title="地址映射"></a>地址映射</h2><p>将程序地址空间中使用的逻辑地址变换成主存中的物理地址的过程，称为地址映射。</p>
+<p><strong>地址重定位就是操作系统将逻辑地址转变为物理地址的过程。。。也就是对目标程序中的指令和数据进行修改的过程</strong></p>
+<p><strong>将逻辑地址空间重定位到物理地址空间的时机有三种：</strong></p>
+<p>1、程序编译连接时。</p>
+<p>​			在程序编写或程序编译时确定虚、实地址之间的对应关系，结果是一个不能浮动的程序模块。</p>
+<p>2、程序装入内存时。</p>
+<p>​			在程序装入过程中随即进行的地址变换方式称为<strong>静态地址映射</strong>。</p>
+<p>3、程序执行时。</p>
+<p>​			在程序执行期间，随着每条指令和数据的访问自动地连续地进行地址映射，这种地址变换方式称为<strong>动态地址映射</strong>。</p>
+<p><strong>静态地址映射与动态地址映射的区别</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">静态地址映射</th>
+<th align="center">动态地址映射</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">在程序装入过程中在程序执行期间进行地址映射</td>
+<td align="center">在程序执行期间进行地址映射进行地址映射</td>
+</tr>
+<tr>
+<td align="center">需软件(重定位装入程序)</td>
+<td align="center">需硬件地址变换机构( 重定位寄存器)</td>
+</tr>
+<tr>
+<td align="center">需花费较多CPU时间</td>
+<td align="center">地址变换快</td>
+</tr>
+<tr>
+<td align="center">不灵活</td>
+<td align="center">灵活</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>一、静态重定位</strong><br>　　<strong>静态重定位是在程序执行之前进行重定位，它根据装配模块将要装入的内存起始位置，直接修改装配模块中的有关使用地址的指令。</strong><br>　　例如，一个以“0”作为参考地址的装配模块，要装入以100为起始地址的存储空间。显然，在装入之前要做某些修改，程序才能正确执行。例如，MOV　 EAX，[500]这条指令的意义，是把相对地址为500的存储单元内容1234装入EAX号累器。现在内容为1234的存储单元的实际地址为1500， 即为相对地址(500)加上装入的地址(1000),因此，MOV　EAX，[500]这条指令中的直接地址码也要相应地加上起始地址，而成为MOV　 EAX，[1500]。<br>　　程序中涉及直接地址的每条指令都要进行这样的修改。需要修改的位置称为重定位项，所做的加实际装入模块起始地址修改中的块起始地址称为重定位因子。<br>　　为支持静态重定位，连接程序在生成统一地址空间和装配模块时，　应产生一个重定位项表，连接程序此时还不知道装配模块将要装入的实际位置，故重定位表 所给出的需修改位置是相对地址所表示的位置。<br>　　操作系统的装入程序要把装配模块和重定位项表一起装入内存。由装配模块的实际装入起始地址得到重定位因子，然后实施如下两步：<br>　　（1）取重定位项，加上重定位因子而得到欲修改位置的实际地址；<br>　　（2）对实际地址中的内容再做加重定位因子的修改，从而完成指令代码的修改。<br>　　对所有的重定位项实施上述两步操作后，静态重定位才完成，尔后可启动程序执行。使用过的重定位项表内存副本随即被废弃。</p>
+<p>　　<strong>静态重定位有着无需硬件支持的优点，但存在着如下的缺点：一是程序重定位之后就不能在内存中搬动了；二是要求程序的存储空间是连续的，不能把程序放在若干个不连续的区域内。</strong></p>
+<p><strong>二、动态重定位</strong><br>　　<strong>动态重定位是指，不是在程序执行之前而是在程序执行过程中进行地址重定位。更确切地说，是在CPU每次访问内存单元前才进行地址变换。</strong>动态重定位可使装配模 块不加任何修改而装入内存，但是它需要硬件——定位寄存器的支持。<br>　　程序的目标模块装入内存时，与地址有关的各项均保持原来的相对地址不进行任何修改。如MOV　1，[500]这条指令仍是相对地址500。当此模块被 操作系统调度到处理机上执行时，操作系统将把此模块装入的实际起始起始地址减去目标模块的相对基地址，然后将其差值装入定位寄存器中。当CPU取得一条访问内存的指令时，地址变换硬件逻辑自动将指令中的相对地址与定位寄存器中的值相加，再依此和值作为内存绝对地址去访问该单元中的数据。<br>　　由此可见，进行动态重定位的时机是在指令执行过程中，每次访问内存前动态地进行。采取动态重定位可带来两个好处：<br>　　（1）目标模块装入内存时无需任何修改，因而装入之后再搬迁也不会影响其正确执行，这对于存储器紧缩、解决碎片问题是极其有利的；<br>　　（2）一个程序由若干个相对独立的目标模块组成时，每个目标模块各装入一个存储区域，这些存储区域可以不是顺序相邻的，只要各个模块有自己对应的定位寄存器就行。</p>
+<p>　　<strong>动态重定位技术所付出的代价是需要硬件支持。</strong></p>
+</blockquote>
+<h2 id="主存分配"><a href="#主存分配" class="headerlink" title="主存分配"></a>主存分配</h2><p>用于主存分配的数据结构：主存资源信息块、空闲区队列；</p>
+<p><strong>主存管理器的一些策略</strong></p>
+<p>分配策略——在众多个请求者中选择一个请求者的原则</p>
+<p>放置策略——在可用资源中，选择一个空闲区的原则</p>
+<p><strong>调入策略</strong>——决定信息装入主存的时机预调策略：预先将信息调入主存请调策略：当需要信息时，将信息调入主存</p>
+<p><strong>淘汰策略</strong>——在主存中没有可用的空闲区(对某一程序而言)时，决定哪些信息从主存中移走，即确定淘汰已占用的内存区的原则。</p>
+<p><strong>调入策略对页式系统或非页式系统没有多大区别，但是淘汰策略和放置策略在页式和非页式系统中是不同的。（页式的页的大小是固定的）</strong></p>
+<h2 id="主存扩充"><a href="#主存扩充" class="headerlink" title="主存扩充"></a>主存扩充</h2><p>实现的方法：</p>
+<ul>
+<li>程序的全部代码和数据存放在辅存中；</li>
+<li>将程序当前执行所涉及的那部分程序代码放入主存中；</li>
+<li>程序执行时，当所需信息不在主存，由操作系统和硬件相配合来完成主存从辅存中调入信息，程序继续执行。</li>
+</ul>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p>由操作系统和硬件相配合来完成主存和辅存之间的信息的动态调度。这样的计算机系统好像为用户提供了一个其存储容量比实际主存大得多的存储器，这个存储器称为虚拟存储器。<strong>本质的大小其实是没有变的，但是给用户的感觉就是变大了，1元钱看成了100元，这100元就是虚拟存储器</strong></p>
+<p><strong>虚拟存储器的核心是将程序的访问地址和主存的物理地址分离。为什么这么说？我们知道访问地址其实是逻辑地址（虚地址），它会去进行地址映射找到主存地址（这个功能由操作系统实现，所以用户不用管）。但是引入了虚存后（不要和虚地址搞混淆了），我们不需要了解主存的物理地址，我们只在虚存中运行（当然，真正运行的时候还是调入一部分进主存的）。这样就把访问地址和虚存互相对应（也就说成了和主存的物理地址分离）</strong></p>
+<ul>
+<li>逻辑地址与物理地址分开</li>
+<li>存储空间与虚地址空间分开</li>
+<li>提供地址变换机构</li>
+</ul>
+<p><strong>实现虚拟存储器的物质基础</strong></p>
+<ul>
+<li>有相当容量的辅存：足以存放应用程序的虚地址空间</li>
+<li>有一定容量的主存：存放进入主存的多进程的信息</li>
+<li>地址变换机构</li>
+</ul>
+<h2 id="存储保护"><a href="#存储保护" class="headerlink" title="存储保护"></a>存储保护</h2><p>在多用户环境中，主存储器按区分配给各用户程序使用。为了互不影响，必须由硬件(软件配合)保证各用户程序只能在给定的存储区域内活动，这种措施叫做存储保护。</p>
+<h3 id="界地址保护"><a href="#界地址保护" class="headerlink" title="界地址保护"></a>界地址保护</h3><h4 id="上、下界保护"><a href="#上、下界保护" class="headerlink" title="上、下界保护"></a>上、下界保护</h4><p><strong>比较的是物理地址</strong>。</p>
+<p>硬件为分给应用程序的每一个连续的主存空间设置一对上下界寄存器—–分别指向该存储空间的上界和下界。</p>
+<h4 id="基地址、限长保护"><a href="#基地址、限长保护" class="headerlink" title="基地址、限长保护"></a>基地址、限长保护</h4><p><strong>比较的是逻辑地址</strong></p>
+<p>基地址存放的是逻辑地址—段的首地址</p>
+<h3 id="存储键保护"><a href="#存储键保护" class="headerlink" title="存储键保护"></a>存储键保护</h3><h1 id="分区存储管理"><a href="#分区存储管理" class="headerlink" title="分区存储管理"></a>分区存储管理</h1><p>对应的是主存分配</p>
+<h2 id="动态分区分配"><a href="#动态分区分配" class="headerlink" title="动态分区分配"></a>动态分区分配</h2><p>在处理程序的过程中，建立分区，依用户请求的大小分配分区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104213759918.png"></p>
+<p>很明显，空闲区被切碎会产生内存碎片。</p>
+<p><strong>动态分区的分配方法中，对用户程序进行动态分配并实现动态地址映射（这个不难理解，由于在动态分区中，系统是根据程序的大小再决定分给程序内存空间的大小，在地址映射中，事先根本就不可能有物理地址让你静态地址映射）</strong></p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214348973.png"></p>
+<h2 id="分区分配数据结构"><a href="#分区分配数据结构" class="headerlink" title="分区分配数据结构"></a>分区分配数据结构</h2><p>主存资源信息块(M_RIB)</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214534920.png"></p>
+<p>分区描述器(PD)</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214549857.png"></p>
+<blockquote>
+<p>flag：为0  ——空闲区<br>             为1  ——已分配区</p>
+<p>size：分区大小</p>
+<p>next：空闲区——自由主存队列中的勾链字<br>             已分配区——此项为零</p>
+</blockquote>
+<h2 id="分区的分配和回收"><a href="#分区的分配和回收" class="headerlink" title="分区的分配和回收"></a>分区的分配和回收</h2><p>注意：动态地址映射只是决定了用户程序什么时候将虚地址映射到物理地址中。但是主存分配给用户程序的地址还没有决定。</p>
+<h3 id="分区分配"><a href="#分区分配" class="headerlink" title="分区分配"></a>分区分配</h3><p>动态分区的策略如下：“放置策略”</p>
+<p>①寻找空闲块<br>                依申请者所要求的主存区的大小，分区分配程序在自由主存队列中找一个满足用户需要的空闲块；</p>
+<p>②若找到了所需的空闲区，有两种情况<br>                i 空闲区与要求的大小相等，将该空闲区分配并从队列中摘除；<br>                ii 空闲区大于所要求的的大小，将空闲区分为两部分：一部分成为已分配区，建立已分配区的描述器；剩下部分仍为空闲区。返回所分配区域的首址；</p>
+<p>③否则，告之不能满足要求。</p>
+<h3 id="分区回收"><a href="#分区回收" class="headerlink" title="分区回收"></a>分区回收</h3><p>①检查释放分区(即为回收分区)在主存中的邻接情况<br>                <strong>若上、下邻接空闲区，则合并，成为一个连续的空闲区</strong></p>
+<p>②若回收分区不与任何空闲区相邻接<br>                建立一个新的空闲区，并加入到空闲区队列中。</p>
+<h2 id="放置策略"><a href="#放置策略" class="headerlink" title="放置策略"></a>放置策略</h2><p>选择空闲区的策略，称为放置策略。</p>
+<p>本质上是空闲区队列的排序问题：<br>如上述提到的从高地址到低地址的分配方式：对应的就是按照地址增加、减少的次序分类排序<br>其他的排序还有：按照区的大小增加、减少的次序排序</p>
+<p>常用的放置策略——</p>
+<ul>
+<li>首次匹配(首次适应算法)</li>
+<li>最佳匹配(最佳适应算法)</li>
+<li>最坏匹配(最坏适应算法)</li>
+</ul>
+<h3 id="首次适应"><a href="#首次适应" class="headerlink" title="首次适应"></a>首次适应</h3><p>首次适应算法是将输入的程序放置到主存里第一个足够装入它的地址<strong>最低</strong>的空闲区中。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222505368.png"></p>
+<p><strong>空闲区队列结构：</strong></p>
+<p>空闲区地址由低到高排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222944954.png"></p>
+<p><strong>首次适应算法的特点</strong></p>
+<p>尽可能地利用存储器中低地址的空闲区，而尽量保存高地址的空闲区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222548961.png"></p>
+<h3 id="最佳适应"><a href="#最佳适应" class="headerlink" title="最佳适应"></a>最佳适应</h3><p>最佳适应算法是将输入的程序放置到主存中与它所需大小最接近的空闲区中。</p>
+<p><strong>空闲区队列结构</strong></p>
+<p>空闲区大小由小到大排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222959824.png"></p>
+<p><strong>最佳适应算法的特点</strong></p>
+<p>尽可能地利用存储器中小的空闲区，而尽量保存大的空闲区。</p>
+<h3 id="最坏适应"><a href="#最坏适应" class="headerlink" title="最坏适应"></a>最坏适应</h3><p>最坏适应算法是将输入的程序放置到主存中与它所需大小差距最大的空闲区中。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222639015.png"></p>
+<p><strong>空闲区队列结构</strong></p>
+<p>空闲区大小由大到小排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104223012937.png"></p>
+<p><strong>最坏适应算法的特点</strong></p>
+<p>尽可能地利用存储器中大的空闲区。</p>
+<h2 id="碎片问题及拼接技术"><a href="#碎片问题及拼接技术" class="headerlink" title="碎片问题及拼接技术"></a>碎片问题及拼接技术</h2><p>在已分配区之间存在着的一些没有被充分利用的空闲区。</p>
+<p>所谓拼接技术是指移动存储器中某些已分配区中的信息，使本来分散的空闲区连成一个大的空闲区。</p>
+<h1 id="页式存储管理"><a href="#页式存储管理" class="headerlink" title="页式存储管理"></a>页式存储管理</h1><p>程序的存放将不再是连续的。</p>
+<p>程序的地址空间被等分成大小相等的片，称为<strong>页面</strong>，又称为虚页。<br><strong>一般页面的大小为1KB、2KB、4KB</strong></p>
+<p>主存被等分成大小相等的片，称为<strong>主存块</strong>，又称为实页。</p>
+<p><strong>主存的块和页面的大小是相等的并且为2的幂次</strong></p>
+<p>好处：可以方便的支持虚拟存储，扩充内存。因为它可以只将一部分页面装入主存中即可。也直接解决了碎片问题。</p>
+<blockquote>
+<p>但是在按区分配中，</p>
+</blockquote>
+<p>需要解决的问题：</p>
+<ul>
+<li>页式系统的地址映射—–动态地址映射</li>
+<li>请调策略—-当装入部分页面的时候，需要询问当前访问的信息是否在主存中。不在的话，系统会从辅存中调入请求的页面。</li>
+<li>放置策略—-确定程序的各个页面分配到主存的哪些块中，以及什么原则挑选主存块</li>
+<li>淘汰策略—-当主存块用完后，确定哪些页面被淘汰出主存。</li>
+</ul>
+<h2 id="页式地址变换"><a href="#页式地址变换" class="headerlink" title="页式地址变换"></a>页式地址变换</h2><h3 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h3><p>为了实现从地址空间到物理主存的映象，系统建立的<strong>记录页与内存块之间对应关系的地址变换</strong>的机构称为页面映像表，简称页表。</p>
+<p>页表的组成：</p>
+<p>​		i 如果选择高速缓冲存储器：地址变换速度快，但成本较高</p>
+<p>​		ii 如果选择主存区域：地址变换速度比硬件慢，成本较低主存管理——页式存储管理</p>
+<h3 id="虚地址结构"><a href="#虚地址结构" class="headerlink" title="虚地址结构"></a>虚地址结构</h3><p>页号+页内位移。</p>
+<p>当CPU给出一个虚地址（指令地址或者操作数地址），将其拆分成页号和页内位移表示该地址对应于物理地址中的具体位置（哪个页面和页面中的哪个位置）</p>
+<h3 id="页式地址变换-1"><a href="#页式地址变换-1" class="headerlink" title="页式地址变换"></a>页式地址变换</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104232557824.png"></p>
+<p>页式地址变换步骤</p>
+<p>i CPU给出操作数地址(为2500) ；<br>ii  由分页机构自动地把逻辑地址分为两部分，得到页号p和页内相对位移w (p &#x3D;2，w &#x3D;452)；<br>iii 根据页表始址寄存器指示的页表始地址，以页号为索引，找到第2页所对应的块号(为7) ；<br>iv  将块号b和页内位移量w拼接在一起，就形成了访问主存的物理地址(7x1024+452&#x3D;7620)</p>
+<p>通过页表将虚地址（也就是逻辑地址）中的页号对应到物理地址中的块号。由于页面的大小和内存块的大小是一样的，所以虚地址的页内位移就是物理地址中的块内位移。</p>
+<blockquote>
+<p>分区管理的地址映射：</p>
+<p>每个进程在分区说明表（ 为了管理分区，设置一张不属于任何进程的分区说明表，也就是放置策略章节对应的分区表）找到自己对应的表项目，<strong>根据表中的物理起始地址+自己的逻辑地址，就得到了实际的物理地址</strong>！目前为止需要注意的是，分区分配中，每个进程的分配的物理空间仍然是连续的!</p>
+<p>换一个说法：</p>
+<p>作业装入内存时，是将该用户的程序和数据原封不动地装入到内存中。当调度该进程在cpu上执行时，<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">操作系统</a>就自动将该进程在内存的起始地址装入<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%9F%BA%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">基址寄存器</a>，将进程的大小装入限长寄存器<br>。当执行指令时，如果地址合法，则将相对地址与<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%9F%BA%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">基址寄存器</a>中的地址相加，所得结果就是真正要访问的<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">内存地址</a>；如果地址越界，则发出相应中断，进行处理。</p>
+<p>虚实地址映射极为简单。</p>
+</blockquote>
+<h3 id="联想存储器LSB"><a href="#联想存储器LSB" class="headerlink" title="联想存储器LSB"></a>联想存储器LSB</h3><p>高速、小容量半导体存储部件，又称缓冲存储器</p>
+<p>快表</p>
+<p>在缓冲存储器中存放正在运行的进程当前用到的页号和对应的块号，又称为快表。</p>
+<p>具体可以参见《组成原理》中《存储系统》章节。</p>
+<p><strong>注意一点：页表查询只在联想映像不匹配时进行</strong></p>
+<h2 id="请调页面的机制"><a href="#请调页面的机制" class="headerlink" title="请调页面的机制"></a>请调页面的机制</h2><p>①简单页式系统：装入一个程序的全部页面才能投入运行。</p>
+<p>②请求页式系统：装入一个程序的部分页面即可投入运行。</p>
+<p>Q：如何发现所要访问的页面不在主存？</p>
+<p>A：扩充页表功能</p>
+<p>Q：如何确认所要访问的页面不在主存时如何处理？</p>
+<p>A：缺页处理</p>
+<h3 id="扩充页表功能"><a href="#扩充页表功能" class="headerlink" title="扩充页表功能"></a>扩充页表功能</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104233939211.png"></p>
+<p>中断位i：标识该页是否在主存</p>
+<p>​						若i&#x3D;1，表示此页不在主存；<br>​						若i&#x3D;0，表示该页在主存</p>
+<p>辅存地址：该页面在辅存的位置</p>
+<h3 id="缺页处理"><a href="#缺页处理" class="headerlink" title="缺页处理"></a>缺页处理</h3><ul>
+<li><p>当从虚地址中得到页号，判断页号不在主存的时候，会发送缺页中断。</p>
+</li>
+<li><p>接下来要将缺页的部分拉回到主存中：</p>
+<ul>
+<li>判断时候有空闲块：<ul>
+<li>有的话就从辅存读入所需的页，并且调整存储分配表和页表，然后重新启动被中断的指令</li>
+<li>没有的话根据淘汰算法选择一页淘汰（淘汰掉的页如果还有用就将其放回辅存，没有用就丢掉），调整存储分配表和页表。然后从辅存中读入所需的页</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234642517.png"></p>
+<h2 id="淘汰机制和策略"><a href="#淘汰机制和策略" class="headerlink" title="淘汰机制和策略"></a>淘汰机制和策略</h2><p>用来选择淘汰哪一页的规则叫做置换策略，或称淘汰算法。</p>
+<p>Q：如何确定那一页被淘汰？</p>
+<p>A：根据最近有没有使用、使用频率等</p>
+<h3 id="扩充页表功能-1"><a href="#扩充页表功能-1" class="headerlink" title="扩充页表功能"></a>扩充页表功能</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234749807.png"></p>
+<p>①引用位——标识该页最近是否被访问<br>                                为“0”——该页没有被访问；为“1”——该页已被访问</p>
+<p>②改变位——表示该页是否被修改<br>                                为“0”——该页未被修改；为“1”——该页已被修改</p>
+<blockquote>
+<p>颠簸(thrashing)，又称为“抖动”</p>
+<p>简单地说，导致系统效率急剧下降的主存和辅存之间的频繁页面置换现像称为“抖动”。</p>
+</blockquote>
+<h3 id="缺页中断率"><a href="#缺页中断率" class="headerlink" title="缺页中断率"></a>缺页中断率</h3><p>假定程序p共有n页，系统分配m块，有1≤m≤n；若程序p在运行中：成功的访问次数为s，不成功的访问次数为f；缺页中断率：<br>$$<br>f′&#x3D;f&#x2F; (s+ f)\<br>f′&#x3D; f (r，m，p)；\<br>r：置换算法；m：系统分配的块数；p：程序特征<br>$$</p>
+<h3 id="常用的置换算法"><a href="#常用的置换算法" class="headerlink" title="常用的置换算法"></a>常用的置换算法</h3><h4 id="最佳算法（OPT算法）"><a href="#最佳算法（OPT算法）" class="headerlink" title="最佳算法（OPT算法）"></a>最佳算法（OPT算法）</h4><p>当要调入一新页而必须先淘汰一旧页时，所淘汰的那一页应是以后不再要用的，或者是在最长的时间以后才会用到的那页。</p>
+<p>简单说，就是不肯可能实现的（你怎么知道那页是以后不用的）</p>
+<p><strong>站在现在，往未来看</strong></p>
+<h4 id="先进先出淘汰算法（FIFO算法）"><a href="#先进先出淘汰算法（FIFO算法）" class="headerlink" title="先进先出淘汰算法（FIFO算法）"></a>先进先出淘汰算法（FIFO算法）</h4><p>总是<strong>选择在主存中居留时间最长(即最早进入主存</strong>)的一页淘汰。</p>
+<p><strong>实现</strong></p>
+<ul>
+<li>建立一个页面进入主存的先后次序表；</li>
+<li>建立一个替换指针，指向最早进入主存的页面；</li>
+<li>当需要置换一页时，选择替换指向的那一页，然后调整替换指针的内容（指向替换后最早进入主存的页面，因为之前最早进入的被替换出去了）。</li>
+</ul>
+<blockquote>
+<p>在存储分块表中记录页面进入主存的先后次序：4→5→1→2   当要调入第6页时：如何处理? 5→1→2 →6</p>
+</blockquote>
+<h4 id="最久未使用淘汰算法-LRU算法"><a href="#最久未使用淘汰算法-LRU算法" class="headerlink" title="最久未使用淘汰算法(LRU算法)"></a>最久未使用淘汰算法(LRU算法)</h4><p>总是<strong>选择最长时间未被使用</strong>的那一页淘汰。</p>
+<p><strong>实现</strong></p>
+<ul>
+<li><p>用引用位考察页面的使用情况；</p>
+</li>
+<li><p>当访问页面时，将引用位置1，并记时；</p>
+</li>
+<li><p>当要淘汰一页时，选择时间最长的一页淘汰。</p>
+<p>要精确实现很困难</p>
+<ul>
+<li>硬件方法：采用计数器</li>
+<li>软件方法：采用页号栈</li>
+</ul>
+</li>
+</ul>
+<h1 id="段式、段页式存储管理"><a href="#段式、段页式存储管理" class="headerlink" title="段式、段页式存储管理"></a>段式、段页式存储管理</h1><h2 id="段式地址空间"><a href="#段式地址空间" class="headerlink" title="段式地址空间"></a>段式地址空间</h2><p>分段是程序中自然划分的一组逻辑意义完整的信息集合。<br>分段的例：代码分段、数据分段、栈段页。</p>
+<h3 id="程序地址空间"><a href="#程序地址空间" class="headerlink" title="程序地址空间"></a>程序地址空间</h3><p>由若干个逻辑分段组成，每个分段有自己的名字，对于一个分段而言，它是一个连续的地址区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001339566.png"></p>
+<h3 id="段式地址结构"><a href="#段式地址结构" class="headerlink" title="段式地址结构"></a>段式地址结构</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105000832513.png"></p>
+<h2 id="段式地址变换"><a href="#段式地址变换" class="headerlink" title="段式地址变换"></a>段式地址变换</h2><p>步骤：</p>
+<ul>
+<li>取出程序地址(s，w)；</li>
+<li>用s检索段表；</li>
+<li>如w＜0或w≥L则主存越界；</li>
+<li>(B＋w)即为所需主存地址（<strong>B是基址</strong>）</li>
+</ul>
+<h2 id="页式系统与段式系统的区别"><a href="#页式系统与段式系统的区别" class="headerlink" title="页式系统与段式系统的区别"></a>页式系统与段式系统的区别</h2><h3 id="用户地址空间的区别"><a href="#用户地址空间的区别" class="headerlink" title="用户地址空间的区别"></a>用户地址空间的区别</h3><p>①页式系统中用户地址空间：一维地址空间</p>
+<p>②段式系统中用户地址空间：二维地址空间</p>
+<h3 id="分段和页面的区别"><a href="#分段和页面的区别" class="headerlink" title="分段和页面的区别"></a>分段和页面的区别</h3><table>
+<thead>
+<tr>
+<th align="center">分段</th>
+<th align="center">页面</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">信息的<strong>逻辑</strong>划分</td>
+<td align="center">信息的<strong>物理</strong>划分</td>
+</tr>
+<tr>
+<td align="center">段长是可变的</td>
+<td align="center">页的大小是固定的</td>
+</tr>
+<tr>
+<td align="center">用户可见</td>
+<td align="center">用户不可见</td>
+</tr>
+<tr>
+<td align="center">w字段的溢出将产生越界中断</td>
+<td align="center">w字段的溢出自动加入到页号中</td>
+</tr>
+</tbody></table>
+<h2 id="段页式系统"><a href="#段页式系统" class="headerlink" title="段页式系统"></a>段页式系统</h2><p>在段式存储管理中结合分页存储管理技术，<strong>在一个分段内划分页面</strong>，就形成了段页式存储管理。</p>
+<h3 id="程序地址空间-1"><a href="#程序地址空间-1" class="headerlink" title="程序地址空间"></a>程序地址空间</h3><p>地址结构&#x3D;段号+段内页号+页内位移</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001323037.png"></p>
+<p><strong>每一个程序一张段表，每个段对应一张页表，段表中的地址是页表的起始地址</strong></p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001435733.png"></p>
+<p>段页式地址变换要得到物理地址需要经过3次主存访问（当段表、页表都在主存中）：</p>
+<ol>
+<li>访问段表，得到页表起始地址</li>
+<li>访问页表，得到主存块号</li>
+<li>将主存块号与页内位移组合得到物理地址</li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>第七章</strong> <strong>习题及解答</strong></p>
+<p>7-11如图7.45所示，主存中有两个空白区。现有如下程序序列：程序1要求50KB；程序2要求60KB；程序3要求70KB。若用首次适应算法和最佳适应算法来处理这个程序序列，试问：哪一种算法可以分配得下 ? 简要说明分配过程 (假定分区描述器所占用的字节数已包含在程序所要求的主存容量中) 。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/clip_image002.png"></p>
+<p>答：(1) 首次适应法：</p>
+<p>程序1要求50KB，在起始地址为150KB，大小为120 KB的空白区进行分割。120KB-50KB&#x3D;70KB，分割后剩70KB 的空白区。</p>
+<p>程序2要求60KB，在剩余的70KB空白区进行分割。70KB-60KB&#x3D;10KB，分割后剩 10KB的空白区。</p>
+<p>程序3要求70KB，在起始地址为300KB，大小为78KB的空白区进行分割。78KB-70KB&#x3D;8KB，分割后剩8KB 的空白区。</p>
+<p>因此首次适应法可满足该程序序列的需求。</p>
+<p>(2) 最佳适应法</p>
+<p>程序1要求50KB，在起始地址为300KB，大小为78 KB的空白区进行分割。78KB-50KB&#x3D;28KB，分割后剩28KB 的空白区。</p>
+<p>程序2要求60KB，在起始地址为150KB，大小为120KB的空白区进行分割。120KB-60KB&#x3D;60KB，分割后剩60KB的空白区。</p>
+<p>程序3要求70KB，。此时系统中有大小为 28KB 和60KB 的两个空白区，它们均不能满足程序3 的需求。</p>
+<p>因此最佳适应法不能满足该程序序列的需求。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" data-id="claaf6qhr003qtkup135161x9" data-title="主存管理" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/01/02/OS_%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          资源分配与调度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">设备管理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

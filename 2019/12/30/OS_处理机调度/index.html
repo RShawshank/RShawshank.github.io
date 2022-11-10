@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>处理机调度 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="处理机调度 作业调度（宏观）：  ­决定哪些程序调入计算机系统。  进&#x2F;线程调度（微观）：  ­决定哪个（些）进程占用CPU。  不同类型操作系统的侧重点不同。  批处理系统    2层  作业—选择作业进入主存 ​       进程—选择获得CPU的进程  分析：作业 小时—分钟为单位 发生的频率低 ​        高效调度，充分优化                  进程 发生的频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="处理机调度">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="处理机调度 作业调度（宏观）：  ­决定哪些程序调入计算机系统。  进&#x2F;线程调度（微观）：  ­决定哪个（些）进程占用CPU。  不同类型操作系统的侧重点不同。  批处理系统    2层  作业—选择作业进入主存 ​       进程—选择获得CPU的进程  分析：作业 小时—分钟为单位 发生的频率低 ​        高效调度，充分优化                  进程 发生的频">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image001.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image002.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image004.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image006-1578274276665.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image008.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image010.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image012.png">
+<meta property="article:published_time" content="2019-12-29T22:54:39.000Z">
+<meta property="article:modified_time" content="2020-04-18T15:30:26.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="处理机调度">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image001.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-OS_处理机调度" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" class="article-date">
+  <time class="dt-published" datetime="2019-12-29T22:54:39.000Z" itemprop="datePublished">2019-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      处理机调度
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="处理机调度"><a href="#处理机调度" class="headerlink" title="处理机调度"></a>处理机调度</h1><p> 作业调度（宏观）： </p>
+<p>­决定哪些程序调入计算机系统。</p>
+<p> 进&#x2F;线程调度（微观）： </p>
+<p>­决定哪个（些）进程占用CPU。</p>
+<p> 不同类型操作系统的侧重点不同。</p>
+<p> <strong>批处理系统</strong>  </p>
+<p> 2层  作业—选择作业进入主存</p>
+<p>​       进程—选择获得CPU的进程</p>
+<p> 分析：作业 小时—分钟为单位 发生的频率低</p>
+<p>​        高效调度，充分优化              </p>
+<p>   进程 发生的频率高 ms为单位 快速调度</p>
+<p>​          例：20ms—时间片，2ms—调度执行</p>
+<p> <strong>分时操作系统—进程调度</strong></p>
+<p> 个人计算机操作系统—进程调度或线程调度</p>
+<h2 id="作业调度"><a href="#作业调度" class="headerlink" title="作业调度"></a>作业调度</h2><blockquote>
+<p> 一般来说，计算机系统把用户要求处理的一项工作称为一个<strong>作业</strong>。</p>
+<p> 作业有四种状态：</p>
+<p>­<strong>1 .</strong> <strong>提交状态</strong>  用户将程序和数据提交计算中心；</p>
+<p>­<strong>2.</strong> <strong>后备状态</strong> 将作业录入到后援存储设备；</p>
+<p>­<strong>3.</strong> <strong>执行状态</strong> 作业调入计算机系统内存；</p>
+<p>­<strong>4.</strong> <strong>完成状态</strong> 作业计算完成的善后处理。</p>
+</blockquote>
+<p> 作业调度的主要任务是完成作业从后备状态到执行状态和从执行状态到完成状态的转变。</p>
+<p> 功能：</p>
+<p>­**1. ** <strong>确定数据结构</strong>，记录已进入系统的各作业的情况JCB（Job Control Block）</p>
+<p>­<strong>2.</strong>  <strong>按一定的调度算法</strong>，从后备作业中选择一个或几个作业进入内存；</p>
+<p>­<strong>3.</strong> <strong>分配资源，为被选中的作业创建进程，并为其申请系统资源；</strong></p>
+<p>­<strong>4.</strong> <strong>作业结束后作善后处理</strong>。（进程和作业的资源回收是同时的）</p>
+<h3 id="作业控制块JCB"><a href="#作业控制块JCB" class="headerlink" title="作业控制块JCB"></a>作业控制块JCB</h3><p>每个作业进入系统时由系统为其建立一个作业控制块JCB（Job Control Block)，它是存放作业控制和管理信息的数据结构。</p>
+<h3 id="调度算法性能的衡量"><a href="#调度算法性能的衡量" class="headerlink" title="调度算法性能的衡量"></a>调度算法性能的衡量</h3><p>需要考虑系统中各种资源的负载均匀</p>
+<p>作业的周转时间：<br>$$<br>t_i &#x3D; t_ci - t_{si}\<br>t_i:作业周转时间，t_ci:作业完成时间，t_{si}：作业提交到系统的时间<br>$$<br>平均周转时间：<br>$$<br>t&#x3D;1&#x2F;n\sum_{i&#x3D;1}^n t_i<br>$$<br>平均带权周转时间<br>$$<br>w&#x3D;1&#x2F;n\sum_{i&#x3D;1}^nw_i\<br>w_i&#x3D;t_i&#x2F;t_{ri}\<br>t_{ri}:作业i实际运行时间<br>$$</p>
+<h3 id="作业调度算法"><a href="#作业调度算法" class="headerlink" title="作业调度算法"></a>作业调度算法</h3><h4 id="先来先服务算法FCFS"><a href="#先来先服务算法FCFS" class="headerlink" title="先来先服务算法FCFS"></a>先来先服务算法FCFS</h4><p><strong>­先来先服务算法是按作业来到的先后次序进行调度的</strong>，换句话说，调度程序每次选择的作业是等待时间最久的，而不管作业的运行时间的长短。这种调度算法突出的优点是实现简单，效率较低，在一些实际的系统和一般应用程序中采用这种算法的较多。</p>
+<h4 id="短作业优先算法SJF"><a href="#短作业优先算法SJF" class="headerlink" title="短作业优先算法SJF"></a>短作业优先算法SJF</h4><p>­<strong>短作业优先调度算法考虑作业的运行时间，每次总是选择一个运行时间最小的作业调入内存（系统）</strong> </p>
+<p>­<strong>在一般情况下这种调度算法比先来先服务调度算法的效率要高一些。实现相对先来先服务调度算法要困难些，如果作业的到来顺序及运行时间不合适，会出现饿死现象。</strong></p>
+<h4 id="响应比高者优先算法"><a href="#响应比高者优先算法" class="headerlink" title="响应比高者优先算法"></a>响应比高者优先算法</h4><p>每调度一个作业投入运行时，就计算后备作业表中的每个作业的响应比，将响应比最高的作业投入运行。<br>$$<br>响应比&#x3D;响应时间&#x2F;执行时间\<br>响应时间&#x3D;作业进入系统的等待时间+执行时间<br>$$</p>
+<p>理论上讲是比较好的，但是需要估计作业的等待时间和运行时间，比较复杂，开销大。</p>
+<h4 id="优先数调度算法"><a href="#优先数调度算法" class="headerlink" title="优先数调度算法"></a>优先数调度算法</h4><p>­<strong>优先数调度算法是终合考虑各方面的因素（作业等待时间、运行时间、缓急程度，系统资源使用等），给每个作业设置一个优先数，调度程序总是选择一个优先数最大（或者最小）的作业调入（系统）内存。</strong></p>
+<p>确定优先数的一种简单的方法是：用户为自己的作业确定一个优先级</p>
+<p>当然，优先数是可以浮动的。</p>
+<h2 id="进程调度"><a href="#进程调度" class="headerlink" title="进程调度"></a>进程调度</h2><p>见《进程管理》</p>
+<h3 id="UNIX系统进程调度"><a href="#UNIX系统进程调度" class="headerlink" title="UNIX系统进程调度"></a>UNIX系统进程调度</h3><ul>
+<li><p>采用优先数调度算法</p>
+</li>
+<li><p>进程有一个进程优先数p_pri</p>
+</li>
+<li><p>p_pri取值范围是-127～127，其值越小，进程的优先级越高</p>
+</li>
+</ul>
+<p><strong>优先数的确定</strong><br><strong>系统设置</strong><br>在sleep（）中设置将要进入睡眠状态进程的优先数，当该进程被唤醒后，就以系统给它设置的优先数去参与处理机的竟争。</p>
+<pre><code>0＃进程（－100优先数）；
+资源请求得不到满足的进程，磁盘（-80），打印机（-20），…；
+所有处于用户态运行进程同步（一般情况下为大于**0）。
+</code></pre>
+<p>­<strong>优先数的计算</strong></p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> p_pri = min&#123;<span class="number">127</span>, (p_cpu/<span class="number">16</span>+p_nice+PUSER)&#125;</span><br><span class="line"> 其中：</span><br><span class="line"><span class="symbol">p_cpu:</span> 进程占用CPU的程度</span><br><span class="line"><span class="symbol">p_nice:</span> 用户通过系统调用nice(priority)设置的</span><br><span class="line">   进程优先数</span><br><span class="line"><span class="symbol">PUSER:</span> 常数，其值为<span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Linux系统进程调度"><a href="#Linux系统进程调度" class="headerlink" title="Linux系统进程调度"></a>Linux系统进程调度</h3><p>进程调度程序是内核的组成部分，负责选择下一个要运行的进程。</p>
+<p>进程调度可看作在可运行态进程之间分配有限的处理器时间资源的内核子系统。</p>
+<p>进程调度程序是如Linux这样的多任务操作系统的基础。</p>
+<p><strong>Linux进程调度策略</strong></p>
+<p>​    <strong>基于动态优先级和可变时间片的调度</strong></p>
+<p>​    <strong>调度方式为可抢占式调度</strong></p>
+<h4 id="调度目标"><a href="#调度目标" class="headerlink" title="调度目标"></a>调度目标</h4><ul>
+<li><p>实现算法复杂度为O(1)级的调度</p>
+<ul>
+<li>进程调度算法保证在恒定的时间内完成</li>
+<li>算法执行时间与系统中处于就绪(可运行)状态的进程个数无关</li>
+</ul>
+</li>
+<li><p>提高交互性能</p>
+<ul>
+<li>提高交互性能，保证系统能快速响应</li>
+</ul>
+</li>
+<li><p>保证公平</p>
+<ul>
+<li>在合理设定的时间范围内，没有进程会出现饥饿状态，也不会有进程获得大量的时间片</li>
+</ul>
+</li>
+<li><p>实现对称多处理器（SMP）可扩展性</p>
+</li>
+</ul>
+<h4 id="I-x2F-O消耗型和处理器消耗型的进程"><a href="#I-x2F-O消耗型和处理器消耗型的进程" class="headerlink" title="I&#x2F;O消耗型和处理器消耗型的进程"></a>I&#x2F;O消耗型和处理器消耗型的进程</h4><ul>
+<li><p>I&#x2F;O消耗型进程</p>
+<ul>
+<li>大部分时间是使用外部设备，交互式进程具有此特征</li>
+</ul>
+</li>
+<li><p>处理器消耗型进程</p>
+<ul>
+<li>大部分时间是使用CPU，计算进程具有此特征</li>
+</ul>
+</li>
+</ul>
+<p>交互式的程序都是I&#x2F;O消耗型的。Linux为了保证交互式应用，优化了进程的响应，更倾向于优先调度I&#x2F;O消耗型进程，但并未忽略处理器消耗型程序。</p>
+<h4 id="进程调度的特点"><a href="#进程调度的特点" class="headerlink" title="进程调度的特点"></a>进程调度的特点</h4><ul>
+<li>Linux系统实现了基于进程过去行为的启发式算法；</li>
+<li>Linux系统选择优先级高的进程先运行，相同优先级的进程按循环方式调度；</li>
+<li>动态优先级依进程占有CPU的情况、休眠时间的长短来增、减 ；</li>
+<li>系统根据进程优先级调整分配给它的时间片；</li>
+<li>实施可抢占调度方式</li>
+</ul>
+<h4 id="动态优先级"><a href="#动态优先级" class="headerlink" title="动态优先级"></a>动态优先级</h4><p>每个进程有一个动态优先级，它是进程调度程序选择可运行进程所使用的参数，其取值范围是100(最高优先级) ~ 139(最低优先级) </p>
+<p><strong>动态优先级的计算</strong></p>
+<p>   <strong>动态优先级</strong> &#x3D; max(100，min(静态优先级－ bonus + 5，139))</p>
+<p>   bonus是范围 0 <strong>～</strong> 10的值，</p>
+<p>​          值小于5表示降低动态优先级以示惩罚</p>
+<p>​          值大于5表示增加动态优先级以示奖励</p>
+<p>   进程调度使用的是动态优先级，通过effective_prio( )函  数来计算一个进程的动态优先级。</p>
+<h4 id="确定I-x2F-O消耗型和处理器消耗型进程的方法"><a href="#确定I-x2F-O消耗型和处理器消耗型进程的方法" class="headerlink" title="确定I&#x2F;O消耗型和处理器消耗型进程的方法"></a>确定I&#x2F;O消耗型和处理器消耗型进程的方法</h4><p><strong>依据</strong> <strong>——</strong> <strong>进程睡眠时间的长短</strong></p>
+<p>   若进程睡眠时间长 —— <strong>I&#x2F;O消耗型</strong></p>
+<p>   若进程睡眠时间短 ——<strong>处理器消耗型</strong></p>
+<h4 id="可变时间片"><a href="#可变时间片" class="headerlink" title="可变时间片"></a>可变时间片</h4><p><strong>对交互式进程,系统提供较长的时间片</strong></p>
+<p><strong>调度程序根据进程的优先级动态调整分配给它的时间片</strong></p>
+<p><strong>时间片处理的时机</strong></p>
+<ul>
+<li><p><strong>创建新进程时的处理</strong></p>
+<ul>
+<li>新创建的子进程和父进程均分父进程剩余的时间片</li>
+</ul>
+</li>
+<li><p><strong>进程用完时间片时的处理</strong></p>
+<ul>
+<li>当一个进程的时间片用完时，依任务的静态优先级重新计算时间片；</li>
+<li>task_timeslice()函数为给定任务返回一个新的时间片</li>
+</ul>
+</li>
+</ul>
+<p><strong>时间片的使用</strong></p>
+<ul>
+<li><p>一个进程拥有的时间片可分多次使用，放弃CPU时进入活动队列</p>
+</li>
+<li><p>当一个进程的时间片耗尽时，认为是过期进程，进入过期队</p>
+</li>
+</ul>
+<p><strong>时间片的计算</strong></p>
+<p><strong>基本时间片</strong></p>
+<p>   静态优先级本质上决定了进程的基本时间片</p>
+<p>​                    (140 －静态优先级) ×20  若静态优先级 ＜ 120</p>
+<p>​                    (140 －静态优先级) ×5   若静态优先级 ≥ 120</p>
+<p>   静态优先级越高(值越小)，基本时间片越长。</p>
+<p><strong>活动队列和过期队列</strong></p>
+<p>​     每个处理器维护两个优先级数组—— 活动数组和过期数组</p>
+<p><strong>活动数组上的可执行队列中的进程都有剩余时间片</strong></p>
+<p><strong>过期数组上的可执行队列中的进程都已耗尽时间片</strong></p>
+<p>   当一个进程的时间片耗尽时，被移至过期队列中；</p>
+<p>   当活动数组上的可执行队列中的所有进程都已耗尽时时间片，这时，在活动数组和过期数组之间切换指针。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>6-3 某系统的进程状态变迁图如图6.12所示 (设该系统的进程调度方式为非剥夺方式)。</p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image001.png"></p>
+<p>(1) 说明一个进程发生变迁3的原因是什么? 发生变迁2、变迁4的原因又是什么？</p>
+<p>(2) 下述因果变迁是否会发生，如果有可能的话，在什么情况下发生 ?</p>
+<p>  ① 2→5； ② 2→1； ③ 4→5； ④ 4→2； ⑤ 3→5</p>
+<p>(3) 根据此进程状态变迁图叙述该系统的调度策略、调度效果。</p>
+<p>(1) 答：</p>
+<p>发生变迁3的原因：当运行进程在执行过程中，需要等待某事件的发生才能继续向下执行时会发生变迁3。</p>
+<p>发生变迁2的原因：运行进程在分得的时间片100ms 或500ms内未完成，当其时间片到时将发生变迁2。</p>
+<p>发生变迁4的原因：当等待进程等待的事件发生了，将会发生变迁4。</p>
+<p>(2) 答：</p>
+<p>① 2→5的因果变迁可能发生。条件是：高优先就绪队列非空。</p>
+<p>② 2→1的因果变迁可能发生，当运行进程的时间片到时发生的变迁2，若此时高优先就绪队列为空，必然引起低优先就绪队列中的一个就绪进程被调度执行而发生变迁1。</p>
+<p>③ 4→5的因果变迁不可能发生，因为采用的是非剥调度夺式。</p>
+<p>④ 4→2的因果变迁不可能发生。</p>
+<p>⑤ 3→5的因果变迁可能发生，条件是：高优先就绪队列非空。</p>
+<p>(3) 答：</p>
+<p>调度策略：首先调度高就绪队列中的进程 (一般是I&#x2F;O 型进程) 投入运行，给高优先就绪队列中的进程分配的时间片大小为100ms。只有当高就绪队列中的所有进程全部运行完或因等待某事件发生处于阻塞状态，高就绪队列中没有进程可运行时，才调度低优先就绪队列中的进程 (一般是计算型进程) ，给低优先就绪队列中的进程分配的时间片大小为500ms。若一个运行进程时间片100ms 或500ms到时未完成就进入低优先就绪队列。若某进程在运行期间因等待某事件发生而进入阻塞队列，则当所等待事件完成后，它将进入高优先就绪队列。</p>
+<p>调度效果：这种算法优先照顾了I&#x2F;O 量大的进程 (高优先级) ，但通过给计算型进程分配更长的时间片也适当照顾了计算型进程。</p>
+<p>6-10 Linux2.6版本为了实现O(1)级算法复杂度，采用了什么措施?</p>
+<p>答：Linux系统进程调度用的数据结构最重要的是运行队列结构，该结构给出了处理机上可运行进程的链表。该结构中包含一个称为优先级数组的结构数组。每个数组都表示一个可运行进程集合，包括两个重要信息：① 一个优先级位图；</p>
+<p>② 140个双向链表头，每个链表对应一个可能的进程优先级队列。</p>
+<p>Linux系统采用优先调度策略。在Linux2.6版本的进程调度程序中，基于上述进程调度用数据结构，查找系统中优先级最高的进程这一问题转化为查找优先级位图中第一个置为1的位。找到这一位就是找到了最高优先级链表，即可确定优先级最高的、可运行的进程。由于优先级个数是定值，所以查找时间恒定。许多体系结构提供find_first_bit指令（字操作指令），找到第一个设置为1的位所花费的时间微不足道。这是保证Linux系统进程调度具有O(1)级算法复杂度的关键所在。</p>
+<p><strong>1． 系统有5</strong>个进程，它们的到达时间和服务时间如表4-8所示。新进程（没有运行过）与老进程（运行过的进程）的条件相同时，假定系统选新进程运行。</p>
+<p>​         <strong>表4-8</strong> <strong>进程情况</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>进程名</strong></th>
+<th><strong>到达时间</strong></th>
+<th><strong>服务时间</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A</strong></td>
+<td><strong>0</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td><strong>2</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td><strong>4</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td><strong>6</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>E</strong></td>
+<td><strong>8</strong></td>
+<td><strong>2</strong></td>
+</tr>
+</tbody></table>
+<p>若按先来先服务（FCFS）、时间片轮法（时间片q&#x3D;1）、短进程优先（SPN）、最短剩余时间优先（SRT，时间片q&#x3D;1）、响应比高者优先（HRRN）及多级反馈队列（MFQ，第一个队列的时间片为1，第i（i&gt;1）个队列的时间片q&#x3D;2（i-1））算法进行CPU调度，请给出各个进程的完成时间、周转时间、带权周转时间，及所有的进程的平均周转时间和平均带权周转时间。</p>
+<p>答：</p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image002.png"></p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image004.png"></p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image006-1578274276665.png"></p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image008.png" alt="img"></p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image010.png" alt="img"></p>
+<p><img src="/images/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/clip_image012.png"></p>
+<p>1． 设系统中有5个进程P1、P2、P3、P4、P5，有3种类型的资源A、B、C，其中A资源的数量是17，B资源的数量是5，C资源的数量是20，T0时刻系统状态如表4-9所示。</p>
+<p>​       <strong>表4-9   T0</strong>时刻系统状态</p>
+<table>
+<thead>
+<tr>
+<th><strong>进程</strong></th>
+<th><strong>已分配资源数量</strong></th>
+<th></th>
+<th></th>
+<th><strong>最大资源需求量</strong></th>
+<th></th>
+<th></th>
+<th><strong>仍然需求资源数</strong></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><strong>A</strong></td>
+<td><strong>B</strong></td>
+<td><strong>C</strong></td>
+<td><strong>A</strong></td>
+<td><strong>B</strong></td>
+<td><strong>C</strong></td>
+<td><strong>A</strong></td>
+<td><strong>B</strong></td>
+<td><strong>C</strong></td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>5</strong></td>
+<td><strong>5</strong></td>
+<td><strong>9</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td><strong>4</strong></td>
+<td><strong>0</strong></td>
+<td><strong>2</strong></td>
+<td><strong>5</strong></td>
+<td><strong>3</strong></td>
+<td><strong>6</strong></td>
+<td><strong>1</strong></td>
+<td><strong>3</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td><strong>4</strong></td>
+<td><strong>0</strong></td>
+<td><strong>5</strong></td>
+<td><strong>4</strong></td>
+<td><strong>0</strong></td>
+<td><strong>11</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>P4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>0</strong></td>
+<td><strong>4</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>5</strong></td>
+<td><strong>2</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>P5</strong></td>
+<td><strong>3</strong></td>
+<td><strong>1</strong></td>
+<td><strong>4</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>4</strong></td>
+<td><strong>1</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+</tr>
+</tbody></table>
+<ol>
+<li>计算每个进程还可能需要的资源，并填入表的“仍然需要资源数”的栏目。</li>
+</ol>
+<p><strong>(2)  T0</strong>时刻系统是否处于安全状态？为什么？</p>
+<p>答：处于安全状态，因为序列&lt;p4，p2，p3，p5，p1&gt;是一个安全状态。</p>
+<p>(3)  如果T0时刻进程P2又有新的资源请求（0,3,4），是否实施资源分配？为什么？</p>
+<p>答：不实施资源分配，因为将所有资源都分配给p2时，p2的C是5，不能够运行，进入死锁。</p>
+<p>(4)  如果T0时刻，若进程P4又有新的资源请求（2，0,1），是否实施资源分配？为什么？</p>
+<p>答：实施；因为p4请求资源后，存在安全状态。</p>
+<p>(5)  在（4）的基础上，若进程P1又有新的资源请求（0,2,0），是否实施资源分配？为什么？</p>
+<p>答：不实施；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" data-id="claaf6qhr003utkup7ccmdsbg" data-title="处理机调度" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          文件管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/30/OS_%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">进程和进程管理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

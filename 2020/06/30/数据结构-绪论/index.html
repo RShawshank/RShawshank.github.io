@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>数据结构_绪论 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="基本概念和术语基本概念 区别和详细解释1、数据(Data)：描述客观事物属性的数、字符及所有能被输入到计算机中并被计算机程序识别和处理的符号的集合。  数据不仅包括整形、实型等数值类型，还包括字符及声音、图像、视频等非数值类型。 数据必须具备两个前提：（1）可以输入到计算机中；（2）能被计算机程序处理。对于整型、实型等数值类型，可以进行数值计算；而对于字符数据类型，就需要非数值的处理；而声音、图像">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构_绪论">
+<meta property="og:url" content="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="基本概念和术语基本概念 区别和详细解释1、数据(Data)：描述客观事物属性的数、字符及所有能被输入到计算机中并被计算机程序识别和处理的符号的集合。  数据不仅包括整形、实型等数值类型，还包括字符及声音、图像、视频等非数值类型。 数据必须具备两个前提：（1）可以输入到计算机中；（2）能被计算机程序处理。对于整型、实型等数值类型，可以进行数值计算；而对于字符数据类型，就需要非数值的处理；而声音、图像">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20200320110023842.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/2019120223070074-1593445162462.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203201006798-1593445162462.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203170952568.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203171556120.png">
+<meta property="article:published_time" content="2020-06-29T16:40:45.000Z">
+<meta property="article:modified_time" content="2020-06-29T16:12:42.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20200320110023842.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-数据结构-绪论" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/" class="article-date">
+  <time class="dt-published" datetime="2020-06-29T16:40:45.000Z" itemprop="datePublished">2020-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      数据结构_绪论
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="基本概念和术语"><a href="#基本概念和术语" class="headerlink" title="基本概念和术语"></a>基本概念和术语</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20200320110023842.png"></p>
+<h2 id="区别和详细解释"><a href="#区别和详细解释" class="headerlink" title="区别和详细解释"></a>区别和详细解释</h2><p>1、数据(Data)：描述客观事物属性的数、字符及所有能被输入到计算机中并被计算机程序识别和处理的符号的集合。</p>
+<blockquote>
+<p>数据不仅包括整形、实型等数值类型，还包括字符及声音、图像、视频等非数值类型。 数据必须具备两个前提：<br>（1）可以输入到计算机中；<br>（2）能被计算机程序处理。对于整型、实型等数值类型，可以进行数值计算；而对于字符数据类型，就需要非数值的处理；而声音、图像、视频等可以通过编码的手段变成字符数据来处理。</p>
+</blockquote>
+<p>2、数据对象(Data Object)：具有相同性质的数据元素的集合。数据对象是数据的一个子集。</p>
+<blockquote>
+<p>什么叫性质相同呢？是指数据元素具有相同数量和类型的数据项，比如人 这个例子，都有姓名、生日、性别等相同的数据项。 既然数据对象是数据的子集，在实际应用中，处理的数据元素通常具有相同性质，在不产生混淆的情况下，我们将数据对象简称为数据。</p>
+</blockquote>
+<p>3、数据元素(Data element)：数据的基本单位，也称结点(node)或记录(record)。</p>
+<blockquote>
+<p>比如 畜类 牛、马、羊、鸡、猪、狗等动物当然就是畜类的数据元素。</p>
+</blockquote>
+<p>4、数据项(Data item)：构成数据元素的不可分割、有独立含义的最小单位，也称域(field)。</p>
+<blockquote>
+<p>一个数据元素由若干个数据项组成。</p>
+</blockquote>
+<p>5、数据结构(Data Structure)：相互之间存在一种或多种特定关系的<strong>数据元素</strong>的集合。</p>
+<blockquote>
+<p>数据元素都不是孤立存在的，它们之间存在某种关系，这些数据元素之间的关系称为结构(structure)。</p>
+</blockquote>
+<h2 id="数据结构三要素"><a href="#数据结构三要素" class="headerlink" title="数据结构三要素"></a>数据结构三要素</h2><p>逻辑结构（数据元素之间的关系）+数据结构（数据结构在计算机中的表示）+数据的运算（运算的定义和实现）。</p>
+<p>PS:通常需要用（数据对象、数据关系、基本操作集）这样的三元组来定义数据结构</p>
+<h3 id="逻辑结构、数据结构的区分方法"><a href="#逻辑结构、数据结构的区分方法" class="headerlink" title="逻辑结构、数据结构的区分方法"></a>逻辑结构、数据结构的区分方法</h3><p>逻辑结构与数据结构的区分判定方法：当一个结构(如数组、链表、树、图)，在逻辑结构中只有一种定义，而在存储结构中却有两种或多种定义，那么这个结构就属于逻辑结构；相反，当此结构在原有基础上加上了某种限定词(如二叉树-&gt;线索二叉树)，使得其在存储结构中只有一种定义，那么这个结构就称为数据结构。</p>
+<blockquote>
+<p>举例1：栈属于什么结构？<br>分析：栈在逻辑结构中只能属于线性结构，而在存储结构中它可以使用顺序存储（数组），也可以使用链式存储（链表），所以说栈是一种逻辑结构。</p>
+</blockquote>
+<blockquote>
+<p>举例2：线索二叉树属于什么结构？<br>分析：首先因为二叉树既可以顺序存储又可链式存储，故可以得到二叉树是一种逻辑结构。但是线索二叉树是二叉树加上限定词线索后的链表结构（不能用顺序存储），也就是说，线索二叉树在计算机内部的只有一种存储结构，所以线索二叉树是数据结构。</p>
+</blockquote>
+<p>逻辑结构和数据结构的区别点在于：<strong>数据的逻辑结构是独立于在计算机中的存储结构</strong>的，数据的存储方式有多种不同的选择。例如栈是一种逻辑结构，它可以用顺序存储也可以用链式存储；而<strong>数据结构是既可以描述逻辑结构又可以描述存储结构和数据运算，必须包含这三种元素。</strong>所以像顺序表、哈希表、单链表都是数据结构。</p>
+<h1 id="算法和算法分析"><a href="#算法和算法分析" class="headerlink" title="算法和算法分析"></a>算法和算法分析</h1><p><strong>程序 &#x3D; 数据结构 + 算法</strong> </p>
+<p><strong>算法（algorithm）</strong> 是为了解决某类问题而规定的一个有限长的操作序列。</p>
+<p><strong>算法的五个特性：</strong></p>
+<ul>
+<li><strong>有穷性：</strong>指算法在执行完有限步骤之后，自动结束而不会出现死循环，并且每个步骤都在可接受时间内完成。</li>
+<li><strong>确定性：</strong>算法的每一步骤都具有正确的含义，不会出现二义性。</li>
+<li><strong>可行性：</strong>算法的每一步都是可行的，也就是说，每一步都能通过执行有限次数完成。</li>
+<li><strong>输入：</strong>一个算法有零个或多个输入。</li>
+<li><strong>输出：</strong>一个算法有一个或多个输出。</li>
+</ul>
+<p><strong>算法设计的要求：</strong></p>
+<ul>
+<li><strong>正确性：</strong>没有歧义，能正确反映问题需求、能够得到问题的正确答案。</li>
+<li><strong>可读性</strong>：便于阅读、理解和交流。</li>
+<li><strong>健壮性：</strong>当输入数据不合法时，也能做出相关处理，而不至于出现莫名其妙的结果。</li>
+<li><strong>高效性和低存储量需求：</strong>时间高效、空间高效。</li>
+</ul>
+<blockquote>
+<p>衡量算法效率的度量方法分为<strong>时间复杂度</strong>和<strong>空间复杂度。</strong></p>
+</blockquote>
+<h2 id="时间和空间复杂度"><a href="#时间和空间复杂度" class="headerlink" title="时间和空间复杂度"></a>时间和空间复杂度</h2><p><strong>时间复杂度：</strong>在进行算法分析时，语句总的执行次数T（n）是关于问题规模n的函数，进而分析T（n）随n的变化情况并确定T（n）的数量级。算法的时间复杂度，也就是算法的时间量度，记作：T（n）&#x3D; O（f（n））。它表示随问题规模的增大，算法执行时间的增长率和f（n）的增长率相同，称为算法的渐进复杂度，简称为时间复杂度。其中f（n）是问题规模n的某个函数。这样用大写 O（） 来体现算法时间复杂度的记法，我们称为大O记法。</p>
+<h3 id="推导大O阶的方法"><a href="#推导大O阶的方法" class="headerlink" title="推导大O阶的方法"></a>推导大O阶的方法</h3><ul>
+<li><em><strong>*用常数1取代运行时间中的所有加法常数。*</strong></em></li>
+<li><em><strong>*在修改后的运行次数函数中，只保留最高阶项。*</strong></em></li>
+<li><em><strong>*如果最高阶项存在且不是1，则去除与这个项目相乘的常数。*</strong></em></li>
+<li><em><strong>*最后得到的结果就是大O阶。*</strong></em></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wq6ylg08/article/details/104242142">参考文章</a></p>
+<p><strong>算法的空间复杂度</strong>：通过计算算法所需的存储空间实现，算法空间复杂度的计算公式记作：S（n）&#x3D; O（f（n）），其中，n为问题规模，f（n）为语句关于n所占存储空间的函数。</p>
+<h1 id="存储和存取"><a href="#存储和存取" class="headerlink" title="存储和存取"></a>存储和存取</h1><h2 id="存取结构：随机存取和顺序存取"><a href="#存取结构：随机存取和顺序存取" class="headerlink" title="存取结构：随机存取和顺序存取"></a>存取结构：随机存取和顺序存取</h2><h3 id="随机存取"><a href="#随机存取" class="headerlink" title="随机存取"></a>随机存取</h3><p>随机存取（直接存取,Random Access）指的是当存储器中的数据被读取或写入时，所需要的时间与该数据所在的物理地址无关。</p>
+<p>随机存取的微观现实例子就是编程语言中的数组。<br>随机存取的宏观现实例子就是我们的随机存取存储器(RAM:Random Access Memory)，通俗的说也就是我们电脑的内存条。因为RAM利用电容存储电荷的原理保存信息，所以RAM可以高速存取，且与物理地址无关。</p>
+<h3 id="顺序存取"><a href="#顺序存取" class="headerlink" title="顺序存取"></a>顺序存取</h3><p>顺序存取(Sequential Access)是一种按记录的逻辑顺序进行读、写操作的存取方法，所需要的时间与该数据所在的物理地址有关。顺序存取表现为:在存取第N个数据时，必须先访问前（N-1）个数据。<br>顺序存取的微观现实例子就是数据结构中的链表。<br>顺序存取的现实例子就是我们的录音磁带、光盘、机械硬盘里面的磁盘。磁带、光盘、磁盘上的数据分别存储在不同扇区、不同磁道上，磁盘的读写磁头通过切换不同扇区和磁道来读取物理地址不连续的数据时，该过程中要经过不同扇区和不同磁道上的无关数据，磁盘的读写磁头在切换不同扇区和磁道所需时间也不同，故为顺序存取。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/2019120223070074-1593445162462.png"></p>
+<h3 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h3><p>顺序存储是把逻辑上相邻的数据元素存储在物理位置上相邻的存储单元中，数据元素之间的逻辑关系由存储单元的邻接关系来体现。</p>
+<p><strong>顺序存储的主要优点：</strong></p>
+<ul>
+<li>节省存储空间。因为分配给数据的存储单元全用存放数据元素（不考虑c&#x2F;c++语言中数组需指定大小的情况），数据元素之间的逻辑关系没有占用额外的存储空间。</li>
+<li>可实现对数据元素的随机存取(直接存取)。即每一个数据元素对应一个元素下标，由该元素下标可以直接计算出来数据元素的物理存储地址。</li>
+</ul>
+<p><strong>顺序存储的主要缺点：</strong></p>
+<ul>
+<li><p>不便于数据修改。对数据元素的插入、删除运算时，可能要移动一系列的数据元素。</p>
+</li>
+<li><p>产生磁盘碎片。因为顺序存储只能使用相邻的一整块存储单元，因此会产生较多的磁盘碎片。</p>
+<p>顺序存储的典型实例就是编程语言中的数组。例如，使用顺序表存储集合 {1,2,3,4,5}，数据最终的存储状态如下图所示：<img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203201006798-1593445162462.png"></p>
+</li>
+</ul>
+<blockquote>
+<p>数组中的所有元素存储在一个连续性的内存块中，并通过数组的首地址和元素下标来访问。因此一个数组就是由1个数组首地址和N个数组元素构成，数组不需要像链表一样，链表的每个节点必须存储下一个结点的物理地址，在存储同样多的数据下，数组比链表节省空间。</p>
+<p>数组可通过数组的首地址和元素下标来直接存取数组中的没每一个元素，而不需要像链表一样，在存取第N个链表结点的数据时，必须先访问前（N-1）个链表结点。</p>
+<p>但对数组的数据元素的插入、删除运算时，可能要移动一系列的数据元素，特别的麻烦，因此顺序存储结构的数组不便于修改。</p>
+</blockquote>
+<h3 id="随机存储"><a href="#随机存储" class="headerlink" title="随机存储"></a>随机存储</h3><p>在计算机中用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）。它不要求逻辑上相邻的元素在物理位置上也相邻，而是借助指示元素存储地址的指针来表示元素之间的逻辑关系。</p>
+<p><strong>随机存储的主要优点：</strong></p>
+<ul>
+<li>不会产生磁盘碎片。因为随机存储不要求逻辑上相邻的元素在物理位置上也相邻，而是借助指示元素存储地址的指针来表示元素之间的逻辑关系，因此不会产生磁盘碎片。</li>
+<li>数据修改方便。对数据元素的插入、删除运算时，随机存储不必移动结点，只要改变结点中的指针。</li>
+</ul>
+<p><strong>随机存储的主要缺点：</strong></p>
+<ul>
+<li><p>占用空间大。随机存储的每个结点都由数据域和指针域组成，所以相同空间内假设全存满，顺序存储比随机存储可存更多数据。</p>
+</li>
+<li><p>查找结点时链式存储要比顺序存储慢，且只能实现顺序存取。</p>
+</li>
+</ul>
+<h4 id="随机存储——链式存储"><a href="#随机存储——链式存储" class="headerlink" title="随机存储——链式存储"></a>随机存储——链式存储</h4><p>链式存储是随机存储最典型的代表，因此链式存储的定义、优点和缺点就是2.2随机存储中的定义、优点和缺点。</p>
+<h4 id="随机存储——索引存储"><a href="#随机存储——索引存储" class="headerlink" title="随机存储——索引存储"></a>随机存储——索引存储</h4><p>除建立存储结点信息外，还建立附加的索引表来标识结点的地址，索引表由若干索引项组成，索引项的一般形式是(关键字，地址)。</p>
+<p>索引存储的主要优点：检索速度快。<br>索引存储的主要缺点：增加了附加的索引表,会占用较多的存储空间。</p>
+<h4 id="随机存储——散列存储"><a href="#随机存储——散列存储" class="headerlink" title="随机存储——散列存储"></a>随机存储——散列存储</h4><p>散列存储，又称Hash存储，是一种将数据元素的存储位置与关键码之间建立确定对应关系的查找技术，即根据元素的关键字直接计算出该元素的存储地址。</p>
+<p>散列存储的主要优点：检索、增加和删除节点的操作更快。<br>散列存储的主要缺点：若散列函数不好，则可能出现元素存储单元的冲突。</p>
+<h1 id="电脑磁盘碎片的定义、产生原理和清理原因"><a href="#电脑磁盘碎片的定义、产生原理和清理原因" class="headerlink" title="电脑磁盘碎片的定义、产生原理和清理原因"></a>电脑磁盘碎片的定义、产生原理和清理原因</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wq6ylg08/article/details/103363478">参考文章</a></p>
+<h2 id="文件碎片的定义"><a href="#文件碎片的定义" class="headerlink" title="文件碎片的定义"></a>文件碎片的定义</h2><p>电脑碎片即磁盘碎片，磁盘碎片应称为文件碎片。文件碎片是由于文件被分散保存到整个磁盘的不同地方，而不是连续地保存在磁盘连续的簇中而形成的。</p>
+<h3 id="文件碎片产生的原因"><a href="#文件碎片产生的原因" class="headerlink" title="文件碎片产生的原因"></a>文件碎片产生的原因</h3><p>百度百科中对文件碎片产生列出了以下三大原因：</p>
+<p>当应用程序所需的物理内存不足时，一般操作系统会在硬盘中产生磁盘临时交换文件，用该文件所占用的硬盘空间虚拟成内存。虚拟内存通常是被分隔成多个物理内存碎片，还有部分暂时存储在外部磁盘存储器上。虚拟内存管理程序会对硬盘频繁读写，产生大量的碎片，这是产生硬盘碎片的主要原因。<br>还有一种情况就是当中间的一个扇区内容被删除后，新写入一个较小的文件，这样在这个文件两边就会出现一些空间，这时候再写入一个文件，两段空间的任意一部分都不能容纳该文件，这时候就需要将文件分割成两个部分，碎片再次产生了。<br>最常见的就是下载电影之类的大文件，这期间大家一般都会处理一下其它事情，而下载下来的电影文件被迫分割成若干个碎片存储于硬盘中。因此下载是产生碎片的一个重要源头。还有就是经常删除、添加文件，这时候如果文件空间不够大，就会产生大量的文件碎片，随着文件的删改频繁，这种情况会日益严重。<br>文件碎片产生的原因：</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203170952568.png"></p>
+<h2 id="清理文件碎片的原因-为什么要清理文件碎片"><a href="#清理文件碎片的原因-为什么要清理文件碎片" class="headerlink" title="清理文件碎片的原因(为什么要清理文件碎片?)"></a>清理文件碎片的原因(为什么要清理文件碎片?)</h2><p>知道了文件碎片的产生原因之后，我们还有必要了解一下程序运行时磁盘的读写动作。一般运行一个程序时，磁盘驱动器的磁头所做的工作是先搜索该程序运行必需的文件，然后读取数据，最后做读后处理——将数据传送至磁盘高速缓存(Cache)和内存中。搜索时间在硬盘性能指标中被称为平均寻道时间（Average seek time），单位为毫秒（ms），当下主流硬盘的平均寻道时间小于9.5ms。如果能将应用程序的相关文件放在磁盘的连续空间内，磁头搜索的时间将会减少很多。读取时也是如此，磁盘读取位于磁头下方扇区的数据所需时间仅为将磁头移到另一地点再读取相同数据所需时间的五分之一。读盘时，系统先检查数据是否在高速缓存中，如果有则直接读取；如果没有则访问磁盘，也就是读盘。当需要多次读取同一份数据时，Cache的作用很大，但对于第一次读取某个文件，Cache就无能为力了。于是搜索时间和读取时间在很大程度上影响着程序执行的效率。</p>
+<p>而磁盘碎片整理是将电脑使用中产生的碎片和冗杂的文件重新整理，让碎片文件融为一体，从而减少了磁盘的寻道时间，因此整体上使得电脑的运行速度得以提升。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/20191203171556120.png"></p>
+<h2 id="机械硬盘-x2F-固态硬盘都需要清理文件碎片吗？"><a href="#机械硬盘-x2F-固态硬盘都需要清理文件碎片吗？" class="headerlink" title="机械硬盘&#x2F;固态硬盘都需要清理文件碎片吗？"></a>机械硬盘&#x2F;固态硬盘都需要清理文件碎片吗？</h2><p>先说结论：机械硬盘需要清理文件碎片，固态硬盘不需要清理文件碎片。</p>
+<p>机械硬盘需要清理文件碎片的原因已经在上述的四、清理文件碎片的原因(为什么要清理文件碎片?)解释了，因为磁盘碎片整理是将电脑使用中产生的碎片和冗杂的文件重新整理，让碎片文件融为一体，从而减少了磁盘的寻道时间，因此整体上使得电脑的运行速度得以提升。</p>
+<p>而为什么说固态硬盘不需要磁盘碎片整理呢？</p>
+<p>固态硬盘的擦写次数是有限的。闪存完全擦写一次叫做1次P&#x2F;E，25nm的固态硬盘寿命约是3000次P&#x2F;E。碎片整理会大大减少固态硬盘的使用寿命。其实，固态硬盘的垃圾回收机制就已经是一种很好的“磁盘整理”，再多的整理完全没必要。Windows的“磁盘整理”功能是机械硬盘时代的产物，并不适用于固态硬盘。<br>固态硬盘电荷寻道耗时几乎为0。固态硬盘不用磁头，又因为固态硬盘的存储单元是基于闪存颗粒的电子存储，所以寻道时间几乎为0。持续写入的速度非常惊人，大部分固态硬盘读写速度在500MB&#x2F;s。<br>固态硬盘具有TRIM功能。这一功能充当了SSD的军师，它会发出指令让系统告诉固态硬盘哪些数据块不再使用了，否则SSD控制器不知道可以回收这些闲置的数据块。从某种意义上来说，这个功能已经是承担了磁盘碎片整理的工作了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/" data-id="claaf6qiu008xtkup2fswc0bt" data-title="数据结构_绪论" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          数据结构_线性表
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">编译原理-静态语义分析和中间代码生成</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

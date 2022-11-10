@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>java-设计模式（四） | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="九、装饰模式（decorator）为对象动态添加功能。 装饰模式是一种用来代替继承的技术，无须通过继承增加子类就能拓展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时可以避免类型体系的快速膨胀。   Component：抽象构件，真实对象和装饰对象都有的接口，这样，客户端对象可以以与真实对象相同的方式同装饰对象交互 ConreteComponent：具体构件对象（真实对象） Decor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-设计模式（四）">
+<meta property="og:url" content="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="九、装饰模式（decorator）为对象动态添加功能。 装饰模式是一种用来代替继承的技术，无须通过继承增加子类就能拓展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时可以避免类型体系的快速膨胀。   Component：抽象构件，真实对象和装饰对象都有的接口，这样，客户端对象可以以与真实对象相同的方式同装饰对象交互 ConreteComponent：具体构件对象（真实对象） Decor">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/luffyrao/picture/raw/master/img/20220110143736.png">
+<meta property="og:image" content="https://gitee.com/luffyrao/picture/raw/master/img/20220110153253.png">
+<meta property="og:image" content="https://gitee.com/luffyrao/picture/raw/master/img/20220110162827.png">
+<meta property="og:image" content="https://gitee.com/luffyrao/picture/raw/master/img/20220111155357.png">
+<meta property="article:published_time" content="2021-12-29T09:28:00.000Z">
+<meta property="article:modified_time" content="2022-01-11T08:08:24.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/luffyrao/picture/raw/master/img/20220110143736.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java-设计模式（四）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2021-12-29T09:28:00.000Z" itemprop="datePublished">2021-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      java-设计模式（四）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="九、装饰模式（decorator）"><a href="#九、装饰模式（decorator）" class="headerlink" title="九、装饰模式（decorator）"></a>九、装饰模式（decorator）</h2><p>为对象动态添加功能。</p>
+<p>装饰模式是一种用来代替继承的技术，无须通过继承增加子类就能拓展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时可以<strong>避免类型体系的快速膨胀</strong>。</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20220110143736.png" alt="img"></p>
+<ul>
+<li>Component：抽象构件，真实对象和装饰对象都有的接口，这样，客户端对象可以以与真实对象相同的方式同装饰对象交互</li>
+<li>ConreteComponent：具体构件对象（真实对象）</li>
+<li>Decorator：装饰角色。持有一个<strong>抽象构件</strong>的引用，装饰对象接受所有客户端的请求，并把这些请求转发给真实的对象。这样，就能在真实对象调用前后增加新的功能</li>
+<li>ConreteDecorator：具体装饰对象。负责给构件对象增加新的责任</li>
+</ul>
+<p> 要点： <strong>装饰者与被装饰者拥有共同的超类，继承的目的是继承类型，而不是行为</strong></p>
+<h3 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h3><p>component抽象类：</p>
+<p>Component是一个接口或是抽象类，就是定义我们最核心的对象，也就是最原始的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span>;</span><br><span class="line">     </span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>conretetComponent:</p>
+<p>具体构件，通过继承实现Component抽象类中的抽象方法。是最核心、最原始、最基本的接口或抽象类的实现，我们要装饰的就是它。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConretetComponent</span> <span class="keyword">extends</span> <span class="title class_">Component</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;具体对象的操作&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Decorator装饰类:</p>
+<p>　　一般是一个抽象类，在其属性里必然有一个private变量指向Component抽象构件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Decorator</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Component</span> <span class="variable">component</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过构造函数传递给被修饰者</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Decorator</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.component = component;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//委托给被修饰者执行</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(component != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="built_in">this</span>.component.operation();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ConcreteDecorator类：</p>
+<p>　　我们可以写多个具体实现类，把最核心的、最原始的、最基本的东西装饰成其它东西。</p>
+<p>　　这里就写两个类，稍改一下二者的实现顺序，看看结果。</p>
+<p>　　A类，它的operation()方法先执行了method1()方法，再执行了Decorator的operation()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteDecoratorA</span> <span class="keyword">extends</span> <span class="title class_">Decorator</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义被修饰者</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteDecoratorA</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义自己的修饰方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;method1 修饰&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.method1();</span><br><span class="line">        <span class="built_in">super</span>.operation();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>B类，它的operation()方法先执行了Decorator的operation()方法，再执行了method2()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteDecoratorB</span> <span class="keyword">extends</span> <span class="title class_">Decorator</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义被修饰者</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteDecoratorB</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义自己的修饰方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">method2</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;method2 修饰&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.operation();</span><br><span class="line">        <span class="built_in">this</span>.method2();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Client客户端：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Component</span> <span class="variable">component</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteComponent</span>();</span><br><span class="line">        <span class="comment">//第一次修饰</span></span><br><span class="line">        component = <span class="keyword">new</span> <span class="title class_">ConcreteDecoratorA</span>(component);</span><br><span class="line">        <span class="comment">//第二次修饰</span></span><br><span class="line">        component = <span class="keyword">new</span> <span class="title class_">ConcreteDecoratorB</span>(component);</span><br><span class="line">        <span class="comment">//修饰后运行</span></span><br><span class="line">        component.operation();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="IO流实现细节"><a href="#IO流实现细节" class="headerlink" title="IO流实现细节"></a>IO流实现细节</h3><ul>
+<li>Component抽象构件角色：<ul>
+<li>io流中的InputStream、OutputStream、Reader、Writer</li>
+</ul>
+</li>
+<li>ConcreteComponent 具体构件角色：<ul>
+<li>io流中的FileInputStream、FileOutputStream</li>
+</ul>
+</li>
+<li>Decorator装饰角色：<ul>
+<li>持有一个抽象构件的引用：io流中的FilterInputStream、FilterOutputStream</li>
+</ul>
+</li>
+<li>ConcreteDecorator具体装饰角色：<ul>
+<li>负责给构件对象增加新的责任。Io流中的BufferedOutputStream、BufferedInputStream等。</li>
+</ul>
+</li>
+</ul>
+<h3 id="装饰模式的应用"><a href="#装饰模式的应用" class="headerlink" title="装饰模式的应用"></a>装饰模式的应用</h3><p>　1. 何时使用</p>
+<ul>
+<li>在不想增加很多子类的情况下扩展类时</li>
+</ul>
+<p> 　2. 方法</p>
+<ul>
+<li>将具体功能职责划分，同时继承装饰者模式</li>
+</ul>
+<p> 　3. 优点</p>
+<ul>
+<li>装饰类和被装饰类可以独立发展，而不会相互耦合。它有效地把类的核心职责和装饰功能分开了</li>
+<li>装饰模式是继承关系的一个替代方案</li>
+<li>装饰模式可以动态地扩展一个实现类的功能</li>
+</ul>
+<p>　　4. 缺点</p>
+<ul>
+<li>多层装饰比较复杂。比如我们现在有很多层装饰，出了问题，一层一层检查，最后发现是最里层的装饰出问题了，想想工作量都害怕</li>
+</ul>
+<p>　　5. 使用场景</p>
+<ul>
+<li>需要扩展一个类的功能时</li>
+<li>需要动态地给一个对象增加功能，并可以动态地撤销时</li>
+<li>需要为一批的兄弟类进行改装或加装功能时</li>
+</ul>
+<h3 id="装饰模式和桥接模式的区别"><a href="#装饰模式和桥接模式的区别" class="headerlink" title="装饰模式和桥接模式的区别"></a>装饰模式和桥接模式的区别</h3><p>两个模式都是为了解决过多子类对象问题。但他们的诱因不一样。桥接模式是对象自身现有机制沿着多个维度变化，是既有部分不稳定。装饰模式是为了增加新的功能。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adamjwh/p/9036358.html">简说设计模式——装饰模式 - JAdam - 博客园 (cnblogs.com)</a></p>
+<h2 id="十、外观模式（facade）"><a href="#十、外观模式（facade）" class="headerlink" title="十、外观模式（facade）"></a>十、外观模式（facade）</h2><p>提供了一个统一的接口，用来访问子系统中的一群接口，从而让子系统更容易使用。</p>
+<h3 id="Implementation-1"><a href="#Implementation-1" class="headerlink" title="Implementation"></a>Implementation</h3><p>观看电影需要操作很多电器，使用外观模式实现一键看电影功能。</p>
+<p>子系统角色：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SubSystem</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">turnOnTV</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;turnOnTV()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCD</span><span class="params">(String cd)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setCD( &quot;</span> + cd + <span class="string">&quot; )&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">startWatching</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;startWatching()&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>外观类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Facade</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">SubSystem</span> <span class="variable">subSystem</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubSystem</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">watchMovie</span><span class="params">()</span> &#123;</span><br><span class="line">        subSystem.turnOnTV();</span><br><span class="line">        subSystem.setCD(<span class="string">&quot;a movie&quot;</span>);</span><br><span class="line">        subSystem.startWatching();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Facade</span> <span class="variable">facade</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Facade</span>();</span><br><span class="line">        facade.watchMovie();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>最少知识原则：只和你的密友谈话。也就是说客户对象所需要交互的对象应当尽可能少。</p>
+<h3 id="外观模式的应用"><a href="#外观模式的应用" class="headerlink" title="外观模式的应用"></a>外观模式的应用</h3><p>　　1. 何时使用</p>
+<ul>
+<li>客户端不需要知道系统内部的复杂联系，整个系统只提供一个“接待员”即可</li>
+<li>定义系统的入口</li>
+</ul>
+<p> 　2. 方法</p>
+<ul>
+<li>客户端不与系统耦合，外观类与系统耦合</li>
+</ul>
+<p> 　3. 优点</p>
+<ul>
+<li>减少了系统的相互依赖</li>
+<li>提高了灵活性。不管系统内部如何变化，只要不影响到外观对象，任你自由活动</li>
+<li>提高了安全性。想让你访问子系统的哪些业务就开通哪些逻辑，不在外观上开通的方法，你就访问不到</li>
+</ul>
+<p> 　4. 缺点</p>
+<ul>
+<li>不符合开不原则，修改很麻烦</li>
+</ul>
+<p> 　5. 使用场景</p>
+<ul>
+<li>为一个复杂的模块或子系统提供一个外界访问的接口</li>
+<li>子系统相对独立，外界对子系统的访问只要黑箱操作即可</li>
+<li>预防低水平人员带来的风险扩散</li>
+</ul>
+<h2 id="十一、享元模式（FlyWeight）"><a href="#十一、享元模式（FlyWeight）" class="headerlink" title="十一、享元模式（FlyWeight）"></a>十一、享元模式（FlyWeight）</h2><p>运用共享技术有效地支持大量细粒度的对象。</p>
+<p>池技术：String常量池、数据库连接池、缓冲池等等都是享元模式的应用，享元模式是池技术的重要实现方式。</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20220110153253.png" alt="img"></p>
+<ul>
+<li>FlyWeightFactory：享元工厂类。创建并管理享元对象，享元池一般设计成键值对。</li>
+<li>FlyWeight：抽象享元类。通常是一个接口或抽象类，声明公共方法，这些方法可以向外界提供对象的内部状态，设置外部状态。</li>
+<li>ConcreteFlyWeight：具体享元类。为内部状态提供成员变量进行存储</li>
+<li>UnsharedConcreteFlyWeight：非共享享元类。不能被共享的子类可以设计为非共享享元类</li>
+</ul>
+<h3 id="Implementation-2"><a href="#Implementation-2" class="headerlink" title="Implementation"></a>Implementation</h3><p>Flyweight抽象类</p>
+<p>　　所有具体享元类的超类或接口，通过这个接口，Flyweight可以接受并作用于外部状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Flyweight</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//内部状态</span></span><br><span class="line">    <span class="keyword">public</span> String intrinsic;</span><br><span class="line">    <span class="comment">//外部状态</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> String extrinsic;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//要求享元角色必须接受外部状态</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Flyweight</span><span class="params">(String extrinsic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.extrinsic = extrinsic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义业务操作</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">operate</span><span class="params">(<span class="type">int</span> extrinsic)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getIntrinsic</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> intrinsic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setIntrinsic</span><span class="params">(String intrinsic)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.intrinsic = intrinsic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ConcreteFlyweight类</p>
+<p>　　继承Flyweight超类或实现Flyweight接口，并为其内部状态增加存储空间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteFlyweight</span> <span class="keyword">extends</span> <span class="title class_">Flyweight</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//接受外部状态</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteFlyweight</span><span class="params">(String extrinsic)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//根据外部状态进行逻辑处理</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operate</span><span class="params">(<span class="type">int</span> extrinsic)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;具体Flyweight:&quot;</span> + extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>UnsharedConcreteFlyweight类</p>
+<p>　　指那些不需要共享的Flyweight子类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UnsharedConcreteFlyweight</span> <span class="keyword">extends</span> <span class="title class_">Flyweight</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">UnsharedConcreteFlyweight</span><span class="params">(String extrinsic)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operate</span><span class="params">(<span class="type">int</span> extrinsic)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;不共享的具体Flyweight:&quot;</span> + extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>FlyweightFactory类</p>
+<p>　　一个享元工厂，用来创建并管理Flyweight对象，主要是用来确保合理地共享Flyweight，当用户请求一个Flyweight时，FlyweightFactory对象提供一个已创建的实例或创建一个实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FlyweightFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个池容器</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;String, Flyweight&gt; pool = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//享元工厂</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Flyweight <span class="title function_">getFlyweight</span><span class="params">(String extrinsic)</span> &#123;</span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">flyweight</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(pool.containsKey(extrinsic)) &#123;    <span class="comment">//池中有该对象</span></span><br><span class="line">            flyweight = pool.get(extrinsic);</span><br><span class="line">            System.out.print(<span class="string">&quot;已有 &quot;</span> + extrinsic + <span class="string">&quot; 直接从池中取----&gt;&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//根据外部状态创建享元对象</span></span><br><span class="line">            flyweight = <span class="keyword">new</span> <span class="title class_">ConcreteFlyweight</span>(extrinsic);</span><br><span class="line">            <span class="comment">//放入池中</span></span><br><span class="line">            pool.put(extrinsic, flyweight);</span><br><span class="line">            System.out.print(<span class="string">&quot;创建 &quot;</span> + extrinsic + <span class="string">&quot; 并从池中取出----&gt;&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> flyweight;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Client客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">extrinsic</span> <span class="operator">=</span> <span class="number">22</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">flyweightX</span> <span class="operator">=</span> FlyweightFactory.getFlyweight(<span class="string">&quot;X&quot;</span>);</span><br><span class="line">        flyweightX.operate(++ extrinsic);</span><br><span class="line"></span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">flyweightY</span> <span class="operator">=</span> FlyweightFactory.getFlyweight(<span class="string">&quot;Y&quot;</span>);</span><br><span class="line">        flyweightY.operate(++ extrinsic);</span><br><span class="line"></span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">flyweightZ</span> <span class="operator">=</span> FlyweightFactory.getFlyweight(<span class="string">&quot;Z&quot;</span>);</span><br><span class="line">        flyweightZ.operate(++ extrinsic);</span><br><span class="line"></span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">flyweightReX</span> <span class="operator">=</span> FlyweightFactory.getFlyweight(<span class="string">&quot;X&quot;</span>);</span><br><span class="line">        flyweightReX.operate(++ extrinsic);</span><br><span class="line"></span><br><span class="line">        <span class="type">Flyweight</span> <span class="variable">unsharedFlyweight</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UnsharedConcreteFlyweight</span>(<span class="string">&quot;X&quot;</span>);</span><br><span class="line">        unsharedFlyweight.operate(++ extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内部状态和外部状态"><a href="#内部状态和外部状态" class="headerlink" title="内部状态和外部状态"></a>内部状态和外部状态</h3><p>　　上面享元模式的定义为我们提出了两个要求：细粒度和共享对象。我们知道分配太多的对象到应用程序中将有损程序的性能，同时还容易造成内存溢出，要避免这种情况，用到的就是共享技术，这里就需要提到内部状态和外部状态了。</p>
+<p>　　因为要求细粒度对象，所以不可避免地会使对象数量多且性质相近，此时我们就将这些对象的信息分为两个部分：内部状态和外部状态。</p>
+<p>　　<strong>内部状态</strong>指对象共享出来的信息，存储在享元对象内部并且不会随环境的改变而改变；<strong>外部状态</strong>指对象得以依赖的一个标记，是随环境改变而改变的、不可共享的状态。</p>
+<p>　　我们举一个最简单的例子，棋牌类游戏大家都有玩过吧，比如说说围棋和跳棋，它们都有大量的棋子对象，围棋和五子棋只有黑白两色，跳棋颜色略多一点，但也是不太变化的，所以棋子颜色就是棋子的内部状态；而各个棋子之间的差别就是位置的不同，我们落子嘛，落子颜色是定的，但位置是变化的，所以方位坐标就是棋子的外部状态。</p>
+<p>　　那么为什么这里要用享元模式呢？可以想象一下，上面提到的棋类游戏的例子，比如围棋，理论上有361个空位可以放棋子，常规情况下每盘棋都有可能有两三百个棋子对象产生，因为内存空间有限，一台服务器很难支持更多的玩家玩围棋游戏，如果用享元模式来处理棋子，那么棋子对象就可以减少到只有两个实例，这样就很好的解决了对象的开销问题。</p>
+<h3 id="享元模式的应用"><a href="#享元模式的应用" class="headerlink" title="享元模式的应用"></a>享元模式的应用</h3><p>　　1. 何时使用</p>
+<ul>
+<li>系统中有大量对象时</li>
+<li>这些对象消耗大量内存时</li>
+<li>这些对象的状态大部分可以外部化时</li>
+</ul>
+<p>　　2. 方法</p>
+<ul>
+<li>用唯一标识码判断，如果在内存中有，则返回这个唯一标识码所标识的对象，用HashMap&#x2F;HashTable存储</li>
+</ul>
+<p>　　3. 优点</p>
+<ul>
+<li>大大减少了对象的创建，降低了程序内存的占用，提高效率</li>
+</ul>
+<p>　　4. 缺点</p>
+<ul>
+<li>提高了系统的复杂度。需要分离出内部状态和外部状态，而外部状态具有固化特性，不应该随着内部状态的改变而改变</li>
+<li>为了节省内存，共享了内部状态，分离出外部状态，而读取外部状态 使运行时间变长。用时间换取了空间。</li>
+</ul>
+<p> 　5. 使用场景</p>
+<ul>
+<li>系统中存在大量相似对象</li>
+<li>需要缓冲池的场景</li>
+</ul>
+<p> 　6. 应用实例</p>
+<ul>
+<li>String常量池</li>
+<li>数据库连接池</li>
+</ul>
+<p> 　7. 注意事项</p>
+<ul>
+<li>注意划分内部状态和外部状态，否则可能会引起线程安全问题</li>
+<li>这些类必须有一个工厂类加以控制</li>
+</ul>
+<h1 id="结构型模式汇总"><a href="#结构型模式汇总" class="headerlink" title="结构型模式汇总"></a>结构型模式汇总</h1><table>
+<thead>
+<tr>
+<th align="center">代理模式</th>
+<th align="center">为真实对象提供一个代理，从而控制对真实对象的访问</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">适配模式</td>
+<td align="center">使原本由于接口不兼容不能一起工作的类可以一起工作</td>
+</tr>
+<tr>
+<td align="center">桥接模式</td>
+<td align="center">处理多层继承结构，处理多维度变化的场景，将各个维度设计成独立的继承结构，使各个维度可以独立的扩展在抽象层建立关联。</td>
+</tr>
+<tr>
+<td align="center">组合模式</td>
+<td align="center">将对象组合成树状结构以表示”部分和整体”层次结构，使得客户可以统一 的调用叶子对象和容器对象</td>
+</tr>
+<tr>
+<td align="center">装饰模式</td>
+<td align="center">动态地给一个对象添加额外的功能，比继承灵活</td>
+</tr>
+<tr>
+<td align="center">外观模式</td>
+<td align="center">为子系统提供统一的调用接口，使得子系统更加容易使用</td>
+</tr>
+<tr>
+<td align="center">享元模式</td>
+<td align="center">运用共享技术有效的实现管理大量细粒度对象，节省内存，提高效率</td>
+</tr>
+</tbody></table>
+<h1 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h1><ul>
+<li><p>行为型模式关注的是系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责。</p>
+</li>
+<li><p>创建型模式关注的是对象的创建过程。</p>
+</li>
+<li><p>结构型模式关注的是对象和类的组织。</p>
+</li>
+</ul>
+<h2 id="十二、责任链模式（chain-of-responsibility）"><a href="#十二、责任链模式（chain-of-responsibility）" class="headerlink" title="十二、责任链模式（chain of responsibility）"></a>十二、责任链模式（chain of responsibility）</h2><p>使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系。将这些对象连成一条链，并沿着这条链发送该请求，直到有一个对象处理它为止。</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20220110162827.png" alt="img"></p>
+<ul>
+<li>Handler：抽象处理者。定义了一个处理请求的接口。</li>
+<li>ConcreteHandler：具体处理者。处理它所负责的请求，可访问它的后继者。如果可处理该请求就处理，否则就将该请求转发给它的后继者。</li>
+</ul>
+<h3 id="Implementation-3"><a href="#Implementation-3" class="headerlink" title="Implementation"></a>Implementation</h3><p>抽象处理者</p>
+<p>　　抽象处理者实现了三个职责：</p>
+<ul>
+<li>定义一个请求的处理方法handlerMessage()，是唯一对外开放的方法</li>
+<li>定义一个链的编排方式setNext()，用于设置下一个处理者</li>
+<li>定义了具体的请求者必须实现的两个方法，即定义自己能够处理的级别的getHandlerLevel()方法及具体的处理任务echo()方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Handler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Handler nextHandler;    <span class="comment">//下一个处理者</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> Response <span class="title function_">handlerMessage</span><span class="params">(Request request)</span> &#123;</span><br><span class="line">        <span class="type">Response</span> <span class="variable">response</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">this</span>.getHandlerLevel().equals(request.getRequestLevel())) &#123;    <span class="comment">//判断是否是自己的处理级别</span></span><br><span class="line">            response = <span class="built_in">this</span>.echo(request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">this</span>.nextHandler != <span class="literal">null</span>) &#123;    <span class="comment">//下一处理者不为空</span></span><br><span class="line">                response = <span class="built_in">this</span>.nextHandler.handlerMessage(request);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//没有适当的处理者，业务自行处理</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设定下一个处理者</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setNext</span><span class="params">(Handler handler)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.nextHandler = handler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//每个处理者的处理等级</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">abstract</span> Level <span class="title function_">getHandlerLevel</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//每个处理者都必须实现的处理任务</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">abstract</span> Response <span class="title function_">echo</span><span class="params">(Request request)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体处理者</p>
+<p>　　这里我们定义三个具体处理者，以便能组成一条链，ConcreteHandlerB及ConcreteHandlerC就不再赘述了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteHandlerA</span> <span class="keyword">extends</span> <span class="title class_">Handler</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Level <span class="title function_">getHandlerLevel</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//设置自己的处理级别</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> Response <span class="title function_">echo</span><span class="params">(Request request)</span> &#123;</span><br><span class="line">        <span class="comment">//完成处理逻辑</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="责任链模式的应用"><a href="#责任链模式的应用" class="headerlink" title="责任链模式的应用"></a>责任链模式的应用</h3><p>开发中常见的场景： </p>
+<ul>
+<li>Java中，异常机制就是一种责任链模式。一个try可以对应多个catch， 当第一个catch不匹配类型，则自动跳到第二个catch. </li>
+<li>Javascript语言中，事件的冒泡和捕获机制。Java语言中，事件的处理 采用观察者模式。</li>
+<li>Servlet开发中，过滤器的链式处理 </li>
+<li>Struts2中，拦截器的调用也是典型的责任链模式</li>
+</ul>
+<p>　　1. 何时使用</p>
+<ul>
+<li>处理消息时</li>
+</ul>
+<p>　　2. 方法</p>
+<ul>
+<li>拦截的类都实现同一接口</li>
+</ul>
+<p>　　3. 优点</p>
+<ul>
+<li>将请求和处理分开，实现解耦，提高系统的灵活性</li>
+<li>简化了对象，使对象不需要知道链的结构</li>
+</ul>
+<p>　　4. 缺点</p>
+<ul>
+<li>性能会收到影响，特别是在链比较长的时候</li>
+<li>调试不方便。采用了类似递归的方式，调试时逻辑可能比较复杂</li>
+<li>不能保证请求一定被接收</li>
+</ul>
+<p>　　5. 使用场景</p>
+<ul>
+<li>有多个对象可以处理同一个请求</li>
+<li>在不明确指定接收者的情况下，向多个对象中的提交请求</li>
+<li>可动态指定一组对象处理请求</li>
+</ul>
+<p>　　6. 应用实例</p>
+<ul>
+<li>多级请求</li>
+<li>击鼓传花</li>
+<li>请假&#x2F;加薪请求</li>
+<li>Java Web中Tomcat对Encoding的处理、拦截器</li>
+</ul>
+<p>　　7. 注意事项</p>
+<ul>
+<li>需控制链中最大节点数量，一般通过在Handler中设置一个最大节点数量，在setNext()方法中判断是否已经超过阀值，超过则不允许该链建立，避免出现超长链无意识地破坏系统性能</li>
+</ul>
+<h2 id="十三、迭代器模式（iterator）"><a href="#十三、迭代器模式（iterator）" class="headerlink" title="十三、迭代器模式（iterator）"></a>十三、迭代器模式（iterator）</h2><p>提供一种顺序访问聚合对象元素的方法，并且不暴露聚合对象的内部表示。</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20220111155357.png" alt="img"></p>
+<ul>
+<li>Aggregate：聚集抽象类。负责提供创建具体迭代器角色的接口</li>
+<li>Iterator：迭代抽象类，用于定义得到开始对象、得到下一个对象、判断是否到结尾、当前对象等抽象方法，统一接口</li>
+<li>ConcreteAggregate：具体聚集类，继承Aggregate</li>
+<li>ConcreteIterator：具体迭代器类，继承Iterator，实现开始、下一个、是否结尾、当前对象等方法</li>
+</ul>
+<h3 id="Implementation-4"><a href="#Implementation-4" class="headerlink" title="Implementation"></a>Implementation</h3><p>抽象容器</p>
+<p>　　负责提供接口，比如存在一个类似createIterator()这样的方法，在Java中一般是iterator()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Aggregate</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Object object)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Object object)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Iterator <span class="title function_">iterator</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>抽象迭代器</p>
+<p>　　负责定义访问和遍历元素的接口，基本上有固定的三个方法，即first()获取第一个元素、next()访问下一个元素、hasNext()是否已经遍历到底部。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Iterator</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">next</span><span class="params">()</span>;    <span class="comment">//遍历到下一个元素</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNext</span><span class="params">()</span>;    <span class="comment">//是否已经遍历到尾部</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">remove</span><span class="params">()</span>;    <span class="comment">//删除当前指向的元素</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体容器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteAggregate</span> <span class="keyword">implements</span> <span class="title class_">Aggregate</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Vector</span> <span class="variable">vector</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vector</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Object object)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.vector.add(object);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Object object)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.remove(object);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Iterator <span class="title function_">iterator</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteIterator</span>(<span class="built_in">this</span>.vector);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体迭代器</p>
+<p>　简单的实现就是通过一个游标，在一个容器中上下翻滚，遍历所有它需要查看的元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteIterator</span> <span class="keyword">implements</span> <span class="title class_">Iterator</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">Vector</span> <span class="variable">vector</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Vector</span>();</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="variable">cursor</span> <span class="operator">=</span> <span class="number">0</span>;    <span class="comment">//定义当前游标</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteIterator</span><span class="params">(Vector vector)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.vector = vector;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">next</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">Object</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.hasNext()) &#123;</span><br><span class="line">            result = <span class="built_in">this</span>.vector.get(<span class="built_in">this</span>.cursor ++);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">hasNext</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span>.cursor == <span class="built_in">this</span>.vector.size()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">remove</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.vector.remove(<span class="built_in">this</span>.cursor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="迭代器模式的应用"><a href="#迭代器模式的应用" class="headerlink" title="迭代器模式的应用"></a>迭代器模式的应用</h3><p>　　1. 何时使用</p>
+<ul>
+<li>遍历一个聚合对象时</li>
+</ul>
+<p>　　2. 方法</p>
+<ul>
+<li>把在元素间游走的责任交给迭代器，而不是聚合对象</li>
+</ul>
+<p>　　3. 优点</p>
+<ul>
+<li>支持以不同的方式遍历一个聚合对象</li>
+<li>迭代器简化了聚合类</li>
+<li>在同一个聚合上可以有多个遍历</li>
+<li>增加新的聚合类和迭代器类都很方便，无需修改原有代码</li>
+</ul>
+<p>　　4. 缺点</p>
+<ul>
+<li>增加了系统的复杂性。因为迭代器模式将存储数据和遍历数据的职责分离，增加了新的聚合类需要对应增加新的迭代器类，增加了系统的复杂性。</li>
+</ul>
+<p>　　5. 使用场景 </p>
+<ul>
+<li>访问一个聚合对象的内容无需暴露它的内部表示时</li>
+<li>需要为聚合对象提供多种便利方式时</li>
+<li>为遍历不同的聚合结构提供一个统一的接口</li>
+</ul>
+<p>　　6. 应用实例</p>
+<ul>
+<li>Java中的Iterator迭代器</li>
+<li>foreach遍历</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%9B%9B%EF%BC%89/" data-id="claaf6qih006ztkup3dhd35hy" data-title="java-设计模式（四）" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          java-设计模式（五）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">java-设计模式（三）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>无线网络和移动网络 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="无线网络和移动网络 概述构成无线网络和移动网络的构成大致相同,都是有三部分组成  无线主机:就是我们所用的终端,如手机,电脑等. **基站:**负责协调无线主机和网络基础设施之间的通讯,比如交换机,信号塔 无线链路:主机通过无线通信链路连接到一个基站，与链路访问相匹配的多址访问协议   无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。n无线局域网可分为两大类:有固定基础设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无线网络和移动网络">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/07/ComputerNetworking_%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="无线网络和移动网络 概述构成无线网络和移动网络的构成大致相同,都是有三部分组成  无线主机:就是我们所用的终端,如手机,电脑等. **基站:**负责协调无线主机和网络基础设施之间的通讯,比如交换机,信号塔 无线链路:主机通过无线通信链路连接到一个基站，与链路访问相匹配的多址访问协议   无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。n无线局域网可分为两大类:有固定基础设">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/09/09/ZYfz8aejEpBuKDV.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/09/7nRLubtQjy3sMSJ.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/09/bCJqTxd2cBKsMit.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/09/8N1gWRa4CTDclfj.png">
+<meta property="og:image" content="https://i.loli.net/2021/09/09/BIejREdC5hGAwYW.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207004835612.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/1uQskUn.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210340340.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207010142453.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210557227.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/UFPZ7Xg.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/uO3Xyvr.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/K01CkZb.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013153995.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013252445.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216220209298.png">
+<meta property="article:published_time" content="2019-12-06T22:54:37.000Z">
+<meta property="article:modified_time" content="2021-09-09T07:44:52.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/09/09/ZYfz8aejEpBuKDV.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-ComputerNetworking_无线网络和移动网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/07/ComputerNetworking_%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/" class="article-date">
+  <time class="dt-published" datetime="2019-12-06T22:54:37.000Z" itemprop="datePublished">2019-12-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      无线网络和移动网络
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="无线网络和移动网络"><a href="#无线网络和移动网络" class="headerlink" title="无线网络和移动网络"></a>无线网络和移动网络</h1><p><img src="https://i.loli.net/2021/09/09/ZYfz8aejEpBuKDV.png"></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><p>无线网络和移动网络的构成大致相同,都是有三部分组成</p>
+<ul>
+<li><strong>无线主机</strong>:就是我们所用的终端,如手机,电脑等.</li>
+<li>**基站:**负责协调无线主机和网络基础设施之间的通讯,比如交换机,信号塔</li>
+<li><strong>无线链路</strong>:主机通过无线通信链路连接到一个基站，与链路访问相匹配的多址访问协议</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/09/7nRLubtQjy3sMSJ.png"></p>
+<p>无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。n无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。</p>
+<h4 id="基础设施模式"><a href="#基础设施模式" class="headerlink" title="基础设施模式"></a>基础设施模式</h4><p>基础设施模式是指预先建立起来的、能够覆盖一定地理范围的一批固定基站。</p>
+<p>移动主机通过基站接入有线网络; </p>
+<p>切换:移动主机的移动可能会改变与之相关联的基站。</p>
+<h4 id="ad-hoc网络"><a href="#ad-hoc网络" class="headerlink" title="ad hoc网络"></a>ad hoc网络</h4><p><strong>自组织网络</strong>（ad hoc network）中，主机不与基站相连，主机本身提供这些服务。</p>
+<ul>
+<li><p>无基站</p>
+</li>
+<li><p>节点（移动主机）仅仅能够在其覆盖范围内向其他节点传送数据；</p>
+</li>
+<li><p>节点之间相互通信组成的临时网络:在它们内部进行选路和地址分配。</p>
+</li>
+<li><p><strong>自组织网络</strong>（ad hoc network）中，主机不与基站相连，主机本身提供这些服务。</p>
+</li>
+</ul>
+<h4 id="无线网络类型"><a href="#无线网络类型" class="headerlink" title="无线网络类型"></a>无线网络类型</h4><p>标准：无线网分组跨越的无线跳、是否有基础设施。<br>1、单跳、基于基础设施。802.11、3G蜂窝网等。<br>2、单跳、无基础设施。蓝牙、自组织模式的802.11<br>3、多跳、基于基础设施。结点通过无线结点中继通信，连接到基站，如无线网状网络。<br>4、多跳、无基础设施。移动自组织网络，包括车载自组织网络。</p>
+<h4 id="无线链路"><a href="#无线链路" class="headerlink" title="无线链路"></a>无线链路</h4><ul>
+<li>无线网络<strong>比特差错率较高</strong>，不仅需要CRC，还可能需要链路层ARQ重传受损的帧。</li>
+<li>两台主机不足以相互检测到对方的传输，由于<ul>
+<li>由于物理阻挡存在<strong>隐藏终端问题</strong>（hidden terminal problem）。</li>
+<li>信号<strong>衰减</strong>（fading）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="无线网络特征"><a href="#无线网络特征" class="headerlink" title="无线网络特征"></a>无线网络特征</h4><ol>
+<li><strong>信号强度递减。</strong>有路径耗损。</li>
+<li>其他源的干扰。如2.4GHz的802.11b受到对应无线电话和环境电子噪音影响。</li>
+<li>多径传播。由于地面发射通过多条路径传播，接收的信号模糊。</li>
+<li>物理层特征<br>对于给定的调制方案，SNR（信噪比，Signal-to-Noise Ratio）越高，BER（比特差错率）越低。<br>对于给定的SNR，较高比特传输速率的调制技术具有较高的BER。<br>物理层可以根据信道条件动态选择调制技术。</li>
+</ol>
+<h4 id="CDMA"><a href="#CDMA" class="headerlink" title="CDMA"></a>CDMA</h4><p>码多分址（Code Divison Multiple Access, CDMA），是一种信道划分协议 。每个要发送的比特乘一个信号比特编码，这个信号变化速率（码片速率, chipping rate）比初始数据快。接收方再乘以相同的编码获得原始数据。</p>
+<p>每个用户被指派一个惟一的m bit码片序列。</p>
+<p>所有用户<strong>共享相同的频道,</strong> 但每个用户用自己的“码片”序列对数据编码。</p>
+<p>例如，发送方使用的CDMA码：(1,1,1,-1,1,-1,-1,-1)发送01比特，0表示为-1：</p>
+<p><img src="https://i.loli.net/2021/09/09/bCJqTxd2cBKsMit.png" alt="SKkilat"></p>
+<blockquote>
+<p>   例：设m&#x3D;8且码片为00011011，则为便于运算与表示，通常将其表示为：</p>
+<p>   S&#x3D;(-1，-1，-1，+1，+1，-1，+1，+1)</p>
+<p>   若发送bit 1则发送序列：</p>
+<p>​      (-1，-1，-1，+1，+1，-1，+1，+1)</p>
+<p>   若发送bit 0则发送序列：</p>
+<p>​      (+1，+1，+1，-1，-1，+1，-1，-1) </p>
+</blockquote>
+<p>当站点发送比特“1”时，就发送指定给该站点的mbit码片序列；发送比特“0”时，发送此mbit码片序列的二进制反码（当用-1表示0时，发送的就是-1 * mbit码片序列）</p>
+<p>习惯上，将码片序列中的“0”写成“-1”，“1”写成“+1”</p>
+<h2 id="两种无线网络"><a href="#两种无线网络" class="headerlink" title="两种无线网络"></a>两种无线网络</h2><h3 id="wifi"><a href="#wifi" class="headerlink" title="wifi"></a>wifi</h3><ul>
+<li><strong>IEEE 802.11 无线LAN</strong>，也称<strong>WiFi</strong>，是一种较小范围的<strong>接入网</strong>技术。</li>
+</ul>
+<p>都是使用CSMA&#x2F;CA 协议实现多路访问</p>
+<p>都可以用于有固定基础设施模式和自组网络模式</p>
+<h4 id="wifi体系结构"><a href="#wifi体系结构" class="headerlink" title="wifi体系结构"></a>wifi体系结构</h4><p>802.11基本构建模块为基本服务集（Basic Service Set, BSS），<strong>一个BSS包括多个无线站点和一个接入点</strong>（Access Point, AP, 中央基站）。所有站在本BSS以内都可以直接通信。但在和本 BSS 以外的站通信时都要通过本 BSS 的基站。</p>
+<p>802.11站点可以自己组合成一个自组织网络。</p>
+<p><img src="https://i.loli.net/2021/09/09/8N1gWRa4CTDclfj.png"></p>
+<ol>
+<li>802.11频段2.4~2.4835GHz，分为11个部分重叠的信道，其中只有3个非重叠信道（两个信道仅当中间相隔4个及以上的信道时，无重叠），在同一个物理网络中可以连接3个AP，然后连接到一个交换机上。意味着 可以在一个无线 局域网里安装3个AP,分别分配信道 1,6,11。每个AP接到 一个交换机，这样无线LAN的最大传输速率可以到33M</li>
+<li>无线站点<strong>关联</strong>AP<ul>
+<li>每个AP有一个SSID（服务集标识符，Service Set Identifier），每个AP被分配一个信道号</li>
+<li>WiFi Jungle：主机如何从多个AP中关联其中一个？</li>
+<li>每个AP周期性发送信标帧，包括AP的SSID和MAC</li>
+<li>主机对11个信道进行扫描，获取所有可用的AP的信标帧</li>
+<li>主机选择其中一个AP进行关联，加入其所属子网</li>
+<li>主机向关联AP发送DHCP发现报文，获取IP地址</li>
+<li>可能需要身份鉴别</li>
+</ul>
+</li>
+</ol>
+<p>一个基本服务集可以是孤立的，也可通过接入点 AP连接到一个主干分配系统 DS (Distribution System)，然后再接入到另一个基本服务集，构成扩展的服务集ESS (Extended Service Set)。</p>
+<p>ESS 还可通过叫做门桥(portal)为无线用户提供到非 802.11 无线局域网（例如，到有线连接的因特网）的接入。门桥的作用就相当于一个网桥。 </p>
+<p><img src="https://i.loli.net/2021/09/09/BIejREdC5hGAwYW.png"></p>
+<h4 id="自组网络-ad-hoc-network"><a href="#自组网络-ad-hoc-network" class="headerlink" title="自组网络(ad hoc network)"></a>自组网络(ad hoc network)</h4><p>自组网络没有上述基本服务集中的接入点 AP 而是由一些处于平等状态的移动站之间相互通信组成的临时网络。</p>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207004835612.png"></p>
+<h4 id="802-11的MAC协议–CSMA-x2F-CA"><a href="#802-11的MAC协议–CSMA-x2F-CA" class="headerlink" title="802.11的MAC协议–CSMA&#x2F;CA"></a>802.11的MAC协议–CSMA&#x2F;CA</h4><p> WiFi所使用的MAC协议叫做CSMA&#x2F;CA**,CSMA即是载波侦听**,其原理同以前讲述的一样,他会检测其他无线站点是否正在发送数据,如果是则停止传输,知道信道空闲.但是和以前不同的是,<strong>CA是碰撞避免</strong>,而不是CD碰转检测,因为CD完全不适用于无线链路,其一,两个无线站点之间如果需要互相检测到对方的发送信号所需的成本太大,其二,即使可以互相检测到信号,也会因为隐藏终端问题和衰减的问题无法检测到所有的碰撞。</p>
+<p><strong>802.11采取碰撞避免而非碰撞检测</strong></p>
+<p>发送帧的步骤是:</p>
+<ol>
+<li>在发送信号之前,即侦听到信道空闲时,会在一个<strong>分布式帧间间隔DIFS的短时间</strong>后发送数据帧.（无冲突检测）</li>
+<li>若信道繁忙,会选取一个随机回退值（相等于一个定时器）,每当侦听到信道空闲时此回退值就会减小,信道繁忙则会冻结回退值,当回退值为0时,发送数据帧。</li>
+<li>发送数据帧并等待确认,目的地则会在等待一个被称为<strong>短帧间间隔SIFS</strong>的短时间后发送确认帧.</li>
+<li>如果源收到确认帧,表示被正确接收了,需要发送其他帧会从第二步开始.如果未收到确认,进入第二部的回退阶段,并从更大的范围选取回退值,如果发送多次,放弃发送该帧.<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/1uQskUn.png"></li>
+</ol>
+<p>处理终端隐藏问题：</p>
+<p><strong>思路</strong>: 允许发送方“预约”信道而非随机访问 :避免长的数据帧冲突</p>
+<ul>
+<li>发送方使用<strong>请求发送</strong>（Request to Send, RTS）控制帧，AP<strong>允许发送</strong>（Clear to Send, CTS）控制帧<strong>预约</strong>对信道的访问。</li>
+<li>当帧长超过<strong>门限值</strong>时使用两个控制帧，减少消耗的信道资源。</li>
+<li>RTS ，CTS被所有节点侦听到：发送方发送数据帧，其他站点推迟发送。</li>
+</ul>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210340340.png"></p>
+<p>RTS也可能仍会相互冲突 (但时间很短)</p>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207010142453.png"></p>
+<h4 id="802-11MAC帧格式"><a href="#802-11MAC帧格式" class="headerlink" title="802.11MAC帧格式"></a>802.11MAC帧格式</h4><p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210557227.png"></p>
+<ul>
+<li>帧控制:包含许多子字段,类型和子类型用于区分管理,RTS,CTS,ACK和数据帧,WEP用于知识是否加密,to,from定义不同地址                字段的含义等等,不做具体描述</li>
+<li>持续期:表示预约信道的时间,即在上文中描述的如何处理隐藏终端问题的预约时间</li>
+<li>地址一:源MAC地址</li>
+<li>地址二:接收该帧的设备的MAC地址</li>
+<li>地址三:AP所连的交换机的MAC地址,是基本服务集BSS和因特网连接的关键</li>
+<li>序号控制:用于区分帧的重传和新的发送</li>
+<li>地址四:用于自组织间的MAC地址</li>
+<li>有效载荷:存放数据</li>
+<li>CRC:循环冗余检测字段</li>
+</ul>
+<h5 id="帧地址的变化"><a href="#帧地址的变化" class="headerlink" title="帧地址的变化"></a>帧地址的变化</h5><p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/UFPZ7Xg.png"></p>
+<p>1、R1到H1<br>路由器R1将数据报封装在以太网帧中，源地址为R1的MAC地址，目的地址为H1的MAC地址。<br>帧到AP后，由802.3以太网帧转换为802.11无线网帧。地址1为接收方H1的MAC地址，地址2为发送方AP的MAC地址，地址3为R1的MAC地址。<br>2、H1到R1<br>H1生成一个802.11帧，地址1为AP的MAC地址，地址2为H1的MAC地址，地址3为R1的MAC地址。<br>AP收到该帧后，转为以太网帧，源地址为H1的MAC地址，目的地址为R1的MAC地址。<br>地址3允许AP构建以太网帧时确定目的MAC地址，在BSS和有线局域网互联中起作用。</p>
+<h4 id="其他性质"><a href="#其他性质" class="headerlink" title="其他性质"></a>其他性质</h4><p><strong>速率适应。</strong>条件较好（收到ACK），增加传输速率，条件变差（没有收到ACK），减小传输速率。类似TCP拥塞机制。<br><strong>功率管理</strong>。一个结点可以明显的在睡眠和唤醒状态之间交替。<br>结点向AP指示打算睡眠，并设置定时器，在AP发送信标帧（100ms一次）前唤醒（约250us）结点。<br>结点睡眠时，AP先缓存帧，待以后传输。<br>短暂的唤醒时间、接收信标帧时间、检查缓存帧的时间，能大大节约能源。</p>
+<h3 id="蜂窝网"><a href="#蜂窝网" class="headerlink" title="蜂窝网"></a>蜂窝网</h3><p>WiFi热区范围较小，蜂窝网通过基站控制器（Base Station Controller, BSC）和收发基站（Base Transceiver Station, BTS）组成GSM基站系统，并将它们连接，可以进行大范围的无线覆盖。一个基站覆盖的区域类似蜂窝。<br>蜂窝电话进行扩展，不光可以传播语音，还可以传输IP数据报。</p>
+<h4 id="移动管理"><a href="#移动管理" class="headerlink" title="移动管理"></a>移动管理</h4><p>原理<br>归属网络（home network）：一个移动结点的永久居所。<br>归属代理（home agent）：归属网络中代表移动结点执行移动管理功能的实体<br>永久地址：归属网络中的地址，用它一定可以找到移动用户</p>
+<p>外部网络（foreign network）：移动结点当前所处网络，也称为被访网络（visited network）。<br>外部代理（foreing agent）：外部网络中代表结点移动管理的实体。<br>通信者（correspondent）：希望与移动结点通信的实体。<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/uO3Xyvr.png"></p>
+<p><strong>寻址</strong></p>
+<ul>
+<li>外部代理为移动节点创建<strong>转交地址</strong>（Care-Of Address, <strong>COA</strong>），与外部网络匹配。一个移动结点可以和两个地址相关联，<strong>永久地址</strong>（permanent address）和COA。</li>
+<li>外部代理可以告诉归属代理，该移动结点在他的外部网络和他的<strong>COA</strong>。</li>
+</ul>
+<h4 id="间接路由选择"><a href="#间接路由选择" class="headerlink" title="间接路由选择"></a>间接路由选择</h4><p>步骤：</p>
+<ol>
+<li>数据报导向移动结点的归属网络。</li>
+<li>归属代理将原始数据报封装（encapsulate）成大数据报，交付到移动结点的COA。</li>
+<li>拥有该COA的外部代理接收并拆封大数据报，向移动结点转发原始数据报。</li>
+<li>移动结点使用永久地址为源地址，通信者地址为目的地址，直接发送数据报到通信者。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/K01CkZb.png"></p>
+<ul>
+<li>用户移动到新的网络时，注册新的COA，更新原本归属代理中的COA。</li>
+<li>存在<strong>三角路由选择问题</strong>，即使通信者和移动结点之间有更有效的路径，也会<strong>先发给归属代理</strong>，再发到外部网络。</li>
+</ul>
+<h4 id="直接路由选择"><a href="#直接路由选择" class="headerlink" title="直接路由选择"></a>直接路由选择</h4><p>步骤：</p>
+<ol>
+<li>通信者代理向归属代理查询移动结点的COA。</li>
+<li>通信者代理使用隧道技术经过外部代理发往移动结点。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013153995.png"></p>
+<p>问题：对通信者来说是非透明的: 通信者必须从归属代理那里得到转交地址COA</p>
+<p>如果移动用户从一个被访问网络移动到另一个网络会怎样呢?</p>
+<p>由于直接选路时，归属代理只在会话开始时被询问过一次，那么在会话过程中移动用户又切换了网络怎么办？</p>
+<p><strong>移动结点移动到另一个外部网络时</strong></p>
+<ol>
+<li>移动结点向新的外部代理注册。</li>
+<li>新的外部代理向<strong>锚外部代理</strong>（会话开始时首次发现移动结点时对应的外部代理）提供移动结点新的<strong>COA</strong>。</li>
+<li>锚外部代理收到发往该移动结点的数据报后，使用新的COA重新封装数据报，并且发向移动结点。</li>
+<li>如果移动结点又移动到新的外部网络，对应的外部代理需要随后建立和锚代理的联系。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013252445.png"></p>
+<h3 id="移动性管理"><a href="#移动性管理" class="headerlink" title="移动性管理"></a>移动性管理</h3><h4 id="移动IP"><a href="#移动IP" class="headerlink" title="移动IP"></a>移动IP</h4><p>支持移动性的因特网体系结构与协议合起来被称为移动IP.有三部分组成</p>
+<ol>
+<li><p><strong>代理发现。</strong>代理通告服务或者移动结点请求服务。<br>1、代理通告。外部代理和归属代理周期性的广播类型9的ICMP报文，包括COA等信息。<br>2、代理请求。移动结点广播类型10的ICMP报文，收到请求的代理单播一个代理通告。</p>
+</li>
+<li><p><strong>向归属代理注册。</strong>移动结点收到COA后，该地址必须向归属代理注册。</p>
+<p>  1、收到外部代理通告之后，移动结点向外部代理发送注册报文，放入端口号434的UDP数据报中，包括：通告的COA、归属代理地址（HA）、移动结点永久地址（MA）、请求注册寿命、注册标识。<br>2、外部代理收到注册后记录永久IP（封装的数据报的目的地址为该永久IP，则该数据包需要解封）。向归属代理发送注册报文。<br>3、归属代理接收后验证，将移动结点的永久IP和COA绑定（到达永久IP的数据报被封装，隧道方式经外部代理发给COA）。归属代理发送注册回答。<br>4、外部代理接收注册回答，转发个移动结点。<br>数据报的间接路由选择。</p>
+</li>
+<li><p>**代理通告:**外部代理&#x2F;归属代理会周期性的通告其服务,通过发送一个类型字段为9的ICMP报文实现,报文结构如下图:<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216220209298.png"></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2019/12/07/ComputerNetworking_%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/" data-id="claaf6qha001ntkup9p17f3h9" data-title="无线网络和移动网络" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/12/11/c++-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          c++语法笔记
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/06/ComputerNetworking_%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">链路层和局域网</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

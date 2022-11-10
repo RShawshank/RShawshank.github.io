@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>文件管理 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="文件管理概述广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问 文件是在逻辑上具有完整意义的信息集合，它有一个名字以供标识，文件名是以字母开头的字母数字串。 构成文件的基本单位：信息项（单个字符或者字节）、记录 (3) 文件的其他描述 ①文件是具有符号名的信息(数据)项的集合 ②文件是具有符号名的记录的集合 (4) 文件分类 ①按文件的性质和用途分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件管理">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="文件管理概述广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问 文件是在逻辑上具有完整意义的信息集合，它有一个名字以供标识，文件名是以字母开头的字母数字串。 构成文件的基本单位：信息项（单个字符或者字节）、记录 (3) 文件的其他描述 ①文件是具有符号名的信息(数据)项的集合 ②文件是具有符号名的记录的集合 (4) 文件分类 ①按文件的性质和用途分类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124920817.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105125342000.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130504852.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130601233.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130817288.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105133705230.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105134329690.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image001.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image002.png">
+<meta property="article:published_time" content="2019-12-29T22:54:58.000Z">
+<meta property="article:modified_time" content="2020-10-06T09:19:58.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="文件管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-OS_文件管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2019-12-29T22:54:58.000Z" itemprop="datePublished">2019-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      文件管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="文件管理概述"><a href="#文件管理概述" class="headerlink" title="文件管理概述"></a>文件管理概述</h1><p><strong>广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问</strong></p>
+<p>文件是<strong>在逻辑上具有完整意义的信息集合</strong>，它有一个名字以供标识，文件名是以字母开头的字母数字串。</p>
+<p>构成文件的基本单位：信息项（单个字符或者字节）、记录</p>
+<p>(3) 文件的其他描述</p>
+<p>①文件是具有符号名的信息(数据)项的集合</p>
+<p>②文件是具有符号名的记录的集合</p>
+<p>(4) 文件分类</p>
+<p>①按文件的性质和用途分类<br>                系统文件（只能通过系统调用） 、程序库文件（允许用户调用，不允许修改） 、用户文件</p>
+<p>②按文件保护级别分类	<br>                不保护文件、 执行文件、 只读文件、 读写文件</p>
+<p>③分类按文件流向分类<br>                输入文件、 输出文件、 输入输出文件</p>
+<p>(5) 文件名与属性</p>
+<p>①文件名<br>每个文件有一个给定的名字，这个名字是由串描述且由文件内容来表示，包括文件符号名和内部标识符。</p>
+<ul>
+<li><p>用户使用文件符号名进行文件操作</p>
+</li>
+<li><p>系统使用文件内部标识符管理文件</p>
+</li>
+</ul>
+<p>②文件扩展<br>文件扩展表示文件的使用特征，如：.c   .obj    .lib 等。</p>
+<p>③文件属性<br>文件的属性字，表示文件类别、保护级等信息。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>文件系统是操作系统中负责管理和存取文件信息的软件机构。</p>
+<p><strong>文件系统的组成</strong></p>
+<p>①管理文件所需的数据结构<br>如目录表、文件控制块、存储分配表</p>
+<p>②管理程序</p>
+<p>③一组操作</p>
+<p><strong>文件系统的功能</strong></p>
+<p>①从用户角度看——文件系统实现了“按名存取”的功能。</p>
+<p>②从系统角度看——辅存空间管理、构造文件结构、提供文件共享功能、提供存取文件的方法、文件保护、提供一组文件操作命令</p>
+<p><strong>文件系统的特点</strong></p>
+<p>①使用简单<br>使用文件名、一组文件操作命令。</p>
+<p>②安全可靠<br>提供防护措施，在文件遭受破坏时，能及时复。全量备份、增量备份、动态备份、远程备份</p>
+<p>③既能共享，又能保密<br>身份验证、存取权限验证。</p>
+<p>存储数据的文件存储器具有固定的物理特性，数据在辅存设备上的排序、分布构成了文件的物理结构</p>
+<p><strong>文件系统负责实现逻辑特性到物理特性的转换</strong></p>
+<h2 id="文件组织的两种结构"><a href="#文件组织的两种结构" class="headerlink" title="文件组织的两种结构"></a>文件组织的两种结构</h2><h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>从用户角度看到的文件面貌。即用户对信息进行逻辑组织形成的文件结构。</p>
+<p><strong>研究文件逻辑结构的目的：</strong></p>
+<p>i 为用户提供一种逻辑结构清晰、使用简便的逻辑文件形式。</p>
+<p>ii 用户按文件的逻辑结构形式去存储、检索和加工文件中的信息</p>
+<h3 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h3><p>文件的物理结构是信息在物理存储器上的存储方式，是数据的物理表示和组织。</p>
+<p><strong>研究文件物理结构的目的</strong></p>
+<p>i选择工作性能良好、设备利用率高的物理文件形式。</p>
+<p>ii  系统按照文件的物理结构形式和外部设备打交道，控制信息的传输。</p>
+<h3 id="逻辑记录与物理记录"><a href="#逻辑记录与物理记录" class="headerlink" title="逻辑记录与物理记录"></a>逻辑记录与物理记录</h3><p>①逻辑记录</p>
+<p>文件中按信息在逻辑上的独立含义来划分的信息单位，逻辑记录是对文件进行存取操作的基本单位。</p>
+<p>②物理记录</p>
+<p>在存储介质上，由连续信息所组成的一个区域称为块，也叫物理记录。</p>
+<p>③逻辑记录与物理记录的区别与联系</p>
+<p>i 一个是逻辑的概念，一个是物理的概念。</p>
+<p>ii 逻辑记录最终要存放到物理记录上。</p>
+<h2 id="文件的逻辑结构与存取方法"><a href="#文件的逻辑结构与存取方法" class="headerlink" title="文件的逻辑结构与存取方法"></a>文件的逻辑结构与存取方法</h2><h3 id="流式文件"><a href="#流式文件" class="headerlink" title="流式文件"></a>流式文件</h3><p>流式文件是相关的有序字符的集合，是无结构的。</p>
+<p>流式文件是按信息的个数或以特殊字符为界进行存取的。</p>
+<p>简单来说就是没有格式的文件</p>
+<p>UNIX系统为了方便会将流式文件按照512B的大小划分为若干个逻辑记录，将流式文件转变为记录式文件。</p>
+<h3 id="记录式文件"><a href="#记录式文件" class="headerlink" title="记录式文件"></a>记录式文件</h3><p>记录式文件是一种有结构的文件。这种文件在逻辑上总是被看成一组连续顺序的记录的集合。</p>
+<p>如果文件中所有记录的长度都相同，就称这种文件为定长记录文件。其长度由记录的数量来决定。</p>
+<p>如果文件中记录的长度不相同，就称这种文件为变长记录文件。其长度由各个记录长度相加得到。</p>
+<h2 id="文件存取方法"><a href="#文件存取方法" class="headerlink" title="文件存取方法"></a>文件存取方法</h2><p>(1) 顺序存取</p>
+<p>后一次存取总是在前一次存取的基础上进行的。顺序存取时不必给出具体的存取位置。</p>
+<p>(2) 随机存取</p>
+<p>用户以任意次序请求某个记录。随机存取时要指出起始存取位置(例如记录号)。</p>
+<h1 id="文件的物理结构"><a href="#文件的物理结构" class="headerlink" title="文件的物理结构"></a>文件的物理结构</h1><h2 id="连续文件"><a href="#连续文件" class="headerlink" title="连续文件"></a>连续文件</h2><p>连续文件结构是由一组分配在磁盘<strong>连续区域</strong>的物理块组成的。</p>
+<p>如果连续文件的逻辑记录和磁盘的物理块一样大，就如下图所示：</p>
+<p>连续文件的第一个逻辑记录所在的磁盘块号记录在文件目录项中，同时文件目录还记录了磁盘块的数量。8</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png"></p>
+<p> 连续文件的特点</p>
+<p>①连续存取时速度较快</p>
+<p>②文件长度一经固定便不易改变</p>
+<p>③文件的增生和扩充不易</p>
+<p>但是当文件不断创建或者删除的时候，将会造成存储空间的浪费（因为文件长度是固定的，多次创建就是占着茅坑不拉屎）</p>
+<h2 id="串联文件"><a href="#串联文件" class="headerlink" title="串联文件"></a>串联文件</h2><p>串联文件结构是<strong>按顺序由串联的块组成</strong>的，即文件的信息存于若干块物理块中，每个物理块的最末一个字作为链接字，它指出后继块的物理地址。文件的最后一块的链接字为结束标记“^”，它表示文件至本块结束。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124920817.png"></p>
+<p>串联文件的特点</p>
+<p>①能较好地利用辅存空间</p>
+<p>②易于对文件进行增生和扩充</p>
+<p>③连续存取时速度较快</p>
+<p>串联文件的特点也决定了它适合的是顺序存取方式，不适用于随机存取方式。（就像链表一样，找中间元素得遍历链表，不方便）</p>
+<h2 id="索引文件"><a href="#索引文件" class="headerlink" title="索引文件"></a>索引文件</h2><p>索引文件将逻辑文件顺序地划分与物理存储块长度相同的逻辑块。（不一定）</p>
+<p>系统为每个文件建立<strong>逻辑块号与物理块号的对照表</strong>。这张表称为该文件的索引表。文件由数据文件和索引表构成。这种文件称为索引文件。</p>
+<p>注意：物理块号可以是不连续的。但是逻辑块号一般是连续的。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105125342000.png"></p>
+<p>①索引文件在存储区中占两个区</p>
+<p>i 索引区：存放索引表</p>
+<p>ii 数据区：存放数据文件</p>
+<p>②访问索引文件的操作</p>
+<p>i 查文件索引，由逻辑块号查得物理块号</p>
+<p>ii 由此磁盘物理块号而获得所要求的信息</p>
+<p>索引文件的特点</p>
+<p>①易于文件的增删</p>
+<p>②直接读写任意记录</p>
+<p>有点像页表。每次对文件进行修改，索引表都可能会发生改动。</p>
+<h3 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130504852.png"></p>
+<p>文件目录项中有一组表项用于索引。每一个表项登记的是逻辑记录所在的磁盘块号。</p>
+<h3 id="一级间接索引"><a href="#一级间接索引" class="headerlink" title="一级间接索引"></a>一级间接索引</h3><p>需要注意：间接索引表磁盘块号和磁盘块号不是一回事</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130601233.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第一级索引表块的块号。第一级索引表块中的索引表项登记的是文件逻辑记录所在的磁盘块号。</p>
+<h3 id="二级间接索引"><a href="#二级间接索引" class="headerlink" title="二级间接索引"></a>二级间接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130817288.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第二级索引表块的块号。第二级索引表块中的索引表项登记的第一级索引表块的块号，第一级索引表项中登记的是文件逻辑记录所在的磁盘块号。</p>
+<p>套娃下去可以是可以，但是检索的时间就变长了。</p>
+<h1 id="文件存储空间的管理"><a href="#文件存储空间的管理" class="headerlink" title="文件存储空间的管理"></a>文件存储空间的管理</h1><p>就是为了管理怎么分配文件存储空间的。</p>
+<h1 id="文件目录及其结构"><a href="#文件目录及其结构" class="headerlink" title="文件目录及其结构"></a>文件目录及其结构</h1><p>文件目录是记录文件的名字、存放地址及其他有关文件的说明信息和控制信息的数据结构</p>
+<p><strong>文件目录项的内容</strong></p>
+<p>①文件名</p>
+<p>②文件逻辑结构<br>说明该文件的记录是否定长、记录长度及记录个数等。</p>
+<p>③文件物理结构：记录文件的物理结构形式<br>连续文件——指出文件第一块的物理地址、文件所占块数<br>串联文件——指出该文件第一块的物理地址<br>索引文件——指出索引表地址</p>
+<p>④存取控制信息<br>文件主具有的存取权限、核准的其他用户及其相应的存取权限</p>
+<p>⑤管理信息<br>文件建立日期、时间，上一次存取时间、要求文件保留的时间等</p>
+<p>⑥文件类型<br>文件的类型，例如可分为数据文件、目录文件、块存储设备文件、字符设备文件</p>
+<h2 id="一级文件目录"><a href="#一级文件目录" class="headerlink" title="一级文件目录"></a>一级文件目录</h2><p>系统将已建立的<strong>所有文件的文件名</strong>、存放地址及有关的说明信息放在一张表中，这张表称为一级文件目录。</p>
+<p><strong>一级文件目录的特点</strong></p>
+<ul>
+<li>实现了按名存取的功能，比较简单；</li>
+<li>要求文件名和文件之间有一一对应的关系，即：不允许两个文件有相同的名字。</li>
+</ul>
+<blockquote>
+<p>重名问题</p>
+<p>所谓“重名”，是指不同用户对不同文件起了相同的名字，即两个或多个文件只有一个相同的符号名。又称为命名冲突。</p>
+<p>为了解决命名冲突、获得更灵活的命名能力，文件系统必须采用多级目录结构</p>
+</blockquote>
+<h2 id="树型文件目录"><a href="#树型文件目录" class="headerlink" title="树型文件目录"></a>树型文件目录</h2><p>在多级目录系统中(除最末一级外)，任何一级目录的目录项可以描述一个目录文件，也可以描述一个非目录文件(数据文件)，而<strong>数据文件一定在树叶上</strong>。这样，就构成了一个树形层次结构。</p>
+<h3 id="文件路径名"><a href="#文件路径名" class="headerlink" title="文件路径名"></a>文件路径名</h3><p>多级目录中，文件的路径名是由根目录到该文件的通路上<strong>所有目录文件符号名和该文件的符号名</strong>组成的字符串，相互之间用分隔符分隔。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105133705230.png"></p>
+<h1 id="文件共享与安全"><a href="#文件共享与安全" class="headerlink" title="文件共享与安全"></a>文件共享与安全</h1><p>文件共享是指某一个或某一部分文件可以让事先规定的某些用户共同使用。</p>
+<p>所谓文件安全，就是文件的保护问题。文件的保护是指文件本身不得被未经文件主授权的任何用户存取，而对于授权用户也只能在允许的存取权限内使用文件。</p>
+<p>②如何进文件的保护</p>
+<p>需要对用户的权限进行验证。所谓存取权限的验证，是指用户存取文件之前，需要检查用户的存取权限是否符合规定，符合者允许使用，否则拒绝。</p>
+<p>③验证用户存取权限的方法</p>
+<p>i 访问控制矩阵</p>
+<p>ii 存取控制表</p>
+<p>iii 用户权限表</p>
+<p>iv 口令</p>
+<p>v 密码</p>
+<h2 id="用文件路径名加快文件的查找"><a href="#用文件路径名加快文件的查找" class="headerlink" title="用文件路径名加快文件的查找"></a>用文件路径名加快文件的查找</h2><p>当前目录是当前用户正在使用的文件所在的目录。当指定当前目录后，用户对文件的所有访问都是相对于“当前目录”进行的。这时，文件路径名是由“当前目录”到信息文件的通路上所有各级目录的符号名加上该信息文件的符号名组成。<strong>用“*”表示当前目录的父节点</strong>。</p>
+<h2 id="链接技术"><a href="#链接技术" class="headerlink" title="链接技术"></a>链接技术</h2><p>所谓“链接”，就是在相应目录表目之间进行链接，即一个目录中的表目直接指向另一个目录表目所在的物理位置。</p>
+<p>注意，这种链接<strong>不是直接指向文件，而是指向相应的目录表目</strong>。这种办法也称为连访，被共享的文件称为连访文件。</p>
+<p>相当于添加共享文件中间的链接</p>
+<p>在当前目录下新键一个子目录用于链接其共享文件</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105134329690.png"></p>
+<blockquote>
+<p>UNIX&#x2F;Linux下的链接文件有两种，硬连接(Hard Link) 和软连接。</p>
+<p>软连接又称符号链接(Symbolic link)。<strong>符号链接文件中并不包括实际的文件数据，而只是包括了它指向文件的路径。</strong>它可以链接到任意的文件和目录，包括处于不同文件系统的文件以及目录。当用户对链接文件操作时，系统会自动的转到对源文件的操作，但是删除链接文件时，并不会删除源文件。</p>
+<p>硬连接是指通过索引节点对文件的链接。<strong>保存在系统中的每一个文件都会有一个索引节点</strong>。每当有文件链接文件A时，文件A的索引节点的引用计数+1（因为文件自身对自己索引节点会链接，所以索引节点的初始值为1.）当文件系统进行删除文件的时候，对应的文件索引节点的引用计数-1。只要引用计数不等于0，文件就不会真正删除。</p>
+</blockquote>
+<h1 id="文件操作和文件备份"><a href="#文件操作和文件备份" class="headerlink" title="文件操作和文件备份"></a>文件操作和文件备份</h1><p>常用的文件操作命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create：<span class="regexp">//</span>创建一个新文件</span><br><span class="line"><span class="keyword">delete</span>：<span class="regexp">//</span>从系统目录中撤消一个文件</span><br><span class="line">rename：<span class="regexp">//</span>在系统目录中改变文件的名字</span><br><span class="line">open：<span class="regexp">//</span>打开文件   在用户和文件(或设备)之间建立一个逻辑通路</span><br><span class="line">close：<span class="regexp">//</span>关闭文件  在用户和文件(或设备)之间撤消一个逻辑通路</span><br><span class="line">write：<span class="regexp">//</span>写到一个文件(或设备)上</span><br><span class="line">read：<span class="regexp">//</span>从一个文件(或设备)读入数据信息</span><br></pre></td></tr></table></figure>
+
+<p>①打开文件操作</p>
+<p>所谓打开文件就是把<strong>该文件的有关目录表目复制到主存中约定的区域，建立文件控制块</strong>，建立用户和这个文件的联系。</p>
+<p>②关闭文件操作</p>
+<p>所谓关闭文件就是用户宣布这个文件当前不再使用，<strong>系统将其在主存中的文件控制块删去</strong>，因而也就切断了用户同这个文件的联系。</p>
+<h2 id="文件备份"><a href="#文件备份" class="headerlink" title="文件备份"></a>文件备份</h2><p>为了能在软、硬件失效的意外情况下恢复文件，保证文件的完整性、数据的连续可利用性，文件系统提供适当的机构，以便复制备份。</p>
+<p><strong>文件备份的方法</strong></p>
+<p>①周期性转储</p>
+<p>按固定的时间周期把存储器中所有文件的内容转存到某种介质上，通常是磁带或磁盘。在系统失效时，使用这些转存磁盘或磁带，将所有文件重新建立并恢复到最后一次转存时的状态。（全部）</p>
+<p>②增量性转储</p>
+<p>这种技术转储的只是从上次转储以后已经改变过的信息；增量转储的信息量较小，故转储可在更短的时间周期内进行（部分）</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>1</strong>．何谓数据项、记录和文件？</p>
+<p>答：①数据项分为基本数据项和组合数据项。基本数据项描述一个对象某种属性的字符集，具有数据名、数据类型及数据值三个特性。组合数据项由若干数据项构成。</p>
+<p>②记录是一组相关数据项的集合，用于描述一个对象某方面的属性。</p>
+<p>③文件是具有文件名的一组相关信息的集合。</p>
+<p><strong>4</strong>．何谓逻辑文件？何谓物理文件？</p>
+<p>答：逻辑文件是物理文件中存储的数据的一种视图方式，不包含具体数据，仅包含物理文件中数据的索引。物理文件又称文件存储结构，是指文件在外存上的存储组织形式。</p>
+<p><strong>8</strong>．试说明顺序文件的结构及其优点。</p>
+<p>答：第一种是串结构：各记录之间的顺序与关键字无关。第二种是顺序结构：指文件中的所有记录按关键字（词）排列。可以按关键词长短排序或英文字母顺序排序。</p>
+<p>顺序文件的最佳应用场合是对诸记录进行批量存取时，存取效率最高；只有顺序文件才能存储在磁带上并有效工作。</p>
+<p><strong>15</strong>．什么是索引文件？为什么要引入多级索引？</p>
+<p>答：索引文件是指当记录为可变长度时，通常为之建立一张索引表，并为每个记录设置一个表项构成的文件。通常将索引非顺序文件简称为索引文件。索引是为了是用户的访问速度更快，多级索引结构可以有效的管理索引文件，可根据用户的访问情况多级处理。</p>
+<p><strong>17</strong>．对目录管理的主要要求是什么？</p>
+<p>答：实现按名存取、提高检索目录的速度、文件共享、允许文件重名。</p>
+<p><strong>18</strong>．采用单级目录能否满足对目录管理的主要要求？为什么？</p>
+<p>答：不能。单级目录在整个文件系统中只建立一张目录表，每个文件占一个目录项，其中含文件名、文件扩展名、文件长度、文件类型、文件物理地址、状态位等其它文件属性。</p>
+<p>单级只能实现目录管理的基本功能，不能满足查找速度、允许重名和文件共享的要求。</p>
+<p><strong>19</strong>．目前广泛应用的目录结构有哪些？它有什么优点？</p>
+<p>答：现代操作系统都采用多级目录结构。基本特点是查询速度快、层次结构清晰、文件管理和保护易于实现。</p>
+<p>9-6 设文件B按串联文件构造，并由四个逻辑记录组成 (其大小与磁盘块大小相等，均为512B)。这四个逻辑记录分别存放在第100、157、66、67号磁盘块上，回答如下问题。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image001.png"></p>
+<p>(1) 画出此串联文件文件的结构，</p>
+<p>(2) 若要读文件B第1560字节处的信息，问要访问哪一个磁盘块? 为什么?</p>
+<p>(3) 读文件B第1560字节处的信息需要进行多少次I&#x2F;O操作? 为什么?</p>
+<p>(1) 答：此串联文件结构如下图所示。</p>
+<p>(2) 答：1560&#x2F;512&#x3D;3余24，因此文件第1560逻辑字节在r3逻辑块上，该逻辑块被分配在67号磁盘块上。</p>
+<p>(3) 答：要访问67号磁盘块，需要先找到文件目录，然后依次访问100、157和66号磁盘块，最后读取67号磁盘块。因此若文件已打开 (文件目录信息已在内存中) 需要4次I&#x2F;O操作，文件未打开需要5次I&#x2F;O操作。</p>
+<p>9-16什么是“重名”问题 ? 二级文件目录结构如何解决这一问题?</p>
+<p>答：重名是指不同用户对不同文件起了相同的名字。在二级文件目录结构中，每个用户建立用户文件目录，系统建立主目录，登记所有用户目录的信息，用目录名加文件名唯一标识每个文件解决重名问题。</p>
+<p>9-18 假设两个用户共享一个文件系统，用户甲要用到文件a、b、c、e，用户乙要用到文件a、d、e、f。已知：用户甲的文件a与用户乙的文件a实际上不是同一文件；用户甲的文件c与用户乙的文件f实际上是同一文件；甲、乙两用户的文件e是同一文件。试拟定一个文件组织方案，使得甲、乙两用户能共享该文件系统而不致造成混乱。</p>
+<p>答：如下图所示。用户甲的主目录名为jia，有四个文件，文件名为a、b、c、e。</p>
+<p>用户乙的主目录名为yi，有四个文件，文件名为a、d、e、f。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image002.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" data-id="claaf6qht003ztkup3w7q9nvc" data-title="文件管理" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          设备管理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">处理机调度</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

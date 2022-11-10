@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>计算机系统结构-指令级并行 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="指令级并行的概念提高处理速度：  提高主频【高到一定程序，发热能耗都会升高】 并行工作：多个部件同时工作  理想流水线的CPI加上各类停顿的时钟周期数：$$CPI_{流水线}&#x3D;CPI_{理想}+停顿_{结构冲突}+停顿_{数据冲突}+停顿_{控制冲突}$$ 需要解决的具体问题相关和流水线冲突： 相关是程序固有的一种属性，它反映了程序中指令之间的相互依赖关系。相关是引起冲突的主要原因（并非">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机系统结构-指令级并行">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="指令级并行的概念提高处理速度：  提高主频【高到一定程序，发热能耗都会升高】 并行工作：多个部件同时工作  理想流水线的CPI加上各类停顿的时钟周期数：$$CPI_{流水线}&#x3D;CPI_{理想}+停顿_{结构冲突}+停顿_{数据冲突}+停顿_{控制冲突}$$ 需要解决的具体问题相关和流水线冲突： 相关是程序固有的一种属性，它反映了程序中指令之间的相互依赖关系。相关是引起冲突的主要原因（并非">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416150630044.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160452576.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160749450.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160711828.png">
+<meta property="article:published_time" content="2020-04-15T12:49:03.000Z">
+<meta property="article:modified_time" content="2020-04-16T09:47:08.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="计算机系统结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416150630044.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-计算机系统结构-指令级并行" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/" class="article-date">
+  <time class="dt-published" datetime="2020-04-15T12:49:03.000Z" itemprop="datePublished">2020-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      计算机系统结构-指令级并行
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="指令级并行的概念"><a href="#指令级并行的概念" class="headerlink" title="指令级并行的概念"></a>指令级并行的概念</h1><p>提高处理速度：</p>
+<ul>
+<li>提高主频【高到一定程序，发热能耗都会升高】</li>
+<li>并行工作：多个部件同时工作</li>
+</ul>
+<p>理想流水线的CPI加上各类停顿的时钟周期数：<br>$$<br>CPI_{流水线}&#x3D;CPI_{理想}+停顿_{结构冲突}+停顿_{数据冲突}+停顿_{控制冲突}<br>$$</p>
+<h2 id="需要解决的具体问题"><a href="#需要解决的具体问题" class="headerlink" title="需要解决的具体问题"></a>需要解决的具体问题</h2><p><strong>相关和流水线冲突</strong>：</p>
+<p>相关是程序固有的一种属性，它反映了程序中指令之间的相互依赖关系。相关是引起冲突的主要原因（并非唯一？结构冲突无对应相关）。因此消除相关是减少冲突停顿的一种有效方法。</p>
+<p><strong>相关是引发冲突的主要原因，其中数据相关与名相关可能导致数据冲突，而控制相关可能导致控制冲突。</strong></p>
+<h3 id="相关的两类解决方案"><a href="#相关的两类解决方案" class="headerlink" title="相关的两类解决方案"></a>相关的两类解决方案</h3><ul>
+<li><p>保持相关，但避免发生冲突</p>
+<ul>
+<li>指令调度</li>
+</ul>
+</li>
+<li><p>通过代码变换，消除相关</p>
+<ul>
+<li>寄存器重命名</li>
+</ul>
+</li>
+</ul>
+<h1 id="指令调度分类"><a href="#指令调度分类" class="headerlink" title="指令调度分类"></a>指令调度分类</h1><ul>
+<li><p>静态调度</p>
+<ul>
+<li>依靠编译器对代码进行静态调度，以减少相关和冲突。</li>
+<li>它不是在程序执行的过程中、而是在编译期间进行代码调度和优化。</li>
+<li>通过把相关的指令拉开距离来减少可能产生的停顿。</li>
+</ul>
+</li>
+<li><p>动态调度</p>
+<ul>
+<li>在程序的执行过程中，依靠专门硬件对代码进行调度，减少数据相关导致的停顿。</li>
+<li>优点：<ul>
+<li>能够处理一些在编译时情况不明的相关（比如涉及到存储器访问的相关），并简化了编译器；</li>
+<li>能够使本来是面向某一流水线优化编译的代码在其它的流水线（动态调度）上也能高效地执行。</li>
+<li>以硬件复杂性的显著增加为代价</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="经典（顺序）流水线的局限性"><a href="#经典（顺序）流水线的局限性" class="headerlink" title="经典（顺序）流水线的局限性"></a>经典（顺序）流水线的局限性</h2><p>由于指令是按序流出和按序执行的。</p>
+<p>例如：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">DIV.D</span>	<span class="built_in">F4</span>，<span class="built_in">F0</span>，<span class="built_in">F2</span></span><br><span class="line"><span class="symbol">ADD.D</span>	F10，<span class="built_in">F4</span>，<span class="built_in">F6</span> </span><br><span class="line"><span class="symbol">SUB.D</span>	F12，<span class="built_in">F6</span>，F14</span><br></pre></td></tr></table></figure>
+
+<p>假设DIV（除法）指令执行时间（EX）是10个时钟周期，ADD（加法）与SUB（减法）分别为1个，（由于除法与加法之间的数据相关）那么ADD必须等待9个时钟周期才能进入EX阶段。在我们学过的顺序流水线中，由于ID部件被ADD指令占据，SUB指令只有在ADD指令流入EX（执行）阶段后才能进入ID阶段，即其也需要等待9个时钟周期。然而，如果这些指令不用按顺序执行，则SUB（减法）无需等待。</p>
+<p>SUB指令需要等待的原因：在ID阶段会检测结构冲突与数据冲突，当发现冲突后，导致冲突的指令中较晚进入流水线的那条（ADD指令），将冻结在流水寄存器中，不在向前流动。由于流水寄存器只能存放一条指令，一旦这条指令受阻，其后的指令（SUB指令）都将停顿。</p>
+<p>解决方法：<strong>允许指令乱序执行</strong></p>
+<h3 id="指令乱序执行"><a href="#指令乱序执行" class="headerlink" title="指令乱序执行"></a>指令乱序执行</h3><p>将ID段分为两个阶段：流出（IS）和读操作数(RO)。IS阶段执行指令译码，检查是否存在结构冲突；RO阶段等待数据冲突消失，再进行读操作数的操作。</p>
+<p>两个方法：</p>
+<ul>
+<li>引入指令缓冲区：不能流出的指令就在缓冲区里排队等待，直到冲突消除</li>
+<li>部署更多的执行部件（这里的执行部件是广义的执行，包括：运算器、访存设备等），使得多条指令能都同时执行或访存</li>
+</ul>
+<h3 id="乱序执行的问题"><a href="#乱序执行的问题" class="headerlink" title="乱序执行的问题"></a>乱序执行的问题</h3><h4 id="WAR冲突和WAW冲突"><a href="#WAR冲突和WAW冲突" class="headerlink" title="WAR冲突和WAW冲突"></a>WAR冲突和WAW冲突</h4><p>乱序执行可能会导致WAR冲突和WAW冲突。</p>
+<p>可以使用寄存器重命名来消除冲突。值得注意的是，寄存器的数量是有限的，更多的寄存器会导致编译器变慢。</p>
+<h4 id="多条指令同时处于执行或访存中"><a href="#多条指令同时处于执行或访存中" class="headerlink" title="多条指令同时处于执行或访存中"></a>多条指令同时处于执行或访存中</h4><p>乱序执行将使得多条指令处于执行当中，因此要求，具有<strong>多个功能部件</strong>、或者功能部件流水化、或者兼而有之。</p>
+<h4 id="复杂的异常处理"><a href="#复杂的异常处理" class="headerlink" title="复杂的异常处理"></a>复杂的异常处理</h4><p>乱序指令引入的最大问题在于，异常处理比较复杂。异常可以分为精确异常与不精确异常。</p>
+<ul>
+<li><p>精确异常：如果发生异常时，处理机的现场跟严格按程序顺序执行时指令i的现场相同。</p>
+</li>
+<li><p>不精确异常：当执行指令i导致发生异常时，处理机的现场（状态）与严格按程序顺序执行时指令i的现场不同。</p>
+<ul>
+<li><p>发生不精确异常的原因：因为当发生异常（设为指令i）时</p>
+<ul>
+<li>流水线可能已经执行完按程序顺序是位于指令i之后的指令；</li>
+<li>流水线可能还没完成按程序顺序是指令i之前的指令。</li>
+</ul>
+</li>
+<li><p>不精确异常使得在异常处理后难以接着继续执行程序。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>显然，动态调度的处理机要保持正确的异常行为。具体而言，对于一条会产生异常的指令来说，只有当处理机确切地知道该指令将被执行时，才允许它产生异常。举个例子，指令i，j顺序流入流水线。j位于条件语句中（选择执行），会引起异常但不会被执行。j被调度到i之前执行，执行过程中发生了异常（实际不会被执行，所以也不会引起异常）。这样是不允许的。</p>
+<p>然而，即使保持了正确的异常行为，动态调度处理机仍可能发生不精确异常。 举个例子：指令i，j顺序流入流水线，指令i会导致异常，但其被调度到j之后执行，假设j执行完后直接改变了上下文，那么i产生异常时，上下文与顺序执行的上下文已经不同了。</p>
+<h1 id="动态分支预测"><a href="#动态分支预测" class="headerlink" title="动态分支预测"></a>动态分支预测</h1><p>ILP（指令级并行）越多，控制相关的制约就越大，分支预测就要有更高的准确度。解决方法就是：动态分支预测。</p>
+<h2 id="动态分支预测-1"><a href="#动态分支预测-1" class="headerlink" title="动态分支预测"></a>动态分支预测</h2><ul>
+<li>在程序运行时，根据分支指令过去的表现来预测其将来的行为。</li>
+<li>如果分支行为发生了变化，预测结果也跟着改变。</li>
+<li>有更好的预测准确度和适应性。</li>
+</ul>
+<p>分支预测的有效性取决于</p>
+<ul>
+<li>预测的准确性</li>
+<li>预测正确和不正确两种情况下的分支开销</li>
+<li>决定分支开销的因素：<ul>
+<li>流水线的结构</li>
+<li>预测的方法</li>
+<li>预测错误时的恢复策略等</li>
+</ul>
+</li>
+</ul>
+<h2 id="目标与关键问题"><a href="#目标与关键问题" class="headerlink" title="目标与关键问题"></a>目标与关键问题</h2><ul>
+<li><p>采用动态分支预测技术的目标【只有尽快做到下面两点，才能避免控制相关造成流水线停顿】</p>
+<ul>
+<li>预测分支是否成功</li>
+<li>尽快找到分支目标地址（或指令）（避免控制相关造成流水线停顿）</li>
+</ul>
+</li>
+<li><p>需要解决的关键问题</p>
+<ul>
+<li>如何记录分支的历史信息，要记录哪些信息？ </li>
+<li>如何根据这些信息来预测分支的去向，甚至提前取出分支目标处的指令</li>
+</ul>
+</li>
+</ul>
+<h2 id="预测错误时的处理方法"><a href="#预测错误时的处理方法" class="headerlink" title="预测错误时的处理方法"></a>预测错误时的处理方法</h2><p>在预测错误时，要作废已经预取和分析的指令，恢复现场，并从另一条分支路径重新取指令。</p>
+<h2 id="分支历史表BHT"><a href="#分支历史表BHT" class="headerlink" title="分支历史表BHT"></a>分支历史表BHT</h2><p>基本思想是使用一张表（BHT）来记录分支指令最近一次或几次的执行情况（成功还是失败），并据此进行预测。</p>
+<h3 id="最简单的分支历史表"><a href="#最简单的分支历史表" class="headerlink" title="最简单的分支历史表"></a>最简单的分支历史表</h3><p>只有1个预测位的分支预测表</p>
+<p>仅记录分支指令最近一次的历史，只需要1位二进制位。其规则也很简单，一句话，上次是分支成功就认为下次分支成功，上次失败就认为下次失败。</p>
+<h3 id="两位预测位的分支历史表"><a href="#两位预测位的分支历史表" class="headerlink" title="两位预测位的分支历史表"></a>两位预测位的分支历史表</h3><p>两个位记录分支最近两次的执行情况（成功1或失败0）</p>
+<p><img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416150630044.png"></p>
+<p>研究结果表明：两位分支预测的性能与n位（n&gt;2）分支预测的性能差不多。</p>
+<h4 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h4><ul>
+<li><p>分支预测</p>
+<ul>
+<li>当分支指令到达译码段（ID）时，根据从BHT读出的信息进行分支预测 。</li>
+<li>若预测正确，就继续处理后续的指令，流水线没有断流。否则，就要作废已经预取和分析的指令，恢复现场，并从另一条分支路径重新取指令。</li>
+</ul>
+</li>
+<li><p>状态修改。【根据状态变迁图修改状态】</p>
+</li>
+</ul>
+<h3 id="BHT的作用范围"><a href="#BHT的作用范围" class="headerlink" title="BHT的作用范围"></a>BHT的作用范围</h3><p>关键在于比较判定分支是否成功所需的时间和确定分支目标地址所需的时间哪个更大。</p>
+<p>【在5段经典流水线中，判断分支是否成功和计算分支目标地址都是在ID段完成的，故BHT方法不会给该流水线带去什么好处。】</p>
+<p>BHT技术只管了预测部份，没管预测后的处理部分。</p>
+<h3 id="BHT的实现"><a href="#BHT的实现" class="headerlink" title="BHT的实现"></a>BHT的实现</h3><p>BHT可以跟分支指令一起存放在指令Cache中，也可以用一块专门的硬件来实现。 </p>
+<h2 id="分支目标缓冲器BTB"><a href="#分支目标缓冲器BTB" class="headerlink" title="分支目标缓冲器BTB"></a>分支目标缓冲器BTB</h2><p>BTB的目标是将分支的开销降为 0。具体方法是分支目标缓冲，即，将分支成功的分支指令的地址和它的分支目标地址都放到一个缓冲区中保存起来，缓冲区以分支指令的地址作为标识。</p>
+<p>BTB可以看成是用专门的硬件实现的一张表格。表格中的<strong>每一项至少有两个字段。一是，执行过的成功分支指令的地址，用作该表的匹配标识。二是预测的分支目标地址。</strong>只有这两项的就是最简单的BTB。</p>
+<p><img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160452576.png"></p>
+<p>注：在预测失败的情况下，会承受2个周期的延迟。</p>
+<p>与BHT相比，BTB的优点在于IF周期就能找到分支地址，能够将分支成功且预测准确时的分支开销降到0。</p>
+<h3 id="改进BTB"><a href="#改进BTB" class="headerlink" title="改进BTB"></a>改进BTB</h3><p>1、在分支目标缓冲器中增设一个至少是两位的“分支历史表”字段 </p>
+<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160749450.png" style="zoom:67%;" />
+
+<p>2、在表中对于每条分支指令都存放若干条分支目标处的指令，就形成了分支目标指令缓冲器。</p>
+<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/image-20200416160711828.png" style="zoom:67%;" />
+
+<p>这里，BTB中不在保存分支目标地址，而是保存分支目标指令。</p>
+<p>为什么存指令，而非指令地址呢？因为IF是通过指令地址取指令，分支成功，程序的空间局部性spatial locality被破坏，取指令的时延很可能会增加</p>
+<h1 id="多指令流出技术"><a href="#多指令流出技术" class="headerlink" title="多指令流出技术"></a>多指令流出技术</h1><p>多指令流出技术通过降低理想CPI，以改善实际CPI。</p>
+<h2 id="多流出处理机的两种基本风格"><a href="#多流出处理机的两种基本风格" class="headerlink" title="多流出处理机的两种基本风格"></a>多流出处理机的两种基本风格</h2><h3 id="超标量"><a href="#超标量" class="headerlink" title="超标量"></a>超标量</h3><ul>
+<li>在每个时钟周期流出的指令条数不固定，依代码的具体情况而定。（有个上限）</li>
+<li>设这个上限为n，就称该处理机为n-流出。</li>
+<li>可以通过编译器进行静态调度，也可以基于Tomasulo算法进行动态调度。</li>
+</ul>
+<p>超标量结构对程序员是透明的，处理机能自己检测下一条指令能否流出，不需要由编译器或专门的变换程序对程序中的指令进行重新排列</p>
+<p>即使是没有经过编译器针对超标量结构进行调度优化的代码或是旧的编译器生成的代码也可以运行，当然运行的效果不会很好【若要想达到很好的效果，方法之一是：使用动态超标量调度技术。】</p>
+<h3 id="超长指令字VLIW"><a href="#超长指令字VLIW" class="headerlink" title="超长指令字VLIW"></a>超长指令字VLIW</h3><ul>
+<li>在每个时钟周期流出的指令条数是固定的，这些指令构成一条长指令或者一个指令包。</li>
+<li>指令包中，指令之间的并行性是通过指令显式地表示出来的。</li>
+<li>指令调度是由编译器静态完成的。</li>
+</ul>
+<h2 id="基于静态调度的超标量流水线技术"><a href="#基于静态调度的超标量流水线技术" class="headerlink" title="基于静态调度的超标量流水线技术"></a>基于静态调度的超标量流水线技术</h2><p>指令按序流出，在流出时进行冲突检测。由硬件检测当前流出的指令之间是否存在冲突以及当前流出的指令与正在执行的指令是否有冲突。</p>
+<h2 id="超长指令字技术"><a href="#超长指令字技术" class="headerlink" title="超长指令字技术"></a>超长指令字技术</h2><p>超长指令字技术把能并行执行的多条指令组装成一条很长的指令，成为一个指令字。这条指令通常为100多位到几百位。为了支持多条指令的同时执行，需要设置多个功能部件。指令字被分割成一些字段，每个字段称为一个操作槽，直接独立地控制一个功能部件。在超长指令字处理机中，<strong>在指令流出时不需要进行复杂的冲突检测，而是依靠编译器全部安排好了。</strong></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li><p>程序代码长度增加了。原因在于，为提高并行性而进行的大量的循环展开；此外，指令字中的操作槽也并非总能填满。 对于这个问题，可以通过采用指令共享立即数字段的方法，或者采用指令压缩存储、调入Cache或译码时展开的方法予以解决。</p>
+</li>
+<li><p>采用了锁步机制。任何一个操作部件出现停顿时，整个处理机都要停顿。</p>
+</li>
+<li><p>机器代码的不兼容性，一旦体系结构发生了变化，代码就必须重新编译。</p>
+</li>
+</ul>
+<h2 id="超流水线处理机"><a href="#超流水线处理机" class="headerlink" title="超流水线处理机"></a>超流水线处理机</h2><p>超流水线处理机的基本概念：将每个流水段进一步细分，这样在一个时钟周期内能够分时流出多条指令。这种处理机称为超流水线处理机。</p>
+<p>对于一台每个时钟周期能流出n条指令的超流水线计算机来说，这n条指令不是同时流出的，而是每隔1&#x2F;n个时钟周期流出一条指令。实际上该超流水线计算机的流水线周期为1&#x2F;n个时钟周期。</p>
+<h1 id="指令调度和循环展开"><a href="#指令调度和循环展开" class="headerlink" title="指令调度和循环展开"></a>指令调度和循环展开</h1><h2 id="指令调度的基本方法"><a href="#指令调度的基本方法" class="headerlink" title="指令调度的基本方法"></a>指令调度的基本方法</h2><p>指令调度一般由编译器完成。通过找出不相关的指令序列，让它们在流水线上重叠并行执行。</p>
+<p>编译器做指令调度时，通常会收两个方面的制约。一是程序固有的指令级并行，二是流水线功能部件的延迟。</p>
+<h2 id="循环展开的基本概念和方法"><a href="#循环展开的基本概念和方法" class="headerlink" title="循环展开的基本概念和方法"></a>循环展开的基本概念和方法</h2><p>循环展开是把循环体的代码复制多次并按顺序排放， 然后相应调整循环的结束条件。它是开发循环级并行的有效方法。</p>
+<h2 id="循环展开和指令调度的注意事项"><a href="#循环展开和指令调度的注意事项" class="headerlink" title="循环展开和指令调度的注意事项"></a>循环展开和指令调度的注意事项</h2><p>（1）保证正确性</p>
+<p>（2）注意有效性</p>
+<p>（3）使用不同的寄存器</p>
+<p>（4）删除多余的测试指令和分支指令，并对循环结束代码和新的循环体代码进行相应的修正。</p>
+<p>（5）注意对存储器数据的相关性分析</p>
+<p>（6）注意新的相关性</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%8C%87%E4%BB%A4%E7%BA%A7%E5%B9%B6%E8%A1%8C/" data-id="claaf6qjf00batkup2z506adn" data-title="计算机系统结构-指令级并行" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          计算机系统结构-存储系统
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">计算机系统结构-流水线技术</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>oracle数据库 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="安装教程参考文章 参考文章 概念Oracle数据库服务器由两部分组成：  实例：理解为对象,看不见的 数据库：理解为类，看得见的  Oracle数据库把表、视图等都看成是对象。 null值Oracle中如果存在字段是null值的话，那么在sqlplus中它是不会显示出来的….如果我们使用null值的数据与其他数据进行运算…那么最终得出的结果都是null值 因此，Oracle提供了NVL(表达式1，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle数据库">
+<meta property="og:url" content="http://rshawshank.github.io/2021/08/13/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="安装教程参考文章 参考文章 概念Oracle数据库服务器由两部分组成：  实例：理解为对象,看不见的 数据库：理解为类，看得见的  Oracle数据库把表、视图等都看成是对象。 null值Oracle中如果存在字段是null值的话，那么在sqlplus中它是不会显示出来的….如果我们使用null值的数据与其他数据进行运算…那么最终得出的结果都是null值 因此，Oracle提供了NVL(表达式1，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-13T10:45:54.000Z">
+<meta property="article:modified_time" content="2021-09-13T02:50:44.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="oracle">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-oracle数据库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/08/13/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/" class="article-date">
+  <time class="dt-published" datetime="2021-08-13T10:45:54.000Z" itemprop="datePublished">2021-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      oracle数据库
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013537329">参考文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013540871">参考文章</a></p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Oracle数据库服务器由两部分组成：</p>
+<ul>
+<li><strong>实例：理解为对象,看不见的</strong></li>
+<li><strong>数据库：理解为类，看得见的</strong></li>
+</ul>
+<p>Oracle数据库把表、视图等都看成是对象。</p>
+<h2 id="null值"><a href="#null值" class="headerlink" title="null值"></a>null值</h2><p>Oracle中如果存在字段是null值的话，那么在sqlplus中它是不会显示出来的….<strong>如果我们使用null值的数据与其他数据进行运算…那么最终得出的结果都是null值</strong></p>
+<p>因此，Oracle提供了NVL(表达式1，表达式2)函数供我们使用，如果表达式1的值为null值，那么就取表达式2的值…当然了，如果表达式1不是null，取的就是表达式1的值</p>
+<p>还有值得注意的是：<strong>null值不能参数&#x3D;号运算，null能参数number&#x2F;date&#x2F;varchar2类型运算</strong></p>
+<p><strong>Oracle提供了 is null关键字来代替&#x3D;号运算的问题</strong></p>
+<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p>Mysql中如果要用别名的话，需要使用as关键字 ，后面跟着别名就行了….Oracle可以省略as关键字…</p>
+<p>并且，一般地，我们使用别名都是用双引号””把别名括起来，Oracle也支持我们直接写别名，但是呢<strong>，如果我们不写双引号，那么我们的别名是不能有空格的</strong></p>
+<p>还有一点的是：<strong>Oracle的别名是不能使用单引号来括起来的，Oracle默认认为单引号是字符串类型和日期类型的。</strong></p>
+<h2 id="操作表细节"><a href="#操作表细节" class="headerlink" title="操作表细节"></a>操作表细节</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">进入回收站</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> users;</span><br><span class="line"></span><br><span class="line">查询回收站中的对象</span><br><span class="line"><span class="keyword">show</span> recyclebin;</span><br><span class="line"></span><br><span class="line">闪回，即将回收站还原</span><br><span class="line">flashback <span class="keyword">table</span> 表名 <span class="keyword">to</span> before <span class="keyword">drop</span>;</span><br><span class="line">flashback <span class="keyword">table</span> 表名 <span class="keyword">to</span> before <span class="keyword">drop</span> rename <span class="keyword">to</span>  新表名;</span><br><span class="line"></span><br><span class="line">彻底删除users表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> users purge;</span><br><span class="line"></span><br><span class="line">清空回收站</span><br><span class="line">purge recyclebin;</span><br><span class="line"></span><br><span class="line">为emp表增加image列，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> 列名 类型(宽度) </span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line"><span class="keyword">add</span> image <span class="type">blob</span>;</span><br><span class="line"></span><br><span class="line">修改ename列的长度为<span class="number">20</span>个字节，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 modify 列名 类型(宽度) </span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line">modify ename varchar2(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">删除image列，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">column</span> 列名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">column</span> image;</span><br><span class="line"></span><br><span class="line">重名列名ename为username，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 rename <span class="keyword">column</span> 原列名 <span class="keyword">to</span> 新列名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line">rename <span class="keyword">column</span> ename <span class="keyword">to</span> username;</span><br><span class="line"></span><br><span class="line">将emp表重命名emps，rename 原表名 <span class="keyword">to</span> 新表名</span><br><span class="line">rename emp <span class="keyword">to</span> emps;</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是：<strong>修改表的时候，是不能回滚的！</strong></p>
+<p>Oracle中的级联操作：</p>
+<ul>
+<li><strong>【on delete cascade】级联删除</strong></li>
+<li><strong>【on delete set null】将外键一方设置为null</strong></li>
+</ul>
+<h1 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h1><p>Oracle中的分页是依靠着rownum这个伪列来实现的，由于rownum只能使用的是&lt;&#x3D;或者&lt;来获取数据。。。因为rownum的值可能会经常变【加入一条数据，那么rownum就+1，讲道理rownum可以是无穷大的，因此不能使用&gt;来进行操作】….</p>
+<p>那么Oracle分页的思路是这样子的：</p>
+<ul>
+<li>先在子查询中获取前n条记录</li>
+<li><strong>由于返回的是多行多列，因此我们可以看做成一张表</strong></li>
+<li>那么将查询出来的数据放在from字句的后边</li>
+<li>外套的查询可以<strong>通过where字句来对子查询出来的数据进行过滤</strong></li>
+<li>那么我们就可以查询出想要的数据了…</li>
+</ul>
+<p>公式：</p>
+<ul>
+<li><strong>Mysql从(currentPage-1)*lineSize开始取数据，取lineSize条数据</strong></li>
+<li><strong>Oracle先获取currentPage*lineSize条数据，从(currentPage-1)*lineSize开始取数据</strong></li>
+</ul>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h2 id="批量操作"><a href="#批量操作" class="headerlink" title="批量操作"></a>批量操作</h2><p><strong>我们查询出来的数据可看成是一张表，那么我们在插入数据的时候，可以根据查询出来的数据进行插入</strong>…这就可以看成是批量操作…</p>
+<p>值得注意的是，<strong>如果没有指定插入哪些字段的话，那么查询出来的全部字段均会插入表中</strong>..</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">将xxx_emp表中所有<span class="number">20</span>号部门的员工，复制到emp表中，批量插入，<span class="keyword">insert</span> <span class="keyword">into</span> 表名 <span class="keyword">select</span> ...语法</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> xxx_emp</span><br><span class="line"><span class="keyword">where</span> deptno<span class="operator">=</span><span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除操作对比"><a href="#删除操作对比" class="headerlink" title="删除操作对比"></a>删除操作对比</h3><p>我们的删除语法有三种：</p>
+<ul>
+<li><strong>delete from</strong></li>
+<li><strong>truncate from</strong></li>
+<li><strong>drop from</strong></li>
+</ul>
+<p>我们来对比一下他们的区别：</p>
+<p>drop table</p>
+<ul>
+<li>1)属于DDL</li>
+<li>2)不可回滚</li>
+<li>3)不可带where</li>
+<li>4)表内容和结构删除</li>
+<li>5)删除速度快</li>
+</ul>
+<p>truncate table</p>
+<ul>
+<li>1)属于DDL</li>
+<li>2)不可回滚</li>
+<li>3)不可带where</li>
+<li>4)表内容删除</li>
+<li>5)删除速度快</li>
+</ul>
+<p>delete from</p>
+<ul>
+<li>1)属于DML</li>
+<li>2)可回滚</li>
+<li>3)可带where</li>
+<li>4)表结构在，表内容要看where执行的情况</li>
+<li>5)删除速度慢,需要逐行删除</li>
+</ul>
+<h2 id="访问其他用户的对象"><a href="#访问其他用户的对象" class="headerlink" title="访问其他用户的对象"></a>访问其他用户的对象</h2><p><strong>我们只要在访问表的时候，指定具体的用户.数据库表就行了，但是呢，还要看看该用户有没有权限查询别的用户的数据表，于是就需要赋予权限了</strong>…</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">声明：scott或hr叫用户名<span class="operator">/</span>方案名<span class="operator">/</span>空间名</span><br><span class="line">      scott<span class="comment">--tiger</span></span><br><span class="line">      hr<span class="comment">-----lion</span></span><br><span class="line">      </span><br><span class="line">查询当前用户是谁</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">user</span>;</span><br><span class="line"></span><br><span class="line">查询scott自己表空间下的所有对象时，可加，或不加用户名<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line">或</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> scott.emp;</span><br><span class="line"></span><br><span class="line">以sysdba身份解锁hr普通帐户</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> hr account unlock;</span><br><span class="line"></span><br><span class="line">以sysdba身份设置hr普通帐户的密码</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> hr identified <span class="keyword">by</span> lion;</span><br><span class="line"></span><br><span class="line">当scott查询hr表空间下的所有表时，必须得加用户名</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> hr.jobs;</span><br><span class="line"></span><br><span class="line">在默认情况下，每个用户只能查询自已空间下的对象的权限，不能查询其它用户空间下的对象</span><br><span class="line"></span><br><span class="line">以sysdba身份角色，授予scott用户查询所有用户空间下的对象权限</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line">以sysdba身份，撤销scott用户查询所有用户空间下的对象权限</span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">from</span> scott;</span><br><span class="line"></span><br><span class="line">scott自已查看自己所拥有的权限</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> user_sys_privs;</span><br><span class="line"></span><br><span class="line">从scott用户空间导航到sysdba用户空间</span><br><span class="line">conn <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line"></span><br><span class="line">从sysdba用户空间导航到scott用户空间</span><br><span class="line">conn scott<span class="operator">/</span>tiger;</span><br><span class="line"></span><br><span class="line">从scott用户空间导航到hr用户空间</span><br><span class="line">conn hr<span class="operator">/</span>lion;</span><br><span class="line"></span><br><span class="line">查询hr用户空间中的所有对象</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tab;</span><br><span class="line"></span><br><span class="line">从hr用户空间导航到scott用户空间</span><br><span class="line">conn scott<span class="operator">/</span>tiger;</span><br><span class="line"></span><br><span class="line">在scott用户空间下，查询hr用户空间下的jobs表，必须加上hr用户空间名</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> hr.jobs;</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">基于emp表所有列，创建视图emp_view_1，<span class="keyword">create</span> <span class="keyword">view</span> 视图名 <span class="keyword">as</span> <span class="keyword">select</span>对一张或多张基表的查询</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_1</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">默认情况下，普通用户无权创建视图，得让sysdba为你分配creare <span class="keyword">view</span>的权限 </span><br><span class="line"></span><br><span class="line">以sysdba身份，授权scott用户<span class="keyword">create</span> <span class="keyword">view</span>权限</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">view</span> <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line">以sysdba身份，撤销scott用户<span class="keyword">create</span> <span class="keyword">view</span>权限</span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">create</span> <span class="keyword">view</span> <span class="keyword">from</span> scott;</span><br><span class="line"></span><br><span class="line">基于emp表指定列，创建视图emp_view_2，该视图包含编号<span class="operator">/</span>姓名<span class="operator">/</span>工资<span class="operator">/</span>年薪<span class="operator">/</span>年收入（查询中使用列别名）</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_2</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">基于emp表指定列，创建视图emp_view_3(a,b,c,d,e)，包含编号<span class="operator">/</span>姓名<span class="operator">/</span>工资<span class="operator">/</span>年薪<span class="operator">/</span>年收入（视图中使用列名）</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_3(a,b,c,d,e)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">查询emp_view_3创建视图的结构</span><br><span class="line"><span class="keyword">desc</span> emp_view_3;</span><br><span class="line"></span><br><span class="line">修改emp_view_3(id,name,salary,annual,income)视图，<span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> 视图名 <span class="keyword">as</span> 子查询</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_3(id,name,salary,annual,income)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">查询emp表，求出各部门的最低工资，最高工资，平均工资</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">min</span>(sal),<span class="built_in">max</span>(sal),round(<span class="built_in">avg</span>(sal),<span class="number">0</span>),deptno</span><br><span class="line"><span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br><span class="line"></span><br><span class="line">创建视图emp_view_4，视图中包含各部门的最低工资，最高工资，平均工资</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_4</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> deptno &quot;部门号&quot;,<span class="built_in">min</span>(sal) &quot;最低工资&quot;,<span class="built_in">max</span>(sal) &quot;最高工资&quot;,round(<span class="built_in">avg</span>(sal),<span class="number">0</span>) &quot;平均工资&quot;</span><br><span class="line"><span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br><span class="line"></span><br><span class="line">创建视图emp_view_5，视图中包含员工编号，姓名，工资，部门名，工资等级</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_5</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> e.empno &quot;编号&quot;,e.ename &quot;姓名&quot;,e.sal &quot;工资&quot;,d.dname &quot;部门名&quot;,s.grade &quot;工资等级&quot;</span><br><span class="line"><span class="keyword">from</span> emp e,dept d,salgrade s</span><br><span class="line"><span class="keyword">where</span> (e.deptno<span class="operator">=</span>d.deptno) <span class="keyword">and</span> (e.sal <span class="keyword">between</span> s.losal <span class="keyword">and</span> s.hisal);</span><br><span class="line"></span><br><span class="line">删除视图emp_view_1中的<span class="number">7788</span>号员工的记录，使用<span class="keyword">delete</span>操作，会影响基表吗</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp_view_1 <span class="keyword">where</span> empno<span class="operator">=</span><span class="number">7788</span>;写法正确，会影响基表</span><br><span class="line"></span><br><span class="line">修改emp_view_1为只读视图【<span class="keyword">with</span> read <span class="keyword">only</span>】，再执行上述<span class="keyword">delete</span>操作，还行吗？</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_1</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">with</span> read <span class="keyword">only</span>;</span><br><span class="line">不能进行<span class="keyword">delete</span>操作了</span><br><span class="line"></span><br><span class="line">删除视图中的【某条】记录会影响基表吗？</span><br><span class="line">会影响基表</span><br><span class="line"></span><br><span class="line">将【整个】视图删除，会影响表吗？</span><br><span class="line">不会影响基表</span><br><span class="line"></span><br><span class="line">删除视图，会进入回收站吗？</span><br><span class="line">不会进入回收站</span><br><span class="line"></span><br><span class="line">删除基表会影响视图吗？</span><br><span class="line">会影响视图</span><br><span class="line"></span><br><span class="line">闪回基表后,视图有影响吗？</span><br><span class="line">视图又可以正常工作了</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">为emp表的empno字段，创建序列emp_empno_seq，<span class="keyword">create</span> sequence 序列名</span><br><span class="line"><span class="keyword">create</span> sequence emp_empno_seq;</span><br><span class="line"></span><br><span class="line">删除序列emp_empno_seq，<span class="keyword">drop</span> sequence 序列名</span><br><span class="line"><span class="keyword">drop</span> sequence emp_empno_seq;</span><br><span class="line"></span><br><span class="line">查询emp_empno_seq序列的当前值currval和下一个值nextval，第一次使用序列时，必须选用：序列名.nextval</span><br><span class="line"><span class="keyword">select</span> emp_empno_seq.nextval <span class="keyword">from</span> dual;</span><br><span class="line"><span class="keyword">select</span> emp_empno_seq.currval <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line">使用序列，向emp表插入记录，empno字段使用序列值</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"></span><br><span class="line">修改emp_empno_seq序列的increment <span class="keyword">by</span>属性为<span class="number">20</span>，默认<span class="keyword">start</span> <span class="keyword">with</span>是<span class="number">1</span>，<span class="keyword">alter</span> sequence 序列名</span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line">increment <span class="keyword">by</span> <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">修改修改emp_empno_seq序列的的increment <span class="keyword">by</span>属性为<span class="number">5</span></span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line">increment <span class="keyword">by</span> <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">修改emp_empno_seq序列的<span class="keyword">start</span> <span class="keyword">with</span>属性，行吗</span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line"><span class="keyword">start</span> <span class="keyword">with</span> <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">有了序列后，还能为主健手工设置值吗？</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(<span class="number">9999</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(<span class="number">7900</span>);</span><br><span class="line"></span><br><span class="line">删除表，会影响序列吗？</span><br><span class="line">你无法做<span class="keyword">insert</span>操作,表真正亡，序列亡</span><br><span class="line"></span><br><span class="line">删除序列，会影响表吗？</span><br><span class="line"></span><br><span class="line">不会</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在hibernate中，如果是访问oracle数据库服务器，那么User.hbm.xml映射文件中关于<span class="operator">&lt;</span>id<span class="operator">&gt;</span>标签如何配置呢？</span><br><span class="line"><span class="operator">&lt;</span>id name<span class="operator">=</span>&quot;id&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;id&quot;<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span>generator class<span class="operator">=</span>&quot;increment/identity/uuid/【sequence】/【native】&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span>id<span class="operator">&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>（1）是一种<strong>快速查询表中内容的机制</strong>，类似于新华字典的目录<br>（2）运用在表中某个&#x2F;些字段上，但<strong>存储时，独立于表之外</strong></p>
+<p>为什么要用索引</p>
+<ul>
+<li>（1）<strong>通过指针加速Oracle服务器的查询速度</strong></li>
+<li>（2）<strong>通过rowid快速定位数据的方法，减少磁盘I&#x2F;O</strong><ul>
+<li>rowid是oracle中唯一确定每张表不同记录的唯一身份证</li>
+</ul>
+</li>
+</ul>
+<h3 id="rowid特点"><a href="#rowid特点" class="headerlink" title="rowid特点"></a>rowid特点</h3><ol>
+<li>位于每个表中，但表面上看不见，例如：desc emp是看不见的</li>
+<li>只有在select中，显示写出rowid，方可看见</li>
+<li>它与每个表绑定在一起，表亡，该表的rowid亡，二张表rownum可以相同，但rowid必须是唯一的</li>
+<li>rowid是18位大小写加数字混杂体，唯一表代该条记录在DBF文件中的位置</li>
+<li>rowid可以参与&#x3D;&#x2F;like比较时，用’’单引号将rowid的值包起来，且区分大小写</li>
+<li>rowid是联系表与DBF文件的桥梁</li>
+</ol>
+<h3 id="索引特点"><a href="#索引特点" class="headerlink" title="索引特点"></a>索引特点</h3><ol>
+<li>索引一旦建立, <strong>Oracle管理系统会对其进行自动维护</strong>, 而且由Oracle管理系统决定何时使用索引</li>
+<li>用户不用在查询语句中指定使用哪个索引</li>
+<li><strong>在定义primary key或unique约束后系统自动在相应的列上创建索引</strong></li>
+<li>用户也能按自己的需求，对指定单个字段或多个字段，添加索引</li>
+</ol>
+<p>需要注意的是：<strong>Oracle是自动帮我们管理索引的，并且如果我们指定了primary key或者unique约束，系统会自动在对应的列上创建索引</strong>..</p>
+<p>什么时候【要】创建索引</p>
+<p>（1）表经常进行 SELECT 操作</p>
+<p>（2）表很大(记录超多)，记录内容分布范围很广</p>
+<p>（3）列名经常在 WHERE 子句或连接条件中出现</p>
+<p>什么时候【不要】创建索引</p>
+<p>（1）表经常进行 INSERT&#x2F;UPDATE&#x2F;DELETE 操作</p>
+<p>（2）表很小(记录超少)</p>
+<p>（3）列名不经常作为连接条件或出现在 WHERE 子句中</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">为emp表的empno单个字段，创建索引emp_empno_idx，叫单列索引，<span class="keyword">create</span> index 索引名 <span class="keyword">on</span> 表名(字段,...)</span><br><span class="line"><span class="keyword">create</span> index emp_empno_idx</span><br><span class="line"><span class="keyword">on</span> emp(empno);</span><br><span class="line"></span><br><span class="line">为emp表的ename,job多个字段，创建索引emp_ename_job_idx，多列索引<span class="operator">/</span>联合索引</span><br><span class="line"><span class="keyword">create</span> index emp_ename_job_idx </span><br><span class="line"><span class="keyword">on</span> emp(ename,job);</span><br><span class="line">如果在<span class="keyword">where</span>中只出现job不使用索引</span><br><span class="line">如果在<span class="keyword">where</span>中只出现ename使用索引</span><br><span class="line">我们提倡同时出现ename和job</span><br><span class="line"></span><br><span class="line">注意：索引创建后，只有查询表有关，和其它（<span class="keyword">insert</span><span class="operator">/</span><span class="keyword">update</span><span class="operator">/</span><span class="keyword">delete</span>）无关,解决速度问题</span><br><span class="line"></span><br><span class="line">删除emp_empno_idx和emp_ename_job_idx索引，<span class="keyword">drop</span> index 索引名</span><br><span class="line"><span class="keyword">drop</span> index emp_empno_idx;</span><br><span class="line"><span class="keyword">drop</span> index emp_ename_job_idx;</span><br></pre></td></tr></table></figure>
+
+<h1 id="权限和用户"><a href="#权限和用户" class="headerlink" title="权限和用户"></a>权限和用户</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">一）用户</span><br><span class="line">Oracle中的用户分为二大类</span><br><span class="line"><span class="number">1</span>）Oracle数据库服务器创建时，由系统自动创建的用户，叫系统用户，如sys。</span><br><span class="line"><span class="number">2</span>）利用系统用户创建的用户，叫普通用户，如scott,hr，c##tiger,zhaojun,...</span><br><span class="line"></span><br><span class="line">》用sys登录，查询当前Oracle数据库服务器中已有用户的名字和状态</span><br><span class="line">  username表示登录名</span><br><span class="line">  expired<span class="operator">&amp;</span>locked表示帐号过期和锁定</span><br><span class="line">  <span class="keyword">open</span>表示帐号现在可用</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  col username <span class="keyword">for</span> a30;</span><br><span class="line">  col account_status <span class="keyword">for</span> a30;</span><br><span class="line">  <span class="keyword">set</span> pagesize <span class="number">100</span>;</span><br><span class="line">  <span class="keyword">select</span> username,account_status <span class="keyword">from</span> dba_users;</span><br><span class="line">  </span><br><span class="line">  查询Oracle中有哪些用户</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> all_users;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">二）创建与删除普通用户</span><br><span class="line">可以在Oracle中创建新的普通用户，创建普通用户命令是：<span class="keyword">create</span> <span class="keyword">user</span>，在创建普通用户的同时，应该为其分配一个具体的表空间，通常叫users。</span><br><span class="line"></span><br><span class="line">》用sys登录，查询Oracle中有哪些可用存储空间，所有普通用户默认为users存储空间</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> v$tablespace;</span><br><span class="line"></span><br><span class="line">》用sys登录，创建普通用户c##tiger，密码为abc，默认使用users存储空间，即对应硬盘上的一个DBF二进制文件</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">user</span> c##tiger identified <span class="keyword">by</span> abc <span class="keyword">default</span> tablespace users;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配users空间无限制使用，即数据库中DBF文件可以无限增加，一个DBF文件不够，会创建第二个DBF文件</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">alter</span> <span class="keyword">user</span> c##tiger quota unlimited <span class="keyword">on</span> users;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，能进orcl数据库吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  进不去orcl数据库</span><br><span class="line"></span><br><span class="line">》用sys登录，删除普通用户c##tiger</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">drop</span> <span class="keyword">user</span> c##tiger cascade;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">三）了解系统用户</span><br><span class="line">sys是Oracle中一个重要的系统用户，sys是Oracle中最高权限用户，其角色为SYSDBA（系统管理员）</span><br><span class="line">sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">四）权限</span><br><span class="line">权限的最终作用于用户。即所有用户在数据库内的操作对象和可执行的动作都是受到限制的。</span><br><span class="line">Oracle中权限分为二大类：</span><br><span class="line"><span class="number">1</span>）系统权限</span><br><span class="line"><span class="number">2</span>）对象权限</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">五）系统权限</span><br><span class="line">针对数据库中特定操作的许可，例如：让c##tiger能登录到orcl数据库，能在orcl数据库中创建表</span><br><span class="line"></span><br><span class="line">》用sys登录，获取系统权限的相关信息，例如：<span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span>表示针对所有表的<span class="keyword">select</span>权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">select</span> <span class="keyword">distinct</span> privilege <span class="keyword">from</span> dba_sys_privs;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配<span class="keyword">create</span> session与数据库建立会话的权限，即允许该用户登录</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">create</span> session <span class="keyword">to</span> c##tiger;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，能进orcl数据库吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  能进去orcl数据库</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，创建一张tiger的表，能创建吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">table</span> tiger(</span><br><span class="line">    name varchar2(<span class="number">20</span>)</span><br><span class="line">  );</span><br><span class="line">  这时c##tiger没有权限创建表</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配<span class="keyword">create</span> <span class="keyword">table</span>权限，即允许创建表</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">to</span> c##tiger;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，创建一张tiger的表，能创建吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">table</span> tiger(</span><br><span class="line">    name varchar2(<span class="number">20</span>)</span><br><span class="line">  );</span><br><span class="line">  可以创建c##tiger表</span><br><span class="line"></span><br><span class="line">》用sys登录，查询c##tiger所拥有的系统权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">select</span> grantee,privilege <span class="keyword">from</span> dba_sys_privs <span class="keyword">where</span> <span class="built_in">lower</span>(grantee) <span class="operator">=</span> <span class="string">&#x27;c##tiger&#x27;</span>;</span><br><span class="line">  grantee表示普通用户名</span><br><span class="line">  privilege权限名  </span><br><span class="line"></span><br><span class="line">》用sys登录，撤销c##tiger的<span class="keyword">create</span> <span class="keyword">table</span>权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">revoke</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">from</span> c##tiger;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">六）对象权限</span><br><span class="line">用户对已有对象的操作权限，包括：</span><br><span class="line"><span class="number">1</span>）<span class="keyword">select</span>可用于表，视图和序列</span><br><span class="line"><span class="number">2</span>）<span class="keyword">insert</span>向表或视图中插入新的记录</span><br><span class="line"><span class="number">3</span>）<span class="keyword">update</span>更新表中数据</span><br><span class="line"><span class="number">4</span>）<span class="keyword">delete</span>删除表中数据</span><br><span class="line"><span class="number">5</span>）<span class="keyword">execute</span>函数，过程的执行</span><br><span class="line"><span class="number">6</span>）index为表创建索引</span><br><span class="line"><span class="number">7</span>）<span class="keyword">references</span>为表创建外健</span><br><span class="line"><span class="number">8</span>）<span class="keyword">alter</span>修改表或者序列的属性</span><br><span class="line"></span><br><span class="line">》用sys登录，查询c##tiger所拥有的对象权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  col grantee <span class="keyword">for</span> a10;</span><br><span class="line">  col table_name <span class="keyword">for</span> a10;</span><br><span class="line">  col privilege <span class="keyword">for</span> a20;</span><br><span class="line">  <span class="keyword">select</span> grantee,table_name,privilege <span class="keyword">from</span> dba_tab_privs <span class="keyword">where</span> <span class="built_in">lower</span>(grantee) <span class="operator">=</span> <span class="string">&#x27;c##tiger&#x27;</span>;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配对tiger表的所有权限，即增删改查操作</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">on</span> c##tiger.tiger <span class="keyword">to</span> c##tiger;</span><br><span class="line">  注意：c##tiger表示空间名</span><br><span class="line">        tiger表示该空间下的表名</span><br><span class="line">  C##TIGER   TIGER      FLASHBACK</span><br><span class="line">  C##TIGER   TIGER      DEBUG</span><br><span class="line">  C##TIGER   TIGER      QUERY REWRITE</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">ON</span> <span class="keyword">COMMIT</span> REFRESH</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">REFERENCES</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">UPDATE</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">SELECT</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">INSERT</span></span><br><span class="line">  C##TIGER   TIGER      INDEX</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">DELETE</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">ALTER</span></span><br><span class="line"></span><br><span class="line">》用c##tiger登录，对tiger表进行增删改查操作</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc;</span><br><span class="line">  <span class="keyword">insert</span> <span class="keyword">into</span> tiger(name) <span class="keyword">values</span>(<span class="string">&#x27;AA&#x27;</span>);</span><br><span class="line">  <span class="keyword">update</span> tiger <span class="keyword">set</span> name <span class="operator">=</span> <span class="string">&#x27;BB&#x27;</span>;</span><br><span class="line">  <span class="keyword">delete</span> <span class="keyword">from</span> tiger <span class="keyword">where</span> rownum <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tiger;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="PLSQL学习"><a href="#PLSQL学习" class="headerlink" title="PLSQL学习"></a>PLSQL学习</h1><p><strong>PLSQL是Oracle对SQL99的一种扩展</strong></p>
+<ul>
+<li>是专用于Oracle服务器，在SQL基础之上，<strong>添加了一些过程化控制语句，叫PLSQL</strong></li>
+<li>过程化包括有：类型定义，判断，循环，游标，异常或例外处理。。。</li>
+<li><strong>PLSQL强调过程</strong></li>
+</ul>
+<p>为什么要用PLSQL</p>
+<ul>
+<li>因为SQL是第四代命令式语言，<strong>无法显示处理过程化的业务，所以得用一个过程化程序设计语言来弥补SQL的不足之处</strong>，</li>
+<li>SQL和PLSQL不是替代关系，是弥补关系</li>
+</ul>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013560860">参考文章</a></p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013517914">参考文章</a></p>
+<h1 id="有关mysql命令"><a href="#有关mysql命令" class="headerlink" title="有关mysql命令"></a>有关mysql命令</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000017278335">面试前必须知道的MySQL命令【explain】 - SegmentFault 思否</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2021/08/13/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/" data-id="claaf6qig006vtkup23ipg05w" data-title="oracle数据库" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          力量训练基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/12/%E9%BB%91%E4%B9%A6%E7%B3%BB%E5%88%97-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">黑书系列-深入理解计算机系统</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

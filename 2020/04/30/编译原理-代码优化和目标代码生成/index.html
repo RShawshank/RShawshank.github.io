@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>编译原理-代码优化和目标代码生成 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="优化技术介绍代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。 代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即  局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化； 循环优化：对循环中的代码进行的优化； 全局优化：在整个程序范围内进行的优化。  常见的代码优化手段常见的代码优化技术有：删除多余运算、合并已知量和复写传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理-代码优化和目标代码生成">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="优化技术介绍代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。 代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即  局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化； 循环优化：对循环中的代码进行的优化； 全局优化：在整个程序范围内进行的优化。  常见的代码优化手段常见的代码优化技术有：删除多余运算、合并已知量和复写传">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/NirHpLcfsoCmdla.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/jkxtV8F3sfoOQI9.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/jfz2uI8gO7UYNDQ.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/5QshwyeKM6UdCkv.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/3fgHueUhVzjFGWr.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/empRxLUdXWEMIhO.png">
+<meta property="article:published_time" content="2020-04-30T11:36:21.000Z">
+<meta property="article:modified_time" content="2021-01-16T19:00:22.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-编译原理-代码优化和目标代码生成" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" class="article-date">
+  <time class="dt-published" datetime="2020-04-30T11:36:21.000Z" itemprop="datePublished">2020-04-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      编译原理-代码优化和目标代码生成
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="优化技术介绍"><a href="#优化技术介绍" class="headerlink" title="优化技术介绍"></a>优化技术介绍</h1><p>代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。</p>
+<p>代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即</p>
+<ol>
+<li>局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化；</li>
+<li>循环优化：对循环中的代码进行的优化；</li>
+<li>全局优化：在整个程序范围内进行的优化。</li>
+</ol>
+<h1 id="常见的代码优化手段"><a href="#常见的代码优化手段" class="headerlink" title="常见的代码优化手段"></a>常见的代码优化手段</h1><p>常见的代码优化技术有：删除多余运算、合并已知量和复写传播，删除无用赋值等。</p>
+<p>针对目标代码：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">P</span> := <span class="number">0</span></span><br><span class="line"><span class="attribute">for</span> I := <span class="number">1</span> to <span class="number">20</span> do </span><br><span class="line">    <span class="attribute">P</span> := P + A[I]*B[I] </span><br></pre></td></tr></table></figure>
+
+<p>假设其翻译所得的中间代码如下</p>
+<p><img src="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png"></p>
+<ol>
+<li><p><strong>删除多余运算</strong><br> 分析上图的中间代码，可以发现(3)和式(6)属于重复计算（因为I并没有发生变化），故而式(6)是多余的，完全可以采用T<del>4</del>∶&#x3D;T<del>1</del>代替。</p>
+</li>
+<li><p><strong>代码外提</strong><br> 减少循环中代码总数的一个重要办法是循环中不变的代码段外提。这种变换把循环不变运算，即结果独立于循环执行次数的表达式，提到循环的前面,使之只在循环外计算一次。针对改定的例子，显然数组A和 B的首地址在计算过程中并不改变，则作出的改动如下</p>
+</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/NirHpLcfsoCmdla.png"></p>
+<ol start="3">
+<li><strong>强度削弱</strong><br> 强度削弱的本质是把<strong>强度大的运算换算成强度小</strong>的运算，例如将乘法换成加法运算。针对上面的循环过程，每循环一次，I的值增加1，T<del>1</del>的值与I保持线性关系，每次总是增加4。因此，可以把循环中计算T<del>1</del>值的乘法运算变换成在循环前进行一次乘法运算，而在循环中将其变换成加法运算。</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/jkxtV8F3sfoOQI9.png"></p>
+<ol start="4">
+<li><p><strong>变换循环控制条件</strong><br> I和T<del>1</del>始终保持T<del>1</del>＝4*I的线性关系，因此可以把四元式（12）的循环控制条件I≤20变换成T<del>1</del>≤80，这样整个程序的运行结果不变。这种变换称为变换循环控制条件。经过这一变换后，循环中I的值在循环后不会被引用，四元式（11）成为多余运算，可以从循环中删除。变换循环控制条件可以达到代码优化的目的。</p>
+</li>
+<li><p><strong>合并已知量和复写传播</strong><br> 四元式（3）计算4 * I时，I必为1。即4*I的两个运算对象都是编码时的已知量，可在编译时计算出它的值，即四元式（3）可变为T<del>1</del>＝4，这种变换称为合并已知量。</p>
+</li>
+</ol>
+<p>  四元式(6)把T<del>1</del>的值复写到T<del>4</del>中，四元式（8）要引用T<del>4</del>的值，而从四元式（6）到四元式（8）之间未改变T<del>4</del>和T<del>1</del>的值，则将四元式（8）改为T<del>6</del>∶&#x3D;T<del>5</del>[T<del>1</del>]，这种变换称为复写传播。</p>
+<p>  <img src="https://i.loli.net/2021/01/17/jfz2uI8gO7UYNDQ.png"></p>
+<ol start="6">
+<li><strong>删除无用赋值</strong><br> 式（6）对T<del>4</del>赋值，但T<del>4</del>未被引用；另外，（2）和（11）对I赋值，但只有（11）引用I。所以，只要程序中其它地方不需要引用T<del>4</del>和I，则（6），（2）和（11）对程序的运行结果无任何作用。我们称之为无用赋值，无用赋值可以从程序中删除。至此，我们可以得到删减后简洁的代码</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/5QshwyeKM6UdCkv.png"></p>
+<h2 id="基本块内的局部优化"><a href="#基本块内的局部优化" class="headerlink" title="基本块内的局部优化"></a>基本块内的局部优化</h2><h3 id="基本块的划分"><a href="#基本块的划分" class="headerlink" title="基本块的划分"></a>基本块的划分</h3><p>入口语句的定义如下：<br>　　① 程序的第一个语句；或者，<br>　　② 条件转移语句或无条件转移语句的转移目标语句；<br>　　③ 紧跟在条件转移语句后面的语句。<br>有了入口语句的概念之后，就可以给出划分中间代码（四元式程序）为基本块的算法，<br>　　其步骤如下：<br>　　① 求出四元式程序中各个基本块的入口语句。<br>　　② 对每一入口语句，构造其所属的基本块。<strong>它是由该入口语句到下一入口语句（不包括下一入口语句），或到一转移语句（包括该转移语句），或到一停语句（包括该停语句）之间的语句序列组成的。</strong><br>　 ③ 凡未被纳入某一基本块的语句、都是程序中控制流程无法到达的语句，因而也是不会被执行到的语句，可以把它们删除。</p>
+<h3 id="基本块的优化手段"><a href="#基本块的优化手段" class="headerlink" title="基本块的优化手段"></a>基本块的优化手段</h3><p>由于基本块内的逻辑清晰，故而要做的优化手段都是较为直接浅层次的。目前基本块内的常见的块内优化手段有：</p>
+<ol>
+<li><p>删除公共子表达式</p>
+</li>
+<li><p>删除无用代码</p>
+</li>
+<li><p>重新命名临时变量 （一般是用来应对创建过多临时变量的，如t<del>2</del> :&#x3D; t<del>1</del> + 3如果后续并没有对t<del>1</del>的引用，则可以t<del>1</del> :&#x3D; t<del>1</del> + 3来节省一个临时变量的创建）</p>
+</li>
+<li><p>交换语句顺序</p>
+</li>
+<li><p>在结果不变的前提下，更换代数操作（如$x∶&#x3D;y<strong>2$是需要根据 $</strong>$运算符重载指数函数的，这是挺耗时的操作，故而可以用强度更低的$x∶&#x3D;y*y$来代替）</p>
+</li>
+</ol>
+<p>根据以上原则，对如下代码进行优化</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">t1 := <span class="number">4</span> - <span class="number">2</span></span><br><span class="line">t2 := t1 / <span class="number">2</span> </span><br><span class="line">t3 := a * t2</span><br><span class="line">t4 := t3 * t1</span><br><span class="line">t5 := b + t4</span><br><span class="line"> c := t5 * t5</span><br></pre></td></tr></table></figure>
+
+<p>给出优化的终版代码</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">t1</span> := a + a</span><br><span class="line"><span class="built_in">t1</span> := <span class="keyword">b </span>+ <span class="built_in">t1</span></span><br><span class="line"> c := <span class="built_in">t1</span> * <span class="built_in">t1</span></span><br></pre></td></tr></table></figure>
+
+<p>显然代码优化的工作不能像上面那样的人工一步步确认和遍历，显然必然要将这些优化工作公理化。而一般到涉及到数据流和控制流简化的这种阶段，都是到了图论一展身手的时候。</p>
+<h3 id="DAG（无环路有向图）应用于基本块的优化工作"><a href="#DAG（无环路有向图）应用于基本块的优化工作" class="headerlink" title="DAG（无环路有向图）应用于基本块的优化工作"></a>DAG（无环路有向图）应用于基本块的优化工作</h3><p><strong>利用DAG进行基本块优化的基本思想是：按照构造DAG结点的顺序，对每一个结点写出其相应的三地址代码表示</strong></p>
+<p>在DAG图中，通过节点间的连线和层次关系来表示表示式或运算的归属关系：<br>① 图的叶结点，即无后继的结点，以一标识符（变量名）或常数作为标记，表示这个结点代表该变量或常数的值。如果叶结点用来代表某变量A的地址，则用addr（A）作为这个结点的标记。<br>② 图的内部结点，即有后继的结点,以一运算符作为标记，表示这个结点代表应用该运算符对其后继结点所代表的值进行运算的结果。<br>（注：该部分内容转载自教材《编译原理》第11章DAG无环路有向图应用于代码优化）</p>
+<p>DAG构建的流程如下</p>
+<blockquote>
+<p>对基本块的每一四元式，依次执行：<br>　　1． </p>
+<p>​	   如果NODE（B）无定义，则构造一标记为B的叶结点并定义NODE（B）为这个结点；<br>　　如果当前四元式是0型，则记NODE（B）的值为n，转4。<br>　　如果当前四元式是1型，则转2.（1）。<br>　　如果当前四元式是2型，则：（Ⅰ）如果NODE（C）无定义，则构造一标记为C的叶结点并定义NODE（C）为这个结点，（Ⅱ）转2.（2）。<br>　　2．<br>　　（1） 如果NODE（B）是标记为常数的叶结点，则转2.（3），否则转3.（1）。<br>　　（2） 如果NODE（B）和NODE（C）都是标记为常数的叶结点，则转2.（4），否则转3.（2）。<br>　　（3） 执行op　B（即合并已知量），令得到的新常数为P。如果NODE（B）是处理当前四元式时 新构造出来的结点，则删除它。如果NODE（P）无定义，则构造一用P做标记的叶结点n。置NODE（P）＝n，转4.。<br>　　（4） 执行B　op　C(即合并已知量)，令得到的新常数为P。如果NODE（B）或NODE（C）是处理当前四元式时新构造出来的结点，则删除它。如果NODE（P）无定义，则构造一用P做标记的叶结点n。置NODE（P）＝n，转4.。<br>　　3．<br>　　（1） 检查DAG中是否已有一结点，其唯一后继为NODE（B），且标记为op（即找公共子表达式）。如果没有，则构造该结点n，否则就把已有的结点作为它的结点并设该结点为n，转4.。<br>　　（2） 检查DAG中是否已有一结点，其左后继为NODE（B），右后继为NODE（C），且标记为op(即找公共子表达式)。如果没有，则构造该结点n，否则就把已有的结点作为它的结点并设该结点为n。转4.。<br>　　4．<br>　　如果NODE（A）无定义，则把A附加在结点n上并令NODE（A）＝n；否则先把A从NODE（A）结点上的附加标识符集中删除（注意，如果NODE（A）是叶结点，则其标记A不删除），把A附加到新结点n上并令NODE（A）＝n。转处理下一四元式。</p>
+</blockquote>
+<p>说着很复杂，下面看一个案例</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>) <span class="built_in">T0</span>∶=<span class="number">3</span>.<span class="number">14</span></span><br><span class="line">(<span class="number">2</span>) <span class="built_in">T1</span>∶=<span class="number">2</span> * <span class="built_in">T0</span></span><br><span class="line">(<span class="number">3</span>) <span class="built_in">T2</span>∶=R + r</span><br><span class="line">(<span class="number">4</span>) A∶=<span class="built_in">T1</span> * <span class="built_in">T2</span></span><br><span class="line">(<span class="number">5</span>) <span class="keyword">B∶=A</span></span><br><span class="line"><span class="keyword"></span>(<span class="number">6</span>) <span class="built_in">T3</span>∶=<span class="number">2</span> * <span class="built_in">T0</span></span><br><span class="line">(<span class="number">7</span>) <span class="built_in">T4</span>∶=R + r</span><br><span class="line">(<span class="number">8</span>) <span class="built_in">T5</span>∶=<span class="built_in">T3</span> * <span class="built_in">T4</span></span><br><span class="line">(<span class="number">9</span>) <span class="built_in">T6</span>∶=R - r</span><br><span class="line">(<span class="number">10</span>) <span class="keyword">B∶=T5 </span>* <span class="built_in">T6</span></span><br></pre></td></tr></table></figure>
+
+<p>其DAG图的构建过程如下</p>
+<p><img src="https://i.loli.net/2021/01/17/3fgHueUhVzjFGWr.png"></p>
+<p>通过DAG图可以发现诸多的优化信息，如重复定义、无用定义等，则根据上图的DAG图可以构建最后的优化代码序列</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　(<span class="number">1</span>) <span class="built_in">S1</span>∶=R+r</span><br><span class="line">　　(<span class="number">2</span>) A∶=<span class="number">6</span>.<span class="number">28</span>*<span class="built_in">S1</span></span><br><span class="line">　　(<span class="number">3</span>) <span class="built_in">S2</span>∶=R-r</span><br><span class="line">　　(<span class="number">4</span>) <span class="keyword">B∶=A </span>*<span class="built_in">S2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="循环优化"><a href="#循环优化" class="headerlink" title="循环优化"></a>循环优化</h2><p>循环优化的主要手段有：循环次数无关性代码外提、删除归纳变量和运算强度削弱。关于这三种手段的理解可以借助此前的描述进行类比，基本并无太多差异。</p>
+<h3 id="流图"><a href="#流图" class="headerlink" title="流图"></a>流图</h3><p>结点是基本块的有向图G &#x3D; ( N, E, root)</p>
+<ul>
+<li>N是结点的集合，每个结点表示一个基本块</li>
+<li>E是边的集合，如果结点n<del>i</del>和n<del>j</del>间存在前驱和后继的关系，则在存在一条从n<del>i</del>到n<del>j</del>的有向边（此时意味着，在n<del>i</del>执行后，可能会执行n<del>j</del>）<ul>
+<li>n<del>i</del>的出口语句是goto(s)或if … goto(s)，且(s)是的n<del>j</del>入口语句</li>
+<li>n<del>j</del>在程序中的位置紧跟在n<del>i</del>后，且n<del>i</del>的出口语句不是无条件转移语句和停语句</li>
+</ul>
+</li>
+<li>root是流图的首结点（或称为根结点），是包含程序第一个语句的基本块</li>
+</ul>
+<p>每个流图都可以等价变换为单入口，且每个结点最多有两个后继的图</p>
+<p>根据上面基本块的定义，我们将诸多基本块组装在一起，构建成程序循环图，如针对下面这个例子</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="comment">(1)</span> read x</span><br><span class="line">　　<span class="comment">(2)</span> read y</span><br><span class="line">　　<span class="comment">(3)</span> r∶=x mod y</span><br><span class="line">　　<span class="comment">(4)</span> <span class="keyword">if</span> r=<span class="number">0</span> <span class="keyword">goto</span> <span class="comment">(8)</span></span><br><span class="line">　　<span class="comment">(5)</span> x∶=y</span><br><span class="line">　　<span class="comment">(6)</span> y∶=r</span><br><span class="line">　　<span class="comment">(7)</span> <span class="keyword">goto</span> <span class="comment">(3)</span></span><br><span class="line">　　<span class="comment">(8)</span> write y</span><br><span class="line">　　<span class="comment">(9)</span> halt</span><br></pre></td></tr></table></figure>
+
+<p>则按照上面基本块的划分，可以分成四个部分，四个部分的控制流分析可知可以得到一个循环图（流图）</p>
+<p><img src="https://i.loli.net/2021/01/17/empRxLUdXWEMIhO.png"></p>
+<p>循环块最主要的特点是<strong>只有一个数据流和控制流入口，而出口可能有多个。</strong></p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" data-id="claaf6qj600a8tkup69fp3vh1" data-title="编译原理-代码优化和目标代码生成" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/03/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          数据库_数据库恢复技术
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%AD%98%E5%82%A8%E7%BB%84%E7%BB%87/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">编译原理-运行时存储组织</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

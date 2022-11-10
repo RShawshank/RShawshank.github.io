@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>JavaWeb学习（八）——JSTL标签库 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="JSTL标签库为了弥补html标签的不足，规范自定义标签的使用而诞生的。使用JSLT标签的目的就是不希望在jsp页面中出现java逻辑代码。 分类 核心标签(用得最多) 国际化标签(I18N格式化标签) 数据库标签(SQL标签，很少使用) XML标签(几乎不用) JSTL函数(EL函数)  核心标签库JSTL的核心标签库标签共13个，使用这些标签能够完成JSP页面的基本功能，减少编码工作。 　　从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaWeb学习（八）——JSTL标签库">
+<meta property="og:url" content="http://rshawshank.github.io/2021/09/29/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94JSTL%E6%A0%87%E7%AD%BE%E5%BA%93/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="JSTL标签库为了弥补html标签的不足，规范自定义标签的使用而诞生的。使用JSLT标签的目的就是不希望在jsp页面中出现java逻辑代码。 分类 核心标签(用得最多) 国际化标签(I18N格式化标签) 数据库标签(SQL标签，很少使用) XML标签(几乎不用) JSTL函数(EL函数)  核心标签库JSTL的核心标签库标签共13个，使用这些标签能够完成JSP页面的基本功能，减少编码工作。 　　从">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-29T09:44:36.000Z">
+<meta property="article:modified_time" content="2021-09-30T01:08:40.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="javaweb">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-JavaWeb学习（八）——JSTL标签库" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/09/29/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94JSTL%E6%A0%87%E7%AD%BE%E5%BA%93/" class="article-date">
+  <time class="dt-published" datetime="2021-09-29T09:44:36.000Z" itemprop="datePublished">2021-09-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      JavaWeb学习（八）——JSTL标签库
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="JSTL标签库"><a href="#JSTL标签库" class="headerlink" title="JSTL标签库"></a>JSTL标签库</h1><p>为了弥补html标签的不足，规范自定义标签的使用而诞生的。使用JSLT标签的目的就是不希望在jsp页面中出现java逻辑代码。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>核心标签(用得最多)</li>
+<li>国际化标签(I18N格式化标签)</li>
+<li>数据库标签(SQL标签，很少使用)</li>
+<li>XML标签(几乎不用)</li>
+<li>JSTL函数(EL函数)</li>
+</ul>
+<h1 id="核心标签库"><a href="#核心标签库" class="headerlink" title="核心标签库"></a>核心标签库</h1><p>JSTL的核心标签库标签共13个，使用这些标签能够完成JSP页面的基本功能，减少编码工作。</p>
+<p>　　从功能上可以分为4类：表达式控制标签、流程控制标签、循环标签、URL操作标签。<br>　　　　（1）<strong>表达式控制标签</strong>：<strong>out标签、set标签、remove标签、catch标签。</strong><br>　　　　（2）<strong>流程控制标签</strong>：<strong>if标签、choose标签、when标签、otherwise标签</strong>。<br>　　　　（3）<strong>循环标签</strong>：<strong>forEach标签、forTokens标签</strong>。<br>　　　　（4）<strong>URL操作标签</strong>：<strong>import标签、url标签、redirect标签、param标签</strong>。</p>
+<p>　　在JSP页面引入核心标签库的代码为：**&lt;%@ taglib prefix&#x3D;”c” uri&#x3D;”<a target="_blank" rel="noopener" href="http://java.sun.com/jsp/jstl/core&quot;">http://java.sun.com/jsp/jstl/core&quot;</a> %&gt;**</p>
+<h2 id="out标签"><a href="#out标签" class="headerlink" title="out标签"></a>out标签</h2><p>&lt;c:out&gt;标签主要是<strong>用来输出数据对象（字符串、表达式）的内容或结果</strong>。<br>　　在使用Java脚本输出时常使用的方式为： &lt;% out.println(“字符串”)%&gt; 或者 &lt;%&#x3D;表达式%&gt; ，在web开发中，为了避免暴露逻辑代码会尽量减少页面中的Java脚本，使用&lt;c:out&gt;标签就可以实现以上功能。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">”字符串”</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">”EL表达式”</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>　　JSTL的使用是和EL表达式分不开的，EL表达式虽然可以直接将结果返回给页面，但有时得到的结果为空，&lt;c:out&gt;有特定的结果处理功能，EL的单独使用会降低程序的易读性，建议把EL的结果输入放入&lt;c:out&gt;标签中。</p>
+<p>&lt;c:out&gt;标签的语法：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:out value=”要显示的数据对象” [escapeXml=”<span class="literal">true</span>|<span class="literal">false</span>”] [<span class="keyword">default</span>=”默认值”]/&gt;</span><br><span class="line">&lt;c:out value=”要显示的数据对象” [escapeXml=”<span class="literal">true</span>|<span class="literal">false</span>”]&gt;默认值&lt;/c:out&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">属性名</th>
+<th align="center">是否支持EL</th>
+<th align="center">属性类型</th>
+<th align="center">属性描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">value</td>
+<td align="center">true</td>
+<td align="center">Object</td>
+<td align="center">指定要输出的内容</td>
+</tr>
+<tr>
+<td align="center">escapeXml</td>
+<td align="center">true</td>
+<td align="center">Boolean</td>
+<td align="center">指定是否将&gt;、&lt;、&amp;等特殊字符进行HTML编码转换后再进行输出。默认true</td>
+</tr>
+<tr>
+<td align="center">default</td>
+<td align="center">true</td>
+<td align="center">Object</td>
+<td align="center">指定如果value属性值为null时所输出的默认值</td>
+</tr>
+</tbody></table>
+<p>使用范例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%--引入JSTL核心标签库 --%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JSTL: --表达式控制标签“out”标签的使用<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;下面的代码演示了c:out的使用，以及在不同属性值状态下的结果。&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        &lt;%--（1）直接输出了一个字符串。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（1）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;JSTL的out标签的使用&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（2）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;&lt;a href=&#x27;http://www.cnblogs.com/&#x27;&gt;点击链接到博客园&lt;/a&gt;&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--escapeXml=&quot;false&quot;表示value值中的html标签不进行转义，而是直接输出 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（3）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;&lt;a href=&#x27;http://www.cnblogs.com/&#x27;&gt;点击链接到博客园&lt;/a&gt;&quot;</span> <span class="attr">escapeXml</span>=<span class="string">&quot;false&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--(4）字符串中有转义字符，但在默认情况下没有转换。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（4）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;&amp;lt未使用字符转义&amp;gt&quot;</span> /&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--（5）使用了转义字符&amp;lt和&amp;gt分别转换成<span class="tag">&lt;<span class="name">和</span>&gt;</span>符号。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（5）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;&amp;lt使用字符转义&amp;gt&quot;</span> <span class="attr">escapeXml</span>=<span class="string">&quot;false&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--（6）设定了默认值，从EL表达式$&#123;null&#125;得到空值，所以直接输出设定的默认值。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（6）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;null&#125;&quot;</span>&gt;</span>使用了默认值<span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--（7）未设定默认值，输出结果为空。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（7）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;null&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--（8）设定了默认值，从EL表达式$&#123;null&#125;得到空值，所以直接输出设定的默认值。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（8）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;null&#125;&quot;</span> <span class="attr">default</span>=<span class="string">&quot;默认值&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--（9）未设定默认值，输出结果为空。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>（9）<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;null&#125;&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="set标签"><a href="#set标签" class="headerlink" title="set标签"></a>set标签</h2><p>&lt;c:set&gt;标签用于把某一个对象存在指定的域范围内，或者将某一个对象存储到Map或者JavaBean对象中。</p>
+<p>语法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1：存值，把一个值放在指定的域范围内。</span><br><span class="line">　　　　<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">value</span>=<span class="string">”值1”</span> <span class="attr">var</span>=<span class="string">”name1”</span> [<span class="attr">scope</span>=<span class="string">”page|request|session|application”]/</span>&gt;</span></span><br><span class="line">　　　　含义：把一个变量名为name1值为“值1”的变量存储在指定的scope范围内。</span><br><span class="line">2：</span><br><span class="line">　　　　<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">”name2”</span> [<span class="attr">scope</span>=<span class="string">”page|request|session|application”]</span>&gt;</span></span><br><span class="line">　　　　　　值2</span><br><span class="line">　　　　<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">　　　　含义：把一个变量名为name2，值为值2的变量存储在指定的scope范围内。</span><br><span class="line">3：</span><br><span class="line">　　　　<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">value</span>=<span class="string">”值3”</span> <span class="attr">target</span>=<span class="string">”JavaBean对象”</span> <span class="attr">property</span>=<span class="string">”属性名”/</span>&gt;</span></span><br><span class="line">　　　　含义：把一个值为“值3”赋值给指定的JavaBean的属性名。相当与setter()方法。</span><br><span class="line">4：</span><br><span class="line">　　　　<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">”JavaBean对象”</span> <span class="attr">property</span>=<span class="string">”属性名”</span>&gt;</span></span><br><span class="line">　　　　　　值4</span><br><span class="line">　　　　<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">　　　　含义：把一个值4赋值给指定的JavaBean的属性名。</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">属性名</th>
+<th align="center">是否支持EL</th>
+<th align="center">属性类型</th>
+<th align="center">属性描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">value</td>
+<td align="center">true</td>
+<td align="center">Object</td>
+<td align="center">指定要输出的内容</td>
+</tr>
+<tr>
+<td align="center">var</td>
+<td align="center">false</td>
+<td align="center">String</td>
+<td align="center">指定要设置的web域属性的名称</td>
+</tr>
+<tr>
+<td align="center">scope</td>
+<td align="center">false</td>
+<td align="center">String</td>
+<td align="center">指定属性所在的web域</td>
+</tr>
+<tr>
+<td align="center">target</td>
+<td align="center">true</td>
+<td align="center">Object</td>
+<td align="center">指定要设置属性的对象（javabean或是map）</td>
+</tr>
+<tr>
+<td align="center">property</td>
+<td align="center">true</td>
+<td align="center">String</td>
+<td align="center">指定当前为对象设置的属性名称</td>
+</tr>
+</tbody></table>
+<p>使用范例</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%--引入JSTL核心标签库 --%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;%--使用JSP的指令元素指定要使用的JavaBean --%&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">jsp:useBean</span> <span class="attr">id</span>=<span class="string">&quot;person&quot;</span> <span class="attr">class</span>=<span class="string">&quot;javabean.Person&quot;</span>/&gt;</span></span><br><span class="line">&lt;%--负责实例化Bean，id指定实例化后的对象名，可以通过$&#123;person&#125;得到person在内存中的值</span><br><span class="line">（或者使用person.toString()方法）。 --%&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>JSTL: --表达式控制标签“set”标签的使用<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>代码给出了给指定scope范围赋值的示例。<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        &lt;%--通过<span class="tag">&lt;<span class="name">c:set</span>&gt;</span>标签将data1的值放入page范围中。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入page域中:<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">&quot;data1&quot;</span> <span class="attr">value</span>=<span class="string">&quot;xdp&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;page&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--使用EL表达式从pageScope得到data1的值。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从page域中得到值：$&#123;pageScope.data1&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--通过<span class="tag">&lt;<span class="name">c:set</span>&gt;</span>标签将data2的值放入request范围中。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入request域中:<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">&quot;data2&quot;</span> <span class="attr">value</span>=<span class="string">&quot;gacl&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;request&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--使用EL表达式从requestScope得到data2的值。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从request域中得到值：$&#123;requestScope.data2&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--通过<span class="tag">&lt;<span class="name">c:set</span>&gt;</span>标签将值name1的值放入session范围中。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入session域中。<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">value</span>=<span class="string">&quot;孤傲苍狼&quot;</span> <span class="attr">var</span>=<span class="string">&quot;name1&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;session&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:set</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--使用EL表达式从sessionScope得到name1的值。--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从session域中得到值:$&#123;sessionScope.name1&#125; <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--把name2放入application范围中。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入application域中。<span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">&quot;name2&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;application&quot;</span>&gt;</span>白虎神皇<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--使用EL表达式从application范围中取值，用<span class="tag">&lt;<span class="name">c:out</span>&gt;</span>标签输出使得页面规范化。 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>使用out标签和EL表达式嵌套从application域中得到值：</span><br><span class="line">             <span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;applicationScope.name2&#125;&quot;</span>&gt;</span>未得到name的值<span class="tag">&lt;/<span class="name">c:out</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        &lt;%--不指定范围使用EL自动查找得到值 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>未指定scope的范围，会从不同的范围内查找得到相应的值：$&#123;data1&#125;、$&#123;data2&#125;、$&#123;name1&#125;、$&#123;name2&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>使用Java脚本实现以上功能<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入page域中。&lt;%pageContext.setAttribute(&quot;data1&quot;,&quot;xdp&quot;);%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从page域中得到值:&lt;%out.println(pageContext.getAttribute(&quot;data1&quot;));%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入request域中。&lt;%request.setAttribute(&quot;data2&quot;,&quot;gacl&quot;);%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从request域中得到值:&lt;%out.println(request.getAttribute(&quot;data2&quot;));%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把一个值放入session域中。&lt;%session.setAttribute(&quot;name1&quot;,&quot;孤傲苍狼&quot;);%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从session中域得到值:&lt;%out.println(session.getAttribute(&quot;name1&quot;));%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--out.println()方法与&lt;%=%&gt;表达式输出功能一样</span><br><span class="line">        但使用表达式输出（&lt;%=%&gt;）明显要比使用out.println()输出更好。</span><br><span class="line">        --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>&lt;%=session.getAttribute(&quot;name1&quot;) %&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>把另一个值放入application域中。&lt;%application.setAttribute(&quot;name2&quot;,&quot;白虎神皇&quot;);%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span> 从application域中得到值：&lt;%out.println(application.getAttribute(&quot;name2&quot;));%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>&lt;%=application.getAttribute(&quot;name2&quot;)%&gt;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>未指定scope的范围，会从不同的范围内查找得到相应的值：</span><br><span class="line">            &lt;%=pageContext.findAttribute(&quot;data1&quot;)%&gt;、</span><br><span class="line">            &lt;%=pageContext.findAttribute(&quot;data2&quot;)%&gt;、</span><br><span class="line">            &lt;%=pageContext.findAttribute(&quot;name1&quot;)%&gt;、</span><br><span class="line">            &lt;%=pageContext.findAttribute(&quot;name2&quot;)%&gt;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>操作JavaBean，设置JavaBean的属性值<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">    &lt;%--设置JavaBean的属性值，等同与setter方法，Target指向实例化后的对象，property指向要插入值的参数名。</span><br><span class="line">    注意：使用target时一定要指向实例化后的JavaBean对象，也就是要跟<span class="tag">&lt;<span class="name">jsp:useBean</span>&gt;</span>配套使用，</span><br><span class="line">    也可以java脚本实例化，但这就失去了是用标签的本质意义。</span><br><span class="line">    使用Java脚本实例化：</span><br><span class="line">    &lt;%@page import=&quot;javabean.Person&quot;%</span><br><span class="line">    &lt;% Person person=new Person(); %&gt;</span><br><span class="line">     --%&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">&quot;$&#123;person&#125;&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span>&gt;</span>孤傲苍狼<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">&quot;$&#123;person&#125;&quot;</span> <span class="attr">property</span>=<span class="string">&quot;age&quot;</span>&gt;</span>25<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">&quot;$&#123;person&#125;&quot;</span> <span class="attr">property</span>=<span class="string">&quot;sex&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">&quot;$&#123;person&#125;&quot;</span> <span class="attr">property</span>=<span class="string">&quot;home&quot;</span>&gt;</span>中国<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>使用的目标对象为：$&#123;person&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从Bean中获得的name值为：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;person.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从Bean中获得的age值为：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;person.age&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从Bean中获得的sex值为：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;person.sex&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>从Bean中获得的home值为：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;person.home&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>操作Map<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">     &lt;%</span><br><span class="line">        Map map = new HashMap();</span><br><span class="line">        request.setAttribute(&quot;map&quot;,map);</span><br><span class="line">     %&gt;</span><br><span class="line">     &lt;%--将data对象的值存储到map集合中 --%&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">property</span>=<span class="string">&quot;data&quot;</span> <span class="attr">value</span>=<span class="string">&quot;gacl&quot;</span> <span class="attr">target</span>=<span class="string">&quot;$&#123;map&#125;&quot;</span>/&gt;</span></span><br><span class="line">        $&#123;map.data&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="remove标签"><a href="#remove标签" class="headerlink" title="remove标签"></a>remove标签</h2><p>从指定的JSP范围内移除指定的变量。</p>
+<p>语法：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:<span class="built_in">remove</span> <span class="attribute">var</span>=”变量名” [<span class="attribute">scope</span>=”page|request|session|application”]/&gt;</span><br><span class="line">　　其中var属性是必须的，scope可以以省略。</span><br></pre></td></tr></table></figure>
+
+<p>范例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%--引入JSTL核心标签库 --%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>JSTL: --表达式控制标签“remove”标签的使用<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">&quot;name&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;session&quot;</span>&gt;</span>孤傲苍狼<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">var</span>=<span class="string">&quot;age&quot;</span> <span class="attr">scope</span>=<span class="string">&quot;session&quot;</span>&gt;</span>25<span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;sessionScope.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;sessionScope.age&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        &lt;%--使用remove标签移除age变量 --%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">c:remove</span> <span class="attr">var</span>=<span class="string">&quot;age&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;sessionScope.name&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;sessionScope.age&#125;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:out</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="catch标签"><a href="#catch标签" class="headerlink" title="catch标签"></a>catch标签</h2><p>用于捕获嵌套在标签体中的内容抛出的异常。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; import=&quot;java.util.*&quot; pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%--引入JSTL核心标签库 --%&gt;</span><br><span class="line">&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>JSTL: --表达式控制标签“catch”标签实例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h4</span>&gt;</span>catch标签实例<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">    &lt;%--把容易产生异常的代码放在<span class="tag">&lt;<span class="name">c:catch</span>&gt;</span><span class="tag">&lt;/<span class="name">c:catch</span>&gt;</span>中，</span><br><span class="line">    自定义一个变量errorInfo用于存储异常信息 --%&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">c:catch</span> <span class="attr">var</span>=<span class="string">&quot;errorInfo&quot;</span>&gt;</span></span><br><span class="line">        &lt;%--实现了一段异常代码，向一个不存在的JavaBean中插入一个值--%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">c:set</span> <span class="attr">target</span>=<span class="string">&quot;person&quot;</span> <span class="attr">property</span>=<span class="string">&quot;hao&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">c:set</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">c:catch</span>&gt;</span></span><br><span class="line">    &lt;%--用EL表达式得到errorInfo的值，并使用<span class="tag">&lt;<span class="name">c:out</span>&gt;</span>标签输出 --%&gt;</span><br><span class="line">    异常：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;errorInfo&#125;&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    异常 errorInfo.getMessage：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;errorInfo.message&#125;&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    异常 errorInfo.getCause：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;errorInfo.cause&#125;&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span><br><span class="line">    异常 errorInfo.getStackTrace：<span class="tag">&lt;<span class="name">c:out</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;errorInfo.stackTrace&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他的标签可见:<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xdp-gacl/p/3943390.html">javaweb学习总结(二十八)——JSTL标签库之核心标签 - 孤傲苍狼 - 博客园 (cnblogs.com)</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2021/09/29/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94JSTL%E6%A0%87%E7%AD%BE%E5%BA%93/" data-id="claaf6qhj002xtkup67khapr2" data-title="JavaWeb学习（八）——JSTL标签库" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/09/30/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94JDBC/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          JavaWeb学习（九）——JDBC
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/22/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94javaweb%E7%9A%84%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">JavaWeb学习（七）——javaweb的开发模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

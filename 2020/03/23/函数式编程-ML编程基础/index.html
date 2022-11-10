@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>函数式编程-ML编程基础 | rhb_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="ML概览 ML强调的是表达式估计 ML更倾向于代数 ML表达式特征：类型可有可无、值可有可无、效果可有可无 类型检查十分严格  ML标准类型 基础类型(basic types) unit, int, real, bool, string 表(lists)  int list, (int -&gt; int) list 元组(tuples)  int * int, int * int * real">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程-ML编程基础">
+<meta property="og:url" content="http://rshawshank.github.io/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-ML%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="ML概览 ML强调的是表达式估计 ML更倾向于代数 ML表达式特征：类型可有可无、值可有可无、效果可有可无 类型检查十分严格  ML标准类型 基础类型(basic types) unit, int, real, bool, string 表(lists)  int list, (int -&gt; int) list 元组(tuples)  int * int, int * int * real">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-22T19:56:50.000Z">
+<meta property="article:modified_time" content="2020-04-29T06:13:26.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="函数式编程">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="rhb_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">rhb_blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://rshawshank.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-函数式编程-ML编程基础" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-ML%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="article-date">
+  <time class="dt-published" datetime="2020-03-22T19:56:50.000Z" itemprop="datePublished">2020-03-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>►<a class="article-category-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      函数式编程-ML编程基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="ML概览"><a href="#ML概览" class="headerlink" title="ML概览"></a>ML概览</h1><ul>
+<li>ML强调的是表达式估计</li>
+<li>ML更倾向于代数</li>
+<li>ML表达式特征：类型可有可无、值可有可无、效果可有可无</li>
+<li>类型检查十分严格</li>
+</ul>
+<h2 id="ML标准类型"><a href="#ML标准类型" class="headerlink" title="ML标准类型"></a>ML标准类型</h2><ul>
+<li>基础类型(basic types) unit, int, real, bool, string</li>
+<li>表(lists)  int list, (int -&gt; int) list</li>
+<li>元组(tuples)  int * int, int * int * real</li>
+<li>函数(functions) int -&gt; int, real -&gt; int * int</li>
+</ul>
+<p>所有对象都要有类型，不一定显式说明，但必须能静态推导(在编译时该类型能被编译器根据上下文推算出来)。例如：int y&#x3D;x+3就默认了x和y均是int型，因为会强制类型转换。</p>
+<ul>
+<li>单元(unit) 只包含一个元素，用空的括号表示，类似于C语言中的void类型。 ( ) : unit</li>
+<li>整型(int) 负号用“~”表示。</li>
+<li>浮点型(real)</li>
+<li>布尔型(bool) true, false</li>
+<li>字符串型(string) 双引号间的字符序列</li>
+</ul>
+<h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><ul>
+<li>包含<strong>相同类型的元素</strong>序列</li>
+<li>表中元素用“,”分隔，整个表用[ ]括起来</li>
+<li>空表：[ ]或nil</li>
+<li>表的类型表达式取决于表的元素类型，写作：<br>  &lt;元素类型&gt; list</li>
+</ul>
+<p> 如： int list, (int -&gt; int) list</p>
+<ul>
+<li>表可以嵌套</li>
+</ul>
+<p> 如: [1,2,3] : int list  [“张三”, “李四”]: string list</p>
+<ul>
+<li><p>相同类型元素的有限序列</p>
+</li>
+<li><p>元素可以重复出现，其顺序是有意义的</p>
+</li>
+<li><p>表中元素可以为任意类型，但需具有相同类型</p>
+</li>
+<li><p>表为多态类型</p>
+</li>
+<li><p>表的基本函数：</p>
+<p>  :: (追加元素), @ (连接表), null (空表测试), hd(返回表头元素), tl(返回非空表的表尾), length(返回表长)</p>
+<blockquote>
+<p>• [1, 3, 2, 1, 21+21] : int list</p>
+<p>• [true, false, true] : bool list</p>
+<p>• [[1],[2, 3]] : (int list) list</p>
+<p>• [ ] : int list, [ ] : bool list, ……</p>
+<p>• 1::[2, 3] &#x3D; [1, 2, 3]</p>
+<p>• [1, 2]@[3, 4] &#x3D; [1, 2, 3, 4]</p>
+<p>• nil &#x3D; [ ]</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><ul>
+<li><strong>包含任意类型数据元素的定长序列</strong></li>
+<li>类型表达式：每个元素的类型用*间隔并排列在一起。如： int * int, int * int * real</li>
+<li>圆括号中用逗号分隔的数据元素，允许嵌套。如: (“张三”, “男”, 19, 1.75)</li>
+</ul>
+<p>​    [((“赵”,”子昂”)，21, 1.81), ((“张”, “文艺”), 20, 1.69)]对应的是((string * string)* int * real)list</p>
+<h3 id="记录"><a href="#记录" class="headerlink" title="记录"></a>记录</h3><ul>
+<li>类似C中的结构类型，可以包含不同类型的元素</li>
+<li>每个元素有个名字</li>
+<li>记录的值和类型的写法都用{ }括起来。如： {First_name&#x3D;“赵”, Last_name&#x3D;“子昂”}</li>
+</ul>
+<h3 id="元组、表和记录的异同点"><a href="#元组、表和记录的异同点" class="headerlink" title="元组、表和记录的异同点"></a>元组、表和记录的异同点</h3><ul>
+<li>符号：（）  、   [ ]    、{  }</li>
+<li>元素类型：可以不同    、    必须相同      、可以不同</li>
+<li>长度：定长    、    变长       、变长</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
+<li>以一定的规则将定义域上的值映射到值域上去</li>
+<li>类型由它的定义域类型和值域类型共同描述</li>
+<li>-&gt;表示定义域到值域的映射</li>
+</ul>
+<p> fn: &lt;定义域类型&gt; -&gt; &lt;值域类型&gt;。如: fun add(x, y) &#x3D; x + y;</p>
+<h4 id="ML标准函数"><a href="#ML标准函数" class="headerlink" title="ML标准函数"></a>ML标准函数</h4><ul>
+<li><p>标准布尔函数：not, andalso, orelse。如：not true;    true andalso false;   true orelse false;</p>
+</li>
+<li><p>标准算数运算函数：~, +, -, *, div, &#x2F;。如：6 * 7;   3.0 * 2.0;</p>
+<ul>
+<li>运算符重载(operator ): 把同一运算符作用在不同类型上。</li>
+<li>重载运算符的两边必须为同一类型。</li>
+<li>整数到实数的转换：real</li>
+<li>实数到整数的转换：floor(下取整), ceil(上取整), round(四舍五入)，trunc(忽略小数)</li>
+</ul>
+</li>
+<li><p>标准字符串函数：</p>
+<ul>
+<li>把两个字符串合并成一个：^</li>
+<li>返回字符串的长度：size</li>
+</ul>
+</li>
+</ul>
+<h3 id="值"><a href="#值" class="headerlink" title="值"></a>值</h3><ul>
+<li><p>每个类型都有一个值的集合<br>  For each type t there is a set of <em>values</em></p>
+</li>
+<li><p>一个类型的表达式求值结果为该类型的一个值(或出错)<br>  An expression of type t <em>evaluates to a value of type</em> t (or fails to terminate)</p>
+</li>
+</ul>
+<h4 id="函数求值"><a href="#函数求值" class="headerlink" title="函数求值"></a>函数求值</h4><p>函数：以一定的规则将定义域上的值映射到值域上</p>
+<p>原型： fn:&lt;定义域类型&gt; -&gt; &lt;值域类型&gt;</p>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><p><strong>赋予某个对象一个名字，包括值、类型、签名、结构和函子</strong></p>
+<ul>
+<li>函数的声明： fun &lt;函数名&gt; (&lt;形式参数&gt;) : &lt;结果类型&gt; &#x3D; &lt;函数体&gt;</li>
+</ul>
+<p> 例：fun divmod(x:int, y:int) : int*int &#x3D; (x div y, x mod y)</p>
+<ul>
+<li><p>值的声明：val pi &#x3D; 3.1415；val (q:int, r:int) &#x3D; divmod(42, 5)；</p>
+<p>采用静态绑定方式——重新声明不会损坏系统、库或程序</p>
+</li>
+<li><p>类型绑定：type float &#x3D; real</p>
+<p>type count &#x3D; int and average &#x3D; real</p>
+</li>
+<li><p>值绑定：val m : int &#x3D; 3+2</p>
+<p>val pi : real &#x3D; 3.14 and e : real &#x3D; 2.17</p>
+</li>
+<li><p>组合声明：val m : int &#x3D; 3+2</p>
+<p>val n : int &#x3D; m*m</p>
+</li>
+</ul>
+<h4 id="声明的使用"><a href="#声明的使用" class="headerlink" title="声明的使用"></a>声明的使用</h4><p>声明函数：<br>  check : int * int -&gt; bool</p>
+<p>局部声明：</p>
+<p>  let D in E end</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">fun</span> check(x<span class="operator">:</span><span class="type">int</span>, y<span class="operator">:</span><span class="type">int</span>)<span class="operator">:</span><span class="type">bool</span> <span class="operator">=</span></span><br><span class="line"><span class="keyword">let</span></span><br><span class="line">	<span class="keyword">val</span> (q<span class="operator">:</span><span class="type">int</span>, r<span class="operator">:</span><span class="type">int</span>)<span class="operator">=</span> divmod(x, y)</span><br><span class="line"><span class="keyword">in</span></span><br><span class="line">	(x <span class="operator">=</span> q<span class="operator">*</span>y <span class="operator">+</span> r)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>全局声明</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pi : real = <span class="number">3.14</span>;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">square</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = r * r;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = pi * square(r);</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> pi : real = <span class="number">3.14159</span>;</span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(r:<span class="type">real</span>)</span></span> : real = pi * square(r);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="声明、类型和值"><a href="#声明、类型和值" class="headerlink" title="声明、类型和值"></a>声明、类型和值</h3><ul>
+<li>任意一个类型的表达式都可以进行求值操作</li>
+<li>任意一个类型表达式求值的结果为该类型的一个值</li>
+<li>ML提供重新声明功能 </li>
+<li>声明将产生名字(变量)和值的绑定(结合)</li>
+<li>绑定具有静态作用域</li>
+</ul>
+<h3 id="ML-x3D"><a href="#ML-x3D" class="headerlink" title="ML &#x3D;"></a>ML &#x3D;</h3><ul>
+<li>“&#x3D;”用于类型的等式判断，称为等式类型(“<em>equality types</em>”)</li>
+<li>等式类型包括整数、布尔值结合元组、表等构造子生成的类型</li>
+</ul>
+<h3 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h3><ul>
+<li><p>只包含变量、构造子(数值、字符、元组、表等)和通配符的表达式</p>
+<ul>
+<li>模式中不是构造子的名字，是变量</li>
+<li>模式中的变量必须彼此不同</li>
+<li>构造子必须和变量区分开来</li>
+</ul>
+</li>
+<li><p>通配符:  _</p>
+</li>
+<li><p>变量  : x   &#x2F;&#x2F;同一模式中，一个变量不能出现两次</p>
+</li>
+<li><p>常数  : 42, true, ~3   &#x2F;&#x2F; 实数和函数没有常数模式</p>
+</li>
+<li><p>元组  : (p1, …, pk)   &#x2F;&#x2F;p1, …, pk均为模式</p>
+</li>
+<li><p>表    : nil, p1::p2, [p1, …, pk]</p>
+</li>
+</ul>
+<h3 id="规则说明"><a href="#规则说明" class="headerlink" title="规则说明"></a>规则说明</h3><ul>
+<li>部分操作的内建规则：<ul>
+<li>结合性强于 -&gt;</li>
+<li>无结合规则</li>
+<li>-&gt; 为右结合</li>
+</ul>
+</li>
+</ul>
+<h3 id="替代"><a href="#替代" class="headerlink" title="替代"></a>替代</h3><ul>
+<li><p>给定集合绑定值【 x1:v1,…,xk:vk 】</p>
+</li>
+<li><p>及表达式e，计为[ x1:v1, …, xk:vk ] e</p>
+</li>
+<li><p>表达式替换为</p>
+</li>
+<li><p>v1 for x1,…,vk for xk </p>
+</li>
+<li><p>如</p>
+<p>[ x:2 ] (x + x) is (2 + 2)；[ x:2 ] (fn y &#x3D;&gt; x + y) is (fn y &#x3D;&gt; 2 + y) </p>
+<p>[ x:2 ] (if x&gt;0 then 1 else f(x-1))  is (if 2&gt;0 then 1 else f(2-1))</p>
+</li>
+</ul>
+<h3 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h3><ul>
+<li>函数定义前，用注释信息描述函数功能，形如(* comments*) ：<ul>
+<li>函数名字和类型 (类型定义)</li>
+<li>REQUIRES：参数说明 (明确参数范围)</li>
+<li>ENSURES：函数在有效参数范围内的执行结果 (函数功能)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>范例1：函数eval的说明</p>
+<p><strong>fun</strong> eval ([ ]:int list) : int &#x3D; 0<br> | eval (d::L) &#x3D; d + 10 * (eval L);</p>
+<p>(* eval : int list -&gt; int  <em>)<br> ( * REQUIRES:  <em>)<br> (  * every integer in L is a decimal digit    * ) (</em> ENSURES:  * )<br> (</em>   eval(L) evaluates to a non-negative integer *)</p>
+</blockquote>
+<h3 id="程序正确性证明"><a href="#程序正确性证明" class="headerlink" title="程序正确性证明"></a>程序正确性证明</h3><ul>
+<li>基于等式或者推导的方式进行数学证明</li>
+<li>程序结构作为指导</li>
+</ul>
+<blockquote>
+<p>为什么要进行程序正确性证明？</p>
+<p>传统程序编写地是否正确性依靠分支测试，根据条件分支输入不同的数据检验是否正确？延伸出来很多自动化测试工具，黑盒测试、白盒测试和覆盖度测试。</p>
+<p>函数式编程程序正确性证明是代码完成后用严格的数学推导证明对所有可能输入都产生正确结果。</p>
+</blockquote>
+<h2 id="归纳法"><a href="#归纳法" class="headerlink" title="归纳法"></a>归纳法</h2><h3 id="简单归纳法"><a href="#简单归纳法" class="headerlink" title="简单归纳法"></a>简单归纳法</h3><ul>
+<li><strong>适用于涉及自然数的递归函数</strong><ul>
+<li>参数为非负整数</li>
+<li>f(x)的递归调用形如f(y),且size(y)&#x3D;size(x)-1</li>
+</ul>
+</li>
+</ul>
+<h3 id="完全归纳法"><a href="#完全归纳法" class="headerlink" title="完全归纳法"></a>完全归纳法</h3><p>证明对所有非负整数n，P(n)都成立</p>
+<p>将P(k)简化为k个子问题： P(0), P(1), … , P(k-1)，且它们均成立时，可以利用{P(0), P(1), … , P(k-1)}推导出P(k)也成立</p>
+<blockquote>
+<p>如：P(0)成立</p>
+<p>​    P(1)可由P(0)推导出来</p>
+<p>​    P(2)可由P(0)， P(1)推导出来</p>
+<p>​     P(3)可由P(0)， P(1)， P(2)推导出来</p>
+<p>​    ……  </p>
+<p>​    P(k)可由P(0), P(1), … , P(k-1)推导出来</p>
+</blockquote>
+<ul>
+<li><strong>适用于涉及自然数的递归函数</strong><ul>
+<li>参数为非负整数</li>
+<li>f(x)的递归调用形如f(y),且size(y)&lt;size(x)</li>
+</ul>
+</li>
+</ul>
+<h3 id="结构归纳法"><a href="#结构归纳法" class="headerlink" title="结构归纳法"></a>结构归纳法</h3><p>基本情形： P([ ])</p>
+<p>归纳步骤：对具有类型t的所有元素y和t list类型的数ys，都有P(ys)成立时， P(y::ys)成立</p>
+<p>  ∀ i &lt; k, P(i)成立的条件下有P(k)</p>
+<ul>
+<li><strong>适用于涉及表和树的递归函数</strong></li>
+</ul>
+<h3 id="良基归纳法"><a href="#良基归纳法" class="headerlink" title="良基归纳法"></a>良基归纳法</h3><p>关系≺是良基的：</p>
+<p>  不存在无穷降序链：…≺Xn≺…≺X2≺X1,</p>
+<p>  <strong>对所有y’≺y</strong>，有P(y)，则P(y’)成立</p>
+<ul>
+<li><strong>可以处理广泛的可终止计算问题</strong></li>
+</ul>
+<h2 id="近似运行时间（近似时间复杂度）"><a href="#近似运行时间（近似时间复杂度）" class="headerlink" title="近似运行时间（近似时间复杂度）"></a>近似运行时间（近似时间复杂度）</h2><ul>
+<li><p>反映基于大批量数据的程序运行性能</p>
+<ul>
+<li><p>假设基本操作为常量执行时间(Assume basic ops take <em>constant</em> time)</p>
+</li>
+<li><p>用Ο记号表示算法的时间性能(Give big-O classification)</p>
+</li>
+</ul>
+</li>
+<li><p>求解步骤：</p>
+<ul>
+<li>1.找出算法中的<strong>基本语句</strong>：算法中执行次数最多的那条语句就是基本语句，通常是最内层循环的循环体</li>
+<li>2.<strong>计算基本语句的执行次数的数量级</strong>：忽略所有低次幂和最高次幂的系数，保证基本语句执行次数的函数中的最高次幂正确</li>
+<li>3.用Ο记号表示算法的时间性能：将基本语句执行次数的数量级放入Ο记号中。</li>
+</ul>
+</li>
+</ul>
+<h2 id="递归分析"><a href="#递归分析" class="headerlink" title="递归分析"></a>递归分析</h2><p>递归函数的定义给出了程序的递推关系，执行情况用<em>work</em>表示</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://rshawshank.github.io/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-ML%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" data-id="claaf6qii0072tkup903xfk65" data-title="函数式编程-ML编程基础" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/03/23/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A6%82%E8%BF%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          数据库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">函数式编程概述</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/">C++</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/">android</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/">javaweb</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">oracle数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/">组原原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">组成原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/">计算机系统结构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/">资源分配</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/">黑书</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/">工作笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%AF%95%E8%AE%BE/">毕设</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">读书笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CPU/" rel="tag">CPU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Leetcode/" rel="tag">Leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/activity/" rel="tag">activity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adapter/" rel="tag">adapter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/" rel="tag">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/broadcast/" rel="tag">broadcast</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/drawable/" rel="tag">drawable</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javaweb/" rel="tag">javaweb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/layout/" rel="tag">layout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/" rel="tag">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/" rel="tag">socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" rel="tag">主存管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="tag">函数式编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" rel="tag">分治策略</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">单元最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" rel="tag">双指针法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" rel="tag">基本图算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="tag">处理机调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" rel="tag">字符匹配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%BB%E7%BA%BF/" rel="tag">总线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag">所有结点对的最短路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag">操作系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" rel="tag">操作系统概述</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag">文件管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="tag">最大流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">最小生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" rel="tag">栈和队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" rel="tag">概率分析和随机算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%AF%95%E8%AE%BE/" rel="tag">毕设</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="tag">滑动窗口</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" rel="tag">组成原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag">编译原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" rel="tag">计算机系统结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="tag">设备管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" rel="tag">资源分配与调度</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" rel="tag">输入输出系统</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" rel="tag">进程和进程管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" rel="tag">选择算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%80%92%E5%BD%92/" rel="tag">递归</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag">锁机制</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CPU/" style="font-size: 10px;">CPU</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Leetcode/" style="font-size: 11.25px;">Leetcode</a> <a href="/tags/activity/" style="font-size: 10px;">activity</a> <a href="/tags/adapter/" style="font-size: 10px;">adapter</a> <a href="/tags/android/" style="font-size: 13.75px;">android</a> <a href="/tags/broadcast/" style="font-size: 10px;">broadcast</a> <a href="/tags/drawable/" style="font-size: 10px;">drawable</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/javaweb/" style="font-size: 17.5px;">javaweb</a> <a href="/tags/layout/" style="font-size: 10px;">layout</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/oracle/" style="font-size: 10px;">oracle</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 10px;">主存管理</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 11.25px;">函数式编程</a> <a href="/tags/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" style="font-size: 10px;">分治策略</a> <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 10px;">动态规划</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">单元最短路径</a> <a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88%E6%B3%95/" style="font-size: 10px;">双指针法</a> <a href="/tags/%E5%9F%BA%E6%9C%AC%E5%9B%BE%E7%AE%97%E6%B3%95/" style="font-size: 10px;">基本图算法</a> <a href="/tags/%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">处理机调度</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D/" style="font-size: 10px;">字符匹配</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="font-size: 10px;">学习笔记</a> <a href="/tags/%E6%80%BB%E7%BA%BF/" style="font-size: 10px;">总线</a> <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">所有结点对的最短路径</a> <a href="/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 10px;">排序</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" style="font-size: 16.25px;">操作系统</a> <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" style="font-size: 10px;">操作系统概述</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 17.5px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 12.5px;">数据结构</a> <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" style="font-size: 10px;">文件管理</a> <a href="/tags/%E6%9C%80%E5%A4%A7%E6%B5%81/" style="font-size: 10px;">最大流</a> <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 10px;">最小生成树</a> <a href="/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" style="font-size: 10px;">栈和队列</a> <a href="/tags/%E6%A0%91/" style="font-size: 10px;">树</a> <a href="/tags/%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" style="font-size: 10px;">概率分析和随机算法</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E6%AF%95%E8%AE%BE/" style="font-size: 10px;">毕设</a> <a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 18.75px;">算法</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" style="font-size: 11.25px;">线性表</a> <a href="/tags/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" style="font-size: 15px;">组成原理</a> <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" style="font-size: 16.25px;">编译原理</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" style="font-size: 15px;">计算机系统结构</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 15px;">计算机网络</a> <a href="/tags/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" style="font-size: 10px;">设备管理</a> <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" style="font-size: 10px;">贪心算法</a> <a href="/tags/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" style="font-size: 10px;">资源分配与调度</a> <a href="/tags/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" style="font-size: 10px;">输入输出系统</a> <a href="/tags/%E8%BF%9B%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" style="font-size: 10px;">进程和进程管理</a> <a href="/tags/%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95/" style="font-size: 10px;">选择算法</a> <a href="/tags/%E9%80%92%E5%BD%92/" style="font-size: 10px;">递归</a> <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" style="font-size: 10px;">锁机制</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">数据库-常用数据库对象</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/12/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E5%85%AD%EF%BC%89/">java-设计模式（六）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%94%EF%BC%89/">java-设计模式（五）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 rhb<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
