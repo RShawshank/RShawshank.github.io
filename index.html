@@ -178,458 +178,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/10/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-11-10 01:57:12" itemprop="dateCreated datePublished" datetime="2022-11-10T01:57:12Z">2022-11-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-31 14:42:06" itemprop="dateModified" datetime="2020-10-31T14:42:06Z">2020-10-31</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/20190111184331949.png"></p>
-<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><ul>
-<li>存储器：存放程序和数据的器件。</li>
-<li>存储位：存放一个二进制数位的存储单元，是存储器最小的存储单位。</li>
-<li>存储字：计算机可寻址（作为一个整体存入或取出）的最小信息单位。</li>
-<li>存储单元：存放一个存储字的若干个记忆单元组成一个存储单元。</li>
-<li>存储体：大量存储单元的集合组成存储体。</li>
-<li>存储单元地址：存储单元的编号。</li>
-<li>字编址：对存储单元按字编址。</li>
-<li>字节编址：对存储单元按字节编址。</li>
-<li>寻址：通过地址寻找数据，从对应地址的存储单元中访存数据。</li>
-</ul>
-<h1 id="存储系统分类"><a href="#存储系统分类" class="headerlink" title="存储系统分类"></a>存储系统分类</h1><h2 id="按存储介质分类"><a href="#按存储介质分类" class="headerlink" title="按存储介质分类"></a>按存储介质分类</h2><p><strong>半导体存储器</strong>：用半导体器件组成的存储器。<br><strong>磁表面存储器</strong>：用磁性材料做成的存储器。（磁盘、磁带）<br><strong>激光存储器</strong>：信息以刻痕的形式保存在盘面上，用激光束照射盘面，靠盘面的不同反射率来读出信息。</p>
-<h2 id="按存取方式分类"><a href="#按存取方式分类" class="headerlink" title="按存取方式分类"></a>按存取方式分类</h2><h3 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h3><p><strong>随机存储器（RAM，Random Access Memory）</strong>：可随机访问任意存储单元，且存取时间与存储单元的物理位置无关。主要充当高速缓冲存储器和主存储器。</p>
-<blockquote>
-<p>半导体随机存储器</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831150521567-371157831.png"></p>
-</blockquote>
-<h4 id="动态随机存储器（DRAM）"><a href="#动态随机存储器（DRAM）" class="headerlink" title="动态随机存储器（DRAM）"></a>动态随机存储器（DRAM）</h4><p>只能将数据保持很短的时间。为了保持数据，DRAM 使用电容存储，所以必须隔一段时间刷新（Refresh）一次，如果存储单元没有被刷新，存储的信息就会丢失，关机就会丢失数据。<strong>常用于主存储器</strong>。<strong>DRAM 采用地址复用技术，地址线是原来的 1&#x2F;2，且地址信号分行、列两次传送</strong>。相对于 SRAM 来说，DRAM 具有容易集成、价位低、容量大和功耗低等优点，但 DRAM 的存取速度比 SRAM 慢，一般用来组成大容量主存系统。</p>
-<p>DRAM 保存的信息会自动消失（易失性存储器），为此，每隔一段时间必须刷新，通常取 2ms，这个时间称为刷新周期。常用的刷新方式有 3 种：集中刷新、分散刷新和异步刷新。</p>
-<p>　　（1）集中刷新：指在一个刷新周期内，利用一段固定的时间，依次对存储器的<strong>所有行</strong>进行逐一再生，在此期间停止对存储器的读写操作，称为“死时间”，又称访存“死区”。集中刷新的优点是读写操作时不受刷新工作的影响，因此系统的存取速度较高；缺点是在集中刷新期间（死区）不能访问存储器。</p>
-<blockquote>
-<p>补充一点：为什么刷新与存取不能并行？<br>因为内存就一套地址译码和片选装置，刷新与存取有相似的过程，它要选中一行——这期间片选线、地址线、地址译码器全被占用着。同理，刷新操作之间也不能并行——意味着一次只能刷一行。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112715598-1052856783.png"></p>
-</blockquote>
-<p>　　（2）分散刷新：把对每行的刷新分散到各个工作周期中。这样，一个存储器的系统工作周期分为两部分：前半部分用于正常读、写或保持；后半部分用于刷新某一行。这种刷新方式增加了系统的存取周期，如存储芯片的存取周期为 0.5μs，则系统的存取周期为 1μs。分散刷新的优点是<strong>没有死区</strong>；缺点是加长了系统的存取周期，降低了整机的速度。</p>
-<blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112726854-1502618203.png"></p>
-<p>即在每个存取操作后绑定一个刷新操作。延长了存取周期，这样存取周期就成了0.5μs + 0.5μs &#x3D;1μs。但是由于与存取操作绑定，就不需要专门给出一段时间来刷新了。这样，每有128个读取操作，就会把0-127行全部刷新一遍。故每隔128μs 就可将存储芯片全部刷新一遍，即刷新周期是1μs×128&#x3D;128μs远短于2ms，而且不存在停止读&#x2F;写的死时间，但是存取周期长了，整个系统速度降低了。（分散刷新的刷新周期128μs ，其实不需要这么频繁，会导致浪费）</p>
-</blockquote>
-<p>　　（3）异步刷新：异步刷新是前两种方法的结合，它既可以缩短“死时间”，又能充分利用最大刷新间隔为 2ms 的特点。具体做法是将刷新周期除以行数，得到两次刷新操作的时间间隔 t，利用逻辑电路每隔时间 t 产生一次刷新请求。这样可以避免使 CPU 连续等待过长的时间，而且减少了刷新次数，从根本上提高了整机速度。</p>
-<blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112736772-1585159475.png"></p>
-<p>具体操作为：在2ms内对128行各刷新一遍</p>
-<p>即每隔15.6μs刷新一行(2000μs&#x2F;128≈15.6μs)，而每行刷新的时间仍为0.5μs。这样，刷新一行只能停止一个存取周期，但对每行来说，刷新间隔时间仍为2ms，而死时间为0.5μs。（相对每一段来说，是集中式刷新，相对整体来说，是分散式刷新）</p>
-<p>如果将DRAM的刷新安排在CPU对指令的译码阶段，由于这个阶段CPU不访问存储器，所以这种方案既克服了分散刷新需独占0.5μs用于刷新，使存取周期加长且降低系统速度的缺点，又不会出现集中刷新的访存“死区”问题，从根本上上提高了整机的工作效率。</p>
-</blockquote>
-<p>DRAM 的刷新需注意以下问题：（1）<strong>刷新对 CPU 是透明的，即刷新不依赖外部的访问</strong>；（2）动态 RAM 的刷新单位是行，故刷新操作时仅需要行地址；（3）刷新操作类似于读操作，但又有所不同。刷新操作仅给栅极电容补充电荷，不需要信息输出。另外，刷新时不需要选片，即整个存储器中的所有芯片同时被刷新。</p>
-<p>　　SRAM 和 DRAM 都满足断电内容消失，但<strong>需要刷新的只有 DRAM</strong>，而 SRAM 不需要刷新。</p>
-<h4 id="静态随机存储器（SRAM）"><a href="#静态随机存储器（SRAM）" class="headerlink" title="静态随机存储器（SRAM）"></a>静态随机存储器（SRAM）</h4><p><em>所谓的 “静态”，指这种存储器只要保持通电，里面储存的数据就可以恒常保持</em>。相对之下，DRAM 里面储存的数据需要周期性地 Refresh。然而，当电力供应停止（关机）时，储存的数据还是会消失，所以也称为 Volatile Memory（易失性存储器），这与在断电后仍能储存数据的 ROM 或闪存不同的。但是 SRAM 也有它的缺点，即它的集成度较低，功耗较 DRAM 大，相同容量的 DRAM 内存可以设计为较小的体积，但是 SRAM 却需要很大的体积。同样面积的硅片可以做出更大容量的 DRAM，因此 SRAM 显得更贵。<strong>常用于高速缓存</strong>。</p>
-<table>
-<thead>
-<tr>
-<th><strong>特点 \ 类型</strong></th>
-<th><strong>SRAM</strong></th>
-<th><strong>DRAM</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>存储信息</td>
-<td>触发器</td>
-<td>电容</td>
-</tr>
-<tr>
-<td>破坏性读出</td>
-<td>非</td>
-<td>是</td>
-</tr>
-<tr>
-<td>需要刷新</td>
-<td>不要</td>
-<td>需要</td>
-</tr>
-<tr>
-<td>送行列地址</td>
-<td>同时送</td>
-<td>分两次送</td>
-</tr>
-<tr>
-<td>运行速度</td>
-<td>快</td>
-<td>慢</td>
-</tr>
-<tr>
-<td>集成度</td>
-<td>低</td>
-<td>高</td>
-</tr>
-<tr>
-<td>发热量（功耗）</td>
-<td>大</td>
-<td>小</td>
-</tr>
-<tr>
-<td>存储成本</td>
-<td>高</td>
-<td>低</td>
-</tr>
-<tr>
-<td>主要用途</td>
-<td>高速缓存</td>
-<td>主机内存</td>
-</tr>
-</tbody></table>
-<h3 id="静态存储器结构"><a href="#静态存储器结构" class="headerlink" title="静态存储器结构"></a>静态存储器结构</h3><p>译码部分：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221204450394.png"></p>
-<p>找到静态存储器中对应的存储单元。</p>
-<p>总体：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221204615051.png"></p>
-<h3 id="串行访问存储器（SAS）"><a href="#串行访问存储器（SAS）" class="headerlink" title="串行访问存储器（SAS）"></a>串行访问存储器（SAS）</h3><p>对存储单元进行 读&#x2F;写 操作时，需按其物理地址的先后顺序寻址，包括顺序存取存储器（如磁带，SAM）与直接存取存储器（如磁盘,DAM）。</p>
-<h4 id="顺序存取存储器（SAM）"><a href="#顺序存取存储器（SAM）" class="headerlink" title="顺序存取存储器（SAM）"></a>顺序存取存储器（SAM）</h4><p>是完全的串行访问，顺序存取存储器的内容只能按照某种顺序存取，存取时间的长短与信息在存储体上的物理位置有关，其特点是存取速度缓慢。如：磁带，读写时要待磁带移动到合适位置之后才能顺序读写。由于价格便宜，主要用于数据备份容灾系统。</p>
-<h4 id="直接存取存储器（DAM）"><a href="#直接存取存储器（DAM）" class="headerlink" title="直接存取存储器（DAM）"></a>直接存取存储器（DAM）</h4><p>是部分的串行访问，如：HHD 机械硬盘，对信息的存取有两步操作。首先，磁头直接移动到目标区域（磁道），然后再从磁道的合适位置开始读写，它介于顺序存取和随机存取之间。主要用于辅助存储器。</p>
-<h3 id="只读存储器（ROM）"><a href="#只读存储器（ROM）" class="headerlink" title="只读存储器（ROM）"></a>只读存储器（ROM）</h3><p>存储器的内容只能随机读出而不能写入。信息一旦写入存储器就固定不变，即使断电，内容也不会丢失。因此，通常用它存放固定不变的程序、常数和汉字字库，甚至用于操作系统的固化。它与随机存储器可共同作为主存的一部分，统一构成主存的地址域。</p>
-<p>由 ROM 派生出的存储器也包含可反复重写的类型，<strong>ROM 与 RAM 的存取方式均为随机存取</strong>。广义上的只读存储器已可已可通过电擦除等方式进行写入，其“只读”的概念没有保留，但仍然保留了断电内容保留、随机读取特性，但其写入速度比读取速度慢得多。</p>
-<h4 id="掩膜式只读存储器（MROM）"><a href="#掩膜式只读存储器（MROM）" class="headerlink" title="掩膜式只读存储器（MROM）"></a>掩膜式只读存储器（MROM）</h4><p>MROM 写入后任何人无法改变其内容</p>
-<h4 id="一次可编程只读存储器（PROM）"><a href="#一次可编程只读存储器（PROM）" class="headerlink" title="一次可编程只读存储器（PROM）"></a>一次可编程只读存储器（PROM）</h4><p>PROM 允许用户利用专门的设备（编程器）写入自己的程序，一旦写入，内容就无法改变。</p>
-<h4 id="可擦除可编程只读存储器（EPROM）"><a href="#可擦除可编程只读存储器（EPROM）" class="headerlink" title="可擦除可编程只读存储器（EPROM）"></a>可擦除可编程只读存储器（EPROM）</h4><p>EPROM不仅可以由用户利用编程器写入信息，而且可以对其内容进行多次改写。需要修改 EPROM 内容时，先将其全部内容擦除，然后编程。</p>
-<h4 id="闪速存储器（Flash-Memory）"><a href="#闪速存储器（Flash-Memory）" class="headerlink" title="闪速存储器（Flash Memory）"></a>闪速存储器（Flash Memory）</h4><h4 id="固态硬盘（Solid-State-Drives"><a href="#固态硬盘（Solid-State-Drives" class="headerlink" title="固态硬盘（Solid State Drives"></a>固态硬盘（Solid State Drives</h4><h2 id="按信息的可保存性分类"><a href="#按信息的可保存性分类" class="headerlink" title="按信息的可保存性分类"></a>按信息的可保存性分类</h2><p><strong>非永久记忆（易失性）的存储器</strong>：掉电后数据消失的存储器，如：<em>半导体读&#x2F;写存储器 RAM</em>。<br><strong>永久性记忆（非易失性）的存储器</strong>：掉电后仍能保存信息的存储器，如：<em>磁性材料做成的存储器以及半导体 ROM</em>。</p>
-<p>若某个存储单元所存储的信息被读出时，原存储信息被破坏，则称为<u>破坏性读出</u>；若读出时，被读单元存储信息不被破坏，则称为非破坏性读出，具有破坏性读出的存储器，每次读出操作后，必须紧接一个再生的操作，以便恢复被破坏的信息。</p>
-<h2 id="三层存储结构"><a href="#三层存储结构" class="headerlink" title="三层存储结构"></a>三层存储结构</h2><p>几个问题：</p>
-<p>1、cpu速度慢：cpu访问的是主存，但是主存的速度慢于cpu的读取速度。导致cpu的速度慢。</p>
-<p>2、主存容量不足</p>
-<p>解决方法：</p>
-<p>1、cache：解决cpu速度慢的问题（一般是集成在cpu上）</p>
-<p>2、辅存解决主存容量小的问题</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221202328281.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831145558214-2105504734.png"></p>
-<blockquote>
-<p>存储系统层次结构主要体现在 “Cache - 主存” 层次和 “主存 - 辅存” 层次。前者主要解决 CPU 和主存速度不匹配的问题，后者主要解决存储系统容量的问题</p>
-</blockquote>
-<p><strong>主存和 Cache 之间的数据调动是由硬件自动完成的，对所有程序员均是透明的；而主存和辅存之间的数据调动则是由硬件和操作系统共同完成的，对应用程序员是透明的</strong>。</p>
-<h3 id="主存储器：主存（又称内存）"><a href="#主存储器：主存（又称内存）" class="headerlink" title="主存储器：主存（又称内存）"></a>主存储器：主存（又称内存）</h3><p>用来存放计算机运行期间所需的大量程序和数据，<strong>CPU 可以直接随机地对其进行访问</strong>，也可以和告诉缓冲存储器（Cache）及辅助存储器交换数据，其特点是容量较小、存取速度较快、单位价格较高。</p>
-<ul>
-<li>半导体存储器、DRAM、非永久记忆存储器</li>
-<li>特性：“可随机访问任意存储单元” 和 “掉电即失去数据”，这些特性均服务于冯诺依曼体系 “存储程序” 的核心理想。</li>
-</ul>
-<h3 id="辅助存储器：辅存"><a href="#辅助存储器：辅存" class="headerlink" title="辅助存储器：辅存"></a>辅助存储器：辅存</h3><p>又称外存储器（外存），是主存储器的后援存储器，用来存放当前暂时不用的程序和数据，以及一些需要永久性保存的信息，它不能与 CPU 直接交换信息。其特点是容量极大、存取速度较慢、单位成本低。</p>
-<h3 id="高速缓冲存储器：cache"><a href="#高速缓冲存储器：cache" class="headerlink" title="高速缓冲存储器：cache"></a>高速缓冲存储器：cache</h3><p>位于主存和 CPU 之间，用来存放正在执行的程序段和数据，以便 CPU 能高速地使用它们。Cache 地存取速度可与 CPU 的速度匹配，但存储容量小、价格高。目前的高档计算机通常将它们制作在 CPU 中。</p>
-<h2 id="存储器的性能指标"><a href="#存储器的性能指标" class="headerlink" title="存储器的性能指标"></a>存储器的性能指标</h2><p>存储器有 3 个主要性能指标，即存储容量、单位成本和存储速度。这 3 个指标相互制约，设计存储器系统所追求的目标就是大容量、低成本和高速度。</p>
-<p>具体可见《王道》</p>
-<h1 id="主存中的数据组织"><a href="#主存中的数据组织" class="headerlink" title="主存中的数据组织"></a>主存中的数据组织</h1><p>主存：随机访问存储器，包含读&#x2F;写存储空间和只读存储空间</p>
-<p><strong>存储字长</strong>：主存的一个存储单元所包含的二进制位数。按照字节为单位。</p>
-<h2 id="数据存储与边界的关系"><a href="#数据存储与边界的关系" class="headerlink" title="数据存储与边界的关系"></a>数据存储与边界的关系</h2><p>按边界对齐，方便访问和读取。但是会浪费空间。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221202909440.png"></p>
-<h2 id="大端和小端存储方式"><a href="#大端和小端存储方式" class="headerlink" title="大端和小端存储方式"></a>大端和小端存储方式</h2><p>大端：最高字节地址作为数据地址</p>
-<p>小端：最低字节地址作为数据地址</p>
-<p>大端模式更符合人的读写习惯，但是小端模式更符合计算机的处理。</p>
-<h1 id="CPU和主存储器连接"><a href="#CPU和主存储器连接" class="headerlink" title="CPU和主存储器连接"></a>CPU和主存储器连接</h1><ul>
-<li><p>连接由总线来支持：包括数据总线、地址总线和控制总线。</p>
-</li>
-<li><p>CPU 通过 AR（地址寄存器）&amp; AB（地址总线）、DR（数码寄存器）&amp; DB（数据总线）和主存进行数据传输。</p>
-</li>
-</ul>
-<p>若 AR 为 K 位字长，表示 CPU 的寻址宽度，即允许主存包含有 2K 个可寻址存储单位；<br>若 DR 为 n 位字长，则表示在一个存储周期内，CPU 和主存之间通过总线进行 n 位数据传输。<br>控制总线包括控制数据传输的读（READ）、写（WRITE）和表示存储器功能完成的（READY）的三种控制线。</p>
-<blockquote>
-<p>cpu向内存写数据的时，相当于将数据写入内存地址中。数据的地址经过地址总线送给译码器，译码器的有效输出送给锁存单元的使能端，而cpu中寄存器数据通过数据总线送给锁存单元的输入端，实现数据存入内存。</p>
-<p>cpu读内存数据时，相当于将内存地址中的数据读入cpu。数据的地址经过地址总线送给译码器，译码器的有效输出送给锁存单元的使能端，此时锁存单元将输出端数据送入数据总线，再通过数据总线送入cpu。</p>
-<p>cpu与内存通过数据总线交换数据，数据总线是双向的。</p>
-</blockquote>
-<h2 id="CPU读取主存数据"><a href="#CPU读取主存数据" class="headerlink" title="CPU读取主存数据"></a>CPU读取主存数据</h2><p>当 CPU 从存储器读取一个存储字时，CPU 必须指定该存储字的地址，将该地址送到 AR 再经 AB 送到存储器，同时，CPU 通过控制线发送 READ 信号到存储器。此后，CPU 等到存储器通过控制线发来一个 READY 信号，表示已经完成了数据的读，并将数据经 DB 放到 DR 上了，CPU 再从 DR 取出相应的数据。以此来完成了一个存储器字的读与取。</p>
-<h2 id="CPU存放数据到主存"><a href="#CPU存放数据到主存" class="headerlink" title="CPU存放数据到主存"></a>CPU存放数据到主存</h2><p>CPU 为了存放一个字到存储器，首先将存储字在存储器中的存放地址通过 AR 经 AB 发送到存储器，并将存储字放到 DR，同时发出一个 WRITE 信号到存储器。此后，CPU 等到接收 READY 信号。存储器会根据 AB 收到的地址来存放 DB 接收到的存储字，然后通过 READY 控制线发送 READY 信号给 CPU 接收。以此完成了一个存储字的存放。</p>
-<p>可见，主存和 CPU 之间采用的是异步工作方式，以 READY 信号表示以此访存操作的结束。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/20200311152228285.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/20190708131719484.jpeg"></p>
-<h2 id="存储扩展"><a href="#存储扩展" class="headerlink" title="存储扩展"></a>存储扩展</h2><p>CPU 的数据线数与存储芯片数据位数不一定相等，通常进行位扩展，用多个存储芯片对字长进行扩充，使数据位数与 CPU 的数据线数相等。可用的技术方法有位扩展法、子扩展法和字位同时扩展法。</p>
-<p>分为字扩展和位扩展以及字位扩展。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211045477.png"></p>
-<h3 id="位扩展"><a href="#位扩展" class="headerlink" title="位扩展"></a>位扩展</h3><p>地址线不变，但是数据线分成了四个部分。因为<strong>位表示的是字的深度，字的地址还是和没扩展前一样的。</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211321650.png"></p>
-<p><strong>仅采用位扩展时，各个芯片连接地址线的方式一样，而连接数据线的方式不一样，某一时刻选中所有芯片，所以片选信号线要连接到所有芯片。</strong></p>
-<h3 id="字扩展"><a href="#字扩展" class="headerlink" title="字扩展"></a>字扩展</h3><p>由于位数没有发生变化，所以数据线是没有发生变化的。但是由于字的<strong>数量（厚度）</strong>增加了，所以地址线要增加。</p>
-<p><em>片选信号是选择字扩展中的字的厚度中的那一层。</em></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211536092.png"></p>
-<p>字扩展将存储芯片的地址线、数据线、读写控制线相应并联，而由片选信号来区分芯片的地址范围</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211551295.png"></p>
-<p><strong>仅采用字扩展时，各个芯片连接地址线方式相同，连接数据线的方式也相同，但在某一时刻只需选中部分芯片，所以通过片选信号或采用译码器设计连接到相应的芯片。</strong></p>
-<h3 id="字位扩展"><a href="#字位扩展" class="headerlink" title="字位扩展"></a>字位扩展</h3><p>字位同时扩展就是既增加存储字的数量，又增加存储字长。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222143433903.png"></p>
-<p><strong>采用字位同时扩展时，各个芯片连接地址线的方式相同，但连接数据线的方式不同，而且需要通过片选信号或采用译码器设计连接到相应的芯片。</strong></p>
-<h1 id="双端口-RAM-和多模块存储器"><a href="#双端口-RAM-和多模块存储器" class="headerlink" title="双端口 RAM 和多模块存储器"></a>双端口 RAM 和多模块存储器</h1><p>双端口 RAM 是指同一个存储器有左、右两个独立的端口，分别具有两组相互独立的地址线、数据线和控制线，允许两个独立的控制器同时异步地访问存储单元。当两个端口的地址不相同时，在两个端口上进行读写操作一定不会发生冲突。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831193253926-1954121305.png"></p>
-<p>两个端口同时存取存储器地同一地址单元时，会因数据冲突造成数据存储或读取错误。两个端口对同一主存操作有以下4 种情况：</p>
-<ol>
-<li>两个端口不同时对同一地址单元存取数据。</li>
-<li>两个端口同时对同一地址单元读出数据。</li>
-<li>两个端口同时对同一地址单元写入数据。</li>
-<li>两个端口同时对同一地址单元操作，一个写入数据，另一个读出数据。</li>
-</ol>
-<p>其中，第 1 种和第 2 种情况不会出现错误；第 3 种情况会出现写入错误；第 4 种情况会出现读出错误。</p>
-<h1 id="多体交叉存储器"><a href="#多体交叉存储器" class="headerlink" title="多体交叉存储器"></a>多体交叉存储器</h1><p>由多个存储模块构成。基本思想是：在不提高存储器效率、不扩展数据通路位数的前提下，通过存储芯片的交叉组织，提高CPU单位时间内访问的数据量，从而缓解快速的CPU与慢速的主存之间的速度差异。</p>
-<p>分为高位和低位两种多体交叉存储器。</p>
-<h2 id="高位多体交叉存储器"><a href="#高位多体交叉存储器" class="headerlink" title="高位多体交叉存储器"></a>高位多体交叉存储器</h2><p>可以看到的是，用<strong>高位段地址</strong>经过译码后产生片选信号，<strong>选择存储体</strong>。<strong>低位段地址</strong>直接选择一个存储体内的不同<strong>存储单元</strong>。</p>
-<p><strong>特点</strong></p>
-<ul>
-<li><strong>相邻的地址在同一个存储体中</strong></li>
-<li><strong>不同存储体的地址不相邻</strong></li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222144034180.png"></p>
-<p><strong>问题</strong></p>
-<p><strong>因为连续的地址在同一个存储体中，无法实现存储体并行工作</strong></p>
-<h2 id="低位多体交叉存储器"><a href="#低位多体交叉存储器" class="headerlink" title="低位多体交叉存储器"></a>低位多体交叉存储器</h2><p>用<strong>低位段地址</strong>经过译码后产生片选信号，<strong>选择存储体</strong>。<strong>高位段地址</strong>直接选择一个存储体内的不同<strong>存储单元</strong>。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222145028079.png"></p>
-<p><strong>存储流水线访问</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222145353046.png"></p>
-<p>其中：存储周期T&#x3D;0至W<del>0</del> 时间，表示的是存储体存入数据的时间。</p>
-<p>连续并行读取时间是：0至W<del>0</del> +W<del>0</del>至W<del>1</del> （此时第一个存储体的数据读出） +W<del>1</del>至W<del>2</del> （此时第二个存储体的数据读出） +W<del>2</del>至W<del>3</del></p>
-<h1 id="Cache的基本原理"><a href="#Cache的基本原理" class="headerlink" title="Cache的基本原理"></a>Cache的基本原理</h1><p>cache，中译名高速缓冲存储器，其作用是为了更好的利用局部性原理，减少CPU访问主存的次数。简单地说，CPU正在访问的指令和数据，其可能会被以后多次访问到，或者是该指令和数据附近的内存区域，也可能会被多次访问。因此，第一次访问这一块区域时，将其复制到cache中，以后访问该区域的指令或者数据时，就不用再从主存中取出。</p>
-<blockquote>
-<p>程序访问的局部性原理包括时间局部性和空间局部性。</p>
-<ul>
-<li>空间局部性：在最近的未来要用到的信息（指令和数据），很可能与现在正在使用的信息在存储空间上是邻近的</li>
-<li>时间局部性：在最近的未来要用到的信息，很可能是现在正在使用的信息</li>
-</ul>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222150221127.png"></p>
-<p>主要分析的是CPU和主存之间的Cache</p>
-<h3 id="cache的工作过程"><a href="#cache的工作过程" class="headerlink" title="cache的工作过程"></a>cache的工作过程</h3><p>Cache和主存都被分成若干大小相等的块（Cache块又称为Cache行），每块由若干字节组成，块的长度称为块长（Cache行长）。所以Cache中的块数要远少于主存中的块数，它仅保存主存中最活跃的若干块的副本。</p>
-<p><strong>CPU与Cache之间的数据交换以字为单位，而Cache与主存之间的数据交换则以Cahce块为单位。</strong></p>
-<ul>
-<li><p>当CPU发出读请求时，若访存地址在Cache中<strong>命中</strong>，就将此地址转换成Cache地址<strong>，直接对Cahce进行读操作，与主存无关</strong>；若访存地址在Cache中<strong>未命中</strong>，<strong>则需访问主存</strong>，<strong>并把此字所在的块一次性地从主存调入Cache，若此时Cache已满，则需根据某种 替换算法，用这个块替换Cache中原来的某块信息。</strong></p>
-<ul>
-<li><p>Q：如何判断数据在Cache中？</p>
-<p>​	A：使用相联存储器（注意，这里是在相联存储器中进行分析的，没有进入到cache块中）</p>
-</li>
-<li><p>Q：Cache中的数据是有效的吗？</p>
-<p>​	A：使用cache块中的vaild</p>
-</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222151148417.png"></p>
-</li>
-<li><p>当CPU发出写请求时，若Cache命中，有可能会遇到Cache与主存中的内容不一致的问题，此时需要根据某种 <strong>写策略</strong> 解决这个问题。</p>
-<ul>
-<li><p>在写穿式Cache中，数据更新时，在写入缓存之后，立即也将数据写入内存，如果此时请求指定的地址没有对应的缓存，那么直接写入内存。所以每次操作总会执行：</p>
-<p>​			  第一步，CPU将数据写入Cache；<br>　　	第二步，将Cache数据传送到Memory中相应的位置； </p>
-</li>
-<li><p>在写回式Cache中，数据更新时，在写入缓存之后，不会立即更新对应的内存，只有当该缓存被用于其他的内存数据（即数据被替换出缓存）时，被修改的缓存中的数据才会被覆盖式地写入到对应的内存中。</p>
-<p>​				并不是每次执行步骤1后都执行步骤2操作。</p>
-</li>
-<li><p>Q：写回前，主存的数据是新的吗？（因为没有及时的写回主存中）</p>
-<p>​		A：使用cache块中的dirty</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222151318537.png" alt="image-20191222151318537"></p>
-<h3 id="cache的地址划分"><a href="#cache的地址划分" class="headerlink" title="cache的地址划分"></a>cache的地址划分</h3><p>因为cache是以块划分的，所以对主存地址，需要进行二次划分。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152243021.png"></p>
-<p>为了解决上述的三个问题，cache的结构需要进行相应的改变。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152556327.png" alt="cache的结构"></p>
-<p>CPU将地址置入相联存储器中，如果数据在cache中，去cache中对应的地址查找，如果不再就直接对主存进行访问。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152817373.png"></p>
-<h2 id="相联存储器"><a href="#相联存储器" class="headerlink" title="相联存储器"></a>相联存储器</h2><p>作用：判断CPU要访问的内容是否在Cache中，在的话，会给出相应内容在cache中的地址。</p>
-<p>存放查找表  (独立硬件，不在缓存中)<br>存储容量 &#x3D; 查找表容量 &#x3D; cache块数 * 表项大小<br>cache中用于存放<strong>块表</strong>，虚拟存储器中存放<strong>段表、页表</strong><br>（valid,      Key，               Value ）<br> ( 有效位,  主存块地址 ， Cache块地址）  注：value不一定是必要的</p>
-<p>CPU给出的块地址与查找表中某单元相同且有效位为1表示<strong>命中</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222205525474.png"></p>
-<p><strong>步骤</strong>(对应的是系统的读过程)</p>
-<ul>
-<li><p>CPU给出主存地址（块地址，块内地址）</p>
-</li>
-<li><p>主存<strong>块地址</strong>为<strong>关键字</strong>查找相联存储器中的查找表</p>
-</li>
-<li><p>如相符表示<strong>副本</strong>在cache中，命中，访问cache</p>
-</li>
-<li><p>否则数据缺失，访问主存</p>
-<ul>
-<li><p>将数据所在块副本调入cache（块交换—局部性）</p>
-</li>
-<li><p>载入副本过程可能引起替换</p>
-</li>
-<li><p>更新查找表，记录当前数据块地址</p>
-</li>
-<li><p>cache缺失时系统等待数据调入</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>基本结构如下</strong></p>
-<p>检索寄存器从地址中剥离Key</p>
-<p>当明确查找的在Cache中时，符合寄存器会记录要查找的地址的位置</p>
-<p><strong>此处的存储体就是cache中的标记存储体</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222203715046.png"></p>
-<p>由下图可以看到：key包含了tag和offset。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222204443669.png"></p>
-<h2 id="cache地址映射和变换方法"><a href="#cache地址映射和变换方法" class="headerlink" title="cache地址映射和变换方法"></a>cache地址映射和变换方法</h2><p>这里的地址映射是指：主存空间映射到cache的地址空间。</p>
-<p>在使用相联存储器得知数据在cache中后，接下来需要得知主存数据如何放置到cache行中。此外，cache满后应该如何处理？如何实现保持cache和主存的一致性？</p>
-<h3 id="全相联映射"><a href="#全相联映射" class="headerlink" title="全相联映射"></a>全相联映射</h3><p><strong>只有一个组，就是全相联。</strong>不用hash来确定组，<strong>直接挨个比对高位地址，来确定是否命中</strong>。可以想见这种方式不适合大的缓存。想想看，如果4M 的大缓存　linesize为32Byte，采用全相联的话，就意味着4<em>1024</em>1024&#x2F;32 &#x3D; 128K 个line挨个比较，来确定是否命中，这是多要命的事情。高速缓存立马成了低速缓存了。</p>
-<p><strong>映射算法：主存的数据块可映射到cache任意行</strong>同时将该数据块地址对应的标记存储体中保存。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222212547429.png"></p>
-<p>主存地址&#x3D;块地址（标记）+块内地址（字）</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214501924.png"></p>
-<p>因为只有一组，cache中的所有行标记会全部送入相联存储器中进行比较。如果命中的话，从cache中剥离出具体要访问的那个字。反之，会根据cpu给出的原始地址再次访问主存。</p>
-<h3 id="直接映射"><a href="#直接映射" class="headerlink" title="直接映射"></a>直接映射</h3><p>每个组只有一个line，选中组之后不需要和组中的每个line比对，因为只有一个line。这样导致了cache的利用率低，块内冲突率高，但是淘汰算法（后来的赶走之前的）简单，适合大容量cache。</p>
-<p><strong>映射算法：cache共n行，主存第j快映射到cache行号为i&#x3D;jmod (n)即映射到特定行</strong></p>
-<p>主存调入cache中的位置由行地址决定。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214438924.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214717465.png"></p>
-<p>先看索引，取出对应的标识放入相联存储器中比较。命中与否的结果与上述相同。可以很明显的看出比较的内容变少了。</p>
-<h3 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a>组相联映射</h3><p>cache分成多个组，每个组分成多个行。所谓8路组相连（ 8-way set associative）的含义是指，每个组里面有8个行。</p>
-<p>cache分组（每组包含的行数相同），主存以cache分组标准将块分组（两者数量相同）</p>
-<p><strong>映射算法：cache共n组，主存第j块号映射到cache的组号是i&#x3D;jmod（n）。即主存的数据块映射到cache特定组的任意行</strong></p>
-<blockquote>
-<p>我们知道，cache的容量要远远小于主存，主存和cache肯定不是一一对应的，那么主存中的地址和cache的映射关系是怎样的呢？</p>
-<p>拿到一个地址，首先是映射到一个组里面去。如何映射？取内存地址的中间几位来映射。</p>
-<p>举例来说，data cache: 32-KB, 8-way set associative, 64-byte line size</p>
-<p>Cache总大小为32KB，8路组相连（每组有8个line），每个line的大小linesize为64Byte,OK，我们可以很轻易的算出一共有32K&#x2F;8&#x2F;64&#x3D;64 个组。</p>
-<p>对于32位的内存地址，每个line有2^6 &#x3D; 64Byte，所以地址的【0，5】区分line中的那个字节。一共有64个组。我们取内存地址中间6为来hash查找地址属于那个组。即内存地址的【6，11】位来确定属于64组的哪一个组。组确定了之后，【12，31】的内存地址与组中8个line挨个比对，如果【12，31】为与某个line一致，并且这个line为有效，那么缓存命中。</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222222824337.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222222921836.png"></p>
-<p>先看索引，取出索引组的全部行对应的标识放入相联存储器中比较。命中与否的结果与上述相同。</p>
-<h2 id="替换算法"><a href="#替换算法" class="headerlink" title="替换算法"></a>替换算法</h2><p>cache存储空间被占满后需要替换数据块。</p>
-<p><strong>直接映射是不需要替换算法的。全相联映射替换算法适用于全部行。组相联映射替换算法适用组内全部行</strong></p>
-<p>① 先进先出算法(FIFO)</p>
-<p>基本思想：按照数据块进入Cache的先后决定替换的顺序，即在需要进行替换时，选择最先</p>
-<p>​     被调入Cache中的块作为替换块。这种方法要求为每块记录它们进入Cache的先</p>
-<p>​     后次序。</p>
-<p>优点：FIFO算法系统开销较小。</p>
-<p>缺点：是不考虑程序访问的局部性，可能会把一些需要经常使用的块（如循环程序块）也作</p>
-<p>   为最早进入Cache的块而替换掉，因此，可能导致Cache的命中率不高。</p>
-<p>② 近期最少使用(LRU)算法</p>
-<p>基本思想：将近期内长久未被访问过的行换出。为此，每行设置一个计数器，cache每命中一次，命中行计数器清零，其它各行计数器增1，因此它是未访问次数计数器。当需要替换时，比较各特定行的计数值，将计数值最大的行换出。</p>
-<p>优点：这种算法显然保护了刚调入Cache的新数据，符合cache工作原理，因而使cache有较高</p>
-<p>   的命中率。LRU算法硬件实现简单</p>
-<p>③ 最不经常使用(LFU)算法</p>
-<p>基本思想：将一段时间内被访次数最少的那行数据换出。为此，每行设置一个计数器，新新</p>
-<p>​     调入行的数据从0开始计数，每访问一次被访行的计数器增1。当需要替换时，对</p>
-<p>​     这些特定行的计数值进行比较，将计数值最小的行换出。</p>
-<p>缺点：一段期间访问情况不能严格反映近期访问情况。例如特定行中的A、B两行，A行在期间的前期多次被访问而后期未被访问，但累积计数值很大，B行是前期不常用而后期却正被频繁访问，但可能由于累积计数小于A行而被LFU算法换出了。</p>
-<p>④ 随机替换算法</p>
-<p>基本思想：需要进行替换时，从特定的行位置中随机地选取一行进行替换。</p>
-<p>优点：硬件实现最容易，而且速度也比前几种策略快。</p>
-<p>缺点：随意换出的数据很可能马上又要用，从而降低命中率和cache工作效率。但这个负面效应随着cache容量增大会减少，模拟研究表明随机替换策略的功效只是稍逊于LFU和LRU。</p>
-<h3 id="随机替换法"><a href="#随机替换法" class="headerlink" title="随机替换法"></a>随机替换法</h3><h3 id="替换算法的抖动"><a href="#替换算法的抖动" class="headerlink" title="替换算法的抖动"></a>替换算法的抖动</h3><p>调出去的那块就是即将访问的那块数据。</p>
-<p>要避免抖动，需要在程序行为上避免。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222224652504.png"></p>
-<h2 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h2><p>解决了程序大小大于内存的限制问题</p>
-<p>虚拟存储器处于“主存-辅存”存储层次。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225312099.png"></p>
-<ul>
-<li><strong>辅存—–逻辑地址</strong></li>
-<li><strong>主存—–物理地址</strong></li>
-</ul>
-<h3 id="页式虚拟存储器"><a href="#页式虚拟存储器" class="headerlink" title="页式虚拟存储器"></a>页式虚拟存储器</h3><p>采用页表判断cpu访问的内容是否在主存，如果在辅存，则调用其内容到主存中。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225546137.png"></p>
-<p>转换：</p>
-<p>MMU用于指出页表在内存中的位置，通过与VPN结合就能访问到页表中与虚拟页号VPN相对应的物理页号PPN。实现虚拟地址到物理地址的转换。</p>
-<blockquote>
-<p>页表常驻在内存中。保存有虚拟页号和物理页号的对应关系。</p>
-<p>进程开始要访问一个地址，它可能会经历下面的过程</p>
-<p>1、每次我要访问地址空间上的某一个地址，都需要把地址翻译为实际物理内存地址<br>2、所有进程共享这整一块物理内存，每个进程只把自己目前需要的虚拟地址空间映射到物理内存上<br>3、进程需要知道哪些地址空间上的数据在物理内存上，哪些不在（可能这部分存储在磁盘上），还有在物理内存上的哪里，这就需要通过页表来记录<br>4、页表的每一个表项分两部分，第一部分记录此页是否在物理内存上，第二部分记录物理内存页的地址（如果在的话）<br>5、当进程访问某个虚拟地址的时候，就会先去看页表，如果发现对应的数据不在物理内存上，就会发生缺页异常<br>6、缺页异常的处理过程，操作系统立即阻塞该进程，并将硬盘里对应的页换入内存，然后使该进程就绪，如果内存已经满了，没有空地方了，那就找一个页覆盖，至于具体覆盖的哪个页，就需要看操作系统的页面置换算法是怎么设计的了。</p>
-<p>当每个进程创建的时候，内核会为进程分配4G的<strong>虚拟内存</strong>，当进程还没有开始运行时，这只是一个内存布局。<strong>实际上并不立即就把虚拟内存对应位置的程序数据和代码（比如.text .data段）拷贝到物理内存中，只是建立好虚拟内存和磁盘文件之间的映射就好（叫做存储器映射）。这个时候数据和代码还是在磁盘上的。当运行到对应的程序时，进程（拿着虚拟地址）去寻找页表，发现页表中地址没有存放在物理内存上，而是在磁盘上，于是发生缺页异常，于是将磁盘上的数据拷贝到物理内存中。</strong></p>
-<p>另外在进程运行过程中，要通过malloc来动态分配内存时，也只是分配了虚拟内存，即为这块虚拟内存对应的页表项做相应设置，当进程真正访问到此数据时，才引发缺页异常。</p>
-<p>可以认为虚拟空间都被映射到了磁盘空间中（事实上也是按需要映射到磁盘空间上，通过mmap，mmap是用来建立虚拟空间和磁盘空间的映射关系的）</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225706372.png"></p>
-<h3 id="TLB"><a href="#TLB" class="headerlink" title="TLB"></a>TLB</h3><p>虚实地址转换过程中存在的问题：</p>
-<p>两次访问主存：第一次拿页表项判断是否在主存中，第二次得到数据。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222235123905.png"></p>
-<p>5，6步骤是为了替换主存中的对应物理地址的内容。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112011182.png"></p>
-<p>为了减少访问主存的次数。设置TLB，不去主存拿页表。故TLB能节省一次CPU访问主存的次数。</p>
-<p>于是TLB设计成页表映像的一部分。</p>
-<p>1、CPU拿着虚拟地址访问MMU（为了将虚拟地址中剥离出的虚页号与MMU中的页表基址寄存器结合得到物理内存地址）</p>
-<p>2、MMU拿着虚页号VPN访问TLB</p>
-<blockquote>
-<p>首先，先去TLB中根据标志Tag寻找，假如找到了并且有效位是1，说明TLB命中了，那么直接就可以从TLB中获取该虚拟页号对应的物理页号。假如有效位是0，说明该页不在内存中，这时候就发生缺页异常，CPU需要先去外存中将<strong>该页调入内存并将页表和TLB更新。</strong></p>
-<p>  假如<strong>在TLB中没有找到，那么就去页表（Page Table）中寻找（以虚拟页号为索引）</strong>，假如找到了并且有效位是1，那么就可以取出对应的物理页号。假如有效位是0，说明该页不在内存中，这时候就发生缺页异常，<strong>CPU需要先去外存中将该页调入内存并将页表和TLB更新。</strong></p>
-<p>  假如在页表中没有找到，也是缺页。同意会执行上述的缺页处理。</p>
-<p>  （不管从哪获取到物理页号，都可以根据规则组拼成实际物理地址，然后就可以访存去数据啦）</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222235644799.png"></p>
-<p>此处TLB tag是因为TLB只是页表的一个子集，不能全部遍历页表中的每一项。所以要增加tag判断与虚页对应的物理页是否存在。（具体见上面的引用部分）</p>
-<h3 id="段式虚拟存储器"><a href="#段式虚拟存储器" class="headerlink" title="段式虚拟存储器"></a>段式虚拟存储器</h3><p>以段为单位。一般将主存空间按照实际运行程序中的段来划分。由此 段可大可小。</p>
-<p>段的独立性—易于编译、管理、修改和维护，也便于多道程序共享</p>
-<p>各段的长度不同，给主存的分配带来麻烦</p>
-<p>段式管理容易产生碎块，浪费主存空间</p>
-<h3 id="段页式虚拟存储器"><a href="#段页式虚拟存储器" class="headerlink" title="段页式虚拟存储器"></a>段页式虚拟存储器</h3><p>程序按模块分段</p>
-<p>段再分成长度固定的页。</p>
-<p>程序调入调出按页面来进行</p>
-<p>程序共享保护按段进行</p>
-<p>兼备段式，页式管理的优点</p>
-<p>在地址映像中需要多次查表</p>
-<h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><p>核心技术：将数据条带化后的存放在不同磁盘上，通过多磁盘的并行操作提高磁盘系统的读写速率。使用基于异或运算为基础的校验技术恢复损坏的数据</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112352878.png"></p>
-<p>最左边的盘就是冗余盘。是用于备份的。</p>
-<h3 id="RAID0"><a href="#RAID0" class="headerlink" title="RAID0"></a>RAID0</h3><p>数据以条带方式均匀分散在各磁盘上。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112559304.png"></p>
-<p>没有冗余，没有校验技术，任一磁盘坏了就GG。</p>
-<h3 id="RAID1"><a href="#RAID1" class="headerlink" title="RAID1"></a>RAID1</h3><p>数据采用镜像的冗余方式，同一个数据有多份拷贝</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112953043.png"></p>
-<h3 id="RAID3-x2F-4"><a href="#RAID3-x2F-4" class="headerlink" title="RAID3&#x2F;4"></a>RAID3&#x2F;4</h3><p>专用校验盘。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113009663.png"></p>
-<h3 id="RAID5"><a href="#RAID5" class="headerlink" title="RAID5"></a>RAID5</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113521894.png"></p>
-<h3 id="RAID10"><a href="#RAID10" class="headerlink" title="RAID10"></a>RAID10</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113548311.png"></p>
-<h3 id="RAID01"><a href="#RAID01" class="headerlink" title="RAID01"></a>RAID01</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113601613.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113627560.png"></p>
-<h1 id="一些习题"><a href="#一些习题" class="headerlink" title="一些习题"></a>一些习题</h1><p>![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 015 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
-<p>![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 020 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com-1595315230835.png)![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 011 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/04/25/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2893,6 +2441,133 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/12/17/java-%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/17/java-%E5%AD%97%E8%8A%82%E7%A0%81%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">java-字节码操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-17 15:26:50" itemprop="dateCreated datePublished" datetime="2021-12-17T15:26:50Z">2021-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-20 06:45:16" itemprop="dateModified" datetime="2021-12-20T06:45:16Z">2021-12-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="字节码操作"><a href="#字节码操作" class="headerlink" title="字节码操作"></a>字节码操作</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>java的动态性的两种常见方式</p>
+<ul>
+<li>字节码操作</li>
+<li>反射</li>
+</ul>
+<p>运行时操作字节码可以实现的功能如下：</p>
+<ul>
+<li><p>动态生成新的类</p>
+</li>
+<li><p>动态改变某个类的结构（添加&#x2F;删除&#x2F;修改 新的属性）</p>
+</li>
+</ul>
+<p>优势：</p>
+<ul>
+<li><p>比反射开销小，性能高。</p>
+</li>
+<li><p>JAVAasist性能高于反射，低于ASM</p>
+</li>
+</ul>
+<p>常见的字节码操作类库</p>
+<ul>
+<li><p>BCEL</p>
+<p> Byte Code Engineering Library (BCEL) ，这是 Apache Software Foundation 的 Jakarta 项目的一部分。 BCEL 是 Java classworking 广泛 使用的一种 框架 , 它 可以让您深入 JVM 汇编语言进行类操作的细节。 BCEL 与 Javassist 有不同的处理字节码方法， BCEL 在实际的 JVM 指令层次上进行操作 (BCEL 拥有丰富的 JVM 指令级支持 ) 而 Javassist 所 强调 的是源代码 级别的 工作 。</p>
+</li>
+<li><p>ASM</p>
+<p> 是一个轻量级 java 字节码操作框架，直接涉及到 JVM 底层的操作和 指令</p>
+</li>
+<li><p>CGLIB</p>
+<p>是一个强大的，高性能，高质量的 Code</p>
+</li>
+<li><p>Javaassist </p>
+<p>性能较ASM差，跟cglib差不多，但是用用简单，很多框架都在使用</p>
+</li>
+</ul>
+<h2 id="javassist"><a href="#javassist" class="headerlink" title="javassist"></a>javassist</h2><p>使用Javassist需要使用javassist.jar</p>
+<p>优势：</p>
+<p>  比反射开销小，性能高。<br>  JAVAsist性能高于反射，低于ASM</p>
+<p>局限性：</p>
+<p>  JDK新语法不支持（包括泛型、枚举），不支持注解修改，但可以通过底层的javasist类来解决，具体参考：javassist.bytecode.annotaion<br>  不支持数组的初始化，如 String[]{“1”,”2”}，除非只有数组的容量为1<br>  不支持内部类和匿名类<br>  不支持 continue 和 break 表达式。<br>  对于继承关系，有些不支持 。例如：- class A{} - class B extends A{} - class C enxends B {}</p>
+<p>应用场景：</p>
+<p>  AOP:<br>    给一个类增加新的方法<br>    给一段语句前面和后面（before&#x2F;after&#x2F;around）动态的加代码<br>  Reflection:起到类似反射的效果</p>
+<p>javassist 的最外层的 API 和 JAVA 的反射包中的 API 颇为类似 。</p>
+<p>它主要由 CtClass ， CtMethod, ，以及 CtField 几个类组成。用以执行和 JDK 反射 API 中 java.lang.Class ， java.lang.reflect.Method ， java.lang.reflect.Method .Field 相同的 操作 。<br>方法操作</p>
+<p>  修改已有方法的方法体体（插入代码到已有方法体）<br>  新增方法 删除方法<br>  占位符参数介绍：</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20211217164511.png" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> javassist.CtClass;</span><br><span class="line"><span class="keyword">import</span> javassist.CtConstructor;</span><br><span class="line"><span class="keyword">import</span> javassist.CtField;</span><br><span class="line"><span class="keyword">import</span> javassist.CtMethod;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 创建一个新的类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test10</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">ClassPool</span> <span class="variable">pool</span> <span class="operator">=</span> ClassPool.getDefault(); <span class="comment">// 类池</span></span><br><span class="line">    <span class="type">CtClass</span> <span class="variable">class1</span> <span class="operator">=</span> pool.makeClass(<span class="string">&quot;com.gs.Emp&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//创建属性</span></span><br><span class="line">    <span class="type">CtField</span> <span class="variable">f1</span> <span class="operator">=</span> CtField.make(<span class="string">&quot;private int num;&quot;</span>, class1);</span><br><span class="line">    <span class="type">CtField</span> <span class="variable">f2</span> <span class="operator">=</span> CtField.make(<span class="string">&quot;private String name;&quot;</span>, class1);</span><br><span class="line">    class1.addField(f1);</span><br><span class="line">    class1.addField(f2);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//创建方法</span></span><br><span class="line">     </span><br><span class="line">    <span class="type">CtMethod</span> <span class="variable">setName</span> <span class="operator">=</span> CtMethod.make(<span class="string">&quot;public void setName(String name)&#123;this.name = name;&#125;&quot;</span>, class1);</span><br><span class="line">    <span class="type">CtMethod</span> <span class="variable">getName</span> <span class="operator">=</span> CtMethod.make(<span class="string">&quot;public String getName()&#123;return name;&#125;&quot;</span>, class1);</span><br><span class="line">    class1.addMethod(setName);</span><br><span class="line">    class1.addMethod(getName);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//添加构造器。  如果是带参构造器，需要传递参数类型，基本数据类型用CtClass获取，引用类型，需要用pool获取</span></span><br><span class="line">    <span class="type">CtConstructor</span> <span class="variable">constructor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CtConstructor</span>(<span class="keyword">new</span> <span class="title class_">CtClass</span>[]&#123;CtClass.intType,pool.get(<span class="string">&quot;java.lang.String&quot;</span>)&#125;, class1);</span><br><span class="line">    constructor.setBody(<span class="string">&quot;&#123;this.num = num;this.name = name;&#125;&quot;</span>); <span class="comment">//构造器的方法体</span></span><br><span class="line">    </span><br><span class="line">    class1.writeFile(<span class="string">&quot;E:/myjava&quot;</span>); <span class="comment">//将上面写好的类，写入到这个工作空间中</span></span><br><span class="line">    </span><br><span class="line">    System.out.println(<span class="string">&quot;生成类成功！&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903751082328072">Java 动态字节码技术 - 掘金 (juejin.cn)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -2980,6 +2655,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -3010,6 +2690,26 @@
 </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
