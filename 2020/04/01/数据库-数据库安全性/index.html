@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="数据库安全性概述1.数据库安全性定义数据库的安全性是指保护数据库以防止不合法的使用所造成的数据泄露、更改或破坏。 2.重要性  数据库的一大特点是数据可以共享  数据共享必然带来数据库的安全性问题  数据库系统中的数据共享不能是无条件的共享   系统的安全保护措施是否有效是数据库系统的主要性能指标之一。 数据库的不安全因素1）非授权用户对数据库的恶意存取和破坏  安全措施：用户身份鉴别、存取控制、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库_数据库安全性">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="数据库安全性概述1.数据库安全性定义数据库的安全性是指保护数据库以防止不合法的使用所造成的数据泄露、更改或破坏。 2.重要性  数据库的一大特点是数据可以共享  数据共享必然带来数据库的安全性问题  数据库系统中的数据共享不能是无条件的共享   系统的安全保护措施是否有效是数据库系统的主要性能指标之一。 数据库的不安全因素1）非授权用户对数据库的恶意存取和破坏  安全措施：用户身份鉴别、存取控制、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200358779.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200936024.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201218195.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201608002.png">
+<meta property="article:published_time" content="2020-04-01T11:12:26.000Z">
+<meta property="article:modified_time" content="2020-06-02T12:23:48.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200358779.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库_数据库安全性 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库_数据库安全性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-01 11:12:26" itemprop="dateCreated datePublished" datetime="2020-04-01T11:12:26Z">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-02 12:23:48" itemprop="dateModified" datetime="2020-06-02T12:23:48Z">2020-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数据库安全性概述"><a href="#数据库安全性概述" class="headerlink" title="数据库安全性概述"></a>数据库安全性概述</h1><p>1.数据库安全性定义数据库的安全性是指保护数据库以防止不合法的使用所造成的数据泄露、更改或破坏。</p>
+<p>2.重要性</p>
+<ul>
+<li><p>数据库的一大特点是数据可以共享</p>
+</li>
+<li><p>数据共享必然带来数据库的安全性问题</p>
+</li>
+<li><p>数据库系统中的数据共享不能是无条件的共享</p>
+</li>
+</ul>
+<p>系统的安全保护措施是否有效是数据库系统的主要性能指标之一。</p>
+<h2 id="数据库的不安全因素"><a href="#数据库的不安全因素" class="headerlink" title="数据库的不安全因素"></a>数据库的不安全因素</h2><p>1）非授权用户对数据库的恶意存取和破坏</p>
+<ul>
+<li>安全措施：用户身份鉴别、存取控制、和视图等</li>
+</ul>
+<p>2）数据库中重要或敏感数据被泄露</p>
+<ul>
+<li>安全措施：审计、日志、入侵检测、数据加密等</li>
+</ul>
+<p>3）安全环境的脆弱性，包括：硬件、OS、网络等。</p>
+<ul>
+<li>可信计算机系统</li>
+</ul>
+<h2 id="数据库安全技术"><a href="#数据库安全技术" class="headerlink" title="数据库安全技术"></a>数据库安全技术</h2><ul>
+<li>用户身份验证</li>
+<li>多层存取控制</li>
+<li>审计</li>
+<li>视图</li>
+<li>数据加密等</li>
+</ul>
+<h3 id="用户身份鉴别"><a href="#用户身份鉴别" class="headerlink" title="用户身份鉴别"></a>用户身份鉴别</h3><ul>
+<li>用户标识与鉴别（Identification &amp;  Authentication）：<ul>
+<li>系统提供的最外层安全保护措施；</li>
+<li>系统提供一定的方式让用户标识自己的名字和身份，系统进行核实，通过鉴定后才提供系统使用权。</li>
+</ul>
+</li>
+<li>常用鉴别方法：<ul>
+<li>口令：静态（易被窃取）、动态（一次一密）</li>
+<li>生物特征识别：指纹、声音、照片等</li>
+<li>智能卡</li>
+<li>回答问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="存取控制"><a href="#存取控制" class="headerlink" title="存取控制"></a>存取控制</h3><p>1.什么是存取控制？对于获得上机权的用户还要根据系统预先定义好的外模式（视图）或用户权限进行存取控制，保证用户只能存取他有权存取的数据。</p>
+<p>2.方法</p>
+<ul>
+<li>定义用户权限</li>
+<li>合法权限检查</li>
+</ul>
+<p>3.常用存取控制方法</p>
+<ul>
+<li>自主存取控制（Discretionary Access Control，DAC），C2级，灵活</li>
+<li>强制存取控制（Mandatory Access Control，MAC），B1级，严格</li>
+</ul>
+<h3 id="视图机制"><a href="#视图机制" class="headerlink" title="视图机制"></a>视图机制</h3><ul>
+<li>视图能够把要保密的数据对无权存取这些数据的用户隐藏起来，因此对数据提供一定程度的安全保护。</li>
+<li>视图机制间接实现了支持存取谓词的用户权限定义。<br>[例]  建立计算机系学生的视图，把对该视图的SELECT权限授于王平，把该视图上的所有操作权限授于张明。<br>-先建立计算机系学生的视图CS_Student<br>CREATE VIEW CS_Student AS SELECT  *    FROM   Student    WHERE  Sdept&#x3D;’CS’；<br>-在视图上进一步定义存取权限：<br>GRANT  SELECT   ON   CS_Student TO 王平；<br>GRANT ALL PRIVILIGES     ON  CS_Student TO  张明</li>
+</ul>
+<h3 id="审计"><a href="#审计" class="headerlink" title="审计"></a>审计</h3><ul>
+<li><p>审计</p>
+<ul>
+<li>系统自动建立审计日志，将用户对数据库的所有操作记录在上面。</li>
+<li>DBA利用审计日志找出非法存取数据的人、时间和内容。</li>
+<li>C2以上安全级别的DBMS必须具有。</li>
+</ul>
+</li>
+<li><p>审计分类</p>
+<p>–用户级审计：针对自己创建的数据库表或视图进行审计。<br>记录所有用户对这些表或视图的一切成功和（或）不成功的访问要求以及各种类型的SQL操作 。</p>
+<p>–系统级审计：由DBA设置</p>
+<ul>
+<li><p>监测成功或失败的登录要求；</p>
+</li>
+<li><p>监测GRANT和REVOKE操作以及其他数据库级权限下的操作。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="审计AUDIT语句"><a href="#审计AUDIT语句" class="headerlink" title="审计AUDIT语句"></a>审计AUDIT语句</h4><ul>
+<li><p>AUDIT语句：设置审计功能</p>
+</li>
+<li><p>NOAUDIT语句：取消审计功能</p>
+</li>
+</ul>
+<h3 id="数据加密"><a href="#数据加密" class="headerlink" title="数据加密"></a>数据加密</h3><ol>
+<li>思想<br>数据库中的数据以密码形式存放，使用时由用户设计的解码程序将其转换成用户可读的数据。这样，数据库中的数据即使被窃取，也只能是一些无法辨认的代码。</li>
+<li>数据库加密：存储加密、传输加密</li>
+<li>数据库加密在哪个层次实现？<ol>
+<li>OS层</li>
+<li>DBMS内核层</li>
+<li>DBMS外层</li>
+</ol>
+</li>
+</ol>
+<h2 id="自主存取控制技术"><a href="#自主存取控制技术" class="headerlink" title="自主存取控制技术"></a>自主存取控制技术</h2><h3 id="自主存取控制"><a href="#自主存取控制" class="headerlink" title="自主存取控制"></a>自主存取控制</h3><p><strong>用户“自主”决定将数据的存取权限授予何人、决定是否将“授权”的权限授予别人，称为“自主存取控制”。</strong></p>
+<ul>
+<li>定义：用户对于不同的数据库对象有不同的存取权限，不同的用户对同一对象也有不同的权限，而且用户还可将其拥有的存取权限转授给其他用户。</li>
+<li>用户权限组成要素 ：数据对象、操作类型</li>
+<li>授权：定义用户可以在哪些数据库对象上进行哪些类型的操作。</li>
+</ul>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200358779.png" style="zoom:67%;" />
+
+<h3 id="授权与回收"><a href="#授权与回收" class="headerlink" title="授权与回收"></a>授权与回收</h3><p>SQL中使用GRANT语句和REVOKE语句来实现自主存取控制。</p>
+<h4 id="GRANT语句"><a href="#GRANT语句" class="headerlink" title="GRANT语句"></a>GRANT语句</h4><ul>
+<li><p>GRANT语句的一般格式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GRANT<span class="tag">&lt;<span class="name">权限</span>&gt;</span>[,<span class="tag">&lt;<span class="name">权限</span>&gt;</span>]...</span><br><span class="line">[ON<span class="tag">&lt;<span class="name">对象类型</span>&gt;</span> <span class="tag">&lt;<span class="name">对象名</span>&gt;</span>]</span><br><span class="line">TO<span class="tag">&lt;<span class="name">用户</span>&gt;</span>[,<span class="tag">&lt;<span class="name">用户</span>&gt;</span>]...</span><br><span class="line">[WITH GRANT OPTION];</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>语义：将对指定操作对象的指定操作权限授予指定的用户</p>
+<ul>
+<li>授权人：DBA、数据库对象创建者、拥有该权限的用户</li>
+<li>被授权限的用户： 一个或多个具体用户、PUBLIC（全体用户）</li>
+<li>WITH GRANT OPTION子句：指定：可以再授予，没有指定：不能传播</li>
+<li>不允许循环授权</li>
+</ul>
+</li>
+</ul>
+<h4 id="REVOKE语句"><a href="#REVOKE语句" class="headerlink" title="REVOKE语句"></a>REVOKE语句</h4><ul>
+<li><p>授予的权限可以由DBA或其他授权者用REVOKE语句收回。</p>
+</li>
+<li><p>REVOKE语句的一般格式为：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">REVOKE<span class="variable">&lt;权限&gt;</span>[,<span class="variable">&lt;权限&gt;</span>]...</span><br><span class="line">[ON<span class="variable">&lt;对象类型&gt;</span> <span class="variable">&lt;对象名&gt;</span>]</span><br><span class="line">FROM<span class="variable">&lt;用户&gt;</span>[,<span class="variable">&lt;用户&gt;</span>]...[CASCADE |<span class="string"> RESTRICT];</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="创建数据库模式的权限"><a href="#创建数据库模式的权限" class="headerlink" title="创建数据库模式的权限"></a>创建数据库模式的权限</h3><p>DBA在创建用户时，可以创建数据库模式的权限。</p>
+<p>CREATE USER语句格式：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span>  <span class="keyword">USER</span>  &lt;username&gt; </span><br><span class="line">［<span class="keyword">WITH</span>］［DBA| RESOURCE| <span class="keyword">CONNECT</span>］</span><br></pre></td></tr></table></figure>
+
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602200936024.png" style="zoom:67%;" />
+
+<h4 id="数据库角色"><a href="#数据库角色" class="headerlink" title="数据库角色"></a>数据库角色</h4><p>被命名的一组与数据库操作相关的权限</p>
+<ul>
+<li>角色是权限的集合</li>
+<li>可以为一组具有相同权限的用户创建一个角色</li>
+<li>简化授权的过程</li>
+</ul>
+<p>1、角色的创建</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE  <span class="keyword">ROLE</span>  <span class="title">&lt;角色名&gt; </span></span><br></pre></td></tr></table></figure>
+
+<p>2、给角色授权</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRANT<span class="tag">&lt;<span class="name">权限</span>&gt;</span>［，<span class="tag">&lt;<span class="name">权限</span>&gt;</span>］... </span><br><span class="line">ON<span class="tag">&lt;<span class="name">对象类型</span>&gt;</span>对象名</span><br><span class="line">TO<span class="tag">&lt;<span class="name">角色</span>&gt;</span>［，<span class="tag">&lt;<span class="name">角色</span>&gt;</span>］...</span><br></pre></td></tr></table></figure>
+
+<p>3、将一个角色授予其他的角色或用户</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRANT<span class="tag">&lt;<span class="name">角色1</span>&gt;</span>［，<span class="tag">&lt;<span class="name">角色2</span>&gt;</span>］...</span><br><span class="line">TO<span class="tag">&lt;<span class="name">角色3</span>&gt;</span>［，<span class="tag">&lt;<span class="name">用户1</span>&gt;</span>］... </span><br><span class="line">［WITH ADMIN OPTION］</span><br></pre></td></tr></table></figure>
+
+<p>4、角色权限收回</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">REVOKE<span class="tag">&lt;<span class="name">权限</span>&gt;</span>［，<span class="tag">&lt;<span class="name">权限</span>&gt;</span>］...</span><br><span class="line">ON<span class="tag">&lt;<span class="name">对象类型</span>&gt;</span> <span class="tag">&lt;<span class="name">对象名</span>&gt;</span></span><br><span class="line">FROM<span class="tag">&lt;<span class="name">角色</span>&gt;</span>［，<span class="tag">&lt;<span class="name">角色</span>&gt;</span>］...</span><br></pre></td></tr></table></figure>
+
+<p>示例如下：</p>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201218195.png" style="zoom:67%;" />
+
+<h3 id="自主存取控制缺点"><a href="#自主存取控制缺点" class="headerlink" title="自主存取控制缺点"></a>自主存取控制缺点</h3><ul>
+<li>可能存在数据的“无意泄露”</li>
+<li>原因：这种机制仅仅通过对数据的存取权限来进行安全控制，而数据本身并无安全性标记</li>
+</ul>
+<h2 id="强制存取控制机制"><a href="#强制存取控制机制" class="headerlink" title="强制存取控制机制"></a>强制存取控制机制</h2><p>对系统控制下的所有主客体赋予安全性标记，系统根据标记安全策略，实施强制存取控制</p>
+<p>强制存取控制（MAC)</p>
+<ul>
+<li>保证更高程度的安全性</li>
+<li>用户不能直接感知或进行控制</li>
+<li>适用于对数据有严格而固定密级分类的部门<ul>
+<li>军事部门</li>
+<li>政府部门</li>
+</ul>
+</li>
+</ul>
+<h3 id="强制存取控制方法"><a href="#强制存取控制方法" class="headerlink" title="强制存取控制方法"></a>强制存取控制方法</h3><ul>
+<li>主体是系统中的活动实体<ul>
+<li>DBMS所管理的实际用户</li>
+<li>代表用户的各进程</li>
+</ul>
+</li>
+<li>客体是系统中的被动实体，是受主体操纵的<ul>
+<li>文件、基表、索引、视图</li>
+</ul>
+</li>
+<li>敏感度标记（Label）<ul>
+<li>绝密（Top Secret）&gt;  机密（Secret）&gt;  可信（Confidential）&gt; 公开（Public）</li>
+</ul>
+</li>
+<li>主体的敏感度标记称为许可证级别（Clearance Level）</li>
+<li>客体的敏感度标记称为密级（Classification Level）</li>
+<li>强制存取控制就是通过对比主体的许可证级别和客体的密级，最终确定主体能否存取客体。</li>
+</ul>
+<p><strong>主体可更新密级高于他的客体</strong></p>
+<h3 id="强制存取控制规则"><a href="#强制存取控制规则" class="headerlink" title="强制存取控制规则"></a>强制存取控制规则</h3><ul>
+<li>强制存取控制规则：<ol>
+<li>仅当主体的许可证级别大于或等于客体的密级时，该主体才能读取相应的客体</li>
+<li>仅当主体的许可证级别小于或等于客体的密级时，该主体才能写相应的客体</li>
+</ol>
+</li>
+<li>规则的关键点：<br><strong>禁止拥有高许可证级别的主体更新低密级的数据对象</strong></li>
+</ul>
+<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/image-20200602201608002.png" style="zoom:80%;" />
+
+<h3 id="强制存取控制的优点"><a href="#强制存取控制的优点" class="headerlink" title="强制存取控制的优点"></a>强制存取控制的优点</h3><ul>
+<li>禁止拥有高许可证级别的主体更新低密级的数据对象，从而保证了敏感数据的可靠性；</li>
+<li>禁止低许可证级别的主体浏览高密级的数据，避免了敏感数据的泄漏；</li>
+<li>MAC对数据本身进行密级标记，无论数据如何复制，标记与数据是不可分割的整体。只有符合密级标记要求的用户才可以操作相应数据，提高了安全性级别。</li>
+</ul>
+<h3 id="强制存取控制方法-1"><a href="#强制存取控制方法-1" class="headerlink" title="强制存取控制方法"></a>强制存取控制方法</h3><ul>
+<li>DAC与MAC共同构成DBMS的安全机制</li>
+<li>实现MAC时要首先实现DAC<ul>
+<li>原因：较高安全性级别提供的安全保护要包含较低级别的所有保护</li>
+</ul>
+</li>
+<li>先进行DAC检查，通过DAC检查的数据对象再由系统进行MAC检查，只有通过MAC检查的数据对象方可存取。</li>
+</ul>
+<p>数据库安全机制的设计目标：试图破坏安全的人所花费的代价 &gt;&gt; 得到的利益</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/" title="数据库_数据库安全性">http://rshawshank.github.io/2020/04/01/数据库-数据库安全性/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93SQL%E8%AF%AD%E8%A8%80/" rel="prev" title="数据库_关系数据库SQL语言">
+      <i class="fa fa-chevron-left"></i> 数据库_关系数据库SQL语言
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/" rel="next" title="数据库_数据库完整性">
+      数据库_数据库完整性 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">数据库安全性概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%B8%8D%E5%AE%89%E5%85%A8%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text">数据库的不安全因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">数据库安全技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E9%89%B4%E5%88%AB"><span class="nav-number">1.2.1.</span> <span class="nav-text">用户身份鉴别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">存取控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.3.</span> <span class="nav-text">视图机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1"><span class="nav-number">1.2.4.</span> <span class="nav-text">审计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1AUDIT%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">审计AUDIT语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="nav-number">1.2.5.</span> <span class="nav-text">数据加密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%8A%80%E6%9C%AF"><span class="nav-number">1.3.</span> <span class="nav-text">自主存取控制技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">自主存取控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E4%B8%8E%E5%9B%9E%E6%94%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">授权与回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GRANT%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">GRANT语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REVOKE%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">REVOKE语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">1.3.3.</span> <span class="nav-text">创建数据库模式的权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%92%E8%89%B2"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">数据库角色</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E4%B8%BB%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E7%BC%BA%E7%82%B9"><span class="nav-number">1.3.4.</span> <span class="nav-text">自主存取控制缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.4.</span> <span class="nav-text">强制存取控制机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">强制存取控制方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E8%A7%84%E5%88%99"><span class="nav-number">1.4.2.</span> <span class="nav-text">强制存取控制规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">1.4.3.</span> <span class="nav-text">强制存取控制的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%88%B6%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">强制存取控制方法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

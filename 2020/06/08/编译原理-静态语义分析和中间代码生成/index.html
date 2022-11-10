@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="符号表符号表的作用 用来存放有关标识符（符号）的属性信息  这些信息会在编译的不同阶段用到 符号表的内容将用于静态语义检查和产生中间代码 在目标代码生成阶段，符号表是对符号名进行地址分配的依据 对一个多遍扫描的编译程序，不同遍所用的符号表也会有所不同，因为每遍所关心的信息或所能得到的信息会有差异   用来体现作用域与可见性信息   符号的常见属性① 符号名 ② 符号的类型：常量、变量、过程&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理-静态语义分析和中间代码生成">
+<meta property="og:url" content="http://rshawshank.github.io/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="符号表符号表的作用 用来存放有关标识符（符号）的属性信息  这些信息会在编译的不同阶段用到 符号表的内容将用于静态语义检查和产生中间代码 在目标代码生成阶段，符号表是对符号名进行地址分配的依据 对一个多遍扫描的编译程序，不同遍所用的符号表也会有所不同，因为每遍所关心的信息或所能得到的信息会有差异   用来体现作用域与可见性信息   符号的常见属性① 符号名 ② 符号的类型：常量、变量、过程&amp;#x2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/image-20200507193159453.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150738632.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150935263.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114115900-1721715496.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114320833-1111479180.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114161937112.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114162122651.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190619191054300-334335601.png">
+<meta property="article:published_time" content="2020-06-07T16:36:23.000Z">
+<meta property="article:modified_time" content="2020-07-05T06:42:10.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/image-20200507193159453.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>编译原理-静态语义分析和中间代码生成 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译原理-静态语义分析和中间代码生成
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-07 16:36:23" itemprop="dateCreated datePublished" datetime="2020-06-07T16:36:23Z">2020-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 06:42:10" itemprop="dateModified" datetime="2020-07-05T06:42:10Z">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">编译原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><h2 id="符号表的作用"><a href="#符号表的作用" class="headerlink" title="符号表的作用"></a>符号表的作用</h2><ul>
+<li><p>用来存放有关<strong>标识符（符号）</strong>的属性信息</p>
+<ul>
+<li>这些信息会在编译的不同阶段用到</li>
+<li>符号表的内容将用于<strong>静态语义检查和产生中间代码</strong></li>
+<li>在目标代码生成阶段，<strong>符号表是对符号名进行地址分配的依据</strong></li>
+<li>对一个多遍扫描的编译程序，不同遍所用的符号表也会有所不同，因为每遍所关心的信息或所能得到的信息会有差异</li>
+</ul>
+</li>
+<li><p>用来体现作用域与可见性信息</p>
+</li>
+</ul>
+<h2 id="符号的常见属性"><a href="#符号的常见属性" class="headerlink" title="符号的常见属性"></a>符号的常见属性</h2><p>① 符号名</p>
+<p>② 符号的类型：常量、变量、过程&#x2F;函数、类的名称等</p>
+<p>③ 符号的存储类别：常量、变量的数据类型，过程函数的返回类型等【决定了其存储格式和允许的操作】</p>
+<p>④ 符号的作用域及可视性</p>
+<p>⑤ 符号变量的存储类别和存储分配信息<br>存储类别确定其分配的区域，静态或动态数据区，堆区或栈区，存储分配信息如单元的大小，相对于某个存储区域的偏移位置等等</p>
+<p>⑥ 符号的其它属性</p>
+<ul>
+<li>数组内情向量</li>
+<li>记录结构的成员信息</li>
+<li>函数及过程的形参</li>
+</ul>
+<h2 id="符号表的实现"><a href="#符号表的实现" class="headerlink" title="符号表的实现"></a>符号表的实现</h2><h4 id="针对符号表的常见操作"><a href="#针对符号表的常见操作" class="headerlink" title="针对符号表的常见操作"></a>针对符号表的常见操作</h4><ul>
+<li>创建符号表：在编译开始，或进入一个作用域</li>
+<li>插入表项：在遇到新的标识符声明时进行</li>
+<li>查询表项：在引用标识符时进行</li>
+<li>修改表项：在获得新的语义值信息时进行</li>
+<li>删除表项：在标识符成为不可见或不再需要它的任何信息时进行</li>
+<li>释放符号表空间：在编译结束前或退出一个作用域</li>
+</ul>
+<h4 id="实现符号表的常用数据结构"><a href="#实现符号表的常用数据结构" class="headerlink" title="实现符号表的常用数据结构"></a>实现符号表的常用数据结构</h4><ul>
+<li>一般的线性表<br>如：数组，链表，等</li>
+<li>有序表<br>查询较无序表快，如可以采用折半查找</li>
+<li>二叉搜索树</li>
+<li>Hash表</li>
+</ul>
+<h4 id="作用域与符号表组织"><a href="#作用域与符号表组织" class="headerlink" title="作用域与符号表组织"></a>作用域与符号表组织</h4><ul>
+<li><p>所有作用域共用一个全局符号表</p>
+</li>
+<li><p>每个作用域都有各自的符号表</p>
+</li>
+</ul>
+<h2 id="作用域与可见性"><a href="#作用域与可见性" class="headerlink" title="作用域与可见性"></a>作用域与可见性</h2><ul>
+<li><p>嵌套的作用域（nested scopes）</p>
+</li>
+<li><p>开作用域与闭作用域（相应于程序中特殊点）</p>
+<ul>
+<li>该点所在的作用域为当前作用域</li>
+<li>当前作用域与包含它的程序单元所构成的作用域称为开作用域（open scopes）,即嵌套重叠的作用域</li>
+<li>不属于开作用域的作用域称为闭作用域（close  scopes）</li>
+</ul>
+</li>
+<li><p>常用的可见性规则（visibility rules）</p>
+<ul>
+<li>在程序的任何一点，只有在该点的开作用域中声明的名字才是可访问的</li>
+<li>若一个名字在多个开作用域中被声明，则把离该名字的某个引用最近的声明作为该引用的解释</li>
+<li>新的声明只能出现在当前作用域</li>
+</ul>
+</li>
+</ul>
+<h2 id="作用域与符号表组织-1"><a href="#作用域与符号表组织-1" class="headerlink" title="作用域与符号表组织"></a>作用域与符号表组织</h2><ul>
+<li>作用域与多符号表组织<ul>
+<li>每个作用域都有各自的符号表</li>
+<li>维护一个符号表的作用域栈，每个开作用域对应栈中的一个入口，当前的开作用域出现在该栈的栈顶</li>
+<li>当一个新的作用域开放时，新符号表将被创建，并将其入栈</li>
+<li>在当前作用域成为闭作用域时，从栈顶弹出相应的符号表</li>
+</ul>
+</li>
+</ul>
+<h1 id="静态语义分析"><a href="#静态语义分析" class="headerlink" title="静态语义分析"></a>静态语义分析</h1><p><strong>静态语义： 刻画程序在静态一致性或完整性方面的特征；仅当程序通过了静态语义检查，才能完成后续的中间代码生成和目标代码优化。</strong></p>
+<blockquote>
+<p>动态语义： 刻画程序执行时的行为。比如除数为0，数组越界等错误，需要生成相应代码</p>
+</blockquote>
+<h2 id="主要任务"><a href="#主要任务" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li><p>类型检查（type checks）<br>检查每个操作是否遵守语言类型系统的定义</p>
+</li>
+<li><p>名字的作用域（scope）分析<br>建立名字的定义和使用之间联系</p>
+</li>
+<li><p>控制流检查（flow-of-control checks）<br>控制流语句必须使控制转移到合法的地方（如break语句必须有合法的语句包围它）</p>
+</li>
+<li><p>唯一性检查（uniqueness checks）<br>很多场合要求对象只能被定义一次（如枚举类型的元素不能重复出现）</p>
+</li>
+<li><p>名字的上下文相关性检查（name-related checks）<br>某些名字的多次出现之间应该满足一定的上下文相关性</p>
+</li>
+</ul>
+<h3 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h3><p>类型检查程序（type checker）：负责类型检查</p>
+<ul>
+<li>验证程序的结构是否匹配上下文所期望的类型</li>
+<li>为相关阶段搜集及建立必要的类型信息</li>
+<li>实现某个类型系统（type system）</li>
+</ul>
+<h1 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h1><p><strong>源程序的不同表示形式,也称为中间表示。其作用：</strong></p>
+<ul>
+<li>源语言和目标语言之间的桥梁，避开二者之间较大的语义跨度，使编译程序的逻辑结构更加简单明确</li>
+<li>有利于编译程序的重定向</li>
+<li>有利于进行与目标机无关的优化</li>
+</ul>
+<h2 id="常见的中间表示的形式"><a href="#常见的中间表示的形式" class="headerlink" title="常见的中间表示的形式"></a>常见的中间表示的形式</h2><p>有不同层次不同目的之分。常见中间表示形式：</p>
+<ul>
+<li>AST（Abstract syntax tree，抽象语法树）<br>DAG（Directed Acyclic Graph,有向无圈图，通过优化技术得到改进型 AST）</li>
+<li>TAC（Three-address code,三地址码，四元式）</li>
+<li>P-code （特别用于 Pasal 语言实现）</li>
+<li>Bytecode（Java 编译器的输出, Java 虚拟机的输入）</li>
+<li>SSA（Static single assignment form，静态单赋值形式）【<strong>静态单赋值形式，程序中的名字只有一次赋值。</strong>】</li>
+</ul>
+<h3 id="生成抽象语法树"><a href="#生成抽象语法树" class="headerlink" title="生成抽象语法树"></a>生成抽象语法树</h3><p><strong>(1) 树的根节点是开始符</strong></p>
+<p><strong>(2) 所有的内节点都是非终结符</strong></p>
+<p><strong>(3) 所有的叶子节点都是终结符</strong></p>
+<h3 id="生成三地址码"><a href="#生成三地址码" class="headerlink" title="生成三地址码"></a>生成三地址码</h3><p>通过遍历语法树或在归约时，生成三地址码，后续要用到的四元式：</p>
+<p>• 赋值语句  x :&#x3D; y op z  （op 代表二元算术&#x2F;逻辑运算）</p>
+<p>• 赋值语句  x :&#x3D; op y  （op 代表一元运算）</p>
+<p>• 复写语句  x :&#x3D; y  （y 的值赋值给 x）</p>
+<p>• 无条件跳转语句  goto L （无条件跳转至标号 L）</p>
+<p>• 条件跳转语句  if x rop y goto L （rop 代表关系运算）</p>
+<p>• 标号语句 L : （定义标号 L）</p>
+<p>• 过程调用语句序列  param x<del>1</del> … param x<del>n</del> call p,n</p>
+<p>• 过程返回语句 return y （y 可选，存放返回值）</p>
+<p>• 下标赋值语句 x :&#x3D; y[i] 和 x[i] :&#x3D; y （前者表示将地址 y 起第i个存储单元的值赋给 x，后者类似）</p>
+<p>• 指针赋值语句 x :&#x3D; *y 和 *x :&#x3D; y</p>
+<h3 id="赋值语句及算术表达式的语法制导翻译"><a href="#赋值语句及算术表达式的语法制导翻译" class="headerlink" title="赋值语句及算术表达式的语法制导翻译"></a>赋值语句及算术表达式的语法制导翻译</h3><h1 id="中间代码（中间语言）"><a href="#中间代码（中间语言）" class="headerlink" title="中间代码（中间语言）"></a>中间代码（中间语言）</h1><p> 中间代码也叫中间语言（Intermediate code &#x2F;language）是：源程序的一种内部表示，不依赖目标机的结构。介于<strong>源语言</strong>和<strong>目标语言</strong>的中间语言形式。</p>
+<p>中间代码的特点：</p>
+<p>1、独立于机器</p>
+<p>2、复杂性界于源语言和目标语言之间</p>
+<p>中间代码的优点</p>
+<p>1、使得编译程序的逻辑结构清楚；</p>
+<p>2、利于不同目标机上实现同一种语言；</p>
+<p>3、利于进行与机器无关的优化；</p>
+<p>中间语言将编译程序分为前端和后端有利于编译程序的移植。例如：保持编译程序的前端不变，替换其后端，就可以将原来的某个语言的编译程序改造成同一个语言，不同目标机器的程序。如果保持后端不变，替换前端，就可以将某个机器上的某个语言的编译程序改造成同一个机器上的另一个语言的编译程序。</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/image-20200507193159453.png"></p>
+<h2 id="常用的中间语言"><a href="#常用的中间语言" class="headerlink" title="常用的中间语言"></a>常用的中间语言</h2><ul>
+<li>后缀式：逆波兰表示</li>
+<li>图表示：抽象语法树AST、有向无环图DAG</li>
+<li>三地址代码：<ul>
+<li>三元式</li>
+<li>四元式</li>
+<li>间接三元式</li>
+</ul>
+</li>
+</ul>
+<h3 id="后缀式"><a href="#后缀式" class="headerlink" title="后缀式"></a>后缀式</h3><p>逆波兰表示法即为<strong>后缀表示法</strong>，而默认我们使用的表达式是<strong>中缀表示法</strong></p>
+<table>
+<thead>
+<tr>
+<th>程序设计语言中的表示</th>
+<th>—–逆波兰表示—–</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a+ba+b</td>
+<td>ab+ab+</td>
+</tr>
+<tr>
+<td>−a−a</td>
+<td>a@a@</td>
+</tr>
+<tr>
+<td>a+b∗ca+b∗c</td>
+<td>abc∗+abc∗+</td>
+</tr>
+<tr>
+<td>(a+b)∗c(a+b)∗c</td>
+<td>ab+c∗ab+c∗</td>
+</tr>
+<tr>
+<td>a:&#x3D;b∗c+b∗da:&#x3D;b∗c+b∗d</td>
+<td>abc∗bd∗+:&#x3D;abc∗bd∗+:&#x3D;</td>
+</tr>
+<tr>
+<td>a:&#x3D;b∗(c+b)∗(−d)a:&#x3D;b∗(c+b)∗(−d)</td>
+<td>bcb+∗d@∗:&#x3D;</td>
+</tr>
+</tbody></table>
+<p><strong>逆波兰式的使用</strong>：需使用额外的标识符栈。顺序扫描逆波兰表达式的时候，遇到<strong>标识符</strong>直接入栈。</p>
+<p>遇到运算符时：</p>
+<ol>
+<li>根据运算符目数，从栈顶取出相应数目的标识符做运算，并把运算结果压栈</li>
+<li>运算结束时，标识符栈应该只剩下一个元素，且为运算结果</li>
+</ol>
+<h3 id="图表示法"><a href="#图表示法" class="headerlink" title="图表示法"></a>图表示法</h3><p>抽象语法树和有向无环图</p>
+<h4 id="抽象语法树"><a href="#抽象语法树" class="headerlink" title="抽象语法树"></a>抽象语法树</h4><p>在语法树中去掉一些对翻译不必要的信息后，获得的更有效的源程序的中间表示，这种经过变换后的语法树称为抽象语法树。</p>
+<p> 在抽象语法树中，操作符和关键字都不作为叶子节点出现，而是把它们作为内部节点，即这些叶子节点的父节点。</p>
+<h4 id="有向无环图"><a href="#有向无环图" class="headerlink" title="有向无环图"></a>有向无环图</h4><p>对表达式中的每个子表达式，DAG都有一个结点，一个内部结点代表一个操作符，他的孩子代表操作数。</p>
+<p>在一个DAG中代表公共子表达式的节点具有多个父结点（与抽象语法树中公共子表达式被表示为重复的子树不同）</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150738632.png"></p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114150935263.png"></p>
+<h3 id="树形表示"><a href="#树形表示" class="headerlink" title="树形表示"></a>树形表示</h3><p>树形表示和三元式表示非常相似，如a:&#x3D;b∗c+b∗d表示为：<br><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114115900-1721715496.png" alt="img"><br>注意赋值表达式中被赋值对象在树的左孩子节点位置</p>
+<p>单目运算−T<del>1</del>直接表示成：</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190617114320833-1111479180.png" alt="img"></p>
+<h3 id="三地址代码表示"><a href="#三地址代码表示" class="headerlink" title="三地址代码表示"></a>三地址代码表示</h3><p>三地址代码可以看作是抽象语法树或有向无环图的一种线性表示</p>
+<p>三地址代码最基本的用法形式:</p>
+<p>  x:&#x3D;y op z</p>
+<p>​     其中x、y、z为名字、常数或编译时产生的临时变量；op代表运算符号。每个语句的右边只能有一个运算符。</p>
+<p>三地址代码可以看成是抽象语法树一种线性表示</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114161937112.png"></p>
+<p>三地址代码可以看成是DAG的一种线性表示</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/20180114162122651.png"></p>
+<p>三地址码的各种形式：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>x:=yop z          x := op z                         x:=y</span><br><span class="line"><span class="number">2.</span>Goto L             ifx relopy gotoL         <span class="keyword">if</span> a <span class="keyword">goto</span> L</span><br><span class="line"><span class="number">3</span>【传参、转子】.Param x         call p,n                           </span><br><span class="line"><span class="number">4</span>【返回语句】.<span class="keyword">return</span> y</span><br><span class="line"><span class="number">5</span>【索引赋值】.x:=y[i]             x[i]:=y</span><br><span class="line"><span class="number">6</span>【地址和指针赋值】.x:=&amp;y            x:=*y                  *x:=y     </span><br><span class="line">赋值语句翻译为三地址码的属性文法</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="三元式"><a href="#三元式" class="headerlink" title="三元式"></a>三元式</h4><p>三元式$(op,A_1,A_2)$</p>
+<p>op为运算符<br>A<del>1</del>为第一运算对象<br>A<del>2</del>为第二运算对象</p>
+<p>例如$a:&#x3D;b∗c+b∗d$表示为：<br>$(1)(∗,b,c)\<br>(2)(∗,b,d)\<br>(3)(+,(1),(2)) 这里用(1)和(2)来表示<strong>中间计算结果</strong>的显式引用\<br>(4)(:&#x3D;,(3),a)( 这里相当于a:&#x3D;(3)$</p>
+<p>而单目运算的−b可以表示成(−,b,&#x2F;)</p>
+<h4 id="四元式"><a href="#四元式" class="headerlink" title="四元式"></a>四元式</h4><p>四元式实际上是一种“三地址语句”的等价表示，是一个带有四个域的记录结构。</p>
+<p>四元式$(op,A_1,A_2,R)$</p>
+<p>op为运算符<br>A<del>1</del>为第一运算对象<br>A<del>2</del>为第二运算对象<br>R为运算结果</p>
+<p>例如$a:&#x3D;b∗c+b∗d$的四元式表示：<br>$(1)(∗,b,c,t_1)\<br>(2)(∗,b,d,t_2)\<br>(3)(+,t_1,t_2,t_3)\<br>(4)(:&#x3D;,t_3,−,a)$</p>
+<p>和三元式的差别在于，四元式对中间结果的引用必须通过<strong>给定的名字(临时变量)</strong></p>
+<p>它的三地址码写法为：<br>$t_1:&#x3D;b∗c\<br>t_2:&#x3D;b∗d\<br>t_3:&#x3D;t_1∗t_2\a:&#x3D;t_3$</p>
+<h4 id="三元式和四元式的比较"><a href="#三元式和四元式的比较" class="headerlink" title="三元式和四元式的比较"></a>三元式和四元式的比较</h4><p>相同点：</p>
+<p>1、无论在一个三元式序列还是四元式序列中，各个三元式或四元式都是按相应表达式的实际运算顺序出现的；</p>
+<p>2、对同一表达式而言，所需的三元式或四元式的个数一般都是相同的。</p>
+<p>不同点：</p>
+<p>1、由于三元式没有result字段，且不需要临时变量，故三元式比四元式占用的存储空间少；</p>
+<p>2、在进行代码优化处理时，常常需要挪动一些运算的位置，这对于三元式序列来说是很困难的，但对于四元式来说，由于四元式之间的相互联系是通过临时变量来实现的，所以，更改其中一些四元式给整个系列带来的影响就比较小。</p>
+<h4 id="三地址代码-间接三元式"><a href="#三地址代码-间接三元式" class="headerlink" title="三地址代码-间接三元式"></a>三地址代码-间接三元式</h4><p> 建立两个与三元式有关的表格，一个称为三元式表，用于存放各三元式本身；另一个称为执行表，它按照三元式的执行顺序，依次列出相应各三元式在三元式表中的位置，也就是说我们用一个三元式表连同执行表来表示中间代码。通常我们称这种表示方法为间接三元式。</p>
+<p>三元式</p>
+<p>$x：&#x3D;（a+b）<em>c\<br>b：&#x3D;a+b\<br>y：&#x3D;c</em>（a+b$</p>
+<p>（1）（+，a，b）             （5） （+，a，b）<br>（2）（ *，（1），c）      （6）（ *，c，（5））<br>（3）（：&#x3D;，x，（2））   （7）（：&#x3D;，y，（6））<br>（4）（：&#x3D;，b，（1））</p>
+<p>间接三元式   </p>
+<p>执行表                           三元式表</p>
+<p> （1）                  （1）（+，a，b）<br> （2）                  （2）（*，（1），c）<br> （3）                  （3）（：&#x3D;，x，（2））<br> （4）                  （4）（：&#x3D;，b，（1））<br> （1）                  （5）（：&#x3D;，y，（2））<br> （2）<br> （5）</p>
+<p>三元式与间接三元式之间的区别</p>
+<p>1、由于间接三元式在执行表中已经依次列出每次要执行的那个三元式，若其中有相同的三元式，则仅需在三元式表中保存其中之一，即三元式的项数一般比执行表的项数少；</p>
+<p>2、当进行代码优化需要挪动运算顺序时，则只需对执行表进行相应地调整，而不必再改动三元式本身，这样，就避免了前面讲到的因改变三元式的顺序所引起的麻烦。</p>
+<h1 id="赋值语句的翻译"><a href="#赋值语句的翻译" class="headerlink" title="赋值语句的翻译"></a>赋值语句的翻译</h1><h2 id="布尔表达式的翻译"><a href="#布尔表达式的翻译" class="headerlink" title="布尔表达式的翻译"></a>布尔表达式的翻译</h2><p>布尔表达式在程序设计语言中有两个作用：</p>
+<ol>
+<li>计算<strong>逻辑值</strong></li>
+<li>用于<strong>改变控制流语句</strong>中的条件表达式</li>
+</ol>
+<p>控制流语句包含循环、分支两大类。</p>
+<p>通常我们只考虑如下文法生成的布尔表达式：<br>$E→EandE∣EorE∣notE∣idropid∣id∣true∣falseE→EandE∣EorE∣notE∣idropid∣id∣true∣false$<br>其中$rop$是关系符，如$&lt;&#x3D;,&lt;,&#x3D;,&gt;,&gt;&#x3D;&lt;&#x3D;,&lt;,&#x3D;,&gt;,&gt;&#x3D;$等<br>布尔运算符的<strong>优先顺序</strong>为$not&gt;and&gt;ornot&gt;and&gt;or$<br>并且$and$和$not$服从<strong>左结合</strong></p>
+<p>布尔表达式的计算有两种方法：</p>
+<ol>
+<li>计算各部分的真假值，最后计算出整个表达式的值<br>$(1and0)and(0or1)&#x3D;0and1&#x3D;0$</li>
+<li>短路法：AandB如果A&#x3D;0则直接得到0；AorB如果A&#x3D;1则直接得到1。这种方式若B为一个带返回值的过程调用会引发<strong>副作用</strong></li>
+</ol>
+<p><strong>布尔表达式翻译成四元式序列</strong>，如a or b and not c的翻译结果为：<br>(1)t1:&#x3D;not c<br>(2)t2:&#x3D;b and t1<br>(3)t3:&#x3D;a or t2</p>
+<h2 id="条件语句中布尔表达式的翻译"><a href="#条件语句中布尔表达式的翻译" class="headerlink" title="条件语句中布尔表达式的翻译"></a>条件语句中布尔表达式的翻译</h2><p>现在有文法：<br>S→if E then S1∣if E then S1 else S2∣while E do S1</p>
+<p>翻译这部分的题目主要是以给定四元式序列，然后填空。</p>
+<p>对布尔表达式E&#x3D;a rop b，可以翻译成：<br>(1)if a rop b goto E.true<br>(2)goto E.false</p>
+<p>但此时E.true和E.false的值仍不能被确定。例如：<br>S→if E then S1 else S2</p>
+<p>E.true的值为S1的第一条四元式的地址<br>E.false的值为S2的第一条四元式的地址</p>
+<p>例如：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//假设要翻译 <span class="keyword">if</span> a&lt;b <span class="keyword">or</span> c&lt;d <span class="keyword">and</span> e&gt;f ...这段程序</span><br><span class="line"></span><br><span class="line">//理想的情况是翻译成下面这样</span><br><span class="line">（<span class="number">1</span>）　<span class="keyword">if</span> a＜b <span class="keyword">goto</span> E.<span class="literal">true</span> //E.<span class="literal">true</span>代表该<span class="keyword">if</span>...<span class="keyword">else</span>...逻辑的正向逻辑段入口地址，但是翻译当前bool表达式显然是暂且还不能确定E.<span class="literal">true</span>的</span><br><span class="line">（<span class="number">2</span>）　<span class="keyword">goto</span> （<span class="number">3</span>）</span><br><span class="line">（<span class="number">3</span>）　<span class="keyword">if</span> c＜d　<span class="keyword">goto</span> （<span class="number">5</span>）</span><br><span class="line">（<span class="number">4</span>）　<span class="keyword">goto</span> E．<span class="literal">false</span>       //E.<span class="literal">false</span>代表<span class="keyword">if</span>...<span class="keyword">else</span>...的反向逻辑段入口地址</span><br><span class="line">（<span class="number">5</span>）　<span class="keyword">is</span> e＞f <span class="keyword">goto</span> E．<span class="literal">true</span></span><br><span class="line">（<span class="number">6</span>）　<span class="keyword">goto</span> E．<span class="literal">false</span> //到bool表达式翻译完成时，才能确定原来逻辑块的正向段入口地址是<span class="number">7</span></span><br><span class="line">（<span class="number">7</span>） ...</span><br></pre></td></tr></table></figure>
+
+<p>可以看到上面的出现E.true和E.false的地方是需要回填的逻辑地址，这里比较常见的思路可能是额外为每个逻辑地址保存一个数组用来记录需要的所有地址，比如定义一个E.true-speicific-array并将(1）（2）填入该数组中。这种做法显然是很笨的，有没有比较好的方法？这便是”拉链“式解决方案，借鉴自链表的思想，为所有需要回填E.true的指令行首尾串在一起。</p>
+<p>……<br>(p−1)…S1 end<br>(p) goto q<br>(p+1) S2 begin…<br>……<br>(q−1)… S2 end<br>(q)…</p>
+<p>在产生出S1和S2的状态块后，才能进行地址回填。上面的E.true应填(7)，而E.false应填(p+1)。</p>
+<p>为了解决地址回填的问题，需要采用<strong>拉链法</strong>，把需要回填E.true的所有四元式构造并维护一条<strong>真链</strong>的链表，把需要回填E.false的所有四元式构造一条<strong>假链</strong>的链表</p>
+<p>对于上面的例子，真链和假链如下图：</p>
+<p><img src="/images/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/1172605-20190619191054300-334335601.png" alt="img"></p>
+<p>其中(5)为真链的链首，(6)为假链的链首。一旦确定S1和S2的地址，就可以沿着链作地址回填</p>
+<p>但还有3种情况会使得四元式序列变得十分复杂，这里不讨论：</p>
+<ol>
+<li>连续的or或连续的and</li>
+<li>连续的if−else if−else if…</li>
+<li>嵌套条件语句</li>
+</ol>
+<h2 id="循环语句中布尔表达式翻译"><a href="#循环语句中布尔表达式翻译" class="headerlink" title="循环语句中布尔表达式翻译"></a>循环语句中布尔表达式翻译</h2><p>现需要翻译语句：while a&lt;b do if c&lt;d then X:&#x3D;Y+Z</p>
+<p>100:if a&lt;b goto E.true<br>101:goto E.false<br>102:if c&lt;d goto 104<br>103:goto 106<br>104:t1:&#x3D;Y+Z<br>105:X:&#x3D;t1<br>106:goto 100<br>107:…</p>
+<p>分析到状态块的开始就可以确认E.true&#x3D;102，而分析完状态块的结束之后就可以确认E.false&#x3D;107</p>
+<h3 id="for循环语句翻译"><a href="#for循环语句翻译" class="headerlink" title="for循环语句翻译"></a>for循环语句翻译</h3><p>现需要翻译语句：for I :&#x3D;1 step 1 until Y do X:&#x3D;X+1<br>等价于C语言的：for(I&#x3D;1;I&lt;&#x3D;Y;++I) X&#x3D;X+1;</p>
+<p>100:I:&#x3D;1<br>101:goto 103<br>102:I:&#x3D;I+1<br>103:if I&lt;&#x3D;Y goto 105<br>104:goto 108<br>105:T:&#x3D;X+1<br>106:X:&#x3D;T<br>107:goto 102<br>108:…</p>
+<h3 id="数组的翻译"><a href="#数组的翻译" class="headerlink" title="数组的翻译"></a>数组的翻译</h3><p>对于一个静态的n维数组，要访问其中一个元素，可以使用下标法：</p>
+<p>A[i1,i2,…,in]</p>
+<p>由于内存是一维连续空间，对于行主数组，比如一个2×32×3的二维数组，在内存中的布局为:</p>
+<p>A[1,1]A[1,2]A[1,3]A[2,1]A[2,2]A[2,3]</p>
+<p>现知道数组A的地址为a，那A[i,j]的地址为：</p>
+<p>a+(i−1)×3+(j−1)</p>
+<p>设B为n维数组B[l1:u1,l2:u2,…,ln:un]</p>
+<p>显然di&#x3D;ui−li+1。令b是数组首元素地址，那么行主数组下B[i1,i2,…,in]的地址D为：</p>
+<p>D&#x3D;b+(i1−l1)d2d3…dn+(i2−l2)d3…dn+(in−1−ln−1)dn+(in−ln)</p>
+<p>对式子展开可以提取出式子中的固定部分和变化部分：<br>D&#x3D;constPart+varPart<br>constPart&#x3D;b−C<br>C&#x3D;l1d2d3…dn+l2d3…dn+…+ln−1dn−1+lndn<br>varPart&#x3D;i1d2d3…dn+i2d3…dn+…+in−1dn−1+indn</p>
+<p>访问数组元素A[i1,i2,…,in]需要产生两组计算数组的四元式：</p>
+<ol>
+<li>一组计算varPart，存放结果到临时单元T中</li>
+<li>一组计算constPart，存放结果到另一个临时单元T1中</li>
+</ol>
+<p>用T1[T]表示数组元素的地址</p>
+<p><strong>变址取数的四元式</strong>：(&#x3D;[],T1[T],−,X),相当于X:&#x3D;T1[T]<br><strong>变址存数的四元式</strong>：([]&#x3D;,X1,−,T1[T]),相当于T1[T]:&#x3D;X</p>
+<p>现在有一个10*20的数组A，即d1&#x3D;10,d2&#x3D;20。则X:&#x3D;A[I,J]的四元式序列为：<br>(∗,I,20,T1)<br>(+,T1,J,T1)<br>(−,A,21,T2)<br>(&#x3D;[],T2[T1],−,T3)<br>(:&#x3D;,T3,−,X)</p>
+<p>对应：<br>varPart&#x3D;20∗I+J<br>constPart&#x3D;A−(1∗20+1)&#x3D;A−21</p>
+<h1 id="符号表-1"><a href="#符号表-1" class="headerlink" title="符号表"></a>符号表</h1><h2 id="符号表的作用-1"><a href="#符号表的作用-1" class="headerlink" title="符号表的作用"></a>符号表的作用</h2><p>符号表用来体现作用域与可见性信息</p>
+<ul>
+<li>登记各类名字的信息</li>
+<li>编译各阶段都需要使用符号表<ul>
+<li>一致性检查和作用域分析</li>
+<li>辅助代码生成</li>
+</ul>
+</li>
+</ul>
+<p>符号表的作用：<br>① 收集符号属性；（词法分析）<br>② 上下文语义的合法性检查的依据；（语法分析）<br>③ 作为目标代码生成阶段地址分配的依据；（语义分析）</p>
+<h2 id="符号表的组织"><a href="#符号表的组织" class="headerlink" title="符号表的组织"></a>符号表的组织</h2><p>符号表的每一项（入口）包含两大栏</p>
+<ul>
+<li>名字栏：主栏、关键字栏</li>
+<li>信息栏：记录相应的不同属性、分为若干子栏</li>
+</ul>
+<p>按名字的不同种属建立多张符号表，如常数表、变量名表、过程名表</p>
+<p>符号表中语言符号可分为关键字（保留字）符号，操作符符号及标识符符号</p>
+<p>符号表中的标识符一般设置的属性项目有：<br>① 符号名<br>② 符号的类型<br>③ 符号的存储类别<br>④ 符号的作用域及可视性<br>⑤ 符号变量的存储分配信息<br>⑥ 符号的其它属性</p>
+<h3 id="符号表操作"><a href="#符号表操作" class="headerlink" title="符号表操作"></a>符号表操作</h3><p>针对符号表的常见操作：</p>
+<p>• 创建符号表  在编译开始，或进入一个作用域</p>
+<p>• 插入表项  在遇到新的标识符声明时进行</p>
+<p>• 查询表项  在引用标识符时进行</p>
+<p>• 修改表项  在获得新的语义值信息时进行</p>
+<p>• 删除表项  在标识符成为不可见或不再需要它的任何信息时进行</p>
+<p> 释放符号表空间  在编译结束前或退出一个作用域</p>
+<h3 id="对符号表进行操作的时机"><a href="#对符号表进行操作的时机" class="headerlink" title="对符号表进行操作的时机"></a>对符号表进行操作的时机</h3><ul>
+<li>定义性出现：int index</li>
+<li>使用性出现：if index &lt; 100</li>
+</ul>
+<h3 id="实现符号表的常用数据结构-1"><a href="#实现符号表的常用数据结构-1" class="headerlink" title="实现符号表的常用数据结构"></a>实现符号表的常用数据结构</h3><p>• 一般的线性表：如：数组，链表，等<br>• 有序表：查询较无序表快，如可以采用折半查找<br>• 二叉搜索树<br>• Hash表</p>
+<h2 id="作用域和可见性"><a href="#作用域和可见性" class="headerlink" title="作用域和可见性"></a>作用域和可见性</h2><h1 id="静态语义分析-1"><a href="#静态语义分析-1" class="headerlink" title="静态语义分析"></a>静态语义分析</h1><p><strong>静态语义： 刻画程序在静态一致性或完整性方面的特征；仅当程序通过了静态语义检查，才能完成后续的中间代码生成和目标代码优化。</strong></p>
+<h2 id="主要任务-1"><a href="#主要任务-1" class="headerlink" title="主要任务"></a>主要任务</h2><ul>
+<li><p>类型检查（type checks）<br>检查每个操作是否遵守语言类型系统的定义</p>
+</li>
+<li><p>名字的作用域（scope）分析<br>建立名字的定义和使用之间联系</p>
+</li>
+<li><p>控制流检查（flow-of-control checks）<br>控制流语句必须使控制转移到合法的地方（如 break语句必须有合法的语句包围它）</p>
+</li>
+<li><p>唯一性检查（uniqueness checks）<br>很多场合要求对象只能被定义一次（如枚举类型的元素不能重复出现）</p>
+</li>
+<li><p>名字的上下文相关性检查（name-related checks）<br>某些名字的多次出现之间应该满足一定的上下文相关性</p>
+</li>
+</ul>
+<h3 id="类型检查-1"><a href="#类型检查-1" class="headerlink" title="类型检查"></a>类型检查</h3><p>类型检查程序（<em>type checker</em>）负责类型检查</p>
+<p>• 验证程序的结构是否匹配上下文所期望的类</p>
+<p>• 为相关阶段搜集及建立必要的类型信息</p>
+<p>• 实现某个类型系统（<em>type system</em>）</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/06/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%92%8C%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" title="编译原理-静态语义分析和中间代码生成">http://rshawshank.github.io/2020/06/08/编译原理-静态语义分析和中间代码生成/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag"># 编译原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" rel="prev" title="数据库_并发控制">
+      <i class="fa fa-chevron-left"></i> 数据库_并发控制
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BB%AA%E8%AE%BA/" rel="next" title="数据结构_绪论">
+      数据结构_绪论 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">符号表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">符号表的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E7%9A%84%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">符号的常见属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">符号表的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">针对符号表的常见操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">实现符号表的常用数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BB%84%E7%BB%87"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">作用域与符号表组织</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">作用域与可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%BB%84%E7%BB%87-1"><span class="nav-number">1.5.</span> <span class="nav-text">作用域与符号表组织</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">静态语义分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">主要任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="nav-number">2.1.1.</span> <span class="nav-text">类型检查</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">中间代码生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">常见的中间表示的形式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91"><span class="nav-number">3.1.1.</span> <span class="nav-text">生成抽象语法树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E4%B8%89%E5%9C%B0%E5%9D%80%E7%A0%81"><span class="nav-number">3.1.2.</span> <span class="nav-text">生成三地址码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5%E5%8F%8A%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%BF%BB%E8%AF%91"><span class="nav-number">3.1.3.</span> <span class="nav-text">赋值语句及算术表达式的语法制导翻译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E4%B8%AD%E9%97%B4%E8%AF%AD%E8%A8%80%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">中间代码（中间语言）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E8%AF%AD%E8%A8%80"><span class="nav-number">4.1.</span> <span class="nav-text">常用的中间语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%BC%80%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">后缀式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E8%A1%A8%E7%A4%BA%E6%B3%95"><span class="nav-number">4.1.2.</span> <span class="nav-text">图表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">抽象语法树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E5%90%91%E6%97%A0%E7%8E%AF%E5%9B%BE"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">有向无环图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%91%E5%BD%A2%E8%A1%A8%E7%A4%BA"><span class="nav-number">4.1.3.</span> <span class="nav-text">树形表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%9C%B0%E5%9D%80%E4%BB%A3%E7%A0%81%E8%A1%A8%E7%A4%BA"><span class="nav-number">4.1.4.</span> <span class="nav-text">三地址代码表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%85%83%E5%BC%8F"><span class="nav-number">4.1.4.1.</span> <span class="nav-text">三元式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E5%BC%8F"><span class="nav-number">4.1.4.2.</span> <span class="nav-text">四元式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%85%83%E5%BC%8F%E5%92%8C%E5%9B%9B%E5%85%83%E5%BC%8F%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">4.1.4.3.</span> <span class="nav-text">三元式和四元式的比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%9C%B0%E5%9D%80%E4%BB%A3%E7%A0%81-%E9%97%B4%E6%8E%A5%E4%B8%89%E5%85%83%E5%BC%8F"><span class="nav-number">4.1.4.4.</span> <span class="nav-text">三地址代码-间接三元式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="nav-number">5.</span> <span class="nav-text">赋值语句的翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="nav-number">5.1.</span> <span class="nav-text">布尔表达式的翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5%E4%B8%AD%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="nav-number">5.2.</span> <span class="nav-text">条件语句中布尔表达式的翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E4%B8%AD%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%BF%BB%E8%AF%91"><span class="nav-number">5.3.</span> <span class="nav-text">循环语句中布尔表达式翻译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E7%BF%BB%E8%AF%91"><span class="nav-number">5.3.1.</span> <span class="nav-text">for循环语句翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="nav-number">5.3.2.</span> <span class="nav-text">数组的翻译</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8-1"><span class="nav-number">6.</span> <span class="nav-text">符号表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E4%BD%9C%E7%94%A8-1"><span class="nav-number">6.1.</span> <span class="nav-text">符号表的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="nav-number">6.2.</span> <span class="nav-text">符号表的组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">6.2.1.</span> <span class="nav-text">符号表操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%AC%A6%E5%8F%B7%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E7%9A%84%E6%97%B6%E6%9C%BA"><span class="nav-number">6.2.2.</span> <span class="nav-text">对符号表进行操作的时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%AC%A6%E5%8F%B7%E8%A1%A8%E7%9A%84%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-1"><span class="nav-number">6.2.3.</span> <span class="nav-text">实现符号表的常用数据结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">6.3.</span> <span class="nav-text">作用域和可见性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90-1"><span class="nav-number">7.</span> <span class="nav-text">静态语义分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1-1"><span class="nav-number">7.1.</span> <span class="nav-text">主要任务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5-1"><span class="nav-number">7.1.1.</span> <span class="nav-text">类型检查</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

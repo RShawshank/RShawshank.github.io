@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="数据库完整性 数据库的完整性  数据的正确性和相容性   数据的完整性和安全性是两个不同概念：  数据的完整性：防止数据库中存在不符合语义的数据，也就是防止数据库中存在不正确的数据 数据的安全性：保护数据库防止恶意的破坏和非法的存取   为维护数据库的完整性，DBMS必须：  提供定义完整性约束条件的机制 提供完整性检查的方法 违约处理    DBMS完整性控制机制应具有的功能：  违约反应 定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库_数据库完整性">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="数据库完整性 数据库的完整性  数据的正确性和相容性   数据的完整性和安全性是两个不同概念：  数据的完整性：防止数据库中存在不符合语义的数据，也就是防止数据库中存在不正确的数据 数据的安全性：保护数据库防止恶意的破坏和非法的存取   为维护数据库的完整性，DBMS必须：  提供定义完整性约束条件的机制 提供完整性检查的方法 违约处理    DBMS完整性控制机制应具有的功能：  违约反应 定义">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-01T11:12:38.000Z">
+<meta property="article:modified_time" content="2020-06-02T13:03:06.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>数据库_数据库完整性 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库_数据库完整性
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-01 11:12:38" itemprop="dateCreated datePublished" datetime="2020-04-01T11:12:38Z">2020-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-02 13:03:06" itemprop="dateModified" datetime="2020-06-02T13:03:06Z">2020-06-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数据库完整性"><a href="#数据库完整性" class="headerlink" title="数据库完整性"></a>数据库完整性</h1><ul>
+<li><p>数据库的完整性</p>
+<ul>
+<li>数据的正确性和相容性</li>
+</ul>
+</li>
+<li><p>数据的完整性和安全性是两个不同概念：</p>
+<ul>
+<li>数据的完整性：防止数据库中存在不符合语义的数据，也就是防止数据库中存在不正确的数据</li>
+<li>数据的安全性：保护数据库防止恶意的破坏和非法的存取</li>
+</ul>
+</li>
+<li><p>为维护数据库的完整性，DBMS必须：</p>
+<ul>
+<li>提供定义完整性约束条件的机制</li>
+<li>提供完整性检查的方法</li>
+<li>违约处理</li>
+</ul>
+</li>
+</ul>
+<p>DBMS完整性控制机制应具有的功能：</p>
+<ul>
+<li>违约反应</li>
+<li>定义功能</li>
+<li>检查功能</li>
+</ul>
+<h2 id="实体完整性"><a href="#实体完整性" class="headerlink" title="实体完整性"></a>实体完整性</h2><p>实体完整性的定义机制：<br>–CREATE  TABLE中用PRIMARY KEY定义<br>–列级约束条件 或表级约束条件</p>
+<p>实体完整性的检查和违约处理：</p>
+<p>在插入或对主码列进行更新操作时，RDBMS按照实体完整性规则自动进行检查。包括：<br>–检查主码值是否唯一，如果不唯一则拒绝插入或修改<br>–检查主码的各个属性是否为空，只要有一个为空就拒绝插入或修改</p>
+<h2 id="参照完整性"><a href="#参照完整性" class="headerlink" title="参照完整性"></a>参照完整性</h2><p>参照完整性，指多表之间的设计，主要使用外键约束【多表设计有：一对多，多对多，一对一】</p>
+<p>主要是定义外码，将一个关系的主码放在另一个关系中，作为该关系的属性，就称其为外码。外码的取值有两种情况，一种为空，另外一种就是被参照表的主码的域。</p>
+<p>子表的删除更新策略一共有4种：</p>
+<ul>
+<li><p>CASCADE 级联策略。<br>主表的修改会被同步到子表中。</p>
+</li>
+<li><p>NO ACTION 无动作策略。<br>要删改主表，必须要先删改子表对应数据。</p>
+</li>
+<li><p>RSTRICT 主表约束策略。<br>此策略，对主表的约束跟NO ACTION一样。即删、更新主表前的主键，必须要先删、更新子表中对应的。</p>
+</li>
+<li><p>SET NO 置空策略。<br>使用此策略时，当主表主键删改，则子表中的外键 设置为NULL。<br>但如果子表的外键是主键，或者子表外键设置NOT NULL，则此时就相当于NO ACTION策略。</p>
+</li>
+</ul>
+<p>参照完整性的定义机制：<br>–在CREATE  TABLE中用FOREIGN KEY短语定义哪些列为外码，<br>–用REFERENCES短语指明这些外码参照哪些表的主码</p>
+<table>
+<thead>
+<tr>
+<th>被参照表</th>
+<th>参照表</th>
+<th>违约处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可能破坏参照完整性</td>
+<td>插入元组</td>
+<td>拒绝</td>
+</tr>
+<tr>
+<td>可能破坏参照完整性</td>
+<td>修改外码值</td>
+<td>拒绝&#x2F;级联修改&#x2F;设置为空值</td>
+</tr>
+<tr>
+<td>修改主码值</td>
+<td>可能破坏参照完整性</td>
+<td>拒绝&#x2F;级联修改&#x2F;设置为空值</td>
+</tr>
+<tr>
+<td>删除元组</td>
+<td>可能破坏参照完整性</td>
+<td>拒绝&#x2F;级联修改&#x2F;设置为空值</td>
+</tr>
+</tbody></table>
+<p>若要在参照完整性中采用级联更新的修改方式，则应该在<strong>外码定义</strong>中说明。</p>
+<h1 id="用户定义完整性"><a href="#用户定义完整性" class="headerlink" title="用户定义完整性"></a>用户定义完整性</h1><p>用户定义的完整性就是针对某一具体应用的数据必须满足的语义要求</p>
+<p>分为：属性上的约束和元组上的约束。</p>
+<p>属性上的约束：在CREATE TABLE中定义属性时定义<br>–列值非空（NOT NULL），列值唯一（UNIQUE），检查列值是否满足一个布尔表达式（CHECK）<br>–插入元组或修改属性值时检查，不满足则拒绝执行。</p>
+<p>元组上的约束<br>–在CREATE TABLE时可以用CHECK短语定义元组上的约束条件，即元组级的限制<br>–同属性值限制相比，元组级的限制可以设置不同属性之间的取值的相互约束条件<br>–插入元组或修改属性值时检查，不满足则拒绝执行</p>
+<p>在一张表上可以定义多个完整性约束，为方便起见，在CREATE TABLE中可用CONSTRAINT语句对所定义的约束条件命名</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CONSTRAINT</span>&lt;完整性约束条件名&gt;&lt;完整性约束条件&gt;</span><br><span class="line">其中，&lt;完整性约束条件&gt;包括：<span class="keyword">NOT</span>  <span class="keyword">NULL</span>、<span class="keyword">UNIQUE</span>、PRIMARYKEY、<span class="keyword">FOREIGN KEY</span>、<span class="keyword">CHECK</span>短语等。</span><br></pre></td></tr></table></figure>
+
+<p>语义: 对定义的约束条件命名</p>
+<h1 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h1><p>是用户定义在关系表上的一类由事件驱动的特殊过程。亦称为：事件-条件-动作规则。</p>
+<ul>
+<li>一旦定义，触发器将被保存在数据库服务器中。</li>
+<li><strong>任何用户对表的增、删、改操作均由服务器自动激活相应的触发器</strong>，在DBMS核心层进行集中的完整性控制。</li>
+<li>比约束更为灵活，规则中的动作可以很复杂，可以包含 if&#x2F; while&#x2F;case 等程序控制指令，可以涉及其他表和其他数据库对象，实施更为复杂的检查和操作，具有更精细和更强大的数据控制能力。</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TRIGGER</span> &lt;触发器名&gt;  </span><br><span class="line">&#123; <span class="keyword">BEFORE</span>| <span class="keyword">AFTER</span>&#125; &lt;触发事件&gt;</span><br><span class="line"><span class="keyword">ON</span>&lt;表名&gt;</span><br><span class="line"><span class="keyword">FOR</span> <span class="keyword">EACH</span>  &#123; <span class="keyword">ROW</span> | <span class="keyword">STATEMENT</span> &#125;</span><br><span class="line">［<span class="keyword">WHEN</span>&lt;触发条件&gt;］</span><br><span class="line">&lt;触发动作体&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>触发时机：AFTER 表示 执行条件，有 BEFORE（之前 ） AFTER（之后）</p>
+</li>
+<li><p>触发事件：INSERT ON 表示在执行了 插入操作 ,有INSERT&#x2F;UPDATE&#x2F;DELETE 三种 </p>
+</li>
+<li><p>触发者类型：FOR EACH ROW BEGIN 固定语法</p>
+<ul>
+<li>行级触发器（FOR EACH ROW）</li>
+<li>语句级触发器（FOR EACH STATEMENT）【那么执行完该语句后，触发动作只发生一次】</li>
+</ul>
+</li>
+<li><p>触发动作体：是一段程序。如果触发器是行级触发器，则这段程序中还可以使用NEW和OLD分别引用触发事件发生前后的元组值。</p>
+</li>
+</ul>
+<h2 id="激活触发器"><a href="#激活触发器" class="headerlink" title="激活触发器"></a>激活触发器</h2><ul>
+<li><p>触发器的执行，由触发事件激活，并由数据库服务器自动执行。</p>
+</li>
+<li><p>一个数据表上可能定义了多个触发器，同一个表上的多个触发器激活时遵循如下的执行顺序：</p>
+<p>​	 （1） 执行该表上的BEFORE触发器；<br>​    （2） 执行激活触发器的SQL语句；<br>​    （3） 执行该表上的AFTER触发器。</p>
+</li>
+<li><p>有多个触发器时，按创建时间顺序依次执行。</p>
+</li>
+<li><p>任一触发器的执行失败都将中止整个操作。</p>
+</li>
+</ul>
+<h2 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h2><p>删除触发器的SQL语法：</p>
+<figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TRIGGER</span> &lt;触发器名&gt; <span class="keyword">ON</span>&lt;表名&gt;;</span><br></pre></td></tr></table></figure>
+
+<p>触发器必须是一个已经创建的触发器，并且只能由具有相应权限的用户删除。</p>
+<p><strong>注意：不同的DBMS对于触发器的支持方式和语法是有所区别的！</strong></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7/" title="数据库_数据库完整性">http://rshawshank.github.io/2020/04/01/数据库-数据库完整性/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag"># 数据库</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%89%E5%85%A8%E6%80%A7/" rel="prev" title="数据库_数据库安全性">
+      <i class="fa fa-chevron-left"></i> 数据库_数据库安全性
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/08/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="java-设计模式（一）">
+      java-设计模式（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">数据库完整性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">实体完整性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E7%85%A7%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">参照完整性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">用户定义完整性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">激活触发器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">删除触发器</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

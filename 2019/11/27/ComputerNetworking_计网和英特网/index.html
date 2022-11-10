@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文是学习自顶向下计算机网络的学习笔记。内容浅显，或有缺漏，还请多多指点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网和英特网">
+<meta property="og:url" content="http://rshawshank.github.io/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="本文是学习自顶向下计算机网络的学习笔记。内容浅显，或有缺漏，还请多多指点。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127003604606.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127004553238.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127004701282.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130416016.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130421156.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130427723.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130132341648.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130133731787.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/20190528153745862.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/20190528160938620.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130134510417.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130143719298.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130143742978.png">
+<meta property="article:published_time" content="2019-11-27T00:07:04.000Z">
+<meta property="article:modified_time" content="2022-01-24T01:03:36.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="计算机网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127003604606.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计网和英特网 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计网和英特网
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-27 00:07:04" itemprop="dateCreated datePublished" datetime="2019-11-27T00:07:04Z">2019-11-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-24 01:03:36" itemprop="dateModified" datetime="2022-01-24T01:03:36Z">2022-01-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文是学习自顶向下计算机网络的学习笔记。内容浅显，或有缺漏，还请多多指点。</p>
+<span id="more"></span>
+
+<h1 id="第一部分：计算机网络的基本概念"><a href="#第一部分：计算机网络的基本概念" class="headerlink" title="第一部分：计算机网络的基本概念"></a>第一部分：计算机网络的基本概念</h1><p>计算机网络：我们俗称的计算机网络就是公用的因特网。因特网是一个世界范围的计算机网络，它连接了许多设备（不仅仅包括计算机）。这些设备就是主机，也称为端系统。</p>
+<p>通信链路：连接设备。</p>
+<p>分组交换机：转发分组。当主机之间传输信息的时候，会把信息分段，加上首部字节（包括了转发地址等信息），这些段就是分组。</p>
+<p>分组交换机：路由器、链路层交换机。</p>
+<p>ISP：因特网服务提供商。提供上网服务等。每个ISP自身就是一个由多台分组交换机和通信链路组成的网络。例如：中国电信 提供拨号上网、ADSL、CDMA等业务 </p>
+<p>Internet：相互连接的ISP。即因特网。</p>
+<p>协议：定义了报文的格式等</p>
+<h1 id="第二部分：因特网的组成"><a href="#第二部分：因特网的组成" class="headerlink" title="第二部分：因特网的组成"></a>第二部分：因特网的组成</h1><p>因特网的组成可以分为两大块。</p>
+<ul>
+<li>核心部分：由大量的网络和连接这些网络的路由器组成，为边缘部分提供服务。在核心部分启特殊作用的 <strong>路由器</strong>，路由器是实现分组交换的关键构件，其任务是转发收到的分组。</li>
+<li>边缘部分：由所有连接在因特网上的主机组成，是用户直接使用的。</li>
+</ul>
+<p>因特网的核心部分是由<strong>许多网络</strong>和<strong>把他们连起来的路由器</strong>组成的，而<strong>主机处于因特网的边缘部分</strong></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127003604606.png" alt="image-20191127003604606"></p>
+<h2 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h2><h3 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h3><p><strong>接入网的作用：</strong></p>
+<p>1、将网络边缘与网络核心连接起来，通常是将端系统连接到边缘路由器上</p>
+<p>2、边缘路由器：端系统到任何其它远程端系统的路径上的第一台路由器</p>
+<p><strong>接入的方式</strong>：</p>
+<p>1、家庭：Modem拨号&#x2F;ADSL拨号（数字电话线）&#x2F;HFC&#x2F;FTTH&#x2F;卫星</p>
+<p>2、企业：以太网&#x2F;Wi-Fiq</p>
+<p>3、广域无线接入：3G&#x2F;4G&#x2F;5G</p>
+<blockquote>
+<p><strong>Modem拨号</strong></p>
+<p>1、通过本地电话回路点对点连接ISP的拨号池（通常是路由器）,就是计算机打电话</p>
+<p>2、速度最高可达56kbps</p>
+<p>3、无法实现在上网的同时拨打电话</p>
+<p><strong>ADSL</strong>：<strong>不对称数字用户线</strong></p>
+<p>1、下行&#x2F;上行速率最高可达8Mbps&#x2F;1Mbps。下行信道速率大于上行信道。</p>
+<p>2、频分复用：</p>
+<p>n0kHz—4kHz：语音</p>
+<p>n4kHz—50kHz：上行    50kHz—1MHz：下行</p>
+<p>3、带宽独享</p>
+<p><strong>HFC (Hybrid Fiber Coaxial Cable)</strong> <strong>：光纤同轴电缆混合网络</strong></p>
+<p>1、下行&#x2F;上行速率最高可达40Mbps&#x2F;10Mbps</p>
+<p>2、通过有线电视网络部署</p>
+<p>3、带宽共享</p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127004553238.png" alt="image-20191127004553238"></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191127004701282.png" alt="image-20191127004701282"></p>
+<p><strong>局域网接入</strong></p>
+<p><strong>无线接入</strong></p>
+<p>1、无线局域网WIFI</p>
+<p>2、广域无线接入：3G、4G</p>
+</blockquote>
+<h3 id="物理媒体"><a href="#物理媒体" class="headerlink" title="物理媒体"></a>物理媒体</h3><p>1、导引型媒体：信号沿着固体媒体被导引</p>
+<p>2、非导引型媒体：信号自由传播</p>
+<p><strong>导引型媒体</strong></p>
+<p>双绞线：两根互相绝缘的铜导线</p>
+<p>1、3类线：传统的电话线， 10Mbps以太网</p>
+<p>2、5类线：100Mbps以太网</p>
+<p>3、6类线：1Gbps以太网</p>
+<p>同轴电缆和光缆的对比:</p>
+<table>
+<thead>
+<tr>
+<th>同轴电缆</th>
+<th>光缆</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>双向传输</td>
+<td>在玻璃光纤传播光脉冲，每一个脉冲一比特</td>
+</tr>
+<tr>
+<td>基带：电缆上单信道、以太网</td>
+<td>高速运行：高速的点到点传输 (如10 Gbps)</td>
+</tr>
+<tr>
+<td>宽带：电缆上多信道、HFC</td>
+<td>低误码率：中继器相隔很远； 不受电磁干扰</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>基带指的是将<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E4%BF%A1%E5%8F%B7%E8%B0%83%E5%88%B6&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">信号调制</a>到更高更有效的频率（用以更有效地传送数据）以前的频率范围。基带传输则是利用数字信号以离散的电（或光）脉冲的形式传送信息。<strong>在基带传输中，整个<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E9%80%9A%E4%BF%A1%E7%BA%BF%E8%B7%AF&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">通信线路</a>用于传送一个数据信号，数据数字信号线缆的全部带宽</strong>，全部带宽也就组成了一个信道。基带网络上设备传送信息是双向的，可以同时进行接收和发送。</p>
+<p>宽带是指在同一传输介质上，使用特殊的技术或者设备，<strong>可以利用不同的频道进行多重（并行）传输</strong>，并且速率在256Kbps以上，至于到底多少速率以上算作宽带，目前没有国际标准，有人说大于56K就是宽带，有人说1Mbps以上才算宽带，这里我们按照约定俗成和网络多媒体视频数据量来考量为256K。因此与传统的互联网接入技术相比，宽带接入技术最大的优势就是其带宽速率远远超过56Kbps拨号。</p>
+</blockquote>
+<p><strong>非导引型媒体：无线电</strong></p>
+<p>特性：</p>
+<p>1、通过电磁频谱传播信号</p>
+<p>2、没有物理“线路”</p>
+<p>3、双向传输</p>
+<p>4、传播环境影响:</p>
+<ul>
+<li>反射</li>
+<li>被障碍物所阻隔</li>
+<li>干扰</li>
+</ul>
+<p>无线链路类型:</p>
+<p>1、地面微波：可达45Mbps</p>
+<p>2、无线局域网：2&#x2F;11&#x2F;54Mbps</p>
+<p>3、无线广域网：如3G&#x2F;4G&#x2F;5G</p>
+<p>4、卫星</p>
+<ul>
+<li>可达45Mbps的信道 (或 多个较小的信道)</li>
+<li>270毫秒的端到端延迟</li>
+<li>同步卫星vs低纬度卫星</li>
+</ul>
+<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><h3 id="第一代计算机网络——电路交换网络"><a href="#第一代计算机网络——电路交换网络" class="headerlink" title="第一代计算机网络——电路交换网络"></a><strong>第一代计算机网络</strong>——<strong>电路交换网络</strong></h3><p>先建立连接、然后交换数据、最后释放连接。</p>
+<p><strong>电路交换的特性</strong></p>
+<p>1、数据交换前需建立起一条从发端到收端的物理通路</p>
+<p>2、在数据交换的全部时间内用户始终占用端到端的固定传输信道（可以使用频分复用和时分复用增大信道的使用率）</p>
+<p>3、交换双方可实时进行数据交换而不会存在任何延迟</p>
+<p><strong>频分复用（FDM）和时分复用（TDM）</strong></p>
+<p>TMD是划分时间片，其时域划分成时帧，网络在时帧指定链路的时隙。即在该时帧中只有这个时隙，该链路可以使用。例如：一个时帧有20个时隙，就意味着该信道分给20个链路使用。</p>
+<p>为了解决主机之间数据传输具有的突发性和间歇性，分组交换网络就出现了。</p>
+<h3 id="第二代计算机网络——分组交换网络"><a href="#第二代计算机网络——分组交换网络" class="headerlink" title="第二代计算机网络——分组交换网络"></a><strong>第二代计算机网络</strong>——<strong>分组交换网络</strong></h3><p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130416016.png" alt="image-20191130130416016"></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130421156.png" alt="image-20191130130421156"></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130130427723.png" alt="image-20191130130427723"></p>
+<p>1、先把报文分成较短的、固定长度的数据段</p>
+<p>2、每段前添加首部构成分组。</p>
+<p>3、分组交换网络依次把各个分组发送到接收端</p>
+<p>4、接收端收到分组后剥去首部还原成报文</p>
+<p>5、最后在接收端把收到的数据恢复成原来的报文</p>
+<p>备注1：这里我们假定分组在传输过程中没有出现差错，在转发时也没有被丢弃。</p>
+<p>备注2：分组首部的重要性：</p>
+<ul>
+<li>每一个分组的首部都含有地址等控制信息。</li>
+<li>分组交换网中的结点交换机根据收到的分组的首部中的地址信息，把分组转发到下一个结点交换机。</li>
+<li>用此种存储转发方式，最后分组就能到达最终目的地。</li>
+</ul>
+<p><strong>分组发送网络的优点</strong></p>
+<ol>
+<li>被传送的数据分成若干分组分别传送</li>
+<li>数据传输前不必预先确定分组的传输路径</li>
+<li>网络核心中的每个交换结点均为共享结点,并且都具有分组的存储&#x2F;转发以及选择合适路由的能力</li>
+<li>在数据通信的过程中，网络核心断续(动态)分配传输带宽，使得通信线路的利用率得以大大提高</li>
+<li>为了提高分组交换网的可靠性，网络核心常采用网状拓扑结构，使得当发生网络拥塞或少数中间交换结点、链路出现故障时，可灵活地改变路由而不致引起通信的中断或全网的瘫痪；</li>
+<li>通信网络的主干线路往往由一些高速链路构成</li>
+</ol>
+<p><strong>转发</strong></p>
+<p>通过分组交换机。分组交换机通过<strong>存储转发传输</strong>来传输数据：在传输数据的第一个比特位之前要储存该分组的全部数据。</p>
+<p>数据报网络</p>
+<ul>
+<li>分组内的<em><strong>目的地址</strong></em>决定下一跳</li>
+<li>在会话过程中路由可能改变</li>
+<li>类似的：驾驶，问路</li>
+</ul>
+<p>虚电路网络</p>
+<ul>
+<li>每个分组携带一个标识（虚电路号），该标识决定下一跳</li>
+<li>在 呼叫建立时决定固定的路径，并在整个呼叫过程中保持不变</li>
+<li><em>路由器保持每个呼叫连接的状态</em></li>
+</ul>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130132341648.png" alt="image-20191130132341648"></p>
+<p><strong>造成的问题</strong>:</p>
+<ul>
+<li>分组在各结点存储转发时因要排队总会造成一定的<em>时延</em>。当网络通信量过大时，这种时延可能会很大</li>
+<li>各分组必须携带一定的控制信息（说明信息），从而带来额外<em>开销</em></li>
+<li>整个分组交换网的管理和控制比较<em>复杂</em></li>
+</ul>
+<h3 id="ISP和因特网主干"><a href="#ISP和因特网主干" class="headerlink" title="ISP和因特网主干"></a>ISP和因特网主干</h3><p>接入的ISP可以视作客户，最大的ISP可以视作提供商。</p>
+<p>1、第一层ISP：位于整个网络结构的顶层。第一层ISP之间互连。</p>
+<p>2、第二层ISP：是较小的区域ISPs。比如：国家级的ISP、省级的ISP</p>
+<ul>
+<li>第二层ISP为能够连接因特网的其它区域而向第一层ISP付费</li>
+<li>第二层ISP是第一层ISP的客户</li>
+<li>第二层之间可以在专用的对等点互连，也可以在IXP进行互连。</li>
+</ul>
+<p>3、第三层ISP：接入网络，与端系统最近。</p>
+<p>备注1：IXP是因特网交换点，多个ISP在这里汇聚、对等。</p>
+<p>备注2：底层的ISP可以连接多个高层的ISP</p>
+<p>备注3：google内容提供商使用独立于公用因特网的专用网络，和底层的ISP对等。</p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130133731787.png" alt="image-20191130133731787"></p>
+<p>由该图可以理解因特网是众多网络连接起来的更大的网络。</p>
+<h2 id="分组交换网中的时延、丢包和吞吐量"><a href="#分组交换网中的时延、丢包和吞吐量" class="headerlink" title="分组交换网中的时延、丢包和吞吐量"></a>分组交换网中的时延、丢包和吞吐量</h2><p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/20190528153745862.png" alt="在这里插入图片描述"></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/20190528160938620.png" alt="img"></p>
+<h3 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h3><p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130134510417.png" alt="image-20191130134510417"></p>
+<p><strong>传输时延</strong></p>
+<p>传输时延是路由器推出分组所需要的时间，它是分组长度和链路传输速率的函数，与两台路由器之间的距离无关（传输速率就是路由器或者主机，把要进行传送的比特流，放到输出链路上的速度）是数据块从结点进入到传输媒体所需的时间。即<strong>一个站点从开始发送数据帧到数据帧发送完毕（或者是接收站点接收一个数据帧的全部时间）所需要的全部时间</strong>。【存储转发传输】</p>
+<p><strong>传播时延</strong></p>
+<p>传播时延是一个比特从一台路由器传播到另一台路由器所需要的时间，它是两台路由器之间距离的函数，而与分组长度或者链路传输速率无关。<br><strong>排队时延</strong></p>
+<p>这里定义一个<strong>流量强度</strong>。</p>
+<p>R&#x3D;链路带宽 (bps) L&#x3D;分组长度 (bits)  a&#x3D;平均分组到达速率</p>
+<p>流量强度：La&#x2F;R</p>
+<p>La&#x2F;R ~ 0: 平均排队时延很小，甚至为0</p>
+<p>La&#x2F;R &lt; 1: 时延较小，且会随时间推延而变小</p>
+<p>La&#x2F;R &#x3D; 1: 时延不会变化，具体数值取决于当时队列长度</p>
+<p>La&#x2F;R &gt; 1: 平均时延较大，且随时间推延而趋于无穷!</p>
+<p><strong>处理时延</strong></p>
+<p>主机或路由器在收到分组时要花费一定的时间进行处理，例如分析分组的首部、从分组中提取数据部分、进行差错检验或查找适当的路由等等</p>
+<h3 id="丢包"><a href="#丢包" class="headerlink" title="丢包"></a>丢包</h3><p>缓存中队列的容量是有限的</p>
+<p>当分组到达时队列已满，则分组被丢弃 (丢失)</p>
+<p>丢失的分组可能会被前一个节点、源端系统重新传输，或者根本不重传</p>
+<h3 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h3><p>在发送方与接收方之间传输比特的速率（bps）</p>
+<h2 id="协议层次和服务模型"><a href="#协议层次和服务模型" class="headerlink" title="协议层次和服务模型"></a>协议层次和服务模型</h2><p><strong>因特网的协议栈</strong></p>
+<p><strong>应用层</strong>: 是网络应用程序及他们的应用层协议<strong>存留的地方</strong>。因特网的应用层协议包括很多，如HTTP(提供了web文档的请求和传送)，SMTP(提供了电子邮件报文的传输)，FTP（提供了两个端系统之间的文件传送）。像我们<a target="_blank" rel="noopener" href="http://www.baidu.com这样端系统名字转换为32比特网络地址,也是借助于特定的应用协议即域名系统(dns)完成的.一个端系统的应用程序通过协议与另一个端系统中的应用进行交换信息产生的分组,我们把这种应用层的信息分组称为**报文./">www.baidu.com这样端系统名字转换为32比特网络地址，也是借助于特定的应用协议即域名系统(dns)完成的。一个端系统的应用程序通过协议与另一个端系统中的应用进行交换信息产生的分组，我们把这种应用层的信息分组称为**报文。</a>**</p>
+<p>FTP, SMTP, HTTP</p>
+<p><strong>运输层</strong>: 主要用来<strong>传输应用层中应用程序产生的应用层报文</strong>。主要包括两种传输协议：TCP和UDP协议。运输层的分组称为<strong>报文段</strong>。</p>
+<p>TCP, UDP</p>
+<p><strong>网络层</strong>：它是负责将称为“数据报的网络层分组”从一台主机移动到另一台主机上。在一台主机中，运输层协议向网络层递交报文段和发送的目的地。就像是你将信件和收人地址交给邮政。</p>
+<p><strong>网络层协议只包含IP协议</strong>，它是一种用来定义网络层数据报中的各个字段(这点类似于java中的类的属性)，还定义了端系统和路由器如何作用于这些对象(类似于类中的方法)。所有具有网络层的因特网组件必须运行IP协议。</p>
+<p>因特网的网络层还包含了决定路由选择协议，它使得<strong>数据报</strong>根据该路由从源系统传输到目的地。</p>
+<p>IP, 路由协议</p>
+<p><strong>链路层</strong>: 类似于一条路。网络层通过源和目的地之间的一系列路由器路由数据。为了将分组从一个节点(路由器或主机)移动到路径中的下一个节点，网络层必须依靠该链路层的服务。特别是在每个节点，网络层将数据报下发给链路层，链路层将沿着路径传输到下一个节点，在下个节点，再由链路层将数据上报给网络层。</p>
+<p>链路层提供的服务取决于应用于该链路的特定链路层协议。有些链路层协议提供可靠传输，从传输节点到跨越链路到达下一个节点 。<strong>注意这里的可靠跟TCP的可靠是不一致的，这里的可靠是保证一个节点到一个节点之间链路的可靠传输</strong>。TCP是保证端系统之间的可靠传输。而一个端系统之间一般会跨越很多条链路，每条链路可能采用不同的链路层协议。我们把链路层的分组称为<strong>帧</strong>。</p>
+<p>PPP, 以太网q</p>
+<p><strong>物理层</strong>: 链路层是将整个帧从一个网络元素传递到邻近的一个网络元素。而物理层的任务是将该帧中的一个个比特从一个节点移动到下一个节点，在这层仍然与链路层相关的，并且进一步与链路的实际传输媒体相关(比如双骄铜线、单模光纤)，以太网由许多物理层协议：一个是关于双娇铜线，另一个是关于同轴电缆的，还有一个是关于光纤的。<img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130143719298.png" alt="image-20191130143719298"></p>
+<p><img src="/images/%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/image-20191130143742978.png" alt="image-20191130143742978"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/" title="计网和英特网">http://rshawshank.github.io/2019/11/27/ComputerNetworking_计网和英特网/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag"># 计算机网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/27/ComputerNetworking_Socket/" rel="next" title="socket">
+      socket <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">第一部分：计算机网络的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E5%9B%A0%E7%89%B9%E7%BD%91%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">第二部分：因特网的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%BE%B9%E7%BC%98"><span class="nav-number">2.1.</span> <span class="nav-text">网络边缘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%BD%91"><span class="nav-number">2.1.1.</span> <span class="nav-text">接入网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%AA%92%E4%BD%93"><span class="nav-number">2.1.2.</span> <span class="nav-text">物理媒体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%A0%B8%E5%BF%83"><span class="nav-number">2.2.</span> <span class="nav-text">网络核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E7%94%B5%E8%B7%AF%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C"><span class="nav-number">2.2.1.</span> <span class="nav-text">第一代计算机网络——电路交换网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%BB%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C"><span class="nav-number">2.2.2.</span> <span class="nav-text">第二代计算机网络——分组交换网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ISP%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91%E4%B8%BB%E5%B9%B2"><span class="nav-number">2.2.3.</span> <span class="nav-text">ISP和因特网主干</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E7%BD%91%E4%B8%AD%E7%9A%84%E6%97%B6%E5%BB%B6%E3%80%81%E4%B8%A2%E5%8C%85%E5%92%8C%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">分组交换网中的时延、丢包和吞吐量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6"><span class="nav-number">2.3.1.</span> <span class="nav-text">时延</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A2%E5%8C%85"><span class="nav-number">2.3.2.</span> <span class="nav-text">丢包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">吞吐量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E5%B1%82%E6%AC%A1%E5%92%8C%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">协议层次和服务模型</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

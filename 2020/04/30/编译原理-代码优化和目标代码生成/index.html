@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="优化技术介绍代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。 代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即  局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化； 循环优化：对循环中的代码进行的优化； 全局优化：在整个程序范围内进行的优化。  常见的代码优化手段常见的代码优化技术有：删除多余运算、合并已知量和复写传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理-代码优化和目标代码生成">
+<meta property="og:url" content="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="优化技术介绍代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。 代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即  局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化； 循环优化：对循环中的代码进行的优化； 全局优化：在整个程序范围内进行的优化。  常见的代码优化手段常见的代码优化技术有：删除多余运算、合并已知量和复写传">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/NirHpLcfsoCmdla.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/jkxtV8F3sfoOQI9.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/jfz2uI8gO7UYNDQ.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/5QshwyeKM6UdCkv.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/3fgHueUhVzjFGWr.png">
+<meta property="og:image" content="https://i.loli.net/2021/01/17/empRxLUdXWEMIhO.png">
+<meta property="article:published_time" content="2020-04-30T11:36:21.000Z">
+<meta property="article:modified_time" content="2021-01-16T19:00:22.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>编译原理-代码优化和目标代码生成 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译原理-代码优化和目标代码生成
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-30 11:36:21" itemprop="dateCreated datePublished" datetime="2020-04-30T11:36:21Z">2020-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-16 19:00:22" itemprop="dateModified" datetime="2021-01-16T19:00:22Z">2021-01-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">编译原理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="优化技术介绍"><a href="#优化技术介绍" class="headerlink" title="优化技术介绍"></a>优化技术介绍</h1><p>代码优化，是指对中间代码或目标代码进行等价变换，使得变换后的代码运行速度加快和存储空间减少。</p>
+<p>代码优化按照优化的代码块尺度分为：局部优化、循环优化和全局优化。即</p>
+<ol>
+<li>局部优化：只有一个控制流入口、一个控制流出口的基本程序块上进行的优化；</li>
+<li>循环优化：对循环中的代码进行的优化；</li>
+<li>全局优化：在整个程序范围内进行的优化。</li>
+</ol>
+<h1 id="常见的代码优化手段"><a href="#常见的代码优化手段" class="headerlink" title="常见的代码优化手段"></a>常见的代码优化手段</h1><p>常见的代码优化技术有：删除多余运算、合并已知量和复写传播，删除无用赋值等。</p>
+<p>针对目标代码：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">P</span> := <span class="number">0</span></span><br><span class="line"><span class="attribute">for</span> I := <span class="number">1</span> to <span class="number">20</span> do </span><br><span class="line">    <span class="attribute">P</span> := P + A[I]*B[I] </span><br></pre></td></tr></table></figure>
+
+<p>假设其翻译所得的中间代码如下</p>
+<p><img src="https://i.loli.net/2021/01/17/D6wA2XkBIuGHhYE.png"></p>
+<ol>
+<li><p><strong>删除多余运算</strong><br> 分析上图的中间代码，可以发现(3)和式(6)属于重复计算（因为I并没有发生变化），故而式(6)是多余的，完全可以采用T<del>4</del>∶&#x3D;T<del>1</del>代替。</p>
+</li>
+<li><p><strong>代码外提</strong><br> 减少循环中代码总数的一个重要办法是循环中不变的代码段外提。这种变换把循环不变运算，即结果独立于循环执行次数的表达式，提到循环的前面,使之只在循环外计算一次。针对改定的例子，显然数组A和 B的首地址在计算过程中并不改变，则作出的改动如下</p>
+</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/NirHpLcfsoCmdla.png"></p>
+<ol start="3">
+<li><strong>强度削弱</strong><br> 强度削弱的本质是把<strong>强度大的运算换算成强度小</strong>的运算，例如将乘法换成加法运算。针对上面的循环过程，每循环一次，I的值增加1，T<del>1</del>的值与I保持线性关系，每次总是增加4。因此，可以把循环中计算T<del>1</del>值的乘法运算变换成在循环前进行一次乘法运算，而在循环中将其变换成加法运算。</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/jkxtV8F3sfoOQI9.png"></p>
+<ol start="4">
+<li><p><strong>变换循环控制条件</strong><br> I和T<del>1</del>始终保持T<del>1</del>＝4*I的线性关系，因此可以把四元式（12）的循环控制条件I≤20变换成T<del>1</del>≤80，这样整个程序的运行结果不变。这种变换称为变换循环控制条件。经过这一变换后，循环中I的值在循环后不会被引用，四元式（11）成为多余运算，可以从循环中删除。变换循环控制条件可以达到代码优化的目的。</p>
+</li>
+<li><p><strong>合并已知量和复写传播</strong><br> 四元式（3）计算4 * I时，I必为1。即4*I的两个运算对象都是编码时的已知量，可在编译时计算出它的值，即四元式（3）可变为T<del>1</del>＝4，这种变换称为合并已知量。</p>
+</li>
+</ol>
+<p>  四元式(6)把T<del>1</del>的值复写到T<del>4</del>中，四元式（8）要引用T<del>4</del>的值，而从四元式（6）到四元式（8）之间未改变T<del>4</del>和T<del>1</del>的值，则将四元式（8）改为T<del>6</del>∶&#x3D;T<del>5</del>[T<del>1</del>]，这种变换称为复写传播。</p>
+<p>  <img src="https://i.loli.net/2021/01/17/jfz2uI8gO7UYNDQ.png"></p>
+<ol start="6">
+<li><strong>删除无用赋值</strong><br> 式（6）对T<del>4</del>赋值，但T<del>4</del>未被引用；另外，（2）和（11）对I赋值，但只有（11）引用I。所以，只要程序中其它地方不需要引用T<del>4</del>和I，则（6），（2）和（11）对程序的运行结果无任何作用。我们称之为无用赋值，无用赋值可以从程序中删除。至此，我们可以得到删减后简洁的代码</li>
+</ol>
+<p>  <img src="https://i.loli.net/2021/01/17/5QshwyeKM6UdCkv.png"></p>
+<h2 id="基本块内的局部优化"><a href="#基本块内的局部优化" class="headerlink" title="基本块内的局部优化"></a>基本块内的局部优化</h2><h3 id="基本块的划分"><a href="#基本块的划分" class="headerlink" title="基本块的划分"></a>基本块的划分</h3><p>入口语句的定义如下：<br>　　① 程序的第一个语句；或者，<br>　　② 条件转移语句或无条件转移语句的转移目标语句；<br>　　③ 紧跟在条件转移语句后面的语句。<br>有了入口语句的概念之后，就可以给出划分中间代码（四元式程序）为基本块的算法，<br>　　其步骤如下：<br>　　① 求出四元式程序中各个基本块的入口语句。<br>　　② 对每一入口语句，构造其所属的基本块。<strong>它是由该入口语句到下一入口语句（不包括下一入口语句），或到一转移语句（包括该转移语句），或到一停语句（包括该停语句）之间的语句序列组成的。</strong><br>　 ③ 凡未被纳入某一基本块的语句、都是程序中控制流程无法到达的语句，因而也是不会被执行到的语句，可以把它们删除。</p>
+<h3 id="基本块的优化手段"><a href="#基本块的优化手段" class="headerlink" title="基本块的优化手段"></a>基本块的优化手段</h3><p>由于基本块内的逻辑清晰，故而要做的优化手段都是较为直接浅层次的。目前基本块内的常见的块内优化手段有：</p>
+<ol>
+<li><p>删除公共子表达式</p>
+</li>
+<li><p>删除无用代码</p>
+</li>
+<li><p>重新命名临时变量 （一般是用来应对创建过多临时变量的，如t<del>2</del> :&#x3D; t<del>1</del> + 3如果后续并没有对t<del>1</del>的引用，则可以t<del>1</del> :&#x3D; t<del>1</del> + 3来节省一个临时变量的创建）</p>
+</li>
+<li><p>交换语句顺序</p>
+</li>
+<li><p>在结果不变的前提下，更换代数操作（如$x∶&#x3D;y<strong>2$是需要根据 $</strong>$运算符重载指数函数的，这是挺耗时的操作，故而可以用强度更低的$x∶&#x3D;y*y$来代替）</p>
+</li>
+</ol>
+<p>根据以上原则，对如下代码进行优化</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">t1 := <span class="number">4</span> - <span class="number">2</span></span><br><span class="line">t2 := t1 / <span class="number">2</span> </span><br><span class="line">t3 := a * t2</span><br><span class="line">t4 := t3 * t1</span><br><span class="line">t5 := b + t4</span><br><span class="line"> c := t5 * t5</span><br></pre></td></tr></table></figure>
+
+<p>给出优化的终版代码</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">t1</span> := a + a</span><br><span class="line"><span class="built_in">t1</span> := <span class="keyword">b </span>+ <span class="built_in">t1</span></span><br><span class="line"> c := <span class="built_in">t1</span> * <span class="built_in">t1</span></span><br></pre></td></tr></table></figure>
+
+<p>显然代码优化的工作不能像上面那样的人工一步步确认和遍历，显然必然要将这些优化工作公理化。而一般到涉及到数据流和控制流简化的这种阶段，都是到了图论一展身手的时候。</p>
+<h3 id="DAG（无环路有向图）应用于基本块的优化工作"><a href="#DAG（无环路有向图）应用于基本块的优化工作" class="headerlink" title="DAG（无环路有向图）应用于基本块的优化工作"></a>DAG（无环路有向图）应用于基本块的优化工作</h3><p><strong>利用DAG进行基本块优化的基本思想是：按照构造DAG结点的顺序，对每一个结点写出其相应的三地址代码表示</strong></p>
+<p>在DAG图中，通过节点间的连线和层次关系来表示表示式或运算的归属关系：<br>① 图的叶结点，即无后继的结点，以一标识符（变量名）或常数作为标记，表示这个结点代表该变量或常数的值。如果叶结点用来代表某变量A的地址，则用addr（A）作为这个结点的标记。<br>② 图的内部结点，即有后继的结点,以一运算符作为标记，表示这个结点代表应用该运算符对其后继结点所代表的值进行运算的结果。<br>（注：该部分内容转载自教材《编译原理》第11章DAG无环路有向图应用于代码优化）</p>
+<p>DAG构建的流程如下</p>
+<blockquote>
+<p>对基本块的每一四元式，依次执行：<br>　　1． </p>
+<p>​	   如果NODE（B）无定义，则构造一标记为B的叶结点并定义NODE（B）为这个结点；<br>　　如果当前四元式是0型，则记NODE（B）的值为n，转4。<br>　　如果当前四元式是1型，则转2.（1）。<br>　　如果当前四元式是2型，则：（Ⅰ）如果NODE（C）无定义，则构造一标记为C的叶结点并定义NODE（C）为这个结点，（Ⅱ）转2.（2）。<br>　　2．<br>　　（1） 如果NODE（B）是标记为常数的叶结点，则转2.（3），否则转3.（1）。<br>　　（2） 如果NODE（B）和NODE（C）都是标记为常数的叶结点，则转2.（4），否则转3.（2）。<br>　　（3） 执行op　B（即合并已知量），令得到的新常数为P。如果NODE（B）是处理当前四元式时 新构造出来的结点，则删除它。如果NODE（P）无定义，则构造一用P做标记的叶结点n。置NODE（P）＝n，转4.。<br>　　（4） 执行B　op　C(即合并已知量)，令得到的新常数为P。如果NODE（B）或NODE（C）是处理当前四元式时新构造出来的结点，则删除它。如果NODE（P）无定义，则构造一用P做标记的叶结点n。置NODE（P）＝n，转4.。<br>　　3．<br>　　（1） 检查DAG中是否已有一结点，其唯一后继为NODE（B），且标记为op（即找公共子表达式）。如果没有，则构造该结点n，否则就把已有的结点作为它的结点并设该结点为n，转4.。<br>　　（2） 检查DAG中是否已有一结点，其左后继为NODE（B），右后继为NODE（C），且标记为op(即找公共子表达式)。如果没有，则构造该结点n，否则就把已有的结点作为它的结点并设该结点为n。转4.。<br>　　4．<br>　　如果NODE（A）无定义，则把A附加在结点n上并令NODE（A）＝n；否则先把A从NODE（A）结点上的附加标识符集中删除（注意，如果NODE（A）是叶结点，则其标记A不删除），把A附加到新结点n上并令NODE（A）＝n。转处理下一四元式。</p>
+</blockquote>
+<p>说着很复杂，下面看一个案例</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">1</span>) <span class="built_in">T0</span>∶=<span class="number">3</span>.<span class="number">14</span></span><br><span class="line">(<span class="number">2</span>) <span class="built_in">T1</span>∶=<span class="number">2</span> * <span class="built_in">T0</span></span><br><span class="line">(<span class="number">3</span>) <span class="built_in">T2</span>∶=R + r</span><br><span class="line">(<span class="number">4</span>) A∶=<span class="built_in">T1</span> * <span class="built_in">T2</span></span><br><span class="line">(<span class="number">5</span>) <span class="keyword">B∶=A</span></span><br><span class="line"><span class="keyword"></span>(<span class="number">6</span>) <span class="built_in">T3</span>∶=<span class="number">2</span> * <span class="built_in">T0</span></span><br><span class="line">(<span class="number">7</span>) <span class="built_in">T4</span>∶=R + r</span><br><span class="line">(<span class="number">8</span>) <span class="built_in">T5</span>∶=<span class="built_in">T3</span> * <span class="built_in">T4</span></span><br><span class="line">(<span class="number">9</span>) <span class="built_in">T6</span>∶=R - r</span><br><span class="line">(<span class="number">10</span>) <span class="keyword">B∶=T5 </span>* <span class="built_in">T6</span></span><br></pre></td></tr></table></figure>
+
+<p>其DAG图的构建过程如下</p>
+<p><img src="https://i.loli.net/2021/01/17/3fgHueUhVzjFGWr.png"></p>
+<p>通过DAG图可以发现诸多的优化信息，如重复定义、无用定义等，则根据上图的DAG图可以构建最后的优化代码序列</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　(<span class="number">1</span>) <span class="built_in">S1</span>∶=R+r</span><br><span class="line">　　(<span class="number">2</span>) A∶=<span class="number">6</span>.<span class="number">28</span>*<span class="built_in">S1</span></span><br><span class="line">　　(<span class="number">3</span>) <span class="built_in">S2</span>∶=R-r</span><br><span class="line">　　(<span class="number">4</span>) <span class="keyword">B∶=A </span>*<span class="built_in">S2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="循环优化"><a href="#循环优化" class="headerlink" title="循环优化"></a>循环优化</h2><p>循环优化的主要手段有：循环次数无关性代码外提、删除归纳变量和运算强度削弱。关于这三种手段的理解可以借助此前的描述进行类比，基本并无太多差异。</p>
+<h3 id="流图"><a href="#流图" class="headerlink" title="流图"></a>流图</h3><p>结点是基本块的有向图G &#x3D; ( N, E, root)</p>
+<ul>
+<li>N是结点的集合，每个结点表示一个基本块</li>
+<li>E是边的集合，如果结点n<del>i</del>和n<del>j</del>间存在前驱和后继的关系，则在存在一条从n<del>i</del>到n<del>j</del>的有向边（此时意味着，在n<del>i</del>执行后，可能会执行n<del>j</del>）<ul>
+<li>n<del>i</del>的出口语句是goto(s)或if … goto(s)，且(s)是的n<del>j</del>入口语句</li>
+<li>n<del>j</del>在程序中的位置紧跟在n<del>i</del>后，且n<del>i</del>的出口语句不是无条件转移语句和停语句</li>
+</ul>
+</li>
+<li>root是流图的首结点（或称为根结点），是包含程序第一个语句的基本块</li>
+</ul>
+<p>每个流图都可以等价变换为单入口，且每个结点最多有两个后继的图</p>
+<p>根据上面基本块的定义，我们将诸多基本块组装在一起，构建成程序循环图，如针对下面这个例子</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">　　<span class="comment">(1)</span> read x</span><br><span class="line">　　<span class="comment">(2)</span> read y</span><br><span class="line">　　<span class="comment">(3)</span> r∶=x mod y</span><br><span class="line">　　<span class="comment">(4)</span> <span class="keyword">if</span> r=<span class="number">0</span> <span class="keyword">goto</span> <span class="comment">(8)</span></span><br><span class="line">　　<span class="comment">(5)</span> x∶=y</span><br><span class="line">　　<span class="comment">(6)</span> y∶=r</span><br><span class="line">　　<span class="comment">(7)</span> <span class="keyword">goto</span> <span class="comment">(3)</span></span><br><span class="line">　　<span class="comment">(8)</span> write y</span><br><span class="line">　　<span class="comment">(9)</span> halt</span><br></pre></td></tr></table></figure>
+
+<p>则按照上面基本块的划分，可以分成四个部分，四个部分的控制流分析可知可以得到一个循环图（流图）</p>
+<p><img src="https://i.loli.net/2021/01/17/empRxLUdXWEMIhO.png"></p>
+<p>循环块最主要的特点是<strong>只有一个数据流和控制流入口，而出口可能有多个。</strong></p>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%92%8C%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" title="编译原理-代码优化和目标代码生成">http://rshawshank.github.io/2020/04/30/编译原理-代码优化和目标代码生成/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" rel="tag"># 编译原理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/30/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-%E8%BF%90%E8%A1%8C%E6%97%B6%E5%AD%98%E5%82%A8%E7%BB%84%E7%BB%87/" rel="prev" title="编译原理-运行时存储组织">
+      <i class="fa fa-chevron-left"></i> 编译原理-运行时存储组织
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/03/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D%E6%8A%80%E6%9C%AF/" rel="next" title="数据库_数据库恢复技术">
+      数据库_数据库恢复技术 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">优化技术介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">常见的代码优化手段</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E5%86%85%E7%9A%84%E5%B1%80%E9%83%A8%E4%BC%98%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">基本块内的局部优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E7%9A%84%E5%88%92%E5%88%86"><span class="nav-number">2.1.1.</span> <span class="nav-text">基本块的划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%9D%97%E7%9A%84%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">2.1.2.</span> <span class="nav-text">基本块的优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DAG%EF%BC%88%E6%97%A0%E7%8E%AF%E8%B7%AF%E6%9C%89%E5%90%91%E5%9B%BE%EF%BC%89%E5%BA%94%E7%94%A8%E4%BA%8E%E5%9F%BA%E6%9C%AC%E5%9D%97%E7%9A%84%E4%BC%98%E5%8C%96%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.3.</span> <span class="nav-text">DAG（无环路有向图）应用于基本块的优化工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E4%BC%98%E5%8C%96"><span class="nav-number">2.2.</span> <span class="nav-text">循环优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E5%9B%BE"><span class="nav-number">2.2.1.</span> <span class="nav-text">流图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.2.2.</span> <span class="nav-text">循环</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="javaWeb简介Java web，是用java技术来解决相关web互联网领域的技术的总称。web包括：web服务器和web客户端两部分。 web资源分类： 所谓web资源即放在Internet网上供外界访问的文件或程序，又根据它们呈现的效果及原理不同，将它们划分为静态资源和动态资源。  静态web资源：固定不变数据文件（静态网页 HTML、CSS文件、文本、音频、视频）  静态web技术：HTM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaWeb学习（一）——简介—+Tomcat">
+<meta property="og:url" content="http://rshawshank.github.io/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="javaWeb简介Java web，是用java技术来解决相关web互联网领域的技术的总称。web包括：web服务器和web客户端两部分。 web资源分类： 所谓web资源即放在Internet网上供外界访问的文件或程序，又根据它们呈现的效果及原理不同，将它们划分为静态资源和动态资源。  静态web资源：固定不变数据文件（静态网页 HTML、CSS文件、文本、音频、视频）  静态web技术：HTM">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/08/31/n1K9YAmo6TdqF3M.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/26/yMknVOF26t7J8K4.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/30/YBJksmbM7TN2pCV.png">
+<meta property="og:image" content="https://i.loli.net/2021/08/30/mbWCsLRuD1UEPvB.png">
+<meta property="article:published_time" content="2021-09-17T15:20:56.000Z">
+<meta property="article:modified_time" content="2021-09-17T07:24:04.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="javaweb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/08/31/n1K9YAmo6TdqF3M.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JavaWeb学习（一）——简介—+Tomcat | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaWeb学习（一）——简介—+Tomcat
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-09-17 15:20:56 / 修改时间：07:24:04" itemprop="dateCreated datePublished" datetime="2021-09-17T15:20:56Z">2021-09-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="javaWeb简介"><a href="#javaWeb简介" class="headerlink" title="javaWeb简介"></a>javaWeb简介</h1><p>Java web，是用java技术来解决相关web互联网领域的技术的总称。web包括：web服务器和web客户端两部分。</p>
+<p>web资源分类：</p>
+<p>所谓web资源即放在Internet网上供外界访问的文件或程序，又根据它们呈现的效果及原理不同，将它们划分为静态资源和动态资源。</p>
+<ul>
+<li><p>静态web资源：固定不变数据文件（静态网页 HTML、CSS文件、文本、音频、视频）</p>
+</li>
+<li><p>静态web技术：HTML+CSS+JavaScript</p>
+</li>
+<li><p>动态web资源：一段服务程序，运行后，生成的数据文件</p>
+</li>
+<li><p>动态web技术：servlet，jsp，php， .net ,ruby、python等等</p>
+</li>
+</ul>
+<p>常见的web服务器：</p>
+<blockquote>
+<p>Tomcat：由Apache组织提供的一种Web服务器，提供对jsp和Servlet的支持。它是一种轻量级的javaWeb容器（服务器），也是当前应用最广的JavaWeb服务器（免费）。<br>Jboss：是一个遵从JavaEE规范的、开放源代码的、纯Java的EJB服务器，它支持所有的JavaEE规范（免费）。<br>GlassFish： 由Oracle公司开发的一款JavaWeb服务器，是一款强健的商业服务器，达到产品级质量（应用很少，收费）。<br>Resin：是CAUCHO公司的产品，是一个非常流行的应用服务器，对servlet和JSP提供了良好的支持，性能也比较优良，resin自身采用JAVA语言开发（收费，应用比较多）。<br>WebLogic：是Oracle公司的产品，是目前应用最广泛的Web服务器，支持JavaEE规范，而且不断的完善以适应新的开发要求，适合大型项目（收费，用的不多，适合大公司）。</p>
+</blockquote>
+<h2 id="JAVAWEB目录结构"><a href="#JAVAWEB目录结构" class="headerlink" title="JAVAWEB目录结构"></a>JAVAWEB目录结构</h2><p><img src="https://i.loli.net/2021/08/31/n1K9YAmo6TdqF3M.png"></p>
+<p>以上图说明：</p>
+<ul>
+<li>bbs目录代表一个web应用</li>
+<li>bbs目录下的html,jsp文件可以直接被浏览器访问</li>
+<li><strong>WEB-INF目录下的资源是不能直接被浏览器访问的</strong></li>
+<li>web.xml文件是web程序的主要配置文件</li>
+<li>所有的classes文件都放在classes目录下</li>
+<li>jar文件放在lib目录下</li>
+</ul>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><p>是一个运行java的网络<strong>服务器</strong>，在中小型系统和并发量小的场合下被普遍使用，是开发和调试Servlet、JSP 程序的首选。</p>
+<p><img src="https://i.loli.net/2021/08/26/yMknVOF26t7J8K4.png" alt="img"></p>
+<h2 id="tomcat体系结构"><a href="#tomcat体系结构" class="headerlink" title="tomcat体系结构"></a>tomcat体系结构</h2><p><img src="https://i.loli.net/2021/08/30/YBJksmbM7TN2pCV.png"></p>
+<p>Tomcat中最顶层的容器是Server，代表着整个服务器，从上图中可以看出，一个Server可以包含至少一个Service，即可以包含多个Service，用于具体提供服务。</p>
+<p>Service主要包含两个部分：Connector和Container。从上图中可以看出 Tomcat 的心脏就是这两个组件，他们的作用如下：</p>
+<ul>
+<li>Connector用于处理连接相关的事情，并提供Socket与Request请求和Response响应相关的转化;</li>
+<li>Container用于封装和管理Servlet，以及具体处理Request请求；</li>
+</ul>
+<p>一个Tomcat中只有一个Server，一个Server可以包含多个Service，一个Service只有一个Container，但是可以有多个Connectors，这是因为一个服务可以有多个连接，如同时提供Http和Https链接，也可以提供向相同协议不同端口的连接</p>
+<p>多个 Connector 和一个 Container 就形成了一个 Service，有了 Service 就可以对外提供服务了，但是 Service 还要一个生存的环境，必须要有人能够给她生命、掌握其生死大权，那就非 Server 莫属了！所以整个 Tomcat 的生命周期由 Server 控制。</p>
+<h2 id="Tomcat-有哪几种Connector-运行模式-优化-？"><a href="#Tomcat-有哪几种Connector-运行模式-优化-？" class="headerlink" title="Tomcat 有哪几种Connector 运行模式(优化)？"></a>Tomcat 有哪几种Connector 运行模式(优化)？</h2><h3 id="BIO：同步并阻塞"><a href="#BIO：同步并阻塞" class="headerlink" title="BIO：同步并阻塞"></a>BIO：同步并阻塞</h3><p>一个线程处理一个请求。缺点：并发量高时，线程数较多，浪费资源。Tomcat7或以下，在Linux系统中默认使用这种方式。</p>
+<h3 id="NIO：同步非阻塞IO"><a href="#NIO：同步非阻塞IO" class="headerlink" title="NIO：同步非阻塞IO"></a>NIO：同步非阻塞IO</h3><p>利用Java的异步IO处理，可以通过少量的线程处理大量的请求，可以复用同一个线程处理多个connection(多路复用)。Tomcat8在Linux系统中默认使用这种方式。</p>
+<h3 id="APR：即Apache-Portable-Runtime"><a href="#APR：即Apache-Portable-Runtime" class="headerlink" title="APR：即Apache Portable Runtime"></a>APR：即Apache Portable Runtime</h3><p>从操作系统层面解决io阻塞问题。</p>
+<p>Tomcat有几种部署方式？<br>Tomcat容器是如何创建servlet类实例？用到了什么原理？</p>
+<ol>
+<li>当容器启动时，会读取在webapps目录下所有的web应用中的web.xml文件，然后对 xml文件进行解析，并读取servlet注册信息。然后，将每个应用中注册的servlet类都进行加载，并通过 反射的方式实例化。（有时候也是在第一次请求时实例化）</li>
+<li>在servlet注册时加上1如果为正数，则在一开始就实例化，如果不写或为负数，则第一次请求实例化。</li>
+</ol>
+<p>浏览器访问web资源的流程图</p>
+<p><img src="https://i.loli.net/2021/08/30/mbWCsLRuD1UEPvB.png"></p>
+<p>有关配置虚拟目录、临时域名、虚拟主机见：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013122831">参考文献</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xdp-gacl/p/3744053.html">JavaWeb学习总结(三)——Tomcat服务器学习和使用(二) - 孤傲苍狼 - 博客园 (cnblogs.com)</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/" title="JavaWeb学习（一）——简介—+Tomcat">http://rshawshank.github.io/2021/09/17/JavaWeb学习（一）——简介+Tomcat/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javaweb/" rel="tag"># javaweb</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94XML%E5%92%8CJSON/" rel="prev" title="JavaWeb学习（十三）——XML和JSON">
+      <i class="fa fa-chevron-left"></i> JavaWeb学习（十三）——XML和JSON
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94http/" rel="next" title="JavaWeb学习（二）——http">
+      JavaWeb学习（二）——http <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#javaWeb%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">javaWeb简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVAWEB%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">JAVAWEB目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tomcat"><span class="nav-number">2.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tomcat%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">tomcat体系结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat-%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8DConnector-%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F-%E4%BC%98%E5%8C%96-%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">Tomcat 有哪几种Connector 运行模式(优化)？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIO%EF%BC%9A%E5%90%8C%E6%AD%A5%E5%B9%B6%E9%98%BB%E5%A1%9E"><span class="nav-number">2.2.1.</span> <span class="nav-text">BIO：同步并阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO%EF%BC%9A%E5%90%8C%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9EIO"><span class="nav-number">2.2.2.</span> <span class="nav-text">NIO：同步非阻塞IO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APR%EF%BC%9A%E5%8D%B3Apache-Portable-Runtime"><span class="nav-number">2.2.3.</span> <span class="nav-text">APR：即Apache Portable Runtime</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

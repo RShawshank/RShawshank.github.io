@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Java中常用的锁机制java多线程—锁机制在开发Java多线程应用程序中，各个线程之间由于要共享资源，必须用到锁机制。Java提供了多种多线程锁机制的实现方式，常见的有synchronized、ReentrantLock、Semaphore、AtomicInteger等。每种机制都有优缺点与各自的适用场景，必须熟练掌握他们的特点才能在Java多线程应用开发时得心应手。 线程同步有关的类图关系可用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java 锁机制">
+<meta property="og:url" content="http://rshawshank.github.io/2020/02/07/java-%E9%94%81%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="Java中常用的锁机制java多线程—锁机制在开发Java多线程应用程序中，各个线程之间由于要共享资源，必须用到锁机制。Java提供了多种多线程锁机制的实现方式，常见的有synchronized、ReentrantLock、Semaphore、AtomicInteger等。每种机制都有优缺点与各自的适用场景，必须熟练掌握他们的特点才能在Java多线程应用开发时得心应手。 线程同步有关的类图关系可用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/1042141-20180119085622974-1501528059.jpg">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20190616200439354_-1581078576151.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104146557.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210420869.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104221314.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104235664.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104316520.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104424361.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104440388.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104448924.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104555799.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104555509.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122101819836.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122101946394.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122102030461.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122102047431.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018032923230698">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329232421333">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210411172.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104130517.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329232604894">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329233254519">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210212894.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104052869.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104329631.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210434386.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104355888.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104410235.png">
+<meta property="og:image" content="http://rshawshank.github.io/notes_learn/java/Java%25E4%25B8%25AD%25E5%25B8%25B8%25E7%2594%25A8%25E7%259A%2584%25E9%2594%2581%25E6%259C%25BA%25E5%2588%25B6.assets/20180329230449266">
+<meta property="article:published_time" content="2020-02-07T11:36:50.000Z">
+<meta property="article:modified_time" content="2020-02-08T05:20:52.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="锁机制">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/1042141-20180119085622974-1501528059.jpg">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/02/07/java-%E9%94%81%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>java 锁机制 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/02/07/java-%E9%94%81%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java 锁机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-07 11:36:50" itemprop="dateCreated datePublished" datetime="2020-02-07T11:36:50Z">2020-02-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-08 05:20:52" itemprop="dateModified" datetime="2020-02-08T05:20:52Z">2020-02-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Java中常用的锁机制"><a href="#Java中常用的锁机制" class="headerlink" title="Java中常用的锁机制"></a>Java中常用的锁机制</h1><h2 id="java多线程—锁机制"><a href="#java多线程—锁机制" class="headerlink" title="java多线程—锁机制"></a>java多线程—锁机制</h2><p>在开发Java多线程应用程序中，各个线程之间由于要共享资源，必须用到锁机制。Java提供了多种多线程锁机制的实现方式，常见的有synchronized、ReentrantLock、Semaphore、AtomicInteger等。每种机制都有优缺点与各自的适用场景，必须熟练掌握他们的特点才能在Java多线程应用开发时得心应手。</p>
+<p>线程同步有关的类图关系可用以下的图总结：</p>
+<img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/1042141-20180119085622974-1501528059.jpg" style="zoom:150%;" />
+
+
+
+<h3 id="锁的介绍"><a href="#锁的介绍" class="headerlink" title="锁的介绍"></a>锁的介绍</h3><h4 id="什么是锁"><a href="#什么是锁" class="headerlink" title="什么是锁"></a>什么是锁</h4><p>在计算机科学中，锁(lock)或互斥(mutex)是一种同步机制，用于在有许多执行线程的环境中强制对资源的访问限制。锁旨在强制实施互斥排他、并发控制策略。</p>
+<p>  锁通常需要硬件支持才能有效实施。这种支持通常采取一个或多个原子指令的形式，如”test-and-set”, “fetch-and-add” or “compare-and-swap””。这些指令允许单个进程测试锁是否空闲，如果空闲，则通过单个原子操作获取锁。</p>
+<p>通俗的理解是，锁是为了解决多个线程公用一种临界资源而产生冲突的。跟上厕所一样，假如有<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=ABC&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">ABC</a>三个人都来上厕所而厕所只有一个一次只能进一人，A先来了，那么在A出来之前，这个厕所就处在了“锁”定状态，B和C憋死也要在外面等着，直到A出门（原因很多，如睡着了，方便完了，忘带厕纸了跑出来找人要….）“锁”定解除B和C才能进入，当然牛逼的进（A和B有一腿只让B进或者优先级高或者…），其他的在外面继续等。</p>
+<h4 id="锁的属性—粒度"><a href="#锁的属性—粒度" class="headerlink" title="锁的属性—粒度"></a>锁的属性—粒度</h4><p>在引入锁粒度之前，需要了解关于锁的三个概念：</p>
+<p>1、锁开销 lock overhead 锁占用内存空间、 cpu初始化和销毁锁、获取和释放锁的时间。程序使用的锁越多，相应的锁开销越大</p>
+<p>2、锁竞争 lock contention 一个进程或线程试图获取另一个进程或线程持有的锁，就会发生锁竞争。锁粒度越小，发生锁竞争的可能性就越小</p>
+<p>3、死锁 deadlock 至少两个任务中的每一个都等待另一个任务持有的锁的情况锁粒度是衡量锁保护的数据量大小，通常选择粗粒度的锁(锁的数量少，每个锁保护大量的数据)，在当单进程访问受保护的数据时锁开销小，但是当多个进程同时访问时性能很差。因为增大了锁的竞争。相反，使用细粒度的锁(锁数量多，每个锁保护少量的数据)增加了锁的开销但是减少了锁竞争。例如数据库中，锁的粒度有表锁、页锁、行锁、字段锁、字段的一部分锁</p>
+<p>相关术语  Critical Section(临界区)、 Mutex&#x2F;mutual exclusion(互斥体)、 Semaphore&#x2F;binary semaphore(信号量)</p>
+<p>注：</p>
+<p>锁的粒度通常就是锁的级别。详细见：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25408423/article/details/84340432">https://blog.csdn.net/qq_25408423/article/details/84340432</a></p>
+<h3 id="Java锁的种类"><a href="#Java锁的种类" class="headerlink" title="Java锁的种类"></a>Java锁的种类</h3><ul>
+<li><p>公平锁&#x2F;非公平锁</p>
+</li>
+<li><p>可重入锁</p>
+</li>
+<li><p>独享锁&#x2F;共享锁</p>
+</li>
+<li><p>互斥锁&#x2F;读写锁</p>
+</li>
+<li><p>乐观锁&#x2F;悲观锁</p>
+</li>
+<li><p>分段锁</p>
+</li>
+<li><p>偏向锁&#x2F;轻量级锁&#x2F;重量级锁</p>
+</li>
+<li><p>自旋锁</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20190616200439354_-1581078576151.png"></p>
+</li>
+</ul>
+<p>上面是很多锁的名词，这些分类并不是全是指锁的状态，有的指锁的特性，有的指锁的设计，下面总结的内容是对每个锁的名词进行一定的解释。</p>
+<h4 id="1-公平锁-x2F-非公平锁"><a href="#1-公平锁-x2F-非公平锁" class="headerlink" title="1.公平锁&#x2F;非公平锁"></a>1.公平锁&#x2F;非公平锁</h4><p>公平锁是指多个线程按照申请锁的顺序来获取锁，线程直接进入队列中排队，队列中的第一个线程才能获得锁。公平锁的优点是等待锁的线程不会饿死。缺点是整体吞吐效率相对非公平锁要低，等待队列中除第一个线程以外的所有线程都会阻塞，CPU唤醒阻塞线程的开销比非公平锁大。</p>
+<p>非公平锁是多个线程加锁时直接尝试获取锁，获取不到才会到等待队列的队尾等待。但如果此时锁刚好可用，那么这个线程可以无需阻塞直接获取到锁，所以非公平锁有可能出现后申请锁的线程先获取锁的场景。非公平锁的优点是可以减少唤起线程的开销，整体的吞吐效率高，因为线程有几率不阻塞直接获得锁，CPU不必唤醒所有线程。缺点是处于等待队列中的线程可能会饿死，或者等很久才会获得锁。对于Java ReentrantLock而言，通过构造函数指定该锁是否是公平锁，默认是非公平锁。</p>
+<p>非公平锁的优点在于吞吐量比公平锁大。 </p>
+<p>例子：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104146557.png"></p>
+<p>如上图所示，假设有一口水井，有管理员看守，管理员有一把锁，只有拿到锁的人才能够打水，打完水要把锁还给管理员。每个过来打水的人都要管理员的允许并拿到锁之后才能去打水，如果前面有人正在打水，那么这个想要打水的人就必须排队。管理员会查看下一个要去打水的人是不是队伍里排最前面的人，如果是的话，才会给你锁让你去打水；如果你不是排第一的人，就必须去队尾排队，这就是公平锁。</p>
+<p>但是对于非公平锁，管理员对打水的人没有要求。即使等待队伍里有排队等待的人，但如果在上一个人刚打完水把锁还给管理员而且管理员还没有允许等待队伍里下一个人去打水时，刚好来了一个插队的人，这个插队的人是可以直接从管理员那里拿到锁去打水，不需要排队，原本排队等待的人只能继续等待。如下图所示：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210420869.png"></p>
+<p>对于synchronized而言，也是一种非公平锁。由于其并不像ReentrantLock是通过AQS的来实现线程调度，所以并没有任何办法使其变成公平锁。</p>
+<p>接下来我们通过ReentrantLock的源码来讲解公平锁和非公平锁。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104221314.png" alt="img"></p>
+<p>根据代码可知，ReentrantLock里面有一个内部类Sync，Sync继承AQS（AbstractQueuedSynchronizer），添加锁和释放锁的大部分操作实际上都是在Sync中实现的。它有公平锁FairSync和非公平锁NonfairSync两个子类。ReentrantLock默认使用非公平锁，也可以通过构造器来显示的指定使用公平锁。</p>
+<p>下面我们来看一下公平锁与非公平锁的加锁方法的源码:</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104235664.png" alt="img"></p>
+<p> 通过上图中的源代码对比，我们可以明显的看出公平锁与非公平锁的lock()方法唯一的区别就在于公平锁在获取同步状态时多了一个限制条件：hasQueuedPredecessors()。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104316520.png" alt="img"></p>
+<p>再进入hasQueuedPredecessors()，可以看到该方法主要做一件事情：主要是判断当前线程是否位于同步队列中的第一个。如果是则返回true，否则返回false。</p>
+<p>综上，<strong>公平锁就是通过同步队列来实现多个线程按照申请锁的顺序来获取锁，从而实现公平的特性。非公平锁加锁时不考虑排队等待问题，直接尝试获取锁，所以存在后申请却先获得锁的情况。</strong></p>
+<h4 id="2-独享锁-x2F-共享锁"><a href="#2-独享锁-x2F-共享锁" class="headerlink" title="2.独享锁&#x2F;共享锁"></a>2.独享锁&#x2F;共享锁</h4><p>独享锁和共享锁同样是一种概念。我们先介绍一下具体的概念，然后通过ReentrantLock和ReentrantReadWriteLock的源码来介绍独享锁和共享锁。</p>
+<p>独享锁也叫排他锁，是<strong>指该锁一次只能被一个线程所持有</strong>。如果线程T对数据A加上排它锁后，则其他线程不能再对A加任何类型的锁。获得排它锁的线程即能读数据又能修改数据。JDK中的synchronized和JUC中Lock的实现类就是互斥锁。</p>
+<p><strong>共享锁是指该锁可被多个线程所持有。如果线程T对数据A加上共享锁后，则其他线程只能对A再加共享锁，不能加排它锁。获得共享锁的线程只能读数据，不能修改数据。</strong></p>
+<p>独享锁与共享锁也是通过AQS来实现的，通过实现不同的方法，来实现独享或者共享。</p>
+<p>下图为ReentrantReadWriteLock的部分源码：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104424361.png" alt="img"></p>
+<p>我们看到ReentrantReadWriteLock有两把锁：ReadLock和WriteLock，由词知意，一个读锁一个写锁，合称“读写锁”。再进一步观察可以发现ReadLock和WriteLock是靠内部类Sync实现的锁。Sync是AQS的一个子类，这种结构在CountDownLatch、ReentrantLock、Semaphore里面也都存在。</p>
+<p>在ReentrantReadWriteLock里面，读锁和写锁的锁主体都是Sync，但读锁和写锁的加锁方式不一样。读锁是共享锁，写锁是独享锁。读锁的共享锁可保证并发读非常高效，而读写、写读、写写的过程互斥，因为读锁和写锁是分离的。所以ReentrantReadWriteLock的并发性相比一般的互斥锁有了很大提升。</p>
+<p>那读锁和写锁的具体加锁方式有什么区别呢？在了解源码之前我们需要回顾一下其他知识。</p>
+<p>在最开始提及AQS的时候我们也提到了state字段（int类型，32位），该字段用来描述有多少线程获持有锁。</p>
+<p>在独享锁中这个值通常是0或者1（如果是重入锁的话state值就是重入的次数），在共享锁中state就是持有锁的数量。但是在ReentrantReadWriteLock中有读、写两把锁，所以需要在一个整型变量state上分别描述读锁和写锁的数量（或者也可以叫状态）。于是将state变量“按位切割”切分成了两个部分，高16位表示读锁状态（读锁个数），低16位表示写锁状态（写锁个数）。如下图所示：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104440388.png" alt="img"></p>
+<p>了解了概念之后我们再来看代码，先看写锁的加锁源码：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104448924.png" alt="img"></p>
+<ul>
+<li>这段代码首先取到当前锁的个数c，然后再通过c来获取写锁的个数w。因为写锁是低16位，所以取低16位的最大值与当前的c做与运算（ int w &#x3D; exclusiveCount(c); ），高16位和0与运算后是0，剩下的就是低位运算的值，同时也是持有写锁的线程数目。</li>
+<li>在取到写锁线程的数目后，首先判断是否已经有线程持有了锁。如果已经有线程持有了锁（c!&#x3D;0），则查看当前写锁线程的数目，如果写线程数为0（即此时存在读锁）或者持有锁的线程不是当前线程就返回失败（涉及到公平锁和非公平锁的实现）。</li>
+<li>如果写入锁的数量大于最大数（65535，2的16次方-1）就抛出一个Error。</li>
+<li>如果当且写线程数为0（那么读线程也应该为0，因为上面已经处理c!&#x3D;0的情况），并且当前线程需要阻塞那么就返回失败；如果通过CAS增加写线程数失败也返回失败。</li>
+<li>如果c&#x3D;0，w&#x3D;0或者c&gt;0，w&gt;0（重入），则设置当前线程或锁的拥有者，返回成功！</li>
+</ul>
+<p>tryAcquire()除了重入条件（当前线程为获取了写锁的线程）之外，增加了一个读锁是否存在的判断。如果存在读锁，则写锁不能被获取，原因在于：必须确保写锁的操作对读锁可见，如果允许读锁在已被获取的情况下对写锁的获取，那么正在运行的其他读线程就无法感知到当前写线程的操作。</p>
+<p>因此，只有等待其他读线程都释放了读锁，写锁才能被当前线程获取，而写锁一旦被获取，则其他读写线程的后续访问均被阻塞。写锁的释放与ReentrantLock的释放过程基本类似，每次释放均减少写状态，当写状态为0时表示写锁已被释放，然后等待的读写线程才能够继续访问读写锁，同时前次写线程的修改对后续的读写线程可见。</p>
+<p>接着是读锁的代码：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104555799.png" alt="img"></p>
+<p>可以看到在tryAcquireShared(int unused)方法中，如果其他线程已经获取了写锁，则当前线程获取读锁失败，进入等待状态。如果当前线程获取了写锁或者写锁未被获取，则当前线程（线程安全，依靠CAS保证）增加读状态，成功获取读锁。读锁的每次释放（线程安全的，可能有多个读线程同时释放读锁）均减少读状态，减少的值是“1&lt;&lt;16”。所以读写锁才能实现读读的过程共享，而读写、写读、写写的过程互斥。</p>
+<p>此时，我们再回头看一下互斥锁ReentrantLock中公平锁和非公平锁的加锁源码：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104555509.png" alt="img"></p>
+<p>我们发现在ReentrantLock虽然有公平锁和非公平锁两种，但是它们添加的都是独享锁。根据源码所示，当某一个线程调用lock方法获取锁时，如果同步资源没有被其他线程锁住，那么当前线程在使用CAS更新state成功后就会成功抢占该资源。而如果公共资源被占用且不是被当前线程占用，那么就会加锁失败。所以可以确定ReentrantLock无论读操作还是写操作，添加的锁都是都是独享锁。</p>
+<p>对于Java ReentrantLock而言，其是独享锁。<strong>但是对于Lock的另一个实现类ReadWriteLock，其读锁是共享锁，其写锁是独享锁</strong>。读锁的共享锁可保证并发读是非常高效的，读写、写读 、写写的过程是互斥的。独享锁与共享锁也是通过AQS来实现的，通过实现不同的方法，来实现独享或者共享。对于synchronized而言，当然是独享锁。</p>
+<h4 id="3-互斥锁-x2F-读写锁"><a href="#3-互斥锁-x2F-读写锁" class="headerlink" title="3.互斥锁&#x2F;读写锁"></a>3.互斥锁&#x2F;读写锁</h4><p>上面说到的独享锁&#x2F;共享锁就是一种广义的说法，互斥锁&#x2F;读写锁就是具体的实现。互斥锁在Java中的具体实现就是ReentrantLock（可重入锁）；读写锁在Java中的具体实现就是ReadWriteLock。独享锁与共享锁也是通过AQS来实现的。</p>
+<p>在多线程的环境下，对同一份数据进行读写，会涉及到线程安全的问题。比如在一个线程读取数据的时候，另外一个线程在写数据，而导致前后数据的不一致性；一个线程在写数据的时候，另一个线程也在写，同样也会导致线程前后看到的数据的不一致性。   这时候可以在读写方法中加入互斥锁，任何时候只能允许一个线程的一个读或写操作，而不允许其他线程的读或写操作，这样是可以解决这样以上的问题，但是效率却大打折扣了。因为在真实的业务场景中，一份数据，读取数据的操作次数通常高于写入数据的操作，而线程与线程间的读读操作是不涉及到线程安全的问题，没有必要加入互斥锁，只要在读-写，写-写期间上锁就行了。对于这种情况，读写锁则最好的解决方案！</p>
+<p>读写锁的机制： </p>
+<ol>
+<li><p>“读-读”不互斥 </p>
+</li>
+<li><p>“读-写”互斥 </p>
+</li>
+<li><p>“写-写”互斥</p>
+</li>
+</ol>
+<p>即在任何时候必须保证： </p>
+<ol>
+<li>只有一个线程在写入； </li>
+<li>线程正在读取的时候，写入操作等待； </li>
+<li>线程正在写入的时候，其他线程的写入操作和读取操作都要等待；</li>
+</ol>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CachedData</span> &#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 缓存都应该是单例的，在这里用单例模式设计：  </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">CachedData</span> <span class="variable">cachedData</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CachedData</span>();  </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">ReadWriteLock</span> <span class="variable">lock</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ReentrantReadWriteLock</span>();<span class="comment">//读写锁  </span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Object&gt; cache = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String, Object&gt;();<span class="comment">//缓存  </span></span><br><span class="line">      </span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">CachedData</span><span class="params">()</span>&#123;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> CachedData <span class="title function_">getInstance</span><span class="params">()</span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> cachedData;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 读取缓存：  </span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">read</span><span class="params">(String key)</span> &#123;  </span><br><span class="line">        lock.readLock().lock();  </span><br><span class="line">        <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> <span class="literal">null</span>;  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            obj = cache.get(key);  </span><br><span class="line">            <span class="keyword">if</span> (obj == <span class="literal">null</span>) &#123;  </span><br><span class="line">                lock.readLock().unlock();  </span><br><span class="line">                <span class="comment">// 在这里的时候，其他的线程有可能获取到锁  </span></span><br><span class="line">                lock.writeLock().lock();  </span><br><span class="line">                <span class="keyword">try</span> &#123;  </span><br><span class="line">                    <span class="keyword">if</span> (obj == <span class="literal">null</span>) &#123;  </span><br><span class="line">                        obj = <span class="string">&quot;查找数据库&quot;</span>; <span class="comment">// 实际动作是查找数据库  </span></span><br><span class="line">                        <span class="comment">// 把数据更新到缓存中：  </span></span><br><span class="line">                        cache.put(key, obj);  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;  </span><br><span class="line">                    <span class="comment">// 当前线程在获取到写锁的过程中，可以获取到读锁，这叫锁的重入，然后导致了写锁的降级，称为降级锁。  </span></span><br><span class="line">                    <span class="comment">// 利用重入可以将写锁降级，但只能在当前线程保持的所有写入锁都已经释放后，才允许重入 reader使用  </span></span><br><span class="line">                    <span class="comment">// 它们。所以在重入的过程中，其他的线程不会有获取到锁的机会（这样做的好处）。试想，先释放写锁，在  </span></span><br><span class="line">                    <span class="comment">// 上读锁，这样做有什么弊端？--如果这样做，那么在释放写锁后，在得到读锁前，有可能被其他线程打断。  </span></span><br><span class="line">                    <span class="comment">// 重入————&gt;降级锁的步骤：先获取写入锁，然后获取读取锁，最后释放写入锁（重点）  </span></span><br><span class="line">                    lock.readLock().lock();   </span><br><span class="line">                    lock.writeLock().unlock();  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;  </span><br><span class="line">            lock.readLock().unlock();  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> obj;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-乐观锁-x2F-悲观锁"><a href="#4-乐观锁-x2F-悲观锁" class="headerlink" title="4.乐观锁&#x2F;悲观锁"></a>4.乐观锁&#x2F;悲观锁</h4><p>乐观锁与悲观锁不是指具体的什么类型的锁，而是指看待并发同步的角度。</p>
+<p><strong>悲观锁：总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁</strong>。比如Java里面的同步原语synchronized关键字的实现就是悲观锁。</p>
+<p>乐观锁：顾名思义，就是很乐观，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号等机制。乐观锁适用于多读的应用类型，这样可以提高吞吐量，在Java中java.util.concurrent.atomic包下面的原子变量类就是使用了乐观锁的一种实现方式CAS(Compare and Swap 比较并交换)实现的。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122101819836.png" alt="img"></p>
+<p>根据从上面的概念描述我们可以发现：</p>
+<ul>
+<li><p>悲观锁适合写操作多的场景，先加锁可以保证写操作时数据正确。</p>
+</li>
+<li><p>乐观锁适合读操作多的场景，不加锁的特点能够使其读操作的性能大幅提升。</p>
+<p>乐观锁和悲观锁的调用方式示例：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122101946394.png" alt="img"></p>
+</li>
+</ul>
+<p>通过调用方式示例，我们可以发现<strong>悲观锁基本都是在显式的锁定之后再操作同步资源，而乐观锁则直接去操作同步资源。</strong>那么，为何乐观锁能够做到不锁定同步资源也可以正确的实现线程同步呢？我们通过介绍乐观锁的主要实现方式 “CAS” 的技术原理来为大家解惑。</p>
+<h5 id="乐观锁的一种实现：CAS"><a href="#乐观锁的一种实现：CAS" class="headerlink" title="乐观锁的一种实现：CAS"></a>乐观锁的一种实现：CAS</h5><p>CAS全称 Compare And Swap（比较与交换），是一种无锁算法。在不使用锁（没有线程被阻塞）的情况下实现多线程之间的变量同步。java.util.concurrent包中的原子类就是通过CAS来实现了乐观锁。</p>
+<p>CAS算法涉及到三个操作数：</p>
+<ul>
+<li>需要读写的内存值 V。</li>
+<li>进行比较的值 A。</li>
+<li>要写入的新值 B。</li>
+</ul>
+<p>当且仅当 V 的值等于 A 时，CAS通过原子方式用新值B来更新V的值（“比较+更新”整体是一个原子操作），否则不会执行任何操作。一般情况下，“更新”是一个不断重试的操作。</p>
+<p>注：</p>
+<p>【原子性：即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。</p>
+<ol>
+<li><p>“原子操作(atomic operation)是不需要synchronized”，所谓原子操作是指不会被线程调度机制打断的操作；这种操作一旦开始，就一直运行到结束，中间不会有任何 context switch；</p>
+</li>
+<li><p>java中一般事务管理里面用到原子操作。</p>
+</li>
+<li><ol>
+<li><p>原子操作可以是一个步骤，也可以是多个操作步骤，但是其顺序不可以被打乱，也不可以被切割而只执行其中的一部分，将整个操作视作一个整体是原子性的核心特征；</p>
+</li>
+<li><p>使用原子操作的好处：</p>
+<p>⑴. 性能角度：它执行多次的所消耗的时间远远小于由于线程所挂起到恢复所消耗的时间，因此无锁的CAS操作在性能上要比同步锁高很多；</p>
+<p>⑵. 业务需求：业务本身的需求上，无锁机制本身就可以满足我们绝大多数的需求，并且在性能上也可以大大的进行提升。】</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>之前提到java.util.concurrent包中的原子类，就是通过CAS来实现了乐观锁，那么我们进入原子类AtomicInteger的源码，看一下AtomicInteger的定义：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122102030461.png" alt="img"></p>
+<p>根据定义我们可以看出各属性的作用：</p>
+<ul>
+<li>unsafe： 获取并操作内存的数据。</li>
+<li>valueOffset： 存储value在AtomicInteger中的偏移量。</li>
+<li>value： 存储AtomicInteger的int值，该属性需要借助volatile关键字保证其在线程间是可见的。</li>
+</ul>
+<p>接下来，我们查看AtomicInteger的自增函数incrementAndGet()的源码时，发现自增函数底层调用的是unsafe.getAndAddInt()。但是由于JDK本身只有Unsafe.class，只通过class文件中的参数名，并不能很好的了解方法的作用，所以我们通过OpenJDK 8 来查看Unsafe的源码：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122102047431.png" alt="img"></p>
+<p>根据OpenJDK 8的源码我们可以看出，getAndAddInt()循环获取给定对象o中的偏移量处的值v，然后判断内存值是否等于v。如果相等则将内存值设置为 v + delta，否则返回false，继续循环进行重试，直到设置成功才能退出循环，并且将旧值返回。整个“比较+更新”操作封装在compareAndSwapInt()中，在JNI里是借助于一个CPU指令完成的，属于原子操作，可以保证多个线程都能够看到同一个变量的修改值。</p>
+<p>后续JDK通过CPU的cmpxchg指令，去比较寄存器中的 A 和 内存中的值 V。如果相等，就把要写入的新值 B 存入内存中。如果不相等，就将内存值 V 赋值给寄存器中的值 A。然后通过Java代码中的while循环再次调用cmpxchg指令进行重试，直到设置成功为止。</p>
+<p>CAS虽然很高效，但是它也存在三大问题，这里也简单说一下：</p>
+<p>\1. <strong>ABA问题</strong>。CAS需要在操作值的时候检查内存值是否发生变化，没有发生变化才会更新内存值。但是如果内存值原来是A，后来变成了B，然后又变成了A，那么CAS进行检查时会发现值没有发生变化，但是实际上是有变化的。ABA问题的解决思路就是在变量前面添加版本号，每次变量更新的时候都把版本号加一，这样变化过程就从“A－B－A”变成了“1A－2B－3A”。</p>
+<p>JDK从1.5开始提供了AtomicStampedReference类来解决ABA问题，具体操作封装在compareAndSet()中。compareAndSet()首先检查当前引用和当前标志与预期引用和预期标志是否相等，如果都相等，则以原子方式将引用值和标志的值设置为给定的更新值。</p>
+<p>\2. <strong>循环时间长开销大</strong>。CAS操作如果长时间不成功，会导致其一直自旋，给CPU带来非常大的开销。</p>
+<p>\3. <strong>只能保证一个共享变量的原子操作</strong>。对一个共享变量执行操作时，CAS能够保证原子操作，但是对多个共享变量操作时，CAS是无法保证操作的原子性的。</p>
+<p>Java从1.5开始JDK提供了AtomicReference类来保证引用对象之间的原子性，可以把多个变量放在一个对象里来进行CAS操作。</p>
+<h4 id="5-分段锁"><a href="#5-分段锁" class="headerlink" title="5.分段锁"></a>5.分段锁</h4><p>分段锁其实是一种锁的设计，并不是具体的一种锁，对于ConcurrentHashMap而言，其并发的实现就是通过分段锁的形式来实现高效的并发操作，ConcurrentHashMap中的分段锁称为Segment，它即类似于HashMap（JDK7与JDK8中HashMap的实现）的结构，即内部拥有一个Entry数组，数组中的每个元素又是一个链表；同时又是一个ReentrantLock（Segment继承了ReentrantLock)。当需要put元素的时候，并不是对整个HashMap进行加锁，而是先通过hashcode来知道他要放在那一个分段中，然后对这个分段进行加锁，所以当多线程put的时候，只要不是放在一个分段中，就实现了真正的并行的插入。但是，在统计size的时候，可就是获取HashMap全局信息的时候，就需要获取所有的分段锁才能统计。</p>
+<p>分段锁的设计目的是细化锁的粒度，当操作不需要更新整个数组的时候，就仅仅针对数组中的一项进行加锁操作。</p>
+<h4 id="6-无锁-x2F-偏向锁-x2F-轻量级锁-x2F-重量级锁（待看）"><a href="#6-无锁-x2F-偏向锁-x2F-轻量级锁-x2F-重量级锁（待看）" class="headerlink" title="6.无锁&#x2F;偏向锁&#x2F;轻量级锁&#x2F;重量级锁（待看）"></a>6.无锁&#x2F;偏向锁&#x2F;轻量级锁&#x2F;重量级锁（待看）</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010648018/article/details/79750608">参考文章</a></p>
+<p>这四种锁是指锁的状态，并且是针对synchronized。在Java 5通过引入锁升级的机制来实现高效synchronized。这三种锁（偏向锁&#x2F;轻量级锁&#x2F;重量级锁）的状态是通过对象监视器在对象头中的字段来表明的。</p>
+<h5 id="Synchronized用法"><a href="#Synchronized用法" class="headerlink" title="Synchronized用法"></a>Synchronized用法</h5><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/blueSkyline/p/8598099.html">原文链接</a></p>
+<p>synchronized是实现线程同步的基本手段，然而底层实现还是通过锁机制来保证，对于被synchronized修饰的区域每次只有一个线程可以访问，从而满足线程安全的目的。</p>
+<p>synchronized通过锁机制的实现，满足了原子性，可见性和有序性，是并发编程正确执行的有效保障，而volatile只保证了可见性和有序性（禁止指令重排）。</p>
+<p>synchronized可以修饰范围的包括：方法级别，代码块级别；而实际加锁的目标包括：对象锁（普通变量，静态变量），类锁。</p>
+<p>下面是synchronized的几种常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynMethod</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Object</span> <span class="variable">staticLockObj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对象锁,代码级别,同一对象争用该锁,this为SynMethod实例,synchronized的锁绑定在this对象上</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; synchronized loop &quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对象锁，方法级别,同一对象争用该锁,普通（非静态）方法,synchronized的锁绑定在调用该方法的对象上,与上一个写法含义一致</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">method2</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot; synchronized loop &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对象锁，代码级别,同一类争用该锁,绑定在staticLockObj上,不同SynMethod实例,拥有同一个staticLockObj对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method3</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (staticLockObj) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; synchronized loop &quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 类锁,代码级别，同一类争用该锁</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method4</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (SynMethod.class) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() + <span class="string">&quot; synchronized loop &quot;</span> + i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 类锁,方法级别，同一类争用该锁,synchronized的锁绑定在SynMethod.class上</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">staticMethod</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">&quot; synchronized loop &quot;</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试情况1</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程运行了同一个对象t1的同一个public方法method1。</p>
+<p><strong>测试情况2</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method1();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程运行同一个对象t1的不同的方法method1和method2方法，但是这两个方法是使用同一个对象t1上进行同步的，所以实现同步的效果，侧面印证了这两种写法的一致性。</p>
+<p><strong>测试情况3：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t2.method3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程运行了不同的类对象t1和t2的同一个方法method3，这个方法是在一个静态对象上同步，这个<strong>静态变量</strong>是在这个类的所有实例上共享的，所以也是达到了同步的效果</p>
+<p><strong>测试情况4：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程运行了同一个对象t1的method2和method3方法，这个方法分别在t1对象和SynMethod类的静态对象上同步，所以达到同步效果。因为method3方法是针对同一类的，</p>
+<p><strong>测试情况5：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method4();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t2.method4();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程运行了不同对象t1和t2的同一个方法method4，该方法是在SynMethod类上同步，实现了同步效果</p>
+<p><strong>测试情况6：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method4();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                SynMethod.staticMethod();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>两个线程分别运行了对象t1的method4和静态方法staticMethod，这个两个方法都在SynMethod类上同步，实现了同步的效果。</p>
+<p><strong>测试情况7：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method4();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t2.method3();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>这次两个线程运行了两个对象的method3和method4发放，这个两个方法分别在SynMethod类和SynMethod类的静态对象上同步，所以没有达到同步效果</p>
+<p><strong>测试情况8：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SynTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">SynMethod</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SynMethod</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">ta</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t1.method4();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;A&quot;</span>);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">tb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                t2.method2();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;B&quot;</span>);</span><br><span class="line">        ta.start();</span><br><span class="line">        tb.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">0</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">1</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">2</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">3</span></span><br><span class="line">A <span class="keyword">synchronized </span>loop <span class="number">4</span></span><br><span class="line"><span class="keyword">B </span><span class="keyword">synchronized </span>loop <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>这次两个线程运行了两个对象的method4和method2方法，这两个方法分别在SynMethod类和对象t2上同步，所以没有达到同步效果。</p>
+<p>　　<strong>使用总结：虽然上面说的情况比较多，但是从同步对象的角度，同步的场景只用三个，一个是SynMethod实例（可以多个），SynMethod的静态对象（共享）和SynMethod类（一个），只要是在同一个对象上同步，这个对象可以是实例对象，可以是静态对象，可以是类对象，那么就可以实现同步效果，否则无法达到同步，这也与synchronized设计的初衷一致。</strong></p>
+<h5 id="为什么Synchronized能实现线程同步？"><a href="#为什么Synchronized能实现线程同步？" class="headerlink" title="为什么Synchronized能实现线程同步？"></a>为什么Synchronized能实现线程同步？</h5><p>在回答这个问题之前我们需要了解两个重要的概念：“Java对象头”、“Monitor”。</p>
+<p>1、Java对象头</p>
+<p>synchronized是悲观锁，在操作同步资源之前需要给同步资源先加锁，<strong>这把锁就是存在Java对象头里的</strong>，而Java对象头又是什么呢？</p>
+<p>我们以Hotspot虚拟机为例，Hotspot的对象头主要包括两部分数据：Mark Word（标记字段）、Klass Pointer（类型指针）。</p>
+<p><strong>Mark Word</strong>：默认存储对象的HashCode，分代年龄和锁标志位信息。这些信息都是与对象自身定义无关的数据，所以Mark Word被设计成一个非固定的数据结构以便在极小的空间内存存储尽量多的数据。它会根据对象的状态复用自己的存储空间，也就是说在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。</p>
+<p><strong>Klass Point</strong>：对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。</p>
+<p>运行时JVM内存布局</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018032923230698"></p>
+<p>Mark Word在不同锁状态下的标志位存储</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329232421333"></p>
+<p>2、Monitor</p>
+<p>Monitor可以理解为一个同步工具或一种同步机制，通常被描述为一个对象。每一个Java对象就有一把看不见的锁，称为内部锁或者Monitor锁。</p>
+<p>Monitor是线程私有的数据结构，每一个线程都有一个可用monitor record列表，同时还有一个全局的可用列表。每一个被锁住的对象都会和一个monitor关联，同时monitor中有一个Owner字段存放拥有该锁的线程的唯一标识，表示该锁被这个线程占用。</p>
+<p>现在话题回到synchronized，synchronized通过Monitor来实现线程同步，Monitor是依赖于底层的操作系统的Mutex Lock（互斥锁）来实现的线程同步。</p>
+<p>如同我们在自旋锁中提到的“阻塞或唤醒一个Java线程需要操作系统切换CPU状态来完成，这种状态转换需要耗费处理器时间。如果同步代码块中的内容过于简单，状态转换消耗的时间有可能比用户代码执行的时间还要长”。这种方式就是synchronized最初实现同步的方式，这就是JDK 6之前synchronized效率低的原因。这种依赖于操作系统Mutex Lock所实现的锁我们称之为“重量级锁”，JDK 6中为了减少获得锁和释放锁带来的性能消耗，引入了“偏向锁”和“轻量级锁”。</p>
+<p>所以目前锁一共有4种状态，级别从低到高依次是：无锁、偏向锁、轻量级锁和重量级锁。锁状态只能升级不能降级。</p>
+<p>通过上面的介绍，我们对synchronized的加锁机制以及相关知识有了一个了解，那么下面我们给出四种锁状态对应的的Mark Word内容，然后再分别讲解四种锁状态的思路以及特点：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210411172.png" alt="img"></p>
+<p><strong>无锁</strong></p>
+<p>无锁没有对资源进行锁定，所有的线程都能访问并修改同一个资源，但同时只有一个线程能修改成功。</p>
+<p>无锁的特点就是修改操作在循环内进行，线程会不断的尝试修改共享资源。如果没有冲突就修改成功并退出，否则就会继续循环尝试。如果有多个线程修改同一个值，必定会有一个线程能修改成功，而其他修改失败的线程会不断重试直到修改成功。上面我们介绍的CAS原理及应用即是无锁的实现。无锁无法全面代替有锁，但无锁在某些场合下的性能是非常高的。</p>
+<p><strong>偏向锁</strong></p>
+<p><strong>偏向锁是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁，降低获取锁的代价。</strong></p>
+<p>在大多数情况下，锁总是由同一线程多次获得，不存在多线程竞争，所以出现了偏向锁。其目标就是在只有一个线程执行同步代码块时能够提高性能。</p>
+<p>当一个线程访问同步代码块并获取锁时，会在Mark Word里存储锁偏向的线程ID。在线程进入和退出同步块时不再通过CAS操作来加锁和解锁，而是检测Mark Word里是否存储着指向当前线程的偏向锁。引入偏向锁是为了在无多线程竞争的情况下尽量减少不必要的轻量级锁执行路径，因为轻量级锁的获取及释放依赖多次CAS原子指令，而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令即可。</p>
+<p>偏向锁只有遇到其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁，线程不会主动释放偏向锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，判断锁对象是否处于被锁定状态。撤销偏向锁后恢复到无锁（标志位为“01”）或轻量级锁（标志位为“00”）的状态。</p>
+<p>偏向锁在JDK 6及以后的JVM里是默认启用的。可以通过JVM参数关闭偏向锁：-XX:-UseBiasedLocking&#x3D;false，关闭之后程序默认会进入轻量级锁状态。</p>
+<p><strong>轻量级锁</strong></p>
+<p>是指当锁是偏向锁的时候，被另外的线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，从而提高性能。</p>
+<p>在代码进入同步块的时候，如果同步对象锁状态为无锁状态（锁标志位为“01”状态，是否为偏向锁为“0”），虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的Mark Word的拷贝，然后拷贝对象头中的Mark Word复制到锁记录中。</p>
+<p>拷贝成功后，虚拟机将使用CAS操作尝试将对象的Mark Word更新为指向Lock Record的指针，并将Lock Record里的owner指针指向对象的Mark Word。</p>
+<p>如果这个更新动作成功了，那么这个线程就拥有了该对象的锁，并且对象Mark Word的锁标志位设置为“00”，表示此对象处于轻量级锁定状态。</p>
+<p>如果轻量级锁的更新操作失败了，虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是就说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行，否则说明多个线程竞争锁。</p>
+<p>若当前只有一个等待线程，则该线程通过自旋进行等待。但是当自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，轻量级锁升级为重量级锁。</p>
+<p><strong>重量级锁</strong></p>
+<p>升级为重量级锁时，锁标志的状态值变为“10”，此时Mark Word中存储的是指向重量级锁的指针，此时等待锁的线程都会进入阻塞状态。</p>
+<p>整体的锁状态升级流程如下：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104130517.png" alt="img"></p>
+<p>综上，偏向锁通过对比Mark Word解决加锁问题，避免执行CAS操作。而轻量级锁是通过用CAS操作和自旋来解决加锁问题，避免线程阻塞和唤醒而影响性能。重量级锁是将除了拥有锁的线程以外的线程都阻塞。</p>
+<p>重量级锁是指当锁为轻量级锁的时候，另一个线程虽然是自旋，但自旋不会一直持续下去，当自旋一定次数的时候，还没有获取到锁，就会进入阻塞，该锁膨胀为重量级锁。重量级锁会让其他申请的线程进入阻塞，性能降低。<strong>随着竞争情况锁状态逐渐升级、锁可以升级但不能降级。</strong></p>
+<p>偏向锁的获取和撤销：</p>
+<p>HotSpot作者经过研究发现，大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入偏向锁。</p>
+<p>线程1检查对象头中的Mark Word中是否存储了线程1，如果没有则CAS操作将Mark Word中的线程ID替换为线程1。此时，锁偏向线程1，后面该线程进入同步块时不需要进行CAS操作，只需要简单的测试一下Mark Word中是否存储指向当前线程的偏向锁，如果成功表明该线程已经获得锁。如果失败，则再需要测试一下Mark Word中偏向锁标识是否设置为1(是否是偏向锁)，如果没有设置，则使用CAS竞争锁，如果设置了，则尝试使用CAS将偏向锁指向当前线程</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329232604894"></p>
+<p>偏向锁的竞争结果:</p>
+<p>根据持有偏向锁的线程是否存活</p>
+<p>1.如果不活动，偏向锁撤销到无锁状态，再偏向到其他线程<br>2.如果线程仍然活着，则升级到轻量级锁</p>
+<p>偏向锁在Java6和Java7中默认是开启的，但是在应用程序启动几秒后才激活，如果有必要可以关闭延迟：<br>-XX:BiasedLockingStartupDelay&#x3D;0</p>
+<p>如果确定应用程序中所有的锁通常情况下处于竞争状态，可以通过JVM参数关闭偏向锁：<br>-XX:-UseBiasedLocking&#x3D;false，那么程序默认会进入轻量级锁。</p>
+<p>-XX:BiasedLockingStartupDelay&#x3D;0 -XX:+TraceBiasedLocking</p>
+<p>轻量级锁膨胀：</p>
+<p>1.线程在执行同步块之前，JVM会在当前栈桢中创建用于存储锁记录的空间(Lock record)，并将对象头中的Mark Word复制到锁记录中(Displaced Mark Word)。<br>2.然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针<br>3.如果成功，当前线程获得锁，如果失败，表示其他线程竞争锁，当前线程尝试使用自旋来获取锁</p>
+<p><strong>偏向锁、轻量级锁、重量级锁的优缺点</strong></p>
+<p>1.偏向锁是为了避免某个线程反复获得&#x2F;释放同一把锁时的性能消耗，如果仍然是同个线程去获得这个锁，尝试偏向锁时会直接进入同步块，不需要再次获得锁。</p>
+<p>2.而轻量级锁和自旋锁都是为了避免直接调用操作系统层面的互斥操作，因为挂起线程是一个很耗资源的操作。</p>
+<p>为了尽量避免使用重量级锁（操作系统层面的互斥），首先会尝试轻量级锁，轻量级锁会尝试使用CAS操作来获得锁，如果轻量级锁获得失败，说明存在竞争。但是也许很快就能获得锁，就会尝试自旋锁，将线程做几个空循环，每次循环时都不断尝试获得锁。如果自旋锁也失败，那么只能升级成重量级锁。</p>
+<p>3.可见偏向锁，轻量级锁，自旋锁都是乐观锁。</p>
+<p>逃逸分析：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20180329233254519"></p>
+<p>逃逸分析：通俗一点讲，当一个对象的指针被多个方法或线程引用时，我们称这个指针发生了逃逸，必须在JIT里完成</p>
+<p>锁粗化：</p>
+<p>如果虚拟机探测到有这样一串零碎的操作都对同一个对象加锁，将会把加锁同步的范围扩展到整个操作序列的外部，这样就只需要加锁一次就够了</p>
+<p>锁消除：</p>
+<p>如果你定义的类的方法上有同步锁，但在运行时，却只有一个线程在访问，此时逃逸分析后的机器码，会去掉同步锁运行。</p>
+<p>栈上分配：</p>
+<p>分析找到未逃逸的变量，将变量类的实例化内存直接在栈里分配(无需进入堆)，分配完成后，继续在调用栈内执行，最后线程结束，栈空间被回收，局部变量对象也被回收。</p>
+<p>从jdk1.6开始默认开启：<br>开启：  -XX:+DoEscapeAnalysis</p>
+<p>关闭：  -XX:-DoEscapeAnalysis</p>
+<h4 id="7-自旋锁"><a href="#7-自旋锁" class="headerlink" title="7.自旋锁"></a>7.自旋锁</h4><p>在Java中，自旋锁是指尝试获取锁的线程不会立即阻塞，而是采用循环的方式去尝试获取锁，这样的好处是减少线程上下文切换的消耗，缺点是循环会消耗CPU。</p>
+<p>在介绍自旋锁前，我们需要介绍一些前提知识来帮助大家明白自旋锁的概念。</p>
+<p>阻塞或唤醒一个Java线程需要操作系统切换CPU状态来完成，这种状态转换需要耗费处理器时间。如果同步代码块中的内容过于简单，状态转换消耗的时间有可能比用户代码执行的时间还要长。</p>
+<p>在许多场景中，同步资源的锁定时间很短，为了这一小段时间去切换线程，线程挂起和恢复现场的花费可能会让系统得不偿失。如果物理机器有多个处理器，能够让两个或以上的线程同时并行执行，我们就可以让后面那个请求锁的线程不放弃CPU的执行时间，看看持有锁的线程是否很快就会释放锁。</p>
+<p>而为了让当前线程“稍等一下”，我们需让当前线程进行自旋，如果在自旋完成后前面锁定同步资源的线程已经释放了锁，那么当前线程就可以不必阻塞而是直接获取同步资源，从而避免切换线程的开销。这就是自旋锁。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210212894.png" alt="img"></p>
+<p>自旋锁本身是有缺点的，它不能代替阻塞。自旋等待虽然避免了线程切换的开销，但它要占用处理器时间。如果锁被占用的时间很短，自旋等待的效果就会非常好。反之，如果锁被占用的时间很长，那么自旋的线程只会白浪费处理器资源。所以，自旋等待的时间必须要有一定的限度，如果自旋超过了限定次数（默认是10次，可以使用-XX:PreBlockSpin来更改）没有成功获得锁，就应当挂起线程。</p>
+<p>自旋锁的实现原理同样也是CAS，AtomicInteger中调用unsafe进行自增操作的源码中的do-while循环就是一个自旋操作，如果修改数值失败则通过循环来执行自旋，直至修改成功。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104052869.png" alt="img"></p>
+<p>自旋锁在JDK1.4.2中引入，使用-XX:+UseSpinning来开启。JDK 6中变为默认开启，并且引入了自适应的自旋锁（适应性自旋锁）。</p>
+<p>自适应意味着自旋的时间（次数）不再固定，而是由前一次在同一个锁上的自旋时间及锁的拥有者的状态来决定。如果在同一个锁对象上，自旋等待刚刚成功获得过锁，并且持有锁的线程正在运行中，那么虚拟机就会认为这次自旋也是很有可能再次成功，进而它将允许自旋等待持续相对更长的时间。如果对于某个锁，自旋很少成功获得过，那在以后尝试获取这个锁时将可能省略掉自旋过程，直接阻塞线程，避免浪费处理器资源。</p>
+<p>在自旋锁中 另有三种常见的锁形式:TicketLock、CLHlock和MCSlock。</p>
+<h4 id="8-可重入锁-x2F-非可重入锁"><a href="#8-可重入锁-x2F-非可重入锁" class="headerlink" title="8.可重入锁&#x2F;非可重入锁"></a>8.可重入锁&#x2F;非可重入锁</h4><p>可重入锁又名递归锁，是指在同一个线程在外层方法获取锁的时候，再进入该线程的内层方法会自动获取锁（前提锁对象得是同一个对象或者class），不会因为之前已经获取过还没释放而阻塞。Java中ReentrantLock和synchronized都是可重入锁，可重入锁的一个优点是可一定程度避免死锁。下面用示例代码来进行分析：</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104329631.png" alt="img"></p>
+<p>在上面的代码中，类中的两个方法都是被内置锁synchronized修饰的，doSomething()方法中调用doOthers()方法。因为内置锁是可重入的，所以同一个线程在调用doOthers()时可以直接获得当前对象的锁，进入doOthers()进行操作。</p>
+<p>如果是一个不可重入锁，那么当前线程在调用doOthers()之前需要将执行doSomething()时获取当前对象的锁释放掉，实际上该对象锁已被当前线程所持有，且无法释放。所以此时会出现死锁。</p>
+<p>而为什么可重入锁就可以在嵌套调用时可以自动获得锁呢？我们通过图示和源码来分别解析一下。</p>
+<p>还是打水的例子，有多个人在排队打水，此时管理员允许锁和同一个人的多个水桶绑定。这个人用多个水桶打水时，第一个水桶和锁绑定并打完水之后，第二个水桶也可以直接和锁绑定并开始打水，所有的水桶都打完水之后打水人才会将锁还给管理员。这个人的所有打水流程都能够成功执行，后续等待的人也能够打到水。这就是可重入锁。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/2018112210434386.png" alt="img"></p>
+<p>但如果是非可重入锁的话，此时管理员只允许锁和同一个人的一个水桶绑定。第一个水桶和锁绑定打完水之后并不会释放锁，导致第二个水桶不能和锁绑定也无法打水。当前线程出现死锁，整个等待队列中的所有线程都无法被唤醒。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104355888.png" alt="img"></p>
+<p>之前我们说过ReentrantLock和synchronized都是重入锁，那么我们通过重入锁ReentrantLock以及非可重入锁NonReentrantLock的源码来对比分析一下为什么非可重入锁在重复调用同步资源时会出现死锁。</p>
+<p>首先ReentrantLock和NonReentrantLock都继承父类AQS，其父类AQS中维护了一个同步状态status来计数重入次数，status初始值为0。</p>
+<p>当线程尝试获取锁时，可重入锁先尝试获取并更新status值，如果status &#x3D;&#x3D; 0表示没有其他线程在执行同步代码，则把status置为1，当前线程开始执行。如果status !&#x3D; 0，则判断当前线程是否是获取到这个锁的线程，如果是的话执行status+1，且当前线程可以再次获取锁。而非可重入锁是直接去获取并尝试更新当前status的值，如果status !&#x3D; 0的话会导致其获取锁失败，当前线程阻塞。</p>
+<p>释放锁时，可重入锁同样先获取当前status的值，在当前线程是持有锁的线程的前提下。如果status-1 &#x3D;&#x3D; 0，则表示当前线程所有重复获取锁的操作都已经执行完毕，然后该线程才会真正释放锁。而非可重入锁则是在确定当前线程是持有锁的线程之后，直接将status置为0，将锁释放。</p>
+<p><img src="/images/java-%E9%94%81%E6%9C%BA%E5%88%B6/20181122104410235.png" alt="img"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">setA</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    setB();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">setB</span><span class="params">()</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码就是一个可重入锁的一个特点，如果不是可重入锁的话，setB可能不会被当前线程执行，可能造成死锁。</p>
+<p>需要注意的是，可重入锁加锁和解锁的次数要相等。</p>
+<p><img src="/../../../../notes_learn/java/Java%25E4%25B8%25AD%25E5%25B8%25B8%25E7%2594%25A8%25E7%259A%2584%25E9%2594%2581%25E6%259C%25BA%25E5%2588%25B6.assets/20180329230449266" alt="img"></p>
+<p>C&#x3D;&#x3D;0表明未获得锁，Else表示已经获得锁，这时对state加1，相应的，每次释放锁都会对state减1</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/02/07/java-%E9%94%81%E6%9C%BA%E5%88%B6/" title="java 锁机制">http://rshawshank.github.io/2020/02/07/java-锁机制/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/%E9%94%81%E6%9C%BA%E5%88%B6/" rel="tag"># 锁机制</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/19/android_drawable/" rel="prev" title="drawable">
+      <i class="fa fa-chevron-left"></i> drawable
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/07/java-%E5%B9%B6%E5%8F%91/" rel="next" title="java 并发">
+      java 并发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">Java中常用的锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E2%80%94%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">java多线程—锁机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.1.</span> <span class="nav-text">锁的介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%94%81"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">什么是锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%B1%9E%E6%80%A7%E2%80%94%E7%B2%92%E5%BA%A6"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">锁的属性—粒度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">Java锁的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%AC%E5%B9%B3%E9%94%81-x2F-%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.公平锁&#x2F;非公平锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%8B%AC%E4%BA%AB%E9%94%81-x2F-%E5%85%B1%E4%BA%AB%E9%94%81"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2.独享锁&#x2F;共享锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%BA%92%E6%96%A5%E9%94%81-x2F-%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3.互斥锁&#x2F;读写锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%B9%90%E8%A7%82%E9%94%81-x2F-%E6%82%B2%E8%A7%82%E9%94%81"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">4.乐观锁&#x2F;悲观锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E4%B8%80%E7%A7%8D%E5%AE%9E%E7%8E%B0%EF%BC%9ACAS"><span class="nav-number">1.1.2.4.1.</span> <span class="nav-text">乐观锁的一种实现：CAS</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E5%88%86%E6%AE%B5%E9%94%81"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">5.分段锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E6%97%A0%E9%94%81-x2F-%E5%81%8F%E5%90%91%E9%94%81-x2F-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81-x2F-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%88%E5%BE%85%E7%9C%8B%EF%BC%89"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">6.无锁&#x2F;偏向锁&#x2F;轻量级锁&#x2F;重量级锁（待看）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Synchronized%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.2.6.1.</span> <span class="nav-text">Synchronized用法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88Synchronized%E8%83%BD%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="nav-number">1.1.2.6.2.</span> <span class="nav-text">为什么Synchronized能实现线程同步？</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">1.1.2.7.</span> <span class="nav-text">7.自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81-x2F-%E9%9D%9E%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81"><span class="nav-number">1.1.2.8.</span> <span class="nav-text">8.可重入锁&#x2F;非可重入锁</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

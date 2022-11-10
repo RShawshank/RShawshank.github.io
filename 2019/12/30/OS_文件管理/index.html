@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="文件管理概述广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问 文件是在逻辑上具有完整意义的信息集合，它有一个名字以供标识，文件名是以字母开头的字母数字串。 构成文件的基本单位：信息项（单个字符或者字节）、记录 (3) 文件的其他描述 ①文件是具有符号名的信息(数据)项的集合 ②文件是具有符号名的记录的集合 (4) 文件分类 ①按文件的性质和用途分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文件管理">
+<meta property="og:url" content="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="文件管理概述广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问 文件是在逻辑上具有完整意义的信息集合，它有一个名字以供标识，文件名是以字母开头的字母数字串。 构成文件的基本单位：信息项（单个字符或者字节）、记录 (3) 文件的其他描述 ①文件是具有符号名的信息(数据)项的集合 ②文件是具有符号名的记录的集合 (4) 文件分类 ①按文件的性质和用途分类">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124920817.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105125342000.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130504852.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130601233.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130817288.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105133705230.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105134329690.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image001.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image002.png">
+<meta property="article:published_time" content="2019-12-29T22:54:58.000Z">
+<meta property="article:modified_time" content="2020-10-06T09:19:58.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="操作系统">
+<meta property="article:tag" content="文件管理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>文件管理 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文件管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 22:54:58" itemprop="dateCreated datePublished" datetime="2019-12-29T22:54:58Z">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-06 09:19:58" itemprop="dateModified" datetime="2020-10-06T09:19:58Z">2020-10-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="文件管理概述"><a href="#文件管理概述" class="headerlink" title="文件管理概述"></a>文件管理概述</h1><p><strong>广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问</strong></p>
+<p>文件是<strong>在逻辑上具有完整意义的信息集合</strong>，它有一个名字以供标识，文件名是以字母开头的字母数字串。</p>
+<p>构成文件的基本单位：信息项（单个字符或者字节）、记录</p>
+<p>(3) 文件的其他描述</p>
+<p>①文件是具有符号名的信息(数据)项的集合</p>
+<p>②文件是具有符号名的记录的集合</p>
+<p>(4) 文件分类</p>
+<p>①按文件的性质和用途分类<br>                系统文件（只能通过系统调用） 、程序库文件（允许用户调用，不允许修改） 、用户文件</p>
+<p>②按文件保护级别分类	<br>                不保护文件、 执行文件、 只读文件、 读写文件</p>
+<p>③分类按文件流向分类<br>                输入文件、 输出文件、 输入输出文件</p>
+<p>(5) 文件名与属性</p>
+<p>①文件名<br>每个文件有一个给定的名字，这个名字是由串描述且由文件内容来表示，包括文件符号名和内部标识符。</p>
+<ul>
+<li><p>用户使用文件符号名进行文件操作</p>
+</li>
+<li><p>系统使用文件内部标识符管理文件</p>
+</li>
+</ul>
+<p>②文件扩展<br>文件扩展表示文件的使用特征，如：.c   .obj    .lib 等。</p>
+<p>③文件属性<br>文件的属性字，表示文件类别、保护级等信息。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>文件系统是操作系统中负责管理和存取文件信息的软件机构。</p>
+<p><strong>文件系统的组成</strong></p>
+<p>①管理文件所需的数据结构<br>如目录表、文件控制块、存储分配表</p>
+<p>②管理程序</p>
+<p>③一组操作</p>
+<p><strong>文件系统的功能</strong></p>
+<p>①从用户角度看——文件系统实现了“按名存取”的功能。</p>
+<p>②从系统角度看——辅存空间管理、构造文件结构、提供文件共享功能、提供存取文件的方法、文件保护、提供一组文件操作命令</p>
+<p><strong>文件系统的特点</strong></p>
+<p>①使用简单<br>使用文件名、一组文件操作命令。</p>
+<p>②安全可靠<br>提供防护措施，在文件遭受破坏时，能及时复。全量备份、增量备份、动态备份、远程备份</p>
+<p>③既能共享，又能保密<br>身份验证、存取权限验证。</p>
+<p>存储数据的文件存储器具有固定的物理特性，数据在辅存设备上的排序、分布构成了文件的物理结构</p>
+<p><strong>文件系统负责实现逻辑特性到物理特性的转换</strong></p>
+<h2 id="文件组织的两种结构"><a href="#文件组织的两种结构" class="headerlink" title="文件组织的两种结构"></a>文件组织的两种结构</h2><h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>从用户角度看到的文件面貌。即用户对信息进行逻辑组织形成的文件结构。</p>
+<p><strong>研究文件逻辑结构的目的：</strong></p>
+<p>i 为用户提供一种逻辑结构清晰、使用简便的逻辑文件形式。</p>
+<p>ii 用户按文件的逻辑结构形式去存储、检索和加工文件中的信息</p>
+<h3 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h3><p>文件的物理结构是信息在物理存储器上的存储方式，是数据的物理表示和组织。</p>
+<p><strong>研究文件物理结构的目的</strong></p>
+<p>i选择工作性能良好、设备利用率高的物理文件形式。</p>
+<p>ii  系统按照文件的物理结构形式和外部设备打交道，控制信息的传输。</p>
+<h3 id="逻辑记录与物理记录"><a href="#逻辑记录与物理记录" class="headerlink" title="逻辑记录与物理记录"></a>逻辑记录与物理记录</h3><p>①逻辑记录</p>
+<p>文件中按信息在逻辑上的独立含义来划分的信息单位，逻辑记录是对文件进行存取操作的基本单位。</p>
+<p>②物理记录</p>
+<p>在存储介质上，由连续信息所组成的一个区域称为块，也叫物理记录。</p>
+<p>③逻辑记录与物理记录的区别与联系</p>
+<p>i 一个是逻辑的概念，一个是物理的概念。</p>
+<p>ii 逻辑记录最终要存放到物理记录上。</p>
+<h2 id="文件的逻辑结构与存取方法"><a href="#文件的逻辑结构与存取方法" class="headerlink" title="文件的逻辑结构与存取方法"></a>文件的逻辑结构与存取方法</h2><h3 id="流式文件"><a href="#流式文件" class="headerlink" title="流式文件"></a>流式文件</h3><p>流式文件是相关的有序字符的集合，是无结构的。</p>
+<p>流式文件是按信息的个数或以特殊字符为界进行存取的。</p>
+<p>简单来说就是没有格式的文件</p>
+<p>UNIX系统为了方便会将流式文件按照512B的大小划分为若干个逻辑记录，将流式文件转变为记录式文件。</p>
+<h3 id="记录式文件"><a href="#记录式文件" class="headerlink" title="记录式文件"></a>记录式文件</h3><p>记录式文件是一种有结构的文件。这种文件在逻辑上总是被看成一组连续顺序的记录的集合。</p>
+<p>如果文件中所有记录的长度都相同，就称这种文件为定长记录文件。其长度由记录的数量来决定。</p>
+<p>如果文件中记录的长度不相同，就称这种文件为变长记录文件。其长度由各个记录长度相加得到。</p>
+<h2 id="文件存取方法"><a href="#文件存取方法" class="headerlink" title="文件存取方法"></a>文件存取方法</h2><p>(1) 顺序存取</p>
+<p>后一次存取总是在前一次存取的基础上进行的。顺序存取时不必给出具体的存取位置。</p>
+<p>(2) 随机存取</p>
+<p>用户以任意次序请求某个记录。随机存取时要指出起始存取位置(例如记录号)。</p>
+<h1 id="文件的物理结构"><a href="#文件的物理结构" class="headerlink" title="文件的物理结构"></a>文件的物理结构</h1><h2 id="连续文件"><a href="#连续文件" class="headerlink" title="连续文件"></a>连续文件</h2><p>连续文件结构是由一组分配在磁盘<strong>连续区域</strong>的物理块组成的。</p>
+<p>如果连续文件的逻辑记录和磁盘的物理块一样大，就如下图所示：</p>
+<p>连续文件的第一个逻辑记录所在的磁盘块号记录在文件目录项中，同时文件目录还记录了磁盘块的数量。8</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png"></p>
+<p> 连续文件的特点</p>
+<p>①连续存取时速度较快</p>
+<p>②文件长度一经固定便不易改变</p>
+<p>③文件的增生和扩充不易</p>
+<p>但是当文件不断创建或者删除的时候，将会造成存储空间的浪费（因为文件长度是固定的，多次创建就是占着茅坑不拉屎）</p>
+<h2 id="串联文件"><a href="#串联文件" class="headerlink" title="串联文件"></a>串联文件</h2><p>串联文件结构是<strong>按顺序由串联的块组成</strong>的，即文件的信息存于若干块物理块中，每个物理块的最末一个字作为链接字，它指出后继块的物理地址。文件的最后一块的链接字为结束标记“^”，它表示文件至本块结束。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124920817.png"></p>
+<p>串联文件的特点</p>
+<p>①能较好地利用辅存空间</p>
+<p>②易于对文件进行增生和扩充</p>
+<p>③连续存取时速度较快</p>
+<p>串联文件的特点也决定了它适合的是顺序存取方式，不适用于随机存取方式。（就像链表一样，找中间元素得遍历链表，不方便）</p>
+<h2 id="索引文件"><a href="#索引文件" class="headerlink" title="索引文件"></a>索引文件</h2><p>索引文件将逻辑文件顺序地划分与物理存储块长度相同的逻辑块。（不一定）</p>
+<p>系统为每个文件建立<strong>逻辑块号与物理块号的对照表</strong>。这张表称为该文件的索引表。文件由数据文件和索引表构成。这种文件称为索引文件。</p>
+<p>注意：物理块号可以是不连续的。但是逻辑块号一般是连续的。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105125342000.png"></p>
+<p>①索引文件在存储区中占两个区</p>
+<p>i 索引区：存放索引表</p>
+<p>ii 数据区：存放数据文件</p>
+<p>②访问索引文件的操作</p>
+<p>i 查文件索引，由逻辑块号查得物理块号</p>
+<p>ii 由此磁盘物理块号而获得所要求的信息</p>
+<p>索引文件的特点</p>
+<p>①易于文件的增删</p>
+<p>②直接读写任意记录</p>
+<p>有点像页表。每次对文件进行修改，索引表都可能会发生改动。</p>
+<h3 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130504852.png"></p>
+<p>文件目录项中有一组表项用于索引。每一个表项登记的是逻辑记录所在的磁盘块号。</p>
+<h3 id="一级间接索引"><a href="#一级间接索引" class="headerlink" title="一级间接索引"></a>一级间接索引</h3><p>需要注意：间接索引表磁盘块号和磁盘块号不是一回事</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130601233.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第一级索引表块的块号。第一级索引表块中的索引表项登记的是文件逻辑记录所在的磁盘块号。</p>
+<h3 id="二级间接索引"><a href="#二级间接索引" class="headerlink" title="二级间接索引"></a>二级间接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130817288.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第二级索引表块的块号。第二级索引表块中的索引表项登记的第一级索引表块的块号，第一级索引表项中登记的是文件逻辑记录所在的磁盘块号。</p>
+<p>套娃下去可以是可以，但是检索的时间就变长了。</p>
+<h1 id="文件存储空间的管理"><a href="#文件存储空间的管理" class="headerlink" title="文件存储空间的管理"></a>文件存储空间的管理</h1><p>就是为了管理怎么分配文件存储空间的。</p>
+<h1 id="文件目录及其结构"><a href="#文件目录及其结构" class="headerlink" title="文件目录及其结构"></a>文件目录及其结构</h1><p>文件目录是记录文件的名字、存放地址及其他有关文件的说明信息和控制信息的数据结构</p>
+<p><strong>文件目录项的内容</strong></p>
+<p>①文件名</p>
+<p>②文件逻辑结构<br>说明该文件的记录是否定长、记录长度及记录个数等。</p>
+<p>③文件物理结构：记录文件的物理结构形式<br>连续文件——指出文件第一块的物理地址、文件所占块数<br>串联文件——指出该文件第一块的物理地址<br>索引文件——指出索引表地址</p>
+<p>④存取控制信息<br>文件主具有的存取权限、核准的其他用户及其相应的存取权限</p>
+<p>⑤管理信息<br>文件建立日期、时间，上一次存取时间、要求文件保留的时间等</p>
+<p>⑥文件类型<br>文件的类型，例如可分为数据文件、目录文件、块存储设备文件、字符设备文件</p>
+<h2 id="一级文件目录"><a href="#一级文件目录" class="headerlink" title="一级文件目录"></a>一级文件目录</h2><p>系统将已建立的<strong>所有文件的文件名</strong>、存放地址及有关的说明信息放在一张表中，这张表称为一级文件目录。</p>
+<p><strong>一级文件目录的特点</strong></p>
+<ul>
+<li>实现了按名存取的功能，比较简单；</li>
+<li>要求文件名和文件之间有一一对应的关系，即：不允许两个文件有相同的名字。</li>
+</ul>
+<blockquote>
+<p>重名问题</p>
+<p>所谓“重名”，是指不同用户对不同文件起了相同的名字，即两个或多个文件只有一个相同的符号名。又称为命名冲突。</p>
+<p>为了解决命名冲突、获得更灵活的命名能力，文件系统必须采用多级目录结构</p>
+</blockquote>
+<h2 id="树型文件目录"><a href="#树型文件目录" class="headerlink" title="树型文件目录"></a>树型文件目录</h2><p>在多级目录系统中(除最末一级外)，任何一级目录的目录项可以描述一个目录文件，也可以描述一个非目录文件(数据文件)，而<strong>数据文件一定在树叶上</strong>。这样，就构成了一个树形层次结构。</p>
+<h3 id="文件路径名"><a href="#文件路径名" class="headerlink" title="文件路径名"></a>文件路径名</h3><p>多级目录中，文件的路径名是由根目录到该文件的通路上<strong>所有目录文件符号名和该文件的符号名</strong>组成的字符串，相互之间用分隔符分隔。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105133705230.png"></p>
+<h1 id="文件共享与安全"><a href="#文件共享与安全" class="headerlink" title="文件共享与安全"></a>文件共享与安全</h1><p>文件共享是指某一个或某一部分文件可以让事先规定的某些用户共同使用。</p>
+<p>所谓文件安全，就是文件的保护问题。文件的保护是指文件本身不得被未经文件主授权的任何用户存取，而对于授权用户也只能在允许的存取权限内使用文件。</p>
+<p>②如何进文件的保护</p>
+<p>需要对用户的权限进行验证。所谓存取权限的验证，是指用户存取文件之前，需要检查用户的存取权限是否符合规定，符合者允许使用，否则拒绝。</p>
+<p>③验证用户存取权限的方法</p>
+<p>i 访问控制矩阵</p>
+<p>ii 存取控制表</p>
+<p>iii 用户权限表</p>
+<p>iv 口令</p>
+<p>v 密码</p>
+<h2 id="用文件路径名加快文件的查找"><a href="#用文件路径名加快文件的查找" class="headerlink" title="用文件路径名加快文件的查找"></a>用文件路径名加快文件的查找</h2><p>当前目录是当前用户正在使用的文件所在的目录。当指定当前目录后，用户对文件的所有访问都是相对于“当前目录”进行的。这时，文件路径名是由“当前目录”到信息文件的通路上所有各级目录的符号名加上该信息文件的符号名组成。<strong>用“*”表示当前目录的父节点</strong>。</p>
+<h2 id="链接技术"><a href="#链接技术" class="headerlink" title="链接技术"></a>链接技术</h2><p>所谓“链接”，就是在相应目录表目之间进行链接，即一个目录中的表目直接指向另一个目录表目所在的物理位置。</p>
+<p>注意，这种链接<strong>不是直接指向文件，而是指向相应的目录表目</strong>。这种办法也称为连访，被共享的文件称为连访文件。</p>
+<p>相当于添加共享文件中间的链接</p>
+<p>在当前目录下新键一个子目录用于链接其共享文件</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105134329690.png"></p>
+<blockquote>
+<p>UNIX&#x2F;Linux下的链接文件有两种，硬连接(Hard Link) 和软连接。</p>
+<p>软连接又称符号链接(Symbolic link)。<strong>符号链接文件中并不包括实际的文件数据，而只是包括了它指向文件的路径。</strong>它可以链接到任意的文件和目录，包括处于不同文件系统的文件以及目录。当用户对链接文件操作时，系统会自动的转到对源文件的操作，但是删除链接文件时，并不会删除源文件。</p>
+<p>硬连接是指通过索引节点对文件的链接。<strong>保存在系统中的每一个文件都会有一个索引节点</strong>。每当有文件链接文件A时，文件A的索引节点的引用计数+1（因为文件自身对自己索引节点会链接，所以索引节点的初始值为1.）当文件系统进行删除文件的时候，对应的文件索引节点的引用计数-1。只要引用计数不等于0，文件就不会真正删除。</p>
+</blockquote>
+<h1 id="文件操作和文件备份"><a href="#文件操作和文件备份" class="headerlink" title="文件操作和文件备份"></a>文件操作和文件备份</h1><p>常用的文件操作命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create：<span class="regexp">//</span>创建一个新文件</span><br><span class="line"><span class="keyword">delete</span>：<span class="regexp">//</span>从系统目录中撤消一个文件</span><br><span class="line">rename：<span class="regexp">//</span>在系统目录中改变文件的名字</span><br><span class="line">open：<span class="regexp">//</span>打开文件   在用户和文件(或设备)之间建立一个逻辑通路</span><br><span class="line">close：<span class="regexp">//</span>关闭文件  在用户和文件(或设备)之间撤消一个逻辑通路</span><br><span class="line">write：<span class="regexp">//</span>写到一个文件(或设备)上</span><br><span class="line">read：<span class="regexp">//</span>从一个文件(或设备)读入数据信息</span><br></pre></td></tr></table></figure>
+
+<p>①打开文件操作</p>
+<p>所谓打开文件就是把<strong>该文件的有关目录表目复制到主存中约定的区域，建立文件控制块</strong>，建立用户和这个文件的联系。</p>
+<p>②关闭文件操作</p>
+<p>所谓关闭文件就是用户宣布这个文件当前不再使用，<strong>系统将其在主存中的文件控制块删去</strong>，因而也就切断了用户同这个文件的联系。</p>
+<h2 id="文件备份"><a href="#文件备份" class="headerlink" title="文件备份"></a>文件备份</h2><p>为了能在软、硬件失效的意外情况下恢复文件，保证文件的完整性、数据的连续可利用性，文件系统提供适当的机构，以便复制备份。</p>
+<p><strong>文件备份的方法</strong></p>
+<p>①周期性转储</p>
+<p>按固定的时间周期把存储器中所有文件的内容转存到某种介质上，通常是磁带或磁盘。在系统失效时，使用这些转存磁盘或磁带，将所有文件重新建立并恢复到最后一次转存时的状态。（全部）</p>
+<p>②增量性转储</p>
+<p>这种技术转储的只是从上次转储以后已经改变过的信息；增量转储的信息量较小，故转储可在更短的时间周期内进行（部分）</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>1</strong>．何谓数据项、记录和文件？</p>
+<p>答：①数据项分为基本数据项和组合数据项。基本数据项描述一个对象某种属性的字符集，具有数据名、数据类型及数据值三个特性。组合数据项由若干数据项构成。</p>
+<p>②记录是一组相关数据项的集合，用于描述一个对象某方面的属性。</p>
+<p>③文件是具有文件名的一组相关信息的集合。</p>
+<p><strong>4</strong>．何谓逻辑文件？何谓物理文件？</p>
+<p>答：逻辑文件是物理文件中存储的数据的一种视图方式，不包含具体数据，仅包含物理文件中数据的索引。物理文件又称文件存储结构，是指文件在外存上的存储组织形式。</p>
+<p><strong>8</strong>．试说明顺序文件的结构及其优点。</p>
+<p>答：第一种是串结构：各记录之间的顺序与关键字无关。第二种是顺序结构：指文件中的所有记录按关键字（词）排列。可以按关键词长短排序或英文字母顺序排序。</p>
+<p>顺序文件的最佳应用场合是对诸记录进行批量存取时，存取效率最高；只有顺序文件才能存储在磁带上并有效工作。</p>
+<p><strong>15</strong>．什么是索引文件？为什么要引入多级索引？</p>
+<p>答：索引文件是指当记录为可变长度时，通常为之建立一张索引表，并为每个记录设置一个表项构成的文件。通常将索引非顺序文件简称为索引文件。索引是为了是用户的访问速度更快，多级索引结构可以有效的管理索引文件，可根据用户的访问情况多级处理。</p>
+<p><strong>17</strong>．对目录管理的主要要求是什么？</p>
+<p>答：实现按名存取、提高检索目录的速度、文件共享、允许文件重名。</p>
+<p><strong>18</strong>．采用单级目录能否满足对目录管理的主要要求？为什么？</p>
+<p>答：不能。单级目录在整个文件系统中只建立一张目录表，每个文件占一个目录项，其中含文件名、文件扩展名、文件长度、文件类型、文件物理地址、状态位等其它文件属性。</p>
+<p>单级只能实现目录管理的基本功能，不能满足查找速度、允许重名和文件共享的要求。</p>
+<p><strong>19</strong>．目前广泛应用的目录结构有哪些？它有什么优点？</p>
+<p>答：现代操作系统都采用多级目录结构。基本特点是查询速度快、层次结构清晰、文件管理和保护易于实现。</p>
+<p>9-6 设文件B按串联文件构造，并由四个逻辑记录组成 (其大小与磁盘块大小相等，均为512B)。这四个逻辑记录分别存放在第100、157、66、67号磁盘块上，回答如下问题。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image001.png"></p>
+<p>(1) 画出此串联文件文件的结构，</p>
+<p>(2) 若要读文件B第1560字节处的信息，问要访问哪一个磁盘块? 为什么?</p>
+<p>(3) 读文件B第1560字节处的信息需要进行多少次I&#x2F;O操作? 为什么?</p>
+<p>(1) 答：此串联文件结构如下图所示。</p>
+<p>(2) 答：1560&#x2F;512&#x3D;3余24，因此文件第1560逻辑字节在r3逻辑块上，该逻辑块被分配在67号磁盘块上。</p>
+<p>(3) 答：要访问67号磁盘块，需要先找到文件目录，然后依次访问100、157和66号磁盘块，最后读取67号磁盘块。因此若文件已打开 (文件目录信息已在内存中) 需要4次I&#x2F;O操作，文件未打开需要5次I&#x2F;O操作。</p>
+<p>9-16什么是“重名”问题 ? 二级文件目录结构如何解决这一问题?</p>
+<p>答：重名是指不同用户对不同文件起了相同的名字。在二级文件目录结构中，每个用户建立用户文件目录，系统建立主目录，登记所有用户目录的信息，用目录名加文件名唯一标识每个文件解决重名问题。</p>
+<p>9-18 假设两个用户共享一个文件系统，用户甲要用到文件a、b、c、e，用户乙要用到文件a、d、e、f。已知：用户甲的文件a与用户乙的文件a实际上不是同一文件；用户甲的文件c与用户乙的文件f实际上是同一文件；甲、乙两用户的文件e是同一文件。试拟定一个文件组织方案，使得甲、乙两用户能共享该文件系统而不致造成混乱。</p>
+<p>答：如下图所示。用户甲的主目录名为jia，有四个文件，文件名为a、b、c、e。</p>
+<p>用户乙的主目录名为yi，有四个文件，文件名为a、d、e、f。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image002.png"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" title="文件管理">http://rshawshank.github.io/2019/12/30/OS_文件管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+              <a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" rel="tag"># 文件管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/30/OS_%E5%A4%84%E7%90%86%E6%9C%BA%E8%B0%83%E5%BA%A6/" rel="prev" title="处理机调度">
+      <i class="fa fa-chevron-left"></i> 处理机调度
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="next" title="设备管理">
+      设备管理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">文件管理概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">文件组织的两种结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.1.</span> <span class="nav-text">逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">物理结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%AE%B0%E5%BD%95%E4%B8%8E%E7%89%A9%E7%90%86%E8%AE%B0%E5%BD%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">逻辑记录与物理记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">文件的逻辑结构与存取方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">流式文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.2.</span> <span class="nav-text">记录式文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">文件存取方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">文件的物理结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">连续文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E8%81%94%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">串联文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">索引文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%B4%A2%E5%BC%95"><span class="nav-number">2.3.1.</span> <span class="nav-text">直接索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E9%97%B4%E6%8E%A5%E7%B4%A2%E5%BC%95"><span class="nav-number">2.3.2.</span> <span class="nav-text">一级间接索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E9%97%B4%E6%8E%A5%E7%B4%A2%E5%BC%95"><span class="nav-number">2.3.3.</span> <span class="nav-text">二级间接索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">文件存储空间的管理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%8F%8A%E5%85%B6%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">文件目录及其结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">4.1.</span> <span class="nav-text">一级文件目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E5%9E%8B%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">4.2.</span> <span class="nav-text">树型文件目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%90%8D"><span class="nav-number">4.2.1.</span> <span class="nav-text">文件路径名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E4%B8%8E%E5%AE%89%E5%85%A8"><span class="nav-number">5.</span> <span class="nav-text">文件共享与安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84%E5%90%8D%E5%8A%A0%E5%BF%AB%E6%96%87%E4%BB%B6%E7%9A%84%E6%9F%A5%E6%89%BE"><span class="nav-number">5.1.</span> <span class="nav-text">用文件路径名加快文件的查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E6%8A%80%E6%9C%AF"><span class="nav-number">5.2.</span> <span class="nav-text">链接技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD"><span class="nav-number">6.</span> <span class="nav-text">文件操作和文件备份</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD"><span class="nav-number">6.1.</span> <span class="nav-text">文件备份</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">问题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

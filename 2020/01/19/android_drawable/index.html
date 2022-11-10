@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="drawabledrawable常用作View的背景（还可以作为ImageView中的图像来显示）。是通过xml来定义的。 Drawable是个抽象类，是所有Dreawble对象的基类，每个具体的Drawable是它的子类。这就反映了Drawable是可以通过代码来创建的。 分类1.BitmapDrawable 表示一张图片，可以直接接引原始的图片，或者通过XML的方式描述。 2.ShapeDra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="drawable">
+<meta property="og:url" content="http://rshawshank.github.io/2020/01/19/android_drawable/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="drawabledrawable常用作View的背景（还可以作为ImageView中的图像来显示）。是通过xml来定义的。 Drawable是个抽象类，是所有Dreawble对象的基类，每个具体的Drawable是它的子类。这就反映了Drawable是可以通过代码来创建的。 分类1.BitmapDrawable 表示一张图片，可以直接接引原始的图片，或者通过XML的方式描述。 2.ShapeDra">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-54b94ead11c967ba.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-c37681ec1a63726a.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-f01c851c19b3679d.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-1337064674f55b83.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-2f3dc23aa919c927.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-b5395a586d961d45.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-3c875323de7fee46.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-f33ae9d93bc59295.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-1a0a013e976eef37.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-d79bdd8c46b1997f.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-680a02e956cc390d.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-1bc237196100deb1.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-ed2a36d243eb82c1.webp">
+<meta property="og:image" content="http://rshawshank.github.io/images/drawable/1323444-1e54785f1036c7fb.webp">
+<meta property="article:published_time" content="2020-01-19T08:41:20.000Z">
+<meta property="article:modified_time" content="2020-01-22T02:17:10.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="drawable">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/drawable/1323444-54b94ead11c967ba.webp">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/01/19/android_drawable/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>drawable | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/01/19/android_drawable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          drawable
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-19 08:41:20" itemprop="dateCreated datePublished" datetime="2020-01-19T08:41:20Z">2020-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-22 02:17:10" itemprop="dateModified" datetime="2020-01-22T02:17:10Z">2020-01-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="drawable"><a href="#drawable" class="headerlink" title="drawable"></a>drawable</h1><p><strong>drawable常用作View的背景</strong>（还可以作为ImageView中的图像来显示）。是通过xml来定义的。</p>
+<p>Drawable是个抽象类，是所有Dreawble对象的基类，每个具体的Drawable是它的子类。这就反映了Drawable是可以通过代码来创建的。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="1-BitmapDrawable"><a href="#1-BitmapDrawable" class="headerlink" title="1.BitmapDrawable"></a>1.BitmapDrawable</h3><p> 表示一张图片，可以直接接引原始的图片，或者通过XML的方式描述。</p>
+<h3 id="2-ShapeDrawble"><a href="#2-ShapeDrawble" class="headerlink" title="2.ShapeDrawble"></a>2.ShapeDrawble</h3><p>通过颜色构造的图形</p>
+<h3 id="3-LayerDrawable"><a href="#3-LayerDrawable" class="headerlink" title="3.LayerDrawable"></a>3.LayerDrawable</h3><p>将不同的Drawable放置在不同的层上面达到一种叠加效果。XML标签是<layer-list>，一个layer-list包含很多个item，一个item表示一个Drawable。item中的属性可以移动对应的Drawable。item中的andorid：drawable属性可以引用一个Drawable（故该drawable是已经存在的。）或者自己在item中定义一个。</p>
+<h3 id="4-StateListDrawable"><a href="#4-StateListDrawable" class="headerlink" title="4.StateListDrawable"></a>4.StateListDrawable</h3><p>对应着<selector>标签，表示的是drawable的集合，每个drawable对应view的一种状态，<strong>系统会根据view的状态来选择drawable</strong></p>
+<p>它包含许多个item（表示一个具体的Drawable）里面包含了view的状态。故系统自上而下根据view的状态选择item。（找到一个就返回，没找到就选择默认的item）默认的item是不附带状态的。</p>
+<h3 id="5-LevelListDrawable"><a href="#5-LevelListDrawable" class="headerlink" title="5.LevelListDrawable"></a>5.LevelListDrawable</h3><p>对应<level-list>标签，表示的是drawable集合，但是集合中的drawable是有等级的。根据不同的等级切换到不同的drawable。等级在item。view是通过设置等级来选择对应的drawable作为其背景的。（设置等级是通过Drawable类的setLevel方法来设置的）。</p>
+<p>感觉上可以自由选择自己想要的背景。</p>
+<h3 id="6-TransitionDrawable"><a href="#6-TransitionDrawable" class="headerlink" title="6.TransitionDrawable"></a>6.TransitionDrawable</h3><p>对应<transition>标签。实现<strong>两个</strong>drawable之间的淡入淡出。</p>
+<p>在其中确定自己的item（即item对应的drawable之前淡入淡出）</p>
+<p>可以直接在view中设置为其背景</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ImageView</span><br><span class="line">        android:id=<span class="string">&quot;@+id/imgView&quot;</span></span><br><span class="line">        android:layout_width=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">        android:layout_height=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">android:src=<span class="string">&quot;@drawable/transition&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者在代码中控制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="type">ImageView</span> <span class="variable">image</span> <span class="operator">=</span> (ImageView) findViewById(R.id.mIv);</span><br><span class="line"><span class="comment">//得到一个Drawable，属于 TransitionDrawable 类型的</span></span><br><span class="line">        <span class="type">TransitionDrawable</span> <span class="variable">transition</span> <span class="operator">=</span> (TransitionDrawable)getResources().</span><br><span class="line">                getDrawable(R.drawable.transition_simple);</span><br><span class="line"></span><br><span class="line">        image.setImageDrawable(transition);</span><br><span class="line">        transition.startTransition(<span class="number">2000</span>); <span class="comment">// 设定渐变的变化时长</span></span><br></pre></td></tr></table></figure>
+
+<p>问题：如何实现多个drawable的淡入淡出？</p>
+<p>开启一个线程（死循环）每隔一段时间发送消息到UI主线程中替换主线程中的transitionDrawable对象中的图片就可以了，需要用到handler。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/z_zt_t/article/details/52761432">https://blog.csdn.net/z_zt_t/article/details/52761432</a></p>
+<h3 id="7-InsetDrawable"><a href="#7-InsetDrawable" class="headerlink" title="7.InsetDrawable"></a>7.InsetDrawable</h3><p>对应<inset>标签。可以将其他的drawable内嵌到自己的当中。故view可以让背景比自己的实际区域小。</p>
+<p>很像drawable的padding属性，区别在于 padding表示drawable的内容与drawable本身的边距，insetDrawable表示两个drawable和容器之间的边距。</p>
+<h3 id="8-ScaleDrawable"><a href="#8-ScaleDrawable" class="headerlink" title="8.ScaleDrawable"></a>8.ScaleDrawable</h3><p>对应与<scale>标签。根据自己的等级将其指定的drawable进行放缩。等级越小，放缩越好。等级为0，则不可见。</p>
+<h3 id="9-ClipDrawable"><a href="#9-ClipDrawable" class="headerlink" title="9.ClipDrawable"></a>9.ClipDrawable</h3><p>对应与<clip>标签。根据自己的等级设置一个Drawable的当前显示比例来裁剪出另一张Drawable。（该drawable是其引用的drawable的一部分）</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/briblue/article/details/53528837">https://blog.csdn.net/briblue/article/details/53528837</a></p>
+<h3 id="10-自定义Drawable"><a href="#10-自定义Drawable" class="headerlink" title="10.自定义Drawable"></a>10.自定义Drawable</h3><p>核心是draw方法（？）。系统调用draw方法来绘制view的背景。由此可得，可以通过重写drawable的draw方法来自定义drawable。</p>
+<h3 id="11-VectorDrawable"><a href="#11-VectorDrawable" class="headerlink" title="11.VectorDrawable"></a>11.VectorDrawable</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0972a0d290e9">Android矢量图I–VectorDrawable基础</a></p>
+<p>Android API 21（5.0）引入了一个Drawable的子类<code>VectorDrawable</code>目的就是用来渲染矢量图，<code>AnimatedVectorDrawable</code>用来播放矢量动画。</p>
+<p><strong>准备</strong></p>
+<p>使用矢量图要根据<code>minSdkVersion</code>来分3中不同的情况：</p>
+<ol>
+<li><code>minSdkVersion&gt;=21</code>：用xml文件或者代码定义VectorDrawable，和普通的Drawable用法一样，不再需要额外任何东西；如何编写矢量图，下文有介绍；</li>
+<li><code>minSdkVersion&lt;21</code>：如果想要渲染矢量图的话必须在app模块的build.gralde文件里添加一行代码：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaultConfig &#123;</span><br><span class="line">    vectorDrawables.useSupportLibrary = true</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	3. <code>minSdkVersion&lt;21以及更多</code>：上面的第二种情况是使用兼容包，但是兼容包仅支持<code>AppCompatImageView</code>和<code>AppCompatImageButton</code>及其子类矢量图，而且矢量图的引用必须放在<code>app:srcCompat</code>属性中才会被识别并生效，代码必须这样写才行：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android.support.v7.widget.AppCompatImageView</span></span></span><br><span class="line"><span class="tag">      <span class="attr">app:layout_constraintBottom_toBottomOf</span>=<span class="string">&quot;parent&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:layout_width</span>=<span class="string">&quot;100dp&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:layout_height</span>=<span class="string">&quot;100dp&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">app:srcCompat</span>=<span class="string">&quot;@drawable/ic_oval&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ic_oval.xml是我们使用xml编写的矢量图，如果想要TextView的drawableTop或者其他额外方式使用矢量图渲染，那么必须在Activity中加入代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">    AppCompatDelegate.setCompatVectorFromResourcesEnabled(<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时这个Activity必须继承AppCompatActivity这个compat兼容包属性才会生效。</p>
+<p><code>minSdkVersion&lt;21</code>情况下在非app:srcCompat属性的地方使用矢量图时，需要将矢量图用drawable容器(如StateListDrawable, InsetDrawable, LayerDrawable, LevelListDrawable, 和RotateDrawable)包裹起来使用。否则会在低版本的情况下报错<code>org.xmlpull.v1.XmlPullParserException: Binary XML file line #0: invalid drawable tag vector</code>。minSdkVersion&gt;&#x3D;21则没有任何限制。</p>
+<p><strong>矢量图使用</strong></p>
+<p>准备工作做好之后，我们就需要自己动手编辑矢量图了。VectorDrawable类在xml中对应的是标签是<code>vector</code>。我目前所知道的是只有xml文件才能决定矢量图的样子(也就是编辑pathData、fillColor等属性)，貌似无法使用代码来决定矢量图的绘制逻辑，而只能使用代码加载编辑好的xml文件，这个xml文件有两种方法来创建：</p>
+<ol>
+<li>右击drawable–&gt;Drawable resource file–&gt;设置<code>root element</code>为<code>vector</code>，这样的矢量图绘制逻辑完全掌握在开发者手里；</li>
+<li>右击drawable–&gt;Vector Asset，选择SVG或者PSD文件直接生成根标签为vector的xml文件，可以百度或者Google怎样把png转换成SVG。</li>
+</ol>
+<p>写了这么多字，一直在瞎扯淡而没谈重点，下面我们看下根标签为vector的xml文件的真面目，代码：</p>
+<p><img src="/images/drawable/1323444-54b94ead11c967ba.webp" alt="img"></p>
+<p>上图中标签vector使用了四个属性：<code>android:width=&quot;24dp&quot;</code>、<code>android:height=&quot;24dp&quot;</code>、<code>android:viewportHeight=&quot;300.0&quot;</code>、<code>android:viewportWidth=&quot;300.0&quot;</code>。</p>
+<ol>
+<li>width和height：当使用这个矢量图的View的宽高是wrap_content 的时候这两个属性才生效；</li>
+<li>viewportWidth和viewportHeight：决定画布的宽高，是定义的一个虚拟空间，方便编辑pathData属性，如果pathData中的点超出了这个虚拟空间，超出的部分将不会展现给用户；虚拟空间的原点仍然还是在左上角(R点就是原点)。</li>
+</ol>
+<p>path标签是vector标签的子标签，它使用了以下属性：</p>
+<ol>
+<li><code>android:name</code>：类似View的id属性，方便path被引用，如上图的edge是虚拟空间四个边界的path，oval是一个椭圆的path；</li>
+<li><code>android:fillColor</code>：填充path的颜色，如果没有定义则不填充path</li>
+<li><code>android:strokeColor</code>：path边框颜色，如果没有定义则不显示边框</li>
+<li><code>android:strokeWidth</code>：path边框的粗细尺寸</li>
+<li><code>android:pathData</code>：path指令，决定path的移动和绘制逻辑，这个是最主要的属性，下面详细讨论。</li>
+</ol>
+<p>更多path属性请参考<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://developer.android.com/reference/android/graphics/drawable/VectorDrawable.html">链接</a>。</p>
+<p>pathData的指令和Path类的API方法基本差不多，比如M指令对应moveTo方法，m指令对应rMoveTo方法，下面是一些基本的指令：</p>
+<ul>
+<li><ol>
+<li>Mx,y：移动到点(x,y)</li>
+</ol>
+</li>
+<li><ol>
+<li>Lx,y：直线连到点x,y，简化命令H(x)水平连接和V(y)垂直连接；</li>
+</ol>
+</li>
+<li><ol>
+<li>Qx1,y1 x2,y2：二阶贝塞尔曲线，控制点（x1,y1），终点x2,y2；</li>
+</ol>
+</li>
+<li><ol>
+<li>Cx1,y1 x2,y2 x3,y3：三阶贝塞尔曲线，控制点（x1,y1）（ x2,y2），终点x3,y3；</li>
+</ol>
+</li>
+<li><ol>
+<li>Tx y：平滑的二阶贝塞尔曲线，参数只有一个点(x,y)，这个点是结束点，控制点是前一个二阶贝塞尔曲线的控制点相对于前一个贝塞尔曲线的结束点的镜像点。</li>
+</ol>
+</li>
+<li><ol>
+<li>Sx2,y2 x,y：平滑的三阶贝塞尔曲线，参数为(x2,y2 x,y) ，x2,y2 为第二个控制点，x,y为绘制终点，那么第一个控制点则是前一个三阶曲线的第二个控制点相对于前一个三阶曲线终点的镜像点。</li>
+</ol>
+</li>
+<li><ol>
+<li>Arx,ry x-axis-rotation large-arc-flag,sweep-flag x,y：ellipse arc圆弧曲线</li>
+</ol>
+</li>
+<li><ol>
+<li>z：close闭合<br>……</li>
+</ol>
+</li>
+</ul>
+<p>每个指令都有大小写形式，大写表示后面的参数是绝对坐标，小写表示相对于上一个点的相对坐标位置，参数可以用逗号或者空格分离。<br>只要掌握上面5个基本指令就能编辑pathData并且绘制一些酷炫的SVG。更详细全面的path指令请参阅<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://www.w3.org/TR/SVG/paths.html%23PathDataEllipticalArcCommands">链接</a>。</p>
+<p>估计你已经发现了，圆弧曲线指令A竟然那么多参数，这直接吓跑了很多的程序员，其实也并不难，且慢慢道来。</p>
+<p>先根据图1里的代码来分析pathData指令。如图一所示，edge这个path使用了四个相对指令，首先指令h300 0相对向右水平移动300到点S，然后指令v0 300相对向下垂直移动300到T，再次指令h-300 0相对向左水平移动300到U，最后指令v0 -300相对向上垂直移动300到起点R，这样就根据属性strokeColor和strokeWidth绘制了四条直线，最后一个指令可以使用z代替。这很简单吧？！</p>
+<p>再来看oval这个path。它使用了三条指令。第一条指令移动到点M处，第二条指令<code>a75,75 0 1,1 150,0</code>绘制M-N-O的弧线，第三条指令<code>a75,75 0 1,1 -150,0</code>绘制O-P-M的弧线。a指令共有7个参数：rx和ry表示椭圆的两个半径，x-axis-rotation表示x轴的旋转角度，x和y表示绘制椭圆弧线的终点，这5个参数很简单很好理解，large-arc-flag和sweep-flag这两个参数有点唬人。<br>解释large-arc-flag和sweep-flag这两个参数之前先考虑下这个题目：已知椭圆的半径rx和ry，请绘制若干条从起始点A到终点B的椭圆弧线。题目中是若干条，那到底几条啊？一般情况下会有四条椭圆弧线(特殊情况是rx&#x3D;线段AB的一半或者ry&#x3D;线段AB的一半，这时候的椭圆弧线只有两条)，而large-arc-flag和sweep-flag这两个参数就从这四个椭圆弧线中选取了最终的一条进行绘制。large-arc-flag决定是大弧线还是小弧线，1大0小，sweep-flag决定是顺时针弧线还是逆时针弧线，1顺0逆。</p>
+<p><img src="/images/drawable/1323444-c37681ec1a63726a.webp" alt="img"></p>
+<p>图2</p>
+<p>看图2希望你能明白这两个参数的意义。</p>
+<p>有人可能会问，图1的oval path是个圆，竟然使用了两个a指令，使用一个a指令就能绘制圆的，只要终点回到起始点就能绘制圆的path了，刚开始我也是这样认为的，比如下面的代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">vector</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:width</span>=<span class="string">&quot;24dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:height</span>=<span class="string">&quot;24dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportHeight</span>=<span class="string">&quot;300.0&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportWidth</span>=<span class="string">&quot;300.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;circle&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/holo_green_light&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">        M150,150</span></span></span><br><span class="line"><span class="string"><span class="tag">        a75,75 0 1,1 0,0&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;#00000000&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>  上面的代码的path从起始点又回到了起始点，不会绘制任何东西，终点x y需要和起始点错开几个像素比如<code>android:pathData=&quot;M150,150 a75,75 0 1,1 0,1&quot;</code>就大约是一个圆path，为什么说是大约一个圆？因为起始点和终点不在一起，这只是一个圆的大弧线部分。推荐使用两条a指令绘制圆path，因为一条a指令绘制的不是真正的圆path。</p>
+<p><strong>group标签</strong></p>
+<p>path没有<strong>scale</strong>、<strong>rotate</strong>和<strong>translate</strong>这三种属性，因此也不能执行这三种属性动画，要达到这样的目的需要借助group这个标签。group标签也是vector的一个子标签，它可以作为path或者其他group的父标签使用，将path和group组合成一个组来附加一些变换操作，这些变换操作包括<strong>scale</strong>、<strong>rotate</strong>和<strong>translate</strong>共三种。这张图3是来自<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html">android官网</a>的vector标签树型图：</p>
+<p><img src="/images/drawable/1323444-f01c851c19b3679d.webp" alt="img"></p>
+<p>图3</p>
+<p>。<group>定义变换的细节，<clip-path>定义裁剪区域。根据这三个变换操作，group标签有以下属性：</p>
+<ul>
+<li>android:name：group的名字；</li>
+<li>android:rotation：group的旋转角度，默认0。</li>
+<li>android:pivotX：scale和rotation变换中心点的X坐标，默认0；</li>
+<li>android:pivotY：scale和rotation变换中心点的Y坐标，默认0；</li>
+<li>android:scaleX：X轴方向的缩放，默认1；</li>
+<li>android:scaleY：Y轴方向的缩放，默认1；</li>
+<li>android:translateX：X轴方向的移动距离，默认0；</li>
+<li>android:translateY：Y轴方向的移动距离，默认0。</li>
+</ul>
+<p>这是group的全部属性了，属性都很简单，不需要解释。</p>
+<p><strong>clip-path标签</strong></p>
+<p><clip-path>定义当前绘制的剪切路径，就是图像的一部分剪切下来。注意，clip-path只对当前的vector和group以及当前vector和group的孩子有效。这个标签仅有两个属性：</p>
+<ul>
+<li>android:name：clip-path的名字；</li>
+<li>android:pathData：clip-path的路径。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">vector</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:width</span>=<span class="string">&quot;24dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:height</span>=<span class="string">&quot;24dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportHeight</span>=<span class="string">&quot;300.0&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportWidth</span>=<span class="string">&quot;300.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">clip-path</span> <span class="attr">android:name</span>=<span class="string">&quot;clip_one&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="string"><span class="tag">    M0 20a20 20 0 0 1 20 -20</span></span></span><br><span class="line"><span class="string"><span class="tag">    l260 0a20 20 0 0 1 20 20</span></span></span><br><span class="line"><span class="string"><span class="tag">    l0 260a20 20 0 0 1 -20 20</span></span></span><br><span class="line"><span class="string"><span class="tag">    l-260 0a20 20 0 0 1 -20 -20</span></span></span><br><span class="line"><span class="string"><span class="tag">    l0 -260&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;edge&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;h300v300h-300v-300</span></span></span><br><span class="line"><span class="string"><span class="tag">        M150 0 v300</span></span></span><br><span class="line"><span class="string"><span class="tag">        M0 150 h300&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/holo_green_light&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;@android:color/holo_red_dark&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeWidth</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">group</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">clip-path</span> <span class="attr">android:name</span>=<span class="string">&quot;clip_two&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;M0 150h300v150h-300v-150&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;oval&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeLineCap</span>=<span class="string">&quot;round&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeLineJoin</span>=<span class="string">&quot;round&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:pathData</span>=<span class="string">&quot;M20 20 l260,260M280 20 l-260,260h100&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeColor</span>=<span class="string">&quot;#000000&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeWidth</span>=<span class="string">&quot;15&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码定义了两个clip-path，其效果如图4所示。</p>
+<p><img src="/images/drawable/1323444-1337064674f55b83.webp" alt="img"></p>
+<p>图4.gif</p>
+<p><strong>build.gradle中vectorDrawables.useSupportLibrary属性</strong></p>
+<p>build.gradle中的vectorDrawables.useSupportLibrary默认是false，不设置为true的话会有什么问题吗？讨论这个问题也需要根据minSdkVersion具体分析：</p>
+<ol>
+<li><code>minSdkVersion&gt;=21</code>：这么高的API根本就不需要兼容包，仍然可以渲染矢量图；</li>
+<li><code>minSdkVersion&lt;21</code>：不再使用矢量图兼容包，不能渲染矢量图，但是有趣的是vector标签仍然可以使用，低版本的API完全把VectorDrawable当作Drawable使用了，VectorDrawable的特性完全失效。原理是vector xml文件会生成对应的png文件，使用png方式渲染图片，和矢量图没有任何关系。值得注意的是生成的png图片size很小而且会忽略vector标签的android:tint属性(貌似只忽略这个属性，我试过vector标签的android:alpha属性在生成的png图片中仍然有效，生成的png文件目录是app&#x2F;build&#x2F;generated&#x2F;res&#x2F;pngs&#x2F;debug，minSdkVersion&gt;&#x3D;21或者vectorDrawables.useSupportLibrary&#x3D;true的话不会生成这些png图片)。而且path标签的color相关的属性不能引用colors.xml的值，<code>android:strokeColor=&quot;@android:color/holo_red_dark&quot;</code>这样写的话会编译失败，提示错误：<code>Can&#39;t process attribute android:strokeColor=&quot;@android:color/holo_red_dark&quot;: references to other resources are not supported by build-time PNG generation</code>，而只能写原生的16进制color值比如<code>android:strokeColor=&quot;#234aac&quot;</code>。</li>
+</ol>
+<p>想看具体信息请查看这篇<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://blog.stylingandroid.com/vectordrawable-png/">文章</a>。</p>
+<p><strong>SVG实战</strong></p>
+<p>我做的项目中一张扑克png资源大小2k左右，我试着用矢量图画这些扑克牌。代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">vector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:width</span>=<span class="string">&quot;400dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:height</span>=<span class="string">&quot;550dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportHeight</span>=<span class="string">&quot;550&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportWidth</span>=<span class="string">&quot;400.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">group</span> <span class="attr">android:name</span>=<span class="string">&quot;poker_diamond_a&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;border&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeWidth</span>=<span class="string">&quot;7&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeColor</span>=<span class="string">&quot;#96999c&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/white&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:pathData</span>=<span class="string">&quot;M5 25a20 20 0 0 1 20 -20</span></span></span><br><span class="line"><span class="string"><span class="tag">            h350a20 20 0 0 1 20 20v500a20 20 0 0 1 -20 20h-350a20 20 0 0 1 -20 -20v-500&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeWidth</span>=<span class="string">&quot;8&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeColor</span>=<span class="string">&quot;#cc0000&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeLineJoin</span>=<span class="string">&quot;bevel&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:pathData</span>=<span class="string">&quot;M40 120</span></span></span><br><span class="line"><span class="string"><span class="tag">            l40 -90</span></span></span><br><span class="line"><span class="string"><span class="tag">            l40 90</span></span></span><br><span class="line"><span class="string"><span class="tag">            l-16-35</span></span></span><br><span class="line"><span class="string"><span class="tag">            h-48&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;small_diamond&quot;</span> <span class="attr">android:fillColor</span>=<span class="string">&quot;#cc0000&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;M80 130l41 41l-41 41l-41 -41z&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;big_diamond&quot;</span> <span class="attr">android:fillColor</span>=<span class="string">&quot;#cc0000&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;M260 310l100 100l-100 100l-100 -100z&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/drawable/1323444-2f3dc23aa919c927.webp" alt="img"></p>
+<p>图5</p>
+<p>代码很简单，只有4条path。border路径顺序是1-2-3-4-5-6-7-8-1， a的路径是a-b-c-d-e，small_diamond的路径是e-f-g-h，big_diamond的路径是i-j-k-l。这个xml文件只有1k。</p>
+<p><strong>vector属性</strong></p>
+<ol>
+<li><code>android:alpha</code>：矢量图的透明度，范围0-1，默认1；</li>
+<li><code>android:tint</code>：矢量图的颜色，这个颜色值会覆盖所有与color相关的属性比如path的fillColor和strokeColor等；这个属性会被API setColorFilter(ColorFilter)覆盖。</li>
+<li><code>android:tintMode</code>：色彩混合模式，可选值有很多，下面详细讨论，默认src_in。</li>
+<li><code>android:autoMirrored</code>：当布局方向变成right-to-left的时候，矢量图是否自动镜像，默认false，这个属性在API&gt;&#x3D;19才生效。</li>
+</ol>
+<p>关于tintMode，先看下PorterDuff这类的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PorterDuff</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">PorterDuff</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Stub!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">enum</span> <span class="title class_">Mode</span> &#123;</span><br><span class="line">        CLEAR, <span class="comment">/** [Sa, Sc] */</span></span><br><span class="line"></span><br><span class="line">        DST, <span class="comment">/** [Da, Dc] */</span></span><br><span class="line">        DST_ATOP, <span class="comment">/** [Sa, Sa * Dc + Sc * (1 - Da)] */</span></span><br><span class="line">        DST_IN, <span class="comment">/** [Sa * Da, Sa * Dc] */</span></span><br><span class="line">        DST_OUT, <span class="comment">/** [Da * (1 - Sa), Dc * (1 - Sa)] */</span></span><br><span class="line">        DST_OVER, <span class="comment">/** [Sa + (1 - Sa)*Da, Rc = Dc + (1 - Da)*Sc] */</span></span><br><span class="line"></span><br><span class="line">        SRC, <span class="comment">/** [Sa, Sc] */</span></span><br><span class="line">        SRC_ATOP, <span class="comment">/** [Da, Sc * Da + (1 - Sa) * Dc] */</span></span><br><span class="line">        SRC_IN, <span class="comment">/** [Sa * Da, Sc * Da] */</span></span><br><span class="line">        SRC_OUT, <span class="comment">/** [Sa * (1 - Da), Sc * (1 - Da)] */</span></span><br><span class="line">        SRC_OVER, <span class="comment">/** [Sa + (1 - Sa)*Da, Rc = Sc + (1 - Sa)*Dc] */</span></span><br><span class="line"></span><br><span class="line">        DARKEN, <span class="comment">/** [Sa + Da - Sa*Da, Sc*(1 - Da) + Dc*(1 - Sa) + min(Sc, Dc)] */</span></span><br><span class="line">        XOR, <span class="comment">/** [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc] */</span></span><br><span class="line">        LIGHTEN, <span class="comment">/** [Sa + Da - Sa*Da, Sc*(1 - Da) + Dc*(1 - Sa) + max(Sc, Dc)] */</span></span><br><span class="line">        MULTIPLY, <span class="comment">/** [Sa * Da, Sc * Dc] */</span></span><br><span class="line">        SCREEN, <span class="comment">/** [Sa + Da - Sa * Da, Sc + Dc - Sc * Dc] */</span></span><br><span class="line">        <span class="comment">/** Saturate(S + D) */</span></span><br><span class="line">        ADD,</span><br><span class="line">        OVERLAY;</span><br><span class="line">        <span class="keyword">private</span> <span class="title function_">Mode</span><span class="params">()</span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先类名PorterDuff是什么意思呢？PorterDuff是两个人名的组合: Thomas Porter和Tom Duff，他们1984年在ACM SIGGRAPH计算机图形学发表论文《Compositing digital images》，最早提出图形混合概念，极大地推动了图形图像学的发展，有兴趣的同学可以自行查阅资料。</p>
+<p><img src="/images/drawable/1323444-b5395a586d961d45.webp" alt="img"></p>
+<p>图1</p>
+<p>PorterDuff共有18个模式可选，但是<code>android:tintMode</code>可选值只有六个：MULTIPLY、SCREEN、ADD、SRC_ATOP、SRC_IN、SRC_OVER，(xml文件只提供这6个的原因我不知道，请大神留言告知)。当然想使用其余12个tintMode模式也是可以的，需要用代码调用API Drawable.setTintMode(PorterDuff.Mode)即可，可以达到相应tintMode的效果。</p>
+<p>tint属性是Android 5.0引入的，Android 6.0又引入了drawableTint的属性。<br>Button和TextView等一些组件会多出下面6个属性：</p>
+<p><img src="/images/drawable/1323444-3c875323de7fee46.webp" alt="img"></p>
+<p>图2</p>
+<p>ImageView会多出下面6个属性：</p>
+<p><img src="/images/drawable/1323444-f33ae9d93bc59295.webp" alt="img"></p>
+<p>图3</p>
+<p><img src="/images/drawable/1323444-1a0a013e976eef37.webp" alt="img"></p>
+<p>图4</p>
+<p>我们对矢量图进行调色，先看效果如图4所示，图4中红色文字表示xml允许使用的6个tintMode。下面贴出代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line">// poker_a.xml</span><br><span class="line"><span class="tag">&lt;<span class="name">vector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:width</span>=<span class="string">&quot;400dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:height</span>=<span class="string">&quot;550dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:tint</span>=<span class="string">&quot;@android:color/holo_purple&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportHeight</span>=<span class="string">&quot;550&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:viewportWidth</span>=<span class="string">&quot;400.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">group</span> <span class="attr">android:name</span>=<span class="string">&quot;poker_diamond_a&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">&quot;border&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeWidth</span>=<span class="string">&quot;7&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeColor</span>=<span class="string">&quot;#96999c&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/white&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:pathData</span>=<span class="string">&quot;M5 25a20 20 0 0 1 20 -20</span></span></span><br><span class="line"><span class="string"><span class="tag">            h350a20 20 0 0 1 20 20v500a20 20 0 0 1 -20 20h-350a20 20 0 0 1 -20 -20v-500&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeWidth</span>=<span class="string">&quot;8&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeColor</span>=<span class="string">&quot;@android:color/holo_red_dark&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:strokeLineJoin</span>=<span class="string">&quot;bevel&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:pathData</span>=<span class="string">&quot;M40 120</span></span></span><br><span class="line"><span class="string"><span class="tag">            l40 -90</span></span></span><br><span class="line"><span class="string"><span class="tag">            l40 90</span></span></span><br><span class="line"><span class="string"><span class="tag">            l-16-35</span></span></span><br><span class="line"><span class="string"><span class="tag">            h-48&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;small_diamond&quot;</span> <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/holo_blue_dark&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;M80 130l41 41l-41 41l-41 -41z&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">path</span> <span class="attr">android:name</span>=<span class="string">&quot;big_diamond&quot;</span> <span class="attr">android:fillColor</span>=<span class="string">&quot;@android:color/holo_green_dark&quot;</span> <span class="attr">android:pathData</span>=<span class="string">&quot;M260 310l100 100l-100 100l-100 -100z&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">group</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dimen</span> <span class="attr">name</span>=<span class="string">&quot;width&quot;</span>&gt;</span>64dp<span class="tag">&lt;/<span class="name">dimen</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dimen</span> <span class="attr">name</span>=<span class="string">&quot;height&quot;</span>&gt;</span>88dp<span class="tag">&lt;/<span class="name">dimen</span>&gt;</span></span><br><span class="line">// activity_main.xml</span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:tools</span>=<span class="string">&quot;http://schemas.android.com/tools&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">&quot;vertical&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:padding</span>=<span class="string">&quot;5dp&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">&quot;horizontal&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;10dp&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:tint</span>=<span class="string">&quot;@android:color/transparent&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">View</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;10dp&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:background</span>=<span class="string">&quot;@android:color/holo_purple&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/CLEAR&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;10dp&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">&quot;horizontal&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">&quot;5dp&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DST&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DST_ATOP&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DST_IN&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DST_OUT&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DST_OVER&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">&quot;horizontal&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">&quot;5dp&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SRC&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SRC_ATOP&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SRC_IN&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SRC_OUT&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SRC_OVER&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">&quot;horizontal&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">&quot;5dp&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/DARKEN&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/XOR&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/LIGHTEN&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/MULTIPLY&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/SCREEN&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">LinearLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:orientation</span>=<span class="string">&quot;horizontal&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:padding</span>=<span class="string">&quot;5dp&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/ADD&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ImageView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">&quot;@+id/OVERLAY&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">&quot;@dimen/width&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">&quot;@dimen/height&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:src</span>=<span class="string">&quot;@drawable/poker_a&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_marginLeft</span>=<span class="string">&quot;5dp&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>MainActivity.java代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MainActivity.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        AppCompatDelegate.setCompatVectorFromResourcesEnabled(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        ((ImageView) findViewById(R.id.CLEAR)).getDrawable().mutate().setTintMode(PorterDuff.Mode.CLEAR);</span><br><span class="line"></span><br><span class="line">        ((ImageView) findViewById(R.id.DST)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DST);</span><br><span class="line">        ((ImageView) findViewById(R.id.DST_ATOP)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DST_ATOP);</span><br><span class="line">        ((ImageView) findViewById(R.id.DST_IN)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DST_IN);</span><br><span class="line">        ((ImageView) findViewById(R.id.DST_OUT)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DST_OUT);</span><br><span class="line">        ((ImageView) findViewById(R.id.DST_OVER)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DST_OVER);</span><br><span class="line"></span><br><span class="line">        ((ImageView) findViewById(R.id.SRC)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SRC);</span><br><span class="line">        ((ImageView) findViewById(R.id.SRC_ATOP)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SRC_ATOP);</span><br><span class="line">        ((ImageView) findViewById(R.id.SRC_IN)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SRC_IN);</span><br><span class="line">        ((ImageView) findViewById(R.id.SRC_OUT)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SRC_OUT);</span><br><span class="line">        ((ImageView) findViewById(R.id.SRC_OVER)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SRC_OVER);</span><br><span class="line"></span><br><span class="line">        ((ImageView) findViewById(R.id.DARKEN)).getDrawable().mutate().setTintMode(PorterDuff.Mode.DARKEN);</span><br><span class="line">        ((ImageView) findViewById(R.id.XOR)).getDrawable().mutate().setTintMode(PorterDuff.Mode.XOR);</span><br><span class="line">        ((ImageView) findViewById(R.id.LIGHTEN)).getDrawable().mutate().setTintMode(PorterDuff.Mode.LIGHTEN);</span><br><span class="line">        ((ImageView) findViewById(R.id.MULTIPLY)).getDrawable().mutate().setTintMode(PorterDuff.Mode.MULTIPLY);</span><br><span class="line">        ((ImageView) findViewById(R.id.SCREEN)).getDrawable().mutate().setTintMode(PorterDuff.Mode.SCREEN);</span><br><span class="line"></span><br><span class="line">        ((ImageView) findViewById(R.id.ADD)).getDrawable().mutate().setTintMode(PorterDuff.Mode.ADD);</span><br><span class="line">        ((ImageView) findViewById(R.id.OVERLAY)).getDrawable().mutate().setTintMode(PorterDuff.Mode.OVERLAY);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>色彩混合涉及到两个对象，<strong>目标对象</strong>和<strong>源对象</strong>，这里的目标对象是poker_a.xml这个矢量图，源对象是tint设置的颜色值，为啥这样说呢，记着这个原则，先绘制的是目标对象，我们就是要对目标对象进行调色。对目标对象调色后的对象叫做<strong>复合对象</strong>。</p>
+<p>有了这两个对象，怎么进行调色呢？这里有很多计算公式，公式中又有很多元素，先来看下这些元素：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* Sa：Source alpha，源对象的Alpha通道；</span><br><span class="line">* Sc：Source <span class="attribute">color</span>，源对象的颜色；</span><br><span class="line">* Da：Destination alpha，目标对象的Alpha通道；</span><br><span class="line">* Dc：Destination <span class="attribute">color</span>，目标对象的颜色；</span><br><span class="line">* <span class="selector-attr">[a，c]</span>：对象的ARGB值，<span class="selector-tag">a</span>表示alpha，c表示<span class="attribute">color</span>。</span><br></pre></td></tr></table></figure>
+
+<p>下面对这18个tintMode进行剖析，该文受到<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d11892bbe055">这篇文章</a>的启发。<br><strong>CLEAR</strong><br>复合对象的ARGB值是[0，0]，完全透明，相当于清除画布上的图像了。</p>
+<p><strong>DST</strong><br>[Da, Dc]，只保留目标对象的alpha和color值，因此绘制出来的只有目标对象，相当于根本就没有进行调色。<br><strong>DST_ATOP</strong><br>[Sa, Sa * Dc + Sc * (1 - Da)]，两者相交处绘制目标对象，不相交的地方绘制源对象，并且相交处的效果会受到源对象和目标对象alpha的影响。<br><strong>DST_IN</strong><br>[Sa * Da, Sa * Dc]，两者相交的地方绘制目标对象，不相交的地方不进行绘制，并且相交处的效果会受到源对象对应地方透明度的影响。<br><strong>DST_OUT</strong><br>[Da * (1 - Sa), Dc * (1 - Sa)]，两者不相交的地方绘制目标对象，相交处根据源对象alpha进行过滤，完全不透明处则完全过滤，完全透明则不过滤。(亲测正确)<br><strong>DST_OVER</strong><br>[Sa + (1 - Sa)*Da, Rc &#x3D; Dc + (1 - Da)*Sc]，目标对象绘制在源对象的上方。</p>
+<p><strong>SRC</strong><br>[Sa, Sc]，只保留源对象的alpha和color，因此绘制出来只有源对象。<br><strong>SRC_ATOP</strong><br>[Da, Sc * Da + (1 - Sa) * Dc]，两者相交处绘制源对象，不相交的地方绘制目标对象，并且相交处的效果会受到源对象和目标对象alpha的影响。<br><strong>SRC_IN</strong><br>[Sa * Da, Sc * Da]，两者相交处绘制源对象，不相交的地方不进行绘制，并且相交处的效果会受到源对象对应地方透明度的影响。<br><strong>SRC_OUT</strong><br>[Sa * (1 - Da), Sc * (1 - Da)]，两者不相交的地方绘制源对象，相交处根据目标对象alpha进行过滤，完全不透明处则完全过滤，完全透明则不过滤。(亲测正确)<br><strong>SRC_OVER</strong><br>[Sa + (1 - Sa)*Da, Rc &#x3D; Sc + (1 - Sa)*Dc]，源对象绘制在目标对象的上方。</p>
+<p><strong>DARKEN</strong><br>[Sa + Da - Sa<em>Da, Sc</em>(1 - Da) + Dc*(1 - Sa) + min(Sc, Dc)]，顾名思义，效果会变暗。进行对应像素比较，取较暗值(即较小值)，如果色值相同则进行混合；如果两个对象都完全不透明，取较暗值，否则使用上面算法进行计算，受到源对象和目标对象对应色值和alpha值影响。结果复合对象的alpha值会变大。<strong>XOR</strong>[Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]，不相交的地方按原样绘制源对象和目标对象，相交的地方受到对应alpha和颜色值影响，按公式进行计算，如果都完全不透明则相交处完全不绘制。<strong>LIGHTEN</strong>[Sa + Da - Sa<em>Da, Sc</em>(1 - Da) + Dc*(1 - Sa) + max(Sc, Dc)]，顾名思义，效果会变亮。进行对应像素比较，取较亮值(即较大值)，如果色值相同则进行混合；如果两个对象都完全不透明，取较亮值，否则使用上面算法进行计算，受到源对象和目标对象对应色值和alpha值影响。<br><strong>MULTIPLY</strong><br>[Sa * Da, Sc * Dc]，正片叠底，即查看每个通道中的颜色信息，目标色与源色复合。结果色总是较暗的颜色。任何颜色与黑色复合产生黑色，任何颜色与白色复合保持不变。(这个理论貌似和现实生活的颜色混合的结果不一致，现实生活中黄色和白色混合会是黄白色而不是白色)。<br><strong>SCREEN</strong><br>[Sa + Da - Sa * Da, Sc + Dc - Sc * Dc]，滤色模式，这个模式与我们所用的显示屏原理相同，因此也被翻译成屏幕模式；保留两个图层中较白的部分，较暗的部分被遮盖，图层中纯黑的部分变成完全透明，纯白部分完全不透明，其他的颜色根据颜色级别产生半透明的效果。</p>
+<p><strong>ADD</strong><br>Saturate(S + D)，饱和度叠加<br><strong>OVERLAY</strong><br>算法同时进行进行 Multiply（正片叠底）混合还是 Screen（屏幕）混合，是进行 Multiply混合还是 Screen混合，取决于目标对象的颜色值，目标对象颜色的高光与阴影部分的亮度等细节会被保留。</p>
+<p>这18个模式终于介绍完了，再次感谢<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d11892bbe055">这篇文章</a>的作者。</p>
+<h3 id="path属性"><a href="#path属性" class="headerlink" title="path属性"></a>path属性</h3><ol>
+<li><p>android:strokeLineCap：顾名思义，设置线条的帽子，round圆角、square正方形、butt臀，默认是butt；</p>
+</li>
+<li><p>android:strokeLineJoin：线条拐弯处的样式，round圆角、bevel斜角、miter斜切尖角，默认是miter；</p>
+</li>
+<li><p>android:strokeMiterLimit：android:strokeLineJoin为miter的时候这个属性才发挥作用。设置miter斜切尖角长度(用miter_length表示)与线条宽度(用line_width表示)比例值的上限，默认是4，strokeMiterLimit &#x3D; miter_length &#x2F; line_width，这个属性设定了这个比例的最大值，超过这个值的尖角不再显示尖角而是bevel斜角。</p>
+<p><img src="/images/drawable/1323444-d79bdd8c46b1997f.webp" alt="img"></p>
+<p>图5</p>
+<p><img src="/images/drawable/1323444-680a02e956cc390d.webp" alt="img"></p>
+<p>图6</p>
+<p>如果你希望尖角多一些，就把这个属性设置大一些。在特别尖的拐弯处的点，点的这个比例可能大与strokeMiterLimit，那么就不显示尖角效果而是类似bevel斜角的效果，这样看起来不是很突兀，比较美观。</p>
+<p>图5和图6来自</p>
+<p>文章</p>
+<p>；</p>
+</li>
+<li><p>android:trimPathStart：从路径起始位置截断路径的比率，取值范围0-1，默认0；</p>
+</li>
+<li><p>android:trimPathEnd：从路径结束位置截断路径的比率，取值范围0-1，默认1；</p>
+</li>
+<li><p>android:trimPathOffset：设置路径截取的偏移比例，取值范围0-1，默认0；<br>利用android:trimPathStart和android:trimPathEnd可以做一些入场和出场动画，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/89efdbe01ac9">链接</a></p>
+</li>
+<li><p>android:fillType：API 24才引入的这个属性，取值nonZero和evenOdd，默认nonZero。</p>
+</li>
+</ol>
+<p>关于<code>android:fillType</code>这个属性，需要花点篇幅讨论下。讨论这个属性之前，先看下代码及其对应的效果：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">vector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:width</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:height</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportHeight</span>=<span class="string">&quot;600&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportWidth</span>=<span class="string">&quot;600&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;noneZero&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeWidth</span>=<span class="string">&quot;2&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;#B32D20&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;#3C8FC1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;M20 120 a100 100 0 1 1 200 0 a100 100 0 1 1 -200 0</span></span></span><br><span class="line"><span class="string"><span class="tag">            M40 120 a80 80 0 1 1 160 0 a80 80 0 1 1 -160 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;evenOdd&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeWidth</span>=<span class="string">&quot;2&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;#B32D20&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;#3C8FC1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillType</span>=<span class="string">&quot;evenOdd&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;M260 120 a100 100 0 1 1 200 0 a100 100 0 1 1 -200 0</span></span></span><br><span class="line"><span class="string"><span class="tag">            M280 120 a80 80 0 1 1 160 0 a80 80 0 1 1 -160 0&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/drawable/1323444-1bc237196100deb1.webp" alt="img"></p>
+<p>图7</p>
+<p>代码中有两条path，前者的fillType是默认的noneZero，后者的fillType是evenOdd，除了这两个属性外，其余属性一模一样(name属性和M指令的起始位置为了显示的区别，忽略好吧😄)。两者的效果图如图7所示。fillType的原理是什么呢？为啥会导致这样的效果呢？</p>
+<p>这里需要提一点，代码中每一条path都绘制了两个圆，四个圆的每一个圆都是通过两条a指令绘制完成的，如果你不清楚a指令的参数，请仔细看完<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0972a0d290e9">Android矢量图I–VectorDrawable基础</a>这篇文章并搞明白a指令后再回来看本文。这8条a指令的第5个参数都是1表示顺时针，请记住都是顺时针，因为fillType属性值noneZero跟path的方向有很大关系。</p>
+<p>首先来看下默认的noneZero值。多看<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://en.wikipedia.org/wiki/Nonzero-rule">维基百科</a>，那里的解释最权威。<strong>有一个多边形C，我们判断是否要对C的子多边形C1形成的一块区域进行填充，那么先定义一个变量value&#x3D;0，根据value的值来决定是否对C1进行填充；在这个C1区域内任意选择一个点P，从这个点P向任意方向发射一条无限长的直线L，但是这个方向需要直线L与C1至少有一个交点，然后找出直线L与C所有的交点，每个交点处的方向是顺时针value++，顺时针value–，如果最后的value不是0，那么就对C1填充，否则不填充。</strong><br>如果你不明白上面粗体文字的含义，那就根据上面代码名字为noneZero这个path来分析下。这条path包含4个a指令，其实也就是4个形状为弧线的子path：弧线AB、弧线BA、弧线CD、弧线DC，相应地我们就要判断四块区域(outer_a、outer_b、inner_a、inner_b)是否要进行fill(填充，这里的填充默认是填充内部)。对于区域outer_a，我们在其内部选择任意一点P，从P发射一条无限长直线，直线需要与子多边形弧线AB相交至少一个点，该点是P1，直线与多边形C的交点是P1，是顺时针，value&#x3D;P1&#x3D;1，不为0，该区域填充；对于区域inner_a，我们在其内部选择任意一点R，从R发射一条无限长直线，直线需要与子多边形弧线CD相交至少一个点，该点是R1，直线与多边形C的交点是R1和R2，value&#x3D;R1+R1&#x3D;1+1&#x3D;2，不为0，该区域填充。如图8所示，</p>
+<p><img src="/images/drawable/1323444-ed2a36d243eb82c1.webp" alt="img"></p>
+<p>图8</p>
+<p>为了加深下印象，再来举个例子。看下面的代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">vector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:width</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:height</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportHeight</span>=<span class="string">&quot;600&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportWidth</span>=<span class="string">&quot;600&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeWidth</span>=<span class="string">&quot;2&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;#B32D20&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;#3C8FC1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;M20 320 a100 100 0 1 0 200 0</span></span></span><br><span class="line"><span class="string"><span class="tag">            M40 320 a80 80 0 1 1 160 0 a80 80 0 1 1 -160 0&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/images/drawable/1323444-1e54785f1036c7fb.webp" alt="img"></p>
+<p>图9</p>
+<p>你运行上面的代码，不出问题的矢量图应该如图9所示。代码首先从A到B逆时针绘制椭圆弧，然后从C到D顺时针绘制椭圆弧，最后从D到C顺时针绘制椭圆弧。最终的多边形C包含三个子区域outer_a、inner_a、inner_b。对于outer_a，其value&#x3D;P&#x3D;-1，非0那就填充；对于inner_a，其value&#x3D;Q1&#x3D;1，非0那就填充；对于inner_b，其value&#x3D;R1+R2&#x3D;1+(-1)&#x3D;0，0那就不填充。</p>
+<p>如果你已经明白了noneZero，那么evenOdd就非常非常简单了，先看<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule">维基百科</a>，它与指针方向没有关系了，一句话你就能明白：<strong>如果虚拟直线与多边形C的交点数目为奇数就填充内部，偶数就不填充内部</strong>。如果还不明白，就举个例子，看代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">vector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:width</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:height</span>=<span class="string">&quot;200dp&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportHeight</span>=<span class="string">&quot;600&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:viewportWidth</span>=<span class="string">&quot;600&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">path</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeWidth</span>=<span class="string">&quot;2&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:strokeColor</span>=<span class="string">&quot;#B32D20&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillColor</span>=<span class="string">&quot;#3C8FC1&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:fillType</span>=<span class="string">&quot;evenOdd&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:pathData</span>=<span class="string">&quot;M20 320 a100 100 0 1 0 200 0</span></span></span><br><span class="line"><span class="string"><span class="tag">            M40 320 a80 80 0 1 1 160 0 a80 80 0 1 1 -160 0&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">vector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码的结果也是如图9所示，那么拿图9来解释：对于outer_a，其只有一个交点P，奇数那就填充；对于inner_a，其只有一个交点Q，奇数那就填充；对于inner_b，有两个交点R1和R2，偶数那就不填充。</p>
+<p>怀着紧张的心情，fillType属性终于介绍了完了，真害怕写错而误导读者，如果有错误的地方或者有更好的分析方法，请大神批评指正。这里有两篇文章，帮助理解fillType：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ce808a9e7e38">文章1</a>、<a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://blog.csdn.net/freshforiphone/article/details/8273023">文章2</a>。再说一点，<strong>如果你是用tint属性对矢量图进行调色，注意fillType属性值会对结果造成同样的影响</strong>。<br>最后，你如果查看Paint类的内部类FillType的源码，会发现还有另外两种fillType：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Enum for the ways a path may be filled.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">FillType</span> &#123;</span><br><span class="line">        <span class="comment">// these must match the values in SkPath.h</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Specifies that &quot;inside&quot; is computed by a non-zero sum of signed</span></span><br><span class="line"><span class="comment">         * edge crossings.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">WINDING</span>         (<span class="number">0</span>),</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Specifies that &quot;inside&quot; is computed by an odd number of edge</span></span><br><span class="line"><span class="comment">         * crossings.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">EVEN_ODD</span>        (<span class="number">1</span>),</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Same as &#123;@link #WINDING&#125;, but draws outside of the path, rather than inside.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">INVERSE_WINDING</span> (<span class="number">2</span>),</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Same as &#123;@link #EVEN_ODD&#125;, but draws outside of the path, rather than inside.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="built_in">INVERSE_EVEN_ODD</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">FillType</span>(<span class="type">int</span> ni) &#123;</span><br><span class="line">            nativeInt = ni;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> nativeInt;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>对这另外两种fillType，Google程序员的注释已经解释的很清楚了，我就不解释了，否则可能越解释越乱，越乱越糊涂。</p>
+<h2 id="mipmap"><a href="#mipmap" class="headerlink" title="mipmap"></a>mipmap</h2><blockquote>
+<p>我们创建新项目时，它会帮助我们自动生成六个文件夹(密度不同)：</p>
+<ul>
+<li>drawable-ldpi （low:120dip）</li>
+<li>drawable</li>
+<li>drawable-mdpi （medium:160dip）</li>
+<li>drawable-hdpi （high :240dip）</li>
+<li>drawable-xhdpi （xhigh :320dip）</li>
+<li>drawable-xxhdpi （xxhigh:480dip）</li>
+</ul>
+</blockquote>
+<p>一般的做法是，将图片等资源放在drawable-hdip中，将一些和XML文件相关的内容（图片选择器、文字颜色选择器、自定义形状等）放在drawable中。</p>
+<p>Google推荐：<strong>像素使用dip，文字使用sp</strong>。并且没有推荐图片放在mipmap中。</p>
+<p>在mdip文件夹，1dip&#x3D;1px。</p>
+<p>关于dp,dip,sp,pt,px的区别，可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/carter_yu/article/details/50421787#1">附录一</a>。</p>
+<p>关于图片在不同目录下的显示举例，可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/carter_yu/article/details/50421787#2">附录二</a>。</p>
+<p>官方解释：<br>mipmap——用于存放原生图片（图ic_launcher.png），缩放上有性能优化;<br>drawable——存放图片、xml，和Eclipse没有区别；</p>
+<p><strong>附录一</strong></p>
+<blockquote>
+<p><strong>dip</strong> : device independent pixels(设备独立像素). 不同设备有不同的显示效果,这个和设备硬件有关，一般我们为了支持WVGA、HVGA和QVGA 推荐使用这个，不依赖像素。</p>
+<p><strong>dp</strong> : 和dip相同。</p>
+<p><strong>px</strong> : pixels(像素)，一个像素通常被视为图像的最小的完整采样，不同设备显示效果相同，一般我们HVGA代表320x480像素，这个用的比较多。</p>
+<p><strong>pt</strong> : point，是一个标准的长度单位，1pt＝1&#x2F;72英寸，用于印刷业，非常简单易用。</p>
+<p><strong>sp</strong> : scaled pixels(放大像素). 主要用于字体显示best for textsize。</p>
+<p><strong>in</strong> ：（英寸）：长度单位。</p>
+<p><strong>分辨率</strong> ：分为<strong>显示分辨率（屏幕分辨率）</strong>和<strong>图像分辨率</strong>。</p>
+<p>显示分辨率：屏幕图像的精密度，是指显示器所能显示的像素有多少。显示器可 显示的像素越多，画面就越精细。显示分辨率一定的情况下，显示屏越小图像越清晰，反之，显示屏大小固定时，显示分辨率越高图像越清晰。</p>
+<p>图象分辨率 ：单位英寸中所包含的像素点数。</p>
+</blockquote>
+<p><strong>换算公式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">applyDimension</span><span class="params">(<span class="type">int</span> unit, <span class="type">float</span> value,</span></span><br><span class="line"><span class="params">   DisplayMetrics metrics)</span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (unit) &#123;</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_PX:</span><br><span class="line">         <span class="keyword">return</span> value;</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_DIP:</span><br><span class="line">         <span class="keyword">return</span> value * metrics.density;</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_SP:</span><br><span class="line">         <span class="keyword">return</span> value * metrics.scaledDensity;</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_PT:</span><br><span class="line">         <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">72</span>);</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_IN:</span><br><span class="line">         <span class="keyword">return</span> value * metrics.xdpi;</span><br><span class="line">     <span class="keyword">case</span> COMPLEX_UNIT_MM:</span><br><span class="line">         <span class="keyword">return</span> value * metrics.xdpi * (<span class="number">1.0f</span>/<span class="number">25.4f</span>);</span><br><span class="line">     &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附录二</p>
+<blockquote>
+<p>mdpi与hdpi是2：3的关系<br>mdpi与xhdpi是1：2的关系<br>ldpi 与mdpi是3：4的关系</p>
+<p>dp与px换算公式：</p>
+<p>pixs &#x3D;dips * (densityDpi&#x2F;160).</p>
+<p>dips&#x3D;(pixs*160)&#x2F;densityDpi</p>
+</blockquote>
+<p>现在假设，在一个项目中，你将一张60px<em>60px的图片放到mdpi中，它的大小是60</em>60；</p>
+<p>若把它拿到hdpi中，那么它的大小应该是40*40，图片缩小。</p>
+<p><strong>结论：</strong><br><strong>mipmap仅仅用于应用启动图标，可以根据不同分辨率进行优化。其他的图标资源，还是要放到drawable文件夹中。</strong></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/01/19/android_drawable/" title="drawable">http://rshawshank.github.io/2020/01/19/android_drawable/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/android/" rel="tag"># android</a>
+              <a href="/tags/drawable/" rel="tag"># drawable</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/19/android_layout/" rel="prev" title="layout">
+      <i class="fa fa-chevron-left"></i> layout
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/07/java-%E9%94%81%E6%9C%BA%E5%88%B6/" rel="next" title="java 锁机制">
+      java 锁机制 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#drawable"><span class="nav-number">1.</span> <span class="nav-text">drawable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-BitmapDrawable"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.BitmapDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-ShapeDrawble"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.ShapeDrawble</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-LayerDrawable"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.LayerDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-StateListDrawable"><span class="nav-number">1.1.4.</span> <span class="nav-text">4.StateListDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-LevelListDrawable"><span class="nav-number">1.1.5.</span> <span class="nav-text">5.LevelListDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-TransitionDrawable"><span class="nav-number">1.1.6.</span> <span class="nav-text">6.TransitionDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-InsetDrawable"><span class="nav-number">1.1.7.</span> <span class="nav-text">7.InsetDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-ScaleDrawable"><span class="nav-number">1.1.8.</span> <span class="nav-text">8.ScaleDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-ClipDrawable"><span class="nav-number">1.1.9.</span> <span class="nav-text">9.ClipDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E8%87%AA%E5%AE%9A%E4%B9%89Drawable"><span class="nav-number">1.1.10.</span> <span class="nav-text">10.自定义Drawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-VectorDrawable"><span class="nav-number">1.1.11.</span> <span class="nav-text">11.VectorDrawable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.12.</span> <span class="nav-text">path属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mipmap"><span class="nav-number">1.2.</span> <span class="nav-text">mipmap</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

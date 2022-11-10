@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="所有结点对的最短路径问题：有一个带权有向图 G &#x3D; (V, E)，V 为图的顶点集合，E 为边的集合，权重函数为 w：E → R，该函数将边映射到实数值上。我们希望找到，对于所有结点对 u，v∈V，一条从结点 u 到结点 v 的最短路径，使得结点 u 到结点 v 的路径所有边的权重之和最小。 简单来说，我们考虑的问题是如何找到一个图中所有结点之间的最短路径。 用单源最短路径算法求解：执行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="所有结点对的最短路径">
+<meta property="og:url" content="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="所有结点对的最短路径问题：有一个带权有向图 G &#x3D; (V, E)，V 为图的顶点集合，E 为边的集合，权重函数为 w：E → R，该函数将边映射到实数值上。我们希望找到，对于所有结点对 u，v∈V，一条从结点 u 到结点 v 的最短路径，使得结点 u 到结点 v 的路径所有边的权重之和最小。 简单来说，我们考虑的问题是如何找到一个图中所有结点之间的最短路径。 用单源最短路径算法求解：执行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20180611225358746">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/2018061122580795-1578384535707">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107161153382.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170608073.png">
+<meta property="og:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170623559.png">
+<meta property="article:published_time" content="2020-01-02T15:49:00.000Z">
+<meta property="article:modified_time" content="2020-01-07T10:44:06.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="所有结点对的最短路径">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rshawshank.github.io/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20180611225358746">
+
+<link rel="canonical" href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>所有结点对的最短路径 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          所有结点对的最短路径
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-02 15:49:00" itemprop="dateCreated datePublished" datetime="2020-01-02T15:49:00Z">2020-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-07 10:44:06" itemprop="dateModified" datetime="2020-01-07T10:44:06Z">2020-01-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="所有结点对的最短路径"><a href="#所有结点对的最短路径" class="headerlink" title="所有结点对的最短路径"></a>所有结点对的最短路径</h1><p><strong>问题</strong>：有一个带权有向图 G &#x3D; (V, E)，V 为图的顶点集合，E 为边的集合，权重函数为 w：E → R，该函数将边映射到实数值上。我们希望找到，对于所有结点对 u，v∈V，一条从结点 u 到结点 v 的最短路径，使得结点 u 到结点 v 的路径所有边的权重之和最小。</p>
+<p>简单来说，我们考虑的问题是<strong>如何找到一个图中所有结点之间的最短路径</strong>。</p>
+<p>用单源最短路径算法求解：<br>执行|V|次单源最短路径算法，每次使用一个不同的结点作为源点，从而可以求出每个结点到其他所有结点的最短路径。</p>
+<ul>
+<li>如果所有的边的权重为非负值，用Dijkstra算法：<ul>
+<li>用线性数组实现最小优先队列：O(V^3^+VE)&#x3D;O(V^3^);</li>
+<li>用二叉堆实现最小优先队列：O(VElgV)；（对稀疏图较好）</li>
+<li>用斐波那契堆实现最小优先队列：O(V^2^lgV+VE)；</li>
+</ul>
+</li>
+<li>如果有权重为负值边，用Bellman-Ford算法：<ul>
+<li>一般的运行时间：O(V^2^E);</li>
+<li>对稠密图，运行时间为O(V^4^)。</li>
+</ul>
+</li>
+</ul>
+<p><strong>允许存在权重为负值的边，但不能包含权重为负值的环路</strong></p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>邻接矩阵是表示一个图的常用存储表示。它用两个数组分别存储数据元素（顶点）的信息和数据元素之间的关系（边或弧）的信息。<br>$$<br>W_{ij}&#x3D;\begin{cases}0 &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i&#x3D;j\有向边（i，j）的权重 &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i\not&#x3D;j&amp;and(i,j)\in E\NIL &amp;&amp;&amp;&amp;&amp;&amp;if&amp;i\not&#x3D;j&amp;and(i,j)\notin E\\end{cases}<br>$$</p>
+<h3 id="最短路径和矩阵乘法"><a href="#最短路径和矩阵乘法" class="headerlink" title="最短路径和矩阵乘法"></a>最短路径和矩阵乘法</h3><h4 id="步骤一：分析最优解结构"><a href="#步骤一：分析最优解结构" class="headerlink" title="步骤一：分析最优解结构"></a>步骤一：分析最优解结构</h4><p>一条最短路径的所有子路径都是最短路径</p>
+<p><strong>每条路径都是最短路径</strong></p>
+<h4 id="步骤二：所有结点对最短路径的递归解"><a href="#步骤二：所有结点对最短路径的递归解" class="headerlink" title="步骤二：所有结点对最短路径的递归解"></a>步骤二：所有结点对最短路径的递归解</h4><p>设<img src="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20180611225358746" style="zoom: 33%;" />为从i到j的一条最短路径，且这条路径最多包含m条边。我们可以得到以下的递推公式：</p>
+<img src="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/2018061122580795-1578384535707" style="zoom: 50%;" />
+
+<p>如果图G不包含权重为负值的环路，则对于每一对结点i和j，如果δ(i,j)&lt;∞，则从i到j之间存在一条最短路径。并且，由于最短路径是简单路径，其中至多包含n-1条边，因此有：</p>
+<img src="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107161153382.png" style="zoom: 67%;" />
+
+<h4 id="步骤三：自底向上计算最短路径权重"><a href="#步骤三：自底向上计算最短路径权重" class="headerlink" title="步骤三：自底向上计算最短路径权重"></a>步骤三：自底向上计算最短路径权重</h4><h4 id="步骤三改进：重复平方"><a href="#步骤三改进：重复平方" class="headerlink" title="步骤三改进：重复平方"></a>步骤三改进：重复平方</h4><h4 id="步骤四：构建最优解"><a href="#步骤四：构建最优解" class="headerlink" title="步骤四：构建最优解"></a>步骤四：构建最优解</h4><h2 id="计算最短路径权重-Floyd-Warshall-算法"><a href="#计算最短路径权重-Floyd-Warshall-算法" class="headerlink" title="计算最短路径权重 - Floyd-Warshall 算法"></a>计算最短路径权重 - Floyd-Warshall 算法</h2><p><strong>采取的是动态规划策略</strong></p>
+<p><strong>算法的时间复杂度Θ(V^3^)。</strong></p>
+<p><strong>算法允许图中存在负权重的边，但不能存在权重为负值的环路</strong></p>
+<p>Floyd 算法考虑的是<em>一条路径上的中间结点</em>。对于任意结点对 i，j∈V，考虑从结点 i 到结点 j 的所有中间结点均取自集合 {1, 2, …, k} 的路径（该集合是 V &#x3D;{1,2,3·····,n}的一个子集），并且设 p 为最短路径。</p>
+<p>含义：</p>
+<ul>
+<li><p>p是简单路径，且p的中间结点都不大于k。</p>
+</li>
+<li><p>p从i到j，仅经过集合{1,2,…,k}中的结点，但，</p>
+<ul>
+<li>不一定经过其中的每一个结点，且与顺序无关；</li>
+<li>也可能不存在这样的路径，此时p的权重等于∞</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>从任意节点i到任意节点j的最短路径不外乎2种可能，1是直接从i到j，2是从i经过若干个节点k到j。所以，算法假设Dis(i,j)为节点u到节点v的最短路径的距离，对于每一个节点k，算法检查Dis(i,k) + Dis(k,j) &lt; Dis(i,j)是否成立，如果成立，证明从i到k再到j的路径比i直接到j的路径短，便设置Dis(i,j) &#x3D; Dis(i,k) + Dis(k,j)，这样一来，当遍历完所有节点k，Dis(i,j)中记录的便是i到j的最短路径的距离。</p>
+</blockquote>
+<p>有两种情况：</p>
+<ul>
+<li>如果结点 k 不是路径 p 上的中间结点，则路径 p 上的所有中间结点都属于集合 {1, 2, …, k - 1}。</li>
+<li>如果结点 k 是路径 p 上的中间结点，则可将路径 p 分解为两条路径，分别是结点 i 到结点 k 和结点 k 到结点 j 的路径。</li>
+</ul>
+<p>简单来说，就是中间结点选自集合 {1，2，…，k - 1} 的时候的所有结点对的最短路径权重已经知道了，接下来的考虑的中间结点从集合 1，2，…，k - 1，k} 选的时候最短路径权重是多少，只需要考虑路径经过结点 k 的时候权重变化就行了，k 可将 i 到 j 的路径分为两条路径，分别是结点 i 到结点 k 和结点 k 到结点 j 的路径，而这两个的最短路径权重已经知道的（i 到 k 的最短路径的中间结点只能从集合 {1，2，…，k - 1} 选），同理 k 到 j），所以最新的权重选择经过 k 与不经过 k 时的权重较小的那个就行。</p>
+<h3 id="递归解"><a href="#递归解" class="headerlink" title="递归解"></a>递归解</h3><p>设$$d^{(k)}_{ij}$$表示从结点 i 到结点 j 的所有中间结点全部取自集合 {1，2，…，k} 的一条最短路径的权重。</p>
+<p>k &#x3D; 0 时，表示结点 i 到结点 j 的路径没有任何中间结点，因此$$d^{(0)}<em>{ij} &#x3D; w</em>{ij} $$。</p>
+<p>状态转移方程：<br>$$<br>d^{(k)}<em>{ij} &#x3D; \begin{cases} w</em>{ij} &amp;  \text {if $k &#x3D; 0$} \min(d^{(k-1)}<em>{ij}, d^{(k-1)}</em>{ik}+ d^{(k-1)}_{kj}) &amp;  \text {if $k\geq1$  }\end{cases}<br>$$</p>
+<p>而因为任何路径的中间结点都属于集合{1,2,…,n}，所以k&#x3D;n时，$$d^{(n)}_{ij}$$给出所有可能的从结点i到结点j的中间结点均取自集合{1,2,…,n}的一条最短路径的权重，也就是从结点i到结点j的最短路径的权重。</p>
+<p>所以对所有的$$i,j\in V$$,有：<br>$$<br>d^{(n)}_{ij}&#x3D;δ(i,j)<br>$$</p>
+<h3 id="自底向上计算最短路径权重"><a href="#自底向上计算最短路径权重" class="headerlink" title="自底向上计算最短路径权重"></a>自底向上计算最短路径权重</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">floyd</span><span class="params">(Graph G, <span class="type">int</span> dist)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//vexnum表示图G的顶点数</span></span><br><span class="line">    <span class="comment">// 计算最短路径</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">0</span>; k &lt; G.vexnum; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; G.vexnum; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; G.vexnum; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果经过下标为k顶点路径比原两点间路径更短，则更新dist[i][j]</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">tmp</span> <span class="operator">=</span> (dist[i][k] + dist[k][j]);</span><br><span class="line">                <span class="keyword">if</span> (dist[i][j] &gt; tmp)</span><br><span class="line">                &#123;</span><br><span class="line">                    dist[i][j] = tmp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="构建最短路径"><a href="#构建最短路径" class="headerlink" title="构建最短路径"></a>构建最短路径</h3><p>思路：给定一个前驱矩阵 $$\prod$$，再利用递归的思想即可输出结点 i 到结点 j 的最短路径。</p>
+<p><strong>前驱矩阵</strong></p>
+<blockquote>
+<p>定义：给出的是从结点 i 到结点 j 的最短路径上结点 j 的前驱结点，i&#x3D;j 或者从 i 到 j 不存在路径时为 NIL。</p>
+</blockquote>
+<p>$$\pi^{(k)}_{ij}$$为从结点i到结点j的一条所有中间结点都取自集合{1,2, …, k}的最短路径上j的前驱结点。</p>
+<p><strong>怎么得到前驱矩阵？</strong>一种方法是计算权重矩阵 dist 的同时计算前驱矩阵 ∏。具体来说，与 floyd 算法思路类似，分为两种情况：<br>当 k &#x3D; 0 时，从 i 到 j 的最短路径没有中间结点，所以，<br>$$<br>\pi^{(0)}<em>{ij} &#x3D; \begin{cases} NIL &amp;  \text {if $i &#x3D; j\ or\ w</em>{ij} &#x3D; NIL$ } \i &amp;  \text {if $i \ne j\ or\ w_{ij} &lt; NIL$ }\end{cases}<br>$$<br>当 k≥1时<br>$$<br>\pi^{(k)}<em>{ij} &#x3D; \begin{cases}\pi^{(k-1)}<em>{ij}  &amp;  \text {if $d^{(k-1)}</em>{ij} \leq d^{(k-1)}<em>{ik} + d^{(k-1)}</em>{kj}$ } \ \pi^{(k-1)}<em>{kj} &amp;  \text {if $d^{(k-1)}</em>{ij} &gt; d^{(k-1)}</em>{ik} + d^{(k-1)}_{kj}$ }\end{cases}<br>$$</p>
+<blockquote>
+<p>若不经过k：</p>
+<p>此时求从结点i到结点j的所有中间结点都取自集合{1,2,…,k}的最短路径上的j的前驱等价于求从结点i到结点j的所有中间结点都取自集合{1,2,…,k-1}的最短路径上的j的前驱。</p>
+<p>若经过k：</p>
+<p>此时求从结点i到结点j的所有中间结点都取自集合{1,2,…,k}的最短路径上的j的前驱等价于求从结点k到结点j的所有中间结点都取自集合{1,2,…,k-1}的最短路径上的j的前驱。</p>
+</blockquote>
+<p><img src="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170608073.png"></p>
+<p><img src="/images/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/image-20200107170623559.png"></p>
+<h2 id="用于稀疏图的Johnson算法"><a href="#用于稀疏图的Johnson算法" class="headerlink" title="用于稀疏图的Johnson算法"></a>用于稀疏图的Johnson算法</h2><p>在稀疏图中求每对结点之间的最短路径权重。</p>
+<p>对稀疏图，Johnson算法优于Floyd-Warshall算法，时间复杂度可达O(V^2^lgV+VE)。</p>
+<ol>
+<li>Johnson算法使用的方式相当于给每个边都加了一个权重，使得所有边都为非负数，这样就能对每个边使用较为高效的Dijkstra算法。</li>
+<li>注意的是不能简单的给每个边加相同的值然后使得所有边都变成非负数，原因为假设从a-&gt;b有两条路径，一条权重为1+1，一条为2，本应权重和相等；如果都加1，则变成了2+2和3，不一致了，就会导致更新了不该更新的边。</li>
+<li>Johnson比较巧妙的引入了h函数来解决这个问题，通过这个函数进行每个边的重新赋值权重</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/36bbe0e86765">参考文章</a></p>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><ol>
+<li>给定图 G &#x3D; (V, E)，增加一个新的顶点 s，使 s 指向图 G 中的所有顶点都建立连接，设新的图为 G’；</li>
+<li>对图 G’ 中顶点 s 使用 Bellman-Ford 算法计算单源最短路径，得到结果 h[] &#x3D; {h[0], h[1], .. h[V-1]}；</li>
+<li>对原图 G 中的所有边进行 “re-weight”，即对于每个边 (u, v)，其新的权值为 w(u, v) + (h[u] - h[v])；</li>
+<li>移除新增的顶点 s，对每个顶点运行 Dijkstra 算法求得最短路径；</li>
+</ol>
+<h3 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h3>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2020/01/02/Algorithm_%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="所有结点对的最短路径">http://rshawshank.github.io/2020/01/02/Algorithm_所有结点对的最短路径/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" rel="tag"># 所有结点对的最短路径</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/02/Algorithm_%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="prev" title="最小生成树">
+      <i class="fa fa-chevron-left"></i> 最小生成树
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/02/Algorithm_%E6%9C%80%E5%A4%A7%E6%B5%81/" rel="next" title="最大流">
+      最大流 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84"><span class="nav-number">1.</span> <span class="nav-text">所有结点对的最短路径</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">邻接矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E5%92%8C%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="nav-number">1.0.2.</span> <span class="nav-text">最短路径和矩阵乘法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%EF%BC%9A%E5%88%86%E6%9E%90%E6%9C%80%E4%BC%98%E8%A7%A3%E7%BB%93%E6%9E%84"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">步骤一：分析最优解结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%EF%BC%9A%E6%89%80%E6%9C%89%E7%BB%93%E7%82%B9%E5%AF%B9%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E7%9A%84%E9%80%92%E5%BD%92%E8%A7%A3"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">步骤二：所有结点对最短路径的递归解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%EF%BC%9A%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E6%9D%83%E9%87%8D"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">步骤三：自底向上计算最短路径权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%E6%94%B9%E8%BF%9B%EF%BC%9A%E9%87%8D%E5%A4%8D%E5%B9%B3%E6%96%B9"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">步骤三改进：重复平方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%EF%BC%9A%E6%9E%84%E5%BB%BA%E6%9C%80%E4%BC%98%E8%A7%A3"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">步骤四：构建最优解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E6%9D%83%E9%87%8D-Floyd-Warshall-%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">计算最短路径权重 - Floyd-Warshall 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E8%A7%A3"><span class="nav-number">1.1.1.</span> <span class="nav-text">递归解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84%E6%9D%83%E9%87%8D"><span class="nav-number">1.1.2.</span> <span class="nav-text">自底向上计算最短路径权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.3.</span> <span class="nav-text">构建最短路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E7%A8%80%E7%96%8F%E5%9B%BE%E7%9A%84Johnson%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">用于稀疏图的Johnson算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">算法描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E8%AF%81%E6%98%8E"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法证明</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
