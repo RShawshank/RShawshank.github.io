@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
@@ -146,7 +146,17 @@
   </li>
         <li class="menu-item menu-item-resources">
 
-    <a href="/resources" rel="section"><i class="download fa-fw"></i>资源</a>
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote/" rel="section"><i class="fa fa-readme fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-thought-bubble fa-fw"></i>随笔闲谈</a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -203,6 +213,168 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">函数式编程概述</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-22 19:56:50" itemprop="dateCreated datePublished" datetime="2020-03-22T19:56:50Z">2020-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-23 07:28:56" itemprop="dateModified" datetime="2020-03-23T07:28:56Z">2020-03-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">函数式编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="functional-programming"><a href="#functional-programming" class="headerlink" title="functional programming"></a>functional programming</h1><h2 id="函数式语言的特点"><a href="#函数式语言的特点" class="headerlink" title="函数式语言的特点"></a>函数式语言的特点</h2><ul>
+<li><p><strong>不依赖于冯·诺伊曼体系结构的计算机</strong></p>
+</li>
+<li><p><strong>函数是”第一等公民”</strong></p>
+<blockquote>
+<p>所谓<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/First-class_function">“第一等公民”</a>（first class），指的是<strong>函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值。</strong></p>
+</blockquote>
+</li>
+<li><p><strong>只用”表达式”，不用”语句”</strong></p>
+<blockquote>
+<p>“表达式”（expression）是一个单纯的运算过程，总是有返回值；”语句”（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。也就是说，<strong>每一步都是单纯的运算，而且都有返回值。</strong></p>
+<p>原因是函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I&#x2F;O）。”语句”属于对系统的读写操作，所以就被排斥在外。</p>
+<p>当然，实际应用中，不做I&#x2F;O是不可能的。因此，编程过程中，函数式编程只要求把I&#x2F;O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</p>
+</blockquote>
+</li>
+<li><p><strong>没有”副作用”</strong></p>
+<blockquote>
+<p>所谓<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Side_effect_(computer_science)">“副作用”</a>（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。</p>
+<p>函数式编程强调没有”副作用”，意味着<strong>函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</strong></p>
+</blockquote>
+</li>
+<li><p><strong>不修改状态</strong></p>
+<blockquote>
+<p>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。</p>
+<p>在其他类型的语言中，变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。<strong>函数式编程使用参数保存状态，最好的例子就是递归</strong>。</p>
+<p>由于使用了递归，函数式语言的运行速度比较慢。</p>
+<p>【递归的速度慢，一般都是将递归写成尾递归，然后编译器进行优化，将尾递归转化成迭代】</p>
+</blockquote>
+</li>
+<li><p><strong>引用透明（referential transparency）</strong></p>
+<blockquote>
+<p>引用透明（Referential transparency），指的是<strong>函数的运行不依赖于外部变量或”状态”，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。</strong></p>
+<p>有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫”引用不透明”，很不利于观察和理解程序的行为。</p>
+</blockquote>
+</li>
+<li><p><strong>确定性（determinism）</strong></p>
+<blockquote>
+<p>所谓确定性的意思就是像数学那样 f(x) &#x3D; y ，这个函数无论在什么场景下，都会得到同样的结果，这个我们称之为函数的确定性。而不是像程序中的很多函数那样，同一个参数，却会在不同的场景下计算出不同的结果。所谓不同的场景的意思就是我们的函数会根据一些运行中的状态信息的不同而发生变化。</p>
+</blockquote>
+</li>
+<li><p><strong>惰性求值（延迟计算）与并行</strong></p>
+<blockquote>
+<p>惰性求值：</p>
+<p>这个需要编译器的支持。<strong>表达式不在它被绑定到变量之后就立即求值，而是在该值被取用的时候求值。</strong>也就是说，当调用函数时，不是盲目的计算所有实参的值后再进入函数体，而是先进入函数体，只有当需要实参值时才计算所需的实参值（<strong>按需调用</strong>）</p>
+</blockquote>
+</li>
+<li><p><strong>递归调用及其优化</strong></p>
+<blockquote>
+<p>就是使用尾递归进行优化</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="函数式语言的优点"><a href="#函数式语言的优点" class="headerlink" title="函数式语言的优点"></a>函数式语言的优点</h2><ol>
+<li><p>代码简洁，开发快速</p>
+<p>其实这条是比较好理解的，函数式的编程使用了大量的函数，减少了代码的重复。</p>
+</li>
+<li><p>易于理解</p>
+</li>
+<li><p>方便代码管理</p>
+<p>函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此，每一个函数都可以被看做独立单元，很有利于进行单元测试（unit testing）和除错（debugging），以及模块化组合。</p>
+</li>
+<li><p><strong>易于“并发编程”</strong></p>
+<p><strong>函数式编程不需要考虑”死锁”（deadlock），因为它不修改变量，所以根本不存在”锁”线程的问题。</strong>不必担心一个线程的数据，被另一个线程修改，所以可以很放心地把工作分摊到多个线程，部署”并发编程”（concurrency）。</p>
+</li>
+<li><p><strong>可以进行代码的热升级</strong></p>
+<p><strong>函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以，可以在运行状态下直接升级代码，不需要重启，也不需要停机。</strong></p>
+</li>
+</ol>
+<h2 id="函数式编程的几个技术"><a href="#函数式编程的几个技术" class="headerlink" title="函数式编程的几个技术"></a>函数式编程的几个技术</h2><ol>
+<li><p><strong>map&amp;reduce</strong></p>
+</li>
+<li><p><strong>pipeline</strong></p>
+</li>
+<li><p><strong>recursing递归</strong></p>
+</li>
+<li><p><strong>currying</strong></p>
+</li>
+<li><p><strong>higher-order function高阶函数</strong></p>
+<blockquote>
+<p>所谓高阶函数就是函数当参数，把传入的函数做一个封装，然后返回这个封装函数。现象上就是函数传进传出，就像面向对象对象满天飞一样。</p>
+</blockquote>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.byvoid.com/zhs/blog/why-functional-programming">参考文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/10822.html">参考文章</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -523,168 +695,6 @@
 </li>
 </ul>
 <h2 id="递归分析"><a href="#递归分析" class="headerlink" title="递归分析"></a>递归分析</h2><p>递归函数的定义给出了程序的递推关系，执行情况用<em>work</em>表示</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/23/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B-%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">函数式编程概述</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-22 19:56:50" itemprop="dateCreated datePublished" datetime="2020-03-22T19:56:50Z">2020-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-23 07:28:56" itemprop="dateModified" datetime="2020-03-23T07:28:56Z">2020-03-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">函数式编程</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="functional-programming"><a href="#functional-programming" class="headerlink" title="functional programming"></a>functional programming</h1><h2 id="函数式语言的特点"><a href="#函数式语言的特点" class="headerlink" title="函数式语言的特点"></a>函数式语言的特点</h2><ul>
-<li><p><strong>不依赖于冯·诺伊曼体系结构的计算机</strong></p>
-</li>
-<li><p><strong>函数是”第一等公民”</strong></p>
-<blockquote>
-<p>所谓<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/First-class_function">“第一等公民”</a>（first class），指的是<strong>函数与其他数据类型一样，处于平等地位，可以赋值给其他变量，也可以作为参数，传入另一个函数，或者作为别的函数的返回值。</strong></p>
-</blockquote>
-</li>
-<li><p><strong>只用”表达式”，不用”语句”</strong></p>
-<blockquote>
-<p>“表达式”（expression）是一个单纯的运算过程，总是有返回值；”语句”（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。也就是说，<strong>每一步都是单纯的运算，而且都有返回值。</strong></p>
-<p>原因是函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I&#x2F;O）。”语句”属于对系统的读写操作，所以就被排斥在外。</p>
-<p>当然，实际应用中，不做I&#x2F;O是不可能的。因此，编程过程中，函数式编程只要求把I&#x2F;O限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</p>
-</blockquote>
-</li>
-<li><p><strong>没有”副作用”</strong></p>
-<blockquote>
-<p>所谓<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Side_effect_(computer_science)">“副作用”</a>（side effect），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。</p>
-<p>函数式编程强调没有”副作用”，意味着<strong>函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</strong></p>
-</blockquote>
-</li>
-<li><p><strong>不修改状态</strong></p>
-<blockquote>
-<p>上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。</p>
-<p>在其他类型的语言中，变量往往用来保存”状态”（state）。不修改变量，意味着状态不能保存在变量中。<strong>函数式编程使用参数保存状态，最好的例子就是递归</strong>。</p>
-<p>由于使用了递归，函数式语言的运行速度比较慢。</p>
-<p>【递归的速度慢，一般都是将递归写成尾递归，然后编译器进行优化，将尾递归转化成迭代】</p>
-</blockquote>
-</li>
-<li><p><strong>引用透明（referential transparency）</strong></p>
-<blockquote>
-<p>引用透明（Referential transparency），指的是<strong>函数的运行不依赖于外部变量或”状态”，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。</strong></p>
-<p>有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫”引用不透明”，很不利于观察和理解程序的行为。</p>
-</blockquote>
-</li>
-<li><p><strong>确定性（determinism）</strong></p>
-<blockquote>
-<p>所谓确定性的意思就是像数学那样 f(x) &#x3D; y ，这个函数无论在什么场景下，都会得到同样的结果，这个我们称之为函数的确定性。而不是像程序中的很多函数那样，同一个参数，却会在不同的场景下计算出不同的结果。所谓不同的场景的意思就是我们的函数会根据一些运行中的状态信息的不同而发生变化。</p>
-</blockquote>
-</li>
-<li><p><strong>惰性求值（延迟计算）与并行</strong></p>
-<blockquote>
-<p>惰性求值：</p>
-<p>这个需要编译器的支持。<strong>表达式不在它被绑定到变量之后就立即求值，而是在该值被取用的时候求值。</strong>也就是说，当调用函数时，不是盲目的计算所有实参的值后再进入函数体，而是先进入函数体，只有当需要实参值时才计算所需的实参值（<strong>按需调用</strong>）</p>
-</blockquote>
-</li>
-<li><p><strong>递归调用及其优化</strong></p>
-<blockquote>
-<p>就是使用尾递归进行优化</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="函数式语言的优点"><a href="#函数式语言的优点" class="headerlink" title="函数式语言的优点"></a>函数式语言的优点</h2><ol>
-<li><p>代码简洁，开发快速</p>
-<p>其实这条是比较好理解的，函数式的编程使用了大量的函数，减少了代码的重复。</p>
-</li>
-<li><p>易于理解</p>
-</li>
-<li><p>方便代码管理</p>
-<p>函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此，每一个函数都可以被看做独立单元，很有利于进行单元测试（unit testing）和除错（debugging），以及模块化组合。</p>
-</li>
-<li><p><strong>易于“并发编程”</strong></p>
-<p><strong>函数式编程不需要考虑”死锁”（deadlock），因为它不修改变量，所以根本不存在”锁”线程的问题。</strong>不必担心一个线程的数据，被另一个线程修改，所以可以很放心地把工作分摊到多个线程，部署”并发编程”（concurrency）。</p>
-</li>
-<li><p><strong>可以进行代码的热升级</strong></p>
-<p><strong>函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以，可以在运行状态下直接升级代码，不需要重启，也不需要停机。</strong></p>
-</li>
-</ol>
-<h2 id="函数式编程的几个技术"><a href="#函数式编程的几个技术" class="headerlink" title="函数式编程的几个技术"></a>函数式编程的几个技术</h2><ol>
-<li><p><strong>map&amp;reduce</strong></p>
-</li>
-<li><p><strong>pipeline</strong></p>
-</li>
-<li><p><strong>recursing递归</strong></p>
-</li>
-<li><p><strong>currying</strong></p>
-</li>
-<li><p><strong>higher-order function高阶函数</strong></p>
-<blockquote>
-<p>所谓高阶函数就是函数当参数，把传入的函数做一个封装，然后返回这个封装函数。现象上就是函数传进传出，就像面向对象对象满天飞一样。</p>
-</blockquote>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.byvoid.com/zhs/blog/why-functional-programming">参考文章</a></p>
-<p><a target="_blank" rel="noopener" href="https://coolshell.cn/articles/10822.html">参考文章</a></p>
 
       
     </div>
@@ -2925,7 +2935,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
