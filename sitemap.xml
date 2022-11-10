@@ -1202,6 +1202,13 @@
   </url>
   
   <url>
+    <loc>http://rshawshank.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</loc>
+    <lastmod>2022-11-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://rshawshank.github.io/tags/%E6%A0%91/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -1210,13 +1217,6 @@
   
   <url>
     <loc>http://rshawshank.github.io/tags/leetcode/</loc>
-    <lastmod>2022-11-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://rshawshank.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1328,14 +1328,14 @@
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/tags/javaweb/</loc>
+    <loc>http://rshawshank.github.io/tags/java/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/tags/java/</loc>
+    <loc>http://rshawshank.github.io/tags/javaweb/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1426,14 +1426,14 @@
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/tags/C/</loc>
+    <loc>http://rshawshank.github.io/tags/adapter/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/tags/adapter/</loc>
+    <loc>http://rshawshank.github.io/tags/C/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1596,14 +1596,14 @@
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/</loc>
+    <loc>http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/</loc>
+    <loc>http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/</loc>
     <lastmod>2022-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
