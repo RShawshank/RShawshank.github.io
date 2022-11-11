@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">55</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">24</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">126</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">127</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,253 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/08/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/08/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">java-设计模式（一）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-07 21:58:36" itemprop="dateCreated datePublished" datetime="2020-04-07T21:58:36Z">2020-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-12-29 02:37:52" itemprop="dateModified" datetime="2021-12-29T02:37:52Z">2021-12-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="GOF23种设计模式"><a href="#GOF23种设计模式" class="headerlink" title="GOF23种设计模式"></a>GOF23种设计模式</h1><p>设计模式主要分三个类型:创建型、结构型和行为型。 </p>
+<p><strong>创建型</strong></p>
+<ol>
+<li>Singleton，单例模式：保证一个类只有一个实例，并提供一个访问它的全局访问点 </li>
+<li>Abstract Factory，抽象工厂：提供一个创建一系列相关或相互依赖对象的接口，而无须指定它们的具体类。 </li>
+<li>Factory Method，工厂方法：定义一个用于创建对象的接口，让子类决定实例化哪一个类，Factory Method使一个类的实例化延迟到了子类。 </li>
+<li>Builder，建造模式：将一个复杂对象的构建与他的表示相分离，使得同样的构建过程可以创建不同的表示。 </li>
+<li>Prototype，原型模式：用原型实例指定创建对象的种类，并且通过拷贝这些原型来创建新的对象。</li>
+</ol>
+<p><strong>行为型</strong></p>
+<ol>
+<li>Iterator，迭代器模式：提供一个方法顺序访问一个聚合对象的各个元素，而又不需要暴露该对象的内部表示。 </li>
+<li>Observer，观察者模式：定义对象间一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知自动更新。 </li>
+<li>Template Method，模板方法：定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，TemplateMethod使得子类可以不改变一个算法的结构即可以重定义该算法得某些特定步骤。 </li>
+<li>Command，命令模式：将一个请求封装为一个对象，从而使你可以用不同的请求对客户进行参数化，对请求排队和记录请求日志，以及支持可撤销的操作。 </li>
+<li>State，状态模式：允许对象在其内部状态改变时改变他的行为。对象看起来似乎改变了他的类。 </li>
+<li>Strategy，策略模式：定义一系列的算法，把他们一个个封装起来，并使他们可以互相替换，本模式使得算法可以独立于使用它们的客户。 </li>
+<li>China of Responsibility，职责链模式：使多个对象都有机会处理请求，从而避免请求的送发者和接收者之间的耦合关系 </li>
+<li>Mediator，中介者模式：用一个中介对象封装一些列的对象交互。 </li>
+<li>Visitor，访问者模式：表示一个作用于某对象结构中的各元素的操作，它使你可以在不改变各元素类的前提下定义作用于这个元素的新操作。 </li>
+<li>Interpreter，解释器模式：给定一个语言，定义他的文法的一个表示，并定义一个解释器，这个解释器使用该表示来解释语言中的句子</li>
+<li>Memento，备忘录模式：在不破坏对象的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。</li>
+</ol>
+<p><strong>结构型</strong> </p>
+<ol>
+<li>Composite，组合模式：将对象组合成树形结构以表示部分整体的关系，Composite使得用户对单个对象和组合对象的使用具有一致性。 </li>
+<li>Facade，外观模式：为子系统中的一组接口提供一致的界面，fa?ade提供了一高层接口，这个接口使得子系统更容易使用。</li>
+<li>Proxy，代理模式：为其他对象提供一种代理以控制对这个对象的访问 </li>
+<li>Adapter,适配器模式：将一类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作那些类可以一起工作。 </li>
+<li>Decrator，装饰模式：动态地给一个对象增加一些额外的职责，就增加的功能来说，Decorator模式相比生成子类更加灵活。 </li>
+<li>Bridge，桥模式：将抽象部分与它的实现部分相分离，使他们可以独立的变化。 </li>
+<li>Flyweight，享元模式</li>
+</ol>
+<h2 id="一、工厂模式"><a href="#一、工厂模式" class="headerlink" title="一、工厂模式"></a>一、工厂模式</h2><h3 id="1-1、简单工厂模式（静态工厂模式）"><a href="#1-1、简单工厂模式（静态工厂模式）" class="headerlink" title="1.1、简单工厂模式（静态工厂模式）"></a>1.1、简单工厂模式（静态工厂模式）</h3><p>“<strong>当你需要某个对象的时候，通常你是new出来的，但是这样代码耦合度太高，因此我们通过一个工厂来生产出来这个对象</strong>”</p>
+<ul>
+<li>工厂：负责实现创建所有实例的内部逻辑，并且提供一个外界调用的方法，创建所需产品对象</li>
+<li>抽象产品：用来描述产品的公共接口</li>
+<li>具体产品：描述生产的具体产品</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  @ Product.java</span></span><br><span class="line"><span class="comment"> *  抽象产品</span></span><br><span class="line"><span class="comment"> *  描述产品的公共接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span>  <span class="keyword">class</span> <span class="title class_">Product</span> &#123;</span><br><span class="line">    <span class="comment">//产品介绍</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ AProduct.java</span></span><br><span class="line"><span class="comment"> * 具体产品A</span></span><br><span class="line"><span class="comment"> * （可以看成是一种饮料：可乐）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AProduct</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;可乐&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ BProduct.java</span></span><br><span class="line"><span class="comment"> * @具体产品B</span></span><br><span class="line"><span class="comment"> * @（可以看成是一种饮料：奶茶）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BProduct</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;奶茶&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ CProduct.java</span></span><br><span class="line"><span class="comment"> * 具体产品C</span></span><br><span class="line"><span class="comment"> * （可以看成是一种饮料：咖啡）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CProduct</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;咖啡&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*Factory.java*/</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 工厂</span></span><br><span class="line"><span class="comment"> * 负责实现创建所有实例的内部逻辑，并提供一个外界调用的方法，创建所需的产品对象。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 供外界调用的方法</span></span><br><span class="line"><span class="comment">     * （可以看成是对外提供的三种按钮）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> type </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 产品实例</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Product <span class="title function_">getProduct</span><span class="params">(String type)</span> &#123;</span><br><span class="line">        <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;A&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AProduct</span>();</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;B&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">BProduct</span>();</span><br><span class="line">            <span class="keyword">case</span> <span class="string">&quot;C&quot;</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CProduct</span>();</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*test.java*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建具体的工厂</span></span><br><span class="line">        <span class="type">Factory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Factory</span>();</span><br><span class="line">        <span class="comment">//根据传入的参数生产不同的产品实例</span></span><br><span class="line">        <span class="comment">//(按下不同的按钮，获取饮料)</span></span><br><span class="line">        <span class="type">Product</span> <span class="variable">A</span> <span class="operator">=</span> Factory.getProduct(<span class="string">&quot;A&quot;</span>);</span><br><span class="line">        A.intro();</span><br><span class="line">        <span class="type">Product</span> <span class="variable">B</span> <span class="operator">=</span> Factory.getProduct(<span class="string">&quot;B&quot;</span>);</span><br><span class="line">        B.intro();</span><br><span class="line">        <span class="type">Product</span> <span class="variable">C</span> <span class="operator">=</span> Factory.getProduct(<span class="string">&quot;C&quot;</span>);</span><br><span class="line">        C.intro();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：将创建使用工作分开，不必关心类对象如何创建，实现了解耦；<br>缺点：违背“开放 - 关闭原则”，一旦添加新产品就不得不修改工厂类的逻辑，这样就会造成工厂逻辑过于复杂。</p>
+<h3 id="1-2、工厂方法模式（工厂模式）"><a href="#1-2、工厂方法模式（工厂模式）" class="headerlink" title="1.2、工厂方法模式（工厂模式）"></a>1.2、工厂方法模式（工厂模式）</h3><p>可以理解成将上述的静态工厂模式中的工厂进行拆分，让对应的实例产品都有一个单独的工厂对其进行生产。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ Product.java </span></span><br><span class="line"><span class="comment"> *   抽象产品</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Product</span> &#123;</span><br><span class="line">    <span class="comment">//产品介绍</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductA.java </span></span><br><span class="line"><span class="comment"> * 具体产品A</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProductA</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;饮料A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductB.java </span></span><br><span class="line"><span class="comment"> * 具体产品B</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProductB</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;饮料B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工厂：Factory.java、FactoryA.java 、FactoryB.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  @ Factory.java</span></span><br><span class="line"><span class="comment"> *    抽象工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="comment">//生产产品</span></span><br><span class="line">    <span class="keyword">abstract</span> Product <span class="title function_">getProduct</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ FactoryA.java</span></span><br><span class="line"><span class="comment"> * 具体工厂A</span></span><br><span class="line"><span class="comment"> * 负责具体的产品A生产</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryA</span> <span class="keyword">extends</span> <span class="title class_">Factory</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Product <span class="title function_">getProduct</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductA</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ FactoryB.java</span></span><br><span class="line"><span class="comment"> * @具体工厂B</span></span><br><span class="line"><span class="comment"> * 负责具体的产品B生产</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryB</span> <span class="keyword">extends</span> <span class="title class_">Factory</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Product <span class="title function_">getProduct</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductB</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建具体的工厂</span></span><br><span class="line">        <span class="type">FactoryA</span> <span class="variable">factoryA</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FactoryA</span>();</span><br><span class="line">        <span class="comment">//生产相对应的产品</span></span><br><span class="line">        factoryA.getProduct().intro();</span><br><span class="line">        <span class="type">FactoryB</span> <span class="variable">factoryB</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FactoryB</span>();</span><br><span class="line">        factoryB.getProduct().intro();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>一个抽象产品类，可以派生出多个具体产品类。一个抽象工厂类，可以派生出多个具体工厂类。每个具体工厂类只能创建一个具体产品类的实例</strong>。</p>
+<p>优点：</p>
+<ol>
+<li>符合开-闭原则：新增一种产品时，只需要增加相应的具体产品类和相应的工厂子类即可</li>
+<li>符合单一职责原则：每个具体工厂类只负责创建对应的产品</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>增加了系统的复杂度：类的个数将成对增加</li>
+<li>增加了系统的抽象性和理解难度</li>
+<li>一个具体工厂只能创建一种具体产品</li>
+</ol>
+<h3 id="1-3、抽象工厂模式"><a href="#1-3、抽象工厂模式" class="headerlink" title="1.3、抽象工厂模式"></a>1.3、抽象工厂模式</h3><p>为了解决工厂模式中一个工厂只能生产一个具体产品的问题。抽象工厂模式使用抽象类添加了抽象工厂，然后让具体工厂继承该抽象工厂达到一个具体工厂可以生产多种具体产品的效果。</p>
+<p><strong>抽象工厂</strong>：描述具体工厂的公共接口<br><strong>具体工厂</strong>：描述具体工厂，创建产品的实例，供外界调用<br><strong>抽象产品族</strong>：描述抽象产品的公共接口<br><strong>抽象产品</strong>：描述具体产品的公共接口<br><strong>具体产品</strong>：具体产品</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ Product.java</span></span><br><span class="line"><span class="comment"> * 抽象产品族 (食品)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Product</span> &#123;</span><br><span class="line">    <span class="comment">//产品介绍</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductA.java</span></span><br><span class="line"><span class="comment"> * 抽象产品  (饮料)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ProductA</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductB.java</span></span><br><span class="line"><span class="comment"> * 抽象产品  (零食)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">ProductB</span> <span class="keyword">extends</span> <span class="title class_">Product</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductAa.java</span></span><br><span class="line"><span class="comment"> * 具体产品  (矿泉水)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span>  <span class="keyword">class</span> <span class="title class_">ProductAa</span> <span class="keyword">extends</span> <span class="title class_">ProductA</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;矿泉水&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ ProductBb.java</span></span><br><span class="line"><span class="comment"> * 具体产品  (面包)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProductBb</span> <span class="keyword">extends</span> <span class="title class_">ProductB</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">intro</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;面包&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工厂：Factory.java、FactoryA.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ Factory.java</span></span><br><span class="line"><span class="comment"> * 抽象工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Factory</span> &#123;</span><br><span class="line">    <span class="comment">//生产饮料</span></span><br><span class="line">    <span class="keyword">abstract</span> Product <span class="title function_">getProductA</span><span class="params">()</span>;</span><br><span class="line">    <span class="comment">//生产零食</span></span><br><span class="line">    <span class="keyword">abstract</span> Product <span class="title function_">getProductB</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ FactoryA.java</span></span><br><span class="line"><span class="comment"> * 具体工厂A</span></span><br><span class="line"><span class="comment"> * 负责具体的A类产品生产</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FactoryA</span> <span class="keyword">extends</span> <span class="title class_">Factory</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Product <span class="title function_">getProductA</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//生产矿泉水</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductAa</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Product <span class="title function_">getProductB</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">//生产面包</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ProductBb</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试：Test.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建零食售卖机（具体工厂），</span></span><br><span class="line">        <span class="type">FactoryA</span> <span class="variable">factoryA</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FactoryA</span>();</span><br><span class="line">        <span class="comment">//获取矿泉水与面包（具体产品）</span></span><br><span class="line">        factoryA.getProductA().intro();</span><br><span class="line">        factoryA.getProductB().intro();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>多个抽象产品类，每个抽象产品类可以派生出多个具体产品类。一个抽象工厂类，可以派生出多个具体工厂类。 每个具体工厂类可以创建多个具体产品类的实例</strong>。.</p>
+<p>优点：</p>
+<ol>
+<li>降低耦合</li>
+<li>符合开-闭原则</li>
+<li>符合单一职责原则</li>
+<li>不使用静态工厂方法，可以形成基于继承的等级结构。</li>
+</ol>
+<p>缺点：难以扩展新种类产品</p>
+<h2 id="二、单例模式（singleton）"><a href="#二、单例模式（singleton）" class="headerlink" title="二、单例模式（singleton）"></a>二、单例模式（singleton）</h2><p>确保一个类只有一个实例，并提供该实例的全局访问点。</p>
+<p><strong>单例的实现主要是通过以下两个步骤</strong>：</p>
+<ol>
+<li><strong>将该类的构造方法定义为私有方法</strong>，这样其他处的代码就无法通过调用该类的构造方法来实例化该类的对象，<strong>只有通过该类提供的静态方法来得到该类的唯一实例</strong>；</li>
+<li>在该类内提供一个静态方法，当我们调用这个方法时，如果类持有的引用不为空就返回这个引用，如果类保持的引用为空就创建该类的实例并将实例的引用赋予该类保持的引用。</li>
+</ol>
+<h3 id="1、单例模式的应用场景和优缺点"><a href="#1、单例模式的应用场景和优缺点" class="headerlink" title="1、单例模式的应用场景和优缺点"></a>1、单例模式的应用场景和优缺点</h3><p>举一个小例子，在我们的windows桌面上，我们打开了一个回收站，当我们试图再次打开一个新的回收站时，Windows系统并不会为你弹出一个新的回收站窗口。，也就是说在整个系统运行的过程中，系统只维护一个回收站的实例。这就是一个典型的单例模式运用。</p>
+<p> 继续说回收站，我们在实际使用中并不存在需要同时打开两个回收站窗口的必要性。假如我每次创建回收站时都需要消耗大量的资源，而每个回收站之间资源是共享的，那么在没有必要多次重复创建该实例的情况下，创建了多个实例，这样做就会给系统造成不必要的负担，造成资源浪费。</p>
+<p> <strong>适用场景：</strong></p>
+<ul>
+<li><strong>1.需要生成唯一序列的环境</strong></li>
+<li><strong>2.需要频繁实例化然后销毁的对象。</strong></li>
+<li><strong>3.创建对象时耗时过多或者耗资源过多，但又经常用到的对象。</strong> </li>
+<li><strong>4.方便资源相互通信的环境</strong></li>
+</ul>
+<p><strong>常见应用场景：</strong></p>
+<ul>
+<li>Windows的Task Manager（任务管理器）</li>
+<li>windows的Recycle Bin（回收站）也是典型的单例应用</li>
+<li>应用程序的日志应用，一般都何用单例模式实现，这一般是由于共享的日志文件一直处于打开状态，因为只能有一个实例去操作 ，否则内容不好追加。</li>
+<li>数据库连接池的设计一般也是采用单例模式，因为数据库连接是一种数据库资源</li>
+<li>操作系统的文件系统，也是大的单例模式实现的具体例子，一个操作系统只能有一个文件系统</li>
+<li>Application 也是单例的典型应用（Servlet编程中会涉及到）</li>
+<li>在Spring中，每个Bean默认就是单例的，这样做的优点是Spring容器可以管理</li>
+<li>在servlet编程中，每个Servlet也是单例</li>
+<li>在spring MVC框架&#x2F;struts1框架中，控制器对象也是单例</li>
+</ul>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>在内存中只有一个对象，节省内存空间；</li>
+<li>避免频繁的创建销毁对象，可以提高性能；</li>
+<li>避免对共享资源的多重占用，简化访问；</li>
+<li>为整个系统提供一个全局访问点。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>不适用于变化频繁的对象；</li>
+<li>滥用单例将带来一些负面问题，如为了节省资源将数据库连接池对象设计为的单例类，可能会导致共享连接池对象的程序过多而出现连接池溢出；</li>
+<li>如果实例化的对象长时间不被利用，系统会认为该对象是垃圾而被回收，这可能会导致对象状态的丢失；</li>
+</ul>
+<p>单例模式的要点有三个：一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。单例模式是一种对象创建型模式。单例模式又名单件模式或单态模式。</p>
+<p> <img src="/images/android%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/1475571-20190112110023891-1922874460.png"></p>
+<p>单例模式的实现代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance=<span class="literal">null</span>;  <span class="comment">//静态私有成员变量</span></span><br><span class="line">    <span class="comment">//私有构造函数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span></span><br><span class="line">    &#123;    </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">       <span class="comment">//静态公有工厂方法，返回唯一实例</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(instance==<span class="literal">null</span>)</span><br><span class="line">            instance=<span class="keyword">new</span> <span class="title class_">Singleton</span>();    </span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在单例模式的实现过程中，需要注意如下三点：</p>
+<p>  • 单例类的构造函数为私有；</p>
+<p>  • 提供一个自身的静态私有成员变量；</p>
+<p>  • 提供一个公有的静态工厂方法。</p>
+<h3 id="2、饿汉式——线程安全、调用效率高、无法延时加载"><a href="#2、饿汉式——线程安全、调用效率高、无法延时加载" class="headerlink" title="2、饿汉式——线程安全、调用效率高、无法延时加载"></a>2、饿汉式——线程安全、调用效率高、无法延时加载</h3><p><strong>类加载的方式是按需加载，且加载一次</strong>。。因此，在上述单例类被加载时，就会实例化一个对象并交给自己的引用，供系统使用；而且，由于这个类在整个生命周期中只会被加载一次，因此只会创建一个实例，即能够充分保证单例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 饿汉式单例</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton1</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 指向自己实例的私有静态引用，主动创建</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Singleton1</span> <span class="variable">singleton1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton1</span>();</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 私有的构造方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton1</span><span class="params">()</span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 以自己实例为返回值的静态的公有方法，静态工厂方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton1 <span class="title function_">getSingleton1</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> singleton1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：这种写法比较简单，就是在类装载的时候就完成实例化。避免了线程同步问题。</p>
+<p>缺点：在类装载的时候就完成实例化，没有达到Lazy Loading的效果。如果从始至终从未使用过这个实例，则会造成内存的浪费。</p>
+<h3 id="3、懒汉式——线程安全、调用效率低、延时加载"><a href="#3、懒汉式——线程安全、调用效率低、延时加载" class="headerlink" title="3、懒汉式——线程安全、调用效率低、延时加载"></a>3、懒汉式——线程安全、调用效率低、延时加载</h3><p>单例实例被<strong>延迟加载</strong>，即只有在真正使用的时候才会实例化一个对象并交给自己的引用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 懒汉式单例</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton2</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 指向自己实例的私有静态引用</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton2 singleton2;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 私有的构造方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Singleton2</span><span class="params">()</span>&#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 以自己实例为返回值的静态的公有方法，静态工厂方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton2 <span class="title function_">getSingleton2</span><span class="params">()</span>&#123;<span class="comment">//synchronized保证getSingleton2是一个同步方法，可以保证在多线程情况下单例对象唯一性</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">//没有synchronized，只能在单线程下使用。如果在多线程下，一个线程进入了if (singleton == null)判断语句块，还未来得及往下执行，另一个线程也通过了这个判断语句，这时便会产生多个实例。所以在多线程环境下不可使用这种方式。</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 被动创建，在真正需要使用时才去创建</span></span><br><span class="line">        <span class="keyword">if</span> (singleton2 == <span class="literal">null</span>) &#123;</span><br><span class="line">            singleton2 = <span class="keyword">new</span> <span class="title class_">Singleton2</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> singleton2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优点：单例只有在使用时才会被实例化，在一定程度上节约了资源</p>
+<p>缺点：第一次加载时需要及时进行实例化，反应稍慢，最大的问题是每次调用getInstance都进行同步，造成不必要的同步开销。这种模式一般不建议使用。</p>
+<h3 id="4、双重加锁机制（Double-Check-Lock）——线程安全"><a href="#4、双重加锁机制（Double-Check-Lock）——线程安全" class="headerlink" title="4、双重加锁机制（Double Check Lock）——线程安全"></a>4、双重加锁机制（Double Check Lock）——线程安全</h3><p>Double-Check概念对于多线程开发者来说不会陌生，如代码中所示，我们进行了两次if (singleton &#x3D;&#x3D; null)检查，这样就可以保证线程安全了。这样，实例化代码只用执行一次，后面再次访问时，判断if (singleton &#x3D;&#x3D; null)，直接return实例化对象。</p>
+<p>使用双重检测同步延迟加载去创建单例的做法是一个非常优秀的做法，<strong>其不但保证了单例，而且切实提高了程序运行效率</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">        <span class="comment">//程序运行时创建一个静态只读的进程辅助对象</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> readonly <span class="type">object</span> <span class="variable">syncRoot</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">object</span>();</span><br><span class="line">        <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">    	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dosomething</span><span class="params">()</span></span><br><span class="line">    	&#123;</span><br><span class="line">        	System.out.println(<span class="string">&quot;do sth.&quot;</span>);</span><br><span class="line">    	&#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">GetInstance</span><span class="params">()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//先判断是否存在，不存在再加锁处理</span></span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//在同一个时刻加了锁的那部分程序只有一个线程可以进入</span></span><br><span class="line">                <span class="comment">//lock(syncRoot) 获取对象syncRoot的互斥锁，可以简单理解为，当多个线程同时执行到lock的时候，大家排队，一个一个地进行。</span></span><br><span class="line">                lock (syncRoot)<span class="comment">//可以使用synchronized (Singleton.class)</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">    &#123;</span><br><span class="line">    <span class="comment">//当声明对象的引用为volatile后，“问题的根源”的三行伪代码中的2和3之间的重排序，在多线程环境中将会被禁止，类在实例化过程中会严格按照1、2、3顺序执行下去。</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Singleton instance;</span><br><span class="line">        <span class="comment">//程序运行时创建一个静态只读的进程辅助对象</span></span><br><span class="line">        <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">    	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dosomething</span><span class="params">()</span></span><br><span class="line">    	&#123;</span><br><span class="line">        	System.out.println(<span class="string">&quot;do sth.&quot;</span>);</span><br><span class="line">    	&#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">GetInstance</span><span class="params">()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//先判断是否存在，不存在再加锁处理</span></span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//在同一个时刻加了锁的那部分程序只有一个线程可以进入</span></span><br><span class="line">                <span class="keyword">synchronized</span> (Singleton.class)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        instance = <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>第一次 if (instance &#x3D;&#x3D; null)主要是为了避免不必要的同步，第二次的判断是为了在null的情况下创建实例。</p>
+<p><img src="https://gitee.com/luffyrao/picture/raw/master/img/20211229102745.png"></p>
+<p>优点：既能够在需要时才初始化单例，又能够保证线程安全，且单例对象初始化后调用getInstance不进行同步锁。<br>资源利用率高，第一次执行getInstance时单例对象才会被实例化，效率高。</p>
+<p>缺点：第一次加载慢</p>
+<p><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/double-checked-locking-with-delay-initialization/">参考文章</a></p>
+<h3 id="5、静态初始化"><a href="#5、静态初始化" class="headerlink" title="5、静态初始化"></a>5、静态初始化</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//阻止发生派生，而派生可能会增加实例</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//在第一次引用类的任何成员时创建实例，公共语言运行库负责处理变量初始化</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> readonly Singleton instance=<span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">private</span> <span class="title function_">Singleton</span><span class="params">()</span> &#123; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">GetInstance</span><span class="params">()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6、静态内部类"><a href="#6、静态内部类" class="headerlink" title="6、静态内部类"></a>6、静态内部类</h3><p>解决DCL在某些情况下出现失效的问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Singleton</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">Slingleton</span><span class="params">()</span></span><br><span class="line">    &#123;   &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title function_">getInstance</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> SingleHolder.sInstance;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//静态内部类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">SingletonHolder</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Singleton</span> <span class="variable">sInstance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Singleton</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当第一次加载singleton类时并不会初始化sInstance，只有在第一次调用Singleton的getInstance方法时才会导致sInstance被初始化。</p>
+<p>第一次调用getInstance方法会导致虚拟机加载SingletonHolder类，这种方式不仅能够确保线程安全，也可以确保单例对象的唯一性，同时也延迟了单例的实例化。推荐。</p>
+<h3 id="7、枚举单例"><a href="#7、枚举单例" class="headerlink" title="7、枚举单例"></a>7、枚举单例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">SingletonEnum</span>&#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">dosomething</span><span class="params">()</span></span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8、使用容器实现"><a href="#8、使用容器实现" class="headerlink" title="8、使用容器实现"></a>8、使用容器实现</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SingletonManager</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String,Object&gt; objMap = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Object&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">SingletonManager</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">registerService</span><span class="params">(String key,Object instance)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!objMap.containsKey(key))</span><br><span class="line">        &#123;</span><br><span class="line">            objMap.put(key,instance);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title function_">getService</span><span class="params">(String key)</span></span><br><span class="line">        <span class="keyword">return</span> objMap.get(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在程序的初始时，可以将多种单例类型注入到一个统一的管理类中，在使用时根据key获取对象对应类型的对象。</p>
+<p>优点：可以管理多种类型的单例，并且在使用时可以通过统一的接口进行获取操作，降低用户的使用成本，降低耦合度。</p>
+<p>要想实现效率高的线程安全的单例，我们必须注意以下两点：</p>
+<ul>
+<li><strong>尽量减少同步块的作用域；</strong></li>
+<li><strong>尽量使用细粒度的锁。</strong></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -3097,329 +3344,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/03/23/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/23/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">数据库</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-22 19:57:09" itemprop="dateCreated datePublished" datetime="2020-03-22T19:57:09Z">2020-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-01 08:28:18" itemprop="dateModified" datetime="2020-06-01T08:28:18Z">2020-06-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p>数据模型是数据库系统的核心和基础。它是现实世界的模拟。</p>
-<p>三要素：数据结构、数据操作、数据约束</p>
-<h3 id="概念模型"><a href="#概念模型" class="headerlink" title="概念模型"></a>概念模型</h3><p>信息模型，按用户的观点来对数据和信息建模。</p>
-<ul>
-<li>实体：客观存在并可相互区别的事物</li>
-<li>属性：实体所具有的某一特性</li>
-<li>码：<strong>唯一</strong>标识实体的属性集</li>
-<li>实体型：</li>
-</ul>
-<h3 id="逻辑模型和物理模型"><a href="#逻辑模型和物理模型" class="headerlink" title="逻辑模型和物理模型"></a>逻辑模型和物理模型</h3><ul>
-<li>逻辑模型主要包括网状模型、层次模型、关系模型、面向对象模型···</li>
-<li>物理模型是对数据最底层的抽象，描述数据在系统内部的表示方式和存取方法，在磁盘或者是磁带上的存储方式和存取方法。</li>
-</ul>
-<h3 id="客观对象的抽象过程–两步抽象"><a href="#客观对象的抽象过程–两步抽象" class="headerlink" title="客观对象的抽象过程–两步抽象"></a>客观对象的抽象过程–两步抽象</h3><p>1、客观对象抽象为概念模型</p>
-<p>2、把概念模型转换为某一DBMS支持的数据模型</p>
-<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200323175234167.png" style="zoom:67%;" />
-
-<h2 id="常用的数据模型"><a href="#常用的数据模型" class="headerlink" title="常用的数据模型"></a>常用的数据模型</h2><ul>
-<li><strong>非关系模型</strong><ul>
-<li>层次模型</li>
-<li>网状模型</li>
-</ul>
-</li>
-<li><strong>关系模型</strong><ul>
-<li>面向对象模型</li>
-<li>对象关系模型</li>
-</ul>
-</li>
-</ul>
-<h3 id="层次模型"><a href="#层次模型" class="headerlink" title="层次模型"></a>层次模型</h3><p>使用<strong>树状结构</strong>来表示各类实体以及实体间的联系。</p>
-<p>要求：</p>
-<ol>
-<li>有且只有一个结点没有双亲结点，这个结点称为根节点</li>
-<li><strong>根以外的其他结点有且只有一个双亲结点</strong></li>
-</ol>
-<p>根据上述的要求，可以确认层次模型其实是<strong>父与子之间一对多的联系</strong>。每个结点表示的是记录类型，记录类型之间的联系用结点之间的连线表示。</p>
-<h4 id="层次模型的特点"><a href="#层次模型的特点" class="headerlink" title="层次模型的特点"></a>层次模型的特点</h4><ul>
-<li>结点的双亲是唯一的</li>
-<li>只能直接处理<strong>一对多</strong>的实体联系<br>【如果一个结点有多个双亲结点的话，只能通过引入冗余数据或者创建非自然的数据结构来解决】</li>
-<li>每个记录类型可以定义一个排序字段（码字段）<br>【方便查找，并且查找效率高】</li>
-<li>任何记录值只有按其路径查看时，才能显出它的全部意义<br>【可以直观的知道其一脉相承的父子关系，结构严密】</li>
-<li>没有一个子女记录值能够脱离双亲记录值而独立存在<br>【例如：插入操作时，要先找到其父结点值；删除操作时，其子结点会一并被删除】</li>
-<li>查询子女结点必须通过双亲结点</li>
-</ul>
-<h4 id="多对多联系在层次模型中的表示"><a href="#多对多联系在层次模型中的表示" class="headerlink" title="多对多联系在层次模型中的表示"></a>多对多联系在层次模型中的表示</h4><p>基本思路是：将多对多联系分解成一对多联系</p>
-<p><strong>冗余结点法</strong>：就是将存在多对多联系的结点拆分成一对多联系的模式。会产生多个根节点，同时该多个根结点也表示子结点。</p>
-<p><strong>虚拟结点法</strong>：就是将存在多对多联系的结点拆分，产生多个根结点。每个根节点连接一个虚拟结点【该虚拟结点就是上述拆开的子节点】</p>
-<h4 id="增删查改与完整性约束"><a href="#增删查改与完整性约束" class="headerlink" title="增删查改与完整性约束"></a>增删查改与完整性约束</h4><ul>
-<li>无相应的双亲结点值就不能插入子女结点值</li>
-<li>如果删除双亲结点值，则相应的子女结点值也会被删除</li>
-<li><strong>更新操作时，应更新所有相应记录，以保证数据的一致性</strong></li>
-</ul>
-<h4 id="层次数据模型的存储结构"><a href="#层次数据模型的存储结构" class="headerlink" title="层次数据模型的存储结构"></a>层次数据模型的存储结构</h4><p><strong>邻接法</strong></p>
-<p>按照层次树前序遍历将所有的记录值一次邻接存储，通过<strong>物理空间的位置相邻</strong>来实现层次顺序</p>
-<p><strong>链接法</strong></p>
-<p>用指针来反映数据之间的层次联系</p>
-<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324103822351.png" style="zoom:67%;" />
-
-<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324103845301.png" style="zoom:67%;" />
-
-
-
-<h3 id="网状模型"><a href="#网状模型" class="headerlink" title="网状模型"></a>网状模型</h3><p>要求：</p>
-<ol>
-<li>允许一个以上的结点无双亲结点</li>
-<li>一个结点可以有多个双亲结点</li>
-</ol>
-<p>层次模型可以看成是网状模型的一个特例</p>
-<h3 id="关系模型"><a href="#关系模型" class="headerlink" title="关系模型"></a>关系模型</h3><p><strong>用二维表来表示实体及其联系：行、列</strong></p>
-<blockquote>
-<p>用表格表示实体集，用列表示属性，表结构表示实体的型</p>
-<p>用表间的特定的冗余信息表示实体间的联系（主键和外键）</p>
-<p>行、列是无序的</p>
-<p>列不可再分</p>
-<p>没有重复行</p>
-</blockquote>
-<p><strong>关系规范化要求：</strong>关系的每一个分量必须是一个不可分的数据项 <strong>不允许表中还有表</strong></p>
-<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324104653997.png" style="zoom:50%;" />
-
-<h4 id="关系模型的存储结构"><a href="#关系模型的存储结构" class="headerlink" title="关系模型的存储结构"></a>关系模型的存储结构</h4><p>实体及实体间的联系都用表来表示</p>
-<p>表以文件形式存储</p>
-<h2 id="数据库系统结构"><a href="#数据库系统结构" class="headerlink" title="数据库系统结构"></a>数据库系统结构</h2><p>在数据模型中有“型”和“值”的概念。<strong>型是指对某一类数据的结构和属性的说明。值是型的一个具体赋值</strong></p>
-<p>数据库系统内部的体系结构：采取三级模式结构</p>
-<p>数据库系统外部的体系结构：</p>
-<ul>
-<li>单用户结构</li>
-<li>主从式结构</li>
-<li>分布式结构</li>
-<li>客户|服务器</li>
-<li>浏览器|应用服务器|数据库服务器多层结构</li>
-</ul>
-<h3 id="数据库系统的三级模式结构"><a href="#数据库系统的三级模式结构" class="headerlink" title="数据库系统的三级模式结构"></a>数据库系统的三级模式结构</h3><p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324120106956.png"></p>
-<h4 id="模式（逻辑模式）"><a href="#模式（逻辑模式）" class="headerlink" title="模式（逻辑模式）"></a>模式（逻辑模式）</h4><p>对数据库中的全部数据的逻辑结构和特征的描述，它仅仅涉及到的是型的描述，不涉及到具体的值。</p>
-<p><strong>模式的定义：</strong></p>
-<ul>
-<li>数据的逻辑结构（包括了数据项的名字、类型、取值范围···）</li>
-<li>数据之间的联系</li>
-<li>数据有关的安全性、完整性要求</li>
-</ul>
-<blockquote>
-<p><strong>模式（schema）</strong>：反映的是数据的结构及其联系</p>
-<p><strong>实例（instance）</strong>：模式的一个具体值，实例会随着数据库中的数据的更新而变动</p>
-<p><strong>模式是相对稳定的，而实例是相对变动的</strong></p>
-</blockquote>
-<p><strong>一个数据库只有一个模式，可以将模式视为是数据库数据在逻辑级上的视图。</strong></p>
-<p>&#x3D;&#x3D;<strong>模式是数据库系统模式结构的中间层</strong>&#x3D;&#x3D;</p>
-<ul>
-<li>与数据的物理存储细节和硬件环境无关</li>
-<li>与具体的应用程序、开发工具及高级程序设计语言无关</li>
-</ul>
-<h4 id="外模式（子模式、用户模式）"><a href="#外模式（子模式、用户模式）" class="headerlink" title="外模式（子模式、用户模式）"></a>外模式（子模式、用户模式）</h4><p><strong>数据库用户的数据视图，是用户使用的局部数据的逻辑结构和特征的描述</strong></p>
-<p>&#x3D;&#x3D;<strong>外模式介于模式和应用之间</strong>&#x3D;&#x3D;</p>
-<ul>
-<li>模式与外模式的关系：一对多<ul>
-<li>外模式通常是模式的子集</li>
-<li>一个数据库可以拥有多个外模式。</li>
-<li>对模式中同一数据，在外模式中的结构、类型、长度、保密级别都不同（这倒是让我想起了在同一个项目下使用不同数据库存储不同的数据）</li>
-</ul>
-</li>
-<li>外模式与应用的关系：一对多<ul>
-<li>同一外模式可以为某个用户的多个应用系统所使用</li>
-<li>但是一个应用程序只能使用一个外模式</li>
-</ul>
-</li>
-</ul>
-<p>外模式的用途</p>
-<ul>
-<li>保证数据库安全性</li>
-<li>每个用户只能看见和访问所对应的外模式中的数据</li>
-</ul>
-<h3 id="内模式（存储模式）"><a href="#内模式（存储模式）" class="headerlink" title="内模式（存储模式）"></a>内模式（存储模式）</h3><p>是数据物理结构和存储方式的描述（不同数据库的内部实现方式）</p>
-<p>是数据在数据库内部的表示方式</p>
-<ul>
-<li>记录的存储方式（顺序存储、按照B树结构存储、按照hash方式存储）</li>
-<li>索引的组织方式</li>
-<li>数据是否压缩存储</li>
-<li>数据是否加密</li>
-<li>数据存储记录结构的规定</li>
-</ul>
-<p><strong>一个数据库只有一个内模式</strong></p>
-<h3 id="数据库的二级映像功能与数据独立性"><a href="#数据库的二级映像功能与数据独立性" class="headerlink" title="数据库的二级映像功能与数据独立性"></a>数据库的二级映像功能与数据独立性</h3><p>二级映像在DBMS内部实现这三个抽象层次的联系和转换</p>
-<ul>
-<li>外模式|模式映像</li>
-<li>模式|内模式映像</li>
-</ul>
-<h4 id="外模式-模式映象"><a href="#外模式-模式映象" class="headerlink" title="外模式|模式映象"></a>外模式|模式映象</h4><p>定义外模式与模式之间的对应关系。映象定义通常包含在各自外模式的描述中。</p>
-<blockquote>
-<p>模式描述的是数据的全局逻辑结构；外模式描述的是数据的局部逻辑结构。</p>
-<p>同一个模式下可以有任意多个外模式。</p>
-</blockquote>
-<p><strong>保证数据的逻辑独立性</strong>：应用程序是依据数据的外模式编写的，从而应用程序不必修改，保证了数据与程序的逻辑独立性。</p>
-<h4 id="模式-内模式映象"><a href="#模式-内模式映象" class="headerlink" title="模式|内模式映象"></a>模式|内模式映象</h4><p>定义了数据全局逻辑结构与存储结构之间的对应关系。通常包含在模式描述中。</p>
-<p><strong>数据库中模式|内模式映象是唯一的。</strong></p>
-<p><strong>保证了数据的物理独立性：</strong>当数据库的存储结构改变了，只要修改模式|内模式映象使得模式保持不变，应用程序就不会受到影响。</p>
-<h4 id="数据库模式"><a href="#数据库模式" class="headerlink" title="数据库模式"></a>数据库模式</h4><ul>
-<li>全局逻辑结构</li>
-<li>设计数据库模式结构时应该首先确定数据库的逻辑模式</li>
-</ul>
-<h4 id="数据库的内模式"><a href="#数据库的内模式" class="headerlink" title="数据库的内模式"></a>数据库的内模式</h4><ul>
-<li>依赖其全局逻辑结构</li>
-<li>独立于数据库的用户视图（外模式）</li>
-<li>独立于具体的存储设备</li>
-<li>将全局逻辑结构中所定义的数据结构及其联系按照一定的物理存储策略进行组织，提高空间使用率。</li>
-</ul>
-<h4 id="数据库的外模式"><a href="#数据库的外模式" class="headerlink" title="数据库的外模式"></a>数据库的外模式</h4><ul>
-<li>面向的是具体的应用程序</li>
-<li>定义在逻辑模式之上</li>
-<li>独立于存储模式和存储设备</li>
-<li>当应用需求发生较大的变化时，相对应外模式不能满足其视图要求时，该外模式就得做出相应改动。</li>
-<li>设计外模式时应充分考虑到应用的扩展性</li>
-</ul>
-<h4 id="特定的应用程序"><a href="#特定的应用程序" class="headerlink" title="特定的应用程序"></a>特定的应用程序</h4><ul>
-<li>是在外模式描述的数据结构上编制的</li>
-<li>依赖于特定的外模式</li>
-<li>与数据库的模式和存储结构独立</li>
-<li>不同的应用程序有时可以共用一个外模式</li>
-</ul>
-<h2 id="数据库系统的组成"><a href="#数据库系统的组成" class="headerlink" title="数据库系统的组成"></a>数据库系统的组成</h2><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324155703346.png" style="zoom:67%;" />
-
-<h3 id="硬件平台及数据库"><a href="#硬件平台及数据库" class="headerlink" title="硬件平台及数据库"></a>硬件平台及数据库</h3><ol>
-<li><p>足够大的内存</p>
-<blockquote>
-<p>存放操作系统、数据库管理系统的核心模块、数据缓冲区和应用程序</p>
-</blockquote>
-</li>
-<li><p>足够大的外存</p>
-<blockquote>
-<p>可以用作数据的备份</p>
-</blockquote>
-</li>
-<li><p>较高的通道能力，提高数据传送率</p>
-</li>
-</ol>
-<h3 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h3><ol>
-<li><p>DBMS</p>
-<blockquote>
-<p>数据库管理系统是为数据库的建立、使用和维护配置的系统软件</p>
-</blockquote>
-</li>
-<li><p>支持DBMS运行的操作系统</p>
-</li>
-<li><p>与数据库接口的高级语言和配套的编译系统</p>
-</li>
-<li><p>以DBMS为核心的应用开发工具</p>
-</li>
-<li><p>为特定应用环境开发的数据库应用系统</p>
-</li>
-</ol>
-<h3 id="人员"><a href="#人员" class="headerlink" title="人员"></a>人员</h3><ol>
-<li><p>数据库管理人员DBA</p>
-<blockquote>
-</blockquote>
-</li>
-<li><p>系统分析员和数据库设计人员</p>
-</li>
-<li><p>应用程序员</p>
-</li>
-<li><p>用户</p>
-</li>
-</ol>
-<img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93/image-20200324160326154.png" style="zoom:67%;" />
-
-<h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><p>文件系统和数据库系统都能管理数据，也都支持通过应用程序访问数据，两种方式在数据独立性上有何不同？</p>
-<p>数据管理文件系统阶段和数据库系统阶段“数据独立性”有何不同？</p>
-<blockquote>
-<p> 在数据管理技术的发展过程中，经历了人工管理阶段、文件系统阶段和数据库系统阶段，其中数据独立性最高的阶段是数据库系统。数据库阶段用数据模型表示复杂的数据，有较高的数据独立性。数据库系统为用户提供了方便的用户接口，用户可使用查询语言或终端命令操作数据库，也可以用程序方式操作数据库。数据库管理系统提供了数据控制功能。</p>
-<p> 文件系统和数据库系统之间的区别：</p>
-<p> （1） 文件系统用文件将数据长期保存在外存上，数据库系统用数据库统一存储数据；</p>
-<p> （2） 文件系统中的程序和数据有一定的联系，数据库系统中的程序和数据分离；</p>
-<p> （3） 文件系统用操作系统中的存取方法对数据进行管理，数据库系统用DBMS统一管理和控制数据；</p>
-<p> （4） 文件系统实现以文件为单位的数据共享，数据库系统实现以记录和字段为单位的数据共享。</p>
-<p> 文件系统和数据库系统之间的联系：</p>
-<p> （1） 均为数据组织的管理技术；</p>
-<p> （2） 均由数据管理软件管理数据，程序与数据之间用存取方法进行转换；</p>
-<p> （3） 数据库系统是在文件系统的基础上发展而来的。</p>
-<p> 文件系统是操作系统用于明确存储设备（常见的是磁盘，也有基于NAND Flash的固态硬盘）或分区上的文件的方法和数据结构；即在存储设备上组织文件的方法。操作系统中负责管理和存储文件信息的软件机构称为文件管理系统，简称文件系统。</p>
-<p> 文件系统由三部分组成：文件系统的接口，对对象操纵和管理的软件集合，对象及属性。从系统角度来看，文件系统是对文件存储设备的空间进行组织和分配，负责文件存储并对存入的文件进行保护和检索的系统。具体地说，它负责为用户建立文件，存入、读出、修改、转储文件，控制文件的存取，当用户不再使用时撤销文件等。</p>
-</blockquote>
-<p>数据库系统在管理数据时采用的分层管理的思想，也就是三级模式两级映像的架构，这么做起到了什么作用？</p>
-<blockquote>
-<p>采用三级模式和二级映像的原因：</p>
-<p>1）保证了数据的独立性。将模式与内模式、模式与外模式分开保证了数据的物理独立性和逻辑独立性</p>
-<p>2）简化了用户接口，按照外模式编写应用程序或敲入命令，不需了解内部结构</p>
-<p>3）有利于数据共享，不同应用可共用一个外模式，减少了数据冗余</p>
-<p>4）有利于数据的安全保密，在外模式限定下进行操作，不能对限定数据操作，保证了其他数据的安全</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3489,20 +3413,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

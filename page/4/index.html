@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">55</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">24</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">126</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">127</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -217,6 +217,162 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/" class="post-title-link" itemprop="url">JavaWeb学习（十二）——AJAX</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 17:03:04" itemprop="dateCreated datePublished" datetime="2021-09-13T17:03:04Z">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-10-11 06:01:44" itemprop="dateModified" datetime="2021-10-11T06:01:44Z">2021-10-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h1><p>AJAX即“Asynchronous Javascript And XML”，是指一种创建交互式网页应用的网页开发技术。AJAX 是一种用于创建快速动态网页的技术。它可以令开发者只向服务器获取数据（而不是图片，HTML文档等资源），互联网资源的传输变得前所未有的轻量级和纯粹。</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/12/24/167e05bddfd8dce9~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<p>Ajax实际上是下面这几种技术的融合：</p>
+<ol>
+<li>XHTML和CSS的基于标准的表示技术</li>
+<li>DOM进行动态显示和交互</li>
+<li>XML和XSLT进行数据交换和处理</li>
+<li>XMLHttpRequest进行异步数据检索</li>
+<li>Javascript将以上技术融合在一起</li>
+</ol>
+<p><strong>客户端与服务器，可以在【不必刷新整个浏览器】的情况下，与服务器进行异步通讯的技术</strong></p>
+<p>————<strong>可以进行局部刷新</strong></p>
+<h2 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h2><p>浏览器是先把请求发送到XMLHttpRequest异步对象之中，异步对象对请求进行封装，然后再发送给服务器。<strong>服务器并不是以转发的方式响应，而是以流的方式把数据返回给浏览器</strong></p>
+<p>XMLHttpRequest异步对象会不停监听服务器状态的变化，得到服务器返回的数据，就写到浏览器上【因为不是转发的方式，所以是无刷新就能够获取服务器端的数据】</p>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><ul>
+<li><strong>open()</strong>(<strong>String method,String url,boolean asynch</strong>,String username,String password)</li>
+<li><strong>send(content)</strong></li>
+<li><strong>setRequestHeader(String header,String value)</strong></li>
+<li>getAllResponseHeaders()</li>
+<li>getResponseHeader(String header)</li>
+<li>abort()</li>
+</ul>
+<p><strong>常用的方法就是黑色粗体的前三个</strong></p>
+<ul>
+<li><strong>open()：该方法创建http请求</strong><ul>
+<li><strong>第一个参数是指定提交方式(post、get)</strong></li>
+<li><strong>第二个参数是指定要提交的地址是哪</strong></li>
+<li><strong>第三个参数是指定是异步还是同步(true表示异步，false表示同步)</strong></li>
+<li>第四和第五参数在http认证的时候会用到。是可选的</li>
+</ul>
+</li>
+<li><strong>setRequestHeader(String header,String value)：设置消息头（使用post方式才会使用到，get方法并不需要调用该方法）</strong><ul>
+<li><strong>xmlhttp.setRequestHeader(“Content-type”,”application&#x2F;x-www-form-urlencoded”);</strong></li>
+</ul>
+</li>
+<li><strong>send(content)：发送请求给服务器</strong><ul>
+<li><strong>如果是get方式，并不需要填写参数，或填写null</strong></li>
+<li><strong>如果是post方式，把要提交的参数写上去</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><strong>onreadystatechange：请求状态改变的事件触发器（readyState变化时会调用此方法），一般用于指定回调函数</strong></p>
+</li>
+<li><p><strong>readyState：请求状态readyState一改变，回调函数被调用，它有5个状态</strong></p>
+<ul>
+<li>0：未初始化</li>
+<li>1：open方法成功调用以后</li>
+<li>2：服务器已经应答客户端的请求</li>
+<li>3：交互中。Http头信息已经接收，响应数据尚未接收。</li>
+<li><strong>4：完成。数据接收完成</strong></li>
+</ul>
+</li>
+<li><p><strong>responseText：服务器返回的文本内容</strong></p>
+</li>
+<li><p><strong>responseXML：服务器返回的兼容DOM的XML内容</strong></p>
+</li>
+<li><p><strong>status：服务器返回的状态码</strong></p>
+</li>
+<li><p>statusText：服务器返回状态码的文本信息</p>
+</li>
+</ul>
+<h2 id="ajax的使用"><a href="#ajax的使用" class="headerlink" title="ajax的使用"></a>ajax的使用</h2><h3 id="创建XMLHttpRequest对象"><a href="#创建XMLHttpRequest对象" class="headerlink" title="创建XMLHttpRequest对象"></a>创建XMLHttpRequest对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> httpRequest;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">XMLHttpRequest</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以上的版本以及其他内核的浏览器(Mozilla)等</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">ActiveXObject</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以下的版本</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">ActiveXObject</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="向服务器发送请求"><a href="#向服务器发送请求" class="headerlink" title="向服务器发送请求"></a>向服务器发送请求</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">1</span>. xhr.open(<span class="keyword">method</span>,<span class="title function_">url</span>,<span class="title function_">async</span>);  </span><br><span class="line">    <span class="number">2</span>. send(string)<span class="punctuation">;</span><span class="comment">//post请求时才使用字符串参数，否则不用带参数。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">method</span>：请求的类型；<span class="title function_">GET</span> 或 <span class="title function_">POST</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">url</span>：文件在服务器上的位置</span><br><span class="line"></span><br><span class="line"><span class="title function_">async</span>：<span class="title function_">true</span>（异步）或 <span class="title function_">false</span>（同步） 注意：<span class="title function_">post</span>请求一定要设置请求头的格式内容</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="built_in">open</span>(<span class="string">&quot;POST&quot;</span>,<span class="string">&quot;test.html&quot;</span>,<span class="literal">true</span>);  </span><br><span class="line">xhr.setRequestHeader(<span class="string">&quot;Content-type&quot;</span>,<span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);  </span><br><span class="line">xhr.<span class="built_in">send</span>(<span class="string">&quot;fname=Henry&amp;lname=Ford&quot;</span>); <span class="comment"> //post请求参数放在send里面，即请求体</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务器响应处理"><a href="#服务器响应处理" class="headerlink" title="服务器响应处理"></a>服务器响应处理</h3><p>responseText    获得字符串形式的响应数据。</p>
+<p>responseXML   获得XML 形式的响应数据。</p>
+<h4 id="①同步处理"><a href="#①同步处理" class="headerlink" title="①同步处理"></a>①同步处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>,<span class="string">&quot;info.txt&quot;</span>,<span class="literal">false</span>);  </span><br><span class="line">xhr.<span class="title function_">send</span>();  </span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>; <span class="comment">//获取数据直接显示在页面上</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="②异步处理"><a href="#②异步处理" class="headerlink" title="②异步处理"></a>②异步处理</h4><p>相对来说比较复杂，要在请求状态改变事件中处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="property">onreadystatechange</span>=<span class="keyword">function</span>(<span class="params"></span>)  &#123; </span><br><span class="line">	  <span class="keyword">if</span> (xhr.<span class="property">readyState</span>==<span class="number">4</span> &amp;&amp;xhr.<span class="property">status</span>==<span class="number">200</span>)  &#123; </span><br><span class="line">	       <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>;  </span><br><span class="line">	     &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013473001">AJAX跨域完全讲解 - SegmentFault 思否</a></p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013291898">AJAX面试题都在这里 - SegmentFault 思否</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -248,8 +404,21 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-10 07:39:10" itemprop="dateModified" datetime="2022-11-10T07:39:10Z">2022-11-10</time>
+                <time title="修改时间：2022-11-11 01:41:04" itemprop="dateModified" datetime="2022-11-11T01:41:04Z">2022-11-11</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/readnote/" itemprop="url" rel="index"><span itemprop="name">readnote</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/readnote/%E6%91%98%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">摘录</span></a>
+                </span>
+            </span>
 
           
 
@@ -1810,64 +1979,6 @@ DROP FOREIGN KEY fk_PerOrders
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm__并查集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-02-10 21:56:17 / 修改时间：13:56:18" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:17Z">2021-02-10</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1937,20 +2048,20 @@ DROP FOREIGN KEY fk_PerOrders
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

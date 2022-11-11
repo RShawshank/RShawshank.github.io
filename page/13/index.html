@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">55</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">56</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">22</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">24</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">126</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">127</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,252 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/02/Algorithm_%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/02/Algorithm_%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" class="post-title-link" itemprop="url">单源最短路径</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-02 14:08:07" itemprop="dateCreated datePublished" datetime="2019-12-02T14:08:07Z">2019-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-17 12:36:08" itemprop="dateModified" datetime="2021-01-17T12:36:08Z">2021-01-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="单源最短路径"><a href="#单源最短路径" class="headerlink" title="单源最短路径"></a>单源最短路径</h1><p>最短路径问题：一个带权重的有向图G &#x3D; (V, E)和权重函数w: E-&gt;R，该权重函数将每条边映射到实数值的权重上。一条路径p的权重w(p)是构成该路径的所有边的权重之和，定义从节点u到结点v的最短路径权重δ (u, v)如下：</p>
+<p><img src="/images/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20150510102230925.png"></p>
+<p>单目的地最短路径问题：找出从每个顶点v到指定终点t的最短路径。把图中的每条边反向，就可以把这一问题变为单源最短路径问题。</p>
+<p><strong>一些概念：</strong></p>
+<p>如果一条路径中包含两个相同的结点，则该路径包含<strong>环路</strong>。</p>
+<p>不包含环路的路径称为<strong>简单路径</strong>。</p>
+<p>最短路应为简单路径，不包含环路。</p>
+<ul>
+<li>对任何简单路径最多包含|V|-1条边和|V|个结点。</li>
+<li>不失一般性，假设后续算法寻找的最短路径都不包含环路。</li>
+</ul>
+<h3 id="负权重边"><a href="#负权重边" class="headerlink" title="负权重边"></a>负权重边</h3><p>边的权重可以为负值，即使边的权重为负值，对于所有节点v，最短路径权重 (u, v)都可以有精确定义。但是，<strong>如果图G&#x3D;(V, E)包含从源节点s可以到达的，权重为负值的环路，则最短路径权重无定义，从s到该环路上的任意节点的路径都不可能是最短路径</strong>。如果从节点s到节点v的某条路径上存在权重为负值的环路，则(u, v) &#x3D; -∞。</p>
+<p>示例：</p>
+<img src="https://i.loli.net/2021/01/17/48swgVASim7JBpe.png" style="zoom:67%;" />
+
+<p> 从节点s到节点c有无数条路径；&lt;s,c&gt;, &lt;s,c,d,c&gt;,&lt;s,c,d,c,d,c&gt;等，因为环路&lt;c, d, c&gt;的权重为3&gt;0。所以从s到c的最短路径为&lt;s,c&gt;，δ(s, c)&#x3D;5。</p>
+<p>   从节点s到节点e也有无数条路径：&lt;s,e&gt;, &lt;s,e,f,e&gt;, &lt;s,e, f,e, f,e &gt;等，因为环路&lt;e, f, e&gt;的权重为-3，所以，从节点s到节点e没有最短路径，因此δ(s,e)&#x3D;-∞。类似的， δ(s,f)&#x3D;-∞。因为g可以从节点f到达，所以， δ(s, g)&#x3D;-∞。（因为s到e可以在e、f上转圈圈，就会使得路径趋于负的无穷小）</p>
+<h3 id="最短路径的表示"><a href="#最短路径的表示" class="headerlink" title="最短路径的表示"></a>最短路径的表示</h3><p>一个结点的<strong>前驱结点</strong>记为：v.π<br>（前驱结点或者为NIL或者为另一个结点）</p>
+<p>利用v.π的记录可以搜索出最短路径上的所有结点。</p>
+<p>一个源点s所诱导的前驱子图定义为Gπ&#x3D;(Vπ，Eπ)，其中，</p>
+<p>结点集合Vπ&#x3D;{v∈V：v.π≠NIL}∪{s}</p>
+<ul>
+<li>即Vπ是源点s和图G中的前驱结点不为NIL的所有结点的集合</li>
+</ul>
+<p>边集合Eπ&#x3D;{(v.π,v)∈E：v∈Vπ-{s}}</p>
+<ul>
+<li>即Eπ是由Vπ中的结点v的π值所“诱导”(induced)的边的集合。</li>
+</ul>
+<p>则，算法终止时，<strong>Gπ是一棵最短路径树。</strong></p>
+<p><strong>该树包含了从源点s到每个可以从s到达的结点的最短路径。</strong></p>
+<p><strong>另外，最短路径不是唯一的，最短路径树也不一定是唯一的。</strong></p>
+<h3 id="松弛操作"><a href="#松弛操作" class="headerlink" title="松弛操作"></a>松弛操作</h3><p>松弛：原来用一根橡皮筋连接p和w两点，现在有一点v到w的路径更短，现在把橡皮筋w点的另一端p换成v点，这样缓解橡皮筋紧绷的压力，让其变得松弛。</p>
+<p>简单的说就是不断更新最短路径。</p>
+<p>1）松弛边：  w -&gt; v 意味着先检查从s到v的最短路径是否是先从s 到 w，再由w -&gt; v, 如果是，则更新v.d和v.π的数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于每个顶点v∈V，都设置一个属性d[v]，用来描述从源点s到v的最短路径上权值的上界，称为**最短路径估计（shortest-path estimate）**。π[v]代表S到v的当前最短路径中v点之前的一个点的编号</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">relax</span><span class="params">(DirectedEdge e)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> e.from(), w = e.to();</span><br><span class="line">        <span class="keyword">if</span> (v.d  &gt;  w.d + e.Weight())</span><br><span class="line">        &#123;</span><br><span class="line">            v.d = w.d + e.Weight();</span><br><span class="line">            v.π = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//RELAX 的时间：O(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="最短路径和松弛操作的性质"><a href="#最短路径和松弛操作的性质" class="headerlink" title="最短路径和松弛操作的性质"></a>最短路径和松弛操作的性质</h3><p>1。<strong>三角不等式性质</strong>：对于任何边(u,v)∈E，有δ(s,v)≤δ(s,u)+ω(u,v)。</p>
+<blockquote>
+<p>证明：</p>
+<p>假定p是从源结点s到结点v的一条最短路径，则p的权重不会比任何从s到v的其它路径的权重大，因此路径p的权重也不会比这样的一条路径的权重更大：从源结点s到结点u的一条最短路径，再加上边(u,v)而到达结点v的这条路径。</p>
+<p>如果s到v没有最短路径，则不可能存在s到v的路径。</p>
+</blockquote>
+<p>2。<strong>上界性质</strong>：对于所有结点v∈V，我们有v.d≥δ(s,v)。一旦v.d的取值达到δ(s,v)，其值将不再变化。</p>
+<blockquote>
+<p>证明：</p>
+<p>使用数学归纳法</p>
+</blockquote>
+<p>3。<strong>非路径性质</strong>：若从结点s到结点v之间不存在路径，有v.d&#x3D;δ(s,v)&#x3D;∞。</p>
+<blockquote>
+<p>证明：</p>
+<p>因为从源点s到给定点v之间不存在路径，所以δ(s,v)&#x3D;∞。而根据上界性质，总有v.d≥δ(s,v)，所以，v.d≥δ(s,v)&#x3D;∞。</p>
+</blockquote>
+<p>4。<strong>收敛性质：</strong>设结点u,v∈V，如果s⇝u→v是图G中的一条最短路径，且在对边(u,v)进行松弛前的任意时间有u.d&#x3D;δ(s,u)，则在之后的所有时间有v.d&#x3D;δ(s,v)。</p>
+<p>5。<strong>路径松弛性质</strong>：若p&#x3D;&lt;v<del>0</del>,v<del>1</del>,…,v<del>k</del>&gt;是从源结点s&#x3D;v<del>0</del>到结点v<del>k</del>的一条路径，且我们对p中所进行松弛的次序为(v<del>0</del>,v<del>1</del>),(v<del>1</del>,v<del>2</del>),…,(v<del>k−1</del>,v<del>k</del>)，则v<del>k</del>.d&#x3D;δ(s,v<del>k</del>)。</p>
+<blockquote>
+<p>该性质的成立与其他边的松弛操作及次序无关，即使这些松弛操作是与对p上的边所进行的松弛操作穿插进行的。</p>
+<p>数学归纳法证明。</p>
+</blockquote>
+<p>6。<strong>前驱子图性质</strong>：对于所有结点v∈V，一旦v.d&#x3D;δ(s,v)，则前驱子图是一棵根结点为s的最短路径树。</p>
+<h2 id="最短路径的最优子结构"><a href="#最短路径的最优子结构" class="headerlink" title="最短路径的最优子结构"></a>最短路径的最优子结构</h2><p><strong>最短路径具有最优子结构性质：两个结点之间的一条最短路径包含其他的最短路径</strong></p>
+<p><strong>具有&#x3D;&#x3D;贪心思想&#x3D;&#x3D;</strong></p>
+<h3 id="证明（剪枝-复制法-反证法）"><a href="#证明（剪枝-复制法-反证法）" class="headerlink" title="证明（剪枝-复制法+反证法）"></a>证明（剪枝-复制法+反证法）</h3><p>假设路径p分为p<del>oi</del> 、p<del>ij</del>、p<del>jk</del> ，并且p是v<del>o</del>到v<del>k</del>的最短路径。如果p<del>oi</del> 、p<del>ij</del>、p<del>jk</del>不是最短路径的话，假设存在p<del>oi2</del></p>
+<p>是v<del>o</del>到v<del>i</del> 的最短路径。将p<del>oi</del> 减去复制上p<del>oi2</del> 就反证出p不是最短路径，矛盾。</p>
+<h2 id="Bellman-ford算法"><a href="#Bellman-ford算法" class="headerlink" title="Bellman-ford算法"></a>Bellman-ford算法</h2><h3 id="适用条件-amp-范围"><a href="#适用条件-amp-范围" class="headerlink" title="适用条件&amp;范围"></a>适用条件&amp;范围</h3><ul>
+<li>单源最短路径(从源点s到其它所有顶点v);——<strong>可以有负权重的边，但不能有负权重的环</strong></li>
+<li>有向图&amp;无向图(无向图可以看作(u,v),(v,u)同属于边集E的有向图);</li>
+<li>边权可正可负(如有负权回路输出错误提示);</li>
+<li>差分约束系统;</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>第一，初始化所有点。每一个点保存一个值，表示从原点到达这个点的距离，将原点的值设为0，其它的点的值设为无穷大（表示不可达）。</p>
+<p>第二，进行循环，循环下标为从1到n－1（n等于图中点的个数）。在循环内部，遍历所有的边，进行松弛计算。（对于N个点，进行N次循环，每次循环依次更新路径）</p>
+<p>第三，遍历途中所有的边（edge（u，v）），判断是否存在这样情况：<br>d（v） &gt; d (u) + w(u,v)（三角不等式性质）<br>则返回false，表示途中存在从源点可达的权为负的回路。</p>
+<h3 id="松弛迭代（核心）"><a href="#松弛迭代（核心）" class="headerlink" title="松弛迭代（核心）"></a>松弛迭代（核心）</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b876fe9b2338">参考文章</a></p>
+<p>大致意思就是，每次对所有边进行松弛，就算一次松弛迭代：</p>
+<p>性质一：<strong>一般性的，当图中已经存在一个或多个已确认顶点时，即图处于任意一种状态，若图中尚存在未确认顶点，则执行一次迭代后，会增加至少一个已确认顶点。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>性质二：<strong>若图中存在由起点不可达的顶点，则这些顶点的初始化状态即为最短路径状态，即初始化时就处于已确认状态。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>所以Bellman-ford算法的循环次数：</p>
+<ul>
+<li>松弛边按照最坏情况下进行，即一次只增加一个已确认顶点，则需要执行的迭代次数为 |V|-1次</li>
+<li>松弛边按照最好情况下进行，则需要执行的迭代次数为 1 次。</li>
+</ul>
+<h3 id="检测带权有向图中是否存在负权回路"><a href="#检测带权有向图中是否存在负权回路" class="headerlink" title="检测带权有向图中是否存在负权回路"></a>检测带权有向图中是否存在负权回路</h3><blockquote>
+<p>根据前面对松弛函数执行次数的分析可知，若图中不存在负权回路，那么即使在最坏情况下，也只需要执行 |V|-1 次迭代松弛，即可获得从起点到各顶点的最短路径。</p>
+<p> 若图中存在负权回路，当回路较小时，例如顶点自身或者两个顶点之间的负权回路，则在 |V|-1 次迭代过程中，可能多次通过了该负权回路；若回路较大，例如从起点出发，串联所有顶点最后回到起点，即通过 |V|-1 条边构成一个圆形，如下图所示。则 |V|-1 次迭代过程中，可能一次也不会通过该负权回路，但是当再执行一次迭代松弛，即可将 d<del>s</del> 值更新为负值，所以<strong>可以多执行一次迭代，通过判断是否更新从起点到某个顶点的最短路径权值，来判断图中是否存在负权回路</strong>。</p>
+</blockquote>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><p>BELLMAN-FORD(G,w, s)</p>
+<pre><code>          INITIALIZE-SINGLE-SOURCE(G, s)
+          for i = 1 to |G.V|-1
+                 for  each edge (u, v)∈ E
+                        RELAX(u, v, w)
+                for each edge (u, v) ∈ E
+                 if  v.d &gt; u.d + w(u, v)
+                        return  FALSE
+                        
+                             return TRUE
+</code></pre>
+<h3 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h3><p>根据最优子结构性和松弛迭代就可以证明：</p>
+<ul>
+<li><p>如果图G中不包含从源结点s可以到达的权重为负值的环路，则算法将返回TRUE，且对于所有结点v∈V，前驱子图Gπ是一个根结点为s的最短路径树。</p>
+<blockquote>
+<p>如果结点v是从s可以到达的，则论断可以从松弛迭代和最优子结构性得到证明。</p>
+<p>如果结点v不能从s可达，则论断可以从非路径性质获得。</p>
+<p>综合前驱子图性质和本论断，可以推导出G<del>π</del>是一棵最短路径树</p>
+</blockquote>
+</li>
+<li><p>如果图G中包含一条从源结点s可以到达的权重为负值的环路，则算法将返回FALSE。</p>
+<blockquote>
+<p>三角不等式性质。可以使用反证法说明</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="时间性能"><a href="#时间性能" class="headerlink" title="时间性能"></a>时间性能</h3><p>初始化：Θ(V)</p>
+<p>松弛处理：for循环执行|V|-1次，每次的时间是Θ(E)</p>
+<p>Bellman-ford算法总的运行时间是O(VE)。</p>
+<h2 id="Dijkstra算法（贪心算法）"><a href="#Dijkstra算法（贪心算法）" class="headerlink" title="Dijkstra算法（贪心算法）"></a>Dijkstra算法（贪心算法）</h2><p>Dijkstra算法解决带权重的有向图上单源最短路径问题</p>
+<p>**&#x3D;&#x3D;该算法要求所有边的权重为非负值&#x3D;&#x3D;**，如果采用合适的实现方式，Dijkstra算法的运行时间要比Bellman-Ford算法快。</p>
+<h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><ul>
+<li>保存两个集合S和U，<strong>S用于存放已经找到和起点之间最短距离的点，U用于存放尚未找到最短距离的点</strong>，起初S中只有起点，其余所有的点存放在U中，并根据和起点是否相邻，修改了距离起点的距离，<strong>不相邻则默认为无穷远。</strong></li>
+<li>循环遍历U中的点，<strong>找出离起点距离最近的点</strong>，该点到起点的距离就是该点到起点的最短距离，将该点从U中移除并放置到S中去，并重新计算U中的点距离起点的距离。这样每次选取的点都是剩余点中距离起点最近的点。</li>
+<li>循环上述操作，直到找到终点到起点的最短路径或则循环结束。</li>
+</ul>
+<p><strong>Dijkstra算法是一个贪心算法：每次总是选择V-S集合中最短路径估计值最小的结点加入S中。</strong></p>
+<h3 id="算法描述-1"><a href="#算法描述-1" class="headerlink" title="算法描述"></a>算法描述</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor">DIJKSTRA(G, <span class="params">w</span>, <span class="params">s</span>)</span></span><br><span class="line">              INITIALIZE-SINGLE-<span class="constructor">SOURCE(G, <span class="params">s</span>)</span><span class="comment">//对所有节点的d值和派值初始化</span></span><br><span class="line">              S = ∅</span><br><span class="line">              Q =G.V</span><br><span class="line">              <span class="keyword">while</span> Q != ∅</span><br><span class="line">                     u = EXTRACT-<span class="constructor">MIN(Q)</span></span><br><span class="line">                     S= S ∪  &#123;u&#125;</span><br><span class="line">                     <span class="keyword">for</span>  each vertex v ∈ G.Adj<span class="literal">[<span class="identifier">u</span>]</span><span class="comment">//对所有从u出发的边进行松弛</span></span><br><span class="line">                            <span class="constructor">RELAX(<span class="params">u</span>, <span class="params">v</span>, <span class="params">w</span>)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法证明-1"><a href="#算法证明-1" class="headerlink" title="算法证明"></a>算法证明</h3><p>利用循环不变式证明循环不变式：</p>
+<p>算法在while语句的每次循环开始前，对于每个结点u∈S，有u.d&#x3D;δ(s,u)</p>
+<p>只 需 证 明： 对 于 每 个 结 点u∈V，当u被 加 入 到S时，有u.d&#x3D;δ(s,u)。注：一旦u加入S，就不会再修正u.d。且根据上界性质，该等式将一直保持。</p>
+<p>证明过程：</p>
+<p>（1）初始化：初始时，S&#x3D;Ø，因此循环不变式直接成立。</p>
+<p>（2）保持：在每次循环中，对于加入到集合S中的结点u而言，u.d&#x3D;δ(s,u)。</p>
+<blockquote>
+<p>用反证法证明：设结点u是第一个在加入到集合S时u.d≠δ(s,u)的结点。</p>
+<p>由于s是第一个加入到集合S中的结点，并且s.d&#x3D;δ(s,s)&#x3D;0，所以u≠s，并且在u即将加入S时，S≠Ø，因为S中至少包含了s。故，此时必存在至少一条从s到u的路径（否则，根据非路径性质将有u.d&#x3D;δ(s,u)&#x3D;∞，与假设的u.d≠δ(s,u)相矛盾，故这样路径一定存在），这样也必存在一条从s到u的最短路径，记为p。</p>
+<p>取p路径上的一个点x（该点是s到u的中间点）在结点u加入到集合S时，有x.d&#x3D;δ(x,y)【因为u是第一个不满足关系的点，并且每次S取的点都是剩下点中具有最短路径的点，x.d&lt;&#x3D;u.d。它肯定被取入S中了】</p>
+<p>然后取p路径上的y点，该点的前驱节点为x。则有：在结点u加入到集合S时，应有y.d&#x3D;δ(s,y)。这是因为x∈S，u是第一个u.d≠δ(s,u)的结点，在将x加入到集合S时，有x.d&#x3D;δ(s,x)，y是x的邻接点，<strong>所以此时边(x,y)将被松弛</strong>。由于y是最短路径p上的结点，根据最短路径的最优子结构性和收敛性质，此时应有y.d&#x3D;δ(s,y)。</p>
+<p>因为结点y是从结点s到结点u的一条最短路径上位于u前面的一个结点，所以应有δ(s,y)≤δ(s,u)，即y.d&lt;&#x3D;u.d。</p>
+<p>但是我们注意到，此时取进S集合的是u不是y，所以u.d应该小于等于y.d。矛盾</p>
+</blockquote>
+<h3 id="时间性能-1"><a href="#时间性能-1" class="headerlink" title="时间性能"></a>时间性能</h3><p>根据算法的处理规则，每个结点u仅被加入集合S一次，邻接链表Adj[u]中的每条边在整个运行期间也只被检查一次。因此算法第7-8行的for循环执行次数总共为|E|次（即松弛判定总次数）</p>
+<p>Dijkstra算法的总运行时间依赖于最小优先队列Q的实现。</p>
+<ul>
+<li>如果用线性数组(无序或者按序插入)实现，每次找d最小的结点u需要O(V)的时间，所以算法的总运行时间为O(V^2^+E)&#x3D;O(V^2^)。</li>
+<li>如果用二叉堆实现，每次找d最小的结点u需要O(lgV)的时间，所以算法的总运行时间为O((V+E)lgV)。</li>
+<li>如果用斐波那契堆实现，算法的总运行时间可以改善至O(VlgV+E)。</li>
+</ul>
+<h2 id="差分约束和最短路径"><a href="#差分约束和最短路径" class="headerlink" title="差分约束和最短路径"></a>差分约束和最短路径</h2><p>对于一组不等式：<br>$$<br>\begin{cases}<br>x_1-x_2≤0\<br>x_1-x_5≤1\<br>x_2-x_5≤1\<br>x_3-x_1≤5\<br>x_4-x_1≤4\<br>x_4-x_3≤-1\<br>x_5-x_3≤-3\<br>x_5-x_4≤-3\<br>\end{cases}<br>$$<br>特点是全都是两个未知数的差小于等于某个常数（大于等于也可以，因为左右乘 −1-1−1 就可以化成小于等于的形式），这样的不等式组称作差分约束系统。</p>
+<p>这个不等式组<strong>要么无解，要么就有无限组解</strong>。因为如果存在一组解(x<del>1</del>,·····x<del>n</del>)的话，那么对于任何一个常数 k 有</p>
+<p>(x<del>1</del>+k,·····x<del>n</del>+k)也肯定是一组解，因为任何两个数加上一个数以后，它们之间的关系（差）是不变的，这个差分约束系统中的所有不等式都不会被破坏。</p>
+<h3 id="约束图"><a href="#约束图" class="headerlink" title="约束图"></a>约束图</h3><p>每个未知数 x<del>i</del>对应图中的一个顶点v<del>i</del> ，把所有的不等式都化成图中的一条边，对于不等式<br>$$<br>x_i−x_j≤ y<br>$$<br>化成三角形不等式<br>$$<br>x_i≤ x_j+y<br>$$<br>就可以化成边 &lt;v<del>j</del>,v<del>i</del>&gt;权值为 y 。最后在这张图上求一遍单源最短路，这些三角不等式就全部满足了，因为它是最短路问题的基本性质。<br><img src="https://i.loli.net/2021/01/17/KE3s5rZSqw2bIO4.png"></p>
+<blockquote>
+<p>说明：</p>
+<p>（1）结点集合：约束图中引入一个额外的结点v<del>0</del>，从其出发可以达到其他所有结点。因此结点集合V由代表每个变量x<del>i</del>的结点v<del>i</del>和**额外的结点v<del>0</del>**组成。</p>
+<p>（2）边集合：边集合E包含代表每个差分约束的边，同时包含v0到其他所有结点的边(v<del>0</del>,v<del>i</del>)，i&#x3D;1,2，…，n。</p>
+<p>（3）边的权重：如果x<del>j</del>-x<del>i</del>≤b<del>k</del>是一个差分约束条件，则边(v<del>i</del>,v<del>j</del>)的权重记为ω(v<del>i</del>,v<del>j</del>)&#x3D;b<del>k</del>，而从v<del>0</del>出发到其他结点的边的权重ω(v<del>0</del>,v<del>j</del>)&#x3D;0</p>
+</blockquote>
+<p>图中每一条边都代表差分约束系统的一个不等式。现在以 v<del>0</del>为源点，求单源最短路，最终得到的v<del>0</del>到 v<del>i</del>的最短路径长度就是 x<del>i</del>的一个解。如图中 v<del>0</del>到其他各个顶点的最短距离分别是 {−5,−3,0,−1,−4}{-5,-3,0,-1,-4}{−5,−3,0,−1,−4} ，因此满足上述不等式的一组解就是 {x<del>1</del>,x<del>2</del>,x<del>3</del>,x<del>4</del>,x<del>5</del>}&#x3D;{−5,−3,0,−1,−4} 。当然把每个数都加上 101010 也是一组解 {5,7,10,9,6}{5,7,10,9,6}{5,7,10,9,6} ，但是这组解只满足不等式组 (1) ，也就是原先的差分约束系统，而不满足不等式组 (2) ，也是我们后来加上的那些不等式。当然这是无关紧要的，因为 x<del>0</del>本来就是个局外人，并不在乎它。</p>
+<p>对于上面例子而言，它代表的解 x<del>0</del>值也在其中也就是 x<del>0</del>&#x3D;0。但是 x<del>0</del>的值是无可争议的，既然是以它作为源点求最短路径，那么源点到它的最短路径当然是 0了，因此，我们解这个差分约束系统无形中存在一个条件x<del>0</del>&#x3D;0那么它有什么用呢？可以限制所有的未知数的解都不大于0 。</p>
+<p>解的个数：</p>
+<p><strong>(1) 如果图G不包含权重为负值的回路，则是该系统的一个可行解。</strong></p>
+<p><strong>(2) 如果图G包含权重为负值的回路，则该系统没有可行解</strong></p>
+<p>一个有趣的结论：当我们一开始就把 v<del>0</del>的解死定为 A 的时候，所有未知数的解都不会大于 A （一开始把 dis[0]&#x3D;A）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1881,20 +2127,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
