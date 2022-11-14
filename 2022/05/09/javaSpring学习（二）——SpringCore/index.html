@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Spring IOCIoC（Inverse of Control:控制反转） 是一种设计思想，而不是一个具体的技术实现。 IOC的思想是：IoC的核心思想在于资源统一管理,你所持有的资源全部放入到IoC容器中,而你也只需要依赖IoC容器,该容器会自动为你装配所需要的具体依赖，而不是传统的在你的对象内部直接控制。对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaSpring学习（二）——SpringCore">
+<meta property="og:url" content="http://rshawshank.github.io/2022/05/09/javaSpring%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94SpringCore/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="Spring IOCIoC（Inverse of Control:控制反转） 是一种设计思想，而不是一个具体的技术实现。 IOC的思想是：IoC的核心思想在于资源统一管理,你所持有的资源全部放入到IoC容器中,而你也只需要依赖IoC容器,该容器会自动为你装配所需要的具体依赖，而不是传统的在你的对象内部直接控制。对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205110948049.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205110948068.jpeg">
+<meta property="article:published_time" content="2022-05-09T10:14:13.000Z">
+<meta property="article:modified_time" content="2022-11-13T09:13:26.000Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205110948049.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2022/05/09/javaSpring%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94SpringCore/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>javaSpring学习（二）——SpringCore | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">57</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/05/09/javaSpring%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94SpringCore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          javaSpring学习（二）——SpringCore
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-09 10:14:13" itemprop="dateCreated datePublished" datetime="2022-05-09T10:14:13Z">2022-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Spring-IOC"><a href="#Spring-IOC" class="headerlink" title="Spring IOC"></a>Spring IOC</h1><p><strong>IoC（Inverse of Control:控制反转）</strong> 是一种设计思想，而不是一个具体的技术实现。</p>
+<p>IOC的思想是：IoC的核心思想在于资源统一管理,你所持有的资源全部放入到IoC容器中,而你也只需要依赖IoC容器,该容器会自动为你装配所需要的具体依赖，<strong>而不是传统的在你的对象内部直接控制。</strong>对于spring框架来说，就是由spring来负责控制对象的生命周期和对象间的关系。</p>
+<ul>
+<li>谁控制谁，控制什么：<strong>IoC 容器控制了对象</strong>；<strong>主要控制了外部资源获取（不只是对象包括比如文件等）</strong></li>
+<li>为何是反转，哪些方面反转了：传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象；为何是反转？<strong>因为由容器帮我们查找及注入依赖对象，对象只是被动的接受依赖对象，所以是反转；哪些方面反转了？依赖对象的获取被反转了。</strong></li>
+</ul>
+<blockquote>
+<p>当某个角色(可能是一个Java实例，调用者)需要另一个角色(另一个Java实例，被调用者)的协助时，在 传统的程序设计过程中，通常由调用者来创建被调用者的实例。但在Spring里，创建被调用者的工作不再由调用者来完成，因此称为控制反转;<strong>创建被调用者 实例的工作通常由Spring容器来完成，然后注入调用者，因此也称为依赖注入。</strong></p>
+<p><strong>注入内容包括：注入某个对象所需要的外部资源（包括对象、资源、常量数据）</strong></p>
+</blockquote>
+<p><strong>为什么叫控制反转？</strong></p>
+<p>Spring所倡导的开发方式：<strong>所有的类都会在spring容器中登记，告诉spring你是个什么东西，你需要什么东西，然后spring会在系统运行到适当的时候，把你要的东西主动给你，同时也把你交给其他需要你的东西。所有的类的创建、销毁都由 spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。</strong></p>
+<ul>
+<li><strong>控制</strong> ：指的是对象创建（实例化、管理）的权力</li>
+<li><strong>反转</strong> ：控制权交给外部环境（Spring 框架、IoC 容器）</li>
+</ul>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205110948049.png"></p>
+<p>其实<strong>IoC对编程带来的最大改变不是从代码上，而是从思想上，发生了“主从换位”的变化。应用程序原本是老大，要获取什么资源都是主动出击，但是在IoC&#x2F;DI思想中，应用程序就变成被动的了，被动的等待IoC容器来创建并注入它所需要的资源了。</strong></p>
+<p>　　<strong>IoC很好的体现了面向对象设计法则之一—— 好莱坞法则：“别找我们，我们找你”；即由IoC容器帮对象找相应的依赖对象并注入，而不是由对象主动去找。</strong></p>
+<p>在 Spring 中， IoC 容器是 Spring 用来实现 IoC 的载体， IoC 容器实际上就是个 Map（key，value），Map 中存放的是各种对象。</p>
+<p>Spring 时代我们一般通过 XML 文件来配置 Bean，后来开发人员觉得 XML 文件来配置不太好，于是 SpringBoot 注解配置就慢慢开始流行起来。</p>
+<h2 id="IOC-x2F-DI"><a href="#IOC-x2F-DI" class="headerlink" title="IOC&#x2F;DI"></a>IOC&#x2F;DI</h2><p>引言：Spring 能有效地组织J2EE应用各层的对象。不管是控制层的Action对象，还是业务层的Service对象，还是持久层的DAO对象，都可在Spring的 管理下有机地协调、运行。Spring将各层的对象以松耦合的方式组织在一起，Action对象无须关心Service对象的具体实现，Service对 象无须关心持久层对象的具体实现，<strong>各层对象的调用完全面向接口</strong>。当系统需要重构时，代码的改写量将大大减少。</p>
+<p>上面所说的一切都得宜于Spring的核心机制，依赖注入。依赖注入让bean与bean之间以配置文件组织在一起，而不是以硬编码的方式耦合在一起。</p>
+<p><strong>IoC的一个重点是在系统运行中，动态的向某个对象提供它所需要的其他对象。这一点是通过DI（Dependency Injection，依赖注入）来实现的</strong>。</p>
+<p>如果调用者使用到被调用对象才会从spring容器中取出依赖的对象注入到使用的类中，如果不用则会放回spring容器的对象池中，做到内存节省并且代码的耦合度也降低。面向接口编程中，让依赖注入只需要找到符合规范的接口注入即可实现调用者和被调用者解耦。对象的调用关系由spring管理。</p>
+<blockquote>
+<p>spring的依赖注入对调用者和被调用者几乎没有任何要求，完全支持对pojo之间依赖关系的管理</p>
+</blockquote>
+<p>　　<strong>IoC和DI</strong>由什么<strong>关系</strong>呢？其实它们<strong>是同一个概念的不同角度描述</strong>，相对IoC 而言，“依赖注入”明确描述了“<strong>被注入对象依赖IoC容器配置依赖对象</strong>”。</p>
+<h3 id="构造器依赖注入和-Setter方法注入的区别"><a href="#构造器依赖注入和-Setter方法注入的区别" class="headerlink" title="构造器依赖注入和 Setter方法注入的区别"></a>构造器依赖注入和 Setter方法注入的区别</h3><table>
+<thead>
+<tr>
+<th>构造函数注入</th>
+<th>setter 注入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有部分注入</td>
+<td>有部分注入</td>
+</tr>
+<tr>
+<td>不会覆盖 setter 属性</td>
+<td>会覆盖 setter 属性</td>
+</tr>
+<tr>
+<td>任意修改都会创建一个新实例</td>
+<td>任意修改不会创建一个新实例</td>
+</tr>
+<tr>
+<td>适用于设置很多属性</td>
+<td>适用于设置少量属性</td>
+</tr>
+</tbody></table>
+<p>两种依赖方式都可以使用，构造器注入和Setter方法注入。最好的解决方案是用构造器参数实现强制依赖，setter方法实现可选依赖。</p>
+<h2 id="IOC原理"><a href="#IOC原理" class="headerlink" title="IOC原理"></a>IOC原理</h2><p>1 Spring的bean容器也叫beanfactory，我们常用的applicationcontext实际上内部有一个listablebeanfactory实际存储bean的map。</p>
+<p>2 bean加载过程：spring容器加载时先读取配置文件，一般是xml，然后解析xml，找到其中所有bean，依次解析，然后生成每个bean的beandefinition，存在一个map中，根据beanid映射实际bean的map。</p>
+<p>3 bean初始化：加载完以后，如果不启用懒加载模式，则默认使用单例加载，在注册完bean以后，可以获取到beandefinition信息，然后根据该信息首先先检查依赖关系，如果依赖其他bean则先加载其他bean，然后通过反射的方式即newinstance创建一个单例bean。</p>
+<p>为什么要用反射呢，因为实现类可以通过配置改变，但接口是一致的，使用反射可以避免实现类改变时无法自动进行实例化。</p>
+<p>当然，bean也可以使用原型方式加载，使用原型的话，每次创建bean都会是全新的。</p>
+<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://javadoop.com/post/spring-ioc">IoC 源码阅读</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247486938&idx=1&sn=c99ef0233f39a5ffc1b98c81e02dfcd4&chksm=cea24211f9d5cb07fa901183ba4d96187820713a72387788408040822ffb2ed575d28e953ce7&token=1736772241&lang=zh_CN#rd">面试被问了几百遍的 IoC 和 AOP ，还在傻傻搞不清楚？</a></li>
+</ul>
+<h1 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h1><p>AOP(Aspect-Oriented Programming:面向切面编程)利用一种称为“横切”的技术，剖解开封装的对象内部，并将那些影响了 多个类的公共行为封装到一个可重用模块，并将其名为“Aspect”，即方面。所谓“方面”，简单地说，就是将那些与业务无关，却为业务模块所共同调用的 逻辑或责任封装起来，比如日志记录，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可操作性和可维护性。</p>
+<h2 id="AOP中的相关概念"><a href="#AOP中的相关概念" class="headerlink" title="AOP中的相关概念"></a>AOP中的相关概念</h2><ul>
+<li><p><code>Advice</code>（通知）：Advice 定义了在 <code>Pointcut</code> 里面定义的程序点具体要做的操作，它通过 before、after 和 around 来区别是在每个 joint point 之前、之后还是代替执行的代码。</p>
+<p>【就是你想要的功能，也就是上面说的 安全，事物，日志等。你给先定义好，然后在想用的地方用一下。】</p>
+</li>
+<li><p><code>Joint point</code>（连接点）：spring允许你使用通知的地方，那可真就多了，基本每个方法的前，后（两者都有也行），或抛出异常时都可以是连接点，spring只支持方法连接点.其他如aspectJ还可以让你在构造器或属性注入时都行，不过那不是咱关注的，只要记住，<strong>和方法有关的前前后后（抛出异常），都是连接点。</strong></p>
+</li>
+<li><p><code>Pointcut</code>（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。</p>
+<p>【你的一个类里，有15个方法，那就有几十个连接点了对把，但是你并不想在所有方法附近都使用通知（使用叫织入，以后再说），你只想让其中的几个，在调用这几个方法之前，之后或者抛出异常时干点什么，那么就用切点来定义这几个方法，让切点来筛选连接点，选中那几个你想要的方法。】</p>
+</li>
+<li><p><code>Aspect</code>（切面）： 切面是通知和切入点的结合。现在发现了吧，没连接点什么事情，连接点就是为了让你好<strong>理解</strong>切点，搞出来的，明白这个<strong>概念</strong>就行了。通知说明了干什么和什么时候干（什么时候通过方法名中的before,after，around等就能知道），而切入点说明了在哪干（指定到底是哪个方法），这就是一个完整的切面定义。</p>
+</li>
+<li><p><code>introduction</code>(引入)：允许我们向现有的类添加新方法属性。这不就是把切面（也就是新方法属性：通知定义的）用到目标类中吗</p>
+</li>
+<li><p><code>Target</code>（目标对象）：引入中所提到的目标类，也就是要被通知的对象，也就是真正的业务逻辑，他可以在毫不知情的情况下，被咱们织入切面。而自己专注于业务本身的逻辑。</p>
+</li>
+<li><p><code>Weaving</code>（织入）：把切面应用到目标对象来创建新的代理对象的过程。有3种方式，spring采用的是运行时，为什么是运行时，后面解释。</p>
+<p>　　关键就是：切点定义了哪些连接点会得到通知</p>
+</li>
+<li><p><code>proxy</code>（代理）：怎么实现整套aop机制的，都是通过代理。</p>
+</li>
+</ul>
+<h2 id="AOP原理理解"><a href="#AOP原理理解" class="headerlink" title="AOP原理理解"></a>AOP原理理解</h2><p>​	spring用代理类包裹切面，把他们织入到Spring管理的bean中。也就是说代理类伪装成目标类，它会截取对目标类中方法的调用，让调用者对目标类的调用都先变成调用伪装类，伪装类中就先执行了切面，再把调用转发给真正的目标bean。</p>
+<p>　　现在可以自己想一想，怎么搞出来这个伪装类，才不会被调用者发现（过JVM的检查，JAVA是强类型检查，哪里都要检查类型）。</p>
+<p>　　1.<strong>实现和目标类相同的接口</strong>，我也实现和你一样的接口，反正上层都是接口级别的调用，这样我就伪装成了和目标类一样的类（实现了同一接口，咱是兄弟了），也就逃过了类型检查，到java运行期的时候，利用多态的后期绑定（所以spring采用运行时），伪装类（代理类）就变成了接口的真正实现，而他里面包裹了真实的那个目标类，最后实现具体功能的还是目标类，只不过伪装类在之前干了点事情（写日志，安全检查，事物等）。</p>
+<p>　　顺着这个思路想，要是本身这个类就没实现一个接口呢，你怎么伪装我，我就压根没有机会让你搞出这个双胞胎的弟弟，那么就用第2种代理方式，创建一个目标类的子类，生个儿子，让儿子伪装我</p>
+<p>　　2.<strong>生成子类调用</strong>，这次用子类来做为伪装类，当然这样也能逃过JVM的强类型检查，我继承的吗，当然查不出来了，子类重写了目标类的所有方法，当然在这些重写的方法中，不仅实现了目标类的功能，还在这些功能之前，实现了一些其他的（写日志，安全检查，事物等）。</p>
+<p>　　这次的对比就是，儿子先从爸爸那把本事都学会了，所有人都找儿子办事情，但是儿子每次办和爸爸同样的事之前，都要收点小礼物（写日志），然后才去办真正的事。当然爸爸是不知道儿子这么干的了。这里就有件事情要说，某些本事是爸爸独有的(final的)，儿子学不了，学不了就办不了这件事，办不了这个事情，自然就不能收人家礼了。</p>
+<p>　　前一种兄弟模式，spring会使用JDK的java.lang.reflect.Proxy类，它允许Spring动态生成一个新类来实现必要的接口，织入通知，并且把对这些接口的任何调用都转发到目标类。</p>
+<p>　　后一种父子模式，spring使用CGLIB库生成目标类的一个子类，在创建这个子类的时候，spring织入通知，并且把对这个子类的调用委托到目标类。</p>
+<p>　　相比之下，还是兄弟模式好些，他能更好的实现松耦合，尤其在今天都高喊着面向接口编程的情况下，父子模式只是在没有实现接口的时候，也能织入通知，应当做一种例外。</p>
+<h2 id="实现AOP的技术"><a href="#实现AOP的技术" class="headerlink" title="实现AOP的技术"></a>实现AOP的技术</h2><ul>
+<li>采用动态代理技术，利用截取消息的方式，对该消息进行装饰，以取代原有对象行为的执行；</li>
+<li>采用静态织入的方式，引入特定的语法创建“方面”，从而使得编译器可以在编译期间织入有关“方面”的代码。</li>
+</ul>
+<h2 id="Spring实现AOP"><a href="#Spring实现AOP" class="headerlink" title="Spring实现AOP"></a>Spring实现AOP</h2><ol>
+<li>JDK动态代理：其代理对象必须是某个接口的实现，它是通过在运行期间创建一个接口的实现类来完成对目标对象的代理；其核心的两个类是InvocationHandler和Proxy。</li>
+<li>CGLIB代理：实现原理类似于JDK动态代理，只是它在运行期间生成的代理对象是针对目标类扩展的子类。CGLIB是高效的代码生成包，底层是依靠ASM（开源的java字节码编辑类库）操作字节码实现的，性能比JDK强；需要引入包asm.jar和cglib.jar。</li>
+</ol>
+<p>如下图所示：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205110948068.jpeg" alt="SpringAOPProcess"></p>
+<p>AOP:</p>
+<p>AOP的切面，切点，增强器一般也是配置在xml文件中的，所以bean容器在解析xml时会找到这些内容，并且首先创建增强器bean的实例。</p>
+<p>基于上面创建bean的过程，AOP起到了什么作用呢，或者是是否有参与到其中呢，答案是有的。</p>
+<p>在获得beandefinition的时候，spring容器会检查该bean是否有aop切面所修饰，是否有能够匹配切点表达式的方法，如果有的话，在创建bean之前，会将bean重新封装成一个动态代理的对象。</p>
+<p>代理类会为bean增加切面中配置的advisor增强器，然后返回bean的时候实际上返回的是一个动态代理对象。</p>
+<p>所以我们在调用bean的方法时，会自动织入切面的增强器，当然，动态代理既可以选择jdk增强器，也可以选择cglib增强器。</p>
+<p>Spring事务：</p>
+<p>spring事务其实是一种特殊的aop方式。在spring配置文件中配置好事务管理器和声明式事务注解后，就可以使用@transactional进行事务方法的处理了。</p>
+<p>事务管理器的bean中会配置基本的信息，然后需要配置事务的增强器，不同方法使用不同的增强器。当然如果使用注解的话就不用这么麻烦了。</p>
+<p>然后和aop的动态代理方式类似，当Spring容器为bean生成代理时，会注入事务的增强器，其中实际上实现了事务中的begin和commit，所以执行方法的过程实际上就是在事务中进行的。</p>
+<h2 id="AOP使用场景"><a href="#AOP使用场景" class="headerlink" title="AOP使用场景"></a>AOP使用场景</h2><ol>
+<li>Authentication 权限检查</li>
+<li>Caching 缓存</li>
+<li>Context passing 内容传递</li>
+<li>Error handling 错误处理</li>
+<li>Lazy loading　延迟加载</li>
+<li>Debugging　　调试</li>
+<li>logging, tracing, profiling and monitoring　日志记录，跟踪，优化，校准</li>
+<li>Performance optimization　性能优化，效率检查</li>
+<li>Persistence　　持久化</li>
+<li>Resource pooling　资源池</li>
+<li>Synchronization　同步</li>
+<li>Transactions 事务管理</li>
+</ol>
+<h2 id="过滤器filter、拦截器interceptor、和AOP的区别与联系"><a href="#过滤器filter、拦截器interceptor、和AOP的区别与联系" class="headerlink" title="过滤器filter、拦截器interceptor、和AOP的区别与联系"></a>过滤器filter、拦截器interceptor、和AOP的区别与联系</h2><h3 id="filter过滤器"><a href="#filter过滤器" class="headerlink" title="filter过滤器"></a>filter过滤器</h3><ul>
+<li><strong>过滤器拦截web访问url地址</strong>。 严格意义上讲，filter只是适用于web中，依赖于Servlet容器，利用<strong>Java的回调机制</strong>进行实现。</li>
+<li>Filter<strong>过滤器</strong>：和框架无关，可以控制最初的http请求，但是更细一点的类和方法控制不了。</li>
+<li>**过滤器可以拦截到方法的请求和响应(ServletRequest request, ServletResponse response)**，并对请求响应做出像响应的过滤操作，</li>
+<li>比如<strong>设置字符编码，鉴权操作</strong>等</li>
+</ul>
+<h3 id="Interceptor拦截器"><a href="#Interceptor拦截器" class="headerlink" title="Interceptor拦截器"></a>Interceptor拦截器</h3><ul>
+<li><strong>拦截器拦截以 .action结尾的url，拦截Action的访问</strong>。 Interfactor是基于<strong>Java的反射机制</strong>（APO思想）进行实现，不依赖Servlet容器。</li>
+<li><strong>拦截器可以在方法执行之前(preHandle)和方法执行之后(afterCompletion)进行操作，回调操作(postHandle)<strong>，</strong>可以获取执行的方法的名称</strong>，请求(HttpServletRequest)</li>
+<li>Interceptor：<strong>可以控制请求的控制器和方法</strong>，但<strong>控制不了请求方法里的参数(只能获取参数的名称，不能获取到参数的值)</strong></li>
+<li><strong>（</strong>用于处理页面提交的请求响应并进行处理，例如做国际化，做主题更换，过滤等）。</li>
+</ul>
+<h3 id="Spring-AOP拦截器"><a href="#Spring-AOP拦截器" class="headerlink" title="Spring AOP拦截器"></a>Spring AOP拦截器</h3><ul>
+<li><strong>只能拦截Spring管理Bean的访问（业务层Service）</strong>。 具体AOP详情参照 <a target="_blank" rel="noopener" href="https://blog.csdn.net/fly910905/article/details/84025425">Spring AOP：原理、 通知、连接点、切点、切面、表达式</a></li>
+<li>实际开发中，AOP常和事务结合：<a target="_blank" rel="noopener" href="https://blog.csdn.net/fly910905/article/details/83547744">Spring的事务管理:声明式事务管理(切面)</a></li>
+<li><strong>AOP操作可以对操作进行横向的拦截</strong>，最大的优势在于他可**以获取执行方法的参数( ProceedingJoinPoint.getArgs() )**，对方法进行统一的处理。</li>
+<li>Aspect : 可以自定义切入的点，有方法的参数，<strong>但是拿不到http请求，可以通过其他方式如RequestContextHolder</strong>获得( ServletRequestAttributes servletRequestAttributes&#x3D; (ServletRequestAttributes) RequestContextHolder.getRequestAttributes(); )。</li>
+<li>常见**使用日志，事务，请求参数安全验证</li>
+</ul>
+<h2 id="Spring-AOP-和-AspectJ-AOP-有什么区别？"><a href="#Spring-AOP-和-AspectJ-AOP-有什么区别？" class="headerlink" title="Spring AOP 和 AspectJ AOP 有什么区别？"></a>Spring AOP 和 AspectJ AOP 有什么区别？</h2><p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
+<p>Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ 相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
+<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比 Spring AOP 快很多。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2022/05/09/javaSpring%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94SpringCore/" title="javaSpring学习（二）——SpringCore">http://rshawshank.github.io/2022/05/09/javaSpring学习（二）——SpringCore/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/08/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="prev" title="java-maven学习（六）——单元测试">
+      <i class="fa fa-chevron-left"></i> java-maven学习（六）——单元测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/09/javaSpring%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94Spring%E4%BB%8B%E7%BB%8D/" rel="next" title="javaSpring学习（一）——Spring介绍">
+      javaSpring学习（一）——Spring介绍 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-IOC"><span class="nav-number">1.</span> <span class="nav-text">Spring IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC-x2F-DI"><span class="nav-number">1.1.</span> <span class="nav-text">IOC&#x2F;DI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%99%A8%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E5%92%8C-Setter%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.1.</span> <span class="nav-text">构造器依赖注入和 Setter方法注入的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IOC%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">IOC原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%98%85%E8%AF%BB"><span class="nav-number">1.3.</span> <span class="nav-text">相关阅读</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">2.</span> <span class="nav-text">Spring AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP%E4%B8%AD%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">AOP中的相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP%E5%8E%9F%E7%90%86%E7%90%86%E8%A7%A3"><span class="nav-number">2.2.</span> <span class="nav-text">AOP原理理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0AOP%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="nav-number">2.3.</span> <span class="nav-text">实现AOP的技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring%E5%AE%9E%E7%8E%B0AOP"><span class="nav-number">2.4.</span> <span class="nav-text">Spring实现AOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.5.</span> <span class="nav-text">AOP使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8filter%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8interceptor%E3%80%81%E5%92%8CAOP%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">2.6.</span> <span class="nav-text">过滤器filter、拦截器interceptor、和AOP的区别与联系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filter%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.6.1.</span> <span class="nav-text">filter过滤器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interceptor%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">2.6.2.</span> <span class="nav-text">Interceptor拦截器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-AOP%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">2.6.3.</span> <span class="nav-text">Spring AOP拦截器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-AOP-%E5%92%8C-AspectJ-AOP-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">2.7.</span> <span class="nav-text">Spring AOP 和 AspectJ AOP 有什么区别？</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
