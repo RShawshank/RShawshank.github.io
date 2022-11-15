@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="akka（二）——Actor模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="akka（二）——Actor模型">
+<meta property="og:url" content="http://rshawshank.github.io/2022/11/15/akka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Actor%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="akka（二）——Actor模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151508296.jpeg">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151058164.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151059063.png">
+<meta property="article:published_time" content="2022-11-15T10:54:47.000Z">
+<meta property="article:modified_time" content="2022-11-15T07:12:56.632Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="akka">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151508296.jpeg">
+
+<link rel="canonical" href="http://rshawshank.github.io/2022/11/15/akka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Actor%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>akka（二）——Actor模型 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">57</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/11/15/akka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Actor%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          akka（二）——Actor模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-15 10:54:47 / 修改时间：07:12:56" itemprop="dateCreated datePublished" datetime="2022-11-15T10:54:47Z">2022-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">akka（二）——Actor模型</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Actor模型"><a href="#Actor模型" class="headerlink" title="Actor模型"></a>Actor模型</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xingchong/p/16202290.html">Actor——Actor模型原理的通俗理解 (转) - 会飞的斧头 - 博客园 (cnblogs.com)</a></p>
+<p>actor模型的优点：</p>
+<p><strong>简化并发编程，提升程序性能</strong></p>
+<p>Akka是一个开发并发、容错和可伸缩应用的框架。它是Actor Model的一个实现，和Erlang的并发模型很像。在Actor模型中，所有的实体被认为是独立的actors。actors和其他actors通过发送异步消息通信。Actor模型的<strong>强大来自于异步</strong>。它也可以显式等待响应，这使得可以执行同步操作。但是，强烈不建议同步消息，因为它们限制了系统的伸缩性。每个actor有一个邮箱(mailbox)，它收到的消息存储在里面。另外，每一个actor维护自身单独的状态。</p>
+<p>一个Actors网络如下所示：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151508296.jpeg" alt="img"></p>
+<p>每个actor是一个单一的线程，它不断地从其邮箱中poll(拉取)消息，并且连续不断地处理。对于已经处理过的消息的结果，actor可以改变它自身的内部状态或者发送一个新消息或者孵化一个新的actor。尽管单个的actor是自然有序的，但一个包含若干个actor的系统却是高度并发的并且极具扩展性的。因为那些处理线程是所有actor之间共享的。这也是我们为什么不该在actor线程里调用可能导致阻塞的“调用”。因为这样的调用可能会阻塞该线程使得他们无法替其他actor处理消息。</p>
+<h2 id="如何满足现代分布式系统的需求？"><a href="#如何满足现代分布式系统的需求？" class="headerlink" title="如何满足现代分布式系统的需求？"></a>如何满足现代分布式系统的需求？</h2><p>使用 Actor 允许我们：</p>
+<ul>
+<li>在不使用锁的情况下强制封装。</li>
+<li>利用协同实体对信号作出反应、改变状态、相互发送信号的模型来驱动整个应用程序向前发展。</li>
+</ul>
+<h2 id="消息传递的使用避免了锁和阻塞"><a href="#消息传递的使用避免了锁和阻塞" class="headerlink" title="消息传递的使用避免了锁和阻塞"></a>消息传递的使用避免了锁和阻塞</h2><p>Actor 不调用方法，而是互相发送消息。<strong>发送消息不会将线程的执行权从发送方传输到目标方</strong>。Actor 可以发送一条消息并继续其他操作，而不是阻塞。因此，它可以在相同的时间内完成更多的工作。</p>
+<p>对于对象，当一个方法返回时，它释放对其执行线程的控制。在这方面，Actor 的行为非常类似于对象，它们对消息作出反应，并在完成当前消息的处理后执行返回。通过这种方式，Actor 实际上实现了我们设想中对象的执行方式：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151058164.png" alt="actors interact with each other by sending messages"></p>
+<p><strong>传递消息和调用方法之间的一个重要区别是消息没有返回值。</strong></p>
+<blockquote>
+<p>通过发送消息，Actor 将工作委托给另一个 Actor。正如我们在「<a target="_blank" rel="noopener" href="https://github.com/guobinhit/akka-guide/blob/master/articles/getting-started-guide/actors-motivation.md#%E8%B0%83%E7%94%A8%E6%A0%88%E7%9A%84%E5%81%87%E8%B1%A1">调用栈的假象</a>」中看到的，如果它期望返回值，那么发送 Actor 要么阻塞，要么在同一线程上执行另一个 Actor 的工作。相反，接收 Actor 在回复消息中传递结果。</p>
+</blockquote>
+<h2 id="Actor的消息处理过程"><a href="#Actor的消息处理过程" class="headerlink" title="Actor的消息处理过程"></a>Actor的消息处理过程</h2><p>许多actors同时运行，但是一个actor只能顺序地处理消息。</p>
+<blockquote>
+<p>如果其它actors发送了三条消息给一个actor，这个actor只能一次处理一条。所以如果你要并行处理3条消息，你需要把这条消息发给3个actors。</p>
+</blockquote>
+<p><strong>由于每个 Actor 最多只能同时处理一条消息，因此可以不同步地保留 Actor 的不变量。这是自动发生的</strong>，不使用锁：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211151059063.png" alt="messages do not invalidate invariants as they are processed sequentially"></p>
+<p>总之，当 Actor 收到消息时会发生以下情况：</p>
+<ol>
+<li>Actor 将消息添加到队列的末尾。</li>
+<li>如果 Actor 没有执行计划，则将其标记为准备执行。</li>
+<li>一个（隐藏的）调度程序实体获取 Actor 并开始执行它。</li>
+<li>Actor 从队列前面选择消息。</li>
+<li>Actor 修改内部状态，向其他 Actor 发送消息。</li>
+<li>Actor 没有预约（<code>unscheduled</code>）。</li>
+</ol>
+<p>为了完成上面的行为，Actors 有：</p>
+<ul>
+<li><strong>一个邮箱（消息结束的队列）</strong>。<ul>
+<li>消息异步地传送到actor，所以当actor正在处理消息时，新来的消息应该存储到别的地方。Mailbox就是这些消息存储的地方。</li>
+</ul>
+</li>
+<li><strong>一个行为（Actor 的状态、内部变量等）</strong>。<ul>
+<li>标志下条消息来时actor自身的状态</li>
+</ul>
+</li>
+<li>消息（表示信号的数据片段，类似于方法调用及其参数）。</li>
+<li>一个执行环境（一种机制，它让具有消息的 Actor 对其消息处理代码作出反应并调用它们）。</li>
+<li>一个地址。</li>
+</ul>
+<p>消息进入 Actor 邮箱。Actor 的行为描述了 Actor 如何响应消息（如发送更多消息和&#x2F;或更改状态）。执行环境协调线程池以完全透明地驱动所有这些操作。</p>
+<p>这是一个非常简单的模型，它解决了前面列举的问题：</p>
+<ul>
+<li>通过将执行与信号分离（方法调用转换执行权，消息传递不这样做），可以保留封装。</li>
+<li>不需要锁。修改 Actor 的内部状态只能通过消息来实现，一次处理一条消息，在试图保持不变时消除竞争。</li>
+<li>任何地方都没有使用锁，发送者也不会阻塞。数百万个 Actor 可以有效地安排在十几个线程上，从而充分发挥现代 CPU 的潜力。任务委托是 Actor 的天然执行方式。</li>
+<li>Actor 的状态是本地的而不是共享的，更改和数据通过消息传播，消息是映射到现代内存架构的实际工作方式。在许多情况下，这意味着只传输包含消息中数据的缓存线，同时将本地状态和数据缓存在原始核心上。相同的模型可以完全映射到远程通信中，其中状态保存在机器的 RAM 中，更改&#x2F;数据作为数据包在网络上传播。</li>
+</ul>
+<h2 id="Actor系统"><a href="#Actor系统" class="headerlink" title="Actor系统"></a>Actor系统</h2><p>一个Actor系统包含了所有存活的actors。它提供的共享服务包括调度、配置和日志等。Actor系统同时包含一个线程池，所有actor从这里获取线程。</p>
+<p>多个Actor系统可以在一台机器上共存。如果一个Actor系统通过RemoteActorRefProvider启动，它就可以被其他机器上的Actor系统发现。Actor系统能够自动识别消息是发送给本地机器还是远程机器的Actor系统。在本地通信的情况下，消息通过共享存储器高效的传输。在远程通信的情况下，消息通过网络栈发送。</p>
+<p>所有Actors都是继承来组织的。每个新创建的actor将其创建的actor视作父actor。<strong>继承被用来监督</strong>。每个父actor对自己的子actor负责监督。如果在一个子actor发生错误，父actor将会收到通知。如果这个父actor可以解决这个问题，它就重新启动这个子actor。如果这个错误父actor无法处理，它可以把这个错误传递给自己的父actor。</p>
+<h2 id="Actor处理错误情况"><a href="#Actor处理错误情况" class="headerlink" title="Actor处理错误情况"></a>Actor处理错误情况</h2><p>由于我们不再拥有在相互发送消息的 Actor 之间共享的调用栈，因此我们需要以不同的方式处理错误情况。我们需要考虑两种错误：</p>
+<ul>
+<li><p>第一种情况是，由于任务中的错误（通常是一些验证问题，如不存在的用户 ID），目标 Actor 上的委派任务失败。在这种情况下，由目标 Actor 封装的服务是完整的，只有任务本身是错误的。服务 Actor 应该用一条消息回复发送者，并显示错误情况。这里没有什么特别的，错误是域的一部分，因此<strong>错误也是普通消息</strong>。</p>
+</li>
+<li><p>第二种情况是当服务本身遇到内部故障时。Akka 要求所有 Actor 都被组织成一个树形的结构，即一个创造另一个 Actor 的 Actor 成为新 Actor 的父节点。这与操作系统将流程组织到树中的方式非常相似。就像处理过程一样，当一个 Actor 失败时，它的父 Actor 会得到通知，并且它可以对失败做出反应。另外，如果父 Actor 被停止，那么它的所有子 Actor 也将被递归地停止。这项服务称为<strong>监督</strong>，是 Akka 的核心概念。</p>
+</li>
+</ul>
+<p>一个监督者（父级节点）可以决定在某些类型的失败时重新启动其子 Actor，或者在其他失败时完全停止它们。子 Actor 永远不会默不作声地死去（除了进入一个无限循环之外），相反，他们要么失败，他们的父级可以对错误作出反应，要么他们被停止（在这种情况下，相关方会被自动通知）。总是有一个负责管理 Actor 的实体：它的父节点。从外部看不到重新启动：协作 Actor 可以在目标 Actor 重新启动时继续发送消息。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2022/11/15/akka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Actor%E6%A8%A1%E5%9E%8B/" title="akka（二）——Actor模型">http://rshawshank.github.io/2022/11/15/akka（二）——Actor模型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/akka/" rel="tag"><i class="fa fa-tag"></i> akka</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/14/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E4%BB%8B%E7%BB%8D/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/15/akka%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94Akka%E5%BA%93%E5%92%8C%E6%A8%A1%E5%9D%97%E6%A6%82%E8%BF%B0/" rel="next" title="akka（三）——Akka库和模块概述">
+      akka（三）——Akka库和模块概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Actor%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">Actor模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%BB%A1%E8%B6%B3%E7%8E%B0%E4%BB%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">如何满足现代分布式系统的需求？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%9A%84%E4%BD%BF%E7%94%A8%E9%81%BF%E5%85%8D%E4%BA%86%E9%94%81%E5%92%8C%E9%98%BB%E5%A1%9E"><span class="nav-number">1.2.</span> <span class="nav-text">消息传递的使用避免了锁和阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actor%E7%9A%84%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">Actor的消息处理过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actor%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.4.</span> <span class="nav-text">Actor系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actor%E5%A4%84%E7%90%86%E9%94%99%E8%AF%AF%E6%83%85%E5%86%B5"><span class="nav-number">1.5.</span> <span class="nav-text">Actor处理错误情况</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

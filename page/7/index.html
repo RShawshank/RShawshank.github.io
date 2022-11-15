@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,262 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/01/24/Algorithm-%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/24/Algorithm-%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Algorithm_字符匹配算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-24 15:19:31" itemprop="dateCreated datePublished" datetime="2021-01-24T15:19:31Z">2021-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>主要的关键点在于NEXT数组————<strong>最长公共前后缀</strong></p>
+<blockquote>
+<p>寻找前后缀的方法：</p>
+<ul>
+<li>找前缀时，要找除了最后一个字符的所有子串</li>
+<li>找后缀时，要找除了第一个字符的所有子串</li>
+</ul>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Getnext</span><span class="params">(<span class="type">int</span> next[],String t)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="type">int</span> j=<span class="number">0</span>,k=<span class="number">-1</span>;</span><br><span class="line">   next[<span class="number">0</span>]=<span class="number">-1</span>;</span><br><span class="line">   <span class="keyword">while</span>(j&lt;t.length<span class="number">-1</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">if</span>(k == <span class="number">-1</span> || t[j] == t[k])</span><br><span class="line">      &#123;</span><br><span class="line">         j++;k++;</span><br><span class="line">         next[j] = k;<span class="comment">//next[j] = k，表示当T[i] != P[j]时，j指针的下一个位置</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> k = next[k];</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当P[k] &#x3D;&#x3D; P[j]时，</p>
+<p>有next[j+1] &#x3D;&#x3D; next[j] + 1</p>
+<p><img src="https://i.loli.net/2021/01/25/EVDfQ1FRw3m4Tc5.png"></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/01/21/%E6%AF%95%E8%AE%BE%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/%E6%AF%95%E8%AE%BE%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">毕设笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-20 23:18:36" itemprop="dateCreated datePublished" datetime="2021-01-20T23:18:36Z">2021-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-10 06:24:26" itemprop="dateModified" datetime="2021-03-10T06:24:26Z">2021-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E8%AE%BE/" itemprop="url" rel="index"><span itemprop="name">毕设</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="SLAM（同步定位与建图）"><a href="#SLAM（同步定位与建图）" class="headerlink" title="SLAM（同步定位与建图）"></a>SLAM（同步定位与建图）</h1><h2 id="SLAM研究体系分类"><a href="#SLAM研究体系分类" class="headerlink" title="SLAM研究体系分类"></a>SLAM研究体系分类</h2><p><img src="https://i.loli.net/2021/01/20/nsHSh9uxEilfOKk.png" alt="SLAM研究体系分类"></p>
+<p>SLAM通常包括如下几个部分，特征提取，数据关联，状态估计，状态更新以及特征更新等。</p>
+<h2 id="SLAM的一般过程"><a href="#SLAM的一般过程" class="headerlink" title="SLAM的一般过程"></a>SLAM的一般过程</h2><p>SLAM的核心是EKF。EKF用于结合上述信息估计机器人准确位置。上述选取的特征一般称作地标。EKF将持续不断的对上述机器人位置和周围环境中地标位置进行估计。</p>
+<blockquote>
+<p>ekf，扩展卡尔曼滤波简称,太偏向物理方面了</p>
+</blockquote>
+<h3 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h3><ul>
+<li>slam的第一步需要通过测距单元获取机器人周围环境的信息。<ul>
+<li>具体的方式可以通过激光测距，或者在仿真的时候直接给出</li>
+</ul>
+</li>
+<li>机器人自身运动模型：机器人自身位置数据通过对机器人轮胎运行圈数的估计可以得到机器人自身位置的一个估计，其可以被看作EKF的初始估计数据<ul>
+<li>需要注意需要保证机器人自身位置数据与测距单元数据的同步性。为了保证其同步性，一般采用插值的方法对数据进行前处理</li>
+</ul>
+</li>
+<li>特征（即是地标）<ul>
+<li>地标是环境中易于观测和区分的特征<ul>
+<li>地标应该可以从不同的位置和角度观察得到</li>
+<li>地标应该是独一无二的，从而可以很容易的将底边从其他物体中分辨出来</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据关联"><a href="#数据关联" class="headerlink" title="数据关联"></a>数据关联</h3><p>是将不同时刻位置传感器提取到的地标信息进行关联的过程，也成为重观察过程。</p>
+<ul>
+<li>此处在仿真的时候，可以选择依赖或者不依赖先验知识，直接从图像序列中检测到运动目标，然后进行目标识别</li>
+</ul>
+<h1 id="路径规划"><a href="#路径规划" class="headerlink" title="路径规划"></a>路径规划</h1><p>所谓机器人的最优路径规划问题就是根据某个或某些优化准则，如工作代价最小，行走路径最短，行走时间最短等准则，在其工作空间中找到一条从起始点到目标点的能避开障碍物的最优路径。</p>
+<p>需要解决的问题分为下面三点：</p>
+<ul>
+<li>始于初始点止于目标点</li>
+<li>避开障碍</li>
+<li>尽可能优化路径</li>
+</ul>
+<h2 id="常见的路径规划"><a href="#常见的路径规划" class="headerlink" title="常见的路径规划"></a>常见的路径规划</h2><p>基于采样的方法、基于节点的方法、基于数学模型的算法、基于生物启发式的算法、和多融合算法。此处重点关注的是基于节点的方法。————可以采用学过的Dijkstra法、A*法</p>
+<blockquote>
+<p>A*法的介绍：也称为栅格法。</p>
+<ol>
+<li><p>通过下面这个函数来计算每个节点的优先级。<br>$$<br>f(n)&#x3D;g(n)+h(n)<br>$$<br>其中：</p>
+<ul>
+<li>f(n)是节点n的综合优先级。当我们选择下一个要遍历的节点时，我们总会选取综合优先级最高（值最小）的节点。</li>
+<li>g(n) 是节点n距离起点的代价。</li>
+<li>h(n)是节点n距离终点的预计代价，这也就是A*算法的启发函数。关于启发函数我们在下面详细讲解。</li>
+</ul>
+</li>
+<li><p>A*算法在运算过程中，每次从优先队列中选取f(n)值最小（优先级最高）的节点作为下一个待遍历的节点。</p>
+</li>
+<li><p>A*算法使用两个集合来表示待遍历的节点，与已经遍历过的节点，这通常称之为<code>open_set</code>和<code>close_set</code>。</p>
+</li>
+<li><p>&#96;&#96;&#96;</p>
+<ul>
+<li>初始化open_set和close_set；</li>
+<li>将起点加入open_set中，并设置优先级为0（优先级最高）；</li>
+<li>如果open_set不为空，则从open_set中选取优先级最高的节点n：<ul>
+<li>如果节点n为终点，则：<ul>
+<li>从终点开始逐步追踪parent节点，一直达到起点；</li>
+<li>返回找到的结果路径，算法结束；</li>
+</ul>
+</li>
+<li>如果节点n不是终点，则：<ul>
+<li>将节点n从open_set中删除，并加入close_set中；</li>
+<li>遍历节点n所有的邻近节点：<ul>
+<li>如果邻近节点m在close_set中，则：<ul>
+<li>跳过，选取下一个邻近节点</li>
+</ul>
+</li>
+<li>如果邻近节点m也不在open_set中，则：<ul>
+<li>设置节点m的parent为节点n</li>
+<li>计算节点m的优先级</li>
+<li>将节点m加入open_set中<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">5</span>. 启发函数</span><br><span class="line"></span><br><span class="line">   - Dijkstra算法就是启发函数h(<span class="built_in">n</span>)=<span class="number">0</span>时的A*算法</span><br><span class="line">   - 如果h(<span class="built_in">n</span>)始终小于等于节点<span class="built_in">n</span>到终点的代价，则A*算法保证一定能够找到最短路径。但是当h(<span class="built_in">n</span>)的值越小，算法将遍历越多的节点，也就导致算法越慢。</span><br><span class="line">   - 如果h(<span class="built_in">n</span>)完全等于节点<span class="built_in">n</span>到终点的代价，则A*算法将找到最佳路径，并且速度很快。</span><br><span class="line">   - 如果h(<span class="built_in">n</span>)的值比节点<span class="built_in">n</span>到终点的代价要大，则A*算法不能保证找到最短路径，不过此时会很快。</span><br><span class="line"></span><br><span class="line">   在一些情况，我们可能未必需要最短路径，而是希望能够尽快找到一个路径即可</span><br><span class="line"></span><br><span class="line">   这里我们的启发函数采用欧几里得距离：两个节点之间的直线距离</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+function heuristic(node) &#x3D;<br>  dx &#x3D; abs(node.x - goal.x)<br>  dy &#x3D; abs(node.y - goal.y)<br>  return D * sqrt(dx * dx + dy * dy)<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">A\*算法的变种：ARA*、D*、Field D*</span><br><span class="line"></span><br><span class="line">## A*算法的优化</span><br><span class="line"></span><br><span class="line">### 估值函数的改进h(n)</span><br><span class="line"></span><br><span class="line">![](https:<span class="comment">//i.loli.net/2021/01/21/bne26cT41qAd7fZ.png)</span></span><br><span class="line"></span><br><span class="line">### 估值函数中引入惩罚函数</span><br><span class="line"></span><br><span class="line">## 基于DWA的局部路径规划算法</span><br><span class="line"></span><br><span class="line">当移动机器人遇到动态的障碍物时，需要针对突然出现的物体有自主避障的能力--因此需要局部路径规划</span><br><span class="line"></span><br><span class="line">### DWA介绍</span><br><span class="line"></span><br><span class="line">[参考文章](https:<span class="comment">//blog.csdn.net/weixin_37835423/article/details/89683302)</span></span><br><span class="line"></span><br><span class="line">————动态窗口法</span><br><span class="line"></span><br><span class="line">其算法过程主要分为仿真获取机器人的运动轨迹、对轨迹进行评价选择最优轨迹两个主要过程，动态窗口表达的是仿真的运动轨迹数量有限，主要是因为机器人在较短的控制周期内只能达到一定的速度。</span><br><span class="line"></span><br><span class="line">#### 获取移动机器人速度样本</span><br><span class="line"></span><br><span class="line">对移动机器人的速度空间（v,w）[v表示的是线速度，w表示的是角速度]进行采用，通过建模对采样的速度进行轨迹预测，通过评价函数对预估的轨迹进行评价</span><br><span class="line"></span><br><span class="line">#### 生成运动轨迹</span><br><span class="line"></span><br><span class="line">根据速度样本确定运动轨迹，是简单运行学知识，主要注意的是用的仿真时间产生的样本还是仿真周期产生的样本。</span><br><span class="line"></span><br><span class="line">#### 针对轨迹进行评价并选取最优轨迹</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+oscillation_costs_ &#x2F;&#x2F;振荡代价函数，一旦速度发生振荡，直接丢弃速度样本<br>obstacle_costs_ &#x2F;&#x2F;障碍物代价函数，当轨迹进入障碍物区，直接丢弃当前轨迹样本<br>goal_costs_ &#x2F;&#x2F;目标代价函数，优先选择距离局部目标点近的轨迹<br>path_costs_ &#x2F;&#x2F;路径代价函数，优先选择贴近全局路径的轨迹</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<p>&#96;&#96;&#96;</p>
+<ul>
+<li>通过仿真轨迹将机器人轮廓映射到全局坐标系下，并对轮廓边上的代价值进行分析，选择最大的代价值作为障碍物代价，从而确定机器人是否会撞到障碍物</li>
+<li>首先根据全局路径与局部代价地图的边界确定局部目标点，然后依据局部目标点生成栅格地图，每个栅格处的值代表当前栅格到目标点的距离，对于障碍物栅格，直接置为到目标点的距离无穷远。最后再根据轨迹末端点处栅格的位置，直接通过索引在地图中获取该位置距目标点的距离，作为距目标点的代价。因此，目标代价函数的主要任务是生成栅格地图。</li>
+<li>该代价函数的实现原理与目标代价函数类似，只是该函数是以局部路径上的所有点作为起点向外膨胀来构建栅格地图，并且是以仿真轨迹上的所有点的距离值的和的平均值作为轨迹的代价值。</li>
+</ul>
+<h2 id="RRT算法"><a href="#RRT算法" class="headerlink" title="RRT算法"></a>RRT算法</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1479,709 +1735,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">数据库_并发控制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-05 11:14:28" itemprop="dateCreated datePublished" datetime="2020-06-05T11:14:28Z">2020-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="并发控制概述"><a href="#并发控制概述" class="headerlink" title="并发控制概述"></a>并发控制概述</h1><p>并发的背景：</p>
-<ul>
-<li>DBMS作为系统软件，对外提供数据访问服务</li>
-<li>多个用户同时访问一个数据库</li>
-<li>各种任务以事务为逻辑单位运行</li>
-<li>同一时间并发运行的事务数可达数百个</li>
-</ul>
-<h2 id="多个事务的运行过程"><a href="#多个事务的运行过程" class="headerlink" title="多个事务的运行过程"></a>多个事务的运行过程</h2><h3 id="串行执行"><a href="#串行执行" class="headerlink" title="串行执行"></a>串行执行</h3><p>——事务依次执行，且每个事务必须等待前一个事务结束后方能运行</p>
-<p>事务串行执行降低了系统资源利用率</p>
-<p>事务执行过程中会占用多种资源：</p>
-<ul>
-<li>CPU——比较、计算、统计等</li>
-<li>数据</li>
-<li>网络——收发指令和数据</li>
-</ul>
-<p>单个事务执行过程中部分资源可能处于空闲状态</p>
-<h3 id="并行执行"><a href="#并行执行" class="headerlink" title="并行执行"></a>并行执行</h3><ul>
-<li>单处理机——CPU时间片轮转，多道程序交替运行</li>
-<li>多CPU——并行处理技术，多种共享内存以及硬盘策略</li>
-</ul>
-<p>注意，数据是临界资源。在事务执行过程中，它所访问的数据集合应该在事务终止前是一致的、相容的</p>
-<h3 id="数据库事务并发带来的问题"><a href="#数据库事务并发带来的问题" class="headerlink" title="数据库事务并发带来的问题"></a>数据库事务并发带来的问题</h3><p>操作系统层面的并发控制手段：信号量<br>——保护对象明确、相对集中<br>——控制保护时间一般较短<br>——直接阻塞任务进程——信号量资源有限</p>
-<p>数据库事务并发控制：<br>——事务访问的数据对象及其范围相对灵活，一致性所涉及的范围更广。<br>——事务的执行一般包括一个读写操作的序列，时间相对比简单的应用程序变量操作要长。<br>——需要被保护的对象个数可能远多于信号量数目。<br>——事务的执行可能涉及DBMS的多个进程。</p>
-<h1 id="数据库系统中的并发错误"><a href="#数据库系统中的并发错误" class="headerlink" title="数据库系统中的并发错误"></a>数据库系统中的并发错误</h1><p>事务是数据库中并发控制的基本单位，事务处理需要保证事务的ACID特性，并发控制要能保证事务的隔离性和一致性。</p>
-<p>当多个用户&#x2F;进程&#x2F;线程同时对数据库进行操作时，会出现3种冲突情形：</p>
-<ol>
-<li>读-读，不存在任何问题</li>
-<li>读-写，有隔离性问题，可能遇到脏读（会读到未提交的数据） ，幻影读等。</li>
-<li>写-写，可能丢失更新</li>
-</ol>
-<p>要解决冲突，一种办法是是锁，即基于锁的并发控制，比如2PL，这种方式开销比较高，而且无法避免死锁。</p>
-<p>多版本并发控制（MVCC）是一种用来<strong>解决读-写冲突</strong>的无锁并发控制，也就是为事务分配单向增长的时间戳，为每个修改保存一个版本，版本与事务时间戳关联，读操作只读该事务开始前的数据库的快照。 这样在读操作不用阻塞写操作，写操作不用阻塞读操作的同时，避免了脏读和不可重复读</p>
-<p>乐观并发控制（OCC）是一种用来<strong>解决写-写冲突</strong>的无锁并发控制，认为事务间争用没有那么多，所以先进行修改，在提交事务前，检查一下事务开始后，有没有新提交改变，如果没有就提交，如果有就放弃并重试。乐观并发控制类似自选锁。乐观并发控制适用于低数据争用，写冲突比较少的环境。</p>
-<p>多版本并发控制可以结合基于锁的并发控制来解决写-写冲突，即MVCC+2PL，也可以结合乐观并发控制来解决写-写冲突。</p>
-<h1 id="基于封锁的并发控制"><a href="#基于封锁的并发控制" class="headerlink" title="基于封锁的并发控制"></a>基于封锁的并发控制</h1><h2 id="封锁概述"><a href="#封锁概述" class="headerlink" title="封锁概述"></a>封锁概述</h2><h3 id="封锁的基本思想"><a href="#封锁的基本思想" class="headerlink" title="封锁的基本思想"></a>封锁的基本思想</h3><p>封锁是数据库管理系统实现并发控制的一种重要技术。</p>
-<p>并发控制方法：<br>① 锁（Locking）——商用数据库典型方法<br>② 时间戳（timestamping）<br>③ 乐观（Optimistic）</p>
-<p>流程——事务在对某个数据对象（表、记录集合等）进行读写操作之前，先向系统发出封锁请求，系统依据请求对数据对象加锁，事务在获得锁后才能对数据对象进行操作，操作完成后在适当时机释放锁。</p>
-<p>约束——系统在事务持有锁期间提供与锁配套的对数据的并发访问保护功能，其他事务不能违反保护规则进行与锁互斥的数据操作。</p>
-<h3 id="封锁的基本规则"><a href="#封锁的基本规则" class="headerlink" title="封锁的基本规则"></a>封锁的基本规则</h3><p>① 将要存取的数据须先申请加锁；</p>
-<p>② 已被加锁的数据不能再加不相容锁；</p>
-<p>③ 一旦完成使用应“尽早”释放锁；</p>
-<p>④ 未被加锁的数据不可对之解锁。</p>
-<h3 id="申请的时机"><a href="#申请的时机" class="headerlink" title="申请的时机"></a>申请的时机</h3><p>①针对事务执行确定一个时间点整体申请<br>一次封锁——无死锁<br>锁开销少——用少数的锁保护较大范围的数据<br>并发度低——锁冲突概率增加。</p>
-<p>②针对单条SQL语句执行申请<br>申请频繁——申请时机增多<br>死锁——部分占有与互斥等待<br>锁开销大——被保护的数据对象集合增多<br>并发度高——细粒度的封锁</p>
-<h3 id="申请的方式"><a href="#申请的方式" class="headerlink" title="申请的方式"></a>申请的方式</h3><p>①显式</p>
-<p>应事务的要求直接加到数据对象上。</p>
-<p>②隐式</p>
-<p>该数据对象没有直接加锁，<strong>由于数据对象的多粒度层次结构中的上级结点加了锁，使该数据对象隐含的加了相同类型的锁</strong>。</p>
-<h2 id="封锁的类型"><a href="#封锁的类型" class="headerlink" title="封锁的类型"></a>封锁的类型</h2><p>基本的封锁类型有两种：排它锁（exclusive locks，简称X锁）和共享锁（share locks，简称S锁）。</p>
-<p>（1）排它锁（X锁）<br>若事务T持有数据D的X锁，则T可读、写D，其它任何事务不能再对D加任何锁，直至T释放该X锁。X锁一般用于写保护，可防止丢失更新。</p>
-<p>（2）共享锁（S锁）<br>若事务T持有数据D的S锁，则T仅能够对D进行读操作，其它事务仍可对D加S锁，但不可加X锁，直到T释放该S锁。</p>
-<p>S锁一般用于读操作，一旦施加S锁，读可共享，但其它事务不可改。</p>
-<blockquote>
-<p>除了X锁和S锁外，还有：</p>
-<p>更新锁（U锁）：</p>
-<p>意向锁：对多粒度树中的结点加意向锁，则说明该结点的下层结点正在被加锁；对任一结点加锁时，必须先对它的上层结点加意向锁。</p>
-<p><strong>注：当出现解锁时，就认定解锁任务开始，在解锁阶段不能再加任何锁</strong></p>
-</blockquote>
-<h2 id="封锁的协议"><a href="#封锁的协议" class="headerlink" title="封锁的协议"></a>封锁的协议</h2><p>在运用X锁和S锁时，针对并发操作不正确调度可能产生的丢失修改、不可重复读和读脏问题，可以通过三级封锁协议不同程度上解决这些问题。不同的封锁协议达到的系统一致性级别是不同的。</p>
-<blockquote>
-<p>发生丢失更新的过程</p>
-<p>T1读取库存后，T2也读取了同一个库存；T1修改库存，回写更新后的值；T2修改库存，也回写更新后的值。此时库存为T2回写的值，T1对库存的更新丢失。</p>
-<table>
-<thead>
-<tr>
-<th>顺序</th>
-<th>任务</th>
-<th>操作</th>
-<th>库存量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>１</td>
-<td>T1</td>
-<td>读库存量</td>
-<td>50</td>
-</tr>
-<tr>
-<td>２</td>
-<td>T2</td>
-<td>读库存量</td>
-<td>50</td>
-</tr>
-<tr>
-<td>３</td>
-<td>T1</td>
-<td>库存量&#x3D;50+100</td>
-<td></td>
-</tr>
-<tr>
-<td>４</td>
-<td>T2</td>
-<td>库存量&#x3D;50-40</td>
-<td></td>
-</tr>
-<tr>
-<td>５</td>
-<td>T1</td>
-<td>写库存量</td>
-<td>150</td>
-</tr>
-<tr>
-<td>６</td>
-<td>T2</td>
-<td>写库存量</td>
-<td>10</td>
-</tr>
-</tbody></table>
-<p> T2使用T1的“脏数据”的过程</p>
-<p>当T1和T2并发执行时，在T1对数据库更新的结果没有提交之前，T2使用了T1的结果，而在T2操作之后T1又回滚，这时引起的错误是T2读取了T1的“脏数据”。</p>
-<table>
-<thead>
-<tr>
-<th>顺序</th>
-<th>任务</th>
-<th>操作</th>
-<th>库存量</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>１</td>
-<td>T1</td>
-<td>读库存量</td>
-<td>50</td>
-</tr>
-<tr>
-<td>２</td>
-<td>T1</td>
-<td>库存量&#x3D;50+100</td>
-<td></td>
-</tr>
-<tr>
-<td>３</td>
-<td>T1</td>
-<td>写库存量</td>
-<td>150</td>
-</tr>
-<tr>
-<td>４</td>
-<td>T2</td>
-<td>读库存量</td>
-<td>150</td>
-</tr>
-<tr>
-<td>５</td>
-<td>T2</td>
-<td>库存量&#x3D;150-40</td>
-<td></td>
-</tr>
-<tr>
-<td>６</td>
-<td>T1</td>
-<td>ROLLBACK</td>
-<td>50</td>
-</tr>
-<tr>
-<td>７</td>
-<td>T2</td>
-<td>写库存量</td>
-<td>110</td>
-</tr>
-</tbody></table>
-<p> T1对数据A“不可重复读”的过程</p>
-<p>当T1读取数据A后，T2执行了对A的更新，当T1 再次读取数据A（希望与第一次是相同的值）时，得到的数据与前一次不同，这时引起的错误称为“不可重复读”。</p>
-<table>
-<thead>
-<tr>
-<th>顺序</th>
-<th>任务</th>
-<th>操作</th>
-<th>库存量A</th>
-<th>入库量B</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>１</td>
-<td>T1</td>
-<td>读A&#x3D;50</td>
-<td>50</td>
-<td>100</td>
-</tr>
-<tr>
-<td>2</td>
-<td>T1</td>
-<td>读B&#x3D;100</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td>T1</td>
-<td>求和&#x3D;50+100</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>４</td>
-<td>T2</td>
-<td>读B&#x3D;100</td>
-<td>50</td>
-<td></td>
-</tr>
-<tr>
-<td>５</td>
-<td>T2</td>
-<td>B←B×4</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>６</td>
-<td>T2</td>
-<td>回写B&#x3D;400</td>
-<td>50</td>
-<td>400</td>
-</tr>
-<tr>
-<td>７</td>
-<td>T1</td>
-<td>读A&#x3D;50</td>
-<td>50</td>
-<td></td>
-</tr>
-<tr>
-<td>8</td>
-<td>T1</td>
-<td>读B&#x3D;400</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>9</td>
-<td>T1</td>
-<td>和&#x3D;450（验算不对）</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-</blockquote>
-<p>（1）1级封锁协议<br>①策略<br>事务T在修改数据D之前须先对其加X锁，直到事务T结束（commit&#x2F;rollback）才释放。<br>②功能<br>防止<strong>丢失修改</strong>；并保证事务T是可恢复的。<br>③问题<br><strong>不能防止不可重复读和读“脏”数据</strong>。（仅对修改操作申请加锁保护，若读则不加锁）</p>
-<table>
-<thead>
-<tr>
-<th align="left">时间</th>
-<th align="left">T<del>A</del></th>
-<th align="left">D值</th>
-<th align="left">T<del>B</del></th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1</td>
-<td align="left">X lock D;<br>R(D)&#x3D;100<br></td>
-<td align="left">100</td>
-<td align="left"></td>
-<td>T<del>A</del>对X加锁成功后读D</td>
-</tr>
-<tr>
-<td align="left">2</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">X lock D<br />等待</td>
-<td>T<del>B</del>对X加锁未成功后等待</td>
-</tr>
-<tr>
-<td align="left">3</td>
-<td align="left">W(D)&#x3D;D-1</td>
-<td align="left">99</td>
-<td align="left">等待</td>
-<td>T<del>A</del>修改，D结果写回数据库并释放X锁</td>
-</tr>
-<tr>
-<td align="left">4</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">X lock D<br />R(D)&#x3D;99<br />W(D)&#x3D;D-1<br />COMMIT<br />Unlock D</td>
-<td>T<del>B</del>获得D的X锁读D得99（已更新后结果）将修改后D（98）写回数据库</td>
-</tr>
-</tbody></table>
-<p>上述过程发生了脏数据的读取</p>
-<p>1级封锁协议为什么不能避免读脏数据？</p>
-<p><strong>排它锁X只能防止该数据无法被其他线程写，不能防止该数据被其他线程读。在改数据和回滚的过程有可能会产生脏数据</strong></p>
-<p>（2）2级封锁协议<br>①策略<br>在1级封锁协议基础上，再<strong>加上约束</strong>：事务T在读取D之前<strong>先对D加S锁</strong>，读完后即可释放该S锁。[<strong>无需等待事务结束</strong>]<br>②功能<br>防止丢失修改；防止读脏。<br>③问题<br>不能防止读不可重复（读完即释放，重读可能其它事务对之修改）。</p>
-<table>
-<thead>
-<tr>
-<th align="left">时间</th>
-<th align="left">T<del>A</del></th>
-<th align="left">D值</th>
-<th align="left">T<del>B</del></th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1</td>
-<td align="left">X lock D;<br>R(D)&#x3D;100<br>W(D)&#x3D;X*2</td>
-<td align="left">100<br><br>200</td>
-<td align="left"></td>
-<td>T<del>A</del>对X加锁成功</td>
-</tr>
-<tr>
-<td align="left">2</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">S lock D<br />等待</td>
-<td>T<del>B</del>申请S锁T<del>A</del>未释放，T<del>B</del>等待</td>
-</tr>
-<tr>
-<td align="left">3</td>
-<td align="left">Rollback<br>(W(X)&#x3D;100)<br>UnLock D</td>
-<td align="left">100</td>
-<td align="left">等待</td>
-<td>T<del>A</del>因故撤消D值恢复为100</td>
-</tr>
-<tr>
-<td align="left">4</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">S lock D<br />R(D)&#x3D;100<br />Unlock D</td>
-<td>T<del>B</del>获得S锁T<del>B</del>读到值与数据库中值一致，防止了读脏</td>
-</tr>
-</tbody></table>
-<p>为什么二级封锁协议可以解决脏读？</p>
-<p>​       前面我们说过脏读产生的原因：因为B事务读取到了A事务修改过尚未提交的数据，根据二级封锁协议要求：读数据的时候必须加S锁，但因为A事务在修改的时候已经加了X锁，在X锁的基础上是不能加S锁的，所以B事务无法获取S锁，就会导致B事务无法读取A事务中正在操作的数据，从而避免了脏读的发生。</p>
-<p>（3）3级封锁协议<br>①策略<br>在1级封锁协议的基础上，加上约束：T读D前须先对D加S锁，<strong>直至T结束后才释放该S锁</strong>。<br>②功能<br><strong>防止丢失修改；防止读脏；防止不可重复读。</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">时间</th>
-<th align="left">T<del>A</del></th>
-<th align="left">数据库中A和B的值</th>
-<th align="left">T<del>B</del></th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1</td>
-<td align="left">S Lock A <br />R(A)&#x3D;50<br />S Lock B<br />R(B)&#x3D;100<br />C &#x3D; A+B</td>
-<td align="left">A：50<br />B：100<br /><br />A：50</td>
-<td align="left"></td>
-<td>T<del>A</del>对A、B加S锁T<del>B</del>不能再对之加X锁</td>
-</tr>
-<tr>
-<td align="left">2</td>
-<td align="left"></td>
-<td align="left"></td>
-<td align="left">X lock B<br />等待</td>
-<td>T<del>B</del>对B加X锁不成功T<del>B</del>等待</td>
-</tr>
-<tr>
-<td align="left">3</td>
-<td align="left">R(A)&#x3D;50<br />R(B)&#x3D;100<br />D&#x3D;A+B<br />COMMIT<br />Unlock A<br />Unlock B</td>
-<td align="left"><br /><br />A：50<br />B：100</td>
-<td align="left">等待</td>
-<td>T<del>B</del>等待T<del>B</del>重读A、B，结果相同</td>
-</tr>
-<tr>
-<td align="left">4</td>
-<td align="left"></td>
-<td align="left"><br /><br />A：50<br />B：200</td>
-<td align="left">X Lock B<br />R(B)&#x3D;100<br />W(B)：&#x3D;B*2<br />写回B&#x3D;200</td>
-<td>T<del>B</del>获得B的X锁</td>
-</tr>
-</tbody></table>
-<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605163246424.png"></p>
-<p>为什么三级封锁协议可以解决不可重复读？</p>
-<p>​       前面我们也说过了不可重复读产生的原因：是因为B事务读取到了A事务已经修改过的数据，导致前后两次读取的数据不一致。现根据三级封锁协议的要求：读取数据时必须加S锁，在S锁的基础上只能加S锁，不能加X锁，所以在B事务读取数据期间，A事务无法对数据进行修改，从而避免了不可重复读问题的发生。</p>
-<h1 id="并行调度的可串行性"><a href="#并行调度的可串行性" class="headerlink" title="并行调度的可串行性"></a>并行调度的可串行性</h1><h2 id="正确性标准"><a href="#正确性标准" class="headerlink" title="正确性标准"></a>正确性标准</h2><p>（1）单个事务</p>
-<p>——若非并发的执行，每个事务都能保证DB的正确性。<br>（丢失修改、不可重复读、读脏数据，都是因事务并发执行产生）</p>
-<p>（2）多个事务</p>
-<p>——多个事务以任意串行方式执行都能保证DB的正确性。<br>给定三个事务：T1，T2，T3。<br>T1→T2→T3         T1→T3→T2<br>T2→T1→T3         T2→T3→T1<br>T3→T1→T2          T3→T2→T1<br>显然，任何一事务并发执行时禁止其它事务执行，总能保证DB正确性，但不利于数据共享。</p>
-<p>（3）可串行化调度（serializable）</p>
-<p>——当且仅当多个事务并发执行的结果与这些事务按某一顺序串行执行的结果相同时，则该并发执行是可串行化的。<br>（可串行化调度是并发事务正确性的唯一准则）</p>
-<p>例：有两个事务TA，TB （A&#x3D;10, B&#x3D;2, C&#x3D;0）包含如下操作序列<br>TA：读B；A:&#x3D;B+1；写回A；<br>TB：读C；读A；B:&#x3D;A+C+1；写回B；<br>则至少可能有四种不同的调度方式:</p>
-<p>1、先执行TA，再执行TB——RA(B) WA(A) RB(C) RB(A) WB(B)；结果：A&#x3D;3，B&#x3D;4，C&#x3D;0。【串行调度】</p>
-<p>2、先执行TB，再执行TA——RB(C) RB(A) WB(B) RA(B) WA(A) ；执行结果：A&#x3D;12，B&#x3D;11，C&#x3D;0。【串行调度】</p>
-<p>3、两事务TA、TB按ti并发执行——RA(B) RB(C) RB(A) WA(A) WB(B)，结果为A&#x3D;3，B&#x3D;11。<br>按事务并发可串行化的正确性准则，该结果与TA、TB两个串行执行的任何结果（A&#x3D;3，B&#x3D;4；A&#x3D;12，B&#x3D;11）均不同，调度结果错误。【交错执行（不可串行化）调度】</p>
-<p>4、按ti交错执行——RA(B) RB(C)WA(A)RB(A)WB(B)；执行结果：A&#x3D;3，B&#x3D;4。该结果正确，因为与串行化调度1结果相同，该调度是可串行化调度【交错执行(可串行化)调度】</p>
-<h2 id="冲突可串行化调度"><a href="#冲突可串行化调度" class="headerlink" title="冲突可串行化调度"></a>冲突可串行化调度</h2><p>——可串行化调度的充分而非必要条件。</p>
-<p>冲突操作：① R<del>i</del>(x)与W<del>j</del>(x)    ② W<del>i</del>(x)与W<del>j</del>(x)</p>
-<p>操作顺序的交换（可交换、不可交换）<br>——不同事务的冲突操作和同一事务的两个操作均是不可交换的。否则可能使操作序列的结果不等价。</p>
-<p>在可交换的前提下，若干事务的操作交换顺序的结果是一个串行调度，则称这个调度是冲突可串行化的。</p>
-<blockquote>
-<p>前趋图：事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
-<p><strong>前驱图中不存在环路等价于调度是冲突可串行化的</strong></p>
-<p>冲突可串行化是可串行化的充分条件，不是必要条件。</p>
-</blockquote>
-<h1 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h1><p><a target="_blank" rel="noopener" href="https://draveness.me/database-concurrency-control/">参考文章</a></p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li><p>并发调度的正确性标准：可串行化调度<br>n个事务的可串行化调度结果——n！种<br>可串行化的充分而非必要条件：冲突可串行化调度</p>
-</li>
-<li><p>基于封锁的并发控制：一种基于悲观思想的并发控制策略。<br>操作之前先查验冲突</p>
-</li>
-<li><p>封锁如何解决并发错误？<br>三级封锁协议<br>排它锁保护写操作——写之前申请，事务结束时释放。<br>在此基础上，共享锁保护读操作——读之前申请，释放时机（读完之后即可释放、事务结束时释放）</p>
-</li>
-</ul>
-<h3 id="三级封锁协议的选择依据"><a href="#三级封锁协议的选择依据" class="headerlink" title="三级封锁协议的选择依据"></a>三级封锁协议的选择依据</h3><p>权衡并发调度正确性和并发性能。</p>
-<p>三级封锁协议的特点之一：事务对数据的保护时间较为统一，其中比较强的往往保护至事务结束。</p>
-<p>能否制定相对灵活的封锁协议?<br>                    两阶段封锁（TwoPhase Locking，简称2PL）</p>
-<h2 id="基于2PL协议的调度"><a href="#基于2PL协议的调度" class="headerlink" title="基于2PL协议的调度"></a>基于2PL协议的调度</h2><p>基本思想：所有事务必须分为两个阶段对数据项加锁和解锁，第一阶段称为扩展阶段（获得锁）；第二阶段称为收缩阶段（释放锁）。</p>
-<p>协议内容：<br>（1）在对任何数据读、写之前，须先获得该数据的锁；<br>（2）在释放一个封锁之后，该事务不能再申请任何其它锁。【正确的遵守2PL协议，所有获得锁均在释放锁之前。】</p>
-<p>两个阶段：事务的第一个释放锁操作成为分界线。<br>扩张和收缩：事务对数据资源的占有。</p>
-<p>两段锁协议的目标：实现并发事务调度的可串行化。</p>
-<h2 id="两阶段锁协议的特点"><a href="#两阶段锁协议的特点" class="headerlink" title="两阶段锁协议的特点"></a>两阶段锁协议的特点</h2><ul>
-<li>定理：若所有事务都遵守2PL协议，则对这些事务的所有并发调度策略都是可串行化的。</li>
-</ul>
-<p>证明思路：<br>前趋图——事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
-<p>前驱图中不存在环路等价于调度是冲突可串行化的</p>
-<p>反证法：假设调度遵循2PL协议但不是可串行化的 → 与2PL有矛盾。冲突可串行化是可串行化的充分而非必要条件。</p>
-<p>假如调度不是可串行化的，则该调度也不是冲突可串行化的。<br>① 假设某个遵守2PL的调度不是可串行化调度；<br>② 按Lock、UnLock操作中因锁不兼容而等待的关系构造调度的前趋图G；<br>③ 依据假设，若调度不是可串行化，则G中必存在环路，不妨设为：Ti<del>1</del>→Ti<del>2</del>→……→Tj<del>p</del>→Ti<del>n</del>。<br>④ 其中某个冲突事务获得锁的前提是前面的冲突事务释放锁，则意味着Ti<del>1</del>解锁后Tj<del>p</del>才能获得锁，之后在环路中又出现Ti<del>n</del>加锁；<br>⑤ “④”中Ti违反了两阶段锁协议。</p>
-<ul>
-<li>2PL协议是可串行化的充分条件，不是必要条件。</li>
-<li>遵守两阶段锁协议的事务可能<strong>发生死锁</strong>。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>两阶段锁（2PL）：通过事务的扩张和收缩阶段的划分，而不是提交之前与提交之时的这种划分，对锁的申请和释放流程进行的一种约定，从而实现了调度正确性的一个充分而非必要条件。</p>
-<h1 id="封锁的粒度"><a href="#封锁的粒度" class="headerlink" title="封锁的粒度"></a>封锁的粒度</h1><p>到目前为止我们都没有对不同粒度的锁进行讨论，一直以来我们都讨论的都是数据行锁，但是在有些时候我们希望将多个节点看做一个数据单元，使用锁直接将这个数据单元、表甚至数据库锁定起来。这个目标的实现需要我们在数据库中定义不同粒度的锁</p>
-<h2 id="多粒度封锁"><a href="#多粒度封锁" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h2><p>封锁的粒度：封锁对象的大小。<br>（1）逻辑单元：整个数据库、整个关系、整个索引、关系的分区、元组、索引项、属性值集、属性值。<br>（2）物理单元：数据页（块）、索引页</p>
-<p>封锁的粒度与数据库并发性能的两个重要因素相关：</p>
-<ul>
-<li>并发度</li>
-<li>并发控制的开销</li>
-</ul>
-<p>粒度小——封锁开销大——并发度大</p>
-<h3 id="封锁的基本策略"><a href="#封锁的基本策略" class="headerlink" title="封锁的基本策略"></a>封锁的基本策略</h3><p>宜采用多粒度封锁：<br>1）需常存取多个关系的大量元组时宜采用数据库级粒度；<br>2）需常存取单个关系大量元组时宜采用关系级；<br>3）需常存取单个关系少量元组时宜采用元组级；<br>4）一般不采用属性级；<br>5）物理单元一般不宜采用。</p>
-<p>多粒度锁提供了并发度和锁开销的权衡空间。</p>
-<h3 id="多粒度封锁-1"><a href="#多粒度封锁-1" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h3><p>隐式封锁：某个数据对象被显式封锁后，它在多粒度层次结构中的子孙节点被隐含的加了相同类型的锁</p>
-<h3 id="多粒度锁的冲突检测"><a href="#多粒度锁的冲突检测" class="headerlink" title="多粒度锁的冲突检测"></a>多粒度锁的冲突检测</h3><ul>
-<li><p>显式封锁和隐式封锁的效果是一样的，因此检查封锁冲突时需要对两种封锁的结果都进行检测。</p>
-<p>1）检查数据对象本身有无显式封锁与申请冲突；</p>
-<p>2）检查上级结点有无封锁与本结点冲突；</p>
-<p>3）检查后代结点有无封锁与本结点冲突</p>
-</li>
-</ul>
-<h2 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h2><p>对任一结点加锁时，必须先对它的上层结点加意向锁。如果对某个结点加意向锁，则表示该结点的某个子孙结点正在或拟施加相应的非意向锁。作用：提高系统并发度，减少加锁和解锁的开销。被商用产品广泛采用。</p>
-<p>意向锁的类型：<br>1）IS锁：表示某个子孙结点拟加S锁<br>2）IX锁：表示某个子孙结点拟加X锁<br>3）SIX锁：表示对结点施加S锁的同时，再施加IX锁&#x3D; S+IX</p>
-<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605173311455.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">数据库_查询处理和查询优化</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-05 11:13:49" itemprop="dateCreated datePublished" datetime="2020-06-05T11:13:49Z">2020-06-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="查询优化概述"><a href="#查询优化概述" class="headerlink" title="查询优化概述"></a>查询优化概述</h1><h2 id="查询优化的意义"><a href="#查询优化的意义" class="headerlink" title="查询优化的意义"></a>查询优化的意义</h2><ul>
-<li>SQL语言具有非过程化特性（必要性）</li>
-<li>查询操作存在多解性（可能性）<ul>
-<li>同一个查询语句可以用多种关系代数表达式来表达</li>
-<li>同一个关系操作可以有多种实现算法或存取路径<ul>
-<li>选择——全表扫描、索引扫描</li>
-<li>自然连接——嵌套循环、排序-合并、索引连接、哈希连接</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="自然连接算法"><a href="#自然连接算法" class="headerlink" title="自然连接算法"></a>自然连接算法</h2><p>自然连接：是一种特殊的等值连接，它要求两个关系进行比较的分量必须是相同的属性组，并且在结果集中将重复属性列去掉。</p>
-<blockquote>
-<p>1）等值连接必须要有等值的条件，当条件不同时连接的结果也不相同，两个关系可以没有相同的属性列<br>2）自然连接必须要有相同的属性列才能进行，即等值连接之后要去除相同的属性列</p>
-</blockquote>
-<h3 id="嵌套循环算法"><a href="#嵌套循环算法" class="headerlink" title="嵌套循环算法"></a>嵌套循环算法</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> row1 <span class="keyword">from</span> T1</span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">each</span> row2 <span class="keyword">from</span> T2</span><br><span class="line">	<span class="keyword">if</span> row2 match row1<span class="comment">//如果row2与row1满足连接条件</span></span><br><span class="line">	<span class="keyword">join</span> row1 <span class="keyword">and</span> row2 <span class="keyword">into</span> <span class="keyword">result</span><span class="comment">//加入结果集</span></span><br></pre></td></tr></table></figure>
-
-<p>简单通用，对参与连接的表没有要求。由于对内层循环表需要进行多次扫描。因此性能较差</p>
-<h3 id="排序—合并算法"><a href="#排序—合并算法" class="headerlink" title="排序—合并算法"></a>排序—合并算法</h3><p>访问次数：两张表都只会访问0次或1次。<br>驱动表是否有顺序：无。<br>是否要排序：是。<br>应用场景：当结果集已经排过序。</p>
-<p>如果A表的数据为（2,1,4,5,2）,B表的数据为(2,2,1,3,1) ,首先将A表和B表<strong>全扫描后排序</strong>，如下：</p>
-<p>​       A   B</p>
-<p>​       1   1</p>
-<p>​       2   1</p>
-<p>​       2   2</p>
-<p>​       4   2</p>
-<p>​       5   3</p>
-<p>因为没有驱动表，所以数据库会随机选择一张表驱动，如果选择了A扫描到1，然后扫描B，当扫描&#x3D;1的时候则匹配</p>
-<p>当扫描到B&#x3D;2时，再以B&#x3D;2为驱动扫描A表，不是从1开始扫，而是从2开始扫描，交替的进行扫描、关联。</p>
-<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/231153163007245.jpg"></p>
-<p>也就是说：不是从1重新开始扫，而是从2开始扫描</p>
-<p>对于左表和右表只需要扫描一遍，性能比较高。但是只适用于参与连接的表已经有序的情况。</p>
-<h3 id="索引连接算法"><a href="#索引连接算法" class="headerlink" title="索引连接算法"></a>索引连接算法</h3><p>利用索引提高连接过程中的元组查找速度，适用于参加连接的表的连接属性上存在索引的情况。</p>
-<h3 id="哈希连接算法"><a href="#哈希连接算法" class="headerlink" title="哈希连接算法"></a>哈希连接算法</h3><p>通过对连接属性进行哈希分桶来提高连接阶段的匹配速度，适用于较小的那个连接表在散列后能完全放入内存的情况</p>
-<p>简单的对于两个表来讲，hash-join就算讲两表中的小表（称S）作为hash表，然后去扫描另一个表(称M)的每一行数据，用得出来的行数据根据连接条件去映射建立的hash表，hash表是放在内存中的，这样可以很快的得到对应的S表与M表相匹配的行。</p>
-<blockquote>
-<p>对于结果集很大的情况，merge-join需要对其排序效率并不会很高，而nested loop join是一种嵌套循环的查询方式无疑更不适合大数据集的连接，而hash-join正是为处理这种棘手的查询方式而生，尤其是对于一个大表和一个小表的情况，基本上只需要将大小表扫描一遍就可以得出最终的结果集。</p>
-<p>　　不过hash-join<strong>只适用于等值连接</strong>，对于&gt;, &lt;, &lt;&#x3D;, &gt;&#x3D;这样的查询连接还是需要nested loop这种通用的连接算法来处理。如果连接key本来就是有序的或者需要排序，那么可能用merge-join的代价会比hash-join更小，此时merge-join会更有优势。</p>
-</blockquote>
-<h1 id="代数优化"><a href="#代数优化" class="headerlink" title="代数优化"></a>代数优化</h1><p>是指通过对关系代数表达式的等价变换来提高查询效率</p>
-<p>就是查询语法树的等价变形</p>
-<h2 id="变换五大核心规则"><a href="#变换五大核心规则" class="headerlink" title="变换五大核心规则"></a>变换五大核心规则</h2><p>总结起来就是: “(连接类的)交换律, 结合律; (投影和选择类的)串接律, (这两大类相互之间)分配率”</p>
-<ol>
-<li>E1 X E2 &#x3D; E2 X E1, (E1 X E2) X E3 &#x3D; E1 X (E2 X E3)做笛卡尔积, 多个表做连接是满足交换律和结合律的</li>
-<li>投影和选择的串接定律<br> 多层的投影可以取小的那个<br> 多层的选择可以取交集(其实也是那个范围比较小的), 这样能够把多次选择  多次表的扫描, 改成一次.</li>
-<li>选择与投影交换律: 选择和投影的顺序可以随意改变</li>
-<li>选择与笛卡尔积, 并, 自然连接, 差的分配律: 处在后面的选择, 可以与处在前面的二目运算顺序进行调整, 使得对相应的表先实施选择, 再实现连接等二目运算. 这个非常重要, 是先选择后进行二目运算的依据, 又名”选择提前”.</li>
-<li>选择与笛卡尔积, 并的分配率: 可以先投影, 也可以先进行二目运算</li>
-</ol>
-<blockquote>
-<p>导致关系数据库查询性能低的主要原因是笛卡尔积运算</p>
-<p>投影与交运算不属于关系代数表达式等价规则</p>
-</blockquote>
-<h2 id="经验性优化五大策略"><a href="#经验性优化五大策略" class="headerlink" title="经验性优化五大策略"></a>经验性优化五大策略</h2><p>其实就是”选择, 合并, 视图”</p>
-<ol>
-<li><strong>选择运算尽可能先做</strong>, 这是最最最最重要和基本的, 这样往往使得执行代价减少了几个数量级, 主要的原理就是<strong>选择运算能够大大降低参与连接的元组的行数</strong>, 使得连接生成的A•B结果也大大被缩小.</li>
-<li><strong>把选择和投影运算同时进行</strong>, 如果有若干投影和选择运算, 并且他们都是针对同一个表, 那么可以在扫描这个表的时候同时完成这些所有的运算, 以此避免重复扫描这张表.</li>
-<li>把投影与其前或者后的双目运算(笛卡尔积, 等值连接, 并集, 差集)结合起来, 也就是说, 没有必要为了选择出几个字段而单独再重新扫描全表.</li>
-<li>把某些选择和在它前面要执行的笛卡尔积结合起来成为一个连接运算(比如变成等值连接), 这是因为连接运算要比同样情形下的笛卡尔积节省很多时间.</li>
-</ol>
-<blockquote>
-<p>笛卡尔积先进行了 O(N • M)操作 生成了A•B大小的中间文件, 存盘, 然后读盘, 然后再按照where选择进行筛选得到结果; 对比之下, 等值连接运算也进行了O(N•M)操作, 但是还进行了筛选, 只生成比较小的中间文件, 存盘和读盘的是一个非常小的结果集合. 大大减少了IO开销.</p>
-</blockquote>
-<ol>
-<li>找出公共子表达式(一次计算, 多次使用). 比如很多的查询都基于某个公共部分, 那么可以定义一个公共子表达式, 然后先计算一次公共子表达式, 然后把它存盘, 供其他大量的表达式来使用. 我们定义视图其实就是在实践这种策略.</li>
-</ol>
-<h1 id="物理优化"><a href="#物理优化" class="headerlink" title="物理优化"></a>物理优化</h1><h2 id="基于经验规则的优化"><a href="#基于经验规则的优化" class="headerlink" title="基于经验规则的优化"></a>基于经验规则的优化</h2><ul>
-<li><p><strong>对于小的表, 直接全表扫描, 即使列上有索引.</strong></p>
-</li>
-<li><p>对于大的表：</p>
-<ul>
-<li>如果是选择条件涉及主键, 那么使用主键索引(MySQL等主流关系数据库都会对主键建立索引);</li>
-<li>如果不是涉及主键：<ul>
-<li>如果是等值查询, 列上有索引, 就使用索引; </li>
-<li>如果非等值查询, 而是范围值查询, 那么范围&lt;&#x3D;10%用索引, 范围比较大的, 直接全表扫描.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>And 和 OR: </p>
-<ul>
-<li>AND连接的, 优先考虑使用索引; </li>
-<li>OR连接的, 优先考虑使用顺序扫描, 毕竟OR可能性非常多.</li>
-</ul>
-</li>
-<li><p>连接操作:</p>
-<ul>
-<li>如果两个表都按照连接属性排序, 用sort-merge算法</li>
-<li>如果其中一个表在连接属性上有索引,采用索引连接算法; </li>
-<li>如果啥都没有, 对小的表建立哈希表, 使用hash join方法; 或者使用基本的嵌套循环, 不过外层循环(i循环)使用小表, 这样能稍微减小代价.</li>
-</ul>
-</li>
-</ul>
-<h2 id="基于代价的优化"><a href="#基于代价的优化" class="headerlink" title="基于代价的优化"></a>基于代价的优化</h2><p>基于代价的优化需要依赖数据库表的各种”情报”, 来计算出不同方案的代价, 从中选择最优的.<br> 这些信息(meta info)包括:</p>
-<ol>
-<li>对每个表来说:<br> 表的元组行数 N,<br> 元组的长度, 即列的维度数目 P,<br> 表占用的block数目 B,<br> 表占用的溢出块的块数 BO,</li>
-<li>对表中的每个列,<br> 该列的不同值的个数 k<br> 列的最大值, 最小值max, min<br> 列上有什么类型的索引 index: 按照实现方式有B+, Hash, Cluster &#x2F; 按照类型来说有普通索引, 唯一索引, 主键索引, 聚集索引<br> 列上的数值分布情况 (直方图)</li>
-</ol>
-<p>那么对于不同情况, 我们有如下的代价估算:</p>
-<ol>
-<li>全表扫描 cost &#x3D; B</li>
-<li>有索引的扫描<br> 如果选择条件是key &#x3D; value, 能适用唯一索引: L + 1<br> 如果选择条件是attr &#x3D; value, 能使用普通索引: L + S (可能有S个元组满足)<br> 如果条件是范围类的, 比如&gt;, &lt;, between A and B, 那么基本上就是接近全表扫描B;</li>
-<li>连接算法的代价<br> 如果用嵌套循环: 读入Capacity-1块B[a], 遍历连接b表所有B[b], 再换下一批B[a], 直到a表结束. 所以, cost &#x3D; B[a] + ( B[a]&#x2F;(C-1) ) • B[b] &#x3D; a表IO次数 + b表IO次数, 假如要生成中间文件的话, 那么还得加上存下所有连接好的元组的磁盘IO开销.</li>
-</ol>
-<p>如果用sort-merge: cost &#x3D; B[a] + B[b], 如果要把中间结果写入外存, 那么还要加上存下所有连接好的元组的磁盘IO开销, 这个开销和上面嵌套循环的是一样的.<br> 假如表本身没有排序, 那么排序的代价是B[a]logB[a] + B[b]logB[b]</p>
-<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
-<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.icourse163.org/course/RUC-1001655006">数据库系统概论（高级篇）</a></li>
-<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.jb51.net/article/33535.htm">脚本之家: SQL语句的各个关键字的解析过程详细总结</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2247,7 +1804,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

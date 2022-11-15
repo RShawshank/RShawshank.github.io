@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,705 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" class="post-title-link" itemprop="url">数据库_并发控制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-05 11:14:28" itemprop="dateCreated datePublished" datetime="2020-06-05T11:14:28Z">2020-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="并发控制概述"><a href="#并发控制概述" class="headerlink" title="并发控制概述"></a>并发控制概述</h1><p>并发的背景：</p>
+<ul>
+<li>DBMS作为系统软件，对外提供数据访问服务</li>
+<li>多个用户同时访问一个数据库</li>
+<li>各种任务以事务为逻辑单位运行</li>
+<li>同一时间并发运行的事务数可达数百个</li>
+</ul>
+<h2 id="多个事务的运行过程"><a href="#多个事务的运行过程" class="headerlink" title="多个事务的运行过程"></a>多个事务的运行过程</h2><h3 id="串行执行"><a href="#串行执行" class="headerlink" title="串行执行"></a>串行执行</h3><p>——事务依次执行，且每个事务必须等待前一个事务结束后方能运行</p>
+<p>事务串行执行降低了系统资源利用率</p>
+<p>事务执行过程中会占用多种资源：</p>
+<ul>
+<li>CPU——比较、计算、统计等</li>
+<li>数据</li>
+<li>网络——收发指令和数据</li>
+</ul>
+<p>单个事务执行过程中部分资源可能处于空闲状态</p>
+<h3 id="并行执行"><a href="#并行执行" class="headerlink" title="并行执行"></a>并行执行</h3><ul>
+<li>单处理机——CPU时间片轮转，多道程序交替运行</li>
+<li>多CPU——并行处理技术，多种共享内存以及硬盘策略</li>
+</ul>
+<p>注意，数据是临界资源。在事务执行过程中，它所访问的数据集合应该在事务终止前是一致的、相容的</p>
+<h3 id="数据库事务并发带来的问题"><a href="#数据库事务并发带来的问题" class="headerlink" title="数据库事务并发带来的问题"></a>数据库事务并发带来的问题</h3><p>操作系统层面的并发控制手段：信号量<br>——保护对象明确、相对集中<br>——控制保护时间一般较短<br>——直接阻塞任务进程——信号量资源有限</p>
+<p>数据库事务并发控制：<br>——事务访问的数据对象及其范围相对灵活，一致性所涉及的范围更广。<br>——事务的执行一般包括一个读写操作的序列，时间相对比简单的应用程序变量操作要长。<br>——需要被保护的对象个数可能远多于信号量数目。<br>——事务的执行可能涉及DBMS的多个进程。</p>
+<h1 id="数据库系统中的并发错误"><a href="#数据库系统中的并发错误" class="headerlink" title="数据库系统中的并发错误"></a>数据库系统中的并发错误</h1><p>事务是数据库中并发控制的基本单位，事务处理需要保证事务的ACID特性，并发控制要能保证事务的隔离性和一致性。</p>
+<p>当多个用户&#x2F;进程&#x2F;线程同时对数据库进行操作时，会出现3种冲突情形：</p>
+<ol>
+<li>读-读，不存在任何问题</li>
+<li>读-写，有隔离性问题，可能遇到脏读（会读到未提交的数据） ，幻影读等。</li>
+<li>写-写，可能丢失更新</li>
+</ol>
+<p>要解决冲突，一种办法是是锁，即基于锁的并发控制，比如2PL，这种方式开销比较高，而且无法避免死锁。</p>
+<p>多版本并发控制（MVCC）是一种用来<strong>解决读-写冲突</strong>的无锁并发控制，也就是为事务分配单向增长的时间戳，为每个修改保存一个版本，版本与事务时间戳关联，读操作只读该事务开始前的数据库的快照。 这样在读操作不用阻塞写操作，写操作不用阻塞读操作的同时，避免了脏读和不可重复读</p>
+<p>乐观并发控制（OCC）是一种用来<strong>解决写-写冲突</strong>的无锁并发控制，认为事务间争用没有那么多，所以先进行修改，在提交事务前，检查一下事务开始后，有没有新提交改变，如果没有就提交，如果有就放弃并重试。乐观并发控制类似自选锁。乐观并发控制适用于低数据争用，写冲突比较少的环境。</p>
+<p>多版本并发控制可以结合基于锁的并发控制来解决写-写冲突，即MVCC+2PL，也可以结合乐观并发控制来解决写-写冲突。</p>
+<h1 id="基于封锁的并发控制"><a href="#基于封锁的并发控制" class="headerlink" title="基于封锁的并发控制"></a>基于封锁的并发控制</h1><h2 id="封锁概述"><a href="#封锁概述" class="headerlink" title="封锁概述"></a>封锁概述</h2><h3 id="封锁的基本思想"><a href="#封锁的基本思想" class="headerlink" title="封锁的基本思想"></a>封锁的基本思想</h3><p>封锁是数据库管理系统实现并发控制的一种重要技术。</p>
+<p>并发控制方法：<br>① 锁（Locking）——商用数据库典型方法<br>② 时间戳（timestamping）<br>③ 乐观（Optimistic）</p>
+<p>流程——事务在对某个数据对象（表、记录集合等）进行读写操作之前，先向系统发出封锁请求，系统依据请求对数据对象加锁，事务在获得锁后才能对数据对象进行操作，操作完成后在适当时机释放锁。</p>
+<p>约束——系统在事务持有锁期间提供与锁配套的对数据的并发访问保护功能，其他事务不能违反保护规则进行与锁互斥的数据操作。</p>
+<h3 id="封锁的基本规则"><a href="#封锁的基本规则" class="headerlink" title="封锁的基本规则"></a>封锁的基本规则</h3><p>① 将要存取的数据须先申请加锁；</p>
+<p>② 已被加锁的数据不能再加不相容锁；</p>
+<p>③ 一旦完成使用应“尽早”释放锁；</p>
+<p>④ 未被加锁的数据不可对之解锁。</p>
+<h3 id="申请的时机"><a href="#申请的时机" class="headerlink" title="申请的时机"></a>申请的时机</h3><p>①针对事务执行确定一个时间点整体申请<br>一次封锁——无死锁<br>锁开销少——用少数的锁保护较大范围的数据<br>并发度低——锁冲突概率增加。</p>
+<p>②针对单条SQL语句执行申请<br>申请频繁——申请时机增多<br>死锁——部分占有与互斥等待<br>锁开销大——被保护的数据对象集合增多<br>并发度高——细粒度的封锁</p>
+<h3 id="申请的方式"><a href="#申请的方式" class="headerlink" title="申请的方式"></a>申请的方式</h3><p>①显式</p>
+<p>应事务的要求直接加到数据对象上。</p>
+<p>②隐式</p>
+<p>该数据对象没有直接加锁，<strong>由于数据对象的多粒度层次结构中的上级结点加了锁，使该数据对象隐含的加了相同类型的锁</strong>。</p>
+<h2 id="封锁的类型"><a href="#封锁的类型" class="headerlink" title="封锁的类型"></a>封锁的类型</h2><p>基本的封锁类型有两种：排它锁（exclusive locks，简称X锁）和共享锁（share locks，简称S锁）。</p>
+<p>（1）排它锁（X锁）<br>若事务T持有数据D的X锁，则T可读、写D，其它任何事务不能再对D加任何锁，直至T释放该X锁。X锁一般用于写保护，可防止丢失更新。</p>
+<p>（2）共享锁（S锁）<br>若事务T持有数据D的S锁，则T仅能够对D进行读操作，其它事务仍可对D加S锁，但不可加X锁，直到T释放该S锁。</p>
+<p>S锁一般用于读操作，一旦施加S锁，读可共享，但其它事务不可改。</p>
+<blockquote>
+<p>除了X锁和S锁外，还有：</p>
+<p>更新锁（U锁）：</p>
+<p>意向锁：对多粒度树中的结点加意向锁，则说明该结点的下层结点正在被加锁；对任一结点加锁时，必须先对它的上层结点加意向锁。</p>
+<p><strong>注：当出现解锁时，就认定解锁任务开始，在解锁阶段不能再加任何锁</strong></p>
+</blockquote>
+<h2 id="封锁的协议"><a href="#封锁的协议" class="headerlink" title="封锁的协议"></a>封锁的协议</h2><p>在运用X锁和S锁时，针对并发操作不正确调度可能产生的丢失修改、不可重复读和读脏问题，可以通过三级封锁协议不同程度上解决这些问题。不同的封锁协议达到的系统一致性级别是不同的。</p>
+<blockquote>
+<p>发生丢失更新的过程</p>
+<p>T1读取库存后，T2也读取了同一个库存；T1修改库存，回写更新后的值；T2修改库存，也回写更新后的值。此时库存为T2回写的值，T1对库存的更新丢失。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>２</td>
+<td>T2</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>３</td>
+<td>T1</td>
+<td>库存量&#x3D;50+100</td>
+<td></td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>库存量&#x3D;50-40</td>
+<td></td>
+</tr>
+<tr>
+<td>５</td>
+<td>T1</td>
+<td>写库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>６</td>
+<td>T2</td>
+<td>写库存量</td>
+<td>10</td>
+</tr>
+</tbody></table>
+<p> T2使用T1的“脏数据”的过程</p>
+<p>当T1和T2并发执行时，在T1对数据库更新的结果没有提交之前，T2使用了T1的结果，而在T2操作之后T1又回滚，这时引起的错误是T2读取了T1的“脏数据”。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读库存量</td>
+<td>50</td>
+</tr>
+<tr>
+<td>２</td>
+<td>T1</td>
+<td>库存量&#x3D;50+100</td>
+<td></td>
+</tr>
+<tr>
+<td>３</td>
+<td>T1</td>
+<td>写库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>读库存量</td>
+<td>150</td>
+</tr>
+<tr>
+<td>５</td>
+<td>T2</td>
+<td>库存量&#x3D;150-40</td>
+<td></td>
+</tr>
+<tr>
+<td>６</td>
+<td>T1</td>
+<td>ROLLBACK</td>
+<td>50</td>
+</tr>
+<tr>
+<td>７</td>
+<td>T2</td>
+<td>写库存量</td>
+<td>110</td>
+</tr>
+</tbody></table>
+<p> T1对数据A“不可重复读”的过程</p>
+<p>当T1读取数据A后，T2执行了对A的更新，当T1 再次读取数据A（希望与第一次是相同的值）时，得到的数据与前一次不同，这时引起的错误称为“不可重复读”。</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>任务</th>
+<th>操作</th>
+<th>库存量A</th>
+<th>入库量B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>１</td>
+<td>T1</td>
+<td>读A&#x3D;50</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T1</td>
+<td>读B&#x3D;100</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>T1</td>
+<td>求和&#x3D;50+100</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>４</td>
+<td>T2</td>
+<td>读B&#x3D;100</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>５</td>
+<td>T2</td>
+<td>B←B×4</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>６</td>
+<td>T2</td>
+<td>回写B&#x3D;400</td>
+<td>50</td>
+<td>400</td>
+</tr>
+<tr>
+<td>７</td>
+<td>T1</td>
+<td>读A&#x3D;50</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>T1</td>
+<td>读B&#x3D;400</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>T1</td>
+<td>和&#x3D;450（验算不对）</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>（1）1级封锁协议<br>①策略<br>事务T在修改数据D之前须先对其加X锁，直到事务T结束（commit&#x2F;rollback）才释放。<br>②功能<br>防止<strong>丢失修改</strong>；并保证事务T是可恢复的。<br>③问题<br><strong>不能防止不可重复读和读“脏”数据</strong>。（仅对修改操作申请加锁保护，若读则不加锁）</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">D值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">X lock D;<br>R(D)&#x3D;100<br></td>
+<td align="left">100</td>
+<td align="left"></td>
+<td>T<del>A</del>对X加锁成功后读D</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock D<br />等待</td>
+<td>T<del>B</del>对X加锁未成功后等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">W(D)&#x3D;D-1</td>
+<td align="left">99</td>
+<td align="left">等待</td>
+<td>T<del>A</del>修改，D结果写回数据库并释放X锁</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock D<br />R(D)&#x3D;99<br />W(D)&#x3D;D-1<br />COMMIT<br />Unlock D</td>
+<td>T<del>B</del>获得D的X锁读D得99（已更新后结果）将修改后D（98）写回数据库</td>
+</tr>
+</tbody></table>
+<p>上述过程发生了脏数据的读取</p>
+<p>1级封锁协议为什么不能避免读脏数据？</p>
+<p><strong>排它锁X只能防止该数据无法被其他线程写，不能防止该数据被其他线程读。在改数据和回滚的过程有可能会产生脏数据</strong></p>
+<p>（2）2级封锁协议<br>①策略<br>在1级封锁协议基础上，再<strong>加上约束</strong>：事务T在读取D之前<strong>先对D加S锁</strong>，读完后即可释放该S锁。[<strong>无需等待事务结束</strong>]<br>②功能<br>防止丢失修改；防止读脏。<br>③问题<br>不能防止读不可重复（读完即释放，重读可能其它事务对之修改）。</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">D值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">X lock D;<br>R(D)&#x3D;100<br>W(D)&#x3D;X*2</td>
+<td align="left">100<br><br>200</td>
+<td align="left"></td>
+<td>T<del>A</del>对X加锁成功</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">S lock D<br />等待</td>
+<td>T<del>B</del>申请S锁T<del>A</del>未释放，T<del>B</del>等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">Rollback<br>(W(X)&#x3D;100)<br>UnLock D</td>
+<td align="left">100</td>
+<td align="left">等待</td>
+<td>T<del>A</del>因故撤消D值恢复为100</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">S lock D<br />R(D)&#x3D;100<br />Unlock D</td>
+<td>T<del>B</del>获得S锁T<del>B</del>读到值与数据库中值一致，防止了读脏</td>
+</tr>
+</tbody></table>
+<p>为什么二级封锁协议可以解决脏读？</p>
+<p>​       前面我们说过脏读产生的原因：因为B事务读取到了A事务修改过尚未提交的数据，根据二级封锁协议要求：读数据的时候必须加S锁，但因为A事务在修改的时候已经加了X锁，在X锁的基础上是不能加S锁的，所以B事务无法获取S锁，就会导致B事务无法读取A事务中正在操作的数据，从而避免了脏读的发生。</p>
+<p>（3）3级封锁协议<br>①策略<br>在1级封锁协议的基础上，加上约束：T读D前须先对D加S锁，<strong>直至T结束后才释放该S锁</strong>。<br>②功能<br><strong>防止丢失修改；防止读脏；防止不可重复读。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">T<del>A</del></th>
+<th align="left">数据库中A和B的值</th>
+<th align="left">T<del>B</del></th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left">S Lock A <br />R(A)&#x3D;50<br />S Lock B<br />R(B)&#x3D;100<br />C &#x3D; A+B</td>
+<td align="left">A：50<br />B：100<br /><br />A：50</td>
+<td align="left"></td>
+<td>T<del>A</del>对A、B加S锁T<del>B</del>不能再对之加X锁</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">X lock B<br />等待</td>
+<td>T<del>B</del>对B加X锁不成功T<del>B</del>等待</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">R(A)&#x3D;50<br />R(B)&#x3D;100<br />D&#x3D;A+B<br />COMMIT<br />Unlock A<br />Unlock B</td>
+<td align="left"><br /><br />A：50<br />B：100</td>
+<td align="left">等待</td>
+<td>T<del>B</del>等待T<del>B</del>重读A、B，结果相同</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left"><br /><br />A：50<br />B：200</td>
+<td align="left">X Lock B<br />R(B)&#x3D;100<br />W(B)：&#x3D;B*2<br />写回B&#x3D;200</td>
+<td>T<del>B</del>获得B的X锁</td>
+</tr>
+</tbody></table>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605163246424.png"></p>
+<p>为什么三级封锁协议可以解决不可重复读？</p>
+<p>​       前面我们也说过了不可重复读产生的原因：是因为B事务读取到了A事务已经修改过的数据，导致前后两次读取的数据不一致。现根据三级封锁协议的要求：读取数据时必须加S锁，在S锁的基础上只能加S锁，不能加X锁，所以在B事务读取数据期间，A事务无法对数据进行修改，从而避免了不可重复读问题的发生。</p>
+<h1 id="并行调度的可串行性"><a href="#并行调度的可串行性" class="headerlink" title="并行调度的可串行性"></a>并行调度的可串行性</h1><h2 id="正确性标准"><a href="#正确性标准" class="headerlink" title="正确性标准"></a>正确性标准</h2><p>（1）单个事务</p>
+<p>——若非并发的执行，每个事务都能保证DB的正确性。<br>（丢失修改、不可重复读、读脏数据，都是因事务并发执行产生）</p>
+<p>（2）多个事务</p>
+<p>——多个事务以任意串行方式执行都能保证DB的正确性。<br>给定三个事务：T1，T2，T3。<br>T1→T2→T3         T1→T3→T2<br>T2→T1→T3         T2→T3→T1<br>T3→T1→T2          T3→T2→T1<br>显然，任何一事务并发执行时禁止其它事务执行，总能保证DB正确性，但不利于数据共享。</p>
+<p>（3）可串行化调度（serializable）</p>
+<p>——当且仅当多个事务并发执行的结果与这些事务按某一顺序串行执行的结果相同时，则该并发执行是可串行化的。<br>（可串行化调度是并发事务正确性的唯一准则）</p>
+<p>例：有两个事务TA，TB （A&#x3D;10, B&#x3D;2, C&#x3D;0）包含如下操作序列<br>TA：读B；A:&#x3D;B+1；写回A；<br>TB：读C；读A；B:&#x3D;A+C+1；写回B；<br>则至少可能有四种不同的调度方式:</p>
+<p>1、先执行TA，再执行TB——RA(B) WA(A) RB(C) RB(A) WB(B)；结果：A&#x3D;3，B&#x3D;4，C&#x3D;0。【串行调度】</p>
+<p>2、先执行TB，再执行TA——RB(C) RB(A) WB(B) RA(B) WA(A) ；执行结果：A&#x3D;12，B&#x3D;11，C&#x3D;0。【串行调度】</p>
+<p>3、两事务TA、TB按ti并发执行——RA(B) RB(C) RB(A) WA(A) WB(B)，结果为A&#x3D;3，B&#x3D;11。<br>按事务并发可串行化的正确性准则，该结果与TA、TB两个串行执行的任何结果（A&#x3D;3，B&#x3D;4；A&#x3D;12，B&#x3D;11）均不同，调度结果错误。【交错执行（不可串行化）调度】</p>
+<p>4、按ti交错执行——RA(B) RB(C)WA(A)RB(A)WB(B)；执行结果：A&#x3D;3，B&#x3D;4。该结果正确，因为与串行化调度1结果相同，该调度是可串行化调度【交错执行(可串行化)调度】</p>
+<h2 id="冲突可串行化调度"><a href="#冲突可串行化调度" class="headerlink" title="冲突可串行化调度"></a>冲突可串行化调度</h2><p>——可串行化调度的充分而非必要条件。</p>
+<p>冲突操作：① R<del>i</del>(x)与W<del>j</del>(x)    ② W<del>i</del>(x)与W<del>j</del>(x)</p>
+<p>操作顺序的交换（可交换、不可交换）<br>——不同事务的冲突操作和同一事务的两个操作均是不可交换的。否则可能使操作序列的结果不等价。</p>
+<p>在可交换的前提下，若干事务的操作交换顺序的结果是一个串行调度，则称这个调度是冲突可串行化的。</p>
+<blockquote>
+<p>前趋图：事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
+<p><strong>前驱图中不存在环路等价于调度是冲突可串行化的</strong></p>
+<p>冲突可串行化是可串行化的充分条件，不是必要条件。</p>
+</blockquote>
+<h1 id="两段锁协议"><a href="#两段锁协议" class="headerlink" title="两段锁协议"></a>两段锁协议</h1><p><a target="_blank" rel="noopener" href="https://draveness.me/database-concurrency-control/">参考文章</a></p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li><p>并发调度的正确性标准：可串行化调度<br>n个事务的可串行化调度结果——n！种<br>可串行化的充分而非必要条件：冲突可串行化调度</p>
+</li>
+<li><p>基于封锁的并发控制：一种基于悲观思想的并发控制策略。<br>操作之前先查验冲突</p>
+</li>
+<li><p>封锁如何解决并发错误？<br>三级封锁协议<br>排它锁保护写操作——写之前申请，事务结束时释放。<br>在此基础上，共享锁保护读操作——读之前申请，释放时机（读完之后即可释放、事务结束时释放）</p>
+</li>
+</ul>
+<h3 id="三级封锁协议的选择依据"><a href="#三级封锁协议的选择依据" class="headerlink" title="三级封锁协议的选择依据"></a>三级封锁协议的选择依据</h3><p>权衡并发调度正确性和并发性能。</p>
+<p>三级封锁协议的特点之一：事务对数据的保护时间较为统一，其中比较强的往往保护至事务结束。</p>
+<p>能否制定相对灵活的封锁协议?<br>                    两阶段封锁（TwoPhase Locking，简称2PL）</p>
+<h2 id="基于2PL协议的调度"><a href="#基于2PL协议的调度" class="headerlink" title="基于2PL协议的调度"></a>基于2PL协议的调度</h2><p>基本思想：所有事务必须分为两个阶段对数据项加锁和解锁，第一阶段称为扩展阶段（获得锁）；第二阶段称为收缩阶段（释放锁）。</p>
+<p>协议内容：<br>（1）在对任何数据读、写之前，须先获得该数据的锁；<br>（2）在释放一个封锁之后，该事务不能再申请任何其它锁。【正确的遵守2PL协议，所有获得锁均在释放锁之前。】</p>
+<p>两个阶段：事务的第一个释放锁操作成为分界线。<br>扩张和收缩：事务对数据资源的占有。</p>
+<p>两段锁协议的目标：实现并发事务调度的可串行化。</p>
+<h2 id="两阶段锁协议的特点"><a href="#两阶段锁协议的特点" class="headerlink" title="两阶段锁协议的特点"></a>两阶段锁协议的特点</h2><ul>
+<li>定理：若所有事务都遵守2PL协议，则对这些事务的所有并发调度策略都是可串行化的。</li>
+</ul>
+<p>证明思路：<br>前趋图——事务均为节点，事务之间存在冲突操作（读写、写读、写写）时，则事务之间存在由冲突操作的先执行事务指向后执行事务的有向边。</p>
+<p>前驱图中不存在环路等价于调度是冲突可串行化的</p>
+<p>反证法：假设调度遵循2PL协议但不是可串行化的 → 与2PL有矛盾。冲突可串行化是可串行化的充分而非必要条件。</p>
+<p>假如调度不是可串行化的，则该调度也不是冲突可串行化的。<br>① 假设某个遵守2PL的调度不是可串行化调度；<br>② 按Lock、UnLock操作中因锁不兼容而等待的关系构造调度的前趋图G；<br>③ 依据假设，若调度不是可串行化，则G中必存在环路，不妨设为：Ti<del>1</del>→Ti<del>2</del>→……→Tj<del>p</del>→Ti<del>n</del>。<br>④ 其中某个冲突事务获得锁的前提是前面的冲突事务释放锁，则意味着Ti<del>1</del>解锁后Tj<del>p</del>才能获得锁，之后在环路中又出现Ti<del>n</del>加锁；<br>⑤ “④”中Ti违反了两阶段锁协议。</p>
+<ul>
+<li>2PL协议是可串行化的充分条件，不是必要条件。</li>
+<li>遵守两阶段锁协议的事务可能<strong>发生死锁</strong>。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>两阶段锁（2PL）：通过事务的扩张和收缩阶段的划分，而不是提交之前与提交之时的这种划分，对锁的申请和释放流程进行的一种约定，从而实现了调度正确性的一个充分而非必要条件。</p>
+<h1 id="封锁的粒度"><a href="#封锁的粒度" class="headerlink" title="封锁的粒度"></a>封锁的粒度</h1><p>到目前为止我们都没有对不同粒度的锁进行讨论，一直以来我们都讨论的都是数据行锁，但是在有些时候我们希望将多个节点看做一个数据单元，使用锁直接将这个数据单元、表甚至数据库锁定起来。这个目标的实现需要我们在数据库中定义不同粒度的锁</p>
+<h2 id="多粒度封锁"><a href="#多粒度封锁" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h2><p>封锁的粒度：封锁对象的大小。<br>（1）逻辑单元：整个数据库、整个关系、整个索引、关系的分区、元组、索引项、属性值集、属性值。<br>（2）物理单元：数据页（块）、索引页</p>
+<p>封锁的粒度与数据库并发性能的两个重要因素相关：</p>
+<ul>
+<li>并发度</li>
+<li>并发控制的开销</li>
+</ul>
+<p>粒度小——封锁开销大——并发度大</p>
+<h3 id="封锁的基本策略"><a href="#封锁的基本策略" class="headerlink" title="封锁的基本策略"></a>封锁的基本策略</h3><p>宜采用多粒度封锁：<br>1）需常存取多个关系的大量元组时宜采用数据库级粒度；<br>2）需常存取单个关系大量元组时宜采用关系级；<br>3）需常存取单个关系少量元组时宜采用元组级；<br>4）一般不采用属性级；<br>5）物理单元一般不宜采用。</p>
+<p>多粒度锁提供了并发度和锁开销的权衡空间。</p>
+<h3 id="多粒度封锁-1"><a href="#多粒度封锁-1" class="headerlink" title="多粒度封锁"></a>多粒度封锁</h3><p>隐式封锁：某个数据对象被显式封锁后，它在多粒度层次结构中的子孙节点被隐含的加了相同类型的锁</p>
+<h3 id="多粒度锁的冲突检测"><a href="#多粒度锁的冲突检测" class="headerlink" title="多粒度锁的冲突检测"></a>多粒度锁的冲突检测</h3><ul>
+<li><p>显式封锁和隐式封锁的效果是一样的，因此检查封锁冲突时需要对两种封锁的结果都进行检测。</p>
+<p>1）检查数据对象本身有无显式封锁与申请冲突；</p>
+<p>2）检查上级结点有无封锁与本结点冲突；</p>
+<p>3）检查后代结点有无封锁与本结点冲突</p>
+</li>
+</ul>
+<h2 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h2><p>对任一结点加锁时，必须先对它的上层结点加意向锁。如果对某个结点加意向锁，则表示该结点的某个子孙结点正在或拟施加相应的非意向锁。作用：提高系统并发度，减少加锁和解锁的开销。被商用产品广泛采用。</p>
+<p>意向锁的类型：<br>1）IS锁：表示某个子孙结点拟加S锁<br>2）IX锁：表示某个子孙结点拟加X锁<br>3）SIX锁：表示对结点施加S锁的同时，再施加IX锁&#x3D; S+IX</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/image-20200605173311455.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">数据库_查询处理和查询优化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-05 11:13:49" itemprop="dateCreated datePublished" datetime="2020-06-05T11:13:49Z">2020-06-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="查询优化概述"><a href="#查询优化概述" class="headerlink" title="查询优化概述"></a>查询优化概述</h1><h2 id="查询优化的意义"><a href="#查询优化的意义" class="headerlink" title="查询优化的意义"></a>查询优化的意义</h2><ul>
+<li>SQL语言具有非过程化特性（必要性）</li>
+<li>查询操作存在多解性（可能性）<ul>
+<li>同一个查询语句可以用多种关系代数表达式来表达</li>
+<li>同一个关系操作可以有多种实现算法或存取路径<ul>
+<li>选择——全表扫描、索引扫描</li>
+<li>自然连接——嵌套循环、排序-合并、索引连接、哈希连接</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="自然连接算法"><a href="#自然连接算法" class="headerlink" title="自然连接算法"></a>自然连接算法</h2><p>自然连接：是一种特殊的等值连接，它要求两个关系进行比较的分量必须是相同的属性组，并且在结果集中将重复属性列去掉。</p>
+<blockquote>
+<p>1）等值连接必须要有等值的条件，当条件不同时连接的结果也不相同，两个关系可以没有相同的属性列<br>2）自然连接必须要有相同的属性列才能进行，即等值连接之后要去除相同的属性列</p>
+</blockquote>
+<h3 id="嵌套循环算法"><a href="#嵌套循环算法" class="headerlink" title="嵌套循环算法"></a>嵌套循环算法</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="keyword">each</span> row1 <span class="keyword">from</span> T1</span><br><span class="line">	<span class="keyword">for</span> <span class="keyword">each</span> row2 <span class="keyword">from</span> T2</span><br><span class="line">	<span class="keyword">if</span> row2 match row1<span class="comment">//如果row2与row1满足连接条件</span></span><br><span class="line">	<span class="keyword">join</span> row1 <span class="keyword">and</span> row2 <span class="keyword">into</span> <span class="keyword">result</span><span class="comment">//加入结果集</span></span><br></pre></td></tr></table></figure>
+
+<p>简单通用，对参与连接的表没有要求。由于对内层循环表需要进行多次扫描。因此性能较差</p>
+<h3 id="排序—合并算法"><a href="#排序—合并算法" class="headerlink" title="排序—合并算法"></a>排序—合并算法</h3><p>访问次数：两张表都只会访问0次或1次。<br>驱动表是否有顺序：无。<br>是否要排序：是。<br>应用场景：当结果集已经排过序。</p>
+<p>如果A表的数据为（2,1,4,5,2）,B表的数据为(2,2,1,3,1) ,首先将A表和B表<strong>全扫描后排序</strong>，如下：</p>
+<p>​       A   B</p>
+<p>​       1   1</p>
+<p>​       2   1</p>
+<p>​       2   2</p>
+<p>​       4   2</p>
+<p>​       5   3</p>
+<p>因为没有驱动表，所以数据库会随机选择一张表驱动，如果选择了A扫描到1，然后扫描B，当扫描&#x3D;1的时候则匹配</p>
+<p>当扫描到B&#x3D;2时，再以B&#x3D;2为驱动扫描A表，不是从1开始扫，而是从2开始扫描，交替的进行扫描、关联。</p>
+<p><img src="/images/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%9F%A5%E8%AF%A2%E5%A4%84%E7%90%86%E5%92%8C%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96/231153163007245.jpg"></p>
+<p>也就是说：不是从1重新开始扫，而是从2开始扫描</p>
+<p>对于左表和右表只需要扫描一遍，性能比较高。但是只适用于参与连接的表已经有序的情况。</p>
+<h3 id="索引连接算法"><a href="#索引连接算法" class="headerlink" title="索引连接算法"></a>索引连接算法</h3><p>利用索引提高连接过程中的元组查找速度，适用于参加连接的表的连接属性上存在索引的情况。</p>
+<h3 id="哈希连接算法"><a href="#哈希连接算法" class="headerlink" title="哈希连接算法"></a>哈希连接算法</h3><p>通过对连接属性进行哈希分桶来提高连接阶段的匹配速度，适用于较小的那个连接表在散列后能完全放入内存的情况</p>
+<p>简单的对于两个表来讲，hash-join就算讲两表中的小表（称S）作为hash表，然后去扫描另一个表(称M)的每一行数据，用得出来的行数据根据连接条件去映射建立的hash表，hash表是放在内存中的，这样可以很快的得到对应的S表与M表相匹配的行。</p>
+<blockquote>
+<p>对于结果集很大的情况，merge-join需要对其排序效率并不会很高，而nested loop join是一种嵌套循环的查询方式无疑更不适合大数据集的连接，而hash-join正是为处理这种棘手的查询方式而生，尤其是对于一个大表和一个小表的情况，基本上只需要将大小表扫描一遍就可以得出最终的结果集。</p>
+<p>　　不过hash-join<strong>只适用于等值连接</strong>，对于&gt;, &lt;, &lt;&#x3D;, &gt;&#x3D;这样的查询连接还是需要nested loop这种通用的连接算法来处理。如果连接key本来就是有序的或者需要排序，那么可能用merge-join的代价会比hash-join更小，此时merge-join会更有优势。</p>
+</blockquote>
+<h1 id="代数优化"><a href="#代数优化" class="headerlink" title="代数优化"></a>代数优化</h1><p>是指通过对关系代数表达式的等价变换来提高查询效率</p>
+<p>就是查询语法树的等价变形</p>
+<h2 id="变换五大核心规则"><a href="#变换五大核心规则" class="headerlink" title="变换五大核心规则"></a>变换五大核心规则</h2><p>总结起来就是: “(连接类的)交换律, 结合律; (投影和选择类的)串接律, (这两大类相互之间)分配率”</p>
+<ol>
+<li>E1 X E2 &#x3D; E2 X E1, (E1 X E2) X E3 &#x3D; E1 X (E2 X E3)做笛卡尔积, 多个表做连接是满足交换律和结合律的</li>
+<li>投影和选择的串接定律<br> 多层的投影可以取小的那个<br> 多层的选择可以取交集(其实也是那个范围比较小的), 这样能够把多次选择  多次表的扫描, 改成一次.</li>
+<li>选择与投影交换律: 选择和投影的顺序可以随意改变</li>
+<li>选择与笛卡尔积, 并, 自然连接, 差的分配律: 处在后面的选择, 可以与处在前面的二目运算顺序进行调整, 使得对相应的表先实施选择, 再实现连接等二目运算. 这个非常重要, 是先选择后进行二目运算的依据, 又名”选择提前”.</li>
+<li>选择与笛卡尔积, 并的分配率: 可以先投影, 也可以先进行二目运算</li>
+</ol>
+<blockquote>
+<p>导致关系数据库查询性能低的主要原因是笛卡尔积运算</p>
+<p>投影与交运算不属于关系代数表达式等价规则</p>
+</blockquote>
+<h2 id="经验性优化五大策略"><a href="#经验性优化五大策略" class="headerlink" title="经验性优化五大策略"></a>经验性优化五大策略</h2><p>其实就是”选择, 合并, 视图”</p>
+<ol>
+<li><strong>选择运算尽可能先做</strong>, 这是最最最最重要和基本的, 这样往往使得执行代价减少了几个数量级, 主要的原理就是<strong>选择运算能够大大降低参与连接的元组的行数</strong>, 使得连接生成的A•B结果也大大被缩小.</li>
+<li><strong>把选择和投影运算同时进行</strong>, 如果有若干投影和选择运算, 并且他们都是针对同一个表, 那么可以在扫描这个表的时候同时完成这些所有的运算, 以此避免重复扫描这张表.</li>
+<li>把投影与其前或者后的双目运算(笛卡尔积, 等值连接, 并集, 差集)结合起来, 也就是说, 没有必要为了选择出几个字段而单独再重新扫描全表.</li>
+<li>把某些选择和在它前面要执行的笛卡尔积结合起来成为一个连接运算(比如变成等值连接), 这是因为连接运算要比同样情形下的笛卡尔积节省很多时间.</li>
+</ol>
+<blockquote>
+<p>笛卡尔积先进行了 O(N • M)操作 生成了A•B大小的中间文件, 存盘, 然后读盘, 然后再按照where选择进行筛选得到结果; 对比之下, 等值连接运算也进行了O(N•M)操作, 但是还进行了筛选, 只生成比较小的中间文件, 存盘和读盘的是一个非常小的结果集合. 大大减少了IO开销.</p>
+</blockquote>
+<ol>
+<li>找出公共子表达式(一次计算, 多次使用). 比如很多的查询都基于某个公共部分, 那么可以定义一个公共子表达式, 然后先计算一次公共子表达式, 然后把它存盘, 供其他大量的表达式来使用. 我们定义视图其实就是在实践这种策略.</li>
+</ol>
+<h1 id="物理优化"><a href="#物理优化" class="headerlink" title="物理优化"></a>物理优化</h1><h2 id="基于经验规则的优化"><a href="#基于经验规则的优化" class="headerlink" title="基于经验规则的优化"></a>基于经验规则的优化</h2><ul>
+<li><p><strong>对于小的表, 直接全表扫描, 即使列上有索引.</strong></p>
+</li>
+<li><p>对于大的表：</p>
+<ul>
+<li>如果是选择条件涉及主键, 那么使用主键索引(MySQL等主流关系数据库都会对主键建立索引);</li>
+<li>如果不是涉及主键：<ul>
+<li>如果是等值查询, 列上有索引, 就使用索引; </li>
+<li>如果非等值查询, 而是范围值查询, 那么范围&lt;&#x3D;10%用索引, 范围比较大的, 直接全表扫描.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>And 和 OR: </p>
+<ul>
+<li>AND连接的, 优先考虑使用索引; </li>
+<li>OR连接的, 优先考虑使用顺序扫描, 毕竟OR可能性非常多.</li>
+</ul>
+</li>
+<li><p>连接操作:</p>
+<ul>
+<li>如果两个表都按照连接属性排序, 用sort-merge算法</li>
+<li>如果其中一个表在连接属性上有索引,采用索引连接算法; </li>
+<li>如果啥都没有, 对小的表建立哈希表, 使用hash join方法; 或者使用基本的嵌套循环, 不过外层循环(i循环)使用小表, 这样能稍微减小代价.</li>
+</ul>
+</li>
+</ul>
+<h2 id="基于代价的优化"><a href="#基于代价的优化" class="headerlink" title="基于代价的优化"></a>基于代价的优化</h2><p>基于代价的优化需要依赖数据库表的各种”情报”, 来计算出不同方案的代价, 从中选择最优的.<br> 这些信息(meta info)包括:</p>
+<ol>
+<li>对每个表来说:<br> 表的元组行数 N,<br> 元组的长度, 即列的维度数目 P,<br> 表占用的block数目 B,<br> 表占用的溢出块的块数 BO,</li>
+<li>对表中的每个列,<br> 该列的不同值的个数 k<br> 列的最大值, 最小值max, min<br> 列上有什么类型的索引 index: 按照实现方式有B+, Hash, Cluster &#x2F; 按照类型来说有普通索引, 唯一索引, 主键索引, 聚集索引<br> 列上的数值分布情况 (直方图)</li>
+</ol>
+<p>那么对于不同情况, 我们有如下的代价估算:</p>
+<ol>
+<li>全表扫描 cost &#x3D; B</li>
+<li>有索引的扫描<br> 如果选择条件是key &#x3D; value, 能适用唯一索引: L + 1<br> 如果选择条件是attr &#x3D; value, 能使用普通索引: L + S (可能有S个元组满足)<br> 如果条件是范围类的, 比如&gt;, &lt;, between A and B, 那么基本上就是接近全表扫描B;</li>
+<li>连接算法的代价<br> 如果用嵌套循环: 读入Capacity-1块B[a], 遍历连接b表所有B[b], 再换下一批B[a], 直到a表结束. 所以, cost &#x3D; B[a] + ( B[a]&#x2F;(C-1) ) • B[b] &#x3D; a表IO次数 + b表IO次数, 假如要生成中间文件的话, 那么还得加上存下所有连接好的元组的磁盘IO开销.</li>
+</ol>
+<p>如果用sort-merge: cost &#x3D; B[a] + B[b], 如果要把中间结果写入外存, 那么还要加上存下所有连接好的元组的磁盘IO开销, 这个开销和上面嵌套循环的是一样的.<br> 假如表本身没有排序, 那么排序的代价是B[a]logB[a] + B[b]logB[b]</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.icourse163.org/course/RUC-1001655006">数据库系统概论（高级篇）</a></li>
+<li><a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=http://www.jb51.net/article/33535.htm">脚本之家: SQL语句的各个关键字的解析过程详细总结</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2114,375 +2813,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-I-O%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-I-O%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">计算机系统结构-I/O系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-15 12:49:40" itemprop="dateCreated datePublished" datetime="2020-04-15T12:49:40Z">2020-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">计算机系统结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="IO系统的基本概念"><a href="#IO系统的基本概念" class="headerlink" title="IO系统的基本概念"></a>IO系统的基本概念</h1><p>通常包含IO设备和IO设备与处理机的连接接口两个主要部分。</p>
-<h1 id="系统评价"><a href="#系统评价" class="headerlink" title="系统评价"></a>系统评价</h1><p>参数指标：连接特性、IO系统的容量、响应时间和吞吐率</p>
-<p>吞吐率反映单位时间内完成的I&#x2F;O数量，响应时间则反映了完成一次I&#x2F;O所花费的时间</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/15/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">计算机系统结构-存储系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-15 12:49:31" itemprop="dateCreated datePublished" datetime="2020-04-15T12:49:31Z">2020-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">计算机系统结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="存储系统性能量化分析"><a href="#存储系统性能量化分析" class="headerlink" title="存储系统性能量化分析"></a>存储系统性能量化分析</h1><p>存储器越靠近CPU，则CPU对它的访问频度越高，但是容量也越低，单位存储容量价格越高。</p>
-<p>存储容量S：一般来说，整个存储系统的容量即是第二级存储器M<del>2</del> ，即S&#x3D;S<del>2</del></p>
-<p>命中率H：CPU访问存储系统时，在M<del>1</del> 中找到所需信息的概率$H&#x3D;\frac{N_1}{N_1+N_2}$</p>
-<p>平均访问时间T<del>A</del> ：</p>
-<ul>
-<li><p>当命中时，访问时间即是T<del>1</del> （命中时间）</p>
-</li>
-<li><p>当没命中时，$T_2+T_1+T_B&#x3D;T_1+T_M\T_m&#x3D;T_2+T_B\传递一个信息块所需的时间为T_B\不命中开销T_M:从向M_2发出访问请求到整个数据块调入M_1中所需的时间$</p>
-</li>
-</ul>
-<h1 id="Cache基本知识"><a href="#Cache基本知识" class="headerlink" title="Cache基本知识"></a>Cache基本知识</h1><p>Cache-利用局部性原理，加快经常性事件原理，将程序和数据放到与CPU速度匹配的高速存储器中。</p>
-<p>cache关注的四个问题：</p>
-<ul>
-<li><p>如何放</p>
-<ul>
-<li>全相联映象</li>
-<li>直接映象</li>
-<li>组相联映象</li>
-</ul>
-</li>
-<li><p>如何找</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200416191002374.png" style="zoom:80%;" />
-</li>
-<li><p>如何写</p>
-<ul>
-<li>写穿：写cache的同时也在写内存</li>
-<li>写回：只写cache，只有被替换时才写回内存</li>
-</ul>
-</li>
-<li><p>如何换</p>
-<ul>
-<li>轮换法</li>
-<li>LRU算法</li>
-</ul>
-</li>
-</ul>
-<p>具体见《组原原理》</p>
-<h1 id="映象规则及其变换"><a href="#映象规则及其变换" class="headerlink" title="映象规则及其变换"></a>映象规则及其变换</h1><p>见《组成原理》</p>
-<h1 id="降低cache不命中率"><a href="#降低cache不命中率" class="headerlink" title="降低cache不命中率"></a>降低cache不命中率</h1><h2 id="三种类型的不命中"><a href="#三种类型的不命中" class="headerlink" title="三种类型的不命中"></a>三种类型的不命中</h2><ul>
-<li>强制性不命中：当第一次访问一个块时，该块不在cache中，需从下一级存储器中调入cache。（冷启动不命中，首次访问不命中。）</li>
-<li>容量不命中：如果程序执行时所需的块不能全部调入cache中，则当某些块被替换后，若重新被访问，就会发生不命中。</li>
-<li>冲突不命中：在组相联或者直接映象cache中，如果太多的块映象到同一组（块）中，则该组中某个块被别的块替换（即使别的组或块有空闲位置），然后又被重新访问的情况。（碰撞不命中，干扰不命中）</li>
-</ul>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>相联度越高，冲突不命中就越少；</li>
-<li>强制性不命中和容量不命中不受相联度的影响</li>
-<li>强制性不命中不受cache容量的影响，但是容量不命中却随着容量的增加而减少</li>
-</ol>
-<h2 id="减少三种不命中的方法"><a href="#减少三种不命中的方法" class="headerlink" title="减少三种不命中的方法"></a>减少三种不命中的方法</h2><ul>
-<li>强制性不命中：增加块大小，预取</li>
-<li>容量不命中：增加容量</li>
-<li>冲突不命中：提高相关度</li>
-</ul>
-<p><strong>许多降低不命中率的方法会增加命中时间或不命中开销</strong></p>
-<h3 id="增加cache块的大小"><a href="#增加cache块的大小" class="headerlink" title="增加cache块的大小"></a>增加cache块的大小</h3><p>对于给定的cache容量，当块大小增加时，不命中率开始是下降的，但是后来就上升了。</p>
-<ul>
-<li>一方面它减少了强制性不命中；</li>
-<li>另一方面，由于增加块大小会减少Cache中块的数目，可能会增加冲突不命中</li>
-</ul>
-<p><strong>增加块的大小会增加不命中开销</strong></p>
-<h3 id="增加cache的容量"><a href="#增加cache的容量" class="headerlink" title="增加cache的容量"></a>增加cache的容量</h3><p>缺点：</p>
-<ul>
-<li>增加成本</li>
-<li>增加命中时间</li>
-</ul>
-<h3 id="提高相联度"><a href="#提高相联度" class="headerlink" title="提高相联度"></a>提高相联度</h3><p>采取相联度超过8的方案实际意义不大</p>
-<p><strong>容量为N的直接映象cache的不命中率和容量为N&#x2F;2的两路组相联cache的不命率差不多相同</strong></p>
-<p>提高相联度是以增加命中时间为代价的</p>
-<h2 id="伪相联cache和列相联cache"><a href="#伪相联cache和列相联cache" class="headerlink" title="伪相联cache和列相联cache"></a>伪相联cache和列相联cache</h2><p>基本思想：在逻辑上把直接映象cache分为上下两个区。对于任何一次访问，伪相联cache先按直接映象cache的方式去处理：如果命中，则其访问过程和直接映象cache的情况一样；如果不命中，则再对另一区相应的位置去查找。如果找到了，则发生了伪命中，否则只好访问下一级存储器。</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417152901445.png" style="zoom:50%;" />
-
-<h2 id="硬件预取"><a href="#硬件预取" class="headerlink" title="硬件预取"></a>硬件预取</h2><ol>
-<li>指令和数据都可以预取</li>
-<li>预取内容即可放入cache中，也可放在外缓冲器中</li>
-<li>指令预取通常由cache之外的硬件完成</li>
-</ol>
-<p>预取应利用存储器的空闲带宽，不能影响对正常不命中的处理，否则会降低性能。</p>
-<h2 id="编译器控制的预取"><a href="#编译器控制的预取" class="headerlink" title="编译器控制的预取"></a>编译器控制的预取</h2><p>在编译的时候加入预取指令，在数据被用到之前发出预取请求。</p>
-<ol>
-<li>按照预取数据所放的位置，可把预取分为两种类型：<ul>
-<li>寄存器预取：把数据放在寄存器中</li>
-<li>cache预取：只将数据放在cache中</li>
-</ul>
-</li>
-<li>按照预取的处理方式不同，分为：<ul>
-<li>故障性预取：在预取时，如果出现虚地址故障或违反保护权限，就会发生异常</li>
-<li>非故障性预取：不会发生异常，编译器会放弃预取，转为空操作</li>
-</ul>
-</li>
-<li>在预取数据的同时，处理器应能继续执行</li>
-<li>编译器控制预取的目的：使得执行指令和读取数据能重叠执行</li>
-<li>每次预取需要花费一条指令的开销<ul>
-<li>保证开销低于收益</li>
-<li>编译器可以通过把重点放在那些可能会导致不命中的访问上，使得程序避免不必要的预取</li>
-</ul>
-</li>
-</ol>
-<h2 id="编译器优化"><a href="#编译器优化" class="headerlink" title="编译器优化"></a>编译器优化</h2><p>通过对软件进行优化来降低不命中率</p>
-<ol>
-<li>程序代码和数据重组<ul>
-<li>重新组织程序而不影响程序的正确性<ul>
-<li>把一个程序的过程重新排序，减少冲突不命中，降低指令不命中率</li>
-<li>把基本块对齐，提高大cache块的效率</li>
-</ul>
-</li>
-<li>假设编译器知道分支指令会成功转移：<ul>
-<li>将转移目标处的基本块和紧跟着该分支指令后的基本块进行对调</li>
-<li>把该分支指令转为操作语义相反的分支指令（？）</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="牺牲cache"><a href="#牺牲cache" class="headerlink" title="牺牲cache"></a>牺牲cache</h2><p>在cache和它的下一级存储器之间设置一个全相联的小cache；用来存放被替换出去的块（牺牲者），以备重新使用</p>
-<p>对于减小冲突不命中很有效，特别是对于小容量的直接映象数据cache，作用尤其明显。</p>
-<h2 id="采取两级cache"><a href="#采取两级cache" class="headerlink" title="采取两级cache"></a>采取两级cache</h2><p>第一级cache小且快；第二级cache容量大。</p>
-<p>全部不命中率和局部不命中率：$全局不命中率&#x3D;不命中率_{L1} X 不命中率_{L2}$</p>
-<ul>
-<li><p>评价第二级Cache需要使用全局不命中率；</p>
-</li>
-<li><p>第二级cache不会影响CPU的时钟频率；</p>
-</li>
-</ul>
-<p>$平均访存时间&#x3D;命中时间L_1+不命中率L_1X()$</p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ol>
-<li>容量：第二级cache的容量一般比第一级cache的大很多</li>
-<li>相联度：第二级cache可以采用较高的相联度或伪相联方法</li>
-<li>块大小：第二级cache可以采用较大的块</li>
-</ol>
-<h2 id="让读不命中优先于写"><a href="#让读不命中优先于写" class="headerlink" title="让读不命中优先于写"></a>让读不命中优先于写</h2><ol>
-<li>cache中的写缓冲器导致对存储器访问的复杂化：在读不命中时，所读单元的最新值可能还在写缓冲器中，还没有进入主存。</li>
-<li>读不命中的处理：<ul>
-<li>推迟对读不命中的处理，直到写缓冲器清空</li>
-<li>检查写缓冲器的内容</li>
-</ul>
-</li>
-<li>在写回法cache中，可采取写缓冲器</li>
-</ol>
-<h2 id="写缓冲合并"><a href="#写缓冲合并" class="headerlink" title="写缓冲合并"></a>写缓冲合并</h2><p>写直达cache：</p>
-<p>依靠写缓冲来减少对下一级存储器写操作的时间。</p>
-<p>如果写缓冲器为空，就把数据和相应地址写入该缓冲器【从CPU的角度来看，该写操作就算完成了】</p>
-<p>如果写缓冲器中已经有了待写入数据，就要把这次写入地址与写缓冲器中已有的所有地址进行比较，看看是否有匹配的项。如果有地址匹配而对应的位置又空闲，就把这次要写入的数据与该项合并。【这就是写缓冲合并】</p>
-<p>如果写缓冲器满并且没有能进行写合并的项，就等待。</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417163741394.png" style="zoom:67%;" />
-
-<h2 id="请求字处理技术"><a href="#请求字处理技术" class="headerlink" title="请求字处理技术"></a>请求字处理技术</h2><p>请求字：从下一级存储器调入cache块中，只有一个字是立即需要的，该字就是请求字。</p>
-<p>应尽早把请求字发送给CPU</p>
-<ul>
-<li>尽早重启动：调块时，从块的起始位置开始读起。一旦请求字到达了，就立即发送给CPU，让CPU继续执行。【请求字优先】</li>
-</ul>
-<h2 id="非阻塞cache技术"><a href="#非阻塞cache技术" class="headerlink" title="非阻塞cache技术"></a>非阻塞cache技术</h2><p>cache不命中时依旧允许CPU进行其他的命中访问。</p>
-<h1 id="减少命中时间"><a href="#减少命中时间" class="headerlink" title="减少命中时间"></a>减少命中时间</h1><p>命中时间直接影响处理器的时钟频率。</p>
-<p>Cache的访问时间限制了处理器的时钟频率。</p>
-<h2 id="容量小、结构简单的Cache"><a href="#容量小、结构简单的Cache" class="headerlink" title="容量小、结构简单的Cache"></a>容量小、结构简单的Cache</h2><p>硬件越简单，速度就越快。</p>
-<h2 id="虚拟cache"><a href="#虚拟cache" class="headerlink" title="虚拟cache"></a>虚拟cache</h2><h3 id="物理cache"><a href="#物理cache" class="headerlink" title="物理cache"></a>物理cache</h3><p>使用物理地址进行访问的传统cache。</p>
-<p>标识存储器中存放的是物理地址，进行地址检测越是用物理地址。</p>
-<p>缺点就是：地址转换和访问cache串行进行，访问速度慢。</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417185513804.png" style="zoom:67%;" />
-
-<h3 id="虚拟cache-1"><a href="#虚拟cache-1" class="headerlink" title="虚拟cache"></a>虚拟cache</h3><p>直接使用虚拟地址进行访问的cache。标识存储器存放的是虚拟地址，进行地址检测用的也是虚拟地址</p>
-<p>优点：在命中时不需要进行地址转换，省去了地址转换的时间。就算是不命中，地址转换和访问cache也是并行进行的，速度比物理cache快。</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417185536512.png" style="zoom:50%;" />
-
-<p>虚拟地址和进程相关。</p>
-<p>虚拟地址&#x3D;虚拟索引+物理标识<br>用虚地址中页内位移作为cache的索引，标识用物理地址；</p>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417190140461.png" style="zoom:67%;" />
-
-<h2 id="Cache访问流水化"><a href="#Cache访问流水化" class="headerlink" title="Cache访问流水化"></a>Cache访问流水化</h2><p>对第一级cache访问按流水线方式组织</p>
-<p>访问cache需要多个时钟周期才能完成</p>
-<p>不能够真正减少cache命中时间，但是可以提高时钟频率，提高cache的带宽。</p>
-<h2 id="踪迹Cache"><a href="#踪迹Cache" class="headerlink" title="踪迹Cache"></a>踪迹Cache</h2><p>存放CPU所执行的动态指令序列：包含了由分支预测展开的指令，该分支预测是否需要在取到该指令时进行确认。</p>
-<ul>
-<li>地址映象机制复杂</li>
-<li>相同的指令序列有可能被当作条件分支的不同选择而重复存放</li>
-<li>能够提高指令cache的空间利用率</li>
-</ul>
-<h1 id="并行主存系统"><a href="#并行主存系统" class="headerlink" title="并行主存系统"></a>并行主存系统</h1><p>主存的主要性能指标：<strong>延迟</strong>和<strong>带宽</strong></p>
-<p>定义：是在一个访存周期内能并行访问多个存储字的存储器</p>
-<p>在单体单字宽的存储器中：存储器的访问周期为T<del>M</del> ,字长为W位，则<br>带宽为$B_M&#x3D;\frac{W}{T_M}$</p>
-<h2 id="单体多字存储器"><a href="#单体多字存储器" class="headerlink" title="单体多字存储器"></a>单体多字存储器</h2><p>存储器能够每个存储周期读出m个CPU字</p>
-<p>$B_M&#x3D;\frac{mW}{T_M}$</p>
-<p>单体多字存储器的实际带宽比最大带宽小</p>
-<p>缺点：访存效率不高</p>
-<ul>
-<li>如果一次去读的m个指令字中有分支指令，而且分支成功，则该分支指令之后的指令是无用的。</li>
-<li>一次取出的m个数据不一定都是有用的。此外，当前执行指令所需要的多个操作数也不一定正好都存放在同一个长存储字中</li>
-<li>写入可能变得复杂</li>
-<li>当要读出的数据字和要写入的数据字处于同一个长存储字内时，读和写的操作就无法在同一个存储周期内完成</li>
-</ul>
-<h2 id="多体交叉存储器"><a href="#多体交叉存储器" class="headerlink" title="多体交叉存储器"></a>多体交叉存储器</h2><p>由多个单字存储体构成，每个体都有自己的地址寄存器以及地址译码和读&#x2F;写驱动等电路。</p>
-<p>编址方式：</p>
-<ul>
-<li>高位交叉编址</li>
-<li>低位交叉编址</li>
-</ul>
-<img src="/images/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/image-20200417195600835.png" style="zoom:67%;" />
-
-<h3 id="高位交叉编址"><a href="#高位交叉编址" class="headerlink" title="高位交叉编址"></a>高位交叉编址</h3><p>对存储单元矩阵按列优先的方式进行编址</p>
-<h3 id="低位交叉编址"><a href="#低位交叉编址" class="headerlink" title="低位交叉编址"></a>低位交叉编址</h3><p>对存储单元矩阵按行优先进行编址</p>
-<h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
-<p>进程保护：</p>
-<ol>
-<li>界地址寄存器：基地址、上界地址；检测条件：（基地址+地址）&lt;&#x3D;上界地址</li>
-<li>虚拟存储器：给每个页面增加访问权限标识</li>
-<li>环形保护</li>
-<li>加锁和解锁</li>
-</ol>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2548,7 +2882,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

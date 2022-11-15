@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,320 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/05/08/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/08/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" class="post-title-link" itemprop="url">java-maven学习（六）——单元测试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 16:10:13" itemprop="dateCreated datePublished" datetime="2022-05-07T16:10:13Z">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="单元测试概念"><a href="#单元测试概念" class="headerlink" title="单元测试概念"></a>单元测试概念</h1><p><strong>单元测试（Unit Testing）</strong>：是指对软件中的最小可测试单元进行检查和验证。<br>这个定义有点抽象，这里举几个单元测试的特性：一般是一个方法配几个单元测试、单元测试不应该依赖外部系统、单元测试运行速度很快、单元测试不应该造成测试环境的脏数据、单元测试可以重复运行。</p>
+<ul>
+<li>单元测试就是测试某个方法是否符合设计的逻辑，而且只测试这个方法，不涉及其他依赖方法的测试。</li>
+</ul>
+<p>这里要注意区分<strong>集成测试</strong>和<strong>单元测试</strong>。</p>
+<ul>
+<li>集成测试的是测试某个模块的功能，通俗的讲就是测试模块所有用到类和方法。</li>
+</ul>
+<h2 id="单元测试的重要性"><a href="#单元测试的重要性" class="headerlink" title="单元测试的重要性"></a>单元测试的重要性</h2><blockquote>
+<p>“每当我要进行重构的时候，第一个步骤永远相同：我得为即将修改的代码建立一组可靠的测试环境 ” ——摘自《重构：改善既有代码的设计》</p>
+</blockquote>
+<ol>
+<li>单元测试使得我们可以放心修改、重构业务代码，而不用担心修改某处代码后带来的副作用。</li>
+<li>单元测试使得系统具备更好的可维护性、具备更好的可读性。</li>
+<li>单元测试能提高代码质量，可以帮助我们反思模块划分的合理性，如果一个单元测试写得逻辑非常复杂、或者说一个函数复杂到无法写单测，那就说明模块的抽象有问题。</li>
+</ol>
+<h2 id="单元测试基本原则"><a href="#单元测试基本原则" class="headerlink" title="单元测试基本原则"></a>单元测试基本原则</h2><p>首先要明确单元测试的一些基本原则，优秀的单元测试具有以下特点：</p>
+<ul>
+<li>自动的、可重复的</li>
+<li>容易实现</li>
+<li>一旦写好，将来都可使用</li>
+<li>任何人都可运行</li>
+<li>单击一个按钮就可运行</li>
+<li>可以快速地运行</li>
+</ul>
+<p>单元测试并非是随手写来验证功能的临时代码，而是需要符合 AIR 原则，所以编写起来是需要一定的功力的。</p>
+<ol>
+<li>【强制】好的单元测试必须遵守AIR原则。</li>
+</ol>
+<p>说明：单元测试在线上运行时，感觉像空气（AIR）一样并不存在，但在测试质量的保障上，却是非常关键的。好的单元测试宏观上来说，具有自动化、独立性、可重复执行的特点。</p>
+<ul>
+<li>A：Automatic（自动化）</li>
+<li>I：Independent（独立性）</li>
+<li>R：Repeatable（可重复）</li>
+</ul>
+<ol start="2">
+<li>【强制】单元测试应该是全自动执行的，并且非交互式的。测试用例通常是被定期执行的，执行过程必须完全自动化才有意义。输出结果需要人工检查的测试不是一个好的单元测试。单元测试中不准使用System.out来进行人肉验证，必须使用assert来验证。</li>
+<li>【强制】保持单元测试的独立性。为了保证单元测试稳定可靠且便于维护，单元测试用例之间决不能互相调用，也不能依赖执行的先后次序。</li>
+</ol>
+<p>反例：method2需要依赖method1的执行，将执行结果作为method2的输入。</p>
+<ol start="4">
+<li>【强制】单元测试是可以重复执行的，不能受到外界环境的影响。</li>
+</ol>
+<p>说明：单元测试通常会被放到持续集成中，每次有代码check in时单元测试都会被执行。如果单测对外部环境（网络、服务、中间件等）有依赖，容易导致持续集成机制的不可用。<br>正例：为了不受外界环境影响，要求设计代码时就把SUT的依赖改成注入，在测试时用spring 这样的DI框架注入一个本地（内存）实现或者Mock实现。</p>
+<ol start="5">
+<li>【强制】对于单元测试，要保证测试粒度足够小，有助于精确定位问题。单测粒度至多是类级别，一般是方法级别。</li>
+</ol>
+<p>说明：只有测试粒度小才能在出错时尽快定位到出错位置。单测不负责检查跨类或者跨系统的交互逻辑，那是集成测试的领域。</p>
+<ol start="6">
+<li>【强制】核心业务、核心应用、核心模块的增量代码确保单元测试通过。</li>
+</ol>
+<p>说明：新增代码及时补充单元测试，如果新增代码影响了原有单元测试，请及时修正。</p>
+<h1 id="JUnit"><a href="#JUnit" class="headerlink" title="JUnit"></a>JUnit</h1><p>在Java的单元测试领域主流工具为JUnit与Mockito。JUnit 负责写单元测试业务逻辑，Mockito负责mock依赖。</p>
+<p>JUnit5的主要特性：</p>
+<ul>
+<li>提供全新的断言和测试注解，支持测试类内嵌</li>
+<li>更丰富的测试方式：支持动态测试，重复测试，参数化测试等</li>
+<li>实现了模块化，让测试执行和测试发现等不同模块解耦，减少依赖</li>
+<li>提供对 Java 8 的支持，如 Lambda 表达式，Sream API等。</li>
+</ul>
+<p>JUnit5 包含3个部分：</p>
+<ul>
+<li><p>JUnit Platform： 用于JVM上启动测试框架的基础服务，提供命令行，IDE和构建工具等方式执行测试的支持。</p>
+</li>
+<li><p>JUnit Jupiter：包含 JUnit 5 新的编程模型和扩展模型，主要就是用于编写测试代码和扩展代码。</p>
+</li>
+<li><p>JUnit Vintage：用于在JUnit 5 中兼容运行 JUnit3.x 和 JUnit4.x 的测试用例。</p>
+</li>
+</ul>
+<h2 id="JUnit5常见用法介绍"><a href="#JUnit5常见用法介绍" class="headerlink" title="JUnit5常见用法介绍"></a>JUnit5常见用法介绍</h2><p>首先，在 Maven 工程里引入 JUnit 5 的依赖坐标，需注意的是当前JDK 环境要在 Java 8 以上。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第一个测试用例"><a href="#第一个测试用例" class="headerlink" title="第一个测试用例"></a>第一个测试用例</h3><p>引入JUnit 5，我们可以先快速编写一个简单的测试用例，从这个测试用例来认识初步下 JUnit 5：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DisplayName(&quot;我的第一个测试用例&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyFirstTestCaseTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeAll</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;初始化数据&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterAll</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">cleanup</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;清理数据&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@BeforeEach</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">tearup</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;当前测试方法开始&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AfterEach</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">tearDown</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;当前测试方法结束&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DisplayName(&quot;我的第一个测试&quot;)</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">testFirstTest</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我的第一个测试开始测试&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@DisplayName(&quot;我的第二个测试&quot;)</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">testSecondTest</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;我的第二个测试开始测试&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>直接运行这个测试用例，可以看到控制台日志如下：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090926685.webp"></p>
+<p>可以看到左边一栏的结果里显示测试项名称就是我们在测试类和方法上使用 <strong>@DisplayName</strong> 设置的名称，这个注解就是 JUnit 5 引入，用来定义一个测试类并指定用例在测试报告中的展示名称，这个注解可以使用在类上和方法上，在类上使用它就表示该类为测试类，在方法上使用则表示该方法为测试方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123; ElementType.TYPE, ElementType.METHOD &#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@API(status = STABLE, since = &quot;5.0&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DisplayName &#123;</span><br><span class="line">	String <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再来看下示例代码中使用到的一对注解 **@BeforeAll **和 <strong>@AfterAll <strong>，它们定义了整个测试类在开始前以及结束时的操作，</strong>只能修饰静态方法，主要用于在测试过程中所需要的全局数据和外部资源的初始化和清理。</strong></p>
+<p><strong>@BeforeEach</strong> 和 <strong>@AfterEach</strong> 所标注的方法会在每个测试用例方法开始前和结束时执行，主要是负责该测试用例所需要的运行环境的准备和销毁。</p>
+<h3 id="禁用执行测试：-Disabled"><a href="#禁用执行测试：-Disabled" class="headerlink" title="禁用执行测试：@Disabled"></a>禁用执行测试：@Disabled</h3><p>当我们希望在运行测试类时，跳过某个测试方法，正常运行其他测试用例时，我们就可以用上 @Disabled 注解，表明该测试方法处于不可用，执行测试类的测试方法时不会被 JUnit 执行。</p>
+<p>下面看下使用 @Disbaled 之后的运行效果，在原来测试类中添加如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DisplayName(&quot;我的第三个测试&quot;)</span></span><br><span class="line"><span class="meta">@Disabled</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testThirdTest</span><span class="params">()</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;我的第三个测试开始测试&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行后看到控制台日志如下，用 @Disabled 标记的方法不会执行，只有单独的方法信息打印：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090929931.webp" alt="img"></p>
+<p>@Disabled 也可以使用在类上，用于标记类下所有的测试方法不被执行，一般使用对多个测试类组合测试的时候。</p>
+<h3 id="内嵌测试类：-Nested"><a href="#内嵌测试类：-Nested" class="headerlink" title="内嵌测试类：@Nested"></a>内嵌测试类：@Nested</h3><p>当我们编写的类和代码逐渐增多，随之而来的需要测试的对应测试类也会越来越多。为了解决测试类数量爆炸的问题，JUnit 5提供了@Nested 注解，能够以静态内部成员类的形式对测试用例类进行逻辑分组。 并且每个静态内部类都可以有自己的生命周期方法， 这些方法将按从外到内层次顺序执行。 此外，嵌套的类也可以用@DisplayName 标记，这样我们就可以使用正确的测试名称。下面看下简单的用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DisplayName(&quot;内嵌测试类&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NestUnitTest</span> &#123;</span><br><span class="line">    <span class="meta">@BeforeEach</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;测试方法执行前准备&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nested</span></span><br><span class="line">    <span class="meta">@DisplayName(&quot;第一个内嵌测试类&quot;)</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">FirstNestTest</span> &#123;</span><br><span class="line">        <span class="meta">@Test</span></span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;第一个内嵌测试类执行测试&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nested</span></span><br><span class="line">    <span class="meta">@DisplayName(&quot;第二个内嵌测试类&quot;)</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">SecondNestTest</span> &#123;</span><br><span class="line">        <span class="meta">@Test</span></span><br><span class="line">        <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;第二个内嵌测试类执行测试&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行所有测试用例后，在控制台能看到如下结果：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090929926.webp"></p>
+<h3 id="重复性测试：-RepeatedTest"><a href="#重复性测试：-RepeatedTest" class="headerlink" title="重复性测试：@RepeatedTest"></a>重复性测试：@RepeatedTest</h3><p>在 JUnit 5 里新增了对测试方法设置运行次数的支持，允许让测试方法进行重复运行。当要运行一个测试方法 N次时，可以使用 @RepeatedTest 标记它，如下面的代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DisplayName(&quot;重复测试&quot;)</span></span><br><span class="line"><span class="meta">@RepeatedTest(value = 3)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">i_am_a_repeated_test</span><span class="params">()</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;执行测试&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行后测试方法会执行3次，在 IDEA 的运行效果如下图所示：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090929926.webp" alt="img"></p>
+<p>这是基本的用法，我们还可以对重复运行的测试方法名称进行修改，利用 @RepeatedTest  提供的内置变量，以占位符方式在其 <code>name</code> 属性上使用，下面先看下使用方式和效果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DisplayName(&quot;自定义名称重复测试&quot;)</span></span><br><span class="line"><span class="meta">@RepeatedTest(value = 3, name = &quot;&#123;displayName&#125; 第 &#123;currentRepetition&#125; 次&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">i_am_a_repeated_test_2</span><span class="params">()</span> &#123;</span><br><span class="line">	System.out.println(<span class="string">&quot;执行测试&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090929920.webp"></p>
+<p>@RepeatedTest 注解内用 <code>currentRepetition</code> 变量表示已经重复的次数，<code>totalRepetitions</code> 变量表示总共要重复的次数，<code>displayName</code> 变量表示测试方法显示名称，我们直接就可以使用这些内置的变量来重新定义测试方法重复运行时的名称。</p>
+<h3 id="新的断言"><a href="#新的断言" class="headerlink" title="新的断言"></a>新的断言</h3><p>在断言 API 设计上，JUnit 5 进行显著地改进，并且充分利用 Java 8 的新特性，特别是 Lambda 表达式，最终提供了新的断言类: <strong>org.junit.jupiter.api.Assertions</strong> 。许多断言方法接受 Lambda 表达式参数，在断言消息使用 Lambda 表达式的一个优点就是它是延迟计算的，如果消息构造开销很大，这样做一定程度上可以节省时间和资源。</p>
+<p>现在还可以将一个方法内的多个断言进行分组，使用 assertAll 方法如下示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testGroupAssertions</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span>[] numbers = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">    Assertions.assertAll(<span class="string">&quot;numbers&quot;</span>,</span><br><span class="line">            () -&gt; Assertions.assertEquals(numbers[<span class="number">1</span>], <span class="number">1</span>),</span><br><span class="line">            () -&gt; Assertions.assertEquals(numbers[<span class="number">3</span>], <span class="number">3</span>),</span><br><span class="line">            () -&gt; Assertions.assertEquals(numbers[<span class="number">4</span>], <span class="number">4</span>)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果分组断言中任一个断言的失败，都会将以 MultipleFailuresError 错误进行抛出提示。</p>
+<h3 id="超时操作的测试：assertTimeoutPreemptively"><a href="#超时操作的测试：assertTimeoutPreemptively" class="headerlink" title="超时操作的测试：assertTimeoutPreemptively"></a>超时操作的测试：assertTimeoutPreemptively</h3><p>当我们希望测试耗时方法的执行时间，并不想让测试方法无限地等待时，就可以对测试方法进行超时测试，JUnit 5 对此推出了断言方法 <code>assertTimeout</code>，提供了对超时的广泛支持。</p>
+<p>假设我们希望测试代码在一秒内执行完毕，可以写如下测试用例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@DisplayName(&quot;超时方法测试&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">test_should_complete_in_one_second</span><span class="params">()</span> &#123;</span><br><span class="line">  Assertions.assertTimeoutPreemptively(Duration.of(<span class="number">1</span>, ChronoUnit.SECONDS), () -&gt; Thread.sleep(<span class="number">2000</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个测试运行失败，因为代码执行将休眠两秒钟，而我们期望测试用例在一秒钟之内成功。但是如果我们把休眠时间设置一秒钟，测试仍然会出现偶尔失败的情况，这是因为测试方法执行过程中除了目标代码还有额外的代码和指令执行会耗时，所以在超时限制上无法做到对时间参数的完全精确匹配。</p>
+<h3 id="异常测试：assertThrows"><a href="#异常测试：assertThrows" class="headerlink" title="异常测试：assertThrows"></a>异常测试：assertThrows</h3><p>我们代码中对于带有异常的方法通常都是使用 try-catch 方式捕获处理，针对测试这样带有异常抛出的代码，而 JUnit 5 提供方法 <code>Assertions#assertThrows(Class&lt;T&gt;, Executable)</code> 来进行测试，第一个参数为异常类型，第二个为函数式接口参数，跟 Runnable 接口相似，不需要参数，也没有返回，并且支持 Lambda表达式方式使用，具体使用方式可参考下方代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="meta">@DisplayName(&quot;测试捕获的异常&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">assertThrowsException</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">  Assertions.assertThrows(IllegalArgumentException.class, () -&gt; &#123;</span><br><span class="line">    Integer.valueOf(str);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当Lambda表达式中代码出现的异常会跟首个参数的异常类型进行比较，如果不属于同一类异常，就会控制台输出如下类似的提示：<code>org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==&gt; expected: &lt;IllegalArgumentException&gt; but was: &lt;...Exception&gt;</code></p>
+<h2 id="JUnit-5-参数化测试"><a href="#JUnit-5-参数化测试" class="headerlink" title="JUnit 5 参数化测试"></a>JUnit 5 参数化测试</h2><p>要使用 JUnit 5 进行参数化测试，除了 junit-jupiter-engine 基础依赖之外，还需要另个模块依赖：<strong>junit-jupiter-params</strong>，其主要就是提供了编写参数化测试 API。同样方式，把相同版本的对应依赖引入 Maven 工程中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.jupiter<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-jupiter-params<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基本数据源测试：-ValueSource"><a href="#基本数据源测试：-ValueSource" class="headerlink" title="基本数据源测试： @ValueSource"></a>基本数据源测试： @ValueSource</h3><p>@ValueSource 是 JUnit 5 提供的最简单的数据参数源，支持 Java 的八大基本类型和字符串，Class，使用时赋值给注解上对应类型属性，以数组方式传递，示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ParameterizedUnitTest</span> &#123;</span><br><span class="line">    <span class="meta">@ParameterizedTest</span></span><br><span class="line">    <span class="meta">@ValueSource(ints = &#123;2, 4, 8&#125;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">testNumberShouldBeEven</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        Assertions.assertEquals(<span class="number">0</span>, num % <span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ParameterizedTest</span></span><br><span class="line">    <span class="meta">@ValueSource(strings = &#123;&quot;Effective Java&quot;, &quot;Code Complete&quot;, &quot;Clean Code&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">testPrintTitle</span><span class="params">(String title)</span> &#123;</span><br><span class="line">        System.out.println(title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>@ParameterizedTest 作为参数化测试的必要注解，替代了 @Test 注解。任何一个参数化测试方法都需要标记上该注解。</p>
+</blockquote>
+<p>运行测试，结果如下图所示，针对 @ValueSource 里每个参数都会运行目标方法，一旦哪个参数运行测试失败，就意味着该测试方法不通过。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090944263.webp" alt="img"></p>
+<h3 id="CSV-数据源测试：-CsvSource"><a href="#CSV-数据源测试：-CsvSource" class="headerlink" title="CSV 数据源测试：@CsvSource"></a>CSV 数据源测试：@CsvSource</h3><p>通过 @CsvSource 可以注入指定 CSV 格式 (comma-separated-values)   的一组数据，用每个逗号分隔的值来匹配一个测试方法对应的参数，下面是使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ParameterizedTest</span></span><br><span class="line"><span class="meta">@CsvSource(&#123;&quot;1,One&quot;, &quot;2,Two&quot;, &quot;3,Three&quot;&#125;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testDataFromCsv</span><span class="params">(<span class="type">long</span> id, String name)</span> &#123;</span><br><span class="line">	System.out.printf(<span class="string">&quot;id: %d, name: %s&quot;</span>, id, name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如图所示，除了用逗号分隔参数外，@CsvSource 还支持自定义符号，只要修改它的 <code>delimiter</code> 即可，默认为 <code>，</code>。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202205090944245.webp" alt="img"></p>
+<p>JUnit 还提供了读取外部 CSV 格式文件数据的方式作为数据源的实现，我们只要用 @CsvFileSource 指定资源文件路径即可，使用起来跟 @CsvSource 一样简单这里就不再重复演示了。</p>
+<blockquote>
+<p>@CsvFileSource 指定的资源文件路径时要以 <code>/</code> 开始，寻找当前测试资源目录下文件。</p>
+</blockquote>
+<p>除了上面提到的三种数据源方式外，JUnit 还提供了以下三种数据源：</p>
+<ul>
+<li><strong>@EnumSource</strong>：允许我们通过参数值，给指定 Enum 枚举类型传入，构造出枚举类型中特定的值。</li>
+<li><strong>@MethodSource</strong>：指定一个返回的 Stream &#x2F; Array &#x2F; 可迭代对象 的方法作为数据源。 需要注意的是该方法必须是静态的，并且不能接受任何参数。</li>
+<li><strong>@ArgumentSource</strong>：通过实现 ArgumentsProvider 接口的参数类来作为数据源，重写它的 <code>provideArguments</code> 方法可以返回自定义类型的 Stream<Arguments>  ，作为测试方法所需要的数据使用。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/05/07/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Nexus%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/java-maven%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Nexus%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%8D/" class="post-title-link" itemprop="url">java-maven学习（五）——Nexus搭建私服</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 14:10:53" itemprop="dateCreated datePublished" datetime="2022-05-07T14:10:53Z">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><h2 id="什么是私服"><a href="#什么是私服" class="headerlink" title="什么是私服"></a>什么是私服</h2><p>私服是指私有服务器,是假设在局域网的一种特殊的远程仓库,目的是代理远程仓库及部署第三方构建.有了私服之后,当maven需要下载构件时,直接请求私服,私服上存在则下载到本地仓库;否则,私服请求外部的远程仓库,将构件下载到私服,在提供给本地仓库下载。</p>
+<h2 id="什么是Nexus"><a href="#什么是Nexus" class="headerlink" title="什么是Nexus"></a>什么是Nexus</h2><p>Nexus是一个强大的maven仓库管理器，它极大的简化了本地内部仓库的维护和外部仓库的访问</p>
+<p>Nexus是一套开箱即用的系统不需要数据库，它使用文件系统加Lucene来组织数据</p>
+<p>Nexus使用ExtJS来开发界面，利用Restlet来提供完整的REST APIs，通过IDEA和Eclipse集成使用</p>
+<p>Nexus支持WebDAV与LDAP安全身份认证</p>
+<p>Nexus提供了强大的仓库管理功能，构件搜索功能，它基于REST，友好的UI是一个extjs的REST客户端，占用较少的内存,基于简单文件系统而非数据库。</p>
+<h2 id="Nexus搭建私服的优点"><a href="#Nexus搭建私服的优点" class="headerlink" title="Nexus搭建私服的优点"></a>Nexus搭建私服的优点</h2><ul>
+<li>内网访问，节省外网带宽。</li>
+<li>一次外网下载，内网所有用户就可以只下载私服缓存，加速 Maven 项目构建。</li>
+<li>允许上传和下载私有库，并且不被外部访问，更加安全。</li>
+<li>减少外部网络因素，提供项目构建的稳定性。</li>
+<li>方便内部项目服务的依赖引用，而不需要其他项目的完整源代码。</li>
+<li>有利于公共构件的维护</li>
+<li>提高工作效率</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7043334312975925262">参考文章</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2442,457 +2756,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">java-设计模式（三）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-29 09:27:50" itemprop="dateCreated datePublished" datetime="2021-12-29T09:27:50Z">2021-12-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h1><p>核心作用：是从程序的结构上实现松耦合，从而可以扩大整体的类结构，用来解决更大的问题。</p>
-<p>分类：</p>
-<ul>
-<li>适配器模式、代理模式、桥接模式、 装饰模式、组合模式、外观模式、享元模式</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>代理模式</th>
-<th>为真实对象提供一个代理，从而控制对真实对象的访问</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>适配模式</td>
-<td>使原本由于接口不兼容不能一起工作的类可以一起工作</td>
-</tr>
-<tr>
-<td>桥接模式</td>
-<td>处理多层继承结构，处理多维度变化的场景，将各个维度设计成独立的继承结构，使各个维度可以独立的扩展在抽象层建立关联。</td>
-</tr>
-<tr>
-<td>组合模式</td>
-<td>将对象组合成树状结构以表示”部分和整体”层次结构，使得客户可以统一的调用叶子对象和容器对象</td>
-</tr>
-<tr>
-<td>装饰模式</td>
-<td>动态地给一个对象添加额外的功能，比继承灵活</td>
-</tr>
-<tr>
-<td>外观模式</td>
-<td>为子系统提供统一的调用接口，使得子系统更加容易使用</td>
-</tr>
-<tr>
-<td>享元模式</td>
-<td>运用共享技术有效的实现管理大量细粒度对象，节省内存，提高效率</td>
-</tr>
-</tbody></table>
-<h2 id="五、代理模式（proxy）"><a href="#五、代理模式（proxy）" class="headerlink" title="五、代理模式（proxy）"></a>五、代理模式（proxy）</h2><p>控制对其它对象的访问。</p>
-<p><strong>核心作用：</strong></p>
-<p>控制对其他对象的访问。</p>
-<p><strong>核心角色：</strong></p>
-<ul>
-<li><p>抽象角色：定义代理角色和真实角色的公共给对外方法</p>
-</li>
-<li><p>真实角色：实现抽象角色，定义真实角色所要实现的业务逻辑，供代理角色调用</p>
-<p><strong>关注真正的业务逻辑！</strong></p>
-</li>
-<li><p>代理角色：实现抽象角色，是真实角色的代理，通过真实角色的业务逻辑方法来实现抽象方法，并可以附加自己的操作。</p>
-<p><strong>将统一的流程控制放到代理角色中处理!</strong></p>
-</li>
-</ul>
-<p><strong>开发框架中应用场景：</strong></p>
-<ul>
-<li>struts2中拦截器的实现</li>
-<li>数据库连接池关闭处理</li>
-<li>Hibernate中延时加载的实现</li>
-<li>mybatis中实现拦截器插件</li>
-<li>AspectJ的实现</li>
-<li>spring中AOP的实现<ul>
-<li>日志拦截</li>
-<li>声明式事务处理</li>
-</ul>
-</li>
-<li>web service</li>
-<li>RMI远程方法调用</li>
-</ul>
-<p>包含四类：</p>
-<ul>
-<li><p>远程代理（remote proxy）:控制对源程对象不同地址空间）的访问。它负责将请求及其参数进行编码，并向不同地址空间中的对象发送已经编码的请求。</p>
-</li>
-<li><p>虚拟代理（Virtual Proxy）：根据需要创建开销很大的对象，它可以缓存实体的附加信息，以便延迟对它的访问，例如在网站加载一个很大图片时，不能马上完成，可以用虚拟代理缓存图片的大小信息，然后生成一张临时图片代替原始图片。</p>
-</li>
-<li><p>保护代理（Protection Proxy）：按权限控制对象的访问，它负责检查调用者是否具有实现一个请求所必须的访问权限。</p>
-</li>
-<li><p>智能代理（Smart Reference）：取代了简单的指针，它在访问对象时执行一些附加操作：记录对象的引用次数；当第一次引用一个对象时，将它装入内存；在访问一个实际对象前，检查是否已经锁定了它，以确保其它对象不能改变它。</p>
-</li>
-</ul>
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9b679ff5-94c6-48a7-b9b7-2ea868e828ed.png"/> </div><br>
-
-<p>例子：</p>
-<p>以下是一个虚拟代理的实现，模拟了图片延迟加载的情况下使用与图片大小相等的临时内容去替换原始图片，直到图片加载完成才将图片显示出来。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Image</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HighResolutionImage</span> <span class="keyword">implements</span> <span class="title class_">Image</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> URL imageURL;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> startTime;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> width;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getHeight</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getWidth</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">HighResolutionImage</span><span class="params">(URL imageURL)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.imageURL = imageURL;</span><br><span class="line">        <span class="built_in">this</span>.startTime = System.currentTimeMillis();</span><br><span class="line">        <span class="built_in">this</span>.width = <span class="number">600</span>;</span><br><span class="line">        <span class="built_in">this</span>.height = <span class="number">600</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isLoad</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 模拟图片加载，延迟 3s 加载完成</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">endTime</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">return</span> endTime - startTime &gt; <span class="number">3000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Real Image: &quot;</span> + imageURL);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageProxy</span> <span class="keyword">implements</span> <span class="title class_">Image</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HighResolutionImage highResolutionImage;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ImageProxy</span><span class="params">(HighResolutionImage highResolutionImage)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.highResolutionImage = highResolutionImage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (!highResolutionImage.isLoad()) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Temp Image: &quot;</span> + highResolutionImage.getWidth() + <span class="string">&quot; &quot;</span> + highResolutionImage.getHeight());</span><br><span class="line">                Thread.sleep(<span class="number">100</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        highResolutionImage.showImage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageViewer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">image</span> <span class="operator">=</span> <span class="string">&quot;http://image.jpg&quot;</span>;</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(image);</span><br><span class="line">        <span class="type">HighResolutionImage</span> <span class="variable">highResolutionImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HighResolutionImage</span>(url);</span><br><span class="line">        <span class="type">ImageProxy</span> <span class="variable">imageProxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageProxy</span>(highResolutionImage);</span><br><span class="line">        imageProxy.showImage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="面向切面编程AOP介绍"><a href="#面向切面编程AOP介绍" class="headerlink" title="面向切面编程AOP介绍"></a>面向切面编程AOP介绍</h2><p>AOP（Aspect-Oriented Programming，面向切面的编程） </p>
-<ul>
-<li>它是可以通过预编译方式和运行期动态代理实现在不修改源代码的情 况下给程序动态统一添加功能的一种技术。它是一种新的方法论，它是对传统OOP编程的一种补充。</li>
-</ul>
-<p>常用术语：</p>
-<ul>
-<li><p>切面（Aspect）：其实就是共有功能的实现。 </p>
-</li>
-<li><p>通知（Advice）：是切面的具体实现。 </p>
-</li>
-<li><p>连接点（Joinpoint）：就是程序在运行过程中能够插入切面的地点。 </p>
-</li>
-<li><p>切入点（Pointcut）：用于定义通知应该切入到哪些连接点上。 </p>
-</li>
-<li><p>目标对象（Target）：就是那些即将切入切面的对象，也就是那些被通知的对象 </p>
-</li>
-<li><p>代理对象（Proxy）：将通知应用到目标对象之后被动态创建的对象。 </p>
-</li>
-<li><p>织入（Weaving）：将切面应用到目标对象从而创建一个新的代理对象的过程。</p>
-</li>
-</ul>
-<p>开源的AOP框架：</p>
-<ul>
-<li>Aspect</li>
-</ul>
-<h2 id="六、适配器模式（Adapter）"><a href="#六、适配器模式（Adapter）" class="headerlink" title="六、适配器模式（Adapter）"></a>六、适配器模式（Adapter）</h2><p>把一个类接口转换成另一个用户需要的接口。</p>
-<p><strong>使用场景</strong></p>
-<ul>
-<li>系统需要使用<strong>现有的类</strong>，而这些类的<strong>接口不符合</strong>系统的需要。</li>
-<li>想要建立一个可以<strong>重复使用</strong>的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
-<li>需要一个<strong>统一的输出接口</strong>，而输入端的类型不可预知。</li>
-</ul>
-<p><strong>工作中的场景</strong></p>
-<ul>
-<li><p>经常用来做旧系统改造和升级</p>
-</li>
-<li><p>如果我们的系统开发之后再也不需要维护，那么很多模式都是没必要的，但是不幸的是，事实却是维护一个系统的代价往往是开发一个系统的数倍。</p>
-</li>
-</ul>
-<p><strong>我们学习中见过的场景</strong></p>
-<ul>
-<li>java.io.InputStreamReader(InputStream)</li>
-<li>java.io.OutputStreamWriter(OutputStream)</li>
-</ul>
-<h3 id="类适配器模式"><a href="#类适配器模式" class="headerlink" title="类适配器模式"></a>类适配器模式</h3><p>一句话描述：Adapter类，通过<strong>继承</strong>需要被适配的类，<strong>实现</strong>我们想要的类<strong>接口</strong>，完成src-&gt;dst的适配。</p>
-<p>我们现有的src类：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 介绍：src类: 我们有的220V电压</span></span><br><span class="line"><span class="comment"> * 作者：zhangxutong</span></span><br><span class="line"><span class="comment"> * 邮箱：zhangxutong@imcoming.com</span></span><br><span class="line"><span class="comment"> * 时间： 2016/10/18.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Voltage220</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">output220V</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> src = <span class="number">220</span>;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">&quot;我是&quot;</span> + src + <span class="string">&quot;V&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们想要的dst接口：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="language-markdown">/<span class="strong">**</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 介绍：dst接口：客户需要的5V电压</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 作者：zhangxutong</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 邮箱：zhangxutong@imcoming.com</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 时间： 2016/10/18.</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">*/</span></span></span></span></span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">interface</span> <span class="title">Voltage5</span> </span>&#123;</span><br><span class="line">    <span class="built_in">int</span> output5V();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>适配器类：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="language-markdown">/<span class="strong">**</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 介绍：Adapter类：完成220V-5V的转变</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 通过继承src类，实现 dst 类接口，完成src-&gt;dst的适配。</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 作者：zhangxutong</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 邮箱：zhangxutong@imcoming.com</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 时间： 2016/10/18.</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span>/</span></span></span></span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">VoltageAdapter</span> <span class="keyword">extends</span> <span class="title">Voltage220</span> <span class="keyword">implements</span> <span class="title">Voltage5</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public <span class="built_in">int</span> output5V() &#123;</span><br><span class="line">        <span class="built_in">int</span> src = output220V();</span><br><span class="line">        System.out.println(<span class="string">&quot;适配器工作开始适配电压&quot;</span>);</span><br><span class="line">        <span class="built_in">int</span> dst = src / <span class="number">44</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;适配完成后输出电压：&quot;</span> + dst);</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="对象的适配器模式（常用）"><a href="#对象的适配器模式（常用）" class="headerlink" title="对象的适配器模式（常用）"></a>对象的适配器模式（常用）</h3><p>基本思路和类的适配器模式相同，只是将Adapter类作修改，这次不继承src类，而是持有src类的实例，以解决<strong>兼容性</strong>的问题。<br> 即：<strong>持有</strong> src类，<strong>实现</strong> dst 类<strong>接口</strong>，完成src-&gt;dst的适配。<br> （根据“合成复用原则”，在系统中<strong>尽量使用关联关系来替代继承关系</strong>，因此大部分结构型模式都是对象结构型模式。）</p>
-<p> Adapter类如下：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 介绍：对象适配器模式：</span></span><br><span class="line"><span class="comment"> * 持有 src类，实现 dst 类接口，完成src-&gt;dst的适配。 。以达到解决**兼容性**的问题。</span></span><br><span class="line"><span class="comment"> * 作者：zhangxutong</span></span><br><span class="line"><span class="comment"> * 邮箱：zhangxutong@imcoming.com</span></span><br><span class="line"><span class="comment"> * 时间： 2016/10/18.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VoltageAdapter2</span> <span class="title">implements</span> <span class="title">Voltage5</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Voltage220 mVoltage220;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VoltageAdapter2</span>(<span class="params">Voltage220 voltage220</span>)</span> &#123;</span><br><span class="line">        mVoltage220 = voltage220;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">output5V</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> dst = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != mVoltage220) &#123;</span><br><span class="line">            <span class="built_in">int</span> src = mVoltage220.output220V();</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">&quot;对象适配器工作，开始适配电压&quot;</span>);</span><br><span class="line">            dst = src / <span class="number">44</span>;</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">&quot;适配完成后输出电压：&quot;</span> + dst);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对象适配器和类适配器其实算是同一种思想，只不过实现方式不同。<br> 根据合成复用原则，组合大于继承，<br> 所以它解决了类适配器必须继承src的局限性问题，也不再强求dst必须是接口。<br> 同样的它使用成本更低，更灵活。</p>
-<p>（和装饰者模式初学时可能会弄混，这里要搞清，装饰者是对src的装饰，使用者毫无察觉到src已经被装饰了（使用者用法不变）。 这里对象适配以后，使用者的用法还是变的。<br> <strong>即，装饰者用法： setSrc-&gt;setSrc，对象适配器用法：setSrc-&gt;setAdapter.</strong>)</p>
-<h3 id="接口的适配器模式"><a href="#接口的适配器模式" class="headerlink" title="接口的适配器模式"></a>接口的适配器模式</h3><p>定义：</p>
-<p>当不需要<strong>全部实现</strong>接口提供的方法时，可先设计一个<strong>抽象类</strong>实现接口，并为该接口中每个方法提供一个<strong>默认实现</strong>（空方法），那么该抽象类的子类可<strong>有选择</strong>地覆盖父类的某些方法来实现需求，它适用于<strong>一个接口不想使用其所有的方法</strong>的情况。</p>
-<h2 id="七、桥接模式（Bridge）"><a href="#七、桥接模式（Bridge）" class="headerlink" title="七、桥接模式（Bridge）"></a>七、桥接模式（Bridge）</h2><p>将抽象与实现分离开来，使得它们可以独立变化。</p>
-<p><strong>核心要点</strong></p>
-<ul>
-<li>处理多层继承结构，处理多维度变化的场景，将各个维度设计成独立的继承结构，使各个维度可以独立的扩展在抽象层建立关联。</li>
-</ul>
-<p><strong>效果及实现要点</strong>：</p>
-<ol>
-<li>桥接模式使用对象见的组合关系解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。</li>
-<li>所谓抽象和实现沿着各自维度的变化，即“<strong>子类化</strong>”它们，得到各个子类之后，便可以任意它们，从而获得不同路上的不同其次。</li>
-<li>桥接模式有时候类似于多继承方案，但是多继承方案往往违背了SRP原则，复用性较差。桥接模式是比继承方案更好的解决方法。</li>
-<li>桥接模式的应用一般在“两个非常强的变化维度”，有时候即使有两个变化的维度，但是某个方向的变化维度并不剧烈——换而言之两个变化不会导致纵横交错的结果，并不一定要使用桥接模式。</li>
-</ol>
-<p><strong>使用场景</strong></p>
-<ol>
-<li>如果你不希望在抽象和实现部分采用固定的绑定关系，可以采用桥接模式，来把抽象和实现部分分开，然后在程序运行期间来动态的设置抽象部分需要用到的具体的实现，还可以动态切换具体的实现。</li>
-<li>如果出现抽象部分和实现部分都应该可以扩展的情况，可以采用桥接模式，让抽象部分和实现部分可以独立的变化，从而可以灵活的进行单独扩展，而不是搅在一起，扩展一边会影响到另一边。</li>
-<li>如果希望实现部分的修改，不会对客户产生影响，可以采用桥接模式，客户是面向抽象的接口在运行，实现部分的修改，可以独立于抽象部分，也就不会对客户产生影响了，也可以说对客户是透明的。</li>
-<li>如果采用继承的实现方案，会导致产生很多子类，对于这种情况，可以考虑采用桥接模式，分析功能变化的原因，看看是否能分离成不同的纬度，然后通过桥接模式来分离它们，从而减少子类的数目。</li>
-</ol>
-<p><strong>实际开发中应用场景</strong></p>
-<ul>
-<li>JDBC驱动程序 <ul>
-<li>AWT中的Peer架构</li>
-</ul>
-</li>
-<li>银行日志管理：<ul>
-<li>格式分类：操作日志、交易日志、异常日志 </li>
-<li>距离分类：本地记录日志、异地记录日志</li>
-</ul>
-</li>
-<li>人力资源系统中的奖金计算模块： <ul>
-<li>奖金分类：个人奖金、团体奖金、激励奖金。 </li>
-<li>部门分类：人事部门、销售部门、研发部门。</li>
-</ul>
-</li>
-<li>OA系统中的消息处理： <ul>
-<li>业务类型：普通消息、加急消息、特急消息 </li>
-<li>发送消息方式：系统内消息、手机短信、邮件</li>
-</ul>
-</li>
-</ul>
-<h2 id="八、组合模式（composite）"><a href="#八、组合模式（composite）" class="headerlink" title="八、组合模式（composite）"></a>八、组合模式（composite）</h2><p>将对象组合成树形结构来表示“整体&#x2F;部分”层次关系，允许用户以相同的方式处理单独对象和组合对象。</p>
-<p><strong>组合模式核心：</strong></p>
-<ul>
-<li>组合部件（Component）：它是一个抽象角色，为要组合的对象提供统一的接口。</li>
-<li>叶子（Leaf）：在组合中表示子节点对象，叶子节点不能有子节点。</li>
-<li>合成部件（Composite）：定义有枝节点的行为，用来存储部件，实现在Component接口中的有关操作，如增加（Add）和删除（Remove）</li>
-</ul>
-<p>组件（Component）类是组合类（Composite）和叶子类（Leaf）的父类，可以把组合类看成是树的中间节点。</p>
-<p>组合对象拥有一个或者多个组件对象，因此组合对象的操作可以委托给组件对象去处理，而组件对象可以是另一个组合对象或者叶子对象。</p>
-<h3 id="透明模式"><a href="#透明模式" class="headerlink" title="透明模式"></a>透明模式</h3><p>在Component中声明所有来管理子对象的方法，其中包括Add，Remove等。这样实现Component接口的所有子类都具备了Add和Remove方法。这样做的好处是叶节点和枝节点对于外界没有区别，它们具备完全一致的接口。</p>
-<p>component：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Component</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//增加一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取分支下的所有叶子构件和树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>composite：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Composite</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构建容器</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;Component&gt; componentArrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Component&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.add(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.remove(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//下级遍历</span></span><br><span class="line">        <span class="keyword">for</span> (Component component : componentArrayList) &#123;</span><br><span class="line">            component.display(depth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>leaf：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Leaf</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="comment">//空实现，抛出“不支持请求”异常</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="comment">//空实现，抛出“不支持请求”异常</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构的叶子节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>弊端：客户端对叶节点和枝节点是一致的，但叶节点并不具备Add和Remove的功能，因而对它们的实现是没有意义的</p>
-<h3 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h3><p>安全模式是把树枝节点和树叶节点彻底分开，树枝节点单独拥有用来组合的方法，这种方法比较安全。</p>
-<p>component:</p>
-<p>这里相比透明模式就少了add()和romove()抽象方法的声明。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Component</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取分支下的所有叶子构件和树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>composite：</p>
-<p>这里add()和remove()方法的实现就从继承变为了自己实现。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Composite</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构建容器</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;Component&gt; componentArrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Component&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//增加一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.add(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.remove(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//下级遍历</span></span><br><span class="line">        <span class="keyword">for</span> (Component component : componentArrayList) &#123;</span><br><span class="line">            component.display(depth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>leaf：</p>
-<p>叶子节点中没有了空实现，比较安全。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Leaf</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构的叶子节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="组合模式的应用"><a href="#组合模式的应用" class="headerlink" title="组合模式的应用"></a>组合模式的应用</h3><p>　　1. 何时使用</p>
-<ul>
-<li>想表达“部分-整体”层次结构（树形结构）时</li>
-<li>希望用户忽略组合对象与单个对象的不同，用户将统一的使用组合结构中的所有对象</li>
-</ul>
-<p>　　2. 方法</p>
-<ul>
-<li>树枝和叶子实现统一接口，树枝内部组合该接口</li>
-</ul>
-<p>　　3. 优点</p>
-<ul>
-<li>高层模块调用简单。一棵树形机构中的所有节点都是Component，局部和整体对调用者来说没有任何区别，高层模块不必关心自己处理的是单个对象还是整个组合结构。</li>
-<li>节点自由增加</li>
-</ul>
-<p>　　4. 缺点</p>
-<ul>
-<li>使用组合模式时，其叶子和树枝的声明都是实现类，而不是接口，违反了依赖倒转原则</li>
-</ul>
-<p>　　5. 使用场景</p>
-<ul>
-<li>维护和展示部分-整体关系的场景（如树形菜单、文件和文件夹管理）</li>
-<li>从一个整体中能够独立出部分模块或功能的场景</li>
-</ul>
-<p>　　6. 应用实例</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/adamjwh/p/8392737.html">Swing</a>中，Button、Checkbox等组件都是树叶，而Container容器是树枝</li>
-<li>文本编辑时，可以单个字编辑，也可以整段编辑，还可以全文编辑</li>
-<li>文件复制时，可以一个一个文件复制，也可以整个文件夹复制</li>
-</ul>
-<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adamjwh/p/9033547.html">简说设计模式——组合模式 - JAdam - 博客园 (cnblogs.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/" class="post-title-link" itemprop="url">java-设计模式（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-29 09:27:05" itemprop="dateCreated datePublished" datetime="2021-12-29T09:27:05Z">2021-12-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="三、建造者模式（Builder）"><a href="#三、建造者模式（Builder）" class="headerlink" title="三、建造者模式（Builder）"></a>三、建造者模式（Builder）</h2><p>建造者模式可以将一个类的构建和表示进行分离</p>
-<p><strong>适用场景：</strong></p>
-<ul>
-<li>隔离复杂对象的创建和使用，相同的方法，不同执行顺序，产生不同事件结果</li>
-<li>多个部件都可以装配到一个对象中，但产生的运行结果不相同</li>
-<li>产品类非常复杂或者产品类因为调用顺序不同而产生不同作用</li>
-<li>初始化一个对象时，参数过多，或者很多参数具有默认值</li>
-<li>Builder模式不适合创建差异性很大的产品类<br> 产品内部变化复杂，会导致需要定义很多具体建造者类实现变化，增加项目中类的数量，增加系统的理解难度和运行成本</li>
-<li>需要生成的产品对象有复杂的内部结构，这些产品对象具备共性；</li>
-</ul>
-<p><strong>开发中应用场景：</strong></p>
-<ul>
-<li>StringBuilder类的append方法</li>
-<li>SQL中的PreparedStatement</li>
-<li>JDOM中，DomBuilder、SAXBuilder</li>
-</ul>
-<p>参考文章：</p>
-<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3d1c9ffb0a28">一篇文章就彻底弄懂建造者模式(Builder Pattern) - 简书 (jianshu.com)</a></p>
-<h2 id="四、原型模式（prototype）"><a href="#四、原型模式（prototype）" class="headerlink" title="四、原型模式（prototype）"></a>四、原型模式（prototype）</h2><p>使用原型实例指定要创建对象的类型，通过复制这个原型来创建新对象。</p>
-<p><strong>适用场景</strong></p>
-<ul>
-<li>通过new产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式</li>
-<li>就是java中的克隆技术，以某个对象为原型，复制出新的对象。显然，新的对象具备原型对象的特点。优势有：效率高(直接克隆，避免了重新执行构造过程步骤) </li>
-<li>克隆类似于new，但是不同于new。new创建新的对象属性采用的是默认值。克隆出的 对象的属性值完全和原型对象相同。并且克隆出的新对象改变不会影响原型对象。然后， 再修改克隆对象的值。</li>
-</ul>
-<h3 id="原型模式实现"><a href="#原型模式实现" class="headerlink" title="原型模式实现"></a>原型模式实现</h3><ul>
-<li>Cloneable接口和clone方法</li>
-<li>Prototype模式中实现起来最困难的地方就是内存复制操作，所幸在Java中提供了 clone()方法替我们做了绝大部分事情。</li>
-</ul>
-<p>例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Prototype</span> &#123;</span><br><span class="line">    <span class="keyword">abstract</span> Prototype <span class="title function_">myClone</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcretePrototype</span> <span class="keyword">extends</span> <span class="title class_">Prototype</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String filed;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcretePrototype</span><span class="params">(String filed)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.filed = filed;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    Prototype <span class="title function_">myClone</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcretePrototype</span>(filed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> filed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Prototype</span> <span class="variable">prototype</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcretePrototype</span>(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">        <span class="type">Prototype</span> <span class="variable">clone</span> <span class="operator">=</span> prototype.myClone();</span><br><span class="line">        System.out.println(clone.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abc</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2958,7 +2825,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

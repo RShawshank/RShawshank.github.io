@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">140</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,483 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/14/OS_linux%E7%9A%84%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/14/OS_linux%E7%9A%84%E7%90%90%E7%A2%8E%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">linux的琐碎知识点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-14 11:21:34" itemprop="dateCreated datePublished" datetime="2019-12-14T11:21:34Z">2019-12-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="创建进程"><a href="#创建进程" class="headerlink" title="创建进程"></a>创建进程</h1><p>父进程创建子进程需要用到fork()函数。调用 fork 时，系统将创建一个与当前进程相同的新进程。通常将原有的进程称为父进程，把新创建的进程称为子进程。子进程是父进程的一个拷贝，子进程获得同父进程相同的数据，但是同父进程使用不同的数据段和堆栈段。子进程从父进程继承大多数的属性，但是也修改一些属性，下表对比了父子进程间的属性差异：</p>
+<table>
+<thead>
+<tr>
+<th>继承属性</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>uid,gid,euid,egid</td>
+<td>进程 ID</td>
+</tr>
+<tr>
+<td>进程组 ID</td>
+<td>父进程 ID</td>
+</tr>
+<tr>
+<td>SESSION ID</td>
+<td>子进程运行时间记录</td>
+</tr>
+<tr>
+<td>所打开文件及文件的偏移量</td>
+<td>父进程对文件的锁定</td>
+</tr>
+<tr>
+<td>控制终端</td>
+<td></td>
+</tr>
+<tr>
+<td>设置用户 ID 和 设置组 ID 标记位</td>
+<td></td>
+</tr>
+<tr>
+<td>根目录与当前目录</td>
+<td></td>
+</tr>
+<tr>
+<td>文件默认创建的权限掩码</td>
+<td></td>
+</tr>
+<tr>
+<td>可访问的内存区段</td>
+<td></td>
+</tr>
+<tr>
+<td>环境变量及其它资源分配</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>fork调用的一个奇妙之处就是它仅仅被调用一次，却能够返回两次</strong>，<strong>在父进程中调用一次，在父进程和子进程中各返回一次。</strong>它可能有三种不同的返回值：<br>  1）在父进程中，fork返回新创建子进程的进程ID；<br>  2）在子进程中，fork返回0；<br>  3）如果出现错误，fork返回一个负值；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>   </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span> <span class="params">()</span>   </span><br><span class="line">&#123;   </span><br><span class="line">    <span class="type">pid_t</span> fpid; <span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="type">int</span> count=<span class="number">0</span>;  </span><br><span class="line">    fpid=fork();   </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error in fork!&quot;</span>);   </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;i am the child process, my process id is %d/n&quot;</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;我是爹的儿子/n&quot;</span>);<span class="comment">//对某些人来说中文看着更直白。  </span></span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;i am the parent process, my process id is %d/n&quot;</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;我是孩子他爹/n&quot;</span>);  </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;统计结果是: %d/n&quot;</span>,count);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>运行结果是：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i am <span class="keyword">the</span> child process, <span class="keyword">my</span> process <span class="built_in">id</span> <span class="keyword">is</span> <span class="number">5574</span></span><br><span class="line"> 我是爹的儿子</span><br><span class="line"> 统计结果是: <span class="number">1</span></span><br><span class="line"> i am <span class="keyword">the</span> parent process, <span class="keyword">my</span> process <span class="built_in">id</span> <span class="keyword">is</span> <span class="number">5573</span></span><br><span class="line"> 我是孩子他爹</span><br><span class="line"> 统计结果是: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p> 在语句fpid&#x3D;fork()之前，只有一个进程在执行这段代码，<strong>但在这条语句之后，就变成两个进程在执行了，这两个进程的几乎完全相同，将要执行的下一条语句都是if(fpid&lt;0)……</strong></p>
+<p>  在fork函数执行完毕后，如果创建新进程成功，则出现两个进程，一个是子进程，一个是父进程。在子进程中，fork函数返回0，在父进程中，fork返回新创建子进程的进程ID。我们可以通过fork返回的值来判断当前进程是子进程还是父进程。</p>
+<p> 引用一位网友的话来解释fpid的值为什么在父子进程中不同。“其实就相当于链表，进程形成了链表，父进程的fpid(p 意味point)指向子进程的进程id, 因为子进程没有子进程，所以其fpid为0.<br>  fork出错可能有两种原因：<br>  1）当前的进程数已经达到了系统规定的上限，这时errno的值被设置为EAGAIN。<br>  2）系统内存不足，这时errno的值被设置为ENOMEM。<br>  创建新进程成功后，系统中出现两个基本完全相同的进程，这两个进程执行没有固定的先后顺序，哪个进程先执行要看系统的进程调度策略。<br>  每个进程都有一个独特（互不相同）的进程标识符（process ID），可以通过getpid（）函数获得，还有一个记录父进程pid的变量，可以通过getppid（）函数获得变量的值。<br>  fork执行完毕后，出现两个进程。</p>
+<p> 有人说两个进程的内容完全一样啊，怎么打印的结果不一样啊，那是因为判断条件的原因，上面列举的只是进程的代码和指令，还有变量啊。<br>  执行完fork后，进程1的变量为count&#x3D;0，fpid！&#x3D;0（父进程）。进程2的变量为count&#x3D;0，fpid&#x3D;0（子进程），这两个进程的变量都是独立的，存在不同的地址中，不是共用的，这点要注意。可以说，我们就是通过fpid来识别和操作父子进程的。<br>  还有人可能疑惑为什么不是从#include处开始复制代码的，这是因为fork是把进程当前的情况拷贝一份，执行fork时，进程已经执行完了int count&#x3D;0;fork只拷贝下一个要执行的代码到新的进程。</p>
+<h3 id="fork进阶知识"><a href="#fork进阶知识" class="headerlink" title="fork进阶知识"></a>fork进阶知识</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>  </span><br><span class="line">&#123;  </span><br><span class="line">   <span class="type">int</span> i=<span class="number">0</span>;  </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;i son/pa ppid pid  fpid/n&quot;</span>);  </span><br><span class="line">   <span class="comment">//ppid指当前进程的父进程pid  </span></span><br><span class="line">   <span class="comment">//pid指当前进程的pid,  </span></span><br><span class="line">   <span class="comment">//fpid指fork返回给当前进程的值  </span></span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;  </span><br><span class="line">       <span class="type">pid_t</span> fpid=fork();  </span><br><span class="line">       <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;%d child  %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">       <span class="keyword">else</span>  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;%d parent %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">   &#125;  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">运行结果是：</span></span><br><span class="line">   <span class="string">i</span> <span class="string">son/pa</span> <span class="string">ppid</span> <span class="string">pid</span>  <span class="string">fpid</span></span><br><span class="line">   <span class="number">0</span> <span class="string">parent</span> <span class="number">2043 </span><span class="number">3224 </span><span class="number">3225</span></span><br><span class="line">   <span class="number">0</span> <span class="string">child</span>  <span class="number">3224 </span><span class="number">3225    </span><span class="number">0</span></span><br><span class="line">   <span class="number">1</span> <span class="string">parent</span> <span class="number">2043 </span><span class="number">3224 </span><span class="number">3226</span></span><br><span class="line">   <span class="number">1</span> <span class="string">parent</span> <span class="number">3224 </span><span class="number">3225 </span><span class="number">3227</span></span><br><span class="line">   <span class="number">1</span> <span class="string">child</span>     <span class="number">1</span> <span class="number">3227    </span><span class="number">0</span></span><br><span class="line">   <span class="number">1</span> <span class="string">child</span>     <span class="number">1</span> <span class="number">3226    </span><span class="number">0</span> </span><br></pre></td></tr></table></figure>
+
+<p> 这份代码比较有意思，我们来认真分析一下：<br>  第一步：在父进程中，指令执行到for循环中，i&#x3D;0，接着执行fork，fork执行完后，系统中出现两个进程，分别是p3224和p3225（后面我都用pxxxx表示进程id为xxxx的进程）。可以看到父进程p3224的父进程是p2043，子进程p3225的父进程正好是p3224。我们用一个链表来表示这个关系：<br>  p2043-&gt;p3224-&gt;p3225<br>  第一次fork后，p3224（父进程）的变量为i&#x3D;0，fpid&#x3D;3225（fork函数在父进程中返向子进程id），代码内容为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;  </span><br><span class="line">    <span class="type">pid_t</span> fpid=fork();<span class="comment">//执行完毕，i=0，fpid=3225  </span></span><br><span class="line">    <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;%d child  %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;%d parent %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;  </span><br></pre></td></tr></table></figure>
+
+<p> p3225（子进程）的变量为i&#x3D;0，fpid&#x3D;0（fork函数在子进程中返回0），代码内容为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;  </span><br><span class="line">    <span class="type">pid_t</span> fpid=fork();<span class="comment">//执行完毕，i=0，fpid=0  </span></span><br><span class="line">    <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;%d child  %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">       <span class="built_in">printf</span>(<span class="string">&quot;%d parent %4d %4d %4d/n&quot;</span>,i,getppid(),getpid(),fpid);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;  </span><br></pre></td></tr></table></figure>
+
+<p> 所以打印出结果：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">0 </span>parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3225</span></span><br><span class="line"><span class="symbol">0 </span>child <span class="number">3224</span> <span class="number">3225</span>  <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>  第二步：假设父进程p3224先执行，当进入下一个循环时，i&#x3D;1，接着执行fork，系统中又新增一个进程p3226，对于此时的父进程，p2043-&gt;p3224（当前进程）-&gt;p3226（被创建的子进程）。<br>  对于子进程p3225，执行完第一次循环后，i&#x3D;1，接着执行fork，系统中新增一个进程p3227，对于此进程，p3224-&gt;p3225（当前进程）-&gt;p3227（被创建的子进程）。从输出可以看到p3225原来是p3224的子进程，现在变成p3227的父进程。父子是相对的，这个大家应该容易理解。只要当前进程执行了fork，该进程就变成了父进程了，就打印出了parent。<br>  所以打印出结果是：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span>parent <span class="number">2043</span> <span class="number">3224</span> <span class="number">3226</span></span><br><span class="line"><span class="symbol">1 </span>parent <span class="number">3224</span> <span class="number">3225</span> <span class="number">3227</span> </span><br></pre></td></tr></table></figure>
+
+<p>  第三步：第二步创建了两个进程p3226，p3227，这两个进程执行完printf函数后就结束了，因为这两个进程无法进入第三次循环，无法fork，该执行return 0;了，其他进程也是如此。<br>  以下是p3226，p3227打印出的结果：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span>child   <span class="number">1</span> <span class="number">3227</span>  <span class="number">0</span></span><br><span class="line"><span class="symbol">1 </span>child   <span class="number">1</span> <span class="number">3226</span>  <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+
+<p>  细心的读者可能注意到p3226，p3227的父进程难道不该是p3224和p3225吗，怎么会是1呢？这里得讲到进程的创建和死亡的过程，在p3224和p3225执行完第二个循环后，main函数就该退出了，也即进程该死亡了，因为它已经做完所有事情了。p3224和p3225死亡后，p3226，p3227就没有父进程了，这在操作系统是不被允许的，所以p3226，p3227的父进程就被置为p1了，p1是永远不会死亡的，至于为什么，这里先不介绍，留到“三、fork高阶知识”讲。</p>
+<h3 id="fork高阶知识"><a href="#fork高阶知识" class="headerlink" title="fork高阶知识"></a>fork高阶知识</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>  </span><br><span class="line">&#123;  </span><br><span class="line">   <span class="type">int</span> i=<span class="number">0</span>;  </span><br><span class="line">   <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;  </span><br><span class="line">       <span class="type">pid_t</span> fpid=fork();  </span><br><span class="line">       <span class="keyword">if</span>(fpid==<span class="number">0</span>)  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;son/n&quot;</span>);  </span><br><span class="line">       <span class="keyword">else</span>  </span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;father/n&quot;</span>);  </span><br><span class="line">   &#125;  </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>  它的执行结果是：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">father</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> son</span></span><br><span class="line"><span class="attribute"> father</span></span><br><span class="line"><span class="attribute"> son</span> </span><br></pre></td></tr></table></figure>
+
+<p>  这里就不做详细解释了，只做一个大概的分析。</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">for</span>    i=<span class="number">0</span>     <span class="number">1</span>      <span class="number">2</span></span><br><span class="line">     <span class="attribute">father</span>  father   father</span><br><span class="line">                  	<span class="attribute">son</span></span><br><span class="line">             <span class="attribute">son</span>    	father</span><br><span class="line">                   	<span class="attribute">son</span></span><br><span class="line">      <span class="attribute">son</span>    father   father</span><br><span class="line">                   	<span class="attribute">son</span></span><br><span class="line">             <span class="attribute">son</span>    	father</span><br><span class="line">                  	<span class="attribute">son</span></span><br></pre></td></tr></table></figure>
+
+<p>  其中每一行分别代表一个进程的运行打印结果。<br>  总结一下规律，对于这种N次循环的情况，执行printf函数的次数为2*（1+2+4+……+2N-1）次，创建的子进程数为1+2+4+……+2N-1个。数学推理见<a target="_blank" rel="noopener" href="http://202.117.3.13/wordpress/?p=81">http://202.117.3.13/wordpress/?p=81</a><br>  同时，大家如果想测一下一个程序中到底创建了几个子进程，最好的方法就是调用printf函数打印该进程的pid，也即调用printf(“%d&#x2F;n”,getpid());或者通过printf(“+&#x2F;n”);来判断产生了几个进程。有人想通过调用printf(“+”);来统计创建了几个进程，这是不妥当的。具体原因我来分析。<br>  老规矩，大家看一下下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;  </span><br><span class="line">    <span class="type">pid_t</span> fpid;<span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="comment">//printf(&quot;fork!&quot;);  </span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;fork!/n&quot;</span>);  </span><br><span class="line">    fpid = fork();  </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error in fork!&quot;</span>);  </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>)  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;I am the child process, my process id is %d/n&quot;</span>, getpid());  </span><br><span class="line">    <span class="keyword">else</span>  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;I am the parent process, my process id is %d/n&quot;</span>, getpid());  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>执行结果如下：<br>  fork!<br>  I am the parent process, my process id is 3361<br>  I am the child process, my process id is 3362<br>  如果把语句printf(“fork!&#x2F;n”);注释掉，执行printf(“fork!”);<br>  则新的程序的执行结果是：<br>  fork!I am the parent process, my process id is 3298<br>  fork!I am the child process, my process id is 3299<br>  程序的唯一的区别就在于一个&#x2F;n回车符号，为什么结果会相差这么大呢？<br>  这就跟printf的缓冲机制有关了，printf某些内容时，操作系统仅仅是把该内容放到了stdout的缓冲队列里了,并没有实际的写到屏幕上。但是,只要看到有&#x2F;n 则会立即刷新stdout,因此就马上能够打印了。<br>  运行了printf(“fork!”)后,“fork!”仅仅被放到了缓冲里,程序运行到fork时缓冲里面的“fork!” 被子进程复制过去了。因此在子进程度stdout缓冲里面就也有了fork! 。所以,你最终看到的会是fork! 被printf了2次！！！！<br>  而运行printf(“fork! &#x2F;n”)后,“fork!”被立即打印到了屏幕上,之后fork到的子进程里的stdout缓冲里不会有fork! 内容。因此你看到的结果会是fork! 被printf了1次！！！！<br>  所以说printf(“+”);不能正确地反应进程的数量。<br>  大家看了这么多可能有点疲倦吧，不过我还得贴最后一份代码来进一步分析fork函数。</p>
+<h1 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h1><h2 id="linux的信号量机制"><a href="#linux的信号量机制" class="headerlink" title="linux的信号量机制"></a>linux的信号量机制</h2><p>对于与信号量操作有关的接口，Linux下主要提供了以下几个函数，值得注意的是，在Linux下的C接口中，这些函数的操作对象都是信号量值组，也就是一个信号量值的链表</p>
+<p>在Linux系统中，使用信号量通常分为以下4个步骤：</p>
+<p>  ①  创建信号量或获得在系统中已存在的信号量，此时需要调用 semget() 函数。不同进程通过使用同一个信号量键值来获得同一个信号量。</p>
+<p>  ②  初始化信号量，此时使用 semctl() 函数的SETVAL操作。当使用二维信号量时，通常将信号量初始化为1。</p>
+<p>  ③  进行信号量的PV操作，此时，调用 semop()函数。这一步是实现进程间的同步和互斥的核心工作部分。</p>
+<p>  ④  如果不需要信号量，则从系统中删除它，此时使用semctl()函数的 IPC_RMID操作。需要注意的是，在程序中不应该出现对已经被删除的信号量的操作。</p>
+<p><strong>1、semget()函数</strong></p>
+<p>它的作用是创建一个新信号量或取得一个已有信号量，原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">semget</span><span class="params">(<span class="type">key_t</span> key, <span class="type">int</span> num_sems, <span class="type">int</span> sem_flags)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数key是整数值（唯一非零），不相关的进程可以通过它访问一个信号量，它代表程序可能要使用的某个资源，程序对所有信号量的访问都是间接的，程序先通过调用semget()函数并提供一个键，再由系统生成一个相应的信号标识符（semget()函数的返回值），只有semget()函数才直接使用信号量键，所有其他的信号量函数使用由semget()函数返回的信号量标识符。如果多个程序使用相同的key值，key将负责协调工作。</p>
+<p>第二个参数num_sems指定需要的信号量数目，它的值几乎总是1。</p>
+<p>第三个参数sem_flags是一组标志，当想要当信号量不存在时创建一个新的信号量，可以和值IPC_CREAT做按位或操作。设置了IPC_CREAT标志后，即使给出的键是一个已有信号量的键，也不会产生错误。而IPC_CREAT | IPC_EXCL则可以创建一个新的，唯一的信号量，如果信号量已存在，返回一个错误。</p>
+<p>semget()函数成功返回一个相应信号标识符（非零），失败返回-1.</p>
+<p><strong>2、semop()函数</strong></p>
+<p>它的作用是<strong>改变信号量的值</strong>，原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">semop</span><span class="params">(<span class="type">int</span> sem_id, <span class="keyword">struct</span> sembuf *sops, <span class="type">size_t</span> num_sem_ops)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>sem_id是由semget()返回的信号量标识符。</p>
+<p>sops是指向信号量操作数组。</p>
+<p>sembuf结构的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sembuf</span>&#123;</span></span><br><span class="line">    <span class="type">short</span> sem_num; <span class="comment">// 除非使用一组信号量，否则它为0,多组信号量中表示信号量在组内的索引值</span></span><br><span class="line">    <span class="type">short</span> sem_op;  <span class="comment">// 信号量在一次操作中需要改变的数据，通常是两个数，一个是-1，即P（等待）操作，</span></span><br><span class="line">                   <span class="comment">// 一个是+1，即V（发送信号）操作。</span></span><br><span class="line">    <span class="type">short</span> sem_flg; <span class="comment">// 通常为SEM_UNDO,使操作系统跟踪信号，</span></span><br><span class="line">                   <span class="comment">// 并在进程没有释放该信号量而终止时，操作系统释放信号量</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>sem_flg 参数：</p>
+<p>该参数可设置为 IPC_NOWAIT 或 SEM_UNDO 两种状态。只有将 sem_flg 指定为 SEM_UNDO 标志后，semadj （所指定信号量针对调用进程的调整值）才会更新。 此外，如果此操作指定SEM_UNDO，系统更新过程中会撤消此信号灯的计数（semadj）。此操作可以随时进行—它永远不会强制等待的过程。调用进程必须有改变信号量集的权限。<br>sem_flg公认的标志是 IPC_NOWAIT 和 SEM_UNDO。如果操作指定SEM_UNDO，当该进程终止时它将会自动撤消。</p>
+</blockquote>
+<p>num_sem_ops表示的是操作数组sops中的操作个数，通常取值1。</p>
+<p>semop函数成功返回信号量标识符，失败返回-1。</p>
+<p>该函数所做的对于信号量的操作都是原子操作，即整个行为是一个整体，是不可打断的。所有操作是否可以立即执行取决于在个人sem_flg领域的IPC_NOWAIT标志的存在。</p>
+<p><strong>semop函数操作中的sem_op（+1或者-1）是基于semctl函数对信号量初始化的值的基础上的。例如semctl函数将信号量初始化为100，sem_op(+1)就是100+1。由此看出信号量初始化是很有必要的。</strong></p>
+<p>3、<strong>semctl()函数</strong></p>
+<p>该函数用来直接控制信号量信息，它的原型为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">semctl</span><span class="params">(<span class="type">int</span> sem_id, <span class="type">int</span> sem_num, <span class="type">int</span> command, ...)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>函数的第一个参数 semid 为信号量集的标识符；<br>函数的第二个参数sem_num则是表示即将要进行操作的信号量的编号，即信号量集合的索引值，其中第一个信号量的索引值为0。</p>
+<p>函数的第3个参数command代表将要在集合上执行的命令，其取值含义如下，通常用特定的宏代替：</p>
+<blockquote>
+<p>IPC_STAT:获取某个信号量集合的semid_ds结构，并将其储存在semun联合体的buf参数所指的地址之中</p>
+<p>IPC_SET:设置某个集合的semid_ds结构的ipc_perm成员的值，该命令所取的值是从semun联合体的buf参数中取到的</p>
+<p>IPC_RMID:从内核删除该信号量集合</p>
+<p>GETALL:用于获取集合中所有信号量的值，整数值存放在无符号短整数的一个数组中，该数组有联合体的array成员所指定</p>
+<p>GETNCNT:返回当前正在等待资源的进程的数目</p>
+<p>GETPID:返回最后一次执行PV操作（semop函数调用）的进程的PID</p>
+<p>GETVAL:返回集合中某个信号量的值</p>
+<p>GETZCNT:返回正在等待资源利用率达到百分之百的进程的数目</p>
+<p>SETALL:把集合中所有信号量的值，设置为联合体的array成员所包含的对应值</p>
+<p>SETVAL:将集合中单个信号量的值设置为联合体的val成员的值</p>
+</blockquote>
+<p>command通常是下面两个值中的其中一个</p>
+<p>SETVAL：用来把信号量初始化为一个已知的值。ps :这个值通过union semun中的val成员设置，其作用是在信号量第一次使用前对它进行设置。</p>
+<p>IPC_RMID：用于删除一个已经无需继续使用的信号量标识符。</p>
+<p>对于该函数，只有当command取某些特定的值的时候，才会使用到第4个参数，第4个参数它通常是一个union semum结构，定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">union</span> <span class="title">semun</span>&#123;</span>    </span><br><span class="line">    <span class="type">int</span> val;    </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">semid_ds</span> *<span class="title">buf</span>;</span>    </span><br><span class="line">    <span class="type">unsigned</span> <span class="type">short</span> *arry;    </span><br><span class="line">&#125;;    </span><br></pre></td></tr></table></figure>
+
+<p>对于第4个参数arg，<br>当执行SETVAL命令时用到这个成员，他用于指定要把信号量设置成什么值，涉及成员：val</p>
+<p>在命令IPC_STAT&#x2F;IPC_SET中使用，它代表内核中所使用内部信号量数据结构的一个复制 ，涉及成员：buf</p>
+<p>在命令GETALL&#x2F;SETALL命令中使用时，他代表指向整数值一个数组的指针，在设置或获取集合中所有信号量的值的过程中，将会用到该数组，涉及成员：array</p>
+<h3 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h3><p>github上的OS2例题。</p>
+<h1 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h1><p>参考下文：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/guoping16/article/details/6584043">https://blog.csdn.net/guoping16/article/details/6584043</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/11/c++-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/11/c++-%E8%AF%AD%E6%B3%95%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">c++语法笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-10 20:40:19" itemprop="dateCreated datePublished" datetime="2019-12-10T20:40:19Z">2019-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="补充点"><a href="#补充点" class="headerlink" title="补充点"></a>补充点</h1><h2 id="引用（-amp-）"><a href="#引用（-amp-）" class="headerlink" title="引用（&amp;）"></a>引用（&amp;）</h2><p>&amp;在C语言表示的是<strong>取地址符</strong>————用在<strong>函数传参</strong>中的<strong>指针赋值</strong></p>
+<p>在C++语言中引用是某一个变量的别名，<strong>对引用的操作与对变量直接操作完全一样。</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a;</span><br><span class="line"><span class="type">int</span> &amp;ra=a;<span class="comment">//定义引用ra,它是变量a的引用，即别名</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>&amp;在此不是求地址运算，而是起标识作用。</li>
+<li>声明引用时，必须同时对其进行初始化。</li>
+<li>类型标识符是指目标变量的类型。</li>
+<li>引用声明完毕后，相当于目标变量名有两个名称————目标原名和引用名，<strong>且不能再把该引用名作为其他变量名的别名</strong></li>
+<li>引用本身不占存储单元，本身不是一种数据类型</li>
+<li>不能建立数组的引用</li>
+</ul>
+<h3 id="引用的作用"><a href="#引用的作用" class="headerlink" title="引用的作用"></a>引用的作用</h3><ul>
+<li>作为函数的参数，<strong>效果是和传递指针的效果是一样的</strong></li>
+<li>使用引用传递函数的参数，由于在内存中没有产生实参的副本，<strong>它是直接对实参操作</strong>。</li>
+</ul>
+<h4 id="常引用"><a href="#常引用" class="headerlink" title="常引用"></a>常引用</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">常引用声明方式：<span class="type">const</span> 类型标识符 &amp;引用名=目标变量名；</span><br><span class="line"><span class="type">int</span> a ;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;ra=a;</span><br><span class="line">ra=<span class="number">1</span>; <span class="comment">//错误</span></span><br><span class="line">a=<span class="number">1</span>; <span class="comment">//正确</span></span><br></pre></td></tr></table></figure>
+
+<p>不能通过引用对目标变量的值进行修改，从而使引用的目标成为const</p>
+<h4 id="引用作为返回值"><a href="#引用作为返回值" class="headerlink" title="引用作为返回值"></a>引用作为返回值</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream.h&gt;</span></span></span><br><span class="line"><span class="type">float</span> temp; <span class="comment">//定义全局变量temp</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">fn1</span><span class="params">(<span class="type">float</span> r)</span></span>; <span class="comment">//声明函数fn1</span></span><br><span class="line"><span class="function"><span class="type">float</span> &amp;<span class="title">fn2</span><span class="params">(<span class="type">float</span> r)</span></span>; <span class="comment">//声明函数fn2</span></span><br><span class="line"><span class="function"><span class="type">float</span> <span class="title">fn1</span><span class="params">(<span class="type">float</span> r)</span> <span class="comment">//定义函数fn1，它以返回值的方法返回函数值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　temp=(<span class="type">float</span>)(r*r*<span class="number">3.14</span>);</span><br><span class="line">　<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">float</span> &amp;<span class="title">fn2</span><span class="params">(<span class="type">float</span> r)</span> <span class="comment">//定义函数fn2，它以引用方式返回函数值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　temp=(<span class="type">float</span>)(r*r*<span class="number">3.14</span>);</span><br><span class="line">　<span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span> <span class="comment">//主函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">　<span class="type">float</span> a=<span class="built_in">fn1</span>(<span class="number">10.0</span>); <span class="comment">//第1种情况，系统生成要返回值的副本（即临时变量）</span></span><br><span class="line">　<span class="type">float</span> &amp;b=<span class="built_in">fn1</span>(<span class="number">10.0</span>); <span class="comment">//第2种情况，可能会出错（不同 C++系统有不同规定）</span></span><br><span class="line">　<span class="comment">//不能从被调函数中返回一个临时变量或局部变量的引用</span></span><br><span class="line">　<span class="type">float</span> c=<span class="built_in">fn2</span>(<span class="number">10.0</span>); <span class="comment">//第3种情况，系统不生成返回值的副本</span></span><br><span class="line">　<span class="comment">//可以从被调函数中返回一个全局变量的引用</span></span><br><span class="line">　<span class="type">float</span> &amp;d=<span class="built_in">fn2</span>(<span class="number">10.0</span>); <span class="comment">//第4种情况，系统不生成返回值的副本</span></span><br><span class="line">　<span class="comment">//可以从被调函数中返回一个全局变量的引用</span></span><br><span class="line">　cout&lt;&lt;a&lt;&lt;c&lt;&lt;d;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> &amp;<span class="title">put</span><span class="params">(<span class="type">int</span> n)</span></span>;</span><br><span class="line"><span class="type">int</span> vals[<span class="number">10</span>];</span><br><span class="line"><span class="type">int</span> error=<span class="number">-1</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="built_in">put</span>(<span class="number">0</span>)=<span class="number">10</span>; <span class="comment">//以put(0)函数值作为左值，等价于vals[0]=10;</span></span><br><span class="line"><span class="built_in">put</span>(<span class="number">9</span>)=<span class="number">20</span>; <span class="comment">//以put(9)函数值作为左值，等价于vals[9]=20;</span></span><br><span class="line">cout&lt;&lt;vals[<span class="number">0</span>];</span><br><span class="line">cout&lt;&lt;vals[<span class="number">9</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> &amp;<span class="title">put</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> (n&gt;=<span class="number">0</span> &amp;&amp; n&lt;=<span class="number">9</span> ) <span class="keyword">return</span> vals[n];</span><br><span class="line"><span class="keyword">else</span> &#123; cout&lt;&lt;<span class="string">&quot;subscript error&quot;</span>; <span class="keyword">return</span> error; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="引用和多态"><a href="#引用和多态" class="headerlink" title="引用和多态"></a>引用和多态</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> 　<span class="title class_">A</span>;</span><br><span class="line"><span class="keyword">class</span> 　<span class="title class_">B</span>：<span class="keyword">public</span> A&#123;……&#125;;</span><br><span class="line">B 　b;</span><br><span class="line">A 　&amp;Ref = b; <span class="comment">// 用派生类对象初始化基类对象的引用</span></span><br></pre></td></tr></table></figure>
+
+<p>Ref 只能用来访问派生类对象中从基类继承下来的成员，是基类引用指向派生类。如果A类中定义有虚函数，并且在B类中重写了这个虚函数，就可以通过Ref产生多态效果。</p>
+<h2 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h2><p>抽象类是指包括至少一个纯虚函数的类。</p>
+<p>C++允许用户使用虚函数 <strong>(virtual function)</strong> 来完成 <strong>运行时决议</strong> 这一操作，这与一般的 <strong>编译时决定</strong> 有着本质的区别</p>
+<ul>
+<li>在基类用virtual声明成员函数为虚函数。这样就可以在派生类中重新定义此函数，为它赋予新的功能，并能方便被调用。<ul>
+<li>在派生类中重新定义此函数，要求函数名，函数类型，函数参数个数和类型全部与基类的虚函数相同，并根据派生类的需要重新定义函数体。</li>
+</ul>
+</li>
+<li>在类外定义虚函数时，不必在定义virtual</li>
+<li>c++规定，<strong>当一个成员函数被声明为虚函数后，其派生类的同名函数都自动成为虚函数</strong>。因此在派生类重新声明该虚函数时，可以加virtual，也可以不加，但习惯上一般在每层声明该函数时都加上virtual，使程序更加清晰。</li>
+<li>如果再派生类中没有对基类的虚函数重新定义，则派生类简单的继承起基类的虚函数。</li>
+</ul>
+<h3 id="实现机制"><a href="#实现机制" class="headerlink" title="实现机制"></a>实现机制</h3><p>用虚表和虚指针</p>
+<p>是<strong>每个类用了一个虚表，每个类的对象用了一个虚指针。虚表是和类对应的，虚表指针是和对象对应的。</strong>  </p>
+<p>虚表</p>
+<ul>
+<li><p><em>一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数</em></p>
+</li>
+<li><p><em>没有覆盖父类的虚函数是毫无意义的。</em></p>
+</li>
+</ul>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>C++中的虚函数的作用主要是实现了多态的机制。</p>
+<p><strong>多态用虚函数来实现，结合动态绑定</strong>，<strong>此时的调用就不会在编译时候确定而是在运行时确定</strong>。不在单独考虑指针&#x2F;引用的类型而是看指针&#x2F;引用的对象的类型来判断函数的调用，根据对象中虚指针指向的虚表中的函数的地址来确定调用哪个函数</p>
+<p><strong>虚函数是在基类中定义的，目的是不确定它的派生类的具体行为。</strong>故可以理解成java的父类中待覆写的函数</p>
+<h1 id="混淆点"><a href="#混淆点" class="headerlink" title="混淆点"></a>混淆点</h1><h2 id="关于函数的调用机制"><a href="#关于函数的调用机制" class="headerlink" title="关于函数的调用机制"></a>关于函数的调用机制</h2><p>（1）调用过程：建立函数调用栈—保存调用函数的运行状态和返回地址—传参—进入被调函数。</p>
+<p>（2）传参机制：传参不一定会压栈！fastcall(快调)一般会由寄存器传参，另外当参数不超过4个时一般也由寄存器传参，否则会压栈。压栈顺序一般是<strong>从右到左</strong></p>
+<h2 id="传参方式"><a href="#传参方式" class="headerlink" title="传参方式"></a>传参方式</h2><h3 id="值传递（传副本）"><a href="#值传递（传副本）" class="headerlink" title="值传递（传副本）"></a>值传递（传副本）</h3><p>形参只是实参的拷贝</p>
+<p>在函数结束时，形参作为局部变量会被释放，对实参不会产生任何影响。若为类的对象会调用拷贝构造，这种深拷贝操作会影响到传参效率。（可理解为“单向接口”）</p>
+<h3 id="指针传递"><a href="#指针传递" class="headerlink" title="指针传递"></a>指针传递</h3><p>指针本质上是一个变量，该变量的值是一个地址，指针在逻辑上是独立的，可以被改变。</p>
+<p>传递的是实参的地址，所以函数内部对形参得操作会“同步更新”到实参。（可理解为“双向接口”）</p>
+<h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><p>传递的是实参的别名，传参时形参被绑定到实参对象上，因此函数内部对形参的操作也都会“同步更新”到源实参。（可理解为“双向接口”）</p>
+<h4 id="引用传递和值传递的异同"><a href="#引用传递和值传递的异同" class="headerlink" title="引用传递和值传递的异同"></a>引用传递和值传递的异同</h4><p>相同点</p>
+<ul>
+<li>都是地址的概念</li>
+</ul>
+<p>不同点</p>
+<ul>
+<li><p>指针是一个实体（替身）；引用只是一个别名（本体的另一个名字）</p>
+</li>
+<li><p>引用只能在定义时被初始化一次，之后不可改变，即“从一而终”；指针可以修改，即“见异思迁”；</p>
+</li>
+<li><p>引用不能为空（有本体，才有别名）；指针可以为空；</p>
+</li>
+<li><p>sizeof 引用，得到的是所指向变量的大小；sizeof 指针，得到的是指针的大小；</p>
+</li>
+<li><p>指针 ++，是指指针的地址自增；引用++是指所指变量自增；</p>
+</li>
+<li><p>引用是类型安全的，引用过程会进行类型检查；指针不会进行安全检查；</p>
+</li>
+</ul>
+<h2 id="关于static用法"><a href="#关于static用法" class="headerlink" title="关于static用法"></a>关于static用法</h2><p><strong>静态局部变量！&#x3D;全局变量</strong>，二者生命周期相同，但作用域不同，静态局部变量只对函数体内部可见。</p>
+<p>static修饰全局变量：限定该变量只在该文件中可用。</p>
+<p>static修饰外部函数：往往在函数声明中加static修饰，限定该函数只在该文件可用（若在头文件中声明，则限定只在其对应的源文件中可用）</p>
+<p>类中static修饰的成员。静态成员与类的对象实体无关，是该类的<strong>共享变量</strong>。</p>
+<h2 id="关于extern用法"><a href="#关于extern用法" class="headerlink" title="关于extern用法"></a>关于extern用法</h2><p>C&#x2F;C++头文件中的函数声明默认为extern，即外部可用（其他源文件只需包含头文件即可使用）。和static修饰的效果相反。</p>
+<p>带extern的变量仅仅是声明而不是定义！用extern使变量可以在<strong>多文件中共享</strong>，主要有两种做法：</p>
+<ul>
+<li>在源文件中定义，其他需要使用该变量的源文件用extern声明。（表示该变量在其它文件中定义，即一次定义，多次extern声明）</li>
+<li>在源文件中定义，其对应的头文件中extern声明，其他需要使用该变量的源文件包含该头文件即可。（更加标准的做法）</li>
+</ul>
+<h2 id="内联"><a href="#内联" class="headerlink" title="内联"></a>内联</h2><p>用途：定义或声明函数时返回值前加上inline修饰能避免函数调用带来的<strong>时间和空间开销</strong>，提高效率，适用于反复执行的核心代码。内部实现机制其实是编译时按函数体展开代码，避免了函数调用的一系列压栈出栈过程。</p>
+<p>限制：</p>
+<p>​	  （1）不能出现复杂的控制结构语句；</p>
+<p>​      （2）递归函数不能用作内联函数；</p>
+<p>​      （3）内联函数体不宜代码过长，只适合数行的小函数。</p>
+<p>注：1.内联和宏定义均属于代码替换机制，但前者安全性更好，宏只是预处理做简单的符号替换而不会做类型检查。内联可以完全替代宏，反之不能。</p>
+<p>​    2.inline关键字只是一种“建议”，是否采用内联机制取决于编译器。</p>
+<h2 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h2><p>用途：C++特有机制。让同一种算法针对不同类型使用相同的函数名，提高代码可读性，重载的函数至少在参数个数或类型上有所区别，仅返回值区别不能重载！</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span>)</span></span>;和<span class="function"><span class="type">int</span> <span class="title">func</span><span class="params">(<span class="type">int</span>)</span></span>;<span class="comment">//编译器无法区分</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">abs</span><span class="params">(<span class="type">int</span>)</span></span>;和<span class="function"><span class="type">double</span> <span class="title">abs</span><span class="params">(<span class="type">double</span>)</span></span>;<span class="comment">//C++通过名字粉碎技术自动匹配</span></span><br></pre></td></tr></table></figure>
+
+<p>ps:重写是面向对象中子类对父类虚函数的重新实现</p>
+<p>底层const修饰的参数以及常量成员函数也可以重载。</p>
+<h2 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h2><ul>
+<li>友元(frend)机制允许<strong>一个类将对其非公有成员的访问权授予指定的函数或者类</strong></li>
+<li>友元的声明以friend开始，它只能出现在类定义的内部</li>
+</ul>
+<h3 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h3><p>友元函数是一个不属于类成员的函数，但它可以访问该类的私有成员。————友元函数视作好像是该类的一个成员</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="type">void</span> <span class="title">set_show</span><span class="params">(<span class="type">int</span> x, A &amp;a)</span></span>;      <span class="comment">//该函数是友元函数的声明</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_show</span><span class="params">(<span class="type">int</span> x, A &amp;a)</span>  <span class="comment">//友元函数定义，为了访问类A中的成员</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a.data = x;</span><br><span class="line">    cout &lt;&lt; a.data &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">A</span> a;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">set_show</span>(<span class="number">1</span>, a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="友元类"><a href="#友元类" class="headerlink" title="友元类"></a>友元类</h3><p>  友元类的所有成员函数都是另一个类的友元函数，都可以访问另一个类中的隐藏信息（包括私有成员和保护成员）。</p>
+<p>关于友元类的注意事项：</p>
+<p>(1) <strong>友元关系不能被继承。</strong><br>(2) 友元关系是单向的，不具有交换性。若类B是类A的友元，类A不一定是类B的友元，要看在类中是否有相应的声明。<br>(3) 友元关系不具有传递性。若类B是类A的友元，类C是B的友元，类C不一定是类A的友元，同样要看类中是否有相应的申明。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">C</span>;                         <span class="comment">//这是友元类的声明</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>             <span class="comment">//友元类定义，为了访问类A中的成员</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">set_show</span><span class="params">(<span class="type">int</span> x, A &amp;a)</span> </span>&#123; a.data = x; cout&lt;&lt;a.data&lt;&lt;endl;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">A</span> a;</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">C</span> c;</span><br><span class="line"></span><br><span class="line">    c.<span class="built_in">set_show</span>(<span class="number">1</span>, a);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="友元成员函数"><a href="#友元成员函数" class="headerlink" title="友元成员函数"></a>友元成员函数</h3><p>使类B中的成员函数成为类A的友元函数，这样类B的该成员函数就可以访问类A的所有成员了。</p>
+<h2 id="vector用法"><a href="#vector用法" class="headerlink" title="vector用法"></a>vector用法</h2><p>vector 是向量类型，它可以容纳许多类型的数据，如若干个整数，所以称其为容器。</p>
+<p>vector是一个类模板，而不是类型。</p>
+<h1 id="动态联编与静态联编"><a href="#动态联编与静态联编" class="headerlink" title="动态联编与静态联编"></a>动态联编与静态联编</h1><p>c++一般的子类和父类继承关系的时候，都是使用的是静态联编（和之前学习的指针的用法一致）参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/neiloid/article/details/6934129">https://blog.csdn.net/neiloid/article/details/6934129</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/neiloid/article/details/6934129">https://blog.csdn.net/neiloid/article/details/6934129</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/gaoxin1076/article/details/8298279">https://blog.csdn.net/gaoxin1076/article/details/8298279</a></p>
+<p>联编是指一个计算机程序自身彼此关联的过程,在这个联编过程中,需要确定程序中的操作调用(函数调用)与执行该操作(函数)的代码段之间的映射关系;按照联编所进行的阶段不同,可分为静态联编和动态联编;</p>
+<p>仔细读读红色字体的那部分句子。我们就能很清楚的明白什么是联编了。给大家举个最通俗易懂的例子好了：</p>
+<p>A类中有fun这个函数， B类中也有fun这个函数，现在我在类外的main函数里面调用fun 函数。</p>
+<p>那么main函数就是函数调用，调用fun函数，</p>
+<p>而A类中的fun函数和B类中的fun函数就是执行该操作的代码段</p>
+<p>所以现在联编就是实现两者的映射关系。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;	</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;cout&lt;&lt;<span class="string">&quot;It&#x27;s A&quot;</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">&#123;	</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;cout&lt;&lt;<span class="string">&quot;It&#x27;s B&quot;</span>&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">func</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>联编就是决定将main函数中的func（）的函数调用映射到A中的func函数还是B中的func函数的过程。</p>
+<p>2.静态联编 和 动态联编 的定义</p>
+<p>知道了什么事联编，那么再来理解动态联编 和静态联编也就不难了</p>
+<blockquote>
+<p>静态联编:<br>是指联编工作是在程序编译连接阶段进行的,这种联编又称为早期联编;因为这种联编是在程序开始运行之前完成的;<br>在程序编译阶段进行的这种联编又称静态束定;在编译时就解决了程序中的操作调用与执行该操作代码间的关系,确定这种关系又被称为束定;编译时束定又称为静态束定;</p>
+</blockquote>
+<p>拿上面的例子来说，<strong>静态联编就是在编译的时候</strong>就决定了main函数中调用的是A中的func还是B中的func。一旦编译完成，那么他们的映射关系就唯一确定了。</p>
+<blockquote>
+<p>动态联编:<br>编译程序在编译阶段并不能确切地知道将要调用的函数,只有在程序执行时才能确定将要调用的函数,为此要确切地知道将要调用的函数,要求联编工作在程序运行时进行,这种在程序运行时进行的联编工作被称为动态联编,或动态束定,又叫晚期联编;C++规定:动态联编是在虚函数的支持下实现的;</p>
+</blockquote>
+<p>动态联编在编译的时候还是不知道到底应该选择哪个func函数，只有在真正执行的时候，它才确定。</p>
+<p><strong>静态联编和动态联编都是属于多态性的,它们是在不同的阶段进对不同的实现进行不同的选择;</strong></p>
+<p>也可以这么说：<strong>C++多态有两种形式，动态多态和静态多态（函数重载）；动态多态是指一般的多态，是通过类继承和虚函数机制实现的多态；静态多态是通过模板来实现，因为这种多态实在编译时而非运行时，所以称为静态多态。</strong></p>
+<p>3.静态联编                                                                                                                                                                                                                                                          </p>
+<p>首先还是拿个例子来说事吧。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">shape</span>&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;cout&lt;&lt;<span class="string">&quot;I am shape&quot;</span>&lt;&lt;endl;&#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;<span class="built_in">draw</span>();&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">circle</span>:<span class="keyword">public</span> shape&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;cout&lt;&lt;<span class="string">&quot;I am circle&quot;</span>&lt;&lt;endl;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    circle  oneshape;</span><br><span class="line">    oneshape.<span class="built_in">fun</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在我们详细具体定义了一开始的A类和B类以及func函数。让我们来分析一下：<br>调用oneshape.fun()的时候，进入类shape中的fun函数。</p>
+<p>现在我们的问题就是：fun函数调用的draw到底是shape里面的draw还是circle中的draw？？</p>
+<p>答案是：它调用了cshape这个基类的draw函数。所以输出了 I am shape</p>
+<p>那么一直困扰我的问题是：为什么调用基类的draw而不是派生类中得draw呢？</p>
+<p>书上好像没有具体讲，上课的时候老师那也根本不会讲。</p>
+<p>自己想了一下，应该可以从汇编的角度理解：</p>
+<p>1.调用oneshape.fun()，这里是一个跳转指令，进入类shape中的fun函数所在的代码段</p>
+<p>2.类shape的代码段是依次顺序放置的。进入fun函数后，现在我们要调用draw的地址。</p>
+<p>由于没有另外的数据结构来保存draw的地址，所以程序所知道的，必然只有在shape类中的draw地址了，仅仅用一个跳转指令</p>
+<p>在我的vs2010的反汇编调试窗口下是这样的一句代码：</p>
+<p>013B1546  call        shape::draw (13B10F5h) </p>
+<p>很明确这里指出了shape::draw，也就确定了映射关系，完成了联编。</p>
+<h1 id="C-和java的异同"><a href="#C-和java的异同" class="headerlink" title="C++和java的异同"></a>C++和java的异同</h1><ol>
+<li><p>Java源码会先经过一次编译，成为中间码，中间码再被解释器解释成机器码。对于Java而言，中间码就是字节码(.class)，而解释器在JVM中内置了。</p>
+<p>C++源码一次编译，直接在编译的过程中链接了，形成了机器码。</p>
+</li>
+<li><p>Java是纯面向对象的语言，所有代码（包括函数、变量）都必须在类中定义。而C++中还有面向过程的东西，比如是全局变量和全局函数。</p>
+</li>
+<li><p><strong>C++支持多继承，Java中类都是单继承的</strong>。但是继承都有传递性，同时Java中的接口是多继承，类对接口的实现也是多实现。</p>
+</li>
+</ol>
+<h2 id="变量和类型"><a href="#变量和类型" class="headerlink" title="变量和类型"></a>变量和类型</h2><ul>
+<li><p>Java没有无符号整数。（无符号右移在Java中强制用三个右尖括号表示）。</p>
+</li>
+<li><p>Java有内置类型String，而C++没有。C++的std::string是可变的，类似于Java的StringBuffer。</p>
+</li>
+<li><p>Java中不存在指针。Java的引用是功能弱化的指针，只能做“调用所指对象的方法”的操作。</p>
+</li>
+<li><p>Java中，对象只能由引用传递，C＋＋中对象可由值或引用传递。</p>
+</li>
+</ul>
+<h2 id="类机制"><a href="#类机制" class="headerlink" title="类机制"></a>类机制</h2><ul>
+<li>Java是完全面向对象的，所有方法都必须写在类中。</li>
+<li></li>
+</ul>
+<h1 id="C-标准库"><a href="#C-标准库" class="headerlink" title="C++标准库"></a>C++标准库</h1><h2 id="IO库"><a href="#IO库" class="headerlink" title="IO库"></a>IO库</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2688,250 +3165,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/11/27/ComputerNetworking_Socket/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/27/ComputerNetworking_Socket/" class="post-title-link" itemprop="url">socket</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-27 00:07:04" itemprop="dateCreated datePublished" datetime="2019-11-27T00:07:04Z">2019-11-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-03 11:45:42" itemprop="dateModified" datetime="2020-04-03T11:45:42Z">2020-04-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="0-理解Socket"><a href="#0-理解Socket" class="headerlink" title="0 理解Socket"></a><strong>0 理解Socket</strong></h1><p>什么是Socket呢？<br>我们经常把Socket翻译为套接字，Socket是在应用层和传输层之间的一个抽象层，它把TCP&#x2F;IP层复杂的操作抽象为几个简单的接口供应用层调用已实现进程在网络中通信。<br>socket起源于UNIX，在Unix一切皆文件哲学的思想下，socket是一种”打开—读&#x2F;写—关闭”模式的实现，服务器和客户端各自维护一个”文件”，在建立连接打开后，可以向自己文件写入内容供对方读取或者读取对方内容，通讯结束时关闭文件。<br>套接字是通信的基石，可看作不同主机的进程进行双向通信的端点。<br>套接字有两种不同的类型：流式套接字和数据报套接字。<br>套接字可处于阻塞模式或非阻塞模式。</p>
-<p><img src="/Socket.assets/1012444-20190920131745226-1003426645.png" alt="img"></p>
-<p><img src="/Socket.assets/1012444-20190920131745554-104977508.png" alt="img"></p>
-<h1 id="1-WinSock-API"><a href="#1-WinSock-API" class="headerlink" title="1 WinSock API"></a>1 WinSock API</h1><p>什么是WinSock呢？<br>WinSock是一套开放的、支持多种协议的Windows下网络编程的接口，是Windows网络编程实时上的标准。<br>Winsock版本：目前Winsock有两个版本，分别是WinSock1.1和WinSock2.0，使用方法如下：<br>WinSock1.1:<br>#include &lt;winsock.h&gt;<br>#pragma comment(lib, “wsock32.lib”)<br>WinSock2.0:<br>#include &lt;winsock2.h&gt;<br>#pragma comment(lib, “ws2_32.lib”)<br>WinSock服务是以动态链接库Winsock DLL形式实现的。</p>
-<h2 id="通用API函数列表"><a href="#通用API函数列表" class="headerlink" title="通用API函数列表"></a>通用API函数列表</h2><p><strong>WinSock API 　　　　 描述</strong><br>WSAStartup 　　　　 Winsock启动<br>WSACleanup 　　　    Winsock停止<br>WSASetLastError　　  错误的检查和控制</p>
-<p>针对WinSock1.1存在的某些局限，WinSock2提供了许多方面的扩展（如支持多个传输协议的原始套接字、重叠IO模型、服务质量控制等）以支持功能更强大的应用，考虑兼容性，WinSock1.1的API都在WinSock2中保留了下来。</p>
-<h1 id="2-阻塞socket"><a href="#2-阻塞socket" class="headerlink" title="2 阻塞socket"></a><strong>2 阻塞socket</strong></h1><h2 id="基于TCP的套接字："><a href="#基于TCP的套接字：" class="headerlink" title="基于TCP的套接字："></a><strong>基于TCP的套接字</strong>：</h2><p>&#x2F;&#x2F; 创建套接字<br>SOCKET socket(int af, int type, int protocol);<br>&#x2F;&#x2F; 绑定地址端口<br>int bind(SOCKET s, const struct sockaddr *addr, socklen_t addrlen);<br>&#x2F;&#x2F; 监听客户端<br>int listen(SOCKET s, int backlog);<br>&#x2F;&#x2F; 接收客户端套接字请求<br>int accept(SOCKET s, struct sockaddr *addr, socklen_t *addrlen);<br>&#x2F;&#x2F; 连接服务端套接字<br>int connect(SOCKET s, const struct sockaddr <em>addr, socklen_t addrlen);<br>&#x2F;&#x2F; 发送数据<br>int send(SOCKET s, const char FAR * buf, int len, int flags);<br>&#x2F;&#x2F; 接收数据（阻塞）<br>int recv(SOCKET s, char</em> buf, int len, int flags);<br>&#x2F;&#x2F; 关闭套接字<br>int closesocket(SOCKET s);</p>
-<p><img src="/Socket.assets/1012444-20190920131745795-533662518.png" alt="img"></p>
-<h2 id="基于UDP的套接字："><a href="#基于UDP的套接字：" class="headerlink" title="基于UDP的套接字："></a><strong>基于UDP的套接字</strong>：</h2><p>&#x2F;&#x2F; 创建套接字<br>SOCKET socket(int af, int type, int protocol);<br>&#x2F;&#x2F; 绑定地址端口<br>int bind(SOCKET s, const struct sockaddr <em>addr, socklen_t addrlen);<br>&#x2F;&#x2F; 发送数据<br>int sendto (SOCKET s, const char</em> buf, int len, int flags, const struct sockaddr* to, int tolen);<br>&#x2F;&#x2F; 接收数据（阻塞）<br>int recvfrom(SOCKET s, char* buf, int len, int flags, struct sockaddr* from, int* fromlen);<br>&#x2F;&#x2F; 关闭套接字<br>int closesocket(SOCKET s);</p>
-<p><img src="/Socket.assets/1012444-20190920131746090-1344730542.png" alt="img"></p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a><strong>总结</strong>：</h2><p>在阻塞模式下，在IO操作完成之前，执行操作的WinSock函数会一直等待下去，不会立即返回，这就意味着任意一个线程在某一时刻只能进行一个IO操作，而且应用程序很难同时通过多个建好连接的套接字进行通信。<br>可见，在默认情况下套接字为阻塞模式。<br>这种情况下一般采用多线程方式，在不同的线程中进行不同的连接处理来避免阻塞，但是多线程会增加系统开销，而且线程同步会增加复杂度。</p>
-<h1 id="3-非阻塞Socket"><a href="#3-非阻塞Socket" class="headerlink" title="3 非阻塞Socket"></a><strong>3 非阻塞Socket</strong></h1><p>WinSock API默认为阻塞模式，但是其提供了非阻塞模式套接字，非阻塞模式套接字使用上不如阻塞模式套接字简单，存在一点的难度，但是只要排除了这些困难，它在功能上还是很强大的。<br>可以使用ioctlsocket将套接字设置为非阻塞模式套接字：<br>int PASCAL FAR ioctlsocket (<br>　　IN SOCKET s,<br>　　IN long cmd,<br>　　IN OUT u_long FAR *argp);<br>　　&#x2F;&#x2F; If *argp &#x3D; 0, blocking is enabled;<br>　　&#x2F;&#x2F; If *argp !&#x3D; 0, non-blocking mode is enabled.</p>
-<p> 代码片段(基于TCP)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SOCKET sock = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="keyword">if</span> (INVALID_SOCKET == sock)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">AfxMessageBox</span>(_T(<span class="string">&quot;Create socket failed&quot;</span>));</span><br><span class="line">    <span class="built_in">WSACleanup</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> lMode = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> retMode = <span class="built_in">ioctlsocket</span>(sock, FIONBIO, (<span class="type">unsigned</span> <span class="type">long</span> *)&amp; lMode);</span><br><span class="line"><span class="keyword">if</span> (retMode == SOCKET_ERROR)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>将一个套接字设置为非阻塞模式后，WinSock API调用会立即返回。大多数情况下，这些调用都会”失败”，并返回一个WSAEWOULDBLOCK错误表示请求的操作在调用期间没有时间完成。由于会不断地返回这个错误，所以程序员需要通过不断地检查函数返回码以判断一个套接字何时可供读写。</p>
-<p> C++ Code </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">While</span>(<span class="literal">true</span>)</span><br><span class="line">&#123;</span><br><span class="line">    nRec = <span class="built_in">recv</span>(sock, (<span class="type">char</span> *)pbuf, <span class="number">1000</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (nRec == SOCKET_ERROR)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> r = <span class="built_in">WSAGetLastError</span>();</span><br><span class="line">        <span class="keyword">if</span> (r == WSAEWOULDBLOCK)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nRec == WSAETIMEDOUT || nRec == WSAENETDOWN)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;recv failed!\n&quot;</span>);</span><br><span class="line">            <span class="built_in">closesocket</span>(sServer);</span><br><span class="line">            <span class="built_in">closesocket</span>(sClient);</span><br><span class="line">            <span class="built_in">WSACleanup</span>();</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="4-套接字IO模型"><a href="#4-套接字IO模型" class="headerlink" title="4 套接字IO模型"></a><strong>4 套接字IO模型</strong></h1><p>套接字的阻塞模式和非阻塞模式都存在一定的缺点，会给编程带来一定的麻烦。为了免去这样的麻烦，WinSock提供了集中不同的套接字IO模型对IO进行管理，它们包括：</p>
-<ul>
-<li>select（选择）</li>
-<li>WSAAsyncSelect（异步选择）</li>
-<li>WSAEventSelect（事件选择）</li>
-<li>Overlaped（重叠）</li>
-<li>Completion port（完成端口）</li>
-</ul>
-<h2 id="4-1-套接字IO模型：select（选择）"><a href="#4-1-套接字IO模型：select（选择）" class="headerlink" title="4.1 套接字IO模型：select（选择）"></a><strong>4.1 套接字IO模型：select（选择）</strong></h2><p>select模式是WinSock中最常见的IO模型。通过调用select函数可以确定一个或多个套接字的状态，判断套接字上是否存在数据，或者能否向一个套接字写入数据。有如下好处：<br>1）、防止应用程序在套接字处于阻塞模式时，在一次IO操作后被阻塞；<br>2）、防止在套接字处于非阻塞模式中时产生WSAEWOULDBLOCK错误。</p>
-<p>函数原型：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">The **select** function determines the status of one <span class="keyword">or</span> more sockets, waiting <span class="keyword">if</span> necessary, to perform synchronous I/O.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> PASCAL FAR <span class="title">select</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">IN <span class="type">int</span> nfds,</span></span></span><br><span class="line"><span class="params"><span class="function">IN OUT fd_set FAR *readfds,</span></span></span><br><span class="line"><span class="params"><span class="function">IN OUT fd_set FAR *writefds,</span></span></span><br><span class="line"><span class="params"><span class="function">IN OUT fd_set FAR *exceptfds,</span></span></span><br><span class="line"><span class="params"><span class="function">IN <span class="type">const</span> <span class="keyword">struct</span> timeval FAR *timeout)</span></span>;</span><br><span class="line">nfds - Ignored. The nfds parameter is included only <span class="keyword">for</span> compatibility with Berkeley sockets.</span><br><span class="line">readfds -Optional pointer to a set of sockets to be checked <span class="keyword">for</span> readability.</span><br><span class="line">writefds -Optional pointer to a set of sockets to be checked <span class="keyword">for</span> writability.</span><br><span class="line">exceptfds -Optional pointer to a set of sockets to be checked <span class="keyword">for</span> errors.</span><br><span class="line">timeout -Maximum time <span class="keyword">for</span> select to wait, provided in the form of a TIMEVAL structure. Set the timeout parameter to null <span class="keyword">for</span> blocking operations.</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>使用该模型时，在服务端（select主要用在服务端处理多个客户请求上）我们可以开辟两个线程，一个线程用来监听客户端的连接请求，另一个用来处理客户端的请求。就这样不需要一个一个客户请求对应一个服务器处理线程，减少了线程的开销。<br>select允许进程指示内核等待多个事件中的任何一个发生，并仅在有一个或多个时间发生或经历一段指定时间后才唤醒它。select告诉内核对哪些描述子感兴趣以及等待多长时间。这就是所谓的非阻塞模型，就是进程或线程执行此函数时不必非要等待事件的发生，一旦执行肯定返回，以返回值的不同来反映函数的执行情况，如果事件发生则与阻塞方式相同，若事件没有发生则返回一个代码来告知事件未发生，而进程或线程继续执行，所以效率较高。<br>select本身是会阻塞的，我们可以使用select实现阻塞式套接字（如上），也可以实现异步套接字。我个人对实现异步套接字的理解是：你可以单独使用一个线程来进行你select，也就是说select阻塞你单独的线程，说白了就是让线程来完成异步。<br>该模型有个最大的缺点就是，它需要一个死循环不停的去遍历所有的客户端套接字集合，询问是否有数据到来，这样，如果连接的客户端很多，势必会影响处理客户端请求的效率，但它的优点就是解决了每一个客户端都去开辟新的线程与其通信的问题。</p>
-<h2 id="4-2-套接字IO模型：WSAAsyncSelect（异步选择）"><a href="#4-2-套接字IO模型：WSAAsyncSelect（异步选择）" class="headerlink" title="4.2 套接字IO模型：WSAAsyncSelect（异步选择）"></a><strong>4.2 套接字IO模型：WSAAsyncSelect（异步选择）</strong></h2><p>如果有一个模型，可以不用去轮询客户端套接字集合，而是等待系统通知，当有客户端数据到来时，系统自动的通知我们的程序，这就解决了select模型带来的问题了。<br>于是WSAAsyncSelect模型登场了，WSAAsyncSelect模型就是这样一个解决了普通select模型问题的socket编程模型。它是在有客户端数据到来时，系统发送消息给我们的程序，我们的程序只要定义好消息的处理方法就可以了，用到的函数只要是WSAAsyncSelect。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">The WSAAsyncSelect function requests Windows message-based notification of network events <span class="keyword">for</span> a socket.</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">WSAAsyncSelect</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in SOCKET s,</span></span></span><br><span class="line"><span class="params"><span class="function">__in HWND hWnd,</span></span></span><br><span class="line"><span class="params"><span class="function">__in <span class="type">unsigned</span> <span class="type">int</span> wMsg,</span></span></span><br><span class="line"><span class="params"><span class="function">__in <span class="type">long</span> lEvent</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line">s -A descriptor that identifies the socket <span class="keyword">for</span> which event notification is required.</span><br><span class="line">hWnd -A handle that identifies the window that will receive a message when a network event occurs.</span><br><span class="line">wMsg -A message to be received when a network event occurs.</span><br><span class="line">lEvent -A bitmask that specifies a combination of network events in which the application is interested.</span><br></pre></td></tr></table></figure>
-
-<p>WSAAsyncSelect模型将套接字和Windows消息机制很好地粘合在一起，为用户异步SOCKET应用提供了一种较优雅的解决方案。<br>WSAAsyncSelect模型是非常简单的模型，它解决了普通select模型的问题，但是它最大的缺点就是它只能用在Windows程序上，因为它需要一个接收系统消息的窗口句柄，那么有没有一个模型既可以解决select模型的问题，又不限定只能是Windows程序才能用呢？请看下节。</p>
-<h2 id="4-3-套接字IO模型：WSAEventSelect（事件选择）"><a href="#4-3-套接字IO模型：WSAEventSelect（事件选择）" class="headerlink" title="4.3 套接字IO模型：WSAEventSelect（事件选择）"></a><strong>4.3 套接字IO模型：WSAEventSelect（事件选择）</strong></h2><p>WSAEventSelect模型是一个不用主动去轮询所有客户端套接字是否有数据到来的模型，它也是在客户端有数据到来时，系统发送通知给我们的程序，但是，它不是发送消息，而是通过事件的方式来通知我们的程序，这就解决了WSAEventSelect模型只能用在Windows程序的问题。<br>该模型的实现，我们也可以开辟两个线程来进行处理，一个用来接收客户端的连接请求，一个用来与客户端进行通信，用到的主要函数有：WSAEventSelect，WSAWaitForMultipleEvents，WSAEnumNetworkEvents。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">The WSACreateEvent function creates a <span class="keyword">new</span> event object.</span><br><span class="line">WSAEVENT <span class="built_in">WSACreateEvent</span>(<span class="type">void</span>);</span><br><span class="line">The WSAEventSelect function specifies an event object to be associated with the specified set of FD_XXX network events.</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">WSAEventSelect</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in SOCKET s,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__in WSAEVENT hEventObject,</span></span></span><br><span class="line"><span class="params"><span class="function">__in <span class="type">long</span> lNetworkEvents</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"></span><br><span class="line">The WSAWaitForMultipleEvents function returns when one <span class="keyword">or</span> all of the specified event objects are in the signaled state, when the time-out interval expires, <span class="keyword">or</span> when an I/O completion routine has executed.</span><br><span class="line"><span class="function">DWORD <span class="title">WSAWaitForMultipleEvents</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in DWORD cEvents,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__in <span class="type">const</span> WSAEVENT* lphEvents,</span></span></span><br><span class="line"><span class="params"><span class="function">__in BOOL fWaitAll,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__in DWORD dwTimeout,</span></span></span><br><span class="line"><span class="params"><span class="function">__in BOOL fAlertable</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"></span><br><span class="line">The WSAEnumNetworkEvents function discovers occurrences of network events <span class="keyword">for</span> the indicated socket, clear internal network event records, <span class="function"><span class="keyword">and</span> reset event <span class="title">objects</span> <span class="params">(optional)</span>.</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">WSAEnumNetworkEvents</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in SOCKET s,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__in WSAEVENT hEventObject,</span></span></span><br><span class="line"><span class="params"><span class="function">__out LPWSANETWORKEVENTS lpNetworkEvents</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The WSACloseEvent function closes an open event object handle.</span><br><span class="line"><span class="function">BOOL <span class="title">WSACloseEvent</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in WSAEVENT hEvent</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>代码片段（接受客户端请求并注册事件）</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局变量</span></span><br><span class="line"><span class="type">int</span>        g_nTotalConn    = <span class="number">0</span>;</span><br><span class="line">SOCKET    g_ClientSocket[MAXIMUM_WAIT_OBJECTS];</span><br><span class="line">WSAEVENT    g_ClientEvent[MAXIMUM_WAIT_OBJECTS];</span><br><span class="line"><span class="comment">//……</span></span><br><span class="line"><span class="keyword">while</span> (TRUE)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// Accept a connection</span></span><br><span class="line">    sClient = <span class="built_in">accept</span>(sListen, (<span class="keyword">struct</span> sockaddr *)&amp;client, &amp;nAddrSize);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Accepted client:%s:%d\n&quot;</span>, <span class="built_in">inet_ntoa</span>(client.sin_addr), <span class="built_in">ntohs</span>(client.sin_port));</span><br><span class="line">    <span class="comment">// Associate socket with network event</span></span><br><span class="line">    g_ClientSocket[g_nTotalConn] = sClient;</span><br><span class="line">    g_ClientEvent[g_nTotalConn] = <span class="built_in">WSACreateEvent</span>();</span><br><span class="line">    <span class="built_in">WSAEventSelect</span>(g_ClientSocket[g_nTotalConn],</span><br><span class="line">                   g_ClientEvent[g_nTotalConn],</span><br><span class="line">                   FD_READ | FD_CLOSE);</span><br><span class="line">    g_nTotalConn++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>代码片段（接受到事件并处理） </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">DWORD WINAPI <span class="title">WorkerThread</span><span class="params">(LPVOID lpParam)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> nRet       = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> nIndex     = <span class="number">0</span>;</span><br><span class="line">    WSANETWORKEVENTS NetworkEvents;</span><br><span class="line">    <span class="type">char</span> szMessage[MSG_SIZE] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">while</span>(TRUE)</span><br><span class="line">    &#123;</span><br><span class="line">        nRet = <span class="built_in">WSAWaitForMultipleEvents</span>(g_nTotalConn, g_ClientEvent, FALSE, <span class="number">1000</span>, FALSE);</span><br><span class="line">        <span class="comment">//注意这里应该有相应的修正的地方，WSAWaitForMultipleEvents函数在fWaitAll设置成FALSE</span></span><br><span class="line">        <span class="comment">//的时候只能指定一个事件对象受信，解决方法使用for循环进行循环检测</span></span><br><span class="line">        <span class="keyword">if</span> (nRet == WSA_WAIT_FAILED || nRet == WSA_WAIT_TIMEOUT)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        nIndex = nRet - WSA_WAIT_EVENT_0;</span><br><span class="line">        <span class="comment">//查看发生了什么网络事件</span></span><br><span class="line">        <span class="built_in">WSAEnumNetworkEvents</span>(g_ClientSocket[nIndex],</span><br><span class="line">                             g_ClientEvent[nIndex],</span><br><span class="line">                             &amp;NetworkEvents);</span><br><span class="line">        <span class="keyword">if</span> (NetworkEvents.lNetworkEvents &amp; FD_READ)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Receive message from client</span></span><br><span class="line">            nRet = <span class="built_in">recv</span>(g_ClientSocket[nIndex], szMessage, MSG_SIZE, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (nRet == <span class="number">0</span> || (nRet == SOCKET_ERROR &amp;&amp; <span class="built_in">WSAGetLastError</span>() == WSAECONNRESET))</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">Cleanup</span>(nIndex);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                szMessage[nRet] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">                <span class="built_in">send</span>(g_ClientSocket[nIndex], szMessage, <span class="built_in">strlen</span>(szMessage), <span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (NetworkEvents.lNetworkEvents &amp; FD_CLOSE)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">Cleanup</span>(nIndex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>该模型通过一个死循环里面调用WSAWaitForMultipleEvents函数来等待客户端套接字对应的Event的到来，一旦事件通知到达，就通过该套接字去接收数据。虽然WsaEventSelect模型的实现较前两种方法复杂，但它在效率和兼容性方面是最好的。</p>
-<h2 id="4-4-套接字IO模型：Overlaped（重叠）"><a href="#4-4-套接字IO模型：Overlaped（重叠）" class="headerlink" title="4.4 套接字IO模型：Overlaped（重叠）"></a><strong>4.4 套接字IO模型：Overlaped（重叠）</strong></h2><p>以上三种模型虽然在效率方面有了不少的提升，但它们都存在一个问题，就是都预设了只能接收64个客户端连接，虽然我们在实现时可以不受这个限制，但是那样，它们所带来的效率提升又将打折扣，那又有没有什么模型可以解决这个问题呢？<br>当然有，它就是Overlaped模型。<br>优点：<br>1、可以运行在支持Winsock2的所有Windows平台 ,而不像完成端口只是支持NT系统。<br>2、比起阻塞、非阻塞、select、WSAAsyncSelect以及WSAEventSelect等模型，Overlapped I&#x2F;O模型使应用程序能达到更佳的系统性能。<br>因为它和这5种模型不同的是：使用重叠模型的应用程序通知缓冲区收发系统直接使用数据，也就是说，如果应用程序投递了一个10KB大小的缓冲区来接收数据，且数据已经到达套接字，则该数据将直接被拷贝到投递的缓冲区。<br>而这5种模型种，数据到达并拷贝到单套接字接收缓冲区中，此时应用程序会被告知可以读入的容量。当应用程序调用接收函数之后，数据才从单套接字缓冲区拷贝到应用程序的缓冲区，差别就体现出来了。<br>3、从《Windows网络编程》中提供的试验结果中可以看到，在使用了P4 1.7G Xero处理器(CPU很强啊)以及768MB的回应服务器中，最大可以处理4万多个SOCKET连接，在处理1万2千个连接的时候CPU占用率才40% 左右(非常好的性能，已经直逼完成端口了^_^)，再也不被限制在64个客户端连接数了，而且性能杠杠的！<br>原理：<br>概括一点说，重叠模型是让应用程序使用重叠数据结构(WSAOVERLAPPED)，一次投递一个或多个Winsock I&#x2F;O请求。针对这些提交的请求，在它们完成之后，应用程序会收到通知，于是就可以通过自己另外的代码来处理这些数据了。<br>需要注意的是，有两个方法可以用来管理重叠IO请求的完成情况（就是说接到重叠操作完成的通知）：<br>1、事件对象通知(event object notification)<br>2、完成例程(completion routines)，注意，这里并不是完成端口<br>我们知道WinSock2扩展中支持重叠IO模型，既然要使用重叠结构，我们常用的send、sendto、recv、recvfrom也都要被WSASend、WSASendto、WSARecv、WSARecvFrom替换掉了，这里只需要注意一点，它们的参数中都有一个Overlapped参数，我们可以假设是把我们的WSARecv这样的操作操作”绑定”到这个重叠结构上，提交一个请求，其他的事情就交给重叠结构去操心，而其中重叠结构又要与Windows的事件对象”绑定”在一起，这样我们调用完WSARecv以后就可以”坐享其成”，等到重叠操作完成以后，自然会有与之对应的事件来通知我们操作完成，然后我们就可以来根据重叠操作的结果取得我们想要德数据了。<br>WinSock重叠IO的基础是Windows的重叠IO机制。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL WINAPI <span class="title">ReadFile</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in HANDLE hFile,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__out LPVOID lpBuffer,</span></span></span><br><span class="line"><span class="params"><span class="function">__in DWORD nNumberOfBytesToRead,</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">__out LPDWORD lpNumberOfBytesRead,</span></span></span><br><span class="line"><span class="params"><span class="function">__in LPOVERLAPPED lpOverlapped</span></span></span><br><span class="line"><span class="params"><span class="function"></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>如果我们在CreateFile的时候没有使用FILE_FLAG_OVERLAPPED标志，同时在调用ReadFile的时候把lpOverlapped这个参数设置的是null，那么ReadFile这个函数的调用一直要到读取完数据指定的数据后才会返回，如果没读取完，就会阻塞在这里。同样 ,writefile和ReadFile都是这样的。这样在读写大文件的时候，我们很多时间都浪费在等待ReadFile和writefile的返回上面。如果ReadFile和WriteFile是往管道里读写数据，那么有可能阻塞得更久，导致程序性能下降。为了解决这个问题，windows引进了重叠io的概念，同样是上面的ReadFile和WriteFile，如果在CreateFile的时候设置了file_flag_overlapped ，那么在调用ReadFile和WriteFile的时候就可以给他们最后一个参数传递一个overlapped结构。这样ReadFile或者WriteFile的调用马上就会返回，这时候你可以去做你要做的事，系统会自动替你完成ReadFile或者WriteFile,在你调用了ReadFile或者WriteFile后，你继续做你的事，系统同时也帮你完成ReadFile或WriteFile的操作，这就是所谓的重叠。使用重叠io还有一个好处，就是你可以同时发出几个ReadFile或者WriteFile的调用，然后用WaitForSingleObject或者WaitForMultipleObjects来等待操作系统的操作完成通知，在得到通知信号后，就可以用GetOverlappedResult来查询IO调用的结果。</p>
-<p>如果我们在CreateFile的时候没有使用FILE_FLAG_OVERLAPPED标志，同时在调用ReadFile的时候把lpOverlapped这个参数设置的是null，那么ReadFile这个函数的调用一直要到读取完数据指定的数据后才会返回，如果没读取完，就会阻塞在这里。同样 ,writefile和ReadFile都是这样的。这样在读写大文件的时候，我们很多时间都浪费在等待ReadFile和writefile的返回上面。如果ReadFile和WriteFile是往管道里读写数据，那么有可能阻塞得更久，导致程序性能下降。为了解决这个问题，windows引进了重叠io的概念，同样是上面的ReadFile和WriteFile，如果在CreateFile的时候设置了file_flag_overlapped ，那么在调用ReadFile和WriteFile的时候就可以给他们最后一个参数传递一个overlapped结构。这样ReadFile或者WriteFile的调用马上就会返回，这时候你可以去做你要做的事，系统会自动替你完成ReadFile或者WriteFile,在你调用了ReadFile或者WriteFile后，你继续做你的事，系统同时也帮你完成ReadFile或WriteFile的操作，这就是所谓的重叠。使用重叠io还有一个好处，就是你可以同时发出几个ReadFile或者WriteFile的调用，然后用WaitForSingleObject或者WaitForMultipleObjects来等待操作系统的操作完成通知，在得到通知信号后，就可以用GetOverlappedResult来查询IO调用的结果。</p>
-<p>举个例子：<br>你想当你有这样一个请求，就是<br>readfile(…) &#x2F;&#x2F;1<br>writefile(…) &#x2F;&#x2F;2<br>readfile(…) &#x2F;&#x2F;3<br>你在程序中如果使用同步的话，那只有当你完成1以后2才会继续执行，2执行完以后3才会继续执行，这就是同步。<br>当如果使用异步的话，当系统遇到1时，ok，开一线程给它去完成该io请求，然后系统继续运行2，3，分别开两线程。 1-2-3如果是比较耗时的操作，尤其是运用在网络上，那么1-2-3这三个io请求是并行的，也就是重叠的。</p>
-<h3 id="4-4-1-基于事件通知的重叠I-x2F-O模型"><a href="#4-4-1-基于事件通知的重叠I-x2F-O模型" class="headerlink" title="4.4.1 基于事件通知的重叠I&#x2F;O模型"></a><strong>4.4.1 基于事件通知的重叠I&#x2F;O模型</strong></h3><p>The WSARecv function receives data from a connected socket.<br>int WSARecv(<br>__in SOCKET s,<br>__in_out LPWSABUF lpBuffers,<br>__in DWORD dwBufferCount,<br>__out LPDWORD lpNumberOfBytesRecvd,<br>__in_out LPDWORD lpFlags,<br>__in LPWSAOVERLAPPED lpOverlapped,<br>__in LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine<br>);</p>
-<p> C++ Code </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    Flags = <span class="number">0</span>;</span><br><span class="line">    rc = <span class="built_in">WSARecv</span>(ConnSocket, &amp;DataBuf, <span class="number">1</span>, &amp;RecvBytes, &amp;Flags, &amp;RecvOverlapped, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> ( (rc == SOCKET_ERROR) &amp;&amp; (WSA_IO_PENDING != (err = <span class="built_in">WSAGetLastError</span>())))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;WSARecv failed: %d\n&quot;</span>, err);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    rc = <span class="built_in">WSAWaitForMultipleEvents</span>(<span class="number">1</span>, &amp;RecvOverlapped.hEvent, TRUE, INFINITE, TRUE);</span><br><span class="line">    <span class="keyword">if</span> (rc == WSA_WAIT_FAILED)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;WSAWaitForMultipleEvents failed: %d\n&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    rc = <span class="built_in">WSAGetOverlappedResult</span>(ConnSocket, &amp;RecvOverlapped, &amp;RecvBytes, FALSE, &amp;Flags);</span><br><span class="line">    <span class="keyword">if</span> (rc == FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;WSARecv operation failed: %d\n&quot;</span>, <span class="built_in">WSAGetLastError</span>());</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Read %d bytes\n&quot;</span>, RecvBytes);</span><br><span class="line">    <span class="built_in">WSAResetEvent</span>(RecvOverlapped.hEvent);</span><br><span class="line">    <span class="comment">// If 0 bytes are received, the connection was closed</span></span><br><span class="line">    <span class="keyword">if</span> (RecvBytes == <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-4-2-基于完成例程的重叠I-x2F-O模型"><a href="#4-4-2-基于完成例程的重叠I-x2F-O模型" class="headerlink" title="4.4.2 基于完成例程的重叠I&#x2F;O模型"></a><strong>4.4.2 基于完成例程的重叠I&#x2F;O模型</strong></h3><p>完成例程(Completion Routine)并非是大家所常听到的”完成端口”(Completion Port)，而是另外一种管理重叠I&#x2F;O请求的方式。<br>如果你想要使用重叠I&#x2F;O机制带来的高性能模型，又懊恼于基于事件通知的重叠模型要收到64个等待事件的限制，还有点畏惧完成端口稍显复杂的初始化过程，那么”完成例程”无疑是你最好的选择！^_^因为完成例程摆脱了事件通知的限制，可以连入任意数量客户端而不用另开线程，也就是说只用很简单的一些代码就可以利用Windows内部的I&#x2F;O机制来获得网络服务器的高性能。<br>而且个人感觉”完成例程”的方式比重叠I&#x2F;O更好理解，因为就和我们传统的”回调函数”是一样的，也更容易使用一些，推荐！<br>基于事件通知的重叠I&#x2F;O模型，在你投递了一个请求以后(比如WSARecv)，系统在完成以后是用事件来通知你的，而在完成例程中，系统在网络操作完成以后会自动调用你提供的回调函数，区别仅此而已，是不是很简单呢？<br>采用完成例程的服务端，通信流程是这样的：</p>
-<p><img src="/Socket.assets/1012444-20190920131746383-1434771728.png" alt="img"></p>
-<p>从图中可以看到，服务器端存在一个明显的异步过程，也就是说我们把客户端连入的SOCKET与一个重叠结构绑定之后，便可以将通讯过程全权交给系统内部自己去帮我们调度处理了（该过程见途中灰色部分），我们在主线程中就可以去做其他的事情，边等候系统完成的通知（调用事前注册的完成例程回调函数）就OK，这也就是完成例程高性能的原因所在。<br>有趣的比方：完成例程的处理过程，也就像我们告诉系统，说”我想要在网络上接收网络数据，你去帮我办一下”（投递WSARecv操作），”不过我并不知道网络数据合适到达，总之在接收到网络数据之后，你直接就调用我给你的这个函数(比如_CompletionProess)，把他们保存到内存中或是显示到界面中等等，全权交给你处理了”，于是乎，系统在接收到网络数据之后，一方面系统会给我们一个通知，另外同时系统也会自动调用我们事先准备好的回调函数，就不需要我们自己操心了。<br>完成例程回调函数原型及传递方式：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Void CALLBACK _CompletionRoutineFunc(</span><br><span class="line">DWORD dwError, 　　　　 　　　　　　 <span class="comment">// 标志咱们投递的重叠操作，比如WSARecv，完成的状态是什么</span></span><br><span class="line">DWORD cbTransferred, 　 　　　　　　<span class="comment">// 指明了在重叠操作期间，实际传输的字节量是多大</span></span><br><span class="line">LPWSAOVERLAPPED lpOverlapped, 　 <span class="comment">// 参数指明传递到最初的IO调用内的一个重叠结构</span></span><br><span class="line">DWORD dwFlags 　　　　　　　　　　 <span class="comment">// 返回操作结束时可能用的标志(一般没用)</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<p>因为我们需要给系统提供一个如上面定义的那样的回调函数，以便系统在完成了网络操作后自动调用，这里就需要提一下究竟是如何把这个函数与系统内部绑定的呢？如下所示，在WSARecv函数中是这样绑定的：最后一个参数</p>
-<p>因为我们需要给系统提供一个如上面定义的那样的回调函数，以便系统在完成了网络操作后自动调用，这里就需要提一下究竟是如何把这个函数与系统内部绑定的呢？如下所示，在WSARecv函数中是这样绑定的：最后一个参数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">The WSARecv function receives data from a connected socket.</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">WSARecv</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">__in SOCKET s,</span></span></span><br><span class="line"><span class="params"><span class="function">__in_out LPWSABUF lpBuffers,</span></span></span><br><span class="line"><span class="params"><span class="function">__in DWORD dwBufferCount,</span></span></span><br><span class="line"><span class="params"><span class="function">__out LPDWORD lpNumberOfBytesRecvd,</span></span></span><br><span class="line"><span class="params"><span class="function">__in_out LPDWORD lpFlags,</span></span></span><br><span class="line"><span class="params"><span class="function">__in LPWSAOVERLAPPED lpOverlapped,</span></span></span><br><span class="line"><span class="params"><span class="function">__in LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="小结："><a href="#小结：" class="headerlink" title="小结："></a><strong>小结</strong>：</h3><p>重叠模型的缺点：它为每一个IO请求都开了一个线程，当同时有1000个请求发生，那么系统处理线程上下文[context]切换也是非常耗时的，所以这也就引发了完成端口模型iocp，用<strong>线程池</strong>来解决这个问题，这是下节要学习的内容。</p>
-<h2 id="4-5-套接字IO模型：Completion-port（完成端口）"><a href="#4-5-套接字IO模型：Completion-port（完成端口）" class="headerlink" title="4.5 套接字IO模型：Completion port（完成端口）"></a><strong>4.5 套接字IO模型：Completion port（完成端口）</strong></h2><p>IOCP（I&#x2F;O Completion Port，I&#x2F;O完成端口）是性能最好的一种I&#x2F;O模型。<br>它是应用程序使用线程池处理异步I&#x2F;O请求的一种机制。在处理多个并发的异步I&#x2F;O请求时，以往的模型都是在接收请求是创建一个线程来应答请求。这样就有很多的线程并行地运行在系统中。而这些线程都是可运行的，Windows内核花费大量的时间在进行线程的上下文切换，并没有多少时间花在线程运行上。再加上创建新线程的开销比较大，所以造成了效率的低下。<br>Windows Sockets应用程序在调用WSARecv()函数后立即返回,线程继续运行。当系统接收数据完成后，向完成端口发送通知包（这个过程对应用程序不可见）。<br>应用程序在发起接收数据操作后，在完成端口上等待操作结果。当接收到I&#x2F;O操作完成的通知后，应用程序对数据进行处理。<br>完成端口其实就是上面两项的联合使用基础上进行了一定的改进。<br>一个完成端口其实就是一个通知队列，由操作系统把已经完成的重叠I&#x2F;O请求的通知放入其中。当某项I&#x2F;O操作一旦完成，某个可以对该操作结果进行处理的工作者线程就会收到一则通知。而套接字在被创建后，可以在任何时候与某个完成端口进行关联。<br>众所皆知，完成端口是在Windows平台下效率最高，扩展性最好的IO模型，特别针对于WinSock的海量连接时，更能显示出其威力。其实建立一个完成端口的服务器也很简单，只要注意几个函数，了解一下关键的步骤也就行了。<br>从本质上说，完成端口模型要求我们创建一个Win32完成端口对象（内核对象），通过指定数量的线程对重叠I&#x2F;O请求进行管理，以便为已经完成的重叠I&#x2F;O请求提供服务。要注意的是，所谓”完成端口”，实际是Win32、Windows NT以及Windows 2000采用的一种I&#x2F;O构造机制，除套接字句柄之外，实际上还可接受其他东西。然而，本文只打算讲述如何使用套接字句柄，来发挥完成端口模型的巨大威力。使用这种模型之前，首先要创建一个I&#x2F;O完成端口对象，用它面向任意数量的套接字句柄。管理多个I&#x2F;O请求。要做到这—点,需要调用CreateIoCompletionPort函数。该函数定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HANDLE <span class="title">CreateIoCompletionPort</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">HANDLE FileHandle,</span></span></span><br><span class="line"><span class="params"><span class="function">HANDLE ExistingCompletionPort,</span></span></span><br><span class="line"><span class="params"><span class="function">DWORD CompletionKey,</span></span></span><br><span class="line"><span class="params"><span class="function">DWORD NumberOfConcurrentThreads</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<h1 id="5-原始套接字"><a href="#5-原始套接字" class="headerlink" title="5 原始套接字"></a><strong>5 原始套接字</strong></h1><p>一般情况下程序设计人员主要接触以下两类套接字：<br>流式套接字（SOCK_STREAM）: 面向连接的套接字，对应于 TCP 应用程序。<br>数据包套接字（SOCK_DGRAM）: 无连接的套接字，对应于UDP 应用程序。<br>这一类套接字为标准套接字。此外，还有一类原始套接字，它是一种对原始网络报文进行处理的套接字。原始套接字的用途主要有：<br>发送自定义的IP 数据报<br>发送ICMP 数据报<br>网卡的侦听模式，监听网络上的数据包。<br>伪装IP地址。<br>自定义协议的实现。<br>原始套接字主要应用在底层网络编程上，同时也是网络黑客的必备手段。eg：sniffer、拒绝服务（DoS）、IP 地址欺骗等都需要在原始套接字的基础上实现。<br>原始套接字与标准套接字之间的关系如下图所示。标准套接字与网络协议栈的TCP、UDP 层打交道，而原始套接字则与IP层级网络协议栈核心打交道。<br>网络监听技术很大程度上依赖于SOCKET_RAW。</p>
-<p><img src="/Socket.assets/1012444-20190920134448947-1182732511.png" alt="img"></p>
-<p>要使用原始套接字，必须经过创建原始套接字、设置套接字选项和创建并填充相应协议头这三个步骤，然后用send、WSASend函数将组装好的数据发送出去。接收的过程也很相似，只是需要用recv或WSARecv函数接收数据。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SOCKET sock；</span><br><span class="line">Sock＝<span class="built_in">socket</span> (AF_INET, SOCK_RAW, IPPROTO_UDP)；</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">setsocketopt</span> <span class="params">(SOCKET s, <span class="type">int</span> level, <span class="type">int</span> optname, <span class="type">const</span> <span class="type">char</span> FAR *optval, <span class="type">int</span> optlen)</span></span>;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">TCP</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> tcp_sport；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> tcp_dport；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> tcp_seq；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> tcp_ack；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> tcp_lenres；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> tcp_flag；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> tcp_win；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> tcp_sum；</span><br><span class="line"><span class="type">unsigned</span> <span class="type">short</span> tcp_urp；</span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure>
-
-<p>raw socket（原始套接字）工作原理与规则<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/bcbobo21cn/article/details/51330174">https://blog.csdn.net/bcbobo21cn/article/details/51330174</a></p>
-<p>raw socket（原始套接字）工作原理与规则<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/bcbobo21cn/article/details/51330174">https://blog.csdn.net/bcbobo21cn/article/details/51330174</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/" class="post-title-link" itemprop="url">计网和英特网</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-27 00:07:04" itemprop="dateCreated datePublished" datetime="2019-11-27T00:07:04Z">2019-11-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文是学习自顶向下计算机网络的学习笔记。内容浅显，或有缺漏，还请多多指点。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/27/ComputerNetworking_%E8%AE%A1%E7%BD%91%E5%92%8C%E8%8B%B1%E7%89%B9%E7%BD%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2997,7 +3234,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
