@@ -217,338 +217,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-title-link" itemprop="url">java-设计模式（三）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-12-29 09:27:50" itemprop="dateCreated datePublished" datetime="2021-12-29T09:27:50Z">2021-12-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h1><p>核心作用：是从程序的结构上实现松耦合，从而可以扩大整体的类结构，用来解决更大的问题。</p>
-<p>分类：</p>
-<ul>
-<li>适配器模式、代理模式、桥接模式、 装饰模式、组合模式、外观模式、享元模式</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>代理模式</th>
-<th>为真实对象提供一个代理，从而控制对真实对象的访问</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>适配模式</td>
-<td>使原本由于接口不兼容不能一起工作的类可以一起工作</td>
-</tr>
-<tr>
-<td>桥接模式</td>
-<td>处理多层继承结构，处理多维度变化的场景，将各个维度设计成独立的继承结构，使各个维度可以独立的扩展在抽象层建立关联。</td>
-</tr>
-<tr>
-<td>组合模式</td>
-<td>将对象组合成树状结构以表示”部分和整体”层次结构，使得客户可以统一的调用叶子对象和容器对象</td>
-</tr>
-<tr>
-<td>装饰模式</td>
-<td>动态地给一个对象添加额外的功能，比继承灵活</td>
-</tr>
-<tr>
-<td>外观模式</td>
-<td>为子系统提供统一的调用接口，使得子系统更加容易使用</td>
-</tr>
-<tr>
-<td>享元模式</td>
-<td>运用共享技术有效的实现管理大量细粒度对象，节省内存，提高效率</td>
-</tr>
-</tbody></table>
-<h2 id="五、代理模式（proxy）"><a href="#五、代理模式（proxy）" class="headerlink" title="五、代理模式（proxy）"></a>五、代理模式（proxy）</h2><p>控制对其它对象的访问。</p>
-<p><strong>核心作用：</strong></p>
-<p>控制对其他对象的访问。</p>
-<p><strong>核心角色：</strong></p>
-<ul>
-<li><p>抽象角色：定义代理角色和真实角色的公共给对外方法</p>
-</li>
-<li><p>真实角色：实现抽象角色，定义真实角色所要实现的业务逻辑，供代理角色调用</p>
-<p><strong>关注真正的业务逻辑！</strong></p>
-</li>
-<li><p>代理角色：实现抽象角色，是真实角色的代理，通过真实角色的业务逻辑方法来实现抽象方法，并可以附加自己的操作。</p>
-<p><strong>将统一的流程控制放到代理角色中处理!</strong></p>
-</li>
-</ul>
-<p><strong>开发框架中应用场景：</strong></p>
-<ul>
-<li>struts2中拦截器的实现</li>
-<li>数据库连接池关闭处理</li>
-<li>Hibernate中延时加载的实现</li>
-<li>mybatis中实现拦截器插件</li>
-<li>AspectJ的实现</li>
-<li>spring中AOP的实现<ul>
-<li>日志拦截</li>
-<li>声明式事务处理</li>
-</ul>
-</li>
-<li>web service</li>
-<li>RMI远程方法调用</li>
-</ul>
-<p>包含四类：</p>
-<ul>
-<li><p>远程代理（remote proxy）:控制对源程对象不同地址空间）的访问。它负责将请求及其参数进行编码，并向不同地址空间中的对象发送已经编码的请求。</p>
-</li>
-<li><p>虚拟代理（Virtual Proxy）：根据需要创建开销很大的对象，它可以缓存实体的附加信息，以便延迟对它的访问，例如在网站加载一个很大图片时，不能马上完成，可以用虚拟代理缓存图片的大小信息，然后生成一张临时图片代替原始图片。</p>
-</li>
-<li><p>保护代理（Protection Proxy）：按权限控制对象的访问，它负责检查调用者是否具有实现一个请求所必须的访问权限。</p>
-</li>
-<li><p>智能代理（Smart Reference）：取代了简单的指针，它在访问对象时执行一些附加操作：记录对象的引用次数；当第一次引用一个对象时，将它装入内存；在访问一个实际对象前，检查是否已经锁定了它，以确保其它对象不能改变它。</p>
-</li>
-</ul>
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/9b679ff5-94c6-48a7-b9b7-2ea868e828ed.png"/> </div><br>
-
-<p>例子：</p>
-<p>以下是一个虚拟代理的实现，模拟了图片延迟加载的情况下使用与图片大小相等的临时内容去替换原始图片，直到图片加载完成才将图片显示出来。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Image</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HighResolutionImage</span> <span class="keyword">implements</span> <span class="title class_">Image</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> URL imageURL;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> startTime;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> height;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> width;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getHeight</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getWidth</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> width;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">HighResolutionImage</span><span class="params">(URL imageURL)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.imageURL = imageURL;</span><br><span class="line">        <span class="built_in">this</span>.startTime = System.currentTimeMillis();</span><br><span class="line">        <span class="built_in">this</span>.width = <span class="number">600</span>;</span><br><span class="line">        <span class="built_in">this</span>.height = <span class="number">600</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isLoad</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 模拟图片加载，延迟 3s 加载完成</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">endTime</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">return</span> endTime - startTime &gt; <span class="number">3000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Real Image: &quot;</span> + imageURL);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageProxy</span> <span class="keyword">implements</span> <span class="title class_">Image</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> HighResolutionImage highResolutionImage;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ImageProxy</span><span class="params">(HighResolutionImage highResolutionImage)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.highResolutionImage = highResolutionImage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showImage</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (!highResolutionImage.isLoad()) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Temp Image: &quot;</span> + highResolutionImage.getWidth() + <span class="string">&quot; &quot;</span> + highResolutionImage.getHeight());</span><br><span class="line">                Thread.sleep(<span class="number">100</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        highResolutionImage.showImage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ImageViewer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">image</span> <span class="operator">=</span> <span class="string">&quot;http://image.jpg&quot;</span>;</span><br><span class="line">        <span class="type">URL</span> <span class="variable">url</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">URL</span>(image);</span><br><span class="line">        <span class="type">HighResolutionImage</span> <span class="variable">highResolutionImage</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HighResolutionImage</span>(url);</span><br><span class="line">        <span class="type">ImageProxy</span> <span class="variable">imageProxy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageProxy</span>(highResolutionImage);</span><br><span class="line">        imageProxy.showImage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="面向切面编程AOP介绍"><a href="#面向切面编程AOP介绍" class="headerlink" title="面向切面编程AOP介绍"></a>面向切面编程AOP介绍</h2><p>AOP（Aspect-Oriented Programming，面向切面的编程） </p>
-<ul>
-<li>它是可以通过预编译方式和运行期动态代理实现在不修改源代码的情 况下给程序动态统一添加功能的一种技术。它是一种新的方法论，它是对传统OOP编程的一种补充。</li>
-</ul>
-<p>常用术语：</p>
-<ul>
-<li><p>切面（Aspect）：其实就是共有功能的实现。 </p>
-</li>
-<li><p>通知（Advice）：是切面的具体实现。 </p>
-</li>
-<li><p>连接点（Joinpoint）：就是程序在运行过程中能够插入切面的地点。 </p>
-</li>
-<li><p>切入点（Pointcut）：用于定义通知应该切入到哪些连接点上。 </p>
-</li>
-<li><p>目标对象（Target）：就是那些即将切入切面的对象，也就是那些被通知的对象 </p>
-</li>
-<li><p>代理对象（Proxy）：将通知应用到目标对象之后被动态创建的对象。 </p>
-</li>
-<li><p>织入（Weaving）：将切面应用到目标对象从而创建一个新的代理对象的过程。</p>
-</li>
-</ul>
-<p>开源的AOP框架：</p>
-<ul>
-<li>Aspect</li>
-</ul>
-<h2 id="六、适配器模式（Adapter）"><a href="#六、适配器模式（Adapter）" class="headerlink" title="六、适配器模式（Adapter）"></a>六、适配器模式（Adapter）</h2><p>把一个类接口转换成另一个用户需要的接口。</p>
-<p><strong>使用场景</strong></p>
-<ul>
-<li>系统需要使用<strong>现有的类</strong>，而这些类的<strong>接口不符合</strong>系统的需要。</li>
-<li>想要建立一个可以<strong>重复使用</strong>的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
-<li>需要一个<strong>统一的输出接口</strong>，而输入端的类型不可预知。</li>
-</ul>
-<p><strong>工作中的场景</strong></p>
-<ul>
-<li><p>经常用来做旧系统改造和升级</p>
-</li>
-<li><p>如果我们的系统开发之后再也不需要维护，那么很多模式都是没必要的，但是不幸的是，事实却是维护一个系统的代价往往是开发一个系统的数倍。</p>
-</li>
-</ul>
-<p><strong>我们学习中见过的场景</strong></p>
-<ul>
-<li>java.io.InputStreamReader(InputStream)</li>
-<li>java.io.OutputStreamWriter(OutputStream)</li>
-</ul>
-<h3 id="类适配器模式"><a href="#类适配器模式" class="headerlink" title="类适配器模式"></a>类适配器模式</h3><p>一句话描述：Adapter类，通过<strong>继承</strong>需要被适配的类，<strong>实现</strong>我们想要的类<strong>接口</strong>，完成src-&gt;dst的适配。</p>
-<p>我们现有的src类：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 介绍：src类: 我们有的220V电压</span></span><br><span class="line"><span class="comment"> * 作者：zhangxutong</span></span><br><span class="line"><span class="comment"> * 邮箱：zhangxutong@imcoming.com</span></span><br><span class="line"><span class="comment"> * 时间： 2016/10/18.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Voltage220</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">output220V</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> src = <span class="number">220</span>;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">&quot;我是&quot;</span> + src + <span class="string">&quot;V&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们想要的dst接口：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="language-markdown">/<span class="strong">**</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 介绍：dst接口：客户需要的5V电压</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 作者：zhangxutong</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 邮箱：zhangxutong@imcoming.com</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 时间： 2016/10/18.</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">*/</span></span></span></span></span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">interface</span> <span class="title">Voltage5</span> </span>&#123;</span><br><span class="line">    <span class="built_in">int</span> output5V();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>适配器类：</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="language-markdown">/<span class="strong">**</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 介绍：Adapter类：完成220V-5V的转变</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 通过继承src类，实现 dst 类接口，完成src-&gt;dst的适配。</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 作者：zhangxutong</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span> 邮箱：zhangxutong@imcoming.com</span></span></span></span><br><span class="line"><span class="strong"><span class="language-markdown"><span class="comment"> <span class="emphasis">* 时间： 2016/10/18.</span></span></span></span></span><br><span class="line"><span class="emphasis"><span class="strong"><span class="language-markdown"><span class="comment"> *</span>/</span></span></span></span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">VoltageAdapter</span> <span class="keyword">extends</span> <span class="title">Voltage220</span> <span class="keyword">implements</span> <span class="title">Voltage5</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public <span class="built_in">int</span> output5V() &#123;</span><br><span class="line">        <span class="built_in">int</span> src = output220V();</span><br><span class="line">        System.out.println(<span class="string">&quot;适配器工作开始适配电压&quot;</span>);</span><br><span class="line">        <span class="built_in">int</span> dst = src / <span class="number">44</span>;</span><br><span class="line">        System.out.println(<span class="string">&quot;适配完成后输出电压：&quot;</span> + dst);</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="对象的适配器模式（常用）"><a href="#对象的适配器模式（常用）" class="headerlink" title="对象的适配器模式（常用）"></a>对象的适配器模式（常用）</h3><p>基本思路和类的适配器模式相同，只是将Adapter类作修改，这次不继承src类，而是持有src类的实例，以解决<strong>兼容性</strong>的问题。<br> 即：<strong>持有</strong> src类，<strong>实现</strong> dst 类<strong>接口</strong>，完成src-&gt;dst的适配。<br> （根据“合成复用原则”，在系统中<strong>尽量使用关联关系来替代继承关系</strong>，因此大部分结构型模式都是对象结构型模式。）</p>
-<p> Adapter类如下：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 介绍：对象适配器模式：</span></span><br><span class="line"><span class="comment"> * 持有 src类，实现 dst 类接口，完成src-&gt;dst的适配。 。以达到解决**兼容性**的问题。</span></span><br><span class="line"><span class="comment"> * 作者：zhangxutong</span></span><br><span class="line"><span class="comment"> * 邮箱：zhangxutong@imcoming.com</span></span><br><span class="line"><span class="comment"> * 时间： 2016/10/18.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">VoltageAdapter2</span> <span class="title">implements</span> <span class="title">Voltage5</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Voltage220 mVoltage220;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VoltageAdapter2</span>(<span class="params">Voltage220 voltage220</span>)</span> &#123;</span><br><span class="line">        mVoltage220 = voltage220;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">output5V</span>()</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> dst = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != mVoltage220) &#123;</span><br><span class="line">            <span class="built_in">int</span> src = mVoltage220.output220V();</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">&quot;对象适配器工作，开始适配电压&quot;</span>);</span><br><span class="line">            dst = src / <span class="number">44</span>;</span><br><span class="line">            System.<span class="keyword">out</span>.println(<span class="string">&quot;适配完成后输出电压：&quot;</span> + dst);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dst;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对象适配器和类适配器其实算是同一种思想，只不过实现方式不同。<br> 根据合成复用原则，组合大于继承，<br> 所以它解决了类适配器必须继承src的局限性问题，也不再强求dst必须是接口。<br> 同样的它使用成本更低，更灵活。</p>
-<p>（和装饰者模式初学时可能会弄混，这里要搞清，装饰者是对src的装饰，使用者毫无察觉到src已经被装饰了（使用者用法不变）。 这里对象适配以后，使用者的用法还是变的。<br> <strong>即，装饰者用法： setSrc-&gt;setSrc，对象适配器用法：setSrc-&gt;setAdapter.</strong>)</p>
-<h3 id="接口的适配器模式"><a href="#接口的适配器模式" class="headerlink" title="接口的适配器模式"></a>接口的适配器模式</h3><p>定义：</p>
-<p>当不需要<strong>全部实现</strong>接口提供的方法时，可先设计一个<strong>抽象类</strong>实现接口，并为该接口中每个方法提供一个<strong>默认实现</strong>（空方法），那么该抽象类的子类可<strong>有选择</strong>地覆盖父类的某些方法来实现需求，它适用于<strong>一个接口不想使用其所有的方法</strong>的情况。</p>
-<h2 id="七、桥接模式（Bridge）"><a href="#七、桥接模式（Bridge）" class="headerlink" title="七、桥接模式（Bridge）"></a>七、桥接模式（Bridge）</h2><p>将抽象与实现分离开来，使得它们可以独立变化。</p>
-<p><strong>核心要点</strong></p>
-<ul>
-<li>处理多层继承结构，处理多维度变化的场景，将各个维度设计成独立的继承结构，使各个维度可以独立的扩展在抽象层建立关联。</li>
-</ul>
-<p><strong>效果及实现要点</strong>：</p>
-<ol>
-<li>桥接模式使用对象见的组合关系解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。</li>
-<li>所谓抽象和实现沿着各自维度的变化，即“<strong>子类化</strong>”它们，得到各个子类之后，便可以任意它们，从而获得不同路上的不同其次。</li>
-<li>桥接模式有时候类似于多继承方案，但是多继承方案往往违背了SRP原则，复用性较差。桥接模式是比继承方案更好的解决方法。</li>
-<li>桥接模式的应用一般在“两个非常强的变化维度”，有时候即使有两个变化的维度，但是某个方向的变化维度并不剧烈——换而言之两个变化不会导致纵横交错的结果，并不一定要使用桥接模式。</li>
-</ol>
-<p><strong>使用场景</strong></p>
-<ol>
-<li>如果你不希望在抽象和实现部分采用固定的绑定关系，可以采用桥接模式，来把抽象和实现部分分开，然后在程序运行期间来动态的设置抽象部分需要用到的具体的实现，还可以动态切换具体的实现。</li>
-<li>如果出现抽象部分和实现部分都应该可以扩展的情况，可以采用桥接模式，让抽象部分和实现部分可以独立的变化，从而可以灵活的进行单独扩展，而不是搅在一起，扩展一边会影响到另一边。</li>
-<li>如果希望实现部分的修改，不会对客户产生影响，可以采用桥接模式，客户是面向抽象的接口在运行，实现部分的修改，可以独立于抽象部分，也就不会对客户产生影响了，也可以说对客户是透明的。</li>
-<li>如果采用继承的实现方案，会导致产生很多子类，对于这种情况，可以考虑采用桥接模式，分析功能变化的原因，看看是否能分离成不同的纬度，然后通过桥接模式来分离它们，从而减少子类的数目。</li>
-</ol>
-<p><strong>实际开发中应用场景</strong></p>
-<ul>
-<li>JDBC驱动程序 <ul>
-<li>AWT中的Peer架构</li>
-</ul>
-</li>
-<li>银行日志管理：<ul>
-<li>格式分类：操作日志、交易日志、异常日志 </li>
-<li>距离分类：本地记录日志、异地记录日志</li>
-</ul>
-</li>
-<li>人力资源系统中的奖金计算模块： <ul>
-<li>奖金分类：个人奖金、团体奖金、激励奖金。 </li>
-<li>部门分类：人事部门、销售部门、研发部门。</li>
-</ul>
-</li>
-<li>OA系统中的消息处理： <ul>
-<li>业务类型：普通消息、加急消息、特急消息 </li>
-<li>发送消息方式：系统内消息、手机短信、邮件</li>
-</ul>
-</li>
-</ul>
-<h2 id="八、组合模式（composite）"><a href="#八、组合模式（composite）" class="headerlink" title="八、组合模式（composite）"></a>八、组合模式（composite）</h2><p>将对象组合成树形结构来表示“整体&#x2F;部分”层次关系，允许用户以相同的方式处理单独对象和组合对象。</p>
-<p><strong>组合模式核心：</strong></p>
-<ul>
-<li>组合部件（Component）：它是一个抽象角色，为要组合的对象提供统一的接口。</li>
-<li>叶子（Leaf）：在组合中表示子节点对象，叶子节点不能有子节点。</li>
-<li>合成部件（Composite）：定义有枝节点的行为，用来存储部件，实现在Component接口中的有关操作，如增加（Add）和删除（Remove）</li>
-</ul>
-<p>组件（Component）类是组合类（Composite）和叶子类（Leaf）的父类，可以把组合类看成是树的中间节点。</p>
-<p>组合对象拥有一个或者多个组件对象，因此组合对象的操作可以委托给组件对象去处理，而组件对象可以是另一个组合对象或者叶子对象。</p>
-<h3 id="透明模式"><a href="#透明模式" class="headerlink" title="透明模式"></a>透明模式</h3><p>在Component中声明所有来管理子对象的方法，其中包括Add，Remove等。这样实现Component接口的所有子类都具备了Add和Remove方法。这样做的好处是叶节点和枝节点对于外界没有区别，它们具备完全一致的接口。</p>
-<p>component：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Component</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//增加一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取分支下的所有叶子构件和树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>composite：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Composite</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构建容器</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;Component&gt; componentArrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Component&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.add(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.remove(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//下级遍历</span></span><br><span class="line">        <span class="keyword">for</span> (Component component : componentArrayList) &#123;</span><br><span class="line">            component.display(depth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>leaf：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Leaf</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="comment">//空实现，抛出“不支持请求”异常</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="comment">//空实现，抛出“不支持请求”异常</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">UnsupportedOperationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构的叶子节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>弊端：客户端对叶节点和枝节点是一致的，但叶节点并不具备Add和Remove的功能，因而对它们的实现是没有意义的</p>
-<h3 id="安全模式"><a href="#安全模式" class="headerlink" title="安全模式"></a>安全模式</h3><p>安全模式是把树枝节点和树叶节点彻底分开，树枝节点单独拥有用来组合的方法，这种方法比较安全。</p>
-<p>component:</p>
-<p>这里相比透明模式就少了add()和romove()抽象方法的声明。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Component</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取分支下的所有叶子构件和树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>composite：</p>
-<p>这里add()和remove()方法的实现就从继承变为了自己实现。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Composite</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构建容器</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;Component&gt; componentArrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Component&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//增加一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.add(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//删除一个叶子构件或树枝构件</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component component)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.componentArrayList.remove(component);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//下级遍历</span></span><br><span class="line">        <span class="keyword">for</span> (Component component : componentArrayList) &#123;</span><br><span class="line">            component.display(depth + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>leaf：</p>
-<p>叶子节点中没有了空实现，比较安全。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Leaf</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">display</span><span class="params">(<span class="type">int</span> depth)</span> &#123;</span><br><span class="line">        <span class="comment">//输出树形结构的叶子节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;depth; i++) &#123;</span><br><span class="line">            System.out.print(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="组合模式的应用"><a href="#组合模式的应用" class="headerlink" title="组合模式的应用"></a>组合模式的应用</h3><p>　　1. 何时使用</p>
-<ul>
-<li>想表达“部分-整体”层次结构（树形结构）时</li>
-<li>希望用户忽略组合对象与单个对象的不同，用户将统一的使用组合结构中的所有对象</li>
-</ul>
-<p>　　2. 方法</p>
-<ul>
-<li>树枝和叶子实现统一接口，树枝内部组合该接口</li>
-</ul>
-<p>　　3. 优点</p>
-<ul>
-<li>高层模块调用简单。一棵树形机构中的所有节点都是Component，局部和整体对调用者来说没有任何区别，高层模块不必关心自己处理的是单个对象还是整个组合结构。</li>
-<li>节点自由增加</li>
-</ul>
-<p>　　4. 缺点</p>
-<ul>
-<li>使用组合模式时，其叶子和树枝的声明都是实现类，而不是接口，违反了依赖倒转原则</li>
-</ul>
-<p>　　5. 使用场景</p>
-<ul>
-<li>维护和展示部分-整体关系的场景（如树形菜单、文件和文件夹管理）</li>
-<li>从一个整体中能够独立出部分模块或功能的场景</li>
-</ul>
-<p>　　6. 应用实例</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/adamjwh/p/8392737.html">Swing</a>中，Button、Checkbox等组件都是树叶，而Container容器是树枝</li>
-<li>文本编辑时，可以单个字编辑，也可以整段编辑，还可以全文编辑</li>
-<li>文件复制时，可以一个一个文件复制，也可以整个文件夹复制</li>
-</ul>
-<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/adamjwh/p/9033547.html">简说设计模式——组合模式 - JAdam - 博客园 (cnblogs.com)</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/12/29/java-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BA%8C%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2467,6 +2135,81 @@
 
 
 
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/11/16/java-maven%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/11/16/java-maven%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">java-maven学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-11-16 14:10:53 / 修改时间：06:49:04" itemprop="dateCreated datePublished" datetime="2021-11-16T14:10:53Z">2021-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h1><ul>
+<li>构建工具：自动化构建，抽象构建过程</li>
+<li>可跨平台——对外提供了一致的操作接口</li>
+</ul>
 
       
     </div>
