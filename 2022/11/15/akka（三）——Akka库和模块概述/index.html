@@ -30,7 +30,7 @@
 <meta property="og:description" content="akka（三）——Akka库和模块概述">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-15T15:13:50.000Z">
-<meta property="article:modified_time" content="2022-11-15T07:14:31.175Z">
+<meta property="article:modified_time" content="2022-11-15T07:50:20.144Z">
 <meta property="article:author" content="rhb">
 <meta property="article:tag" content="akka">
 <meta name="twitter:card" content="summary">
@@ -129,17 +129,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">57</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">59</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">24</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">142</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -245,7 +245,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-11-15 15:13:50 / 修改时间：07:14:31" itemprop="dateCreated datePublished" datetime="2022-11-15T15:13:50Z">2022-11-15</time>
+              <time title="创建时间：2022-11-15 15:13:50 / 修改时间：07:50:20" itemprop="dateCreated datePublished" datetime="2022-11-15T15:13:50Z">2022-11-15</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -269,7 +269,95 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Akka-库和模块概述"><a href="#Akka-库和模块概述" class="headerlink" title="Akka 库和模块概述"></a>Akka 库和模块概述</h1>
+        <h1 id="Akka-库和模块概述"><a href="#Akka-库和模块概述" class="headerlink" title="Akka 库和模块概述"></a>Akka 库和模块概述</h1><h2 id="Akka的主要可用功能"><a href="#Akka的主要可用功能" class="headerlink" title="Akka的主要可用功能"></a>Akka的主要可用功能</h2><h3 id="Remoting"><a href="#Remoting" class="headerlink" title="Remoting"></a>Remoting</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Maven --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-remote_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>远程处理（<code>Remoting</code>）使存活（<code>live</code>）在不同计算机上的 Actor 能够无缝地交换消息。虽然作为 JAR 包（<code>artifact</code>）分发，远程处理更像一个模块，而不是一个库。你主要通过配置来启用它，它只有几个 API。由于 Actor 模型，远程和本地消息发送看起来完全相同。在本地系统上使用的模式可以直接转换到远程系统。你很少需要直接使用远程处理，但它提供了构建集群子系统（<code>Cluster subsystem</code>）的基础。</p>
+<p>远程处理解决的挑战包括：</p>
+<ul>
+<li>如何处理远程主机上的 Actor 系统。</li>
+<li>如何在远程 Actor 系统上处理单个 Actor。</li>
+<li>如何将消息转换为线路上的字节。</li>
+<li>如何管理主机之间的低级（<code>low-level</code>）网络连接（和重新连接），如何透明地检测崩溃的 Actor 系统和主机。</li>
+<li>如何透明的在同一网络连接上从一组不相关的 Actor 那里复用通信。</li>
+</ul>
+<h2 id="Cluster"><a href="#Cluster" class="headerlink" title="Cluster"></a>Cluster</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Maven --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-cluster_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你有一组协作解决某些业务问题的 Actor 系统，那么你可能希望以规范的方式管理这些系统集（<code>set of systems</code>）。当远程处理解决了与远程系统组件寻址和通信的问题时，集群（<code>Clustering</code>）使你能够将它们组织成一个由成员协议绑定在一起的“元系统（<code>meta-system</code>）”。在大多数情况下，你希望使用集群模块（<code>Cluster module</code>）而不是直接使用远程处理。集群在远程处理之上提供了一组额外的服务，这是大多数实际应用程序所需要的。</p>
+<p>集群模块解决的挑战包括：</p>
+<ul>
+<li>如何维护一组 Actor 系统（一个集群），这些系统可以相互通信，并将彼此视为集群的一部分。</li>
+<li>如何将新系统安全地引入到已经存在的成员集中。</li>
+<li>如何可靠地检测暂时无法访问的系统。</li>
+<li>如何删除失败的主机&#x2F;系统（或缩小系统规模），以便集群中所有剩余的成员保持一致性。</li>
+<li>如何在当前成员集中分布计算。</li>
+<li>如何将集群成员指定到某个角色，换句话说，提供某些特定的服务而不是其他服务。</li>
+</ul>
+<h2 id="Cluster-Sharding"><a href="#Cluster-Sharding" class="headerlink" title="Cluster Sharding"></a>Cluster Sharding</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Maven --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-cluster-sharding_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分片（<code>Sharding</code>）有助于解决在 Akka 集群成员之间分配一组 Actor 的问题。分片是一种模式，它主要与持久性（<code>Persistence</code>）一起使用，以将一大组需要持久化的实体（由 Actors 支持）平衡到集群的各个成员，并在成员崩溃或离开时将它们迁移到其他节点。</p>
+<p>分片解决的挑战包括：</p>
+<ul>
+<li>如何在一组系统上建模和扩展大规模有状态的实体。</li>
+<li>如何确保集群中的实体正确分布，以便在机器之间保持平衡负载。</li>
+<li>如何确保从崩溃的系统迁移实体而不丢失状态。</li>
+<li>如何确保一个实体不同时存在于多个系统上，从而保持一致性。</li>
+</ul>
+<h2 id="Cluster-Singleton"><a href="#Cluster-Singleton" class="headerlink" title="Cluster Singleton"></a>Cluster Singleton</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-cluster-singleton_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>分布式系统中的一个常见用例是让一个实体负责一个给定的任务，该任务在集群的其他成员之间共享，并且在主机系统发生故障时进行迁移。尽管这无疑会给整个集群带来一个限制扩展的常见瓶颈，但在某些情况下，使用这种模式是不可避免的。集群单例（<code>Cluster singleton</code>）允许集群选择一个 Actor 系统，该系统将承载一个特定的 Actor，而其他系统始终可以独立地访问该 Actor 承担的服务。</p>
+<p>单例模块可用于解决这些挑战：</p>
+<ul>
+<li>如何确保整个集群中只有一个服务实例在运行。</li>
+<li>如何确保服务处于启动状态，即使承载它的系统在缩小规模的过程中崩溃或关闭。</li>
+<li>如何从集群的任何成员访问这个实例，假设它可以随着时间迁移到其他系统。</li>
+</ul>
+<h2 id="Cluster-Publish-Subscribe"><a href="#Cluster-Publish-Subscribe" class="headerlink" title="Cluster Publish-Subscribe"></a>Cluster Publish-Subscribe</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-cluster-tools_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了在系统之间进行协调，通常需要将消息分发给集群中感兴趣的一组系统的所有系统或一个系统。这个模式通常被称为发布订阅，这个模块解决了这个确切的问题。可以向主题的所有订阅者广播消息，也可以向表示感兴趣的任意 Actor 发送消息。</p>
+<p>集群发布订阅（<code>Cluster Publish-Subscribe</code>）旨在解决以下挑战：</p>
+<ul>
+<li>如何向集群中感兴趣的一组 Actor 广播消息。</li>
+<li>如何从群集中感兴趣的一组 Actor 发送消息。</li>
+<li>如何订阅和取消订阅集群中某个主题的事件。</li>
+</ul>
+<h2 id="Persistence"><a href="#Persistence" class="headerlink" title="Persistence"></a>Persistence</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-persistence_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>就像 OOP 中的对象一样，Actor 将其状态保存在易失性内存中。一旦系统正常关闭或突然崩溃，内存中的所有数据都将丢失。持久性（<code>Persistence</code>）提供了使 Actor 能够持久化导致其当前状态的事件的模式。启动时，可以重播事件以恢复由 Actor 承载的实体的状态。可以查询事件流并将其输入到其他处理管道（例如外部大数据集群）或备用视图（如报表）中。</p>
+<p>持久性解决了以下挑战：</p>
+<ul>
+<li>如何在系统重新启动或崩溃时恢复实体&#x2F;参与者的状态。</li>
+<li>如何实现「<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/msp-n-p/jj591573(v=pandp.10)">CQR</a>」系统。</li>
+<li>如何在网络错误和系统崩溃时确保消息的可靠传递。</li>
+<li>如何自查导致实体进入当前状态的域事件。</li>
+<li>如何在项目继续发展的同时利用应用程序中的「<a target="_blank" rel="noopener" href="https://martinfowler.com/eaaDev/EventSourcing.html">事件源</a>」来支持长期运行的流程。</li>
+</ul>
+<h2 id="Distributed-Data"><a href="#Distributed-Data" class="headerlink" title="Distributed Data"></a>Distributed Data</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-distributed-data_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在最终一致性可以接受的情况下，可以在 Akka 集群中的节点之间共享数据，甚至在集群分区面前也可以接受读和写。这可以通过使用「<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type">无冲突的复制数据类型（CRDTs）</a>」来实现，其中不同节点上的写入可以并发进行，并随后以可预测的方式进行合并。分布式数据（<code>Distributed Data</code>）模块提供了共享数据和许多有用数据类型的基础结构。</p>
+<p>分布式数据旨在解决以下挑战：</p>
+<ul>
+<li>如何接受即使面对群集分区的写入。</li>
+<li>如何在保证低延迟本地读写访问的同时共享数据。</li>
+</ul>
+<h2 id="Streams"><a href="#Streams" class="headerlink" title="Streams"></a>Streams</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.typesafe.akka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>akka-stream_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5.19<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Actor 是并发性的基本模型，但是有一些共同的模式，它们的使用要求用户反复实现相同的模式。非常常见的情况是，Actor 的链或图需要处理潜在的大型或无限的连续事件流，并适当地协调资源使用，以便更快的处理阶段不会压倒链或图中较慢的阶段。流（<code>Streams</code>）在 Actor 之上提供了更高级别的抽象，从而简化了编写此类处理网络、处理后台的所有细节，并提供了一个安全、类型化、可组合的编程模型。流也是响应式流（<code>Reactive Streams</code>）标准的实现，它支持与该标准的所有第三方实现集成。</p>
+<p>流解决了以下挑战：</p>
+<ul>
+<li>如何以高性能处理事件流或大型数据集，如何利用并发性并保持资源使用的严格性。</li>
+<li>如何将可重用的事件&#x2F;数据处理片段组装成灵活的管道。</li>
+<li>如何以灵活的、高性能的方式将异步服务相互连接。</li>
+<li>如何提供或使用与第三方库接口的响应式流兼容接口。</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>「<a target="_blank" rel="noopener" href="https://doc.akka.io/docs/akka-http/current/">Akka HTTP</a>」是 Akka 的一个独立模块。</p>
+<p>实际上，远程、内部或外部提供 API 的标准是「<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a>」。Akka 提供了一个库，通过提供一组工具来创建 HTTP 服务（并为其提供服务），以及一个可用于其他服务的客户端来使用此类 HTTP 服务。这些工具特别适合通过利用 Akka 流的底层模型来流入和流出大量数据或实时事件。</p>
+<p>HTTP 解决的一些挑战：</p>
+<ul>
+<li>如何通过 HTTP API 以高性能方式向外部公开系统或集群的服务。</li>
+<li>如何使用 HTTP 将大型数据集流入和流出系统。</li>
+<li>如何使用 HTTP 将活动事件（<code>live events</code>）流入和流出系统。</li>
+</ul>
+
     </div>
 
     
@@ -308,7 +396,10 @@
     <a href="/2022/11/15/akka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Actor%E6%A8%A1%E5%9E%8B/" rel="prev" title="akka（二）——Actor模型">
       <i class="fa fa-chevron-left"></i> akka（二）——Actor模型
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/15/akka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Actor%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="next" title="akka（四）——Actor的体系结构">
+      akka（四）——Actor的体系结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -367,7 +458,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Akka-%E5%BA%93%E5%92%8C%E6%A8%A1%E5%9D%97%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Akka 库和模块概述</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Akka-%E5%BA%93%E5%92%8C%E6%A8%A1%E5%9D%97%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">Akka 库和模块概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Akka%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8F%AF%E7%94%A8%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">Akka的主要可用功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Remoting"><span class="nav-number">1.1.1.</span> <span class="nav-text">Remoting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster"><span class="nav-number">1.2.</span> <span class="nav-text">Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Sharding"><span class="nav-number">1.3.</span> <span class="nav-text">Cluster Sharding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Singleton"><span class="nav-number">1.4.</span> <span class="nav-text">Cluster Singleton</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Publish-Subscribe"><span class="nav-number">1.5.</span> <span class="nav-text">Cluster Publish-Subscribe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Persistence"><span class="nav-number">1.6.</span> <span class="nav-text">Persistence</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Distributed-Data"><span class="nav-number">1.7.</span> <span class="nav-text">Distributed Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Streams"><span class="nav-number">1.8.</span> <span class="nav-text">Streams</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP"><span class="nav-number">1.9.</span> <span class="nav-text">HTTP</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -381,20 +472,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">144</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
