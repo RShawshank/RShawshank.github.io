@@ -31,17 +31,6 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://d33wubrfki0l68.cloudfront.net/26a177ede4d7b032362289c6fccd448fc4a91174/eb693/images/docs/container_evolution.svg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181557030.png">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181634658.webp">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642092.jpeg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642444.jpeg">
-<meta property="og:image" content="https://pic2.zhimg.com/v2-499cc023903440be0fee5cf63b689c89_r.jpg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181641843.jpeg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642491.jpeg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642572.jpeg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643595.webp">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643720.jpeg">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643466.webp">
-<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181644824.jpeg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181631225.webp">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181558353.png">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181558444.png">
@@ -50,7 +39,7 @@
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181603909.png">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181559564.png">
 <meta property="article:published_time" content="2022-11-18T15:13:36.000Z">
-<meta property="article:modified_time" content="2022-11-18T08:45:51.912Z">
+<meta property="article:modified_time" content="2022-11-22T05:44:51.335Z">
 <meta property="article:author" content="rhb">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -150,7 +139,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">59</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">60</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -160,7 +149,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -264,10 +253,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-11-18 15:13:36 / 修改时间：08:45:51" itemprop="dateCreated datePublished" datetime="2022-11-18T15:13:36Z">2022-11-18</time>
+              <time title="创建时间：2022-11-18 15:13:36" itemprop="dateCreated datePublished" datetime="2022-11-18T15:13:36Z">2022-11-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-22 05:44:51" itemprop="dateModified" datetime="2022-11-22T05:44:51Z">2022-11-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -353,62 +348,7 @@
 <h2 id="Docker怎么用？"><a href="#Docker怎么用？" class="headerlink" title="Docker怎么用？"></a>Docker怎么用？</h2><p>其实大多数人谈论 Docker 时说的是 Docker Engine，这只是一个构建和运行的容器。</p>
 <p>在运行容器前需要编写Docker File，通过 dockerFile 生成镜像，然后才能运行 Docker 容器。</p>
 <p>Docker File 定义了运行镜像（image）所需的所有内容，包括操作系统和软件安装位置。一般情况下都不需要从头开始编写 Docker File，在 Docker Hub 中有来自世界各地的工程师编写好的镜像，你可以基于此修改。</p>
-<h1 id="3、k8s"><a href="#3、k8s" class="headerlink" title="3、k8s"></a>3、k8s</h1><p>k8s是一个来自google的开源项目，用于统一管理处理容器化的应用。</p>
-<p>k8s，负责在大规模的服务器环境中，部署和管理容器组，用于解决掉容器的复制，扩展，健康，启动，负载均衡。</p>
-<p>k8s 由众多组件组成，组件间通过 API 互相通信，归纳起来主要分为三个部分：</p>
-<ul>
-<li>controller manager</li>
-<li>nodes</li>
-<li>pods</li>
-</ul>
-<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181634658.webp" alt="k8s集群架构图"></p>
-<ul>
-<li><strong>Controller Manager</strong>，即控制平面，用于调度程序以及节点状态检测。</li>
-<li><strong>Nodes</strong>，构成了Kubernetes集群的集体计算能力，实际部署容器运行的地方。</li>
-<li><strong>Pods</strong>，Kubernetes集群中资源的最小单位。</li>
-</ul>
-<h2 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a><strong>硬件</strong></h2><h3 id="节点-Node-：硬件节点"><a href="#节点-Node-：硬件节点" class="headerlink" title="节点(Node)：硬件节点"></a><strong>节点(Node)：硬件节点</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642092.jpeg" alt="img"></p>
-<p>Node是k8s中最小的<strong>计算硬件单元</strong>，它类似于传统集群中单台机器的概念，是对硬件物理资源的一层抽象，它可以是真实机房的物理机器，又或者是云平台上的ECS，甚至可以是边缘计算的一个终端。</p>
-<p>无论如何，借助Node的抽象，我们可以把任何一台机器简单的看做是一组CPU和RAM资源的组合，从而达到解耦的效果</p>
-<h3 id="集群-Cluster"><a href="#集群-Cluster" class="headerlink" title="集群(Cluster)"></a><strong>集群(Cluster)</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642444.jpeg" alt="img"></p>
-<p>对于大型系统，我们往往不会把关注点放在单个机器上，而是聚焦更大粒度的集群。</p>
-<p>在k8s中，一般将集群看做一个整体，而不关心内部节点的状态，集群内部状态的调整将由k8s自动完成。</p>
-<p>这个集群主要包括两个部分：</p>
-<ul>
-<li><strong>一个Master节点（主节点）</strong></li>
-<li><strong>一群Node节点（计算节点）</strong></li>
-</ul>
-<p>Master节点主要还是负责管理和控制。Node节点是工作负载节点，里面是具体的容器。</p>
-<p><img src="https://pic2.zhimg.com/v2-499cc023903440be0fee5cf63b689c89_r.jpg" alt="img"></p>
-<h4 id="Master节点"><a href="#Master节点" class="headerlink" title="Master节点"></a>Master节点</h4><p>kubernetes中的master指的是集群控制节点，每个kubernetes集群里都需要有一个Master节点来负责整个集群的管理和控制，基本上kubernetes的所有控制命令都发给它，它来负责具体的执行过程。Master节点通常会占据一个独立的服务器(高可用建议用3台服务器)，主要原因就是他太重要了，是整个集群的“首脑”。</p>
-<p>Master节点包括API Server、Scheduler、Controller manager。</p>
-<p>1、kubernetes <a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=API&spm=1001.2101.3001.7020">API</a> Server（kube-apiserver）：提供了HTTP Rest接口的关键服务进程，是kubernetes里所有资源的增、删、改、查等操作的唯一入口，也是集群控制的入口进程<br>2、kubernetes Controller Manager（kube-controller-manager）：kubernetes里所有资源对象的自动化控制中心，可以理解为资源对象的 “大总管”<br>3、kubernetes Scheduler（kube-scheduler）：负责资源调度（pod调度）的进程，相当于公交公司的 “调度室”</p>
-<h4 id="Node节点"><a href="#Node节点" class="headerlink" title="Node节点"></a>Node节点</h4><p>除了master，kubernetes集群中的其他机器被称为Node节点，在较早的版本中也被称为minion。与master一样，Node可以是物理机也可以是虚拟机，Node节点才是kubernetes集群中的工作负载节点，每个Node节点都会被master分配一些工作负载（docker容器）。</p>
-<p>Node节点包括Docker、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=kubelet&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22article%22,%22sourceId%22:%2253260098%22%7D">kubelet</a>、kube-proxy、Fluentd、kube-dns（可选），还有就是<strong>Pod</strong>。</p>
-<p>Pod是Kubernetes最基本的操作单元。<strong>一个Pod代表着集群中运行的一个进程，它内部封装了一个或多个紧密相关的容器。</strong>除了Pod之外，K8S还有一个<strong>Service</strong>的概念，一个Service可以看作一组提供相同服务的Pod的对外访问接口。</p>
-<p>每个Node节点上都运行着以下关键进程：</p>
-<p>1、kubelet：负责Pod对应的容器的创建、启停等任务，同时与master节点密切协作，实现集群管理的基本功能<br>2、kube-proxy：实现kubernetes Service的通信与负载均衡机制的重要组件<br>3、Docker Engine（docker）：Docker引擎，负责本机的容器创建和管理工作</p>
-<p>Fluentd，主要负责日志收集、存储与查询。</p>
-<p>Node节点可以在运行期间动态增加到kubernetes集群中，前提是这个节点上已经正确安装、配置和启动了以上关键进程。在默认情况下，kubelet会向master注册自己，这也是官方所推荐的Node管理方式。一旦Node被纳入集群管理范围，kubelet进程就会定时向master节点汇报自身情况，例如操作系统、docker版本、CPU和内存情况，以及当前有哪些Pod在运行等，这样master就可以知道每个Node的资源使用情况，并实现高效均衡的资源调度策略，长时间失联的Node会被标记为不可用 “Not ready”，随后master会触发 “负载转移”的自动流程</p>
-<h3 id="持久卷-Persistent-Volumes"><a href="#持久卷-Persistent-Volumes" class="headerlink" title="持久卷(Persistent Volumes)"></a><strong>持久卷(Persistent Volumes)</strong></h3><p>考虑到集群内部的节点始终在发生调度和变动，所以所有节点内部的文件系统都是<strong>易失的</strong>，无法保证持久，为了解决这一问题，k8s引入了持久卷的概念，用于映射实际的物理储存节点（云盘或者是物理磁盘），它可以随时被挂载到任何的集群上去。</p>
-<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181641843.jpeg" alt="img"></p>
-<h2 id="软件"><a href="#软件" class="headerlink" title="软件"></a><strong>软件</strong></h2><h3 id="容器-Container"><a href="#容器-Container" class="headerlink" title="容器(Container)"></a><strong>容器(Container)</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642491.jpeg" alt="img"></p>
-<p>容器是打包好的运行环境，这点无需再多赘述。值得一提的是k8s中的容器支持不仅仅包含了docker，还支持一些其他的容器标准</p>
-<h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a><strong>Pod</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181642572.jpeg" alt="img"></p>
-<p>这是k8s区别于其他容器编排平台的一个显著特点：它不直接运行容器，而是运行一种称为Pod的高级结构，里面封装了一系列相关的容器，并共享相同的namespace和网络。</p>
-<p>Pod也是k8s进行服务编排和缩扩容的基本单位，这意味着Pod里所有的容器都会被一并缩放(不管是否有必要)，因此定制Pod时应该使它的体积尽可能小一些。</p>
-<p>另外还有一个和Pod相关的概念，就是副本集(Replica Sets)，它是指在扩容时产生的Pod的复制</p>
-<p>我们可以把上面几个逻辑概念的关系用下图表示：</p>
-<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643595.webp" alt="img"></p>
-<h3 id="部署-Deployment"><a href="#部署-Deployment" class="headerlink" title="部署(Deployment)"></a><strong>部署(Deployment)</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643720.jpeg" alt="img"></p>
-<p>deployment是用于管理pod的抽象层，它的定位类似于docker-compose。</p>
-<p>k8s一个很巧妙的地方在于它把deployment层设计成“过程无关”的，你只需要声明你所期望的最终状态，k8s将会自动为你调度pod并保证它们满足你的预期。</p>
-<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181643466.webp" alt="img"></p>
-<h3 id="入口-Ingress"><a href="#入口-Ingress" class="headerlink" title="入口(Ingress)"></a><strong>入口(Ingress)</strong></h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181644824.jpeg" alt="img"></p>
-<p>使用上面描述的概念，你可以创建一个节点集群，并将Pod部署到集群上。不过，还有一个问题需要解决：允许外部通信流进入你的应用程序。</p>
-<p>默认情况下，Kubernetes提供隔离舱和外部世界。如果你想要与运行在Pod中的服务通信，你必须打开一个通信通道。称作入口(ingress)。</p>
-<p>有多种方法可以将入口添加到集群中。最常见的方法是添加入口控制器或负载均衡器。这两个选项之间的精确权衡超出了本文的范围，但是你必须知道，在你可以与Kubernetes进行实验之前，你需要处理的是入口。</p>
-<h1 id="4、编排系统的需求催生-k8s"><a href="#4、编排系统的需求催生-k8s" class="headerlink" title="4、编排系统的需求催生 k8s"></a>4、编排系统的需求催生 k8s</h1><p>尽管Docker为容器化的应用程序提供了开放标准，但随着容器越来越多出现了一系列新问题：</p>
+<h1 id="3、编排系统的需求催生-k8s"><a href="#3、编排系统的需求催生-k8s" class="headerlink" title="3、编排系统的需求催生 k8s"></a>3、编排系统的需求催生 k8s</h1><p>尽管Docker为容器化的应用程序提供了开放标准，但随着容器越来越多出现了一系列新问题：</p>
 <ul>
 <li>如何协调和调度这些容器？</li>
 <li>如何在升级应用程序时不会中断服务？</li>
@@ -425,7 +365,7 @@
 <li>管理服务通信</li>
 <li>多平台部署</li>
 </ul>
-<h1 id="5、Docker与k8s-难舍难分"><a href="#5、Docker与k8s-难舍难分" class="headerlink" title="5、Docker与k8s 难舍难分"></a>5、Docker与k8s 难舍难分</h1><p>Docker 和 k8s 在业界非常流行，都已经是事实上的标准。</p>
+<h1 id="4、Docker与k8s-难舍难分"><a href="#4、Docker与k8s-难舍难分" class="headerlink" title="4、Docker与k8s 难舍难分"></a>4、Docker与k8s 难舍难分</h1><p>Docker 和 k8s 在业界非常流行，都已经是事实上的标准。</p>
 <p>Docker 是用于构建、分发、运行容器的平台和工具。</p>
 <p>而 <strong>k8s 实际上是一个使用 Docker 容器进行编排的系统，主要围绕 pods 进行工作</strong>。<strong>Pods 是 k8s 生态中最小的调度单位，可以包含一个或多个容器。</strong></p>
 <p><strong>Docker 和 k8s 是根本上不同的技术，两者可以很好的协同工作。</strong></p>
@@ -434,7 +374,7 @@
 <p><strong>（2）没有 Docker 可以使用 k8s 吗？</strong></p>
 <p>k8s 只是一个容器编排器，没有容器拿什么编排？！</p>
 <p>k8s 经常与 Docker 进行搭配使用，但是也可以使用其他容器，如RunC、Containerted 等。</p>
-<h1 id="6、Kubernetes的作用"><a href="#6、Kubernetes的作用" class="headerlink" title="6、Kubernetes的作用"></a>6、Kubernetes的作用</h1><h2 id="1、Kubernetes-的著名优势特色"><a href="#1、Kubernetes-的著名优势特色" class="headerlink" title="1、Kubernetes 的著名优势特色"></a>1、Kubernetes 的著名优势特色</h2><h3 id="1、一个平台搞定所有"><a href="#1、一个平台搞定所有" class="headerlink" title="1、一个平台搞定所有"></a>1、一个平台搞定所有</h3><p>使用k8s，部署任何应用都相当的容易。</p>
+<h1 id="5、Kubernetes的作用"><a href="#5、Kubernetes的作用" class="headerlink" title="5、Kubernetes的作用"></a>5、Kubernetes的作用</h1><h2 id="1、Kubernetes-的著名优势特色"><a href="#1、Kubernetes-的著名优势特色" class="headerlink" title="1、Kubernetes 的著名优势特色"></a>1、Kubernetes 的著名优势特色</h2><h3 id="1、一个平台搞定所有"><a href="#1、一个平台搞定所有" class="headerlink" title="1、一个平台搞定所有"></a>1、一个平台搞定所有</h3><p>使用k8s，部署任何应用都相当的容易。</p>
 <p>只要能打包进入容器，容器能够运行，那么k8s 就一定能运行。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181558353.png" alt="img"></p>
 <h3 id="2、云环境无缝迁移"><a href="#2、云环境无缝迁移" class="headerlink" title="2、云环境无缝迁移"></a>2、云环境无缝迁移</h3><p>如果你有上云的需求，那么使用k8s，这间会是一件相当简单的事情，k8s，会让你无缝迁移云环境，从google的cloud到aws再到微软的环境，任意迁移。</p>
@@ -458,6 +398,7 @@
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202211181559564.png" alt="img"></p>
 <p>一个容器化的基础设施是有自愈能力的，可以提供应用程序的不间断操作，即使一部分基础设施出现故障。</p>
 <h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903792882761741">k8s从入门到放弃(1)：介绍&amp;上手 - 掘金 (juejin.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6952331691524358174">最详细的 K8S 学习笔记总结（2021最新版） - 掘金 (juejin.cn)</a></p>
 
     </div>
 
@@ -497,7 +438,10 @@
     <a href="/2022/11/15/akka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Actor%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" rel="prev" title="akka（四）——Actor的体系结构">
       <i class="fa fa-chevron-left"></i> akka（四）——Actor的体系结构
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/22/k8s%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E7%BB%84%E4%BB%B6/" rel="next" title="k8s（二）——组件">
+      k8s（二）——组件 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -556,7 +500,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E4%B8%8D%E5%90%8C%E9%83%A8%E7%BD%B2%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1、不同部署的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">容器、虚拟机的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">虚拟机的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">虚拟机的优劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E5%AE%B9%E5%99%A8%E5%B0%B1%E6%B2%A1%E6%9C%89%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">没有容器就没有微服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E6%8E%92%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">编排系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%92%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.3.</span> <span class="nav-text">容器和虚拟机区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81Docker"><span class="nav-number">2.</span> <span class="nav-text">2、Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E6%80%8E%E4%B9%88%E7%94%A8%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">Docker怎么用？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%E3%80%81k8s"><span class="nav-number">3.</span> <span class="nav-text">3、k8s</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">硬件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9-Node-%EF%BC%9A%E7%A1%AC%E4%BB%B6%E8%8A%82%E7%82%B9"><span class="nav-number">3.1.1.</span> <span class="nav-text">节点(Node)：硬件节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4-Cluster"><span class="nav-number">3.1.2.</span> <span class="nav-text">集群(Cluster)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Master%E8%8A%82%E7%82%B9"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">Master节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node%E8%8A%82%E7%82%B9"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">Node节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8D%B7-Persistent-Volumes"><span class="nav-number">3.1.3.</span> <span class="nav-text">持久卷(Persistent Volumes)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8-Container"><span class="nav-number">3.2.1.</span> <span class="nav-text">容器(Container)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod"><span class="nav-number">3.2.2.</span> <span class="nav-text">Pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-Deployment"><span class="nav-number">3.2.3.</span> <span class="nav-text">部署(Deployment)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3-Ingress"><span class="nav-number">3.2.4.</span> <span class="nav-text">入口(Ingress)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%E3%80%81%E7%BC%96%E6%8E%92%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9C%80%E6%B1%82%E5%82%AC%E7%94%9F-k8s"><span class="nav-number">4.</span> <span class="nav-text">4、编排系统的需求催生 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5%E3%80%81Docker%E4%B8%8Ek8s-%E9%9A%BE%E8%88%8D%E9%9A%BE%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">5、Docker与k8s 难舍难分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6%E3%80%81Kubernetes%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">6、Kubernetes的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Kubernetes-%E7%9A%84%E8%91%97%E5%90%8D%E4%BC%98%E5%8A%BF%E7%89%B9%E8%89%B2"><span class="nav-number">6.1.</span> <span class="nav-text">1、Kubernetes 的著名优势特色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%80%E4%B8%AA%E5%B9%B3%E5%8F%B0%E6%90%9E%E5%AE%9A%E6%89%80%E6%9C%89"><span class="nav-number">6.1.1.</span> <span class="nav-text">1、一个平台搞定所有</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BA%91%E7%8E%AF%E5%A2%83%E6%97%A0%E7%BC%9D%E8%BF%81%E7%A7%BB"><span class="nav-number">6.1.2.</span> <span class="nav-text">2、云环境无缝迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%AB%98%E6%95%88%E7%9A%84%E5%88%A9%E7%94%A8%E8%B5%84%E6%BA%90"><span class="nav-number">6.1.3.</span> <span class="nav-text">3、高效的利用资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8%E7%9A%84%E8%87%AA%E5%8A%A8%E7%BC%A9%E6%94%BE%E8%83%BD%E5%8A%9B"><span class="nav-number">6.1.4.</span> <span class="nav-text">4、开箱即用的自动缩放能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%BD%BF-CI-x2F-CD-%E6%9B%B4%E5%8A%A0%E7%AE%80%E5%8D%95"><span class="nav-number">6.1.5.</span> <span class="nav-text">5、使 CI&#x2F;CD 更加简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">6.1.6.</span> <span class="nav-text">6、可靠性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">7.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E4%B8%8D%E5%90%8C%E9%83%A8%E7%BD%B2%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1、不同部署的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">容器、虚拟机的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">虚拟机的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E4%BC%98%E5%8A%A3%E5%8A%BF"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">虚拟机的优劣势</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E5%AE%B9%E5%99%A8%E5%B0%B1%E6%B2%A1%E6%9C%89%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">没有容器就没有微服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E6%8E%92%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">编排系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%92%8C%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.3.</span> <span class="nav-text">容器和虚拟机区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81Docker"><span class="nav-number">2.</span> <span class="nav-text">2、Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E6%80%8E%E4%B9%88%E7%94%A8%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">Docker怎么用？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%E3%80%81%E7%BC%96%E6%8E%92%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9C%80%E6%B1%82%E5%82%AC%E7%94%9F-k8s"><span class="nav-number">3.</span> <span class="nav-text">3、编排系统的需求催生 k8s</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%E3%80%81Docker%E4%B8%8Ek8s-%E9%9A%BE%E8%88%8D%E9%9A%BE%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">4、Docker与k8s 难舍难分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5%E3%80%81Kubernetes%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">5、Kubernetes的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81Kubernetes-%E7%9A%84%E8%91%97%E5%90%8D%E4%BC%98%E5%8A%BF%E7%89%B9%E8%89%B2"><span class="nav-number">5.1.</span> <span class="nav-text">1、Kubernetes 的著名优势特色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%B8%80%E4%B8%AA%E5%B9%B3%E5%8F%B0%E6%90%9E%E5%AE%9A%E6%89%80%E6%9C%89"><span class="nav-number">5.1.1.</span> <span class="nav-text">1、一个平台搞定所有</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BA%91%E7%8E%AF%E5%A2%83%E6%97%A0%E7%BC%9D%E8%BF%81%E7%A7%BB"><span class="nav-number">5.1.2.</span> <span class="nav-text">2、云环境无缝迁移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E9%AB%98%E6%95%88%E7%9A%84%E5%88%A9%E7%94%A8%E8%B5%84%E6%BA%90"><span class="nav-number">5.1.3.</span> <span class="nav-text">3、高效的利用资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8%E7%9A%84%E8%87%AA%E5%8A%A8%E7%BC%A9%E6%94%BE%E8%83%BD%E5%8A%9B"><span class="nav-number">5.1.4.</span> <span class="nav-text">4、开箱即用的自动缩放能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E4%BD%BF-CI-x2F-CD-%E6%9B%B4%E5%8A%A0%E7%AE%80%E5%8D%95"><span class="nav-number">5.1.5.</span> <span class="nav-text">5、使 CI&#x2F;CD 更加简单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">5.1.6.</span> <span class="nav-text">6、可靠性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -570,7 +514,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">147</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -583,7 +527,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

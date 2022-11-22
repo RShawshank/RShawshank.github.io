@@ -126,7 +126,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">59</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">60</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">144</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,974 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/30/OS_%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">主存管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 22:55:22" itemprop="dateCreated datePublished" datetime="2019-12-29T22:55:22Z">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="主存管理概述"><a href="#主存管理概述" class="headerlink" title="主存管理概述"></a>主存管理概述</h1><p>现代操作系统将主存区分为物理主存和逻辑主存2类。</p>
+<p>物理主存是共享的物质基础。由多个物理地址构成。</p>
+<h2 id="主存共享方式—-分片共享"><a href="#主存共享方式—-分片共享" class="headerlink" title="主存共享方式—-分片共享"></a>主存共享方式—-分片共享</h2><h3 id="分片的方式"><a href="#分片的方式" class="headerlink" title="分片的方式"></a>分片的方式</h3><p>(1) 大小不等的区域—根据用户程序的实际需要决定分区的大小</p>
+<p>①分区存储管理</p>
+<p>②段式存储管理</p>
+<p>(2) 大小相等的区域—以块为单位，根据用户程序的实际需要决定应分配的块数</p>
+<p>页式存储管理</p>
+<p>(3) 二者结合</p>
+<p>段页式存储管理</p>
+<p>由于不同程序的物理地址的首地址都是乱七八糟的，不方便用户使用。所以采用逻辑地址（虚地址）将首地址设置为0。逻辑地址和物理地址之间的映射就是地址映射。</p>
+<h3 id="程序的逻辑组织"><a href="#程序的逻辑组织" class="headerlink" title="程序的逻辑组织"></a>程序的逻辑组织</h3><h4 id="一维地址结构"><a href="#一维地址结构" class="headerlink" title="一维地址结构"></a>一维地址结构</h4><p>一个程序是一个连续、线性的地址结构；确定线性地址空间中的指令地址或操作数地址只需要一个信息。</p>
+<h4 id="二维地址结构"><a href="#二维地址结构" class="headerlink" title="二维地址结构"></a>二维地址结构</h4><p>一个程序由<strong>若干个分段组成</strong>（数据段、代码段、栈段······），每个分段是一个连续的地址区；</p>
+<p>确定线性地址空间中的指令地址或操作数地址需要两个信息，一是该信息所在的分段，另一个是该信息在段内的偏移量。</p>
+<h1 id="主存管理功能"><a href="#主存管理功能" class="headerlink" title="主存管理功能"></a>主存管理功能</h1><p>实现的功能：主存分配、主存保护、虚拟主存</p>
+<ul>
+<li>地址映射—-将逻辑地址映射成物理地址</li>
+<li>主存分配—-在多用户之间分配物理主存</li>
+<li>存储保护—-对各用户区的信息提供保护措施</li>
+<li>主存扩充&#x2F;虚拟主存—-扩充逻辑主存区</li>
+</ul>
+<h2 id="地址映射"><a href="#地址映射" class="headerlink" title="地址映射"></a>地址映射</h2><p>将程序地址空间中使用的逻辑地址变换成主存中的物理地址的过程，称为地址映射。</p>
+<p><strong>地址重定位就是操作系统将逻辑地址转变为物理地址的过程。。。也就是对目标程序中的指令和数据进行修改的过程</strong></p>
+<p><strong>将逻辑地址空间重定位到物理地址空间的时机有三种：</strong></p>
+<p>1、程序编译连接时。</p>
+<p>​			在程序编写或程序编译时确定虚、实地址之间的对应关系，结果是一个不能浮动的程序模块。</p>
+<p>2、程序装入内存时。</p>
+<p>​			在程序装入过程中随即进行的地址变换方式称为<strong>静态地址映射</strong>。</p>
+<p>3、程序执行时。</p>
+<p>​			在程序执行期间，随着每条指令和数据的访问自动地连续地进行地址映射，这种地址变换方式称为<strong>动态地址映射</strong>。</p>
+<p><strong>静态地址映射与动态地址映射的区别</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">静态地址映射</th>
+<th align="center">动态地址映射</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">在程序装入过程中在程序执行期间进行地址映射</td>
+<td align="center">在程序执行期间进行地址映射进行地址映射</td>
+</tr>
+<tr>
+<td align="center">需软件(重定位装入程序)</td>
+<td align="center">需硬件地址变换机构( 重定位寄存器)</td>
+</tr>
+<tr>
+<td align="center">需花费较多CPU时间</td>
+<td align="center">地址变换快</td>
+</tr>
+<tr>
+<td align="center">不灵活</td>
+<td align="center">灵活</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>一、静态重定位</strong><br>　　<strong>静态重定位是在程序执行之前进行重定位，它根据装配模块将要装入的内存起始位置，直接修改装配模块中的有关使用地址的指令。</strong><br>　　例如，一个以“0”作为参考地址的装配模块，要装入以100为起始地址的存储空间。显然，在装入之前要做某些修改，程序才能正确执行。例如，MOV　 EAX，[500]这条指令的意义，是把相对地址为500的存储单元内容1234装入EAX号累器。现在内容为1234的存储单元的实际地址为1500， 即为相对地址(500)加上装入的地址(1000),因此，MOV　EAX，[500]这条指令中的直接地址码也要相应地加上起始地址，而成为MOV　 EAX，[1500]。<br>　　程序中涉及直接地址的每条指令都要进行这样的修改。需要修改的位置称为重定位项，所做的加实际装入模块起始地址修改中的块起始地址称为重定位因子。<br>　　为支持静态重定位，连接程序在生成统一地址空间和装配模块时，　应产生一个重定位项表，连接程序此时还不知道装配模块将要装入的实际位置，故重定位表 所给出的需修改位置是相对地址所表示的位置。<br>　　操作系统的装入程序要把装配模块和重定位项表一起装入内存。由装配模块的实际装入起始地址得到重定位因子，然后实施如下两步：<br>　　（1）取重定位项，加上重定位因子而得到欲修改位置的实际地址；<br>　　（2）对实际地址中的内容再做加重定位因子的修改，从而完成指令代码的修改。<br>　　对所有的重定位项实施上述两步操作后，静态重定位才完成，尔后可启动程序执行。使用过的重定位项表内存副本随即被废弃。</p>
+<p>　　<strong>静态重定位有着无需硬件支持的优点，但存在着如下的缺点：一是程序重定位之后就不能在内存中搬动了；二是要求程序的存储空间是连续的，不能把程序放在若干个不连续的区域内。</strong></p>
+<p><strong>二、动态重定位</strong><br>　　<strong>动态重定位是指，不是在程序执行之前而是在程序执行过程中进行地址重定位。更确切地说，是在CPU每次访问内存单元前才进行地址变换。</strong>动态重定位可使装配模 块不加任何修改而装入内存，但是它需要硬件——定位寄存器的支持。<br>　　程序的目标模块装入内存时，与地址有关的各项均保持原来的相对地址不进行任何修改。如MOV　1，[500]这条指令仍是相对地址500。当此模块被 操作系统调度到处理机上执行时，操作系统将把此模块装入的实际起始起始地址减去目标模块的相对基地址，然后将其差值装入定位寄存器中。当CPU取得一条访问内存的指令时，地址变换硬件逻辑自动将指令中的相对地址与定位寄存器中的值相加，再依此和值作为内存绝对地址去访问该单元中的数据。<br>　　由此可见，进行动态重定位的时机是在指令执行过程中，每次访问内存前动态地进行。采取动态重定位可带来两个好处：<br>　　（1）目标模块装入内存时无需任何修改，因而装入之后再搬迁也不会影响其正确执行，这对于存储器紧缩、解决碎片问题是极其有利的；<br>　　（2）一个程序由若干个相对独立的目标模块组成时，每个目标模块各装入一个存储区域，这些存储区域可以不是顺序相邻的，只要各个模块有自己对应的定位寄存器就行。</p>
+<p>　　<strong>动态重定位技术所付出的代价是需要硬件支持。</strong></p>
+</blockquote>
+<h2 id="主存分配"><a href="#主存分配" class="headerlink" title="主存分配"></a>主存分配</h2><p>用于主存分配的数据结构：主存资源信息块、空闲区队列；</p>
+<p><strong>主存管理器的一些策略</strong></p>
+<p>分配策略——在众多个请求者中选择一个请求者的原则</p>
+<p>放置策略——在可用资源中，选择一个空闲区的原则</p>
+<p><strong>调入策略</strong>——决定信息装入主存的时机预调策略：预先将信息调入主存请调策略：当需要信息时，将信息调入主存</p>
+<p><strong>淘汰策略</strong>——在主存中没有可用的空闲区(对某一程序而言)时，决定哪些信息从主存中移走，即确定淘汰已占用的内存区的原则。</p>
+<p><strong>调入策略对页式系统或非页式系统没有多大区别，但是淘汰策略和放置策略在页式和非页式系统中是不同的。（页式的页的大小是固定的）</strong></p>
+<h2 id="主存扩充"><a href="#主存扩充" class="headerlink" title="主存扩充"></a>主存扩充</h2><p>实现的方法：</p>
+<ul>
+<li>程序的全部代码和数据存放在辅存中；</li>
+<li>将程序当前执行所涉及的那部分程序代码放入主存中；</li>
+<li>程序执行时，当所需信息不在主存，由操作系统和硬件相配合来完成主存从辅存中调入信息，程序继续执行。</li>
+</ul>
+<h3 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h3><p>由操作系统和硬件相配合来完成主存和辅存之间的信息的动态调度。这样的计算机系统好像为用户提供了一个其存储容量比实际主存大得多的存储器，这个存储器称为虚拟存储器。<strong>本质的大小其实是没有变的，但是给用户的感觉就是变大了，1元钱看成了100元，这100元就是虚拟存储器</strong></p>
+<p><strong>虚拟存储器的核心是将程序的访问地址和主存的物理地址分离。为什么这么说？我们知道访问地址其实是逻辑地址（虚地址），它会去进行地址映射找到主存地址（这个功能由操作系统实现，所以用户不用管）。但是引入了虚存后（不要和虚地址搞混淆了），我们不需要了解主存的物理地址，我们只在虚存中运行（当然，真正运行的时候还是调入一部分进主存的）。这样就把访问地址和虚存互相对应（也就说成了和主存的物理地址分离）</strong></p>
+<ul>
+<li>逻辑地址与物理地址分开</li>
+<li>存储空间与虚地址空间分开</li>
+<li>提供地址变换机构</li>
+</ul>
+<p><strong>实现虚拟存储器的物质基础</strong></p>
+<ul>
+<li>有相当容量的辅存：足以存放应用程序的虚地址空间</li>
+<li>有一定容量的主存：存放进入主存的多进程的信息</li>
+<li>地址变换机构</li>
+</ul>
+<h2 id="存储保护"><a href="#存储保护" class="headerlink" title="存储保护"></a>存储保护</h2><p>在多用户环境中，主存储器按区分配给各用户程序使用。为了互不影响，必须由硬件(软件配合)保证各用户程序只能在给定的存储区域内活动，这种措施叫做存储保护。</p>
+<h3 id="界地址保护"><a href="#界地址保护" class="headerlink" title="界地址保护"></a>界地址保护</h3><h4 id="上、下界保护"><a href="#上、下界保护" class="headerlink" title="上、下界保护"></a>上、下界保护</h4><p><strong>比较的是物理地址</strong>。</p>
+<p>硬件为分给应用程序的每一个连续的主存空间设置一对上下界寄存器—–分别指向该存储空间的上界和下界。</p>
+<h4 id="基地址、限长保护"><a href="#基地址、限长保护" class="headerlink" title="基地址、限长保护"></a>基地址、限长保护</h4><p><strong>比较的是逻辑地址</strong></p>
+<p>基地址存放的是逻辑地址—段的首地址</p>
+<h3 id="存储键保护"><a href="#存储键保护" class="headerlink" title="存储键保护"></a>存储键保护</h3><h1 id="分区存储管理"><a href="#分区存储管理" class="headerlink" title="分区存储管理"></a>分区存储管理</h1><p>对应的是主存分配</p>
+<h2 id="动态分区分配"><a href="#动态分区分配" class="headerlink" title="动态分区分配"></a>动态分区分配</h2><p>在处理程序的过程中，建立分区，依用户请求的大小分配分区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104213759918.png"></p>
+<p>很明显，空闲区被切碎会产生内存碎片。</p>
+<p><strong>动态分区的分配方法中，对用户程序进行动态分配并实现动态地址映射（这个不难理解，由于在动态分区中，系统是根据程序的大小再决定分给程序内存空间的大小，在地址映射中，事先根本就不可能有物理地址让你静态地址映射）</strong></p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214348973.png"></p>
+<h2 id="分区分配数据结构"><a href="#分区分配数据结构" class="headerlink" title="分区分配数据结构"></a>分区分配数据结构</h2><p>主存资源信息块(M_RIB)</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214534920.png"></p>
+<p>分区描述器(PD)</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104214549857.png"></p>
+<blockquote>
+<p>flag：为0  ——空闲区<br>             为1  ——已分配区</p>
+<p>size：分区大小</p>
+<p>next：空闲区——自由主存队列中的勾链字<br>             已分配区——此项为零</p>
+</blockquote>
+<h2 id="分区的分配和回收"><a href="#分区的分配和回收" class="headerlink" title="分区的分配和回收"></a>分区的分配和回收</h2><p>注意：动态地址映射只是决定了用户程序什么时候将虚地址映射到物理地址中。但是主存分配给用户程序的地址还没有决定。</p>
+<h3 id="分区分配"><a href="#分区分配" class="headerlink" title="分区分配"></a>分区分配</h3><p>动态分区的策略如下：“放置策略”</p>
+<p>①寻找空闲块<br>                依申请者所要求的主存区的大小，分区分配程序在自由主存队列中找一个满足用户需要的空闲块；</p>
+<p>②若找到了所需的空闲区，有两种情况<br>                i 空闲区与要求的大小相等，将该空闲区分配并从队列中摘除；<br>                ii 空闲区大于所要求的的大小，将空闲区分为两部分：一部分成为已分配区，建立已分配区的描述器；剩下部分仍为空闲区。返回所分配区域的首址；</p>
+<p>③否则，告之不能满足要求。</p>
+<h3 id="分区回收"><a href="#分区回收" class="headerlink" title="分区回收"></a>分区回收</h3><p>①检查释放分区(即为回收分区)在主存中的邻接情况<br>                <strong>若上、下邻接空闲区，则合并，成为一个连续的空闲区</strong></p>
+<p>②若回收分区不与任何空闲区相邻接<br>                建立一个新的空闲区，并加入到空闲区队列中。</p>
+<h2 id="放置策略"><a href="#放置策略" class="headerlink" title="放置策略"></a>放置策略</h2><p>选择空闲区的策略，称为放置策略。</p>
+<p>本质上是空闲区队列的排序问题：<br>如上述提到的从高地址到低地址的分配方式：对应的就是按照地址增加、减少的次序分类排序<br>其他的排序还有：按照区的大小增加、减少的次序排序</p>
+<p>常用的放置策略——</p>
+<ul>
+<li>首次匹配(首次适应算法)</li>
+<li>最佳匹配(最佳适应算法)</li>
+<li>最坏匹配(最坏适应算法)</li>
+</ul>
+<h3 id="首次适应"><a href="#首次适应" class="headerlink" title="首次适应"></a>首次适应</h3><p>首次适应算法是将输入的程序放置到主存里第一个足够装入它的地址<strong>最低</strong>的空闲区中。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222505368.png"></p>
+<p><strong>空闲区队列结构：</strong></p>
+<p>空闲区地址由低到高排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222944954.png"></p>
+<p><strong>首次适应算法的特点</strong></p>
+<p>尽可能地利用存储器中低地址的空闲区，而尽量保存高地址的空闲区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222548961.png"></p>
+<h3 id="最佳适应"><a href="#最佳适应" class="headerlink" title="最佳适应"></a>最佳适应</h3><p>最佳适应算法是将输入的程序放置到主存中与它所需大小最接近的空闲区中。</p>
+<p><strong>空闲区队列结构</strong></p>
+<p>空闲区大小由小到大排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222959824.png"></p>
+<p><strong>最佳适应算法的特点</strong></p>
+<p>尽可能地利用存储器中小的空闲区，而尽量保存大的空闲区。</p>
+<h3 id="最坏适应"><a href="#最坏适应" class="headerlink" title="最坏适应"></a>最坏适应</h3><p>最坏适应算法是将输入的程序放置到主存中与它所需大小差距最大的空闲区中。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104222639015.png"></p>
+<p><strong>空闲区队列结构</strong></p>
+<p>空闲区大小由大到小排序</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104223012937.png"></p>
+<p><strong>最坏适应算法的特点</strong></p>
+<p>尽可能地利用存储器中大的空闲区。</p>
+<h2 id="碎片问题及拼接技术"><a href="#碎片问题及拼接技术" class="headerlink" title="碎片问题及拼接技术"></a>碎片问题及拼接技术</h2><p>在已分配区之间存在着的一些没有被充分利用的空闲区。</p>
+<p>所谓拼接技术是指移动存储器中某些已分配区中的信息，使本来分散的空闲区连成一个大的空闲区。</p>
+<h1 id="页式存储管理"><a href="#页式存储管理" class="headerlink" title="页式存储管理"></a>页式存储管理</h1><p>程序的存放将不再是连续的。</p>
+<p>程序的地址空间被等分成大小相等的片，称为<strong>页面</strong>，又称为虚页。<br><strong>一般页面的大小为1KB、2KB、4KB</strong></p>
+<p>主存被等分成大小相等的片，称为<strong>主存块</strong>，又称为实页。</p>
+<p><strong>主存的块和页面的大小是相等的并且为2的幂次</strong></p>
+<p>好处：可以方便的支持虚拟存储，扩充内存。因为它可以只将一部分页面装入主存中即可。也直接解决了碎片问题。</p>
+<blockquote>
+<p>但是在按区分配中，</p>
+</blockquote>
+<p>需要解决的问题：</p>
+<ul>
+<li>页式系统的地址映射—–动态地址映射</li>
+<li>请调策略—-当装入部分页面的时候，需要询问当前访问的信息是否在主存中。不在的话，系统会从辅存中调入请求的页面。</li>
+<li>放置策略—-确定程序的各个页面分配到主存的哪些块中，以及什么原则挑选主存块</li>
+<li>淘汰策略—-当主存块用完后，确定哪些页面被淘汰出主存。</li>
+</ul>
+<h2 id="页式地址变换"><a href="#页式地址变换" class="headerlink" title="页式地址变换"></a>页式地址变换</h2><h3 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h3><p>为了实现从地址空间到物理主存的映象，系统建立的<strong>记录页与内存块之间对应关系的地址变换</strong>的机构称为页面映像表，简称页表。</p>
+<p>页表的组成：</p>
+<p>​		i 如果选择高速缓冲存储器：地址变换速度快，但成本较高</p>
+<p>​		ii 如果选择主存区域：地址变换速度比硬件慢，成本较低主存管理——页式存储管理</p>
+<h3 id="虚地址结构"><a href="#虚地址结构" class="headerlink" title="虚地址结构"></a>虚地址结构</h3><p>页号+页内位移。</p>
+<p>当CPU给出一个虚地址（指令地址或者操作数地址），将其拆分成页号和页内位移表示该地址对应于物理地址中的具体位置（哪个页面和页面中的哪个位置）</p>
+<h3 id="页式地址变换-1"><a href="#页式地址变换-1" class="headerlink" title="页式地址变换"></a>页式地址变换</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104232557824.png"></p>
+<p>页式地址变换步骤</p>
+<p>i CPU给出操作数地址(为2500) ；<br>ii  由分页机构自动地把逻辑地址分为两部分，得到页号p和页内相对位移w (p &#x3D;2，w &#x3D;452)；<br>iii 根据页表始址寄存器指示的页表始地址，以页号为索引，找到第2页所对应的块号(为7) ；<br>iv  将块号b和页内位移量w拼接在一起，就形成了访问主存的物理地址(7x1024+452&#x3D;7620)</p>
+<p>通过页表将虚地址（也就是逻辑地址）中的页号对应到物理地址中的块号。由于页面的大小和内存块的大小是一样的，所以虚地址的页内位移就是物理地址中的块内位移。</p>
+<blockquote>
+<p>分区管理的地址映射：</p>
+<p>每个进程在分区说明表（ 为了管理分区，设置一张不属于任何进程的分区说明表，也就是放置策略章节对应的分区表）找到自己对应的表项目，<strong>根据表中的物理起始地址+自己的逻辑地址，就得到了实际的物理地址</strong>！目前为止需要注意的是，分区分配中，每个进程的分配的物理空间仍然是连续的!</p>
+<p>换一个说法：</p>
+<p>作业装入内存时，是将该用户的程序和数据原封不动地装入到内存中。当调度该进程在cpu上执行时，<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">操作系统</a>就自动将该进程在内存的起始地址装入<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%9F%BA%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">基址寄存器</a>，将进程的大小装入限长寄存器<br>。当执行指令时，如果地址合法，则将相对地址与<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%9F%BA%E5%9D%80%E5%AF%84%E5%AD%98%E5%99%A8&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">基址寄存器</a>中的地址相加，所得结果就是真正要访问的<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">内存地址</a>；如果地址越界，则发出相应中断，进行处理。</p>
+<p>虚实地址映射极为简单。</p>
+</blockquote>
+<h3 id="联想存储器LSB"><a href="#联想存储器LSB" class="headerlink" title="联想存储器LSB"></a>联想存储器LSB</h3><p>高速、小容量半导体存储部件，又称缓冲存储器</p>
+<p>快表</p>
+<p>在缓冲存储器中存放正在运行的进程当前用到的页号和对应的块号，又称为快表。</p>
+<p>具体可以参见《组成原理》中《存储系统》章节。</p>
+<p><strong>注意一点：页表查询只在联想映像不匹配时进行</strong></p>
+<h2 id="请调页面的机制"><a href="#请调页面的机制" class="headerlink" title="请调页面的机制"></a>请调页面的机制</h2><p>①简单页式系统：装入一个程序的全部页面才能投入运行。</p>
+<p>②请求页式系统：装入一个程序的部分页面即可投入运行。</p>
+<p>Q：如何发现所要访问的页面不在主存？</p>
+<p>A：扩充页表功能</p>
+<p>Q：如何确认所要访问的页面不在主存时如何处理？</p>
+<p>A：缺页处理</p>
+<h3 id="扩充页表功能"><a href="#扩充页表功能" class="headerlink" title="扩充页表功能"></a>扩充页表功能</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104233939211.png"></p>
+<p>中断位i：标识该页是否在主存</p>
+<p>​						若i&#x3D;1，表示此页不在主存；<br>​						若i&#x3D;0，表示该页在主存</p>
+<p>辅存地址：该页面在辅存的位置</p>
+<h3 id="缺页处理"><a href="#缺页处理" class="headerlink" title="缺页处理"></a>缺页处理</h3><ul>
+<li><p>当从虚地址中得到页号，判断页号不在主存的时候，会发送缺页中断。</p>
+</li>
+<li><p>接下来要将缺页的部分拉回到主存中：</p>
+<ul>
+<li>判断时候有空闲块：<ul>
+<li>有的话就从辅存读入所需的页，并且调整存储分配表和页表，然后重新启动被中断的指令</li>
+<li>没有的话根据淘汰算法选择一页淘汰（淘汰掉的页如果还有用就将其放回辅存，没有用就丢掉），调整存储分配表和页表。然后从辅存中读入所需的页</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234642517.png"></p>
+<h2 id="淘汰机制和策略"><a href="#淘汰机制和策略" class="headerlink" title="淘汰机制和策略"></a>淘汰机制和策略</h2><p>用来选择淘汰哪一页的规则叫做置换策略，或称淘汰算法。</p>
+<p>Q：如何确定那一页被淘汰？</p>
+<p>A：根据最近有没有使用、使用频率等</p>
+<h3 id="扩充页表功能-1"><a href="#扩充页表功能-1" class="headerlink" title="扩充页表功能"></a>扩充页表功能</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200104234749807.png"></p>
+<p>①引用位——标识该页最近是否被访问<br>                                为“0”——该页没有被访问；为“1”——该页已被访问</p>
+<p>②改变位——表示该页是否被修改<br>                                为“0”——该页未被修改；为“1”——该页已被修改</p>
+<blockquote>
+<p>颠簸(thrashing)，又称为“抖动”</p>
+<p>简单地说，导致系统效率急剧下降的主存和辅存之间的频繁页面置换现像称为“抖动”。</p>
+</blockquote>
+<h3 id="缺页中断率"><a href="#缺页中断率" class="headerlink" title="缺页中断率"></a>缺页中断率</h3><p>假定程序p共有n页，系统分配m块，有1≤m≤n；若程序p在运行中：成功的访问次数为s，不成功的访问次数为f；缺页中断率：<br>$$<br>f′&#x3D;f&#x2F; (s+ f)\<br>f′&#x3D; f (r，m，p)；\<br>r：置换算法；m：系统分配的块数；p：程序特征<br>$$</p>
+<h3 id="常用的置换算法"><a href="#常用的置换算法" class="headerlink" title="常用的置换算法"></a>常用的置换算法</h3><h4 id="最佳算法（OPT算法）"><a href="#最佳算法（OPT算法）" class="headerlink" title="最佳算法（OPT算法）"></a>最佳算法（OPT算法）</h4><p>当要调入一新页而必须先淘汰一旧页时，所淘汰的那一页应是以后不再要用的，或者是在最长的时间以后才会用到的那页。</p>
+<p>简单说，就是不肯可能实现的（你怎么知道那页是以后不用的）</p>
+<p><strong>站在现在，往未来看</strong></p>
+<h4 id="先进先出淘汰算法（FIFO算法）"><a href="#先进先出淘汰算法（FIFO算法）" class="headerlink" title="先进先出淘汰算法（FIFO算法）"></a>先进先出淘汰算法（FIFO算法）</h4><p>总是<strong>选择在主存中居留时间最长(即最早进入主存</strong>)的一页淘汰。</p>
+<p><strong>实现</strong></p>
+<ul>
+<li>建立一个页面进入主存的先后次序表；</li>
+<li>建立一个替换指针，指向最早进入主存的页面；</li>
+<li>当需要置换一页时，选择替换指向的那一页，然后调整替换指针的内容（指向替换后最早进入主存的页面，因为之前最早进入的被替换出去了）。</li>
+</ul>
+<blockquote>
+<p>在存储分块表中记录页面进入主存的先后次序：4→5→1→2   当要调入第6页时：如何处理? 5→1→2 →6</p>
+</blockquote>
+<h4 id="最久未使用淘汰算法-LRU算法"><a href="#最久未使用淘汰算法-LRU算法" class="headerlink" title="最久未使用淘汰算法(LRU算法)"></a>最久未使用淘汰算法(LRU算法)</h4><p>总是<strong>选择最长时间未被使用</strong>的那一页淘汰。</p>
+<p><strong>实现</strong></p>
+<ul>
+<li><p>用引用位考察页面的使用情况；</p>
+</li>
+<li><p>当访问页面时，将引用位置1，并记时；</p>
+</li>
+<li><p>当要淘汰一页时，选择时间最长的一页淘汰。</p>
+<p>要精确实现很困难</p>
+<ul>
+<li>硬件方法：采用计数器</li>
+<li>软件方法：采用页号栈</li>
+</ul>
+</li>
+</ul>
+<h1 id="段式、段页式存储管理"><a href="#段式、段页式存储管理" class="headerlink" title="段式、段页式存储管理"></a>段式、段页式存储管理</h1><h2 id="段式地址空间"><a href="#段式地址空间" class="headerlink" title="段式地址空间"></a>段式地址空间</h2><p>分段是程序中自然划分的一组逻辑意义完整的信息集合。<br>分段的例：代码分段、数据分段、栈段页。</p>
+<h3 id="程序地址空间"><a href="#程序地址空间" class="headerlink" title="程序地址空间"></a>程序地址空间</h3><p>由若干个逻辑分段组成，每个分段有自己的名字，对于一个分段而言，它是一个连续的地址区。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001339566.png"></p>
+<h3 id="段式地址结构"><a href="#段式地址结构" class="headerlink" title="段式地址结构"></a>段式地址结构</h3><p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105000832513.png"></p>
+<h2 id="段式地址变换"><a href="#段式地址变换" class="headerlink" title="段式地址变换"></a>段式地址变换</h2><p>步骤：</p>
+<ul>
+<li>取出程序地址(s，w)；</li>
+<li>用s检索段表；</li>
+<li>如w＜0或w≥L则主存越界；</li>
+<li>(B＋w)即为所需主存地址（<strong>B是基址</strong>）</li>
+</ul>
+<h2 id="页式系统与段式系统的区别"><a href="#页式系统与段式系统的区别" class="headerlink" title="页式系统与段式系统的区别"></a>页式系统与段式系统的区别</h2><h3 id="用户地址空间的区别"><a href="#用户地址空间的区别" class="headerlink" title="用户地址空间的区别"></a>用户地址空间的区别</h3><p>①页式系统中用户地址空间：一维地址空间</p>
+<p>②段式系统中用户地址空间：二维地址空间</p>
+<h3 id="分段和页面的区别"><a href="#分段和页面的区别" class="headerlink" title="分段和页面的区别"></a>分段和页面的区别</h3><table>
+<thead>
+<tr>
+<th align="center">分段</th>
+<th align="center">页面</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">信息的<strong>逻辑</strong>划分</td>
+<td align="center">信息的<strong>物理</strong>划分</td>
+</tr>
+<tr>
+<td align="center">段长是可变的</td>
+<td align="center">页的大小是固定的</td>
+</tr>
+<tr>
+<td align="center">用户可见</td>
+<td align="center">用户不可见</td>
+</tr>
+<tr>
+<td align="center">w字段的溢出将产生越界中断</td>
+<td align="center">w字段的溢出自动加入到页号中</td>
+</tr>
+</tbody></table>
+<h2 id="段页式系统"><a href="#段页式系统" class="headerlink" title="段页式系统"></a>段页式系统</h2><p>在段式存储管理中结合分页存储管理技术，<strong>在一个分段内划分页面</strong>，就形成了段页式存储管理。</p>
+<h3 id="程序地址空间-1"><a href="#程序地址空间-1" class="headerlink" title="程序地址空间"></a>程序地址空间</h3><p>地址结构&#x3D;段号+段内页号+页内位移</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001323037.png"></p>
+<p><strong>每一个程序一张段表，每个段对应一张页表，段表中的地址是页表的起始地址</strong></p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/image-20200105001435733.png"></p>
+<p>段页式地址变换要得到物理地址需要经过3次主存访问（当段表、页表都在主存中）：</p>
+<ol>
+<li>访问段表，得到页表起始地址</li>
+<li>访问页表，得到主存块号</li>
+<li>将主存块号与页内位移组合得到物理地址</li>
+</ol>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>第七章</strong> <strong>习题及解答</strong></p>
+<p>7-11如图7.45所示，主存中有两个空白区。现有如下程序序列：程序1要求50KB；程序2要求60KB；程序3要求70KB。若用首次适应算法和最佳适应算法来处理这个程序序列，试问：哪一种算法可以分配得下 ? 简要说明分配过程 (假定分区描述器所占用的字节数已包含在程序所要求的主存容量中) 。</p>
+<p><img src="/images/%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86/clip_image002.png"></p>
+<p>答：(1) 首次适应法：</p>
+<p>程序1要求50KB，在起始地址为150KB，大小为120 KB的空白区进行分割。120KB-50KB&#x3D;70KB，分割后剩70KB 的空白区。</p>
+<p>程序2要求60KB，在剩余的70KB空白区进行分割。70KB-60KB&#x3D;10KB，分割后剩 10KB的空白区。</p>
+<p>程序3要求70KB，在起始地址为300KB，大小为78KB的空白区进行分割。78KB-70KB&#x3D;8KB，分割后剩8KB 的空白区。</p>
+<p>因此首次适应法可满足该程序序列的需求。</p>
+<p>(2) 最佳适应法</p>
+<p>程序1要求50KB，在起始地址为300KB，大小为78 KB的空白区进行分割。78KB-50KB&#x3D;28KB，分割后剩28KB 的空白区。</p>
+<p>程序2要求60KB，在起始地址为150KB，大小为120KB的空白区进行分割。120KB-60KB&#x3D;60KB，分割后剩60KB的空白区。</p>
+<p>程序3要求70KB，。此时系统中有大小为 28KB 和60KB 的两个空白区，它们均不能满足程序3 的需求。</p>
+<p>因此最佳适应法不能满足该程序序列的需求。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/30/OS_%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">设备管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 22:55:11" itemprop="dateCreated datePublished" datetime="2019-12-29T22:55:11Z">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="设备管理概述"><a href="#设备管理概述" class="headerlink" title="设备管理概述"></a>设备管理概述</h1><p>操作系统的设备管理，又称为I&#x2F;O管理，它负责管理设备和控制I&#x2F;O传输操作。</p>
+<p>设备分类：</p>
+<ul>
+<li><p>存储设备</p>
+<p>存储设备又称块设备，是存储信息的设备，如：磁盘、 磁鼓 (以块为单位传输信息) 。</p>
+</li>
+<li><p>输入输出设备</p>
+<p>   输入输出设备又称字符设备，能将信息从计算机外部输入到机内，或反之，如：键盘、显示器、打印机 (以子符为单位传输信息) 。</p>
+</li>
+<li><p>通信设备</p>
+<p>   通信设备负责计算机之间的信息传输，如调制解调器、网卡等。</p>
+</li>
+</ul>
+<p><strong>设备管理的目标</strong></p>
+<p>   <strong>(1)</strong> <strong>提高设备利用率</strong></p>
+<p><strong>①</strong> <strong>合理分配设备</strong></p>
+<p><strong>②</strong> <strong>提高设备与CPU、各外部设备之间的并行性</strong></p>
+<p>   <strong>(2)</strong> <strong>方便用户的使用</strong></p>
+<p>​       提供使用方便且独立于设备的界面</p>
+<p><strong>①</strong> <strong>统一：对各种不同的设备提供一致的界面</strong></p>
+<p><strong>②</strong> <strong>独立于设备：用户使用的设备与物理设备无关</strong></p>
+<p>（可以看成具有良好的封装性）</p>
+<h2 id="设备管理的三大功能"><a href="#设备管理的三大功能" class="headerlink" title="设备管理的三大功能"></a>设备管理的三大功能</h2><p>   <strong>(1)</strong> <strong>状态跟踪</strong></p>
+<p>   动态地记录各种设备的状态。设备状态信息保留在设备控制块中。</p>
+<p>   <strong>(2)</strong> <strong>设备分配与回收</strong></p>
+<p><strong>①</strong> <strong>静态分配</strong> <strong>——</strong> <strong>应用程序级</strong></p>
+<p>   程序进入系统时进行分配，退出系统时收回全部资源。</p>
+<p><strong>②</strong> <strong>动态分配</strong> <strong>——</strong> <strong>进程级</strong></p>
+<p>​        进程提出设备申请时进行分配，使用完毕后立即收回。</p>
+<p>   <strong>(3)</strong> <strong>设备控制</strong></p>
+<p>   实施设备驱动和中断处理的工作。</p>
+<h2 id="设备独立性"><a href="#设备独立性" class="headerlink" title="设备独立性"></a>设备独立性</h2><p>所谓设备独立性是指，用户在程序中使用的设备与实际使用的设备无关，也就是在用户程序中仅使用逻辑设备名。</p>
+<p><strong>②</strong> <strong>逻辑设备名</strong></p>
+<p>   逻辑设备名，是用户自己指定的设备名 (或设备号)，它是暂时的、可更改的。</p>
+<p><strong>③</strong> <strong>物理设备名</strong></p>
+<p>   物理设备名，是系统提供的设备的标准名称，它是永久的、不可更改的。</p>
+<p><strong>两种类型的设备独立性</strong></p>
+<p><strong>①</strong> <strong>一个程序独立于分配给它的某种类型的具体设备</strong> </p>
+<p>   系统可以根据设备的使用情况，动态地分配给程序某类设备中的任一台物理设备，程序都能正确地执行。</p>
+<p><strong>②</strong> <strong>程序应尽可能与它所使用的I&#x2F;O设备类型无关</strong></p>
+<p>   在输入 (或输出)信息时，信息可以从不同类型的输入 (或输出)设备上输入 (或输出)，若要改变输入 (或输出) 设备的类型，程序只需进行最少的修改。 </p>
+<p>优点：</p>
+<p>​			很明显，方便用户、改善设备利用率、提高系统的可扩展性和可适应性</p>
+<p><strong>逻辑设备描述器ldd：</strong></p>
+<p>描述了进程的逻辑设备和物理设备名的对应关系。</p>
+<h3 id="设备独立性的实现"><a href="#设备独立性的实现" class="headerlink" title="设备独立性的实现"></a>设备独立性的实现</h3><p><strong>①</strong> <strong>在高级语言中用软通道实现</strong></p>
+<p>   使用高级语言提供的指派语句，通过指派一个逻辑设备名(通道号)来定义一个设备或文件。</p>
+<p>​      如：fd &#x3D; open(“&#x2F;dev&#x2F;lp”, mode) </p>
+<p><strong>②</strong> <strong>在批处理系统中，用联接说明语句来定义</strong></p>
+<p>   如：OUTPUT1 &#x3D; LPT</p>
+<p><strong>③</strong> <strong>在交互系统中，用指派命令来定义</strong></p>
+<p>​      如：PDP系列机上的RT11系统</p>
+<p>​      ASSIGN 设备物理名  设备逻辑名</p>
+<h2 id="设备控制块DCB"><a href="#设备控制块DCB" class="headerlink" title="设备控制块DCB"></a>设备控制块DCB</h2><p>系统为每一台设备都配置了一个用来记录设备的硬件特性、连接和使用情况的一组数据，称为设备控制块。</p>
+<p><strong>①</strong> <strong>设备名</strong></p>
+<p>   设备的系统名，即设备的<strong>物理名</strong>。</p>
+<p><strong>②</strong> <strong>设备属性</strong></p>
+<p>   描述设备现行状态的一组属性。</p>
+<p><strong>③</strong> <strong>命令转换表</strong></p>
+<p>​    转换表包含设备特定的I&#x2F;O例程地址，不具备相应功能的设备在其例程地址上可以填“－1”。</p>
+<h1 id="缓存技术"><a href="#缓存技术" class="headerlink" title="缓存技术"></a>缓存技术</h1><p>缓冲是两种不同速度的设备之间传输信息时平滑传输过程的常用手段。</p>
+<p>缓冲类别：</p>
+<p><strong>①</strong> <strong>缓冲器</strong></p>
+<p>​       缓冲器是用来暂时存放数据的一种存储装置，它容量较小，存取速度快。</p>
+<p><strong>②</strong> <strong>软件缓冲</strong></p>
+<p>​       在I&#x2F;O操作期间用来临时存放I&#x2F;O数据的一块存储区域。</p>
+<p>引入缓冲的目的：</p>
+<p><strong>①</strong> <strong>处理数据流的生产者与消费者间的速度差异</strong></p>
+<p>​    如：从调制解调器收到一个文件，并保存到硬盘上。</p>
+<p><strong>②</strong> <strong>协调传输数据大小不一致的设备</strong></p>
+<p>​    如：在计算机网络中用来处理消息的分段和重组。</p>
+<p><strong>③</strong> <strong>应用程序的拷贝语义</strong></p>
+<p>​    如：操作系统需要保证系统调用write的正确语义 (应用程序要写入磁盘的数据就是write系统调用发生时的版本)。</p>
+<p>​    方法：在系统调用返回前将应用程序缓冲区复制到内核缓冲区。</p>
+<h2 id="利用缓冲技术进行I-x2F-O操作"><a href="#利用缓冲技术进行I-x2F-O操作" class="headerlink" title="利用缓冲技术进行I&#x2F;O操作"></a>利用缓冲技术进行I&#x2F;O操作</h2><h3 id="进程活动时，读入数据"><a href="#进程活动时，读入数据" class="headerlink" title="进程活动时，读入数据"></a>进程活动时，读入数据</h3><p>步骤：</p>
+<p>ⅰ 当用户要求在某个设备上进行读操作时，首先从系统中获得一个空的缓冲区 (图中标注的操作①)；</p>
+<p>ⅱ 将一个物理记录送到缓冲区中 (图中标注的存在②) ；</p>
+<p>ⅲ 当用户请求这些数据时，系统将依据逻辑记录特性从缓冲区中提取并发送到用户进程存储区中 (图中标注的操作③) ；</p>
+<p>ⅳ 当缓冲区空而进程又要从中取用数据时该进程被迫等待。此时，操作系统需要重新送数据<strong>填满缓冲区</strong>，进程才能从中取数据继续运行。</p>
+<p><strong>要注意操作②与操作③的同步关系</strong></p>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105093504783.png"></p>
+<h3 id="进程活动时，输出数据"><a href="#进程活动时，输出数据" class="headerlink" title="进程活动时，输出数据"></a>进程活动时，输出数据</h3><p>步骤：</p>
+<p>ⅰ 当用户要求进行写操作时，首先从系统中获得一个空的缓冲区 (图中标注的操作①) ；</p>
+<p>ⅱ 将一个逻辑记录从进程存储区传送到缓冲区中 (图中标注操作②) ；  </p>
+<p>ⅲ 当<strong>缓冲区写满</strong>时，系统将缓冲区的内容作为物理记录文件写到设备上，使缓冲区再次为空 (图中标注的操作③) ；</p>
+<p>ⅳ 只有在系统还来不及腾空缓冲区之前，进程又企图输出信息时，它才需要等待。</p>
+<p><strong>要注意操作②与操作③的同步关系</strong></p>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105093615775.png"></p>
+<p>上述在保证BUF写、输入是满的前提下再进行输出、输入操作是为了保证数据的可靠性</p>
+<h3 id="双缓冲"><a href="#双缓冲" class="headerlink" title="双缓冲"></a>双缓冲</h3><p>在双缓冲方案下，为输入或输出分配两个缓冲区buf1 、 buf2 。</p>
+<p>①输入设备先填满BUF1</p>
+<p>②进程从BUF1提取数据的同时，输入设备填充BUF2</p>
+<p>③当BUF1空、BUF2满时，进程又可从BUF2提起数据，与此同时，输入设备又填充BUF1</p>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105093857679.png"></p>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105093957746.png"></p>
+<p>还可以使用缓冲池。</p>
+<h3 id="UNIX系统的缓冲区管理"><a href="#UNIX系统的缓冲区管理" class="headerlink" title="UNIX系统的缓冲区管理"></a>UNIX系统的缓冲区管理</h3><p>目的：</p>
+<p>加快系统响应、增强系统吞吐量</p>
+<p>减少对磁盘的I&#x2F;O操作次数</p>
+<p><strong>UNIX系统缓冲管理的思路</strong></p>
+<ul>
+<li><p>当进程要从磁盘读数据时，首先考虑从高速缓冲中读———–<strong>预先缓存</strong></p>
+</li>
+<li><p>当进程要写数据到磁盘时，先写入高速缓冲中———–<strong>延迟发送</strong></p>
+</li>
+</ul>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105100316223.png"></p>
+<p><strong>缓冲区队列结构</strong></p>
+<p>​    <strong>ⅰ</strong> <strong>设备缓冲区队列</strong> </p>
+<p>   与某类设备有关的所有缓冲区组成的队列称为设备缓冲区队列，简称b链。</p>
+<p>   <strong>ⅱ</strong> <strong>空闲缓冲区队列</strong> </p>
+<p>   可供重新分配使用的缓冲区组成的队列称为空闲缓冲区队列，简称av链。</p>
+<p>步骤：</p>
+<p>​	 ⅰ 一个buf被分配用于读&#x2F;写某设备上的块时置B_ BUSY&#x3D;1，位于b链上，不在av链上；</p>
+<p>​    ⅱ 当读&#x2F;写操作结束时释放该buf，置B_BUSY&#x3D;0，<strong>仍留在b链上，并送入av链尾</strong>；</p>
+<ul>
+<li>在空闲缓冲区队列中的缓存，只要还没有重新分配就保持原有内容不变</li>
+</ul>
+<p>​	ⅲ 若进程需要的信息在buf中时在该设备的b链上找到，置B_BUSY&#x3D;1；从av链上摘除，使用完后，又送入av链，链入队尾。</p>
+<p>​	ⅳ 对空闲buf空队列的处理<br>​		当需要一个空闲buf时，总是取空闲buf队列(av链) 的首元素；一个使用过的buf释放时，插入到空闲buf队列（av链)的队尾。</p>
+<p>​       <strong>实现了精确的最久未使用淘汰算法 (LRU</strong>算法)</p>
+<p>​	ⅴ 对延迟写的处理<br>​		当一个具有延迟写标记的buf移到av链头，要用于分配时，立即进行写操作。从av链上摘除，使用完后又送入av头部。</p>
+<h2 id="设备分配"><a href="#设备分配" class="headerlink" title="设备分配"></a>设备分配</h2><h3 id="独占分配"><a href="#独占分配" class="headerlink" title="独占分配"></a>独占分配</h3><p>在一个作业执行前，将它所要使用的设备分配给它；当它结束撤离时，将分配给它的这类设备收回。</p>
+<p><strong>让一个作业在整个运行期间独占使用的设备</strong></p>
+<p><strong>特点</strong></p>
+<p>   ⅰ 临界资源</p>
+<p>   ⅱ 费时的I&#x2F;O操作或需人工干预    </p>
+<p>可能会引起进程死锁</p>
+<h3 id="共享分配"><a href="#共享分配" class="headerlink" title="共享分配"></a>共享分配</h3><p><strong>由多个作业、进程共同使用的设备称为共享设备。</strong></p>
+<p><strong>特点</strong></p>
+<p>ⅰ 旋转设备，可直接或随机访问</p>
+<p>ⅱ 便于共享，转接简单，耗费较少</p>
+<p>不会引起进程死锁</p>
+<h3 id="虚拟分配"><a href="#虚拟分配" class="headerlink" title="虚拟分配"></a>虚拟分配</h3><p>就是如果要使用独占设备的话，就先将数据输入、输出到辅存中。当进程需要输入数据、输出数据的时候，再把数据输入、输出（从辅存中）。理论上一个独占设备可以和辅存上的多个存储区连接，就形成了独占设备变成共享设备的假象。</p>
+<p>本质上是提高了独占设备的利用率。</p>
+<blockquote>
+<p> <strong>(1)</strong> <strong>虚拟技术</strong></p>
+<p>​        所谓虚拟技术，是在一类物理设备上模拟另一类物理设备的技术，是将独占设备转化为共享设备的技术。</p>
+<p><strong>(2)</strong> <strong>虚拟设备</strong></p>
+<p>​        通常把用来代替独占型设备的那部分外存空间 (包括有关的控制表格)称为虚拟设备。</p>
+<p><strong>(3)</strong> <strong>虚拟分配</strong></p>
+<pre><code>    当进程需要与独占型设备交换信息时，系统将分配磁盘空间，并建立相应的数据结构，这种分配方法称为设备的虚拟分配。
+</code></pre>
+</blockquote>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105103151386.png"></p>
+<h3 id="SPOOLING系统"><a href="#SPOOLING系统" class="headerlink" title="SPOOLING系统"></a>SPOOLING系统</h3><p>​    SPOOLING系统提供外围设备同时联机操作的功能。利用通道和中断技术，在主机控制之下，由通道完成输入输出工作。系统提供一个软件系统 (包括预输入程序、缓输出程序、井管理程序、预输入表、缓输出表)。它提供输入收存和输出发送的功能，使外部设备可以并行操作。这一软件系统称为SPOOLING系统。</p>
+<p><strong>设计思想</strong>（也就是虚拟设备的设计思想）</p>
+<p><strong>① 预输入</strong></p>
+<p>​       在应用程序需要数据前，OS已将所需数据预先输入到辅存 输入井存放。当应用程序 (或进程) 需要数据时，可直接从辅存中读入主存。</p>
+<p><strong>② 缓输出</strong></p>
+<p>​       在应用程序执行时，将输出数据写入辅存输出井中。当应用程序 (或进程)执行完毕 (或需要数据时) ，由操作系统将数据输出。</p>
+<p>优点：</p>
+<p> <strong>① 提供虚拟设备</strong></p>
+<p> <strong>②</strong> <strong>外围设备同时联机操作</strong></p>
+<p> <strong>③</strong> <strong>加快作业处理速度</strong>              </p>
+<p><strong>实现SPOOLING系统的基础</strong></p>
+<p><strong>①</strong> <strong>大容量的辅存空间</strong></p>
+<p>​    在辅存上需开辟两个较大的输入井和输出井，用以存放大量应用程序的输入信息和输出信息。</p>
+<p><strong>②</strong> <strong>硬件基础</strong></p>
+<p>​    通道装置、中断系统</p>
+<p><strong>③</strong> <strong>数据结构</strong></p>
+<p>​    预输入表、缓输出表：描述辅存输入井和输出井的状态变化。</p>
+<p>​     如： 输入信息从哪台设备输入，存放在辅存输入井什么位置；输出信息存放在辅存输出井什么位置，从哪台输出设备输出。</p>
+<p><strong>所需的软件程序</strong>       </p>
+<p><strong>ⅰ</strong> <strong>输入程序</strong>     控制信息从独占设备输入到辅存</p>
+<p><strong>ⅱ</strong> <strong>缓输出程序</strong>   控制信息从辅存输出到独占设备</p>
+<p><strong>ⅲ</strong> <strong>井管理程序</strong>   控制用户程序和辅存之间的信息交换</p>
+<h2 id="输入-输出控制"><a href="#输入-输出控制" class="headerlink" title="输入\输出控制"></a>输入\输出控制</h2><p>端口：设备与计算机通信的硬件连接点。</p>
+<p>总线：一组线+一组严格定义的可以描述在线上传输信息的协议。这一组线用来连接一个或者多个设备，这种连接成为总线。</p>
+<p>控制器：用于操作端口、总线或设备的一组电器器件。</p>
+<h3 id="输入-输出控制方式"><a href="#输入-输出控制方式" class="headerlink" title="输入\输出控制方式"></a>输入\输出控制方式</h3><p><strong>循环测试I&#x2F;O方式</strong></p>
+<p><strong>I&#x2F;O中断方式</strong></p>
+<p><strong>通道方式</strong></p>
+<p><strong>DMA方式</strong>  </p>
+<p>具体可见组成原理相关章节</p>
+<h3 id="I-x2F-O子系统"><a href="#I-x2F-O子系统" class="headerlink" title="I&#x2F;O子系统"></a>I&#x2F;O子系统</h3><p>对设备的控制和操作由内核的IO子系统来实现。可以对设备进行分类，并且提供接口。</p>
+<p><strong>①</strong> <strong>解释用户的I&#x2F;O系统调用</strong>   </p>
+<p><strong>②</strong> <strong>设备驱动</strong></p>
+<p><strong>③</strong> <strong>中断处理</strong></p>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105103514838.png"></p>
+<p><strong>①</strong> <strong>在应用层为用户提供I&#x2F;O应用接口</strong></p>
+<p>   对设备的控制和操作则由内核I&#x2F;O子系统来实施。</p>
+<p><strong>②</strong> <strong>每个通用设备类型都通过一组标准函数(及接口)来访问</strong></p>
+<p>   具体的差别被I&#x2F;O子系统中的内核模块(称为设备驱动程序)所封装，这些设备驱动程序一方面可以定制以适合各种设备，另一方面也提供了一组标准的接口。设备驱动程序层的作用是为内核I&#x2F;O子系统隐藏设备控制器之间的差异。将I&#x2F;O子系统与硬讲分离，简化了操作系统开发人员的任务，也有利于设备的设计与制造。          </p>
+<p><strong>设备处理程序</strong></p>
+<p>​    设备处理程序是能直接控制设备运转的程序，它根据各类设备的特点和性能来编写。<strong>每一类设备有一个相应的设备处理程序，能控制同类中多台物理设备同时工作。</strong></p>
+<h4 id="控制I-x2F-O核心模块的方式"><a href="#控制I-x2F-O核心模块的方式" class="headerlink" title="控制I&#x2F;O核心模块的方式"></a>控制I&#x2F;O核心模块的方式</h4><p><strong>①</strong> <strong>以设备处理进程的方式</strong></p>
+<p>   ⅰ 为每一类设备设置一个设备处理进程 (对应的程序就是设备处理程序)；</p>
+<p>   ⅱ 当有I&#x2F;O请求来到时该进程被唤醒，进行设备驱动工作；当没有I&#x2F;O请求时，该进程睡眠。</p>
+<p>​     由<strong>I&#x2F;O控制模块的接口程序</strong>负责解释用户的I&#x2F;O系统调用，将其转换成I&#x2F;O控制模块认识的命令形式后，将I&#x2F;O请求发给对应的设备处理进程。</p>
+<p><strong>②</strong> <strong>将设备与文件一样对待</strong></p>
+<p>   将设备与文件一样对待，使用文件系统的系统调用命令进行设备的读、写。         </p>
+<p>例子：</p>
+<blockquote>
+<p>   <strong>(1)</strong> <strong>用户进程请求I&#x2F;O的系统功能调用</strong></p>
+<p>​        <strong>系统功能调用的形式为：</strong></p>
+<p>​       <strong>doio</strong>(ldev,mode,amount,addr);</p>
+<p>​       <strong>ldev</strong>：   逻辑设备名</p>
+<p>​       <strong>mode</strong>：  操作模式</p>
+<p>​       <strong>amount</strong>：传输数据的数目</p>
+<p>​       <strong>addr</strong>：   传送地址</p>
+<p>​	(2) I&#x2F;O接口程序(I&#x2F;O过程)</p>
+<p><strong>①</strong> <strong>将逻辑设备转换为物理设备</strong></p>
+<p>​    ⅰ 获得 I&#x2F;O系统调用中给出的逻辑设备名 (ldev)；</p>
+<p>   ⅱ 根据逻辑设备描述器，将逻辑设备名转换为物理设备名。</p>
+<p><strong>②</strong> <strong>合法性检查</strong></p>
+<p>​    ⅰ 获得 I&#x2F;O系统调用中给出的操作模式mode；</p>
+<p>   ⅱ 根据DCB中命令转换表中允许的操作，检查操作的合法性。</p>
+<p><strong>③</strong> <strong>形成I&#x2F;O请求块，发消息给对应的设备处理进程</strong></p>
+<p>   ⅰ 根据请求的参数形成I&#x2F;O请求块 (IORB)；</p>
+<p>   ⅱ 将I&#x2F;O请求块 (IORB)挂到对应的设备请求队列。</p>
+<p>​	(3) I&#x2F;O接口程序的描述</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;       <span class="keyword">while</span>  (该进程的逻辑设备描述器队列不空)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>  (与ldev相联结的物理设备找到)</span><br><span class="line">                <span class="keyword">break</span>；    <span class="regexp">/ *找到* /</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>  (该进程的逻辑设备描述器队列为空)</span><br><span class="line">            <span class="keyword">return</span>(错误码)；    <span class="regexp">/ * 设备逻辑名错* /</span></span><br><span class="line">        检查参数与该设备特性是否一致;</span><br><span class="line">        <span class="keyword">if</span>  (不一致)</span><br><span class="line">            <span class="keyword">return</span> (错误码)；    <span class="regexp">/ * 传送参数错 * /</span></span><br><span class="line">        构造iorb；</span><br><span class="line">        把iorb插入到该设备的请求队列中；</span><br><span class="line">        唤醒因等待I/O请求块而睡眠的进程；</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>(4)</strong> <strong>设备处理进程</strong></p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">process</span>  <span class="variable">io</span></span><br><span class="line"><span class="punctuation">&#123;</span>   <span class="variable">l</span>： <span class="variable">while</span>  <span class="punctuation">(</span>设备请求队列不空<span class="punctuation">)</span></span><br><span class="line">    <span class="punctuation">&#123;</span>     取一个<span class="variable">iorb</span>；</span><br><span class="line">          提取请求的详细信息；</span><br><span class="line">          启动<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>操作；</span><br><span class="line">          <span class="variable">sleep</span>  <span class="punctuation">(</span>事件：<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>完成<span class="punctuation">)</span>    <span class="operator">/*</span> <span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>操作<span class="operator">*</span> <span class="operator">/</span></span><br><span class="line">              <span class="operator">/*</span> 等<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>完成后，进入中断处理程序，并在那里唤醒设备处理进程<span class="operator">*</span> <span class="operator">/</span></span><br><span class="line">          <span class="variable">if</span>  <span class="punctuation">(</span>出错<span class="punctuation">)</span>    将错误信息写在该设备的<span class="variable">dcb</span>中；</span><br><span class="line">          传送数据到目的地；</span><br><span class="line">          唤醒请求此<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>操作的进程；</span><br><span class="line">          删除<span class="variable">iorb</span>；</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="variable">sleep</span>  <span class="punctuation">(</span>事件：因无<span class="built_in">I</span><span class="operator">/</span><span class="built_in">O</span>请求<span class="punctuation">)</span>；</span><br><span class="line">    <span class="variable">goto</span> <span class="variable">l</span> ；</span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<p><img src="/images/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/image-20200105104624110.png"></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>第七章</strong> <strong>习题及解答</strong></p>
+<p>8-1 什么是设备独立性？引入这一概念有什么好处？</p>
+<p>答：所谓设备独立性是指，用户在编制程序时所使用的设备同实际使用的设备无关，也就是在用户程序中仅使用逻辑设备。</p>
+<p>引入设备独立性，可使应用程序独立于物理设备。此时，用户编程只需用逻辑设备去请求使用某类设备。当系统中有多台该类设备时，系统将其中的任一台备分配给请求进程，而不必局限于某一指定设备。这样，可以显著地提高资源的利用率和可适应性。</p>
+<p>独立性还可以使用户程序独立于设备类型。例如，在进行输出时，既可以利用显示终端进行输出，也可以利用打印机进行输出。有了这种适应性，就可以很方便地实现输出重定向，类似地可以实现输入重定向。</p>
+<p>8-4 什么是缓冲？引入缓冲的原因是什么？</p>
+<p>答：缓冲是两种不同速度的设备之间传输信息时平滑传输过程的常用手段。</p>
+<p>引入缓冲技术的原因有如下几点。</p>
+<p>(1) 缓和CPU 和I&#x2F;O设备之间速度不匹配的矛盾。</p>
+<p>(2) 减少中断次数和CPU 的中断处理时间。如果没有缓冲，慢速 I&#x2F;O设备每传一个字节就要产生一个中断，CPU 必须处理该中断；如果采用了缓冲，则慢速 I&#x2F;O 设备将缓冲填满时，才向CPU发出中断，减少了中断次数和CPU 的中断处理时间。</p>
+<p>(3) 解决 DMA 或通道方式下数据传输的瓶颈问题。DMA或通道方式都用于成批数据传输，在无缓冲的情况下，慢速 I&#x2F;O设备只能一个字节一个字节的传输信息，成了DMA 或通道方式数据传输的瓶颈。缓冲的设置适应了DMA 或通道方式的成批数据传输方式，解决了数据传输的瓶颈问题。</p>
+<p>8-5 常用的缓冲技术有哪些？</p>
+<p>答：常用的缓冲技术有双缓冲、环形缓冲和缓冲池。</p>
+<p>引入双缓冲以提高处理机与I&#x2F;O设备之间的并行操作程度，例如，输入设备备先将第一个缓冲装满数据，在输入设备向第二个缓冲装数据时，处理机就可以从第一个缓冲中取出数据进行处理。第一个缓冲的数据处理完毕，若第二个缓冲已经装满数据，则处理机又可以从第二个缓冲中取出数据进行行处理，而输入设备又向第一个缓冲装填数据。</p>
+<p>为了在CPU与 外设对信息的操作速度相差甚远时仍能得到良好并行效果，可以采用环形缓冲技术。环形缓冲技术是在主存中分配一组大小相等的存储区作为缓存区，并将这些缓存区链接起来，每个缓存区中有一个指向下一个缓存区的指针，最后一个缓存区的指针指向第一个缓存区，这样n 个缓存区就成了一个环形缓冲外，系统中有个缓冲链首指针指向第一个缓存区。环形缓冲用于输入输出时，需要两个指针in 和out，in 指向第一个空缓存区，out 指向第一个装满数据的缓存区。输入时，把数据输入到in 所指的空缓存区中，然后 in 模取后移一位，指向下一个空缓存区。输出时， 从out所指的满缓存区中取出数据，然 out 模取后移一位，指向下一个满缓存区。</p>
+<p>缓冲池是由若干个大小相等的缓存区组成的。缓冲池中的每一个缓存区都由系统统一管理和动态分配。若某个进程需要使用缓冲时便提出申请，由系统将缓存区分配给它，进程不再使用缓存区时，就将缓存区交还给缓冲池。这样，就可以用少量的缓存区服务更多的进程。缓冲池通常将缓存区排成3 个队列：空闲缓存区队列、输入缓存区队列和输出缓存区队列。</p>
+<p>8-8 什么是独占设备？对独占设备如何分配？</p>
+<p>答：独占设备是指在一段时间内只允许一个用户进程访问的设备。系统一旦把这类设备分配给某进程后，便由该进程独占直到使用完后释放。多数低速 I&#x2F;O设备都属于独占设备，如打印机等。</p>
+<p>独占设备采用独占分配方式，即将一个独占设备分配给某进程后便一直由它独占，直到该进程完成或释放该设备时，系统才能将该设备分配给其他进程。</p>
+<p>8-9 什么是共享设备？对共享设备如何分配？</p>
+<p>答：共享设备是指在一段时间内允许多个进程同时访问的设备，如磁盘。对共享设备可将其同时分配给多个进程，使用共享分配方式显著提高了设备的利用率，但对设备的访问需进行合理的调度。</p>
+<p>8-10 什么是虚拟设备技术？什么是虚拟设备？如何进行行虚拟分配？</p>
+<p>答：所谓虚拟设备技术，是在一类物理设备上模拟另一个物理设备的技术，是将独占设备转换成共享设备的技术。目前广泛流行的虚拟设备技术是SPOOLing技术，网络环境中的虚拟打印机。</p>
+<p>虚拟设备是指通过虚拟技术将一独占设备变换成若干台逻辑设备，供若干个用户进程使用，通常把这种经过虚拟技术处理的设备称为虚拟设备。引入虚拟设备的目的是为了克服独占设备速度较慢、资源利用率较低的缺点，以提高设备的利用率。</p>
+<p>虚拟分配是针对虚拟设备而言的。当进程申请独占设备时，由系统分配给它共享设备，如磁盘的一部分存储空间。当进程要和设备交换信息，系统就将要交换的信息放到这部分存储空间中，在合适的时候，系统再将存储空间中的信息传到独占设备。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/30/OS_%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">文件管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 22:54:58" itemprop="dateCreated datePublished" datetime="2019-12-29T22:54:58Z">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="文件管理概述"><a href="#文件管理概述" class="headerlink" title="文件管理概述"></a>文件管理概述</h1><p><strong>广义上的I&#x2F;O操作是指不经过CPU的操作，侠义的是指对磁盘的访问</strong></p>
+<p>文件是<strong>在逻辑上具有完整意义的信息集合</strong>，它有一个名字以供标识，文件名是以字母开头的字母数字串。</p>
+<p>构成文件的基本单位：信息项（单个字符或者字节）、记录</p>
+<p>(3) 文件的其他描述</p>
+<p>①文件是具有符号名的信息(数据)项的集合</p>
+<p>②文件是具有符号名的记录的集合</p>
+<p>(4) 文件分类</p>
+<p>①按文件的性质和用途分类<br>                系统文件（只能通过系统调用） 、程序库文件（允许用户调用，不允许修改） 、用户文件</p>
+<p>②按文件保护级别分类	<br>                不保护文件、 执行文件、 只读文件、 读写文件</p>
+<p>③分类按文件流向分类<br>                输入文件、 输出文件、 输入输出文件</p>
+<p>(5) 文件名与属性</p>
+<p>①文件名<br>每个文件有一个给定的名字，这个名字是由串描述且由文件内容来表示，包括文件符号名和内部标识符。</p>
+<ul>
+<li><p>用户使用文件符号名进行文件操作</p>
+</li>
+<li><p>系统使用文件内部标识符管理文件</p>
+</li>
+</ul>
+<p>②文件扩展<br>文件扩展表示文件的使用特征，如：.c   .obj    .lib 等。</p>
+<p>③文件属性<br>文件的属性字，表示文件类别、保护级等信息。</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>文件系统是操作系统中负责管理和存取文件信息的软件机构。</p>
+<p><strong>文件系统的组成</strong></p>
+<p>①管理文件所需的数据结构<br>如目录表、文件控制块、存储分配表</p>
+<p>②管理程序</p>
+<p>③一组操作</p>
+<p><strong>文件系统的功能</strong></p>
+<p>①从用户角度看——文件系统实现了“按名存取”的功能。</p>
+<p>②从系统角度看——辅存空间管理、构造文件结构、提供文件共享功能、提供存取文件的方法、文件保护、提供一组文件操作命令</p>
+<p><strong>文件系统的特点</strong></p>
+<p>①使用简单<br>使用文件名、一组文件操作命令。</p>
+<p>②安全可靠<br>提供防护措施，在文件遭受破坏时，能及时复。全量备份、增量备份、动态备份、远程备份</p>
+<p>③既能共享，又能保密<br>身份验证、存取权限验证。</p>
+<p>存储数据的文件存储器具有固定的物理特性，数据在辅存设备上的排序、分布构成了文件的物理结构</p>
+<p><strong>文件系统负责实现逻辑特性到物理特性的转换</strong></p>
+<h2 id="文件组织的两种结构"><a href="#文件组织的两种结构" class="headerlink" title="文件组织的两种结构"></a>文件组织的两种结构</h2><h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>从用户角度看到的文件面貌。即用户对信息进行逻辑组织形成的文件结构。</p>
+<p><strong>研究文件逻辑结构的目的：</strong></p>
+<p>i 为用户提供一种逻辑结构清晰、使用简便的逻辑文件形式。</p>
+<p>ii 用户按文件的逻辑结构形式去存储、检索和加工文件中的信息</p>
+<h3 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h3><p>文件的物理结构是信息在物理存储器上的存储方式，是数据的物理表示和组织。</p>
+<p><strong>研究文件物理结构的目的</strong></p>
+<p>i选择工作性能良好、设备利用率高的物理文件形式。</p>
+<p>ii  系统按照文件的物理结构形式和外部设备打交道，控制信息的传输。</p>
+<h3 id="逻辑记录与物理记录"><a href="#逻辑记录与物理记录" class="headerlink" title="逻辑记录与物理记录"></a>逻辑记录与物理记录</h3><p>①逻辑记录</p>
+<p>文件中按信息在逻辑上的独立含义来划分的信息单位，逻辑记录是对文件进行存取操作的基本单位。</p>
+<p>②物理记录</p>
+<p>在存储介质上，由连续信息所组成的一个区域称为块，也叫物理记录。</p>
+<p>③逻辑记录与物理记录的区别与联系</p>
+<p>i 一个是逻辑的概念，一个是物理的概念。</p>
+<p>ii 逻辑记录最终要存放到物理记录上。</p>
+<h2 id="文件的逻辑结构与存取方法"><a href="#文件的逻辑结构与存取方法" class="headerlink" title="文件的逻辑结构与存取方法"></a>文件的逻辑结构与存取方法</h2><h3 id="流式文件"><a href="#流式文件" class="headerlink" title="流式文件"></a>流式文件</h3><p>流式文件是相关的有序字符的集合，是无结构的。</p>
+<p>流式文件是按信息的个数或以特殊字符为界进行存取的。</p>
+<p>简单来说就是没有格式的文件</p>
+<p>UNIX系统为了方便会将流式文件按照512B的大小划分为若干个逻辑记录，将流式文件转变为记录式文件。</p>
+<h3 id="记录式文件"><a href="#记录式文件" class="headerlink" title="记录式文件"></a>记录式文件</h3><p>记录式文件是一种有结构的文件。这种文件在逻辑上总是被看成一组连续顺序的记录的集合。</p>
+<p>如果文件中所有记录的长度都相同，就称这种文件为定长记录文件。其长度由记录的数量来决定。</p>
+<p>如果文件中记录的长度不相同，就称这种文件为变长记录文件。其长度由各个记录长度相加得到。</p>
+<h2 id="文件存取方法"><a href="#文件存取方法" class="headerlink" title="文件存取方法"></a>文件存取方法</h2><p>(1) 顺序存取</p>
+<p>后一次存取总是在前一次存取的基础上进行的。顺序存取时不必给出具体的存取位置。</p>
+<p>(2) 随机存取</p>
+<p>用户以任意次序请求某个记录。随机存取时要指出起始存取位置(例如记录号)。</p>
+<h1 id="文件的物理结构"><a href="#文件的物理结构" class="headerlink" title="文件的物理结构"></a>文件的物理结构</h1><h2 id="连续文件"><a href="#连续文件" class="headerlink" title="连续文件"></a>连续文件</h2><p>连续文件结构是由一组分配在磁盘<strong>连续区域</strong>的物理块组成的。</p>
+<p>如果连续文件的逻辑记录和磁盘的物理块一样大，就如下图所示：</p>
+<p>连续文件的第一个逻辑记录所在的磁盘块号记录在文件目录项中，同时文件目录还记录了磁盘块的数量。8</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124837487.png"></p>
+<p> 连续文件的特点</p>
+<p>①连续存取时速度较快</p>
+<p>②文件长度一经固定便不易改变</p>
+<p>③文件的增生和扩充不易</p>
+<p>但是当文件不断创建或者删除的时候，将会造成存储空间的浪费（因为文件长度是固定的，多次创建就是占着茅坑不拉屎）</p>
+<h2 id="串联文件"><a href="#串联文件" class="headerlink" title="串联文件"></a>串联文件</h2><p>串联文件结构是<strong>按顺序由串联的块组成</strong>的，即文件的信息存于若干块物理块中，每个物理块的最末一个字作为链接字，它指出后继块的物理地址。文件的最后一块的链接字为结束标记“^”，它表示文件至本块结束。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105124920817.png"></p>
+<p>串联文件的特点</p>
+<p>①能较好地利用辅存空间</p>
+<p>②易于对文件进行增生和扩充</p>
+<p>③连续存取时速度较快</p>
+<p>串联文件的特点也决定了它适合的是顺序存取方式，不适用于随机存取方式。（就像链表一样，找中间元素得遍历链表，不方便）</p>
+<h2 id="索引文件"><a href="#索引文件" class="headerlink" title="索引文件"></a>索引文件</h2><p>索引文件将逻辑文件顺序地划分与物理存储块长度相同的逻辑块。（不一定）</p>
+<p>系统为每个文件建立<strong>逻辑块号与物理块号的对照表</strong>。这张表称为该文件的索引表。文件由数据文件和索引表构成。这种文件称为索引文件。</p>
+<p>注意：物理块号可以是不连续的。但是逻辑块号一般是连续的。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105125342000.png"></p>
+<p>①索引文件在存储区中占两个区</p>
+<p>i 索引区：存放索引表</p>
+<p>ii 数据区：存放数据文件</p>
+<p>②访问索引文件的操作</p>
+<p>i 查文件索引，由逻辑块号查得物理块号</p>
+<p>ii 由此磁盘物理块号而获得所要求的信息</p>
+<p>索引文件的特点</p>
+<p>①易于文件的增删</p>
+<p>②直接读写任意记录</p>
+<p>有点像页表。每次对文件进行修改，索引表都可能会发生改动。</p>
+<h3 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130504852.png"></p>
+<p>文件目录项中有一组表项用于索引。每一个表项登记的是逻辑记录所在的磁盘块号。</p>
+<h3 id="一级间接索引"><a href="#一级间接索引" class="headerlink" title="一级间接索引"></a>一级间接索引</h3><p>需要注意：间接索引表磁盘块号和磁盘块号不是一回事</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130601233.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第一级索引表块的块号。第一级索引表块中的索引表项登记的是文件逻辑记录所在的磁盘块号。</p>
+<h3 id="二级间接索引"><a href="#二级间接索引" class="headerlink" title="二级间接索引"></a>二级间接索引</h3><p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105130817288.png"></p>
+<p>文件目录项中有一组表项，其内容登记的是第二级索引表块的块号。第二级索引表块中的索引表项登记的第一级索引表块的块号，第一级索引表项中登记的是文件逻辑记录所在的磁盘块号。</p>
+<p>套娃下去可以是可以，但是检索的时间就变长了。</p>
+<h1 id="文件存储空间的管理"><a href="#文件存储空间的管理" class="headerlink" title="文件存储空间的管理"></a>文件存储空间的管理</h1><p>就是为了管理怎么分配文件存储空间的。</p>
+<h1 id="文件目录及其结构"><a href="#文件目录及其结构" class="headerlink" title="文件目录及其结构"></a>文件目录及其结构</h1><p>文件目录是记录文件的名字、存放地址及其他有关文件的说明信息和控制信息的数据结构</p>
+<p><strong>文件目录项的内容</strong></p>
+<p>①文件名</p>
+<p>②文件逻辑结构<br>说明该文件的记录是否定长、记录长度及记录个数等。</p>
+<p>③文件物理结构：记录文件的物理结构形式<br>连续文件——指出文件第一块的物理地址、文件所占块数<br>串联文件——指出该文件第一块的物理地址<br>索引文件——指出索引表地址</p>
+<p>④存取控制信息<br>文件主具有的存取权限、核准的其他用户及其相应的存取权限</p>
+<p>⑤管理信息<br>文件建立日期、时间，上一次存取时间、要求文件保留的时间等</p>
+<p>⑥文件类型<br>文件的类型，例如可分为数据文件、目录文件、块存储设备文件、字符设备文件</p>
+<h2 id="一级文件目录"><a href="#一级文件目录" class="headerlink" title="一级文件目录"></a>一级文件目录</h2><p>系统将已建立的<strong>所有文件的文件名</strong>、存放地址及有关的说明信息放在一张表中，这张表称为一级文件目录。</p>
+<p><strong>一级文件目录的特点</strong></p>
+<ul>
+<li>实现了按名存取的功能，比较简单；</li>
+<li>要求文件名和文件之间有一一对应的关系，即：不允许两个文件有相同的名字。</li>
+</ul>
+<blockquote>
+<p>重名问题</p>
+<p>所谓“重名”，是指不同用户对不同文件起了相同的名字，即两个或多个文件只有一个相同的符号名。又称为命名冲突。</p>
+<p>为了解决命名冲突、获得更灵活的命名能力，文件系统必须采用多级目录结构</p>
+</blockquote>
+<h2 id="树型文件目录"><a href="#树型文件目录" class="headerlink" title="树型文件目录"></a>树型文件目录</h2><p>在多级目录系统中(除最末一级外)，任何一级目录的目录项可以描述一个目录文件，也可以描述一个非目录文件(数据文件)，而<strong>数据文件一定在树叶上</strong>。这样，就构成了一个树形层次结构。</p>
+<h3 id="文件路径名"><a href="#文件路径名" class="headerlink" title="文件路径名"></a>文件路径名</h3><p>多级目录中，文件的路径名是由根目录到该文件的通路上<strong>所有目录文件符号名和该文件的符号名</strong>组成的字符串，相互之间用分隔符分隔。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105133705230.png"></p>
+<h1 id="文件共享与安全"><a href="#文件共享与安全" class="headerlink" title="文件共享与安全"></a>文件共享与安全</h1><p>文件共享是指某一个或某一部分文件可以让事先规定的某些用户共同使用。</p>
+<p>所谓文件安全，就是文件的保护问题。文件的保护是指文件本身不得被未经文件主授权的任何用户存取，而对于授权用户也只能在允许的存取权限内使用文件。</p>
+<p>②如何进文件的保护</p>
+<p>需要对用户的权限进行验证。所谓存取权限的验证，是指用户存取文件之前，需要检查用户的存取权限是否符合规定，符合者允许使用，否则拒绝。</p>
+<p>③验证用户存取权限的方法</p>
+<p>i 访问控制矩阵</p>
+<p>ii 存取控制表</p>
+<p>iii 用户权限表</p>
+<p>iv 口令</p>
+<p>v 密码</p>
+<h2 id="用文件路径名加快文件的查找"><a href="#用文件路径名加快文件的查找" class="headerlink" title="用文件路径名加快文件的查找"></a>用文件路径名加快文件的查找</h2><p>当前目录是当前用户正在使用的文件所在的目录。当指定当前目录后，用户对文件的所有访问都是相对于“当前目录”进行的。这时，文件路径名是由“当前目录”到信息文件的通路上所有各级目录的符号名加上该信息文件的符号名组成。<strong>用“*”表示当前目录的父节点</strong>。</p>
+<h2 id="链接技术"><a href="#链接技术" class="headerlink" title="链接技术"></a>链接技术</h2><p>所谓“链接”，就是在相应目录表目之间进行链接，即一个目录中的表目直接指向另一个目录表目所在的物理位置。</p>
+<p>注意，这种链接<strong>不是直接指向文件，而是指向相应的目录表目</strong>。这种办法也称为连访，被共享的文件称为连访文件。</p>
+<p>相当于添加共享文件中间的链接</p>
+<p>在当前目录下新键一个子目录用于链接其共享文件</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/image-20200105134329690.png"></p>
+<blockquote>
+<p>UNIX&#x2F;Linux下的链接文件有两种，硬连接(Hard Link) 和软连接。</p>
+<p>软连接又称符号链接(Symbolic link)。<strong>符号链接文件中并不包括实际的文件数据，而只是包括了它指向文件的路径。</strong>它可以链接到任意的文件和目录，包括处于不同文件系统的文件以及目录。当用户对链接文件操作时，系统会自动的转到对源文件的操作，但是删除链接文件时，并不会删除源文件。</p>
+<p>硬连接是指通过索引节点对文件的链接。<strong>保存在系统中的每一个文件都会有一个索引节点</strong>。每当有文件链接文件A时，文件A的索引节点的引用计数+1（因为文件自身对自己索引节点会链接，所以索引节点的初始值为1.）当文件系统进行删除文件的时候，对应的文件索引节点的引用计数-1。只要引用计数不等于0，文件就不会真正删除。</p>
+</blockquote>
+<h1 id="文件操作和文件备份"><a href="#文件操作和文件备份" class="headerlink" title="文件操作和文件备份"></a>文件操作和文件备份</h1><p>常用的文件操作命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">create：<span class="regexp">//</span>创建一个新文件</span><br><span class="line"><span class="keyword">delete</span>：<span class="regexp">//</span>从系统目录中撤消一个文件</span><br><span class="line">rename：<span class="regexp">//</span>在系统目录中改变文件的名字</span><br><span class="line">open：<span class="regexp">//</span>打开文件   在用户和文件(或设备)之间建立一个逻辑通路</span><br><span class="line">close：<span class="regexp">//</span>关闭文件  在用户和文件(或设备)之间撤消一个逻辑通路</span><br><span class="line">write：<span class="regexp">//</span>写到一个文件(或设备)上</span><br><span class="line">read：<span class="regexp">//</span>从一个文件(或设备)读入数据信息</span><br></pre></td></tr></table></figure>
+
+<p>①打开文件操作</p>
+<p>所谓打开文件就是把<strong>该文件的有关目录表目复制到主存中约定的区域，建立文件控制块</strong>，建立用户和这个文件的联系。</p>
+<p>②关闭文件操作</p>
+<p>所谓关闭文件就是用户宣布这个文件当前不再使用，<strong>系统将其在主存中的文件控制块删去</strong>，因而也就切断了用户同这个文件的联系。</p>
+<h2 id="文件备份"><a href="#文件备份" class="headerlink" title="文件备份"></a>文件备份</h2><p>为了能在软、硬件失效的意外情况下恢复文件，保证文件的完整性、数据的连续可利用性，文件系统提供适当的机构，以便复制备份。</p>
+<p><strong>文件备份的方法</strong></p>
+<p>①周期性转储</p>
+<p>按固定的时间周期把存储器中所有文件的内容转存到某种介质上，通常是磁带或磁盘。在系统失效时，使用这些转存磁盘或磁带，将所有文件重新建立并恢复到最后一次转存时的状态。（全部）</p>
+<p>②增量性转储</p>
+<p>这种技术转储的只是从上次转储以后已经改变过的信息；增量转储的信息量较小，故转储可在更短的时间周期内进行（部分）</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><strong>1</strong>．何谓数据项、记录和文件？</p>
+<p>答：①数据项分为基本数据项和组合数据项。基本数据项描述一个对象某种属性的字符集，具有数据名、数据类型及数据值三个特性。组合数据项由若干数据项构成。</p>
+<p>②记录是一组相关数据项的集合，用于描述一个对象某方面的属性。</p>
+<p>③文件是具有文件名的一组相关信息的集合。</p>
+<p><strong>4</strong>．何谓逻辑文件？何谓物理文件？</p>
+<p>答：逻辑文件是物理文件中存储的数据的一种视图方式，不包含具体数据，仅包含物理文件中数据的索引。物理文件又称文件存储结构，是指文件在外存上的存储组织形式。</p>
+<p><strong>8</strong>．试说明顺序文件的结构及其优点。</p>
+<p>答：第一种是串结构：各记录之间的顺序与关键字无关。第二种是顺序结构：指文件中的所有记录按关键字（词）排列。可以按关键词长短排序或英文字母顺序排序。</p>
+<p>顺序文件的最佳应用场合是对诸记录进行批量存取时，存取效率最高；只有顺序文件才能存储在磁带上并有效工作。</p>
+<p><strong>15</strong>．什么是索引文件？为什么要引入多级索引？</p>
+<p>答：索引文件是指当记录为可变长度时，通常为之建立一张索引表，并为每个记录设置一个表项构成的文件。通常将索引非顺序文件简称为索引文件。索引是为了是用户的访问速度更快，多级索引结构可以有效的管理索引文件，可根据用户的访问情况多级处理。</p>
+<p><strong>17</strong>．对目录管理的主要要求是什么？</p>
+<p>答：实现按名存取、提高检索目录的速度、文件共享、允许文件重名。</p>
+<p><strong>18</strong>．采用单级目录能否满足对目录管理的主要要求？为什么？</p>
+<p>答：不能。单级目录在整个文件系统中只建立一张目录表，每个文件占一个目录项，其中含文件名、文件扩展名、文件长度、文件类型、文件物理地址、状态位等其它文件属性。</p>
+<p>单级只能实现目录管理的基本功能，不能满足查找速度、允许重名和文件共享的要求。</p>
+<p><strong>19</strong>．目前广泛应用的目录结构有哪些？它有什么优点？</p>
+<p>答：现代操作系统都采用多级目录结构。基本特点是查询速度快、层次结构清晰、文件管理和保护易于实现。</p>
+<p>9-6 设文件B按串联文件构造，并由四个逻辑记录组成 (其大小与磁盘块大小相等，均为512B)。这四个逻辑记录分别存放在第100、157、66、67号磁盘块上，回答如下问题。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image001.png"></p>
+<p>(1) 画出此串联文件文件的结构，</p>
+<p>(2) 若要读文件B第1560字节处的信息，问要访问哪一个磁盘块? 为什么?</p>
+<p>(3) 读文件B第1560字节处的信息需要进行多少次I&#x2F;O操作? 为什么?</p>
+<p>(1) 答：此串联文件结构如下图所示。</p>
+<p>(2) 答：1560&#x2F;512&#x3D;3余24，因此文件第1560逻辑字节在r3逻辑块上，该逻辑块被分配在67号磁盘块上。</p>
+<p>(3) 答：要访问67号磁盘块，需要先找到文件目录，然后依次访问100、157和66号磁盘块，最后读取67号磁盘块。因此若文件已打开 (文件目录信息已在内存中) 需要4次I&#x2F;O操作，文件未打开需要5次I&#x2F;O操作。</p>
+<p>9-16什么是“重名”问题 ? 二级文件目录结构如何解决这一问题?</p>
+<p>答：重名是指不同用户对不同文件起了相同的名字。在二级文件目录结构中，每个用户建立用户文件目录，系统建立主目录，登记所有用户目录的信息，用目录名加文件名唯一标识每个文件解决重名问题。</p>
+<p>9-18 假设两个用户共享一个文件系统，用户甲要用到文件a、b、c、e，用户乙要用到文件a、d、e、f。已知：用户甲的文件a与用户乙的文件a实际上不是同一文件；用户甲的文件c与用户乙的文件f实际上是同一文件；甲、乙两用户的文件e是同一文件。试拟定一个文件组织方案，使得甲、乙两用户能共享该文件系统而不致造成混乱。</p>
+<p>答：如下图所示。用户甲的主目录名为jia，有四个文件，文件名为a、b、c、e。</p>
+<p>用户乙的主目录名为yi，有四个文件，文件名为a、d、e、f。</p>
+<p><img src="/images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/clip_image002.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2610,811 +3578,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/25/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-CPU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/25/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-CPU/" class="post-title-link" itemprop="url">组成原理-CPU</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-24 21:44:22" itemprop="dateCreated datePublished" datetime="2019-12-24T21:44:22Z">2019-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/2019011215573123.png"></p>
-<h1 id="CPU的组成和功能"><a href="#CPU的组成和功能" class="headerlink" title="CPU的组成和功能"></a>CPU的组成和功能</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-CPU/1552225-8b09b1de21af5f76.png"></p>
-<p>cpu&#x3D;运算器+控制器。</p>
-<p>运算器：数据加工。</p>
-<p>控制器：</p>
-<ul>
-<li>程序控制: 程序中指令执行顺序控制 </li>
-<li>操作控制: 将机器指令翻译成执行部件所需操作控制信号</li>
-<li>时序控制: 控制操作信号的产生时间、持续时间</li>
-<li>异常控制: 异常处理，外设交互</li>
-</ul>
-<h2 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h2><p><strong>控制器：</strong>程序计数器、指令寄存器、指令译码器、时序产生器和操作控制器组成。</p>
-<p>取指令，将机器指令<strong>译码</strong>并生成<strong>执行部件</strong>所需的<strong>控制信号序列</strong>，控制信号送至各执行部件控点，引起逻辑门开闭，建立正确的数据通路，从而完成指令功能。</p>
-<ul>
-<li><strong>硬布线控制器</strong>  (时序逻辑型) (硬件实现)</li>
-<li><strong>微程序控制器</strong>  (存储程序型) (软件实现)</li>
-</ul>
-<h1 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h1><p>在指令的执行周期完成后，处理器会判断是否出现中断请求，只有在出现中断请求时才会进入中断周期。</p>
-<!--以下是上课的学习笔记-->
-
-<h1 id="数据通路"><a href="#数据通路" class="headerlink" title="数据通路"></a>数据通路</h1><p>执行部件间传送信息的路径（数据流）</p>
-<ul>
-<li><strong>共享通路（总线）</strong></li>
-<li><strong>专用通路</strong></li>
-</ul>
-<p><strong>在总线结构中，可同时进行的数据传输数量取决于总线的数量</strong></p>
-<h4 id="单总线结构"><a href="#单总线结构" class="headerlink" title="单总线结构"></a>单总线结构</h4><p>总线上可以有多个模块同时接收数据，但是某一时刻只能有一个模块向总线发送数据。因此，接入到总线上的部件需要进行输出控制，以防止总线上的数据冲突。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225144536035.png"></p>
-<h4 id="双总线结构"><a href="#双总线结构" class="headerlink" title="双总线结构"></a>双总线结构</h4><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225144858947.png"></p>
-<h4 id="三总线结构"><a href="#三总线结构" class="headerlink" title="三总线结构"></a>三总线结构</h4><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225144921158.png"></p>
-<h1 id="指令周期与时序（重要）"><a href="#指令周期与时序（重要）" class="headerlink" title="指令周期与时序（重要）"></a>指令周期与时序（重要）</h1><h2 id="指令周期-1"><a href="#指令周期-1" class="headerlink" title="指令周期"></a>指令周期</h2><ul>
-<li>定长指令周期：传统的三级时序—–以最慢的指令周期同步</li>
-<li>变长指令周期：指令需要多少时间就给多少时间</li>
-</ul>
-<p><strong>取指令、执行指令反复循环</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225145027383.png"></p>
-<ul>
-<li>时钟周期（震荡周期、节拍脉冲） ——能完成依次微操作</li>
-<li>机器周期（CPU周期）&#x3D; 多个时钟周期 ——–从主存读出一条指令的最短时间（也就是访问一次内存的最短时间）</li>
-</ul>
-<p>指令周期可划分如下阶段</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225145338190.png"></p>
-<h2 id="取值周期"><a href="#取值周期" class="headerlink" title="取值周期"></a>取值周期</h2><p>取值周期就是按PC内容取出指令，并计算后续指令的地址：<br>有跳转指令的就计算跳转后的指令的地址；没有就顺序执行。</p>
-<h2 id="译码-x2F-取操作数周期"><a href="#译码-x2F-取操作数周期" class="headerlink" title="译码&#x2F;取操作数周期"></a>译码&#x2F;取操作数周期</h2><p>识别指令类型，并根据指令地址码字段的值访问相应的寄存器或主存单元。</p>
-<p>这部分包括了操作数地址计算和取操作数的阶段。</p>
-<h4 id="执行周期"><a href="#执行周期" class="headerlink" title="执行周期"></a>执行周期</h4><p>控制器向算术逻辑运算单元和数据通路中的其他部件发送操作控制命令，对前面准备好的操作数进行操作，将操作的状态信息保存在PSW中。<strong>如果出现程序转移，则在执行周期内决定转移地址</strong></p>
-<h4 id="写回"><a href="#写回" class="headerlink" title="写回"></a>写回</h4><p>将运算结果写到寄存器或存储器中。</p>
-<h4 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h4><p>实际的指令周期还包括了中断周期（完成现行程序与中断程序的切换）、总线周期（完成总线操作与总线控制权的转移）、IO周期（完成输入输出操作）。</p>
-<h4 id="指令周期数据流示例"><a href="#指令周期数据流示例" class="headerlink" title="指令周期数据流示例"></a>指令周期数据流示例</h4><p>可以分析分析与不同总线的数据通路之间的运行的周期数。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225151042573.png"></p>
-<h3 id="时序"><a href="#时序" class="headerlink" title="时序"></a>时序</h3><p>硬布线控制中采用的时序体制是三级时序体制。微程序控制器采用的是两级时序体制。</p>
-<h4 id="时序产生器与控制器–同步控制"><a href="#时序产生器与控制器–同步控制" class="headerlink" title="时序产生器与控制器–同步控制"></a>时序产生器与控制器–同步控制</h4><p>时序产生器循环产生周期电位、节拍电位，供控制器对信号进行时间调制。简单来说就是对各种信号进行时间同步。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225150508227.png"></p>
-<h4 id="现代时序系统—异步控制"><a href="#现代时序系统—异步控制" class="headerlink" title="现代时序系统—异步控制"></a>现代时序系统—异步控制</h4><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225202524104.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225150533112.png"></p>
-<h3 id="控制方式"><a href="#控制方式" class="headerlink" title="控制方式"></a>控制方式</h3><ul>
-<li>同步控制方式—–使用的是定长指令周期</li>
-<li>异步控制方式—–使用的是变长指令周期</li>
-<li>混合控制方式—–使计算机处于同步和异步交替工作方式</li>
-</ul>
-<h2 id="硬布线控制器"><a href="#硬布线控制器" class="headerlink" title="硬布线控制器"></a>硬布线控制器</h2><h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><p>将控制器看成产生固定时序控制信号的逻辑电路。</p>
-<h3 id="单周期硬布线控制器"><a href="#单周期硬布线控制器" class="headerlink" title="单周期硬布线控制器"></a>单周期硬布线控制器</h3><p>使用的是同步控制</p>
-<p><strong>固定指令周期硬布线控制器设计步骤</strong></p>
-<p>1、设计三级时序产生器：所有指令固定机器周期数、节拍数<br>2、列出所有机器指令的指令周期流程图，明确每个节拍的控制信号<br>3、找出产生同一微操作控制信号的条件<br>4、写出各微操作控制信号的布尔表达式<br>5、化简<br>6、实现</p>
-<h3 id="多周期硬布线控制器"><a href="#多周期硬布线控制器" class="headerlink" title="多周期硬布线控制器"></a>多周期硬布线控制器</h3><p><strong>核心是设计时序产生器状态机</strong></p>
-<p>使用的是异步控制</p>
-<ul>
-<li>一条指令多个时钟周期</li>
-<li>一个时钟周期一个状态</li>
-<li>一个状态对应一组并发信号</li>
-</ul>
-<p><strong>可变周期硬布线控制器设计步骤</strong></p>
-<p>1、列出所有机器指令的指令周期流程图，明确每个节拍的控制信号<br>2、绘制指令执行状态转换图<br>3、根据状态转换图构建状态机真值表，实现有限状态机组合逻辑<br>4、实现控制器组合逻辑电路</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225205455789.png"></p>
-<p>指令结束阶段可能会进入中断</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225205200955.png"></p>
-<h2 id="微程序控制器"><a href="#微程序控制器" class="headerlink" title="微程序控制器"></a>微程序控制器</h2><p>使用的是 <strong>存储逻辑</strong></p>
-<ul>
-<li><strong>将并发信号事先存储为微指令</strong></li>
-<li>一条指令对应多条微指令</li>
-<li><strong>状态等同与存储器地址</strong></li>
-</ul>
-<p>微程序控制器是利用软件方法来设计硬件的技术。将完成指令所需要的控制信号按格式编写成微指令，存放到控制存储器。</p>
-<ul>
-<li>一条机器指令对应一段微程序（多条微指令）</li>
-<li>指令取指执行—&gt;微程序的执行—–&gt;执行多条微指令—–&gt;依次生成控制信号</li>
-</ul>
-<h3 id="微命令和微操作"><a href="#微命令和微操作" class="headerlink" title="微命令和微操作"></a>微命令和微操作</h3><p>微程序–&gt;微指令–&gt;微命令</p>
-<p>微命令：控制部件向执行部件发出的各种控制命令</p>
-<p>微操作：执行部件收到微命令后所进行的操作</p>
-<p><strong>微命令是可以在CPU周期内并行执行的，但是微程序是只能串行执行。</strong></p>
-<p>操作控制字段是微指令主体，每一位都是一个微指令。</p>
-<p>微程序中多条微指令的先后关系由微指令格式中的<strong>测试字段</strong>和<strong>下地址字段</strong>给出。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225210308226.png"></p>
-<h2 id="微程序设计"><a href="#微程序设计" class="headerlink" title="微程序设计"></a>微程序设计</h2><h3 id="微指令格式"><a href="#微指令格式" class="headerlink" title="微指令格式"></a>微指令格式</h3><p>分为水平型和垂直型。</p>
-<h4 id="水平型微指令"><a href="#水平型微指令" class="headerlink" title="水平型微指令"></a>水平型微指令</h4><p>在一个微周期中<strong>同时给出多个微命令</strong>的微指令。编码方式如下“微指令编码方式”</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225231213793.png"></p>
-<h4 id="垂直型微指令"><a href="#垂直型微指令" class="headerlink" title="垂直型微指令"></a>垂直型微指令</h4><p>类似汇编语言，把微指令代码化。</p>
-<p>基本上淘汰了。</p>
-<h3 id="微指令编码方式"><a href="#微指令编码方式" class="headerlink" title="微指令编码方式"></a>微指令编码方式</h3><p><strong>直接表示法</strong></p>
-<p>将微指令操作控制字段的每一个二进制位定义成一个微命令，用1或者0表示相应的微命令的有无。</p>
-<p>缺点：字长太长</p>
-<p>解决方法：</p>
-<ul>
-<li>改直接表示为编码表示</li>
-<li>去掉下址字段，采用PC&#x3D;PC+1的方式生成微指令</li>
-<li>改水平微指令为垂直微指令（牺牲并行性）</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225232115891.png"></p>
-<p>此时没有下址字段，故PC的生成方式如下图所示：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%85%AD/image-20191225232205758.png"></p>
-<p><strong>字段直接译码法</strong></p>
-<p>将微指令格式中的操作控制字段分成诺干组，每组中包含诺干个互斥性微命令，将相容性微命令安排在不同组。（将互斥性微命令编码是因为他们之间是不可能同时出现的）</p>
-<p><strong>注意：要预留一个信号表示什么指令都不给</strong></p>
-<h2 id="PS-1"><a href="#PS-1" class="headerlink" title="PS"></a>PS</h2><h3 id="一些名词的含义"><a href="#一些名词的含义" class="headerlink" title="一些名词的含义"></a>一些名词的含义</h3><p>指令周期：取指令并执行一条指令所需要的时间，一般由若干个机器周期组成，包括从取指令、分析指令到执行完所需的全部时间。</p>
-<p>数据通路：数据在功能部件之间传送的路径。</p>
-<p>时钟周期：由CPU时钟定义的定长时间间隔，是CPU工作的最小时间单位，也称节拍脉冲或T周期。</p>
-<p>同步控制：选取部件中最长的操作时间作为统一的时间间隔标准，使所有部件都在这个时间间隔内启动并完成操作。</p>
-<p>异步控制：系统不设立统一的时间间隔标准(基准时钟除外)，各部件按各自的时钟工作，分别实现各自的时序控制，时间衔接通过应答通讯方式(又称握手方式)实现。</p>
-<p>联合控制：同步控制与异步控制相结合。对大多数节拍数相近的指令，采用同步控制；而对少数节拍数多不固定的指令，采用异步控制。</p>
-<p>单周期处理器：所有指令在一个时钟周期内完成的处理器。</p>
-<p>多周期处理器：每条指令的执行分成多个阶段，每个时钟周期完成一个阶段的工作。</p>
-<p>微操作：执行部件收到微命令后所进行的操作。</p>
-<p>相容性微命令：能同时并行执行的微命令。</p>
-<p>互斥性微命令：不能并行执行的微操作。</p>
-<p>微指令：由微指令产生的一组实现一定微操作功能的微命令的组合。</p>
-<p>微程序：实现一条指令功能的若干条微指令的集合。</p>
-<p>微程序控制器：采用微程序设计方法设计的控制器。指令执行过程中所需要的所有控制信号以微指令的方式存在在控制存储器中，指令执行时，逐条读出微指令，以产生执行执行过程中所需要的控制信号。</p>
-<p>控制存储器：微程序控制器中用于存放解释所有指令微程序的存储器。</p>
-<p>硬布线控制器：又称为组合逻辑控制器，指令执行所需要的控制信号直接由逻辑门电路和触发器等构成的电路产生，与微程序控制器相比，具有结构复杂但速度快的特点。</p>
-<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><p>1)中央处理器的基本功能是什么?从实现其功能的角度分析，它应由哪些部件组成?</p>
-<p>答：五方面的功能：</p>
-<p>指令执行顺序的控制。即控制程序中的指令按事先规定的顺序自动地执行，从而保证程序执行过程中，指令在逻辑上的相互关系不被改变。</p>
-<p>指令的操作控制。即产生指令执行过程中所需要的信号，以控制执行部件按指令规定的操作运行。</p>
-<p>时间控制，即对每个控制信号进行定时，以便按规定的时间顺序启动各操作。对于任何一条指令而言，如果操作控制信号的时间不正确，则指令的功能也就不能正确实现。</p>
-<p>数据加工处理。即对数据进行算术、逻辑运算，或将数据在相关部件之间传送。</p>
-<p>异常和中断处理。如处理运算中的异常及处理外部设备的中断服务请求等。</p>
-<p>组成：中央处理器主要由控制器和运算器两部分构成。控制器的主要功能包括：取指令、计算下一条指令的地址、对指令译码、产生相应的操作控制信号、控制指令执行的步骤和数据流动的方向。运算器是执行部件，由算术逻辑单元和各种寄存器组成。</p>
-<p><strong>2)CPU</strong>内部有哪些寄存器?它们的功能分别是什么?</p>
-<p>答：**(1)** **指令寄存器(IR)**：IR用于保存指令。从主存储器取出的指令存放在IR中，直到新的指令从主存中取出为止。</p>
-<p>   <strong>(2)</strong> <strong>程序计数器(PC)</strong> <strong>：</strong>PC保存将要执行的指令地址，故又称指令地址寄存器。CPU取指令时，将PC的内容送到主存地址寄存器，然后修改PC的值形成下一条将要执行的指令地址</p>
-<p><strong>(3)</strong> **地址寄存器(AR)**：AR用来保存当前CPU所要访问的主存单元地址，无论CPU是取指令还是存取数据，都必须先将要访问的主存单元地址送AR，直到读&#x2F;写操作完成。</p>
-<p>(4)**通用寄存器组(GR)**：通用的含义是指寄存器的功能有多种用途，GR可作为ALU的累加器、变址寄存器、地址指针、指令计数器、数据缓冲器，用于存放操作数(包括源操作数、目的操作数及中间结果)和各种地址信息等。</p>
-<p> <strong>(5)</strong> <strong>数据缓冲寄存器(DR)</strong></p>
-<p>DR作为CPU和主存之间的数据缓冲寄存器用于存放操作数、运算结果或中间结果，以减少访问主存的次数；也可存放从主存中读出的数据，或准备写入主存的数据。</p>
-<p>   <strong>(6)</strong> <strong>程序状态字寄存器(PSW)</strong></p>
-<p>PSW用于保存由算术运算指令、逻辑运算指令、测试结果等建立的各种条件标志。常见的状态信息包括进位标志(C)、溢出标志(V)、结果为负数标志(S)及结果为零标志(Z)等。</p>
-<p>**3)**什么是取指周期?取指周期内应完成哪些操作?</p>
-<p> 答：取指周期就是从开始取指令到取指令完成所需要的时间。取指周期要完成两方面的操作，一是将PC的值送存储器地址寄存器MAR，并完成储单元去取指令；二是如何形成后续指令地址：</p>
-<p>·顺序执行指令时，将PC内容加当前指令所占用的主存单元数(以字节为单位)；</p>
-<p>·当出现转移时，根据寻址方式、转移条件、转移的目标地址等内容计算得到。</p>
-<p>**4)**<strong>指令有几种执行方式?说明各自的特点。</strong></p>
-<p>答：指令的执行方式有顺序执行方式、重叠执行方式和流水执行三种方式。</p>
-<p>顺序执行方式：是一种串行执行方式，取出一条指令的操作全部结束后才能开始下一条指令的指令周期，这种方式控制简单，程序的执行速度慢。</p>
-<p>重叠执行方式：是一种局部并行方式，通常将当前指令的执行阶段与下一条指令的取指阶段重叠进行，这种方式控制较复杂，但可以提高程序的执行速度；</p>
-<p>流水执行方式：是一种并行执行方式，它将指令的执行分多个阶段（每个阶段的任务由特定的功能部件完成），一般而言，在该执行方式下，指令间的并行程度比重叠执行方式要高，控制更为复杂，可以更快地提高程序的执行速度。</p>
-<p>**5)**<strong>计算机为什么要设置时序系统?说明指令周期、机器周期、和时钟周期的含义。</strong></p>
-<p>答：指令执行过程中的所有操作必须按照一定的次序完成，而且这些操作持续的时间也有严格的限制，因此，在计算机系统中需要设置时序系统，对指令执行过程中的所有控制信号进行时间控制，以保证指令功能的正确实现。</p>
-<p>通常将一条指令从取出到执行完成所需要的时间称为<strong>指令周期，</strong>包括取指周期和执行周期，指令周期通过右若干和机器周期组成，所包含的机器周期的数量随指令功能和寻址方式的不同而不同。</p>
-<p><strong>机器周期</strong>分成若干个节拍电位时间段，通常以CPU完成一次微操作所需要的时间为基础来定义节拍电位的时间；由CPU时钟定义的定长时间间隔，是CPU工作的最小时间单位，也称<strong>节拍脉冲或T周期</strong>。</p>
-<ol start="6">
-<li><strong>组合逻辑控制器与微程序控制器各有什么特点?</strong></li>
-</ol>
-<p> 答：硬布线控制器又称为组合逻辑控制器，这种控制器中的控制信号直接由各种类型的逻辑门电路和触发器等构成，与微程序控制器相比，具有结构复杂但速度快的特点。</p>
-<p>微程序控制器的设计采用了存储技术和程序设计技术，使复杂的控制逻辑得到简化。通过过读出存放在微程序控制器中微指令产生指令执行过程中所需要的控制信号，所以，与硬布线控制器相比，微程序控制器的速度较慢。</p>
-<ol start="7">
-<li><strong>说明程序与微程序，指令与微指令的异同</strong></li>
-</ol>
-<p>答：微程序是多条微指令系列的集合,用于实现指令的功能,属于机器指令级别，对用于的透明性不强，存放在CPU内的控制存储器中；程序则是为了完成某一应用功能所编写的指令（包括机器语言指令或高级语言指令）集合，属于高级语言级别，对用户的透明性好，运行时存放在计算机的主存中。</p>
-<p>指令是指挥计算机执行某种功能的命令，是构成程序的基本单位，由操作码和地址字段构成；而微指令则用于微程序控制器中产生指令执行过程中所需要的微命令，是构成微程序的基本单位，由操作控制字段、判别测试字段和下地址字段等组成。</p>
-<p>  **8)**<strong>微命令有哪几种编码方法?它们是如何实现的?</strong>  </p>
-<p>答：微指令的微命令有三种编码方法，分别是直接表示方法、字段直接译码法和混合控制法。 </p>
-<p><strong>直接表示法</strong>的基本思想是：将微指令操作控制字段的每个二进制位定义为一个微命令，用“1”或“0”表示相应的微命令的“有”或“无”。</p>
-<p><strong>字段直接译码法</strong>的基本思想是：将微指令格式中的操作控制字段分成若干组，每组中包含若干个互斥性微命令，将相容性的微命令安排在不同组。</p>
-<p><strong>混合控制法：</strong>将直接表示法与字段直接译码法混合使用，以便在微指令字长、并行性及执行速度和灵活性等方面进行折衷，发挥它们的共同优点。</p>
-<p><strong>9)简述微程序控制器和硬布线控制器的设计方法?</strong></p>
-<p> 答： <strong>微程序控制器设计方法：</strong></p>
-<p>1)分析指令执行的数据通路，列出每条指令在所有寻址方式下的执行操作流程和每一步所需要的控制信号；</p>
-<p>2)对指令的操作流程进行细化，将每条指令的每个微操作分配到具体的机器周期的各个时间节拍信号上；</p>
-<p>(3)设计微指令格式、微命令编码方法和程序组织方式；</p>
-<p>(4)编制每条指令的微程序；并按照所设计的微程序组织方式存放到控存中；</p>
-<p>(5)对微命令进行同步控制，并送数据通路的相关控制点。</p>
-<p><strong>硬布线控制器设计方法：</strong></p>
-<p>1)分析指令执行的数据通路，列出每条指令在所有寻址方式下的执行操作流程和每一步所需要的控制信号；</p>
-<p>2)对指令的操作流程进行细化，将每条指令的每个微操作分配到具体的机器周期的各个时间节拍信号上，即对操作控制信号进行同步控制。</p>
-<p>3)对每一个控制信号进行逻辑综合，得到每个控制信号的逻辑表达式。</p>
-<p>4)最后采用逻辑门或PLA或ROM实现逻辑表达式的功能，各控制信号送数据通路的相关控制点。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/23/Algorithm_%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/23/Algorithm_%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">排序</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-23 15:15:08" itemprop="dateCreated datePublished" datetime="2019-12-23T15:15:08Z">2019-12-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <span id="more"></span>
-
-<h1 id="概叙"><a href="#概叙" class="headerlink" title="概叙"></a>概叙</h1><p>术语说明：</p>
-<ul>
-<li><strong>稳定</strong> ：如果a原本在b前面，而a&#x3D;b，排序之后a仍然在b的前面；</li>
-<li><strong>不稳定</strong> ：如果a原本在b的前面，而a&#x3D;b，排序之后a可能会出现在b的后面；</li>
-<li><strong>内排序</strong> ：所有排序操作都在内存中完成；</li>
-<li><strong>外排序</strong> ：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；</li>
-</ul>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMzMyMjA2MzctMTA1NTA4ODExOC5wbmc.jpg"></p>
-<p>当n较大，则应采用时间复杂度为O(nlog2n)的排序方法：快速排序、堆排序或归并排序。</p>
-<p>  快速排序：是目前基于比较的内部排序中被认为是最好的方法，当待排序的关键字是随机分布时，快速排序的平均时间最短；</p>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/aHR0cHM6Ly9pbWFnZXMyMDE3LmNuYmxvZ3MuY29tL2Jsb2cvODQ5NTg5LzIwMTcxMC84NDk1ODktMjAxNzEwMTUyMzMwNDMxNjgtMTg2NzgxNzg2OS5wbmc.jpg"></p>
-<h1 id="1-插入排序—直接插入排序-Straight-Insertion-Sort"><a href="#1-插入排序—直接插入排序-Straight-Insertion-Sort" class="headerlink" title="1.插入排序—直接插入排序(Straight Insertion Sort)"></a>1.插入排序—直接插入排序(Straight Insertion Sort)</h1><p>插入排序简单来说就是不断从后面将数据插入前面已经排好序的过程。</p>
-<p>由此可知：前面的队列一定是排好序的。在插入的过程中可能会导致前面排好序的数据往后移，腾出位置。</p>
-<p>动画演示：</p>
-<img src="/images/%E6%8E%92%E5%BA%8F/849589-20171015225645277-1151100000.gif" style="zoom:25%;" />
-
-
-
-<h1 id="2-归并排序（Merge-Sort）"><a href="#2-归并排序（Merge-Sort）" class="headerlink" title="2.归并排序（Merge Sort）"></a>2.归并排序（Merge Sort）</h1><p>简单来说，归并排序就是将一个无序的序列分解成诺干个有序的子序列，然后依次归并。</p>
-<p>一般采取的是递归的方式进行设计。</p>
-<p>递归的结束标志是：当分解的序列只有一个元素时。</p>
-<p>递归层需要做的是：将子序列排序。</p>
-<p>递归层返回的是：排好序的子序列</p>
-<p>递归请见：</p>
-<p>动画演示：</p>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/849589-20171015230557043-37375010.gif"></p>
-<p>看不明白？再看一个。</p>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy9jL2NjL01lcmdlLXNvcnQtZXhhbXBsZS0zMDBweC5naWY.jpg"></p>
-<h1 id="3、堆排序（Heap-Sort）"><a href="#3、堆排序（Heap-Sort）" class="headerlink" title="3、堆排序（Heap Sort）"></a>3、堆排序（Heap Sort）</h1><p> <strong>堆排序（Heapsort）</strong> 是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点。</p>
-<ul>
-<li>算法描述</li>
-<li>步骤1：将初始待排序关键字序列(R1,R2….Rn)构建成大顶堆，此堆为初始的无序区；</li>
-<li>步骤2：将堆顶元素R[1]与最后一个元素R[n]交换，此时得到新的无序区(R1,R2,……Rn-1)和新的有序区(Rn),且满足R[1,2…n-1]&lt;&#x3D;R[n]；</li>
-<li>步骤3：由于交换后新的堆顶R[1]可能违反堆的性质，因此需要对当前无序区(R1,R2,……Rn-1)调整为新堆，然后再次将R[1]与无序区最后一个元素交换，得到新的无序区(R1,R2….Rn-2)和新的有序区(Rn-1,Rn)。不断重复此过程直到有序区的元素个数为n-1，则整个排序过程完成。</li>
-<li>演示</li>
-</ul>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/849589-20171015231308699-356134237.gif"></p>
-<p> 算法分析</p>
-<ul>
-<li>最佳情况：T(n) &#x3D; O(nlogn)</li>
-<li>最差情况：T(n) &#x3D; O(nlogn)</li>
-<li>平均情况：T(n) &#x3D; O(nlogn)</li>
-</ul>
-<h1 id="4、快速排序（Quick-Sort）"><a href="#4、快速排序（Quick-Sort）" class="headerlink" title="4、快速排序（Quick Sort）"></a>4、快速排序（Quick Sort）</h1><p> <strong>快速排序</strong> 的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。</p>
-<ul>
-<li><p>算法描述</p>
-<p>快速排序使用分治法来把一个串（list）分为两个子串（sub-lists）。具体算法描述如下：</p>
-<ul>
-<li>步骤1：从数列中挑出一个元素，称为 “基准”（<strong>pivot</strong> ）；</li>
-<li>步骤2：重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；</li>
-<li>步骤3：递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
-</ul>
-</li>
-<li><p>示例</p>
-</li>
-</ul>
-<p>概括来说为 挖坑填数+分治法</p>
-<p>下面举例来进行说明，主要有三个参数，i为区间的开始地址，j为区间的结束地址，X为当前的开始的值</p>
-<p>第一步，i&#x3D;0,j&#x3D;9,X&#x3D;72（X可以理解成此时a[0]是挖了一个洞，东西放在X哪里。这个洞可以填入其他数据）</p>
-<table>
-<thead>
-<tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>72</strong></td>
-<td align="center">6</td>
-<td align="center">57</td>
-<td align="center">88</td>
-<td align="center">60</td>
-<td align="center">42</td>
-<td align="center">83</td>
-<td align="center">73</td>
-<td align="center">48</td>
-<td align="center">85</td>
-</tr>
-</tbody></table>
-<p>第二步，从j开始由后向前找，找到比X小的第一个数a[8]&#x3D;48,此时：a[0]&#x3D;a[8]；i++<br>进行替换。这样a[0]这个坑被填上了，但是a[7]这个坑多出来了。</p>
-<table>
-<thead>
-<tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">48</td>
-<td align="center">6</td>
-<td align="center">57</td>
-<td align="center">88</td>
-<td align="center">60</td>
-<td align="center">42</td>
-<td align="center">83</td>
-<td align="center">73</td>
-<td align="center"><strong>72</strong></td>
-<td align="center">85</td>
-</tr>
-</tbody></table>
-<p>第三步，从i开始由前往后找，找到比X大的第一个数a[3]&#x3D;88,（此处找比X大的数是因为在后半截的数据均要比72才算实现目的）此时：a[8]&#x3D;a[3]；j–<br>a[8]的坑被填上了，但是a[3]的坑又出现了。</p>
-<table>
-<thead>
-<tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">48</td>
-<td align="center">6</td>
-<td align="center">57</td>
-<td align="center">88</td>
-<td align="center">60</td>
-<td align="center">42</td>
-<td align="center">83</td>
-<td align="center">73</td>
-<td align="center"><strong>88</strong></td>
-<td align="center">85</td>
-</tr>
-</tbody></table>
-<p>此时：i&#x3D;3；j&#x3D;7；X&#x3D;72（因为经过上几轮的比较，我们可以得出前3个数均比72小，后3个数都比72大，不予考虑）</p>
-<p>再重复上面的步骤，<strong>先从后向前找，再从前向后找</strong>。</p>
-<p>第四步，从j&#x3D;7开始由后向前找，找到比X小的第一个数a[5]&#x3D;42，a[3] &#x3D; a[5]; i++;</p>
-<table>
-<thead>
-<tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">48</td>
-<td align="center">6</td>
-<td align="center">57</td>
-<td align="center">42</td>
-<td align="center">60</td>
-<td align="center">42</td>
-<td align="center">83</td>
-<td align="center">73</td>
-<td align="center"><strong>88</strong></td>
-<td align="center">85</td>
-</tr>
-</tbody></table>
-<p>第五步，从i&#x3D;5开始由前往后找，i&#x3D;j&#x3D;5，所以退出，将X填入a[5]</p>
-<table>
-<thead>
-<tr>
-<th align="center">0</th>
-<th align="center">1</th>
-<th align="center">2</th>
-<th align="center">3</th>
-<th align="center">4</th>
-<th align="center">5</th>
-<th align="center">6</th>
-<th align="center">7</th>
-<th align="center">8</th>
-<th align="center">9</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">48</td>
-<td align="center">6</td>
-<td align="center">57</td>
-<td align="center">42</td>
-<td align="center">60</td>
-<td align="center">72</td>
-<td align="center">83</td>
-<td align="center">73</td>
-<td align="center"><strong>88</strong></td>
-<td align="center">85</td>
-</tr>
-</tbody></table>
-<p>一轮结束。</p>
-<p>接下来对两个子区间[0,4]和[6,9]重复上面的操作即可</p>
-<p>总结：</p>
-<blockquote>
-<p>1．i &#x3D;L; j &#x3D; R; 将基准数挖出形成第一个坑a[i]。</p>
-<p>2．j–由后向前找比它小的数，找到后挖出此数填前一个坑a[i]中。</p>
-<p>3．i++由前向后找比它大的数，找到后也挖出此数填到前一个坑a[j]中。</p>
-<p>4．再重复执行2，3二步，直到i&#x3D;&#x3D;j，将基准数填入a[i]中</p>
-</blockquote>
-<ul>
-<li>动图演示</li>
-</ul>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/849589-20171015230936371-1413523412.gif"></p>
-<p>算法分析</p>
-<ul>
-<li>最佳情况：T(n) &#x3D; O(nlogn)</li>
-<li>最差情况：T(n) &#x3D; O(n2)</li>
-<li>平均情况：T(n) &#x3D; O(nlogn)</li>
-</ul>
-<h1 id="排序算法的下界"><a href="#排序算法的下界" class="headerlink" title="排序算法的下界"></a>排序算法的下界</h1><p>排序，涉及到被排序的序列和排序的方法。（比较）排序算法时间的下界对被排序的序列和排序方法做了以下限制</p>
-<ul>
-<li><p>没有关于被排序序列的先验信息，譬如序列内数据的分布、范围等，即认为序列内元素在一个开区间内均匀分布。同时，序列内元素互异。（可以从两个方面理解元素互异的限制，其一是对于随机的序列而言，两元素相同的概率约为0；其二是比较排序中没有对相同元素的特殊处理）</p>
-</li>
-<li><p>排序方法中仅仅利用了比较运算来确定元素的顺序。不失一般性，假设每次比较仅取2个元素，比较其大小。</p>
-<p><strong>（比较）排序算法的算法时间复杂度等价为确定输入序列的排列方式需要多少次比较操作。</strong></p>
-</li>
-</ul>
-<blockquote>
-<p>选择，插入，归并，快速排序算法，在确定排序顺序时都仅仅依赖于对排序关键字对进行比较，它们确定决策时的依据均是”如果这个元素的排序关键字比另一个元素的排序关键字小，那么就进行相应操作，否则，进行其他操作或者什么也不做”，这些排序算法就是比较排序。</p>
-</blockquote>
-<h2 id="基于比较排序的下界"><a href="#基于比较排序的下界" class="headerlink" title="基于比较排序的下界"></a>基于比较排序的下界</h2><p>将比较排序定义为仅仅通过比较元素对来确定排序顺序，</p>
-<p>Ω符号给出了下界，因此称“<strong>对于任意大的n，任何比较排序算法在最坏情况下至少需要cnlgn次比较操作（对于某个常量c成立)”由于每次比较至少需要花费常量时间，对于n个元素的基于比较的排序操作，能够得出一个时间为Ω(nlgn)的下界。</strong></p>
-<p>关于此下界的说明：</p>
-<p>1.它仅仅指最坏情况。在最坏情况下，该排序必定需要Ω（nlgn)次比较操作。</p>
-<p>2.Ω(nlgn)这一下界不依赖于任何算法，只要该算法是一个比较排序。</p>
-<h3 id="决策二叉树"><a href="#决策二叉树" class="headerlink" title="决策二叉树"></a>决策二叉树</h3><p>决策树：用于证明排序算法的下界，是一个二叉树，每个节点是元素之间一组可能的排序，比较的结果是树的边，下图表示将a，b，c排序的算法</p>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/1288560-20190506212758599-1563702061.png"></p>
-<p><strong>定理：任何只用到比较的算法最坏情况下需要Ω（nlgn)次比较！！</strong></p>
-<p>证明：假设高度为h，具有l个可达叶结点的决策树。输入n!种可能的排列都是叶结点，所以n!&lt;&#x3D;l。且l&lt;&#x3D;2^h^</p>
-<p>两边取对数即可得证。</p>
-<p><strong>推论：堆排序和归并排序都是渐近最优的比较排序算法</strong></p>
-<p>以比较为基础的有序检索算法最坏情况下的时间下界：</p>
-<p>定理 ：设A(1:n)含有n(n≥1)个不同的元素，且有A(1) &lt; A(2) &lt; …&lt; A(n)。</p>
-<p>以<strong>以比较为基础的算法</strong>去判断给定的x是否有，则，最坏情况下，任何这样的算法所需的最小比较次数FIND(n)有：</p>
-<p><img src="/images/%E6%8E%92%E5%BA%8F/image-20191228003422720.png"></p>
-<p>1）任何一种以比较为基础的有序检索算法，在最坏情况下的计算时间都不低于Ο(logn)。因此，不可能存在最坏情况比二分检索数量级还低的算法。</p>
-<p>2）二分检索是解决检索问题的最优的最坏情况算法</p>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/MobiusStrip/article/details/83785159">https://blog.csdn.net/MobiusStrip/article/details/83785159</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/23/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/23/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">组成原理-指令系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-23 12:57:36" itemprop="dateCreated datePublished" datetime="2019-12-23T12:57:36Z">2019-12-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/20190111184347604.png"></p>
-<ul>
-<li>指令要求计算机完成什么功能？ - - - -设置操作码</li>
-<li>指令要求计算机处理什么数据？ - - - -设置数据源&#x2F;目</li>
-<li>计算机怎样得到要处理的数据？ - - - -设置寻址方式</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191223224549538.png"></p>
-<h2 id="不同地址数量的指令"><a href="#不同地址数量的指令" class="headerlink" title="不同地址数量的指令"></a>不同地址数量的指令</h2><p>分为三地址指令、双地址指令、单地址指令、零地址指令</p>
-<p>①三地址指令：一般地址域中A1、A2分别确定第一、第二操作数地址,A3确定结果地址。下一条指令的地址通常由程序计数器按顺序给出。</p>
-<p>②二地址指令：地址域中A1确定第一操作数地址和结果地址，A2确定第二操作数地址。</p>
-<p>③单地址指令：地址域中A 确定第一操作数地址。固定使用某个寄存器存放第二操作数和操作结果。因而在指令中隐含了它们的地址。</p>
-<p>④零地址指令：在堆栈型计算机中，操作数一般存放在下推堆栈顶的两个单元中,结果又放入栈顶,地址均被隐含，因而大多数指令只有操作码而没有地址域。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th align="left"></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>三地址指令</td>
-<td align="left">操作码op</td>
-<td>address1</td>
-<td>address2</td>
-<td>address3</td>
-<td>（address1） op （address2）-&gt; (address3)</td>
-</tr>
-<tr>
-<td>双地址指令</td>
-<td align="left">操作码op</td>
-<td>address1</td>
-<td>address2</td>
-<td></td>
-<td>（address1）op （address2）-&gt; （address1）or（address2）</td>
-</tr>
-<tr>
-<td>单地址指令</td>
-<td align="left">操作码op</td>
-<td>address1</td>
-<td></td>
-<td></td>
-<td>（address1）op -&gt;（address1） （address1）op（ACC）-&gt; （address1）</td>
-</tr>
-</tbody></table>
-<p>零地址指令：</p>
-<ol>
-<li>机器指令无地址码</li>
-<li>空操作、停机操作、中途返回</li>
-</ol>
-<h2 id="寻址方式及指令寻址"><a href="#寻址方式及指令寻址" class="headerlink" title="寻址方式及指令寻址"></a>寻址方式及指令寻址</h2><h3 id="顺序寻址"><a href="#顺序寻址" class="headerlink" title="顺序寻址"></a>顺序寻址</h3><p>CPU中设置有PC计数器。注意PC+1中的1是一条指令的长度，不是一个字节。</p>
-<h3 id="跳跃寻址"><a href="#跳跃寻址" class="headerlink" title="跳跃寻址"></a>跳跃寻址</h3><p>就是JMP。</p>
-<h2 id="操作数寻址方式"><a href="#操作数寻址方式" class="headerlink" title="操作数寻址方式"></a>操作数寻址方式</h2><h3 id="立即数寻址"><a href="#立即数寻址" class="headerlink" title="立即数寻址"></a>立即数寻址</h3><p>地址码字段就是操作数本身。</p>
-<p>优点：因为将数据和指令一并送入CPU内部的寄存器中，执行指令速度快。便于程序设计。，不需要访问内存</p>
-<p>缺点：数据大小受字段位数限制。</p>
-<p>MOV AX .2000H</p>
-<h3 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h3><p>操作数已经在CPU的内部寄存器中。</p>
-<p>优点：执行速度快。不需要访问内存</p>
-<p>缺点：能访问的数据大小一般与计算机字长有关。也受寄存器数量限制</p>
-<p>MOV AX ,BX</p>
-<h3 id="直接寻址"><a href="#直接寻址" class="headerlink" title="直接寻址"></a>直接寻址</h3><p>地址码字段直接给出操作数在内存的地址。</p>
-<p>特点：提供了访问主存的操作。</p>
-<p>缺点：速度慢。地址字段的位数决定了访问空间大小</p>
-<p>MOV AX ,[2000H]</p>
-<h3 id="间接寻址"><a href="#间接寻址" class="headerlink" title="间接寻址"></a>间接寻址</h3><p>地址码字段给出的是操作数地址的地址。第一次访问主存：获得操作数的地址。第二次访问主存：获得操作数。</p>
-<p>明显用速度换访问空间。</p>
-<p>MOV AX ,[SOMETHING]  &#x2F;&#x2F;something在内存中。</p>
-<h3 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h3><p>地址码字段给出的是寄存器编号。也是两次访问：第一次访问寄存器：获得操作数地址。第二次访问主存：获得操作数。</p>
-<p>例如：MOV AL , [BX]</p>
-<h3 id="相对寻址"><a href="#相对寻址" class="headerlink" title="相对寻址"></a>相对寻址</h3><p>可用于跳转指令。</p>
-<p>有效地址为程序计数器PC中的内容+指令中的形式地址。</p>
-<p><strong>注意：因为在执行指令的时候，PC会变。这里取的PC的值是下一条将要执行指令的地址。</strong></p>
-<h3 id="基址寻址"><a href="#基址寻址" class="headerlink" title="基址寻址"></a>基址寻址</h3><p>指定一个基址寄存器，与本指令地址无关。</p>
-<p>例如：MOV AX ,32[B]</p>
-<h3 id="变址寻址"><a href="#变址寻址" class="headerlink" title="变址寻址"></a>变址寻址</h3><p>MOV AX , 32[SI]</p>
-<p>可以用在循环中。</p>
-<p>和基址寻址的不同点是SI是可以修改的。基址B是不可修改的。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191223233913438.png"></p>
-<h2 id="指令格式设计"><a href="#指令格式设计" class="headerlink" title="指令格式设计"></a>指令格式设计</h2><ul>
-<li>根据指令数量的要求是否支持操作码扩展，确定操作码字段的位数</li>
-<li>根据对操作数的要求确定地址码字段的个数</li>
-<li>根据寻址方式的要求，为每个地址码字段确定寻址方式字段位数</li>
-<li>确定采用定长指令还是变长指令</li>
-</ul>
-<p>例题：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224000148075.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224000222378.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224000250587.png"></p>
-<h2 id="MIPS指令概述"><a href="#MIPS指令概述" class="headerlink" title="MIPS指令概述"></a>MIPS指令概述</h2><p>只有三种指令格式</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224205156695.png"></p>
-<ul>
-<li><strong>R型指令</strong></li>
-</ul>
-<p>操作数只能来自寄存器，运算结果也只能存入寄存器。是RR型指令</p>
-<p>如果表示移位运算，则表示对Rt的内容进行移位，所移位数有shamt确定。</p>
-<ul>
-<li><strong>I型指令</strong></li>
-</ul>
-<p>立即数指令。</p>
-<ul>
-<li><strong>J型指令</strong></li>
-</ul>
-<p>无条件转移指令。无条件转移的目标地址有PC高4位与26位直接地址左移后的值拼接而成。</p>
-<p><strong>注意：不单设寻址方式说明字段。</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224210041029.png"></p>
-<p><strong>每一条指令都只有一种寻址方式。</strong></p>
-<h3 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h3><p><strong>立即数寻址</strong></p>
-<p><strong>目标寄存器在右边，源寄存器在左边</strong> 和汇编语言恰好相反？？？</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224210907954.png" alt="image-20191224210907954"></p>
-<p><strong>寄存器直接寻址</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224210954328.png"></p>
-<p><strong>基址寻址</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224211013152.png"></p>
-<p><strong>相对寻址</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224211058011.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224211112555.png"></p>
-<h2 id="MIPS指令详解"><a href="#MIPS指令详解" class="headerlink" title="MIPS指令详解"></a>MIPS指令详解</h2><h3 id="R型指令"><a href="#R型指令" class="headerlink" title="R型指令"></a>R型指令</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224213904379.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224213916117.png"></p>
-<p>三种不同类型</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224213952859.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214001172.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214009616.png"></p>
-<h3 id="I型指令"><a href="#I型指令" class="headerlink" title="I型指令"></a>I型指令</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214218941.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214227288.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214240566.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214248828.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214256109.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214305157.png"></p>
-<h3 id="J型指令"><a href="#J型指令" class="headerlink" title="J型指令"></a>J型指令</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%BA%94/image-20191224214317827.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3484,7 +3647,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">147</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3497,7 +3660,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
