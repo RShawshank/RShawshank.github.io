@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="NoSql数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSql数据库">
+<meta property="og:url" content="http://rshawshank.github.io/2022/11/24/NoSql%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="NoSql数据库">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/8/10/165234a1e965cb53~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image">
+<meta property="article:published_time" content="2022-11-23T16:49:02.000Z">
+<meta property="article:modified_time" content="2022-11-23T09:02:22.917Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="NoSql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/8/10/165234a1e965cb53~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image">
+
+<link rel="canonical" href="http://rshawshank.github.io/2022/11/24/NoSql%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NoSql数据库 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">62</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">26</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">150</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2022/11/24/NoSql%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NoSql数据库
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-23 16:49:02 / 修改时间：09:02:22" itemprop="dateCreated datePublished" datetime="2022-11-23T16:49:02Z">2022-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/NoSql/" itemprop="url" rel="index"><span itemprop="name">NoSql</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">NoSql数据库</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="为什么选择NoSql数据库"><a href="#为什么选择NoSql数据库" class="headerlink" title="为什么选择NoSql数据库"></a>为什么选择NoSql数据库</h1><h2 id="传统数据库缺点"><a href="#传统数据库缺点" class="headerlink" title="传统数据库缺点"></a>传统数据库缺点</h2><ul>
+<li>大数据场景下I&#x2F;O较高 因为数据是按行存储，即使只针对其中某一列进行运算，关系型数据库也会将整行数据从存储设备中读入内存，导致I&#x2F;O较高</li>
+<li>存储的是行记录，无法存储数据结构</li>
+<li>表结构schema扩展不方便 如要需要修改表结构，需要执行执行DDL(data definition language)，语句修改，修改期间会导致锁表，部分服务不可用</li>
+<li>全文搜索功能较弱 关系型数据库下只能够进行子字符串的匹配查询，当表的数据逐渐变大的时候，like查询的匹配会非常慢，即使在有索引的情况下。况且关系型数据库也不应该对文本字段进行索引</li>
+<li>存储和处理复杂关系型数据功能较弱 许多应用程序需要了解和导航高度连接数据之间的关系，才能启用社交应用程序、推荐引擎、欺诈检测、知识图谱、生命科学和 IT&#x2F;网络等用例。然而传统的关系数据库并不善于处理数据点之间的关系。它们的表格数据模型和严格的模式使它们很难添加新的或不同种类的关联信息。</li>
+</ul>
+<h1 id="NoSQL的常见类型"><a href="#NoSQL的常见类型" class="headerlink" title="NoSQL的常见类型"></a><strong>NoSQL的常见类型</strong></h1><h2 id="键值（K-V）数据库"><a href="#键值（K-V）数据库" class="headerlink" title="键值（K-V）数据库"></a><strong>键值（K-V）数据库</strong></h2><p>其数据按照键值对的形式进行组织、索引和存储。</p>
+<p>KV 存储非常适合不涉及过多数据关系业务关系的数据，同时能有效减少读写磁盘的次数，比 SQL 数据库存储拥有更好的读写性能，能够<strong>解决关系型数据库无法存储数据结构的问题</strong>。</p>
+<p>键值：键<strong>值数据库是高度可分区的</strong>，并且允许以其他类型的数据库无法实现的规模进行水平扩展。诸如游戏、广告技术和 IoT 等使用案例本身特别适合键值数据模型。</p>
+<p>键值数据库是一种非关系数据库，它使用简单的键值方法来存储数据。键值数据库将数据存储为键值对集合，其中键作为唯一标识符。键和值都可以是从简单对象到复杂复合对象的任何内容。键值数据库是高度可分区的，并且允许以其他类型的数据库无法实现的规模进行水平扩展。</p>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><ul>
+<li><p>适用场景 储存用户信息(比如会话)、配置文件、参数、购物车等等。这些信息一般都和ID（键）挂钩</p>
+</li>
+<li><p>不适用场景</p>
+<ul>
+<li>需要通过值来查询，而不是键来查询。Key-Value数据库中根本没有通过值查询的途径。</li>
+<li>需要储存数据之间的关系。在Key-Value数据库中不能通过两个或以上的键来关联数据</li>
+<li>需要事务的支持。在Key-Value数据库中故障产生时<strong>不可以进行回滚</strong>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="列式数据库"><a href="#列式数据库" class="headerlink" title="列式数据库"></a><strong>列式数据库</strong></h2><p>列式数据库是以列相关存储架构进行数据存储的数据库，主要适合于批量数据处理和即时查询。相对应的是行式数据库，数据以行相关的存储体系架构进行空间分配，主要适合于小批量的数据处理，常用于联机事务型数据处理。</p>
+<p>基于列式数据库的列列存储特性，可以<strong>解决某些特定场景下关系型数据库I&#x2F;O较高的问题</strong></p>
+<h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><h3 id="相关特性"><a href="#相关特性" class="headerlink" title="相关特性"></a>相关特性</h3><p>优点如下：</p>
+<ul>
+<li>高效的储存空间利用率**</li>
+</ul>
+<p>列式数据库由于其针对不同列的数据特征而发明的不同算法使其往往有比行式数据库高的多的压缩率，普通的行式数据库一般压缩率在3：1 到5：1 左右，而列式数据库的压缩率一般在8：1到30：1 左右。 比较常见的，通过字典表压缩数据： 下面中才是那张表本来的样子。经过字典表进行数据压缩后，表中的字符串才都变成数字了。正因为每个字符串在字典表里只出现一次了，所以达到了压缩的目的(有点像规范化和非规范化Normalize和Denomalize)</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/8/10/165234a1e965cb53~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.image" alt="通过字典表压缩数据"></p>
+<ul>
+<li><strong>查询效率高</strong></li>
+</ul>
+<p>读取多条数据的同一列效率高，因为这些列都是存储在一起的，一次磁盘操作可以数据的指定列全部读取到内存中。 下图通过一条查询的执行过程说明列式存储(以及数据压缩)的优点</p>
+<ul>
+<li><strong>适合做聚合操作</strong></li>
+<li><strong>适合大量的数据而不是小数据</strong></li>
+</ul>
+<p>缺点如下：</p>
+<ul>
+<li>不适合扫描小量数据</li>
+<li>不适合随机的更新</li>
+<li>不适合做含有删除和更新的实时操作</li>
+<li>单行的数据是ACID的，多行的事务时，不支持事务的正常回滚，支持 I(Isolation)隔离性(事务串行提交)，D(Durability)持久性，不能保证 A(Atomicity)原子性， C(Consistency)一致性</li>
+</ul>
+<h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a>使用场景</h3><p>以HBase为例说明：</p>
+<ul>
+<li>大数据量 （100s TB级数据） 且有快速随机访问的需求</li>
+<li>写密集型应用，每天写入量巨大，而相对读数量较小的应用 比如IM的历史消息，游戏的日志等等</li>
+<li>不需要复杂查询条件来查询数据的应用 HBase只支持基于rowkey的查询，对于HBase来说，单条记录或者小范围的查询是可以接受的，大范围的查询由于分布式的原因，可能在性能上有点影响，HBase不适用与有join，多级索引，表关系复杂的数据模型</li>
+<li>对性能和可靠性要求非常高的应用 由于HBase本身没有单点故障，可用性非常高。</li>
+<li>数据量较大，而且增长量无法预估的应用，需要进行优雅的数据扩展的 HBase支持在线扩展，即使在一段时间内数据量呈井喷式增长，也可以通过HBase横向扩展来满足功能。</li>
+<li>存储结构化和半结构化的数据</li>
+</ul>
+<h2 id="文档数据库"><a href="#文档数据库" class="headerlink" title="文档数据库"></a><strong>文档数据库</strong></h2><p>文档数据库（也称为文档型数据库）是旨在将半结构化数据存储为文档的一种数据库。</p>
+<p><strong>文档数据库通常以 JSON 或 XML 格式存储数据。</strong></p>
+<p>由于文档数据库的no-schema特性，<strong>可以存储和读取任意数据</strong>。</p>
+<p>由于使用的数据格式是JSON或者BSON，因为JSON数据是自描述的，无需在使用前定义字段，读取一个JSON中不存在的字段也不会导致SQL那样的语法错误，<strong>可以解决关系型数据库表结构schema扩展不方便的问题</strong></p>
+<p>文档数据库是一种非关系数据库，旨在将数据作为类 JSON 文档存储和查询。文档数据库让开发人员可以使用他们在其应用程序代码中使用的相同文档模型格式，更轻松地在数据库中存储和查询数据。文档和文档数据库的灵活、半结构化和层级性质允许它们随应用程序的需求而变化。文档模型可以很好地与目录、用户配置文件和内容管理系统等使用案例配合使用，其中每个文档都是唯一的，并会随时间而变化。文档数据库支持灵活的索引、强大的临时查询和文档集合分析。</p>
+<h3 id="常见文档数据库"><a href="#常见文档数据库" class="headerlink" title="常见文档数据库"></a>常见文档数据库</h3><ol>
+<li><p>MongoDB</p>
+<p>优点如下：</p>
+<ul>
+<li>新增字段简单 无需像关系型数据库一样先执行DDL语句修改表结构，程序代码直接读写即可</li>
+<li>容易兼容历史数据 对于历史数据，即使没有新增的字段，也不会导致错误，只会返回空值，此时代码兼容处理即可</li>
+<li>容易存储复杂数据 JSON是一种强大的描述语言，能够描述复杂的数据结构</li>
+</ul>
+<p>相比传统关系型数据库，文档数据库的缺点主要是对多条数据记录的事务支持较弱，具体体现如下：</p>
+<ul>
+<li>Atomicity(原子性) 仅支持单行&#x2F;文档级原子性，不支持多行、多文档、多语句原子性</li>
+<li>Isolation(隔离性) 隔离级别仅支持已提交读（Read committed）级别，可能导致不可重复读，幻读的问题</li>
+<li>不支持复杂查询 例如join查询，如果需要join查询，需要多次操作数据库</li>
+</ul>
+<p>MongonDB还是支持多文档事务的Consistency(一致性)和Durability(持久性)</p>
+</li>
+</ol>
+<h2 id="使用场景-2"><a href="#使用场景-2" class="headerlink" title="使用场景"></a>使用场景</h2><p><strong>适用场景</strong>：</p>
+<ul>
+<li>数据量很大或者未来会变得很大</li>
+<li>表结构不明确，且字段在不断增加，例如内容管理系统，信息管理系统</li>
+</ul>
+<p><strong>不适用场景</strong>：</p>
+<ul>
+<li>在不同的文档上需要添加事务。Document-Oriented数据库并不支持文档间的事务</li>
+<li>多个文档直接需要复杂查询，例如join</li>
+</ul>
+<h2 id="图形数据库"><a href="#图形数据库" class="headerlink" title="图形数据库"></a><strong>图形数据库</strong></h2><p><strong>图形数据库应用图形理论存储实体之间的关系信息</strong>。</p>
+<p>图形：图形数据库旨在轻松构建和运行与高度连接的数据集一起使用的应用程序。图形数据库的典型使用案例包括社交网络、推荐引擎、欺诈检测和知识图形。热门图形数据库包括 Neo4j 和 Giraph。图形数据库专门用于存储和导航关系。关系是图形数据库中的一等公民，图形数据库的大部分价值都源自于这些关系。图形数据库使用节点来存储数据实体，并使用边缘来存储实体之间的关系。边缘始终有一个开始节点、结束节点、类型和方向，并且边缘可以描述父子关系、操作、所有权等。一个节点可以拥有的关系的数量和类型没有限制。</p>
+<p>图形数据库中的图形可依据具体的边缘类型进行遍历，或者也可对整个图形进行遍历。在图形数据库中，遍历联结或关系非常快，因为节点之间的关系不是在查询时计算的，而是留存在数据库中。在社交网络、推荐引擎和欺诈检测等使用案例中，需要在数据之间创建关系并快速查询这些关系，此时，图形数据库更具优势。</p>
+<h3 id="使用场景-3"><a href="#使用场景-3" class="headerlink" title="使用场景"></a>使用场景</h3><p>适用场景如下：</p>
+<ul>
+<li>在一些关系性强的数据中，例如社交网络</li>
+<li>推荐引擎。如果我们将数据以图的形式表现，那么将会非常有益于推荐的制定</li>
+</ul>
+<p>不适用场景如下：</p>
+<ul>
+<li>记录大量基于事件的数据（例如日志条目或传感器数据）</li>
+<li>对大规模分布式数据进行处理，类似于Hadoop</li>
+<li>适合于保存在关系型数据库中的结构化数据</li>
+<li>二进制数据存储</li>
+</ul>
+<h2 id="搜索数据库"><a href="#搜索数据库" class="headerlink" title="搜索数据库"></a><strong>搜索数据库</strong></h2><p>传统关系型数据库主要通过索引来达到快速查询的目的，在全文搜索的业务下，索引也无能为力，主要体现在：</p>
+<ul>
+<li>全文搜索的条件可以随意排列组合，如果通过索引来满足，则索引的数量非常多</li>
+<li>全文搜索的模糊匹配方式，索引无法满足，只能用like查询，而like查询是整表扫描，效率非常低</li>
+</ul>
+<p>而全文搜索引擎的出现，正是<strong>解决关系型数据库全文搜索功能较弱的问题</strong></p>
+<h3 id="基本原理-1"><a href="#基本原理-1" class="headerlink" title="基本原理"></a>基本原理</h3><p>全文搜索引擎的技术原理称为“倒排索引”（inverted index），是一种索引方法，其基本原理是建立单词到文档的索引。与之相对是，是“正排索引”，其基本原理是建立文档到单词的索引。</p>
+<h3 id="关特性相"><a href="#关特性相" class="headerlink" title="关特性相"></a>关特性相</h3><p>以Elasticsearch为例： 优点如下：</p>
+<ul>
+<li>查询效率高 对海量数据进行近实时的处理</li>
+<li>可扩展性 基于集群环境可以方便横向扩展，可以承载PB级数据</li>
+<li>高可用 Elasticsearch集群弹性-他们将发现新的或失败的节点，重组和重新平衡数据，确保数据是安全的和可访问的</li>
+</ul>
+<p>缺点如下：</p>
+<ul>
+<li>ACID支持不足 单一文档的数据是ACID的，包含多个文档的事务时不支持事务的正常回滚，支持 I(Isolation)隔离性（基于乐观锁机制的），D(Durability)持久性，<strong>不支持 A(Atomicity)原子性，C(Consistency)一致性</strong></li>
+<li>对类似数据库中通过外键的复杂的多表关联操作支持较弱</li>
+<li>读写有一定延时，写入的数据，最快1s中能被检索到</li>
+<li>更新性能较低，底层实现是先删数据，再插入新数据</li>
+<li>内存占用大，因为Lucene 将索引部分加载到内存中</li>
+</ul>
+<h3 id="使用场景-4"><a href="#使用场景-4" class="headerlink" title="使用场景"></a>使用场景</h3><p>适用场景如下：</p>
+<ul>
+<li>分布式的搜索引擎和数据分析引擎</li>
+<li>全文检索，结构化检索，数据分析</li>
+<li>对海量数据进行近实时的处理 可以将海量数据分散到多台服务器上去存储和检索</li>
+</ul>
+<p>不适用场景如下：</p>
+<ul>
+<li>数据需要频繁更新</li>
+<li>需要复杂关联查询</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903663962423304">NoSQL 还是 SQL ？这一篇讲清楚 - 掘金 (juejin.cn)</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2022/11/24/NoSql%E6%95%B0%E6%8D%AE%E5%BA%93/" title="NoSql数据库">http://rshawshank.github.io/2022/11/24/NoSql数据库/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/NoSql/" rel="tag"><i class="fa fa-tag"></i> NoSql</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/23/redis/" rel="prev" title="redis">
+      <i class="fa fa-chevron-left"></i> redis
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9NoSql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">为什么选择NoSql数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%BA%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">传统数据库缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NoSQL%E7%9A%84%E5%B8%B8%E8%A7%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">NoSQL的常见类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%AE%E5%80%BC%EF%BC%88K-V%EF%BC%89%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">键值（K-V）数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%BC%8F%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">列式数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="nav-number">2.2.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%89%B9%E6%80%A7"><span class="nav-number">2.2.2.</span> <span class="nav-text">相关特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.3.</span> <span class="nav-text">文档数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%96%87%E6%A1%A3%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.3.1.</span> <span class="nav-text">常见文档数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">2.4.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.5.</span> <span class="nav-text">图形数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-3"><span class="nav-number">2.5.1.</span> <span class="nav-text">使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.6.</span> <span class="nav-text">搜索数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86-1"><span class="nav-number">2.6.1.</span> <span class="nav-text">基本原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E7%89%B9%E6%80%A7%E7%9B%B8"><span class="nav-number">2.6.2.</span> <span class="nav-text">关特性相</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-4"><span class="nav-number">2.6.3.</span> <span class="nav-text">使用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">3.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">150</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
