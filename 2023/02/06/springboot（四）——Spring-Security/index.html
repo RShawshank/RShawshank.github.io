@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="springboot（四）——Spring Security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot（四）——Spring Security">
+<meta property="og:url" content="http://rshawshank.github.io/2023/02/06/springboot%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Spring-Security/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="springboot（四）——Spring Security">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071417112.webp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071444059.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071454272.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071445013.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071505294.png">
+<meta property="article:published_time" content="2023-02-06T14:06:20.000Z">
+<meta property="article:modified_time" content="2023-02-07T07:07:33.257Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071417112.webp">
+
+<link rel="canonical" href="http://rshawshank.github.io/2023/02/06/springboot%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Spring-Security/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>springboot（四）——Spring Security | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">63</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/02/06/springboot%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Spring-Security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springboot（四）——Spring Security
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-06 14:06:20" itemprop="dateCreated datePublished" datetime="2023-02-06T14:06:20Z">2023-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-07 07:07:33" itemprop="dateModified" datetime="2023-02-07T07:07:33Z">2023-02-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">springboot（四）——Spring Security</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="认识Spring-Security"><a href="#认识Spring-Security" class="headerlink" title="认识Spring Security"></a>认识Spring Security</h1><p>Spring Security 是为基于 Spring 的应用程序提供声明式安全保护的安全性框架。Spring Security 提供了完整的安全性解决方案，它能够在 Web 请求级别和方法调用级别处理身份认证和授权。因为基于 Spring 框架，所以 Spring Security 充分利用了依赖注入（dependency injection， DI）和面向切面的技术。</p>
+<h2 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h2><p>对于一个权限管理框架而言，无论是 Shiro 还是 Spring Security，最最核心的功能，无非就是两方面：</p>
+<ul>
+<li>认证</li>
+<li>授权</li>
+</ul>
+<p>通俗点说，认证就是我们常说的登录，授权就是权限鉴别，看看请求是否具备相应的权限。</p>
+<h2 id="认证（Authentication）"><a href="#认证（Authentication）" class="headerlink" title="认证（Authentication）"></a>认证（Authentication）</h2><p>Spring Security 支持多种不同的认证方式，这些认证方式有的是 Spring Security 自己提供的认证功能，有的是第三方标准组织制订的，主要有如下一些：</p>
+<p>一些比较常见的认证方式：</p>
+<ul>
+<li>HTTP BASIC authentication headers：基于IETF RFC 标准。</li>
+<li>HTTP Digest authentication headers：基于IETF RFC 标准。</li>
+<li>HTTP X.509 client certificate exchange：基于IETF RFC 标准。</li>
+<li>LDAP：跨平台身份验证。</li>
+<li>Form-based authentication：基于表单的身份验证。</li>
+<li>Run-as authentication：用户用户临时以某一个身份登录。</li>
+<li>OpenID authentication：去中心化认证。</li>
+</ul>
+<p>除了这些常见的认证方式之外，一些比较冷门的认证方式，Spring Security 也提供了支持。</p>
+<ul>
+<li>Jasig Central Authentication Service：单点登录。</li>
+<li>Automatic “remember-me” authentication：记住我登录（允许一些非敏感操作）。</li>
+<li>Anonymous authentication：匿名登录。</li>
+<li>……</li>
+</ul>
+<p>作为一个开放的平台，Spring Security 提供的认证机制不仅仅是上面这些。如果上面这些认证机制依然无法满足你的需求，我们也可以自己定制认证逻辑。当我们需要和一些“老破旧”的系统进行集成时，自定义认证逻辑就显得非常重要了。</p>
+<h2 id="授权（Authorization）"><a href="#授权（Authorization）" class="headerlink" title="授权（Authorization）"></a>授权（Authorization）</h2><p>无论采用了上面哪种认证方式，都不影响在 Spring Security 中使用授权功能。Spring Security 支持基于 URL 的请求授权、支持方法访问授权、支持 SpEL 访问控制、支持域对象安全（ACL），同时也支持动态权限配置、支持 RBAC 权限模型等，总之，我们常见的权限管理需求，Spring Security 基本上都是支持的。</p>
+<p>当完成认证后，接下来就是授权。</p>
+<p>在 Spring Security 的授权体系中，有两个关键接口：</p>
+<ul>
+<li>AccessDecisionManager</li>
+<li>AccessDecisionVoter</li>
+</ul>
+<p>AccessDecisionVoter 是一个投票器，投票器会检查用户是否具备应有的角色，进而投出赞成、反对或者弃权票；</p>
+<p>AccessDecisionManager 则是一个决策器，来决定此次访问是否被允许。AccessDecisionVoter 和 AccessDecisionManager 都有众多的实现类，在 AccessDecisionManager 中会挨个遍历 AccessDecisionVoter，进而决定是否允许用户访问，因而 AccessDecisionVoter 和 AccessDecisionManager 两者的关系类似于 AuthenticationProvider 和 ProviderManager 的关系。</p>
+<h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7174943829655552059">Spring Security进阶学习 - 掘金 (juejin.cn)</a></p>
+<p>Spring Security 采用的<strong>是责任链的设计模式</strong>，它有一条很长的过滤器链。如下是常见的过滤器：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071417112.webp" alt="Spring Security 过滤器"></p>
+<p>Spring Security 的默认 Filter 链:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> SecurityContextPersistenceFilter</span><br><span class="line">-&gt;HeaderWriterFilter</span><br><span class="line">-&gt;LogoutFilter</span><br><span class="line">-&gt;UsernamePasswordAuthenticationFilter</span><br><span class="line">-&gt;RequestCacheAwareFilter</span><br><span class="line">-&gt;SecurityContextHolderAwareRequestFilter</span><br><span class="line">-&gt;SessionManagementFilter</span><br><span class="line">-&gt;ExceptionTranslationFilter</span><br><span class="line">-&gt;FilterSecurityInterceptor</span><br></pre></td></tr></table></figure>
+
+<p>这些过滤器按照既定的优先级排列，最终形成一个过滤器链。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071444059.png" alt="img"></p>
+<p>介绍几个重要的过滤器：</p>
+<ul>
+<li>SecurityContextPersistenceFilter 这个Filter是整个拦截过程的入口和出口（也就是第一个和最后一个拦截器），会在请求开始时从配置好的 SecurityContextRepository 中获取 SecurityContext，然后把它设置给 SecurityContextHolder。在请求完成后将 SecurityContextHolder 持有的 SecurityContext 再保存到配置好的 SecurityContextRepository，同时清除 securityContextHolder 所持有的 SecurityContext；</li>
+<li>UsernamePasswordAuthenticationFilter过滤器用于处理基于表单方式的登录验证，该过滤器默认只有当请求方法为post、请求页面为&#x2F;login时过滤器才生效，如果想修改默认拦截url，只需在刚才介绍的Spring Security配置类WebSecurityConfig中配置该过滤器的拦截url：.loginProcessingUrl(“url”)即可;</li>
+<li>BasicAuthenticationFilter用于处理基于HTTP Basic方式的登录验证，当通过HTTP Basic方式登录时，默认会发送post请求&#x2F;login，并且在请求头携带Authorization:Basic dXNlcjoxOWEyYWIzOC1kMjBiLTQ0MTQtOTNlOC03OThkNjc2ZTZlZDM&#x3D;信息，该信息是登录用户名、密码加密后的信息，然后由BasicAuthenticationFilter过滤器解析后，构建UsernamePasswordAuthenticationFilter过滤器进行认证；如果请求头没有Authorization信息，BasicAuthenticationFilter过滤器则直接放行；</li>
+<li>FilterSecurityInterceptor的拦截器，用于判断当前请求身份认证是否成功，是否有相应的权限，当身份认证失败或者权限不足的时候便会抛出相应的异常；</li>
+<li>ExceptionTranslateFilter捕获并处理，所以我们在ExceptionTranslateFilter过滤器用于处理了FilterSecurityInterceptor抛出的异常并进行处理，比如需要身份认证时将请求重定向到相应的认证页面，当认证失败或者权限不足时返回相应的提示信息；</li>
+</ul>
+<h1 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h1><ul>
+<li>用户提交用户名、密码被 <code>SecurityFilterChain</code> 中的 <code>UsernamePasswordAuthenticationFilter</code> 过滤器获取到， 封装为请求<code>Authentication</code>，通常情况下是 <code>UsernamePasswordAuthenticationToken</code> 这个实现类。</li>
+<li>然后过滤器将 Authentication 提交至认证管理器（<code>AuthenticationManager</code>）进行认证 。</li>
+<li>认证成功后， AuthenticationManager 身份管理器返回一个被填充满了信息的（包括上面提到的权限信息， 身份信息，细节信息，但密码通常会被移除） Authentication 实例。</li>
+<li>SecurityContextHolder 安全上下文容器将第3步填充了信息的 Authentication ，通过 SecurityContextHolder.getContext().setAuthentication()方法，设置到其中。 可以看出 AuthenticationManager 接口（认证管理器）是认证相关的核心接口，也是发起认证的出发点，它的实现类为 ProviderManager。而 Spring Security 支持多种认证方式，因此 ProviderManager 维护着一个 List 列表，存放多种认证方式，最终实际的认证工作是由 AuthenticationProvider完成的。其中web表单的对应的 AuthenticationProvider 实现类为 DaoAuthenticationProvider，它的内部又维护着一个<code>UserDetailsService </code>负责<code>UserDetails</code>的获取。最终 AuthenticationProvider 将 UserDetails 填充至 Authentication。</li>
+</ul>
+<p>（2）AuthenticationManager 本身不包含认证逻辑，其核心是用来管理所有的 <code>AuthenticationProvider</code>，通过交由合适的 AuthenticationProvider 来实现认证。</p>
+<blockquote>
+<p> <code>AuthenticationProvider</code> 的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AuthenticationProvider</span> &#123;</span><br><span class="line">  Authentication <span class="title function_">authenticate</span><span class="params">(Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException;</span><br><span class="line"></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; authentication)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，AuthenticationProvider 中就两个方法：</p>
+<ul>
+<li>authenticate 方法用来做验证，就是验证用户身份。</li>
+<li>supports 则用来判断当前的 <code>AuthenticationProvider</code> 是否支持对应的 Authentication。</li>
+</ul>
+</blockquote>
+<p>这里又涉及到一个东西，就是 <code>Authentication</code>。</p>
+<blockquote>
+<p>Authentication 本身是一个接口，从这个接口中，我们可以得到用户身份信息，密码，细节信息，认证信息，以及权限列表。我们来看下 Authentication 的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.security.core;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Authentication</span> <span class="keyword">extends</span> <span class="title class_">Principal</span>, Serializable &#123;</span><br><span class="line">  <span class="comment">// 获取用户的权限</span></span><br><span class="line">  Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//获取用户凭证，一般是密码，认证之后会移出，来保证安全性</span></span><br><span class="line">  Object <span class="title function_">getCredentials</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">//获取用户携带的详细信息，Web应用中一般是访问者的ip地址和sessionId</span></span><br><span class="line">  Object <span class="title function_">getDetails</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">// 获取当前用户</span></span><br><span class="line">  Object <span class="title function_">getPrincipal</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">//判断当前用户是否认证成功</span></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">isAuthenticated</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setAuthenticated</span><span class="params">(<span class="type">boolean</span> isAuthenticated)</span> <span class="keyword">throws</span> IllegalArgumentException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>官方文档里说过，当用户提交登录信息时，会将用户名和密码进行组合成一个实例 <code>UsernamePasswordAuthenticationToken</code>，而这个类是 Authentication 的一个常用的实现类，用来进行用户名和密码的认证，类似的还有 <code>RememberMeAuthenticationToken</code>，它用于记住我功能。</p>
+<p>Spring Security 支持多种认证逻辑，<strong>每一种认证逻辑的认证方式其实就是一种 AuthenticationProvider</strong>。通过 <code>getProviders()</code> 方法就能获取所有的 AuthenticationProvider，通过 <code>provider.supports()</code> 来判断 provider 是否支持当前的认证逻辑。</p>
+<p>当选择好一个合适的 AuthenticationProvider 后，通过 <code>provider.authenticate(authentication)</code> 来让 AuthenticationProvider 进行认证。</p>
+<p>如何选择 <code>AuthenticationProvider</code> 来处理它？</p>
+<p>我们在 <code>DaoAuthenticationProvider</code> 的基类 <code>AbstractUserDetailsAuthenticationProvider</code> 发现以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; authentication)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说当web表单提交用户名密码时，Spring Security 由 <code>DaoAuthenticationProvider</code> 处理。</p>
+<p><code>DaoAuthenticationProvider</code> 的父类是 <code>AbstractUserDetailsAuthenticationProvider</code>， 在该类中的 authenticate()方法用于处理认证逻辑，这里就不粘贴代码了，该方法大致逻辑如下：</p>
+<ol>
+<li>首先实例化<code>UserDetails</code>对象，调用了<code>retrieveUser</code>方法获取到了一个<code>user</code>对象，<code>retrieveUser</code>是一个抽象方法。该方法进一步会调用我们自己在登录时候的写的 <code>loadUserByUsername</code> 方法，具体在自定义的 <code>UserDetailsService</code> 或 <code>InMemoryUserDetailsManager</code> 等。</li>
+<li>如果没拿到信息就会抛出异常，如果查到了就会去调用<code>preAuthenticationChecks</code>的<code>check(user)</code>方法去进行预检查。在预检查中进行了三个检查，因为<code>UserDetail</code>类中有四个布尔类型，去检查其中的三个，<strong>用户是否锁定</strong>、<strong>用户是否过期</strong>，<strong>用户是否可用</strong>。</li>
+<li>预检查之后紧接着去调用了<code>additionalAuthenticationChecks</code>方法去进行附加检查，这个方法也是一个抽象方法，<strong>检查密码是否匹配</strong>，在<code>DaoAuthenticationProvider</code> 的 <code>additionalAuthenticationChecks</code> 方法中去具体实现，在里面进行了加密解密去校验当前的密码是否匹配。我们想要校验图片验证码，就可以和密码一起校验，即我们重写 <code>additionalAuthenticationChecks</code> 方法。</li>
+<li>最后在 postAuthenticationChecks.check 方法中检查密码是否过期。</li>
+<li>所有的检查都通过，则认为用户认证是成功的。用户认证成功之后，会将这些认证信息和user传递进去，调用<code>createSuccessAuthentication</code>方法。</li>
+</ol>
+<p><code>DaoAuthenticationProvider</code> 中的 <code>additionalAuthenticationChecks</code> 方法用于比对密码，逻辑比较简单，就是将 password 加密后与事先保存好的密码做比对。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">additionalAuthenticationChecks</span><span class="params">(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)</span> <span class="keyword">throws</span> AuthenticationException &#123;</span><br><span class="line">  <span class="keyword">if</span> (authentication.getCredentials() == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Failed to authenticate since no credentials provided&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BadCredentialsException</span>(<span class="built_in">this</span>.messages.getMessage(<span class="string">&quot;AbstractUserDetailsAuthenticationProvider.badCredentials&quot;</span>, <span class="string">&quot;Bad credentials&quot;</span>));</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">presentedPassword</span> <span class="operator">=</span> authentication.getCredentials().toString();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">this</span>.passwordEncoder.matches(presentedPassword, userDetails.getPassword())) &#123;</span><br><span class="line">      <span class="built_in">this</span>.logger.debug(<span class="string">&quot;Failed to authenticate since password does not match stored value&quot;</span>);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BadCredentialsException</span>(<span class="built_in">this</span>.messages.getMessage(<span class="string">&quot;AbstractUserDetailsAuthenticationProvider.badCredentials&quot;</span>, <span class="string">&quot;Bad credentials&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071454272.png" alt="img"></p>
+<h3 id="AuthenticationManager"><a href="#AuthenticationManager" class="headerlink" title="AuthenticationManager"></a>AuthenticationManager</h3><p>AuthenticationManager 认证管理器是用来处理认证请求的接口.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.security.authentication;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AuthenticationManager</span> &#123;</span><br><span class="line">  Authentication <span class="title function_">authenticate</span><span class="params">(Authentication authentication)</span> <span class="keyword">throws</span> AuthenticationException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AuthenticationManager 只有一个 authenticate 方法用来做认证，该方法有三个不同的返回值：</p>
+<ul>
+<li>返回 Authentication，表示认证成功；</li>
+<li>抛出 AuthenticationException 异常，表示用户输入了无效的凭证；</li>
+<li>返回 null，表示不能断定。</li>
+</ul>
+<p>AuthenticationManager 是一个接口，它有很多实现类，开发人员可以自定义实现类。它默认的实现是 ProviderManager，但它不处理认证请求，而是将委托给 AuthenticationProvider 列表，然后依次使用 AuthenticationProvider 进行认证。</p>
+<p>如果有一个 AuthenticationProvider 认证的结果不为null，则表示成功（否则失败，抛出 ProviderNotFoundException），之后不在进行其它 AuthenticationProvider 认证，并作为结果保存在 ProviderManager。</p>
+<h3 id="AuthenticationProvider"><a href="#AuthenticationProvider" class="headerlink" title="AuthenticationProvider"></a>AuthenticationProvider</h3><p>AuthenticationProvider 是一个身份认证接口，实现该接口来定制自己的认证方式。</p>
+<p>AuthenticationProvider 的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AuthenticationProvider</span> &#123;</span><br><span class="line">    Authentication <span class="title function_">authenticate</span><span class="params">(Authentication var1)</span> <span class="keyword">throws</span> AuthenticationException;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; var1)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring Security 支持多种不同的认证方式，不同的认证方式对应不同的身份类型，每个 AuthenticationProvider 需要实现supports()方法来表明自己支持的认证方式，如我们使用表单方式认证，在提交请求时 Spring Security 会生成 UsernamePasswordAuthenticationToken，它是一个 Authentication，里面封装着用户提交的用户名、密码信息。而对应的，哪个 AuthenticationProvider 来处理它？</p>
+<p>我们在 DaoAuthenticationProvider 的基类 AbstractUserDetailsAuthenticationProvider 发现以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; authentication)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说当web表单提交用户名密码时，Spring Security 由 DaoAuthenticationProvider 处理。</p>
+<p>如果有一个 AuthenticationProvider 认证的结果不为null，则表示成功（否则失败，抛出 ProviderNotFoundException），之后不在进行其它 AuthenticationProvider 认证，并作为结果保存在 ProviderManager。</p>
+<p>ProviderManager 具有一个可选的 parent，如果所有的 AuthenticationProvider 都认证失败，那么就会调用 parent 进行认证。parent 相当于一个备用认证方式，即各个 AuthenticationProvider 都无法处理认证问题的时候，就由 parent 来负责。</p>
+<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><p>最后，我们来看一下Authentication(认证信息)的结构，它是一个接口，我们之前提到的 UsernamePasswordAuthenticationToken就是它的实现之一：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.security.core;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Authentication</span> <span class="keyword">extends</span> <span class="title class_">Principal</span>, Serializable &#123;</span><br><span class="line">  <span class="comment">// 获取用户的权限</span></span><br><span class="line">  Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities();</span><br><span class="line"></span><br><span class="line">  <span class="comment">//获取用户凭证，一般是密码，认证之后会移出，来保证安全性</span></span><br><span class="line">  Object <span class="title function_">getCredentials</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">//获取用户携带的详细信息，Web应用中一般是访问者的ip地址和sessionId</span></span><br><span class="line">  Object <span class="title function_">getDetails</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">// 获取当前用户</span></span><br><span class="line">  Object <span class="title function_">getPrincipal</span><span class="params">()</span>;</span><br><span class="line">	<span class="comment">//判断当前用户是否认证成功</span></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">isAuthenticated</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setAuthenticated</span><span class="params">(<span class="type">boolean</span> isAuthenticated)</span> <span class="keyword">throws</span> IllegalArgumentException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从这个接口中，我们可以得到用户身份信息，密码，细节信息，认证信息，以及权限列表。</p>
+<p>官方文档里说过，当用户提交登录信息时，会将用户名和密码进行组合成一个实例 UsernamePasswordAuthenticationToken，而这个类是 Authentication 的一个常用的实现类，用来进行用户名和密码的认证，类似的还有 RememberMeAuthenticationToken，它用于记住我功能。</p>
+<h3 id="UserDetailsService"><a href="#UserDetailsService" class="headerlink" title="UserDetailsService"></a>UserDetailsService</h3><p>现在咱们现在知道 DaoAuthenticationProvider 处理了web表单的认证逻辑，认证成功后既得到一个Authentication(UsernamePasswordAuthenticationToken)，里面包含了身份信息（Principal）。这个身份信息就是一个 Object ，大多数情况下它可以被强转为UserDetails对象。</p>
+<p>DaoAuthenticationProvider 中包含了一个 UserDetailsService 实例，它负责根据用户名提取用户信息 UserDetails(包含密码)，而后 DaoAuthenticationProvider 会去对比 UserDetailsService 提取的用户密码与用户提交的密码是否匹配作为认证成功的关键依据，因此可以通过将自定义的 UserDetailsService 公开为spring bean来定义自定义身份验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDetailsService</span> &#123;</span><br><span class="line">    UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String var1)</span> <span class="keyword">throws</span> UsernameNotFoundException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很多人把 DaoAuthenticationProvider 和 UserDetailsService 的职责搞混淆，其实 <strong>UserDetailsService 只负责从特定的地方（通常是数据库）加载用户信息，仅此而已。而 DaoAuthenticationProvider 的职责更大，它完成完整的认证流程，同时会把 UserDetails 填充至 Authentication</strong>。</p>
+<p>UserDatails 是用户信息，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDetails</span> <span class="keyword">extends</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">    Collection&lt;? <span class="keyword">extends</span> <span class="title class_">GrantedAuthority</span>&gt; getAuthorities();</span><br><span class="line"></span><br><span class="line">    String <span class="title function_">getPassword</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    String <span class="title function_">getUsername</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isAccountNonExpired</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isAccountNonLocked</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isCredentialsNonExpired</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isEnabled</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>它和 Authentication 接口很类似，比如它们都拥有 username，authorities。Authentication 的 getCredentials()与 UserDetails 中的getPassword()需要被区分对待，前者是用户提交的密码凭证，后者是用户实际存储的密码，认证其实就是对这两者的比对。Authentication 中的 getAuthorities()实际是由 UserDetails 的 getAuthorities()传递而形成的。还记得 Authentication 接口中的getDetails()方法吗？其中的 UserDetails 用户详细信息便是经过了 AuthenticationProvider 认证之后被填充的。</p>
+<p>通过实现 UserDetailsService 和 UserDetails，我们可以完成对用户信息获取方式以及用户信息字段的扩展。</p>
+<p>Spring Security 提供的 InMemoryUserDetailsManager(内存认证)，JdbcUserDetailsManager(jdbc认证)就是 UserDetailsService 的实现类，主要区别无非就是从内存还是从数据库加载用户。</p>
+<h3 id="自定义-UserDetailsService"><a href="#自定义-UserDetailsService" class="headerlink" title="自定义 UserDetailsService"></a>自定义 UserDetailsService</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyUserDetailsService</span> <span class="keyword">implements</span> <span class="title class_">UserDetailsService</span> &#123; </span><br><span class="line">  <span class="meta">@Override</span> </span><br><span class="line">  <span class="keyword">public</span> UserDetails <span class="title function_">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException &#123; </span><br><span class="line">    <span class="comment">//登录账号 </span></span><br><span class="line">    System.out.println(<span class="string">&quot;username=&quot;</span>+username); </span><br><span class="line">    <span class="comment">//根据账号去数据库查询... </span></span><br><span class="line">    <span class="comment">//这里暂时使用静态数据 </span></span><br><span class="line">    <span class="type">UserDetails</span> <span class="variable">userDetails</span> <span class="operator">=</span> </span><br><span class="line">      User.withUsername(username).password(<span class="string">&quot;123&quot;</span>).authorities(<span class="string">&quot;p1&quot;</span>).build(); </span><br><span class="line">    <span class="keyword">return</span> userDetails; </span><br><span class="line">  &#125; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="PasswordEncoder"><a href="#PasswordEncoder" class="headerlink" title="PasswordEncoder"></a>PasswordEncoder</h3><p>DaoAuthenticationProvider 认证处理器通过 UserDetailsService 获取到 UserDetails 后，它是如何与请求 Authentication 中的密码做对比呢？</p>
+<p>在这里 Spring Security 为了适应多种多样的加密类型，又做了抽象，DaoAuthenticationProvider 通过 PasswordEncoder 接口的matches 方法进行密码的对比，而具体的密码对比细节取决于实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">PasswordEncoder</span> &#123;</span><br><span class="line">    String <span class="title function_">encode</span><span class="params">(CharSequence var1)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">matches</span><span class="params">(CharSequence var1, String var2)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span> <span class="type">boolean</span> <span class="title function_">upgradeEncoding</span><span class="params">(String encodedPassword)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而 Spring Security 提供很多内置的 PasswordEncoder，能够开箱即用，使用某种 PasswordEncoder 只需要进行如下声明即可，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span> </span><br><span class="line"><span class="keyword">public</span> PasswordEncoder <span class="title function_">passwordEncoder</span><span class="params">()</span> &#123; </span><br><span class="line">    <span class="keyword">return</span>  NoOpPasswordEncoder.getInstance(); </span><br><span class="line">&#125; </span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>NoOpPasswordEncoder 采用字符串匹配方法，不对密码进行加密比较处理，密码比较流程如下：</p>
+<p>1、用户输入密码（明文 ）</p>
+<p>2、DaoAuthenticationProvider 获取 UserDetails（其中存储了用户的正确密码）</p>
+<p>3、DaoAuthenticationProvider 使用 PasswordEncoder 对输入的密码和正确的密码进行校验，密码一致则校验通过，否则校验失败。</p>
+<p>NoOpPasswordEncoder 的校验规则拿输入的密码和 UserDetails 中的正确密码进行字符串比较，字符串内容一致则校验通过，否则 校验失败。</p>
+<p>实际项目中首选 BCryptPasswordEncoder，在安全配置中定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> PasswordEncoder <span class="title function_">passwordEncoder</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">BCryptPasswordEncoder</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试发现认证失败，提示：Encoded password does not look like BCrypt。</p>
+<p>原因：</p>
+<p>由于UserDetails 中存储的是原始密码（比如：123），它不是BCrypt格式。</p>
+<h2 id="多个请求共享认证信息"><a href="#多个请求共享认证信息" class="headerlink" title="多个请求共享认证信息"></a>多个请求共享认证信息</h2><p>Spring Security 通过 <code>Session</code> 来保存用户的认证信息，那么 Spring Security 到底是在什么时候将认证信息放入 Session，又在什么时候将认证信息从 Session 中取出来的呢？</p>
+<p>下面将 Spring Security 的认证流程补充完整，如下图：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071445013.png" alt="img"></p>
+<p>在上一节认证成功的 <code>successfulAuthentication()</code>方法中，有一行语句：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SecurityContextHolder.getContext().setAuthentication(authResult);</span><br></pre></td></tr></table></figure>
+
+<p>其实就是在这里将认证信息放入 Session 中。</p>
+<p>查看 <code>SecurityContext</code> 源码，发现内部就是对 Authentication 的封装，提供了 equals、hashcode、toString等方法，而<code>SecurityContextHolder</code> 可以理解为线程中的 <code>ThreadLocal</code>。</p>
+<p>我们知道一个 HTTP 请求和响应都是在一个线程中执行，因此在整个处理的任何一个方法中都可以通过 <code>SecurityContextHolder.getContext()</code>来取得存放进去的认证信息。</p>
+<p>从 Session 中对认证信息的处理由 <code>SecurityContextPersistenceFilter</code> 来处理，它位于 Spring Security 过滤器链的最前面，它的主要作用是：</p>
+<ul>
+<li>当请求时，检查 Session 中是否存在 SecurityContext，如果有将其放入到线程中。</li>
+<li>当响应时，检查线程中是否存在 SecurityContext，如果有将其放入到 Session 中。</li>
+</ul>
+<h3 id="会话控制"><a href="#会话控制" class="headerlink" title="会话控制"></a>会话控制</h3><p>Session 会话管理需要在<code>configure(HttpSecurity http)</code>方法中通过<code>http.sessionManagement()</code>开启配置。此处对<code>http.sessionManagement()</code>返回值的主要方法进行说明，这些方法涉及 Session 会话管理的配置，具体如下：</p>
+<ul>
+<li><code>invalidSessionUrl(String invalidSessionUrl)</code>：指定会话失效时（请求携带无效的 JSESSIONID 访问系统）重定向的 URL，默认重定向到登录页面。</li>
+<li><code>invalidSessionStrategy(InvalidSessionStrategy invalidSessionStrategy)</code>：指定会话失效时（请求携带无效的 JSESSIONID 访问系统）的处理策略。</li>
+<li><code>maximumSessions(int maximumSessions)</code>：指定每个用户的最大并发会话数量，-1 表示不限数量。</li>
+<li><code>maxSessionsPreventsLogin(boolean maxSessionsPreventsLogin)</code>：如果设置为 true，表示某用户达到最大会话并发数后，新会话请求会被拒绝登录；如果设置为 false，表示某用户达到最大会话并发数后，新会话请求访问时，其最老会话会在下一次请求时失效并根据 expiredUrl() 或者 expiredSessionStrategy() 方法配置的会话失效策略进行处理，默认值为 false。</li>
+<li><code>expiredUrl(String expiredUrl)</code>：如果某用户达到最大会话并发数后，新会话请求访问时，其最老会话会在下一次请求时失效并重定向到 expiredUrl。</li>
+<li><code>expiredSessionStrategy(SessionInformationExpiredStrategy expiredSessionStrategy)</code>：如果某用户达到最大会话并发数后，新会话请求访问时，其最老会话会在下一次请求中失效并按照该策略处理请求。注意如果本方法与 expiredUrl() 同时使用，优先使用 expiredUrl() 的配置。</li>
+<li><code>sessionRegistry(SessionRegistry sessionRegistry)</code>：设置所要使用的 sessionRegistry，默认配置的是 SessionRegistryImpl 实现类。</li>
+<li><code>sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)</code>：创建 session 的时机，默认是 <strong>ifRequired</strong>，Spring Security在需要时才创建session。</li>
+</ul>
+<h2 id="获取用户认证信息"><a href="#获取用户认证信息" class="headerlink" title="获取用户认证信息"></a>获取用户认证信息</h2><p>通过调用 <code>SecurityContextHolder.getContext().getAuthentication()</code> 就能够取得认证信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/me&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">me</span><span class="params">(Authentication authentication)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> authentication;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仅想获取 <code>UserDetails</code> 对象，也是可以的，写法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/me&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">me</span><span class="params">(<span class="meta">@AuthenticationPrincipal</span> UserDetails userDetails)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> userDetails;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="授权流程"><a href="#授权流程" class="headerlink" title="授权流程"></a>授权流程</h2><p>Spring Security 可以通过 http.authorizeRequests() 对web请求进行授权保护。Spring Security 使用标准Filter建立了对web请求的拦截，最终实现对资源的授权访问。授权流程如下：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202302071505294.png" alt="img"></p>
+<p>分析授权流程：</p>
+<ol>
+<li>拦截请求，已认证用户访问受保护的web资源将被 SecurityFilterChain 中的 FilterSecurityInterceptor 的子类拦截。</li>
+<li>获取资源访问策略，FilterSecurityInterceptor 会从 SecurityMetadataSource 的子类 DefaultFilterInvocationSecurityMetadataSource 获取要访问当前资源所需要的权限 Collection 。</li>
+</ol>
+<p>SecurityMetadataSource 其实就是读取访问策略的抽象，而读取的内容，其实就是我们配置的访问规则， 读取访问策略如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http.csrf().disable()   <span class="comment">//屏蔽CSRF控制，即spring security不再限制CSRF</span></span><br><span class="line">.authorizeRequests()</span><br><span class="line">.antMatchers(	<span class="string">&quot;/r/r1&quot;</span>).hasAuthority(<span class="string">&quot;p1&quot;</span>)</span><br><span class="line">.antMatchers(<span class="string">&quot;/r/r2&quot;</span>).hasAuthority(<span class="string">&quot;p2&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>最后，FilterSecurityInterceptor 会调用 AccessDecisionManager 进行授权决策，若决策通过，则允许访问资 源，否则将禁止访问。</li>
+</ol>
+<p>AccessDecisionManager（访问决策管理器）的核心接口如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AccessDecisionManager</span> &#123;</span><br><span class="line">   <span class="comment">/**   </span></span><br><span class="line"><span class="comment">   * 通过传递的参数来决定用户是否有访问对应受保护资源的权限   </span></span><br><span class="line"><span class="comment">   */</span>   </span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">decide</span><span class="params">(Authentication authentication , Object object, Collection&lt;ConfigAttribute&gt; </span></span><br><span class="line"><span class="params">configAttributes )</span> <span class="keyword">throws</span> AccessDeniedException, InsufficientAuthenticationException;</span><br><span class="line"> <span class="comment">//略..     </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里着重说明一下decide的参数：</p>
+<ul>
+<li>authentication：要访问资源的访问者的身份</li>
+<li>object：要访问的受保护资源，web请求对应FilterInvocation</li>
+<li>configAttributes：是受保护资源的访问策略，通过SecurityMetadataSource获取。</li>
+</ul>
+<p><strong>decide接口就是用来鉴定当前用户是否有访问对应受保护资源的权限。</strong></p>
+<h3 id="授权决策"><a href="#授权决策" class="headerlink" title="授权决策"></a>授权决策</h3><p>1、AccessDecisionManager，为web和方法安全性提供访问决。<code>AccessDecisionManager</code> 由 <code>AbstractSecurityInterceptor</code>调用，负责做出最终的访问控制决策。<code>AccessDecisionManager</code> 接口包含三种方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.security.access;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AccessDecisionManager</span> &#123;</span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">decide</span><span class="params">(Authentication authentication, Object object, Collection&lt;ConfigAttribute&gt; configAttributes)</span> <span class="keyword">throws</span> AccessDeniedException, InsufficientAuthenticationException;</span><br><span class="line"></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(ConfigAttribute attribute)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; clazz)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>AccessDecisionManager</code> 的 <code>decide</code> 方法传递了它所需的所有相关信息，以便做出授权决定。特别是，传递 secure <code>Object</code>可以检查实际安全对象调用中包含的那些参数。例如，假设安全对象是 <code>MethodInvocation</code>。查询 <code>MethodInvocation</code> 任何<code>Customer</code>参数很容易，然后在<code>AccessDecisionManager</code> 中实现某种安全逻辑，以确保允许委托人对该客户进行操作。如果访问被拒绝，预计实现将抛出<code>AccessDeniedException</code>。</p>
+<p><code>AbstractSecurityInterceptor</code>在启动时调用<code>supports(ConfigAttribute)</code>方法来确定<code>AccessDecisionManager</code>是否可以处理传递的<code>ConfigAttribute</code>。安全拦截器实现调用<code>supports(Class)</code>方法以确保配置的<code>AccessDecisionManager</code>支持安全拦截器将呈现的安全对象的类型。</p>
+<p>2、AccessDecisionVoter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.springframework.security.access;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">AccessDecisionVoter</span>&lt;S&gt; &#123;</span><br><span class="line">  <span class="type">int</span> <span class="variable">ACCESS_GRANTED</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">ACCESS_ABSTAIN</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  <span class="type">int</span> <span class="variable">ACCESS_DENIED</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(ConfigAttribute attribute)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(Class&lt;?&gt; clazz)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> <span class="title function_">vote</span><span class="params">(Authentication authentication, S object, Collection&lt;ConfigAttribute&gt; attributes)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体实现返回<code>int</code>，可能的值反映在<code>AccessDecisionVoter</code>静态字段<code>ACCESS_ABSTAIN</code>，<code>ACCESS_DENIED</code>和<code>ACCESS_GRANTED</code>中。如果投票实施对授权决定没有意见，则返回<code>ACCESS_ABSTAIN</code>。如果确实有意见，则必须返回<code>ACCESS_DENIED</code>或<code>ACCESS_GRANTED</code>。</p>
+<p>AccessDecisionVoter 是一个投票器，投票器会检查用户身份具备应有的角色，进而投出赞成、反对或者弃权票；AccessDecisionManager 则是一个决策器，来决定此次访问是否被允许。AccessDecisionVoter 和 AccessDecisionManager 都有众多的实现类，在 AccessDecisionManager 中会挨个遍历 AccessDecisionVoter，进而决定是否允许用户访问，因而 AccessDecisionVoter 和 AccessDecisionManager 两者的关系类似于 AuthenticationProvider 和 ProviderManager 的关系。</p>
+<p>Spring Security 提供的最常用的 <code>AccessDecisionVoter</code> 是简单的 <code>RoleVoter</code>，它将配置属性视为简单的角色名称，并在用户被分配了该角色时授予访问权限。</p>
+<p>在 Spring Security 中，用户请求一个资源（通常是一个网络接口或者一个 Java 方法）所需要的角色会被封装成一个 ConfigAttribute 对象，在 ConfigAttribute 对象中只有一个 getAttribute 方法，该方法返回一个 String 字符串，就是角色的名称。如果任何 <code>ConfigAttribute</code> 以前缀 <code>ROLE_</code>开头，它将投票。如果有 <code>GrantedAuthority</code> 返回<code>String</code>表示（通过<code>getAuthority()</code>方法）完全等于从前缀<code>ROLE_</code>开始的一个或多个<code>ConfigAttributes</code>，它将投票授予访问权限。如果与<code>ROLE_</code>开头的任何<code>ConfigAttribute</code>没有完全匹配，则<code>RoleVoter</code>将投票拒绝访问。如果没有<code>ConfigAttribute</code>以<code>ROLE_</code>开头，选民将弃权。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2023/02/06/springboot%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Spring-Security/" title="springboot（四）——Spring Security">http://rshawshank.github.io/2023/02/06/springboot（四）——Spring-Security/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/06/springboot%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E6%B3%A8%E8%A7%A3/" rel="prev" title="springboot（三）——注解">
+      <i class="fa fa-chevron-left"></i> springboot（三）——注解
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86Spring-Security"><span class="nav-number">1.</span> <span class="nav-text">认识Spring Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">核心功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%EF%BC%88Authentication%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">认证（Authentication）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%EF%BC%88Authorization%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">授权（Authorization）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">过滤器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">认证流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AuthenticationManager"><span class="nav-number">3.0.1.</span> <span class="nav-text">AuthenticationManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AuthenticationProvider"><span class="nav-number">3.0.2.</span> <span class="nav-text">AuthenticationProvider</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Authentication"><span class="nav-number">3.0.3.</span> <span class="nav-text">Authentication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UserDetailsService"><span class="nav-number">3.0.4.</span> <span class="nav-text">UserDetailsService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-UserDetailsService"><span class="nav-number">3.0.5.</span> <span class="nav-text">自定义 UserDetailsService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PasswordEncoder"><span class="nav-number">3.0.6.</span> <span class="nav-text">PasswordEncoder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%85%B1%E4%BA%AB%E8%AE%A4%E8%AF%81%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.</span> <span class="nav-text">多个请求共享认证信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E6%8E%A7%E5%88%B6"><span class="nav-number">3.1.1.</span> <span class="nav-text">会话控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E4%BF%A1%E6%81%AF"><span class="nav-number">3.2.</span> <span class="nav-text">获取用户认证信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%B5%81%E7%A8%8B"><span class="nav-number">3.3.</span> <span class="nav-text">授权流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E5%86%B3%E7%AD%96"><span class="nav-number">3.3.1.</span> <span class="nav-text">授权决策</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">155</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

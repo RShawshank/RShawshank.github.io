@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">154</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,269 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/18/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E4%BC%9A%E8%AF%9D%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/18/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94%E4%BC%9A%E8%AF%9D%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">JavaWeb学习（（六）——会话技术</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-18 14:19:13" itemprop="dateCreated datePublished" datetime="2021-09-18T14:19:13Z">2021-09-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="会话技术"><a href="#会话技术" class="headerlink" title="会话技术"></a>会话技术</h1><blockquote>
+<p>基本概念: 指用户开一个浏览器，<strong>访问一个网站,只要不关闭该浏览器，不管该用户点击多少个超链接，访问多少资源，直到用户关闭浏览器，整个这个过程我们称为一次会话</strong>.</p>
+</blockquote>
+<h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><blockquote>
+<p>Cookie是由W3C组织提出，最早由netscape社区发展的一种机制</p>
+</blockquote>
+<ul>
+<li>Cookie的流程：浏览器访问服务器，<strong>如果服务器需要记录该用户的状态，就使用response向浏览器发送一个Cookie，浏览器会把Cookie保存起来。当浏览器再次访问服务器的时候，浏览器会把请求的网址连同Cookie一同交给服务器</strong>。</li>
+</ul>
+<h3 id="Cookie-API"><a href="#Cookie-API" class="headerlink" title="Cookie API"></a>Cookie API</h3><p>　Java中的javax.servlet.http.Cookie类用于创建一个Cookie</p>
+<table>
+<thead>
+<tr>
+<th>Cookie类的主要方法</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>No.</td>
+<td>方法</td>
+<td>类型</td>
+<td>描述</td>
+</tr>
+<tr>
+<td>1</td>
+<td>[Cookie](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xdp-gacl/p/3803033.html#Cookie">https://www.cnblogs.com/xdp-gacl/p/3803033.html#Cookie</a>(java.lang.String, java.lang.String))(<a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> name, <a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> value)</td>
+<td>构造方法</td>
+<td>实例化Cookie对象，传入cooke名称和cookie的值</td>
+</tr>
+<tr>
+<td>2</td>
+<td>public <a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> getName()</td>
+<td>普通方法</td>
+<td>取得Cookie的名字</td>
+</tr>
+<tr>
+<td>3</td>
+<td>public <a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> getValue()</td>
+<td>普通方法</td>
+<td>取得Cookie的值</td>
+</tr>
+<tr>
+<td>4</td>
+<td>public void setValue(<a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> newValue)</td>
+<td>普通方法</td>
+<td>设置Cookie的值</td>
+</tr>
+<tr>
+<td>5</td>
+<td>public void setMaxAge(int expiry)</td>
+<td>普通方法</td>
+<td>设置Cookie的最大保存时间，即cookie的有效期，当服务器给浏览器回送一个cookie时，如果在服务器端没有调用setMaxAge方法设置cookie的有效期，那么cookie的有效期只在一次会话过程中有效，<strong>用户开一个浏览器，点击多个超链接，访问服务器多个web资源，然后关闭浏览器，整个过程称之为一次会话</strong>，当用户关闭浏览器，会话就结束了，此时cookie就会失效，如果在服务器端使用setMaxAge方法设置了cookie的有效期，比如设置了30分钟，那么当服务器把cookie发送给浏览器时，此时cookie就会在客户端的硬盘上存储30分钟，在30分钟内，即使浏览器关了，cookie依然存在，在30分钟内，打开浏览器访问服务器时，浏览器都会把cookie一起带上，这样就可以在服务器端获取到客户端浏览器传递过来的cookie里面的信息了，这就是cookie设置maxAge和不设置maxAge的区别，不设置maxAge，那么cookie就只在一次会话中有效，一旦用户关闭了浏览器，那么cookie就没有了，那么浏览器是怎么做到这一点的呢，我们启动一个浏览器，就相当于启动一个应用程序，而服务器回送的cookie首先是存在浏览器的缓存中的，当浏览器关闭时，浏览器的缓存自然就没有了，所以存储在缓存中的cookie自然就被清掉了，而如果设置了cookie的有效期，那么浏览器在关闭时，就会把缓存中的cookie写到硬盘上存储起来，这样cookie就能够一直存在了。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>public int getMaxAge()</td>
+<td>普通方法</td>
+<td>获取Cookies的有效期</td>
+</tr>
+<tr>
+<td>7</td>
+<td>public void setPath(<a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> uri)</td>
+<td>普通方法</td>
+<td>设置cookie的有效路径，比如把cookie的有效路径设置为”&#x2F;xdp”，那么浏览器访问”xdp”目录下的web资源时，都会带上cookie，再比如把cookie的有效路径设置为”&#x2F;xdp&#x2F;gacl”，那么浏览器只有在访问”xdp”目录下的”gacl”这个目录里面的web资源时才会带上cookie一起访问，而当访问”xdp”目录下的web资源时，浏览器是不带cookie的</td>
+</tr>
+<tr>
+<td>8</td>
+<td>public <a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> getPath()</td>
+<td>普通方法</td>
+<td>获取cookie的有效路径</td>
+</tr>
+<tr>
+<td>9</td>
+<td>public void setDomain(<a target="_blank" rel="noopener" href="http://java.sun.com/j2se/1.5/docs/api/java/lang/String.html">String</a> pattern)</td>
+<td>普通方法</td>
+<td>设置cookie的有效域</td>
+</tr>
+<tr>
+<td>10</td>
+<td>public String getDomain()</td>
+<td>普通方法</td>
+<td>获取cookie的有效域</td>
+</tr>
+</tbody></table>
+<p>　　response接口也中定义了一个addCookie方法，它用于在其响应头中增加一个相应的Set-Cookie头字段。 同样，request接口中也定义了一个getCookies方法，它用于获取客户端提交的Cookie。</p>
+<ul>
+<li>Cookie类用于创建一个Cookie对象</li>
+<li>response接口中定义了一个addCookie方法，它用于在其响应头中增加一个相应的Set-Cookie头字段</li>
+<li>request接口中定义了一个getCookies方法，它用于获取客户端提交的Cookie</li>
+</ul>
+<h3 id="简单使用Cookie"><a href="#简单使用Cookie" class="headerlink" title="简单使用Cookie"></a>简单使用Cookie</h3><ul>
+<li>创建Cookie对象，发送Cookie给浏览器、</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置response的编码</span></span><br><span class="line">response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建Cookie对象，指定名称和值</span></span><br><span class="line"><span class="type">Cookie</span> <span class="variable">cookie</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;username&quot;</span>, <span class="string">&quot;zhongfucheng&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//向浏览器给一个Cookie</span></span><br><span class="line">response.addCookie(cookie);</span><br><span class="line"></span><br><span class="line">response.getWriter().write(<span class="string">&quot;我已经向浏览器发送了一个Cookie&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置Cookie的时间</span></span><br><span class="line">cookie.setMaxAge(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>保存中文</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">response.setContentType(<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"><span class="type">PrintWriter</span> <span class="variable">printWriter</span> <span class="operator">=</span> response.getWriter();</span><br><span class="line">  </span><br><span class="line"><span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;中国&quot;</span>;</span><br><span class="line">     </span><br><span class="line">  <span class="comment">//对Unicode字符进行编码</span></span><br><span class="line">  <span class="type">Cookie</span> <span class="variable">cookie</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;country&quot;</span>, URLEncoder.encode(name, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line"></span><br><span class="line">cookie.setMaxAge(<span class="number">2000</span>);</span><br><span class="line">response.addCookie(cookie);</span><br><span class="line">  </span><br><span class="line">printWriter.write(<span class="string">&quot;我颁发了一个Cookie，值保存的是中文数据&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们发现Cookie保存在硬盘的中文数据是经过编码的，那么我们在<strong>取出Cookie的时候要对中文数据进行解码</strong></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Cookie[] cookies = request.getCookies();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; cookies != <span class="literal">null</span> &amp;&amp; i &lt; cookies.length; i++) &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> cookies[i].getName();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//经过URLEncoding就要URLDecoding</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> URLDecoder.decode(cookies[i].getValue(), <span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">    printWriter.write(name + <span class="string">&quot;------&quot;</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cookie不可跨域名性"><a href="#Cookie不可跨域名性" class="headerlink" title="Cookie不可跨域名性"></a>Cookie不可跨域名性</h3><p>Cookie具有不可跨域名性。浏览器判断<strong>一个网站是否能操作另一个网站的Cookie的依据是域名</strong>。所以一般来说，<strong>当我访问baidu的时候，浏览器只会把baidu颁发的Cookie带过去，而不会带上google的Cookie。</strong></p>
+<h3 id="Cookie的有效期"><a href="#Cookie的有效期" class="headerlink" title="Cookie的有效期"></a>Cookie的有效期</h3><p><strong>Cookie的有效期是通过setMaxAge()来设置的</strong>。</p>
+<ul>
+<li>如果MaxAge为<strong>正数</strong>，<strong>浏览器会把Cookie写到硬盘中，只要还在MaxAge秒之前，登陆网站时该Cookie就有效</strong>【不论关闭了浏览器还是电脑】</li>
+<li>如果MaxAge为<strong>负数</strong>，<strong>Cookie是临时性的，仅在本浏览器内有效</strong>，关闭浏览器Cookie就失效了，Cookie不会写到硬盘中。Cookie默认值就是-1。这也就为什么在我第一个例子中，如果我没设置Cookie的有效期，在硬盘中就找不到对应的文件。</li>
+<li>如果MaxAge为<strong>0</strong>，则表示<strong>删除该Cookie</strong>。Cookie机制没有提供删除Cookie对应的方法，把MaxAge设置为0等同于删除Cookie</li>
+</ul>
+<h3 id="Cookie的修改和删除"><a href="#Cookie的修改和删除" class="headerlink" title="Cookie的修改和删除"></a>Cookie的修改和删除</h3><ul>
+<li>上面我们已经知道了Cookie机制没有提供删除Cookie的方法。其实细心点我们可以发现，Cookie机制也没有提供修改Cookie的方法。那么我们<strong>怎么修改Cookie的值呢</strong>？</li>
+<li>Cookie存储的方式<strong>类似于Map集合</strong></li>
+<li><strong>Cookie的名称相同，通过response添加到浏览器中，会覆盖原来的Cookie</strong>。</li>
+<li>注意：删除，修改Cookie时，<strong>新建的Cookie除了value、maxAge之外的所有属性都要与原Cookie相同</strong>。否则浏览器将<strong>视为不同的Cookie，不予覆盖，导致删除修改失败</strong>！</li>
+</ul>
+<p>删除Cookie示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CookieDemo02</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//创建一个名字为lastAccessTime的cookie</span></span><br><span class="line">        <span class="type">Cookie</span> <span class="variable">cookie</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cookie</span>(<span class="string">&quot;lastAccessTime&quot;</span>, System.currentTimeMillis()+<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="comment">//将cookie的有效期设置为0，命令浏览器删除该cookie</span></span><br><span class="line">        cookie.setMaxAge(<span class="number">0</span>);</span><br><span class="line">        response.addCookie(cookie);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cookie的域名"><a href="#Cookie的域名" class="headerlink" title="Cookie的域名"></a>Cookie的域名</h3><p>Cookie的<strong>domain属性决定运行访问Cookie的域名。domain的值规定为“.域名”</strong></p>
+<ul>
+<li>Cookie的隐私安全机制决定Cookie是不可跨域名的。也就是说<a href="http://www.baidu.com和www.google.com之间的Cookie是互不交接的。**即使是同一级域名，不同二级域名也不能交接**，也就是说：www.goole.com和www.image.goole.com的Cookie也不能访问">www.baidu.com和www.google.com之间的Cookie是互不交接的。**即使是同一级域名，不同二级域名也不能交接**，也就是说：www.goole.com和www.image.goole.com的Cookie也不能访问</a></li>
+</ul>
+<h3 id="Cookie的安全属性"><a href="#Cookie的安全属性" class="headerlink" title="Cookie的安全属性"></a>Cookie的安全属性</h3><ul>
+<li>HTTP协议不仅仅是无状态的，而且是不安全的！如果不希望Cookie在非安全协议中传输，可以<strong>设置Cookie的secure属性为true，浏览器只会在HTTPS和SSL等安全协议中传输该Cookie</strong>。</li>
+<li>当然了，设置secure属性不会将Cookie的内容加密。如果想要保证安全，最好使用md5算法加密。</li>
+</ul>
+<h1 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h1><blockquote>
+<p>Session 是另一种记录浏览器状态的机制。不同的是Cookie保存在浏览器中，Session保存在服务器中。用户使用浏览器访问服务器的时候，服务器把用户的信息以某种的形式记录在服务器，这就是Session</p>
+</blockquote>
+<h2 id="Session和Cookie的区别"><a href="#Session和Cookie的区别" class="headerlink" title="Session和Cookie的区别"></a>Session和Cookie的区别</h2><ul>
+<li>Cookie是把用户的数据写给用户的浏览器。</li>
+<li>Session技术把用户的数据写到用户独占的session中。</li>
+<li>Session对象由服务器创建，开发人员可以调用request对象的getSession方法得到session对象。</li>
+<li><strong>Session可以存储对象，Cookie只能存储字符串。</strong></li>
+</ul>
+<h2 id="Session的生命周期和有效期"><a href="#Session的生命周期和有效期" class="headerlink" title="Session的生命周期和有效期"></a>Session的生命周期和有效期</h2><ul>
+<li>Session在用户<strong>第一次访问服务器Servlet，jsp等动态资源就会被自动创建，Session对象保存在内存里</strong>。</li>
+<li>如果访问HTML,IMAGE等静态资源Session不会被创建。</li>
+<li>Session生成后，只要用户继续访问，服务器就会更新Session的最后访问时间，无论<strong>是否对Session进行读写，服务器都会认为Session活跃了一次</strong>。</li>
+<li>由于会有越来越多的用户访问服务器，因此Session也会越来越多。<strong>为了防止内存溢出，服务器会把长时间没有活跃的Session从内存中删除，这个时间也就是Session的超时时间</strong>。</li>
+</ul>
+<h2 id="Session创建和销毁"><a href="#Session创建和销毁" class="headerlink" title="Session创建和销毁"></a>Session创建和销毁</h2><p>服务器创建session出来后，会把session的id号，以cookie的形式回写给客户机，这样，只要客户机的浏览器不关，再去访问服务器时，都会带着session的id号去，服务器发现客户机浏览器带session id过来了，就会使用内存中与之对应的session为之服务。</p>
+<p>创建：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用request对象的getSession()获取session，如果session不存在则创建一个</span></span><br><span class="line"><span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line"><span class="comment">//获取session的Id</span></span><br><span class="line"><span class="type">String</span> <span class="variable">sessionId</span> <span class="operator">=</span> session.getId();</span><br><span class="line"><span class="comment">//判断session是不是新创建的</span></span><br><span class="line"><span class="keyword">if</span> (session.isNew()) &#123;</span><br><span class="line">    response.getWriter().print(<span class="string">&quot;session创建成功，session的id是：&quot;</span>+sessionId);</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    response.getWriter().print(<span class="string">&quot;服务器已经存在session，session的id是：&quot;</span>+sessionId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>销毁：</p>
+<p>　session对象默认30分钟没有使用，则服务器会自动销毁session，在web.xml文件中可以手工配置session的失效时间</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee</span></span></span><br><span class="line"><span class="string"><span class="tag">    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">display-name</span>&gt;</span><span class="tag">&lt;/<span class="name">display-name</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>index.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">&lt;!-- 设置Session的有效时间:以分钟为单位--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">session-config</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">session-timeout</span>&gt;</span>15<span class="tag">&lt;/<span class="name">session-timeout</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">session-config</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在tomcat&#x2F;conf&#x2F;web.xml文件中设置，时间值为20分钟，<strong>所有的WEB应用都有效</strong></li>
+<li>在单个的web.xml文件中设置，对单个web应用有效，<strong>如果有冲突，以自己的web应用为准</strong>。</li>
+</ul>
+<p>当需要在程序中手动设置Session失效时，可以手工调用<strong>session.invalidate</strong>方法，摧毁session。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line"><span class="comment">//手工调用session.invalidate方法，摧毁session</span></span><br><span class="line">session.invalidate();</span><br></pre></td></tr></table></figure>
+
+<h2 id="Session应用"><a href="#Session应用" class="headerlink" title="Session应用"></a>Session应用</h2><h3 id="1、表单重复提交"><a href="#1、表单重复提交" class="headerlink" title="1、表单重复提交"></a>1、表单重复提交</h3><ul>
+<li>网络延迟</li>
+<li>表单提交后，用户多次刷新</li>
+<li>表单提交后，点击浏览器“后退”按钮回退到表单页面后再次提交</li>
+</ul>
+<p>方法一：只能解决在网络延迟的情况下防止用户多次提交</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DoFormServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="comment">//客户端是以UTF-8编码传输数据到服务器端的，所以需要设置服务器端以UTF-8的编码进行接收，否则对于中文数据就会产生乱码</span></span><br><span class="line">        request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">userName</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//让当前的线程睡眠3秒钟，模拟网络延迟而导致表单重复提交的现象</span></span><br><span class="line">            Thread.sleep(<span class="number">3</span>*<span class="number">1000</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;向数据库中插入数据：&quot;</span>+userName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法二：利用Session</p>
+<p>具体的做法：<strong>在服务器端生成一个唯一的随机标识号，专业术语称为Token(令牌)，同时在当前用户的Session域中保存这个Token。然后将Token发送到客户端的Form表单中，在Form表单中使用隐藏域来存储这个Token，表单提交的时候连同这个Token一起提交到服务器端，然后在服务器端判断客户端提交上来的Token与服务器端生成的Token是否一致，如果不一致，那就是重复提交了，此时服务器端就可以不处理重复提交的表单。如果相同则处理表单提交，处理完后清除当前用户的Session域中存储的标识号。</strong></p>
+<p>在下列情况下，服务器程序将拒绝处理用户提交的表单请求：</p>
+<ol>
+<li>存储Session域中的Token(令牌)与表单提交的Token(令牌)不同。</li>
+<li>当前用户的Session中不存在Token(令牌)。</li>
+<li>用户提交的表单数据中没有Token(令牌)。</li>
+</ol>
+<p>创建Token：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FormServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> <span class="variable">serialVersionUID</span> <span class="operator">=</span> -<span class="number">884689940866074733L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> TokenProccessor.getInstance().makeToken();<span class="comment">//创建令牌</span></span><br><span class="line">        System.out.println(<span class="string">&quot;在FormServlet中生成的token：&quot;</span>+token);</span><br><span class="line">        request.getSession().setAttribute(<span class="string">&quot;token&quot;</span>, token);  <span class="comment">//在服务器使用session保存token(令牌)</span></span><br><span class="line">        request.getRequestDispatcher(<span class="string">&quot;/form.jsp&quot;</span>).forward(request, response);<span class="comment">//跳转到form.jsp页面</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在jsp文件中使用隐藏域来存储Token：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> <span class="keyword">import</span>=<span class="string">&quot;java.util.*&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;form表单&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;form action=<span class="string">&quot;$&#123;pageContext.request.contextPath&#125;/servlet/DoFormServlet&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">        &lt;%--使用隐藏域存储生成的token--%&gt;</span><br><span class="line">        &lt;%--</span><br><span class="line">            &lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;token&quot;</span> value=<span class="string">&quot;&lt;%=session.getAttribute(&quot;</span>token<span class="string">&quot;) %&gt;&quot;</span>&gt;</span><br><span class="line">        --%&gt;</span><br><span class="line">        &lt;%--使用EL表达式取出存储在session中的token--%&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;hidden&quot;</span> name=<span class="string">&quot;token&quot;</span> value=<span class="string">&quot;$&#123;token&#125;&quot;</span>/&gt;</span><br><span class="line">        用户名：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">        &lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;提交&quot;</span>&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>处理表单请求:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DoFormServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">                <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">            <span class="type">boolean</span> <span class="variable">b</span> <span class="operator">=</span> isRepeatSubmit(request);<span class="comment">//判断用户是否是重复提交</span></span><br><span class="line">            <span class="keyword">if</span>(b==<span class="literal">true</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;请不要重复提交&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            request.getSession().removeAttribute(<span class="string">&quot;token&quot;</span>);<span class="comment">//移除session中的token</span></span><br><span class="line">            System.out.println(<span class="string">&quot;处理用户提交请求！！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 判断客户端提交上来的令牌和服务器端生成的令牌是否一致</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         *         true 用户重复提交了表单</span></span><br><span class="line"><span class="comment">         *         false 用户没有重复提交表单</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isRepeatSubmit</span><span class="params">(HttpServletRequest request)</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">client_token</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;token&quot;</span>);</span><br><span class="line">            <span class="comment">//1、如果用户提交的表单数据中没有token，则用户是重复提交了表单</span></span><br><span class="line">            <span class="keyword">if</span>(client_token==<span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//取出存储在Session中的token</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">server_token</span> <span class="operator">=</span> (String) request.getSession().getAttribute(<span class="string">&quot;token&quot;</span>);</span><br><span class="line">            <span class="comment">//2、如果当前用户的Session中不存在Token(令牌)，则用户是重复提交了表单</span></span><br><span class="line">            <span class="keyword">if</span>(server_token==<span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//3、存储在Session中的Token(令牌)与表单提交的Token(令牌)不同，则用户是重复提交了表单</span></span><br><span class="line">            <span class="keyword">if</span>(!client_token.equals(server_token))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span><br><span class="line">            <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        doGet(request, response);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1756,302 +2019,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/03/13/%E6%95%B0%E6%8D%AE%E5%BA%93-%E9%9D%A2%E8%AF%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/13/%E6%95%B0%E6%8D%AE%E5%BA%93-%E9%9D%A2%E8%AF%95%E9%A2%98/" class="post-title-link" itemprop="url">数据库-面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-13 15:22:51" itemprop="dateCreated datePublished" datetime="2021-03-13T15:22:51Z">2021-03-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1、事务的四大特性是什么？"><a href="#1、事务的四大特性是什么？" class="headerlink" title="1、事务的四大特性是什么？"></a>1、事务的四大特性是什么？</h1><ul>
-<li>原子性，要么执行，要么不执行  </li>
-<li>隔离性，所有操作全部执行完以前其它会话不能看到过程 </li>
-<li>一致性，事务前后，数据总额一致 </li>
-<li>持久性，一旦事务提交，对数据的改变就是永久的</li>
-</ul>
-<h1 id="PS-sql语句"><a href="#PS-sql语句" class="headerlink" title="PS:sql语句"></a>PS:sql语句</h1><p><strong>sql对大小写不敏感。</strong></p>
-<h2 id="1-SQL-DML-和-DDL"><a href="#1-SQL-DML-和-DDL" class="headerlink" title="1.SQL DML 和 DDL"></a>1.SQL DML 和 DDL</h2><p>可以把 SQL 分为两个部分：数据操作语言 (DML) 和 数据定义语言 (DDL)。</p>
-<p>SQL (结构化查询语言)是用于执行查询的语法。但是 SQL 语言也包含用于更新、插入和删除记录的语法。</p>
-<p>查询和更新指令构成了 SQL 的 DML 部分：</p>
-<ul>
-<li><em>SELECT</em> - 从数据库表中获取数据</li>
-<li><em>UPDATE</em> - 更新数据库表中的数据</li>
-<li><em>DELETE</em> - 从数据库表中删除数据</li>
-<li><em>INSERT INTO</em> - 向数据库表中插入数据</li>
-</ul>
-<p>SQL 的数据定义语言 (DDL) 部分使我们有能力创建或删除表格。我们也可以定义索引（键），规定表之间的链接，以及施加表间的约束。</p>
-<p>SQL 中最重要的 DDL 语句:</p>
-<ul>
-<li><em>CREATE DATABASE</em> - 创建新数据库</li>
-<li><em>ALTER DATABASE</em> - 修改数据库</li>
-<li><em>CREATE TABLE</em> - 创建新表</li>
-<li><em>ALTER TABLE</em> - 变更（改变）数据库表</li>
-<li><em>DROP TABLE</em> - 删除表</li>
-<li><em>CREATE INDEX</em> - 创建索引（搜索键）</li>
-<li><em>DROP INDEX</em> - 删除索引</li>
-</ul>
-<h3 id="select语句"><a href="#select语句" class="headerlink" title="select语句"></a>select语句</h3><p>从表中选取数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名称，列名称 <span class="keyword">FROM</span> 表名称</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表名称<span class="operator">/</span><span class="operator">/</span>星号（<span class="operator">*</span>）是选取所有列的快捷方式。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>distinct语句</p>
-<p>关键词 DISTINCT 用于返回唯一不同的值。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> 列名称 <span class="keyword">FROM</span> 表名称</span><br></pre></td></tr></table></figure>
-
-<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><p><strong>WHERE 子句用于规定选择的标准</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 列名称 <span class="keyword">FROM</span> 表名称 <span class="keyword">WHERE</span> 列 运算符 值</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">&#x3D;</td>
-<td align="left">等于</td>
-</tr>
-<tr>
-<td align="left">&lt;&gt;</td>
-<td align="left">不等于</td>
-</tr>
-<tr>
-<td align="left">&gt;</td>
-<td align="left">大于</td>
-</tr>
-<tr>
-<td align="left">&lt;</td>
-<td align="left">小于</td>
-</tr>
-<tr>
-<td align="left">&gt;&#x3D;</td>
-<td align="left">大于等于</td>
-</tr>
-<tr>
-<td align="left">&lt;&#x3D;</td>
-<td align="left">小于等于</td>
-</tr>
-<tr>
-<td align="left">BETWEEN</td>
-<td align="left">在某个范围内</td>
-</tr>
-<tr>
-<td align="left">LIKE</td>
-<td align="left">搜索某种模式</td>
-</tr>
-</tbody></table>
-<h4 id="and和or运算符"><a href="#and和or运算符" class="headerlink" title="and和or运算符"></a>and和or运算符</h4><p>AND 和 OR 可在 WHERE 子语句中把两个或多个条件结合起来。</p>
-<p>如果第一个条件和第二个条件都成立，则 AND 运算符显示一条记录。</p>
-<p>如果第一个条件和第二个条件中只要有一个成立，则 OR 运算符显示一条记录。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons <span class="keyword">WHERE</span> (FirstName<span class="operator">=</span><span class="string">&#x27;Thomas&#x27;</span> <span class="keyword">OR</span> FirstName<span class="operator">=</span><span class="string">&#x27;William&#x27;</span>)</span><br><span class="line"><span class="keyword">AND</span> LastName<span class="operator">=</span><span class="string">&#x27;Carter&#x27;</span><span class="comment">/*使用圆括号来组成复杂的表达式*/</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h3><p>ORDER BY 语句用于对结果集进行排序。</p>
-<p>例如：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*按照company名字进行升序排序*/</span></span><br><span class="line"><span class="keyword">SELECT</span> Company, OrderNumber <span class="keyword">FROM</span> Orders <span class="keyword">ORDER</span> <span class="keyword">BY</span> Company</span><br><span class="line"><span class="comment">/*以字母顺序显示公司名称（Company），并以数字顺序显示顺序号（OrderNumber*/</span></span><br><span class="line"><span class="keyword">SELECT</span> Company, OrderNumber <span class="keyword">FROM</span> Orders <span class="keyword">ORDER</span> <span class="keyword">BY</span> Company, OrderNumber</span><br><span class="line"><span class="comment">/*desc是降序*/</span></span><br><span class="line"><span class="keyword">SELECT</span> Company, OrderNumber <span class="keyword">FROM</span> Orders <span class="keyword">ORDER</span> <span class="keyword">BY</span> Company <span class="keyword">DESC</span>, OrderNumber <span class="keyword">ASC</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="insert-into"><a href="#insert-into" class="headerlink" title="insert into"></a>insert into</h3><p>INSERT INTO 语句用于向表格中插入<strong>新的行。</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*(值1, 值2,....)构成新的一行*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名称 <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"><span class="comment">/*指定所要插入数据的列*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (列<span class="number">1</span>, 列<span class="number">2</span>,...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><p><strong>修改列值</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名称 <span class="keyword">SET</span> 列名称 <span class="operator">=</span> 新值 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 某值</span><br></pre></td></tr></table></figure>
-
-<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><p>删除表中的<strong>行</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名称 <span class="keyword">WHERE</span> 列名称 <span class="operator">=</span> 值</span><br><span class="line"><span class="comment">/*删除所有行*/</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
-
-<h3 id="top"><a href="#top" class="headerlink" title="top"></a>top</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*选取头两条记录*/</span></span><br><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">2</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons</span><br><span class="line"><span class="comment">/*选取50%记录*/</span></span><br><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">50</span> <span class="keyword">PERCENT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons</span><br></pre></td></tr></table></figure>
-
-<h3 id="like"><a href="#like" class="headerlink" title="like"></a>like</h3><p>用在where子句中搜索列中的指定模式</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*从 &quot;Persons&quot; 表中选取居住在以 &quot;N&quot; 开始的城市里的人*/</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons</span><br><span class="line"><span class="keyword">WHERE</span> City <span class="keyword">LIKE</span> <span class="string">&#x27;N%&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>“%” 可用于定义通配符（模式中缺少的字母）。</p>
-<p>SQL 通配符必须与 LIKE 运算符一起使用。</p>
-<table>
-<thead>
-<tr>
-<th align="left">通配符</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">%</td>
-<td align="left">替代一个或多个字符</td>
-</tr>
-<tr>
-<td align="left">_</td>
-<td align="left">仅替代一个字符</td>
-</tr>
-<tr>
-<td align="left">[charlist]</td>
-<td align="left">字符列中的任何单一字符</td>
-</tr>
-<tr>
-<td align="left">[^charlist]或者[!charlist]</td>
-<td align="left">不在字符列中的任何单一字符</td>
-</tr>
-</tbody></table>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*从 &quot;Persons&quot; 表中选取居住的城市以 &quot;A&quot; 或 &quot;L&quot; 或 &quot;N&quot; 开头的人*/</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons</span><br><span class="line"><span class="keyword">WHERE</span> City <span class="keyword">LIKE</span> <span class="string">&#x27;[ALN]%&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="in"><a href="#in" class="headerlink" title="in"></a>in</h3><p>IN 操作符允许我们在 WHERE 子句中规定多个值。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*选取姓氏为 Adams 和 Carter 的人*/</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> Persons</span><br><span class="line"><span class="keyword">WHERE</span> LastName <span class="keyword">IN</span> (<span class="string">&#x27;Adams&#x27;</span>,<span class="string">&#x27;Carter&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="alias（别名-AS）"><a href="#alias（别名-AS）" class="headerlink" title="alias（别名-AS）"></a>alias（别名-AS）</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name <span class="keyword">AS</span> alias_name</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
-
-<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p><strong>SQL join 用于根据两个或多个表中的列之间的关系，从这些表中查询数据。</strong></p>
-<ul>
-<li>JOIN: 如果表中有至少一个匹配，则返回行</li>
-<li>LEFT JOIN: 即使右表中没有匹配，也从左表返回所有的行</li>
-<li>RIGHT JOIN: 即使左表中没有匹配，也从右表返回所有的行</li>
-<li>FULL JOIN: 只要其中一个表中存在匹配，就返回行</li>
-</ul>
-<p><img src="https://i.loli.net/2021/03/18/ZUSLomsxJlOvFhP.jpg"></p>
-<h4 id="inner-join（内连接）"><a href="#inner-join（内连接）" class="headerlink" title="inner join（内连接）"></a>inner join（内连接）</h4><p>INNER JOIN 与 JOIN 是相同的。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name(s)</span><br><span class="line"><span class="keyword">FROM</span> table_name1</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> table_name2 </span><br><span class="line"><span class="keyword">ON</span> table_name1.column_name<span class="operator">=</span>table_name2.column_name</span><br></pre></td></tr></table></figure>
-
-<p>没有匹配的话，就不会返回行了</p>
-<p>同理：left join…</p>
-<h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><p>UNION 操作符用于合并两个或多个 SELECT 语句的结果集。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*列出所有在中国和美国的不同的雇员名*/</span></span><br><span class="line"><span class="keyword">SELECT</span> E_Name <span class="keyword">FROM</span> Employees_China</span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> E_Name <span class="keyword">FROM</span> Employees_USA</span><br></pre></td></tr></table></figure>
-
-<p>union只会选择出不同值，union all会选择出所有值（包括了两个表之间的共同值）</p>
-<p><strong>union合并需要UNION 内部的 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型</strong></p>
-<h3 id="select-into"><a href="#select-into" class="headerlink" title="select into"></a>select into</h3><p>SELECT INTO 语句从一个表中选取数据，然后把数据插入另一个表中。</p>
-<p>SELECT INTO 语句常用于创建表的备份复件或者用于对记录进行存档。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">INTO</span> new_table_name [<span class="keyword">IN</span> externaldatabase] </span><br><span class="line"><span class="keyword">FROM</span> old_tablename</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*从 &quot;Persons&quot; 表中提取居住在 &quot;Beijing&quot; 的人的信息，创建了一个带有两个列的名为 &quot;Persons_backup&quot; 的表*/</span></span><br><span class="line"><span class="keyword">SELECT</span> LastName,Firstname</span><br><span class="line"><span class="keyword">INTO</span> Persons_backup</span><br><span class="line"><span class="keyword">FROM</span> Persons</span><br><span class="line"><span class="keyword">WHERE</span> City<span class="operator">=</span><span class="string">&#x27;Beijing&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE database_name</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名称</span><br><span class="line">(</span><br><span class="line">列名称<span class="number">1</span> 数据类型,</span><br><span class="line">列名称<span class="number">2</span> 数据类型,</span><br><span class="line">列名称<span class="number">3</span> 数据类型,</span><br><span class="line">....</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> train(</span><br><span class="line">TID <span class="type">int</span>,</span><br><span class="line">SDate <span class="type">date</span>,</span><br><span class="line">TName <span class="type">char</span>(<span class="number">20</span>), </span><br><span class="line">SStationID <span class="type">int</span>,</span><br><span class="line">AStationID <span class="type">int</span>, </span><br><span class="line">STime datetime, </span><br><span class="line">ATime datetime,</span><br><span class="line"><span class="keyword">constraint</span> PK_train <span class="keyword">primary</span> key (TID),</span><br><span class="line"><span class="keyword">constraint</span> UK_date_tname <span class="keyword">unique</span>(SDate,TName),</span><br><span class="line"><span class="keyword">constraint</span> FK_train_SStationId <span class="keyword">foreign</span> key(SStationID) <span class="keyword">REFERENCES</span> station(SID),</span><br><span class="line"><span class="keyword">constraint</span> FK_train_AStationId <span class="keyword">foreign</span> key(AStationID) <span class="keyword">REFERENCES</span> station(SID)</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="constraints"><a href="#constraints" class="headerlink" title="constraints"></a>constraints</h3><p>约束用于限制加入表的数据的类型。</p>
-<p>可以在<strong>创建表时</strong>规定约束（通过 CREATE TABLE 语句），或者在表创建之后也可以（通过 ALTER TABLE 语句）。</p>
-<ul>
-<li><p>NOT NULL</p>
-</li>
-<li><p>UNIQUE</p>
-<ul>
-<li>&#96;&#96;&#96;sql<br>&#x2F;<em>当表已经被创建时添加约束</em>&#x2F;<br>ALTER TABLE Persons<br>ADD UNIQUE (Id_P)<br>&#x2F;<em>添加多个约束</em>&#x2F;<br>ALTER TABLE Persons<br>ADD CONSTRAINT uc_PersonID UNIQUE (Id_P,LastName)<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">- <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span></span><br><span class="line"></span><br><span class="line">  - <span class="keyword">UNIQUE</span> 和 <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span> 约束均为列或列集合提供了唯一性的保证。</span><br><span class="line"></span><br><span class="line">  - 每个表可以有多个 <span class="keyword">UNIQUE</span> 约束，但是每个表只能有一个 <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span> 约束。</span><br><span class="line"></span><br><span class="line">  - ```sql</span><br><span class="line">    <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Persons</span><br><span class="line">    <span class="keyword">ADD</span> <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span> (Id_P)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>FOREIGN KEY</p>
-<ul>
-<li><pre><code class="sql">CREATE TABLE Orders
-(
-Id_O int NOT NULL,
-OrderNo int NOT NULL,
-Id_P int,
-PRIMARY KEY (Id_O),
-FOREIGN KEY (Id_P) REFERENCES Persons(Id_P)
-)
-/*在已存在的情况下创建约束*/
-ALTER TABLE Orders
-ADD FOREIGN KEY (Id_P)
-REFERENCES Persons(Id_P)
-/*撤销相关的约束*/
-ALTER TABLE Orders
-DROP FOREIGN KEY fk_PerOrders
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="operator">-</span> <span class="keyword">CHECK</span></span><br><span class="line"></span><br><span class="line">  <span class="operator">-</span> <span class="keyword">CHECK</span> 约束用于限制列中的值的范围。</span><br><span class="line"></span><br><span class="line">    如果对单个列定义 <span class="keyword">CHECK</span> 约束，那么该列只允许特定的值。</span><br><span class="line"></span><br><span class="line">    如果对一个表定义 <span class="keyword">CHECK</span> 约束，那么此约束会在特定的列中对值进行限制。</span><br><span class="line"></span><br><span class="line">    ```<span class="keyword">sql</span></span><br><span class="line">    <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Persons</span><br><span class="line">    (</span><br><span class="line">    Id_P <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    LastName <span class="type">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    FirstName <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    Address <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    City <span class="type">varchar</span>(<span class="number">255</span>),</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> chk_Person <span class="keyword">CHECK</span> (Id_P<span class="operator">&gt;</span><span class="number">0</span> <span class="keyword">AND</span> City<span class="operator">=</span><span class="string">&#x27;Sandnes&#x27;</span>)</span><br><span class="line">    )</span><br><span class="line">    <span class="comment">/*撤销check约束*/</span></span><br><span class="line">    <span class="keyword">ALTER</span> <span class="keyword">TABLE</span> Persons</span><br><span class="line">    <span class="keyword">DROP</span> <span class="keyword">CHECK</span> chk_Person</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li></li>
-</ul>
-</li>
-<li><p>DEFAULT</p>
-<ul>
-<li><p>DEFAULT 约束用于向列中插入默认值。</p>
-</li>
-<li><p>&#96;&#96;&#96;sql<br>CREATE TABLE Persons<br>(<br>Id_P int NOT NULL,<br>LastName varchar(255) NOT NULL,<br>FirstName varchar(255),<br>Address varchar(255),<br>City varchar(255) DEFAULT ‘Sandnes’<br>)</p>
-<p>SQL View<br>SQL Date<br>SQL Nulls<br>SQL isnull()<br>SQL 数据类型<br>SQL 服务器<br>SQL 函数<br>SQL functions<br>SQL avg()<br>SQL count()<br>SQL first()<br>SQL last()<br>SQL max()<br>SQL min()<br>SQL sum()<br>SQL Group By<br>SQL Having<br>SQL ucase()<br>SQL lcase()<br>SQL mid()<br>SQL len()<br>SQL round()<br>SQL now()<br>SQL format()<br>SQL 总结<br>SQL 快速参考<br>SQL 教程总结<br>SQL 测验<br>SQL 测验<br>建站手册<br>网站构建<br>万维网联盟 (W3C)<br>浏览器信息<br>网站品质<br>语义网<br>职业规划<br>网站主机<br>编程<br>Python 教程<br>关于 W3School<br>帮助 W3School<br>SQL DEFAULT 约束<br>SQL Check<br>SQL Create Index<br>SQL DEFAULT 约束<br>DEFAULT 约束用于向列中插入默认值。</p>
-<p>如果没有规定其他的值，那么会将默认值添加到所有的新记录。</p>
-<p>SQL DEFAULT Constraint on CREATE TABLE<br>下面的 SQL 在 “Persons” 表创建时为 “City” 列创建 DEFAULT 约束：</p>
-<p>My SQL &#x2F; SQL Server &#x2F; Oracle &#x2F; MS Access:<br>CREATE TABLE Persons<br>(<br>Id_P int NOT NULL,<br>LastName varchar(255) NOT NULL,<br>FirstName varchar(255),<br>Address varchar(255),<br>City varchar(255) DEFAULT ‘Sandnes’<br>)<br>通过使用类似 GETDATE() 这样的函数，DEFAULT 约束也可以用于插入系统值：</p>
-<p>CREATE TABLE Orders<br>(<br>Id_O int NOT NULL,<br>OrderNo int NOT NULL,<br>Id_P int,<br>OrderDate date DEFAULT GETDATE()<br>)<br>SQL DEFAULT Constraint on ALTER TABLE<br>&#x2F;<em>在表已存在的情况下为 “City” 列创建 DEFAULT 约束</em>&#x2F;<br>ALTER TABLE Persons<br>ALTER City SET DEFAULT ‘SANDNES’<br>&#x2F;<em>需撤销 DEFAULT 约束</em>&#x2F;<br>ALTER TABLE Persons<br>ALTER City DROP DEFAULT</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### <span class="keyword">index</span></span><br><span class="line"></span><br><span class="line">在表中创建索引</span><br><span class="line"></span><br><span class="line">```<span class="keyword">sql</span></span><br><span class="line"><span class="comment">/*允许使用重复的值*/</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> index_name</span><br><span class="line"><span class="keyword">ON</span> <span class="built_in">table_name</span> (<span class="built_in">column_name</span>)</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ul>
-<h2 id="View"><a href="#View" class="headerlink" title="View"></a>View</h2><p>视图是基于 SQL 语句的结果集的可视化的表。</p>
-<p>视图包含行和列，就像一个真实的表。视图中的字段就是来自一个或多个数据库中的真实的表中的字段。我们可以向视图添加 SQL 函数、WHERE 以及 JOIN 语句，我们也可以提交数据，就像这些来自于某个单一的表。</p>
-<p>视图的作用：</p>
-<ol>
-<li>简化了操作，把<strong>经常使用</strong>的数据定义为视图，可以将复杂的SQL查询语句进行封装。</li>
-<li>安全性，用户只能查询和修改能看到的数据。<ul>
-<li>使用视图，基表中的数据就有了一定的安全性。因为视图是虚拟的，物理上是不存在的，只是存储了数据的集合，我们可以不通过视图将基表中重要的字段信息给用户。视图是动态的数据的集合，数据是随着基表的更新而更新的。同时，用户对视图，不可以随意的更改和删除，可以保证数据的安全性。</li>
-</ul>
-</li>
-<li>逻辑上的独立性，屏蔽了真实表的结构带来的影响。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2121,7 +2088,7 @@ DROP FOREIGN KEY fk_PerOrders
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-count">155</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2166,7 +2133,7 @@ DROP FOREIGN KEY fk_PerOrders
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
