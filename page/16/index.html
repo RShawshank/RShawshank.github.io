@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">63</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">64</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">27</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">28</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">155</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">160</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,1855 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/07/ComputerNetworking_%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/07/ComputerNetworking_%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">无线网络和移动网络</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-06 22:54:37" itemprop="dateCreated datePublished" datetime="2019-12-06T22:54:37Z">2019-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="无线网络和移动网络"><a href="#无线网络和移动网络" class="headerlink" title="无线网络和移动网络"></a>无线网络和移动网络</h1><p><img src="https://i.loli.net/2021/09/09/ZYfz8aejEpBuKDV.png"></p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h3><p>无线网络和移动网络的构成大致相同,都是有三部分组成</p>
+<ul>
+<li><strong>无线主机</strong>:就是我们所用的终端,如手机,电脑等.</li>
+<li>**基站:**负责协调无线主机和网络基础设施之间的通讯,比如交换机,信号塔</li>
+<li><strong>无线链路</strong>:主机通过无线通信链路连接到一个基站，与链路访问相匹配的多址访问协议</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/09/7nRLubtQjy3sMSJ.png"></p>
+<p>无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。n无线局域网可分为两大类:有固定基础设施和自组网络(ad hoc 网络) 。</p>
+<h4 id="基础设施模式"><a href="#基础设施模式" class="headerlink" title="基础设施模式"></a>基础设施模式</h4><p>基础设施模式是指预先建立起来的、能够覆盖一定地理范围的一批固定基站。</p>
+<p>移动主机通过基站接入有线网络; </p>
+<p>切换:移动主机的移动可能会改变与之相关联的基站。</p>
+<h4 id="ad-hoc网络"><a href="#ad-hoc网络" class="headerlink" title="ad hoc网络"></a>ad hoc网络</h4><p><strong>自组织网络</strong>（ad hoc network）中，主机不与基站相连，主机本身提供这些服务。</p>
+<ul>
+<li><p>无基站</p>
+</li>
+<li><p>节点（移动主机）仅仅能够在其覆盖范围内向其他节点传送数据；</p>
+</li>
+<li><p>节点之间相互通信组成的临时网络:在它们内部进行选路和地址分配。</p>
+</li>
+<li><p><strong>自组织网络</strong>（ad hoc network）中，主机不与基站相连，主机本身提供这些服务。</p>
+</li>
+</ul>
+<h4 id="无线网络类型"><a href="#无线网络类型" class="headerlink" title="无线网络类型"></a>无线网络类型</h4><p>标准：无线网分组跨越的无线跳、是否有基础设施。<br>1、单跳、基于基础设施。802.11、3G蜂窝网等。<br>2、单跳、无基础设施。蓝牙、自组织模式的802.11<br>3、多跳、基于基础设施。结点通过无线结点中继通信，连接到基站，如无线网状网络。<br>4、多跳、无基础设施。移动自组织网络，包括车载自组织网络。</p>
+<h4 id="无线链路"><a href="#无线链路" class="headerlink" title="无线链路"></a>无线链路</h4><ul>
+<li>无线网络<strong>比特差错率较高</strong>，不仅需要CRC，还可能需要链路层ARQ重传受损的帧。</li>
+<li>两台主机不足以相互检测到对方的传输，由于<ul>
+<li>由于物理阻挡存在<strong>隐藏终端问题</strong>（hidden terminal problem）。</li>
+<li>信号<strong>衰减</strong>（fading）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="无线网络特征"><a href="#无线网络特征" class="headerlink" title="无线网络特征"></a>无线网络特征</h4><ol>
+<li><strong>信号强度递减。</strong>有路径耗损。</li>
+<li>其他源的干扰。如2.4GHz的802.11b受到对应无线电话和环境电子噪音影响。</li>
+<li>多径传播。由于地面发射通过多条路径传播，接收的信号模糊。</li>
+<li>物理层特征<br>对于给定的调制方案，SNR（信噪比，Signal-to-Noise Ratio）越高，BER（比特差错率）越低。<br>对于给定的SNR，较高比特传输速率的调制技术具有较高的BER。<br>物理层可以根据信道条件动态选择调制技术。</li>
+</ol>
+<h4 id="CDMA"><a href="#CDMA" class="headerlink" title="CDMA"></a>CDMA</h4><p>码多分址（Code Divison Multiple Access, CDMA），是一种信道划分协议 。每个要发送的比特乘一个信号比特编码，这个信号变化速率（码片速率, chipping rate）比初始数据快。接收方再乘以相同的编码获得原始数据。</p>
+<p>每个用户被指派一个惟一的m bit码片序列。</p>
+<p>所有用户<strong>共享相同的频道,</strong> 但每个用户用自己的“码片”序列对数据编码。</p>
+<p>例如，发送方使用的CDMA码：(1,1,1,-1,1,-1,-1,-1)发送01比特，0表示为-1：</p>
+<p><img src="https://i.loli.net/2021/09/09/bCJqTxd2cBKsMit.png" alt="SKkilat"></p>
+<blockquote>
+<p>   例：设m&#x3D;8且码片为00011011，则为便于运算与表示，通常将其表示为：</p>
+<p>   S&#x3D;(-1，-1，-1，+1，+1，-1，+1，+1)</p>
+<p>   若发送bit 1则发送序列：</p>
+<p>​      (-1，-1，-1，+1，+1，-1，+1，+1)</p>
+<p>   若发送bit 0则发送序列：</p>
+<p>​      (+1，+1，+1，-1，-1，+1，-1，-1) </p>
+</blockquote>
+<p>当站点发送比特“1”时，就发送指定给该站点的mbit码片序列；发送比特“0”时，发送此mbit码片序列的二进制反码（当用-1表示0时，发送的就是-1 * mbit码片序列）</p>
+<p>习惯上，将码片序列中的“0”写成“-1”，“1”写成“+1”</p>
+<h2 id="两种无线网络"><a href="#两种无线网络" class="headerlink" title="两种无线网络"></a>两种无线网络</h2><h3 id="wifi"><a href="#wifi" class="headerlink" title="wifi"></a>wifi</h3><ul>
+<li><strong>IEEE 802.11 无线LAN</strong>，也称<strong>WiFi</strong>，是一种较小范围的<strong>接入网</strong>技术。</li>
+</ul>
+<p>都是使用CSMA&#x2F;CA 协议实现多路访问</p>
+<p>都可以用于有固定基础设施模式和自组网络模式</p>
+<h4 id="wifi体系结构"><a href="#wifi体系结构" class="headerlink" title="wifi体系结构"></a>wifi体系结构</h4><p>802.11基本构建模块为基本服务集（Basic Service Set, BSS），<strong>一个BSS包括多个无线站点和一个接入点</strong>（Access Point, AP, 中央基站）。所有站在本BSS以内都可以直接通信。但在和本 BSS 以外的站通信时都要通过本 BSS 的基站。</p>
+<p>802.11站点可以自己组合成一个自组织网络。</p>
+<p><img src="https://i.loli.net/2021/09/09/8N1gWRa4CTDclfj.png"></p>
+<ol>
+<li>802.11频段2.4~2.4835GHz，分为11个部分重叠的信道，其中只有3个非重叠信道（两个信道仅当中间相隔4个及以上的信道时，无重叠），在同一个物理网络中可以连接3个AP，然后连接到一个交换机上。意味着 可以在一个无线 局域网里安装3个AP,分别分配信道 1,6,11。每个AP接到 一个交换机，这样无线LAN的最大传输速率可以到33M</li>
+<li>无线站点<strong>关联</strong>AP<ul>
+<li>每个AP有一个SSID（服务集标识符，Service Set Identifier），每个AP被分配一个信道号</li>
+<li>WiFi Jungle：主机如何从多个AP中关联其中一个？</li>
+<li>每个AP周期性发送信标帧，包括AP的SSID和MAC</li>
+<li>主机对11个信道进行扫描，获取所有可用的AP的信标帧</li>
+<li>主机选择其中一个AP进行关联，加入其所属子网</li>
+<li>主机向关联AP发送DHCP发现报文，获取IP地址</li>
+<li>可能需要身份鉴别</li>
+</ul>
+</li>
+</ol>
+<p>一个基本服务集可以是孤立的，也可通过接入点 AP连接到一个主干分配系统 DS (Distribution System)，然后再接入到另一个基本服务集，构成扩展的服务集ESS (Extended Service Set)。</p>
+<p>ESS 还可通过叫做门桥(portal)为无线用户提供到非 802.11 无线局域网（例如，到有线连接的因特网）的接入。门桥的作用就相当于一个网桥。 </p>
+<p><img src="https://i.loli.net/2021/09/09/BIejREdC5hGAwYW.png"></p>
+<h4 id="自组网络-ad-hoc-network"><a href="#自组网络-ad-hoc-network" class="headerlink" title="自组网络(ad hoc network)"></a>自组网络(ad hoc network)</h4><p>自组网络没有上述基本服务集中的接入点 AP 而是由一些处于平等状态的移动站之间相互通信组成的临时网络。</p>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207004835612.png"></p>
+<h4 id="802-11的MAC协议–CSMA-x2F-CA"><a href="#802-11的MAC协议–CSMA-x2F-CA" class="headerlink" title="802.11的MAC协议–CSMA&#x2F;CA"></a>802.11的MAC协议–CSMA&#x2F;CA</h4><p> WiFi所使用的MAC协议叫做CSMA&#x2F;CA**,CSMA即是载波侦听**,其原理同以前讲述的一样,他会检测其他无线站点是否正在发送数据,如果是则停止传输,知道信道空闲.但是和以前不同的是,<strong>CA是碰撞避免</strong>,而不是CD碰转检测,因为CD完全不适用于无线链路,其一,两个无线站点之间如果需要互相检测到对方的发送信号所需的成本太大,其二,即使可以互相检测到信号,也会因为隐藏终端问题和衰减的问题无法检测到所有的碰撞。</p>
+<p><strong>802.11采取碰撞避免而非碰撞检测</strong></p>
+<p>发送帧的步骤是:</p>
+<ol>
+<li>在发送信号之前,即侦听到信道空闲时,会在一个<strong>分布式帧间间隔DIFS的短时间</strong>后发送数据帧.（无冲突检测）</li>
+<li>若信道繁忙,会选取一个随机回退值（相等于一个定时器）,每当侦听到信道空闲时此回退值就会减小,信道繁忙则会冻结回退值,当回退值为0时,发送数据帧。</li>
+<li>发送数据帧并等待确认,目的地则会在等待一个被称为<strong>短帧间间隔SIFS</strong>的短时间后发送确认帧.</li>
+<li>如果源收到确认帧,表示被正确接收了,需要发送其他帧会从第二步开始.如果未收到确认,进入第二部的回退阶段,并从更大的范围选取回退值,如果发送多次,放弃发送该帧.<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/1uQskUn.png"></li>
+</ol>
+<p>处理终端隐藏问题：</p>
+<p><strong>思路</strong>: 允许发送方“预约”信道而非随机访问 :避免长的数据帧冲突</p>
+<ul>
+<li>发送方使用<strong>请求发送</strong>（Request to Send, RTS）控制帧，AP<strong>允许发送</strong>（Clear to Send, CTS）控制帧<strong>预约</strong>对信道的访问。</li>
+<li>当帧长超过<strong>门限值</strong>时使用两个控制帧，减少消耗的信道资源。</li>
+<li>RTS ，CTS被所有节点侦听到：发送方发送数据帧，其他站点推迟发送。</li>
+</ul>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210340340.png"></p>
+<p>RTS也可能仍会相互冲突 (但时间很短)</p>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207010142453.png"></p>
+<h4 id="802-11MAC帧格式"><a href="#802-11MAC帧格式" class="headerlink" title="802.11MAC帧格式"></a>802.11MAC帧格式</h4><p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216210557227.png"></p>
+<ul>
+<li>帧控制:包含许多子字段,类型和子类型用于区分管理,RTS,CTS,ACK和数据帧,WEP用于知识是否加密,to,from定义不同地址                字段的含义等等,不做具体描述</li>
+<li>持续期:表示预约信道的时间,即在上文中描述的如何处理隐藏终端问题的预约时间</li>
+<li>地址一:源MAC地址</li>
+<li>地址二:接收该帧的设备的MAC地址</li>
+<li>地址三:AP所连的交换机的MAC地址,是基本服务集BSS和因特网连接的关键</li>
+<li>序号控制:用于区分帧的重传和新的发送</li>
+<li>地址四:用于自组织间的MAC地址</li>
+<li>有效载荷:存放数据</li>
+<li>CRC:循环冗余检测字段</li>
+</ul>
+<h5 id="帧地址的变化"><a href="#帧地址的变化" class="headerlink" title="帧地址的变化"></a>帧地址的变化</h5><p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/UFPZ7Xg.png"></p>
+<p>1、R1到H1<br>路由器R1将数据报封装在以太网帧中，源地址为R1的MAC地址，目的地址为H1的MAC地址。<br>帧到AP后，由802.3以太网帧转换为802.11无线网帧。地址1为接收方H1的MAC地址，地址2为发送方AP的MAC地址，地址3为R1的MAC地址。<br>2、H1到R1<br>H1生成一个802.11帧，地址1为AP的MAC地址，地址2为H1的MAC地址，地址3为R1的MAC地址。<br>AP收到该帧后，转为以太网帧，源地址为H1的MAC地址，目的地址为R1的MAC地址。<br>地址3允许AP构建以太网帧时确定目的MAC地址，在BSS和有线局域网互联中起作用。</p>
+<h4 id="其他性质"><a href="#其他性质" class="headerlink" title="其他性质"></a>其他性质</h4><p><strong>速率适应。</strong>条件较好（收到ACK），增加传输速率，条件变差（没有收到ACK），减小传输速率。类似TCP拥塞机制。<br><strong>功率管理</strong>。一个结点可以明显的在睡眠和唤醒状态之间交替。<br>结点向AP指示打算睡眠，并设置定时器，在AP发送信标帧（100ms一次）前唤醒（约250us）结点。<br>结点睡眠时，AP先缓存帧，待以后传输。<br>短暂的唤醒时间、接收信标帧时间、检查缓存帧的时间，能大大节约能源。</p>
+<h3 id="蜂窝网"><a href="#蜂窝网" class="headerlink" title="蜂窝网"></a>蜂窝网</h3><p>WiFi热区范围较小，蜂窝网通过基站控制器（Base Station Controller, BSC）和收发基站（Base Transceiver Station, BTS）组成GSM基站系统，并将它们连接，可以进行大范围的无线覆盖。一个基站覆盖的区域类似蜂窝。<br>蜂窝电话进行扩展，不光可以传播语音，还可以传输IP数据报。</p>
+<h4 id="移动管理"><a href="#移动管理" class="headerlink" title="移动管理"></a>移动管理</h4><p>原理<br>归属网络（home network）：一个移动结点的永久居所。<br>归属代理（home agent）：归属网络中代表移动结点执行移动管理功能的实体<br>永久地址：归属网络中的地址，用它一定可以找到移动用户</p>
+<p>外部网络（foreign network）：移动结点当前所处网络，也称为被访网络（visited network）。<br>外部代理（foreing agent）：外部网络中代表结点移动管理的实体。<br>通信者（correspondent）：希望与移动结点通信的实体。<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/uO3Xyvr.png"></p>
+<p><strong>寻址</strong></p>
+<ul>
+<li>外部代理为移动节点创建<strong>转交地址</strong>（Care-Of Address, <strong>COA</strong>），与外部网络匹配。一个移动结点可以和两个地址相关联，<strong>永久地址</strong>（permanent address）和COA。</li>
+<li>外部代理可以告诉归属代理，该移动结点在他的外部网络和他的<strong>COA</strong>。</li>
+</ul>
+<h4 id="间接路由选择"><a href="#间接路由选择" class="headerlink" title="间接路由选择"></a>间接路由选择</h4><p>步骤：</p>
+<ol>
+<li>数据报导向移动结点的归属网络。</li>
+<li>归属代理将原始数据报封装（encapsulate）成大数据报，交付到移动结点的COA。</li>
+<li>拥有该COA的外部代理接收并拆封大数据报，向移动结点转发原始数据报。</li>
+<li>移动结点使用永久地址为源地址，通信者地址为目的地址，直接发送数据报到通信者。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/K01CkZb.png"></p>
+<ul>
+<li>用户移动到新的网络时，注册新的COA，更新原本归属代理中的COA。</li>
+<li>存在<strong>三角路由选择问题</strong>，即使通信者和移动结点之间有更有效的路径，也会<strong>先发给归属代理</strong>，再发到外部网络。</li>
+</ul>
+<h4 id="直接路由选择"><a href="#直接路由选择" class="headerlink" title="直接路由选择"></a>直接路由选择</h4><p>步骤：</p>
+<ol>
+<li>通信者代理向归属代理查询移动结点的COA。</li>
+<li>通信者代理使用隧道技术经过外部代理发往移动结点。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013153995.png"></p>
+<p>问题：对通信者来说是非透明的: 通信者必须从归属代理那里得到转交地址COA</p>
+<p>如果移动用户从一个被访问网络移动到另一个网络会怎样呢?</p>
+<p>由于直接选路时，归属代理只在会话开始时被询问过一次，那么在会话过程中移动用户又切换了网络怎么办？</p>
+<p><strong>移动结点移动到另一个外部网络时</strong></p>
+<ol>
+<li>移动结点向新的外部代理注册。</li>
+<li>新的外部代理向<strong>锚外部代理</strong>（会话开始时首次发现移动结点时对应的外部代理）提供移动结点新的<strong>COA</strong>。</li>
+<li>锚外部代理收到发往该移动结点的数据报后，使用新的COA重新封装数据报，并且发向移动结点。</li>
+<li>如果移动结点又移动到新的外部网络，对应的外部代理需要随后建立和锚代理的联系。</li>
+</ol>
+<p><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/image-20191207013252445.png"></p>
+<h3 id="移动性管理"><a href="#移动性管理" class="headerlink" title="移动性管理"></a>移动性管理</h3><h4 id="移动IP"><a href="#移动IP" class="headerlink" title="移动IP"></a>移动IP</h4><p>支持移动性的因特网体系结构与协议合起来被称为移动IP.有三部分组成</p>
+<ol>
+<li><p><strong>代理发现。</strong>代理通告服务或者移动结点请求服务。<br>1、代理通告。外部代理和归属代理周期性的广播类型9的ICMP报文，包括COA等信息。<br>2、代理请求。移动结点广播类型10的ICMP报文，收到请求的代理单播一个代理通告。</p>
+</li>
+<li><p><strong>向归属代理注册。</strong>移动结点收到COA后，该地址必须向归属代理注册。</p>
+<p>  1、收到外部代理通告之后，移动结点向外部代理发送注册报文，放入端口号434的UDP数据报中，包括：通告的COA、归属代理地址（HA）、移动结点永久地址（MA）、请求注册寿命、注册标识。<br>2、外部代理收到注册后记录永久IP（封装的数据报的目的地址为该永久IP，则该数据包需要解封）。向归属代理发送注册报文。<br>3、归属代理接收后验证，将移动结点的永久IP和COA绑定（到达永久IP的数据报被封装，隧道方式经外部代理发给COA）。归属代理发送注册回答。<br>4、外部代理接收注册回答，转发个移动结点。<br>数据报的间接路由选择。</p>
+</li>
+<li><p>**代理通告:**外部代理&#x2F;归属代理会周期性的通告其服务,通过发送一个类型字段为9的ICMP报文实现,报文结构如下图:<br><img src="/images/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20181216220209298.png"></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/06/ComputerNetworking_%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/06/ComputerNetworking_%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/" class="post-title-link" itemprop="url">链路层和局域网</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-05 22:45:14" itemprop="dateCreated datePublished" datetime="2019-12-05T22:45:14Z">2019-12-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="链路层和局域网"><a href="#链路层和局域网" class="headerlink" title="链路层和局域网"></a>链路层和局域网</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/06/ComputerNetworking_%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/04/ComputerNetworking_%E7%BD%91%E7%BB%9C%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/04/ComputerNetworking_%E7%BD%91%E7%BB%9C%E5%B1%82/" class="post-title-link" itemprop="url">网络层</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-04 10:30:53" itemprop="dateCreated datePublished" datetime="2019-12-04T10:30:53Z">2019-12-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h1><h2 id="第一部分：网络层概述"><a href="#第一部分：网络层概述" class="headerlink" title="第一部分：网络层概述"></a>第一部分：网络层概述</h2><p>网络层是整个协议栈中最复杂的层次。它能够被分为两个相互作用的部分：<strong>数据平面和控制平面</strong>。</p>
+<h3 id="1、网络层的目标："><a href="#1、网络层的目标：" class="headerlink" title="1、网络层的目标："></a>1、网络层的目标：</h3><p>是实现主机到主机的通信。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/1099775-20180526225039768-1081772513-1575435507732.jpg"></p>
+<h3 id="2、网络层在计算机网络的作用是："><a href="#2、网络层在计算机网络的作用是：" class="headerlink" title="2、网络层在计算机网络的作用是："></a>2、网络层在计算机网络的作用是：</h3><ul>
+<li>为运输层提供支持。</li>
+<li>为实现从源主机到目标主机成功的移动数据分组，整个路径上的每一台分组交换机上均需实现网络层。</li>
+</ul>
+<p><strong>网络层属于网络核心的功能，从运输层到网络层就从网络边缘进入到了网络核心。</strong></p>
+<h3 id="3、网络层的核心功能：选路和转发。"><a href="#3、网络层的核心功能：选路和转发。" class="headerlink" title="3、网络层的核心功能：选路和转发。"></a>3、网络层的核心功能：<strong>选路</strong>和<strong>转发</strong>。</h3><p><strong>转发是指在路由器内部将输入端口的分组转移到正确的输出端口；而路由是指路由器决定从源到目的地的路径</strong></p>
+<p><strong>在全局范畴为主机之间的通信进行选路，选路的结果反映为分组交换机上的转发表</strong></p>
+<p><strong>分组交换机上的网络层根据转发表以及分组头部信息，将分组向适当链路进行转发</strong></p>
+<p>对于面向连接的网络层服务，提供连接建立的功能</p>
+<blockquote>
+<p>分组交换机的分类：</p>
+<p>根据链路层首部信息进行转发的——链路层节点交换机</p>
+<p>根据网络层首部信息进行转发的——路由器</p>
+</blockquote>
+<h3 id="4、网路层可以提供的服务："><a href="#4、网路层可以提供的服务：" class="headerlink" title="4、网路层可以提供的服务："></a>4、网路层可以提供的服务：</h3><ul>
+<li>确保交付</li>
+<li>具有时延上界的确保交付</li>
+<li>有序分组交付</li>
+<li>确保最小带宽</li>
+<li>确保最大时延抖动</li>
+</ul>
+<p>面向连接的服务——虚电路，需事先握手</p>
+<p>面向无连接的服务——数据报，无需握手</p>
+<h3 id="5、几种实际使用的网络层服务模型："><a href="#5、几种实际使用的网络层服务模型：" class="headerlink" title="5、几种实际使用的网络层服务模型："></a>5、几种实际使用的网络层服务模型：</h3><p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204125608381.png"></p>
+<h3 id="6、网络层和运输层相应服务的区别"><a href="#6、网络层和运输层相应服务的区别" class="headerlink" title="6、网络层和运输层相应服务的区别"></a>6、网络层和运输层相应服务的区别</h3><p>网络层只向运输层提供主机到主机的服务；运输层是向应用层提供进程到进程的服务。</p>
+<p>值得一提的是运输层同时提供上述两种服务。</p>
+<p>此外，运输层的服务是在网络边缘的端系统实现的（端到端系统）。而网络层的服务则是在整个网络中实现的，包含路由器。</p>
+<h2 id="第二部分：路由器的工作原理"><a href="#第二部分：路由器的工作原理" class="headerlink" title="第二部分：路由器的工作原理"></a>第二部分：路由器的工作原理</h2><h3 id="路由器的结构"><a href="#路由器的结构" class="headerlink" title="路由器的结构"></a>路由器的结构</h3><p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204132723969.png"></p>
+<p>整个路由器结构可划分为两大部分：</p>
+<h4 id="1、路由选择部分。"><a href="#1、路由选择部分。" class="headerlink" title="1、路由选择部分。"></a>1、路由选择部分。</h4><p>路由选择部分：也叫做控制部分，其核心构件是路由选择处理机。 路由选择处理机的任务是根据所选定的路由选择协议构 造出路由表，同时经常或定期地和相邻路由器交换路由信息而不断地更新和维护路由表。</p>
+<h4 id="2、分组转发部分。"><a href="#2、分组转发部分。" class="headerlink" title="2、分组转发部分。"></a>2、分组转发部分。</h4><p>分组转发部分由三部分组成：</p>
+<p>​	1、交换结构(switching fabric)：又称为交换组织，其作用是根据转发表(forwarding table) 对分组进行处理。</p>
+<p>​	2、一组输入端口</p>
+<p>​	3、一组输出端口 （请注意：这里的端口就是硬件接口）</p>
+<ul>
+<li>输入端口：线路端接→数据链路处理（协议、拆封）→查找、转发、排队（→交换结构）</li>
+</ul>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20190507162753597-1575437721107.png"></p>
+<blockquote>
+<p><strong>分散式交换</strong>:</p>
+<p>按照给出的目的地址,使用输入端口的内存中存储的路由选择表，查找输出端口（注意每个输入端口都有一份转发表的拷贝），</p>
+<p>目标:以“线路速度”完成输入端口的处理</p>
+<p>排队：如果数据报到达的速度超过了输入端口将数据报转交给交换结构的速度，则后到的分组会暂时阻塞</p>
+</blockquote>
+<p>​			输入端口排队：输入的分组太多，就会对其进行缓存。会产生线头阻塞现象（大家都想吃麦当劳，即使肯德基没人排队）。输入缓冲区溢出可导致排队时延和丢包。</p>
+<ul>
+<li>输出端口：排队（缓存管理）→数据链路处理（协议、封装）→线路端接→</li>
+</ul>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20190507162929221-1575437868227.png"></p>
+<p>​		输出端口里面装有物理层、数据链路层和网络层的处理模块。输出端口从交换结构接收分组，然后把它们发送		到路由器外面的线路上。</p>
+<p>​		在网络层的处理模块中设有一个缓冲区（队列）。 当交换结构传送过来的分组的速率超过输出链路的发送速率		时，来不及发送的分组就必须暂时存放在这个队列中。</p>
+<p>​		数据链路层处理模块将分组加上链路层的首部和尾部，交给物理层后发送到外部线路。</p>
+<p>​	输出端口排队：来不及输出的分组就对其进行缓存，输出缓冲区溢出会导致分组的排队和丢失。</p>
+<ul>
+<li><p>交换结构：三种交换技术（经内存交换、经总线交换、经互联网交换）</p>
+<blockquote>
+<p>通过内存：当路由器的某个输入端口收到一个分组时，就用中断方式通知路由选择处理机。然后分组就从输入端口复制到内存中。 路由器处理机从分组首部提取目的地址，查找路由表， 再将分组复制到合适的输出端口的缓存中。</p>
+<p><strong>问题：若存储器的带宽（读或写）为每秒M个分组，那么路由器的交换速率（即分组从输入端口传送到输出端口的速 率）一定小于M&#x2F;2。【转发速度受限于内存的带宽（每个分组走两次总线）】</strong></p>
+<p>通过总线 ：数据报从输入端口通过共享的总线直接传送到合适的输出端口，而不需要路由选择处理机的干预。</p>
+<p><strong>问题：因为每一个要转发的分组都要通过这一条总线，因此路由器的转发带宽就受总线速率的限制。</strong></p>
+<p>现代的技术已经可以将总线的带宽提高到每秒吉比特的速率，因此许多的路由器产品都采用这种通过总线的交换方式。</p>
+<p>通过纵横交换结构(crossbar switch fabric)：这种交换结构常称为互连网络(interconnection network)。 它有2N条总线，可以使N个输入端口和N个输出端口相连接。当输入端口收到一个分组时，就将它发送到与该输入端口相连的水平总线上。</p>
+<p>若通向所要转发的输出端口的垂直总线是空闲的，则在这个结点将垂直总线与水平总线接通，然后将该分组转发到这个输出 端口。<strong>但若该垂直总线已被占用（有另一个分组正在转发到同一个输出端口），则后到达的分组就被阻塞，必须在输入端口排队。</strong></p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20190507164057429.png"></p>
+</blockquote>
+</li>
+</ul>
+<p>问题：缓冲区设置多少合适呢？</p>
+<p>a：$B&#x3D;RTT x R$</p>
+<h5 id="输出端口分组调度策略"><a href="#输出端口分组调度策略" class="headerlink" title="输出端口分组调度策略"></a>输出端口分组调度策略</h5><p>1、先来先服务FCFS&#x2F;FIFO</p>
+<p>2、加权公平排队WFQ。类似与OS中的优先级优先策略。</p>
+<h2 id="第三部分：网际协议-因特网中的转发和编址"><a href="#第三部分：网际协议-因特网中的转发和编址" class="headerlink" title="第三部分：网际协议:因特网中的转发和编址"></a>第三部分：网际协议:因特网中的转发和编址</h2><p>因特网网络层的内部视图：</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180527220449512.png"></p>
+<p>网络层主体是什么，它又是如何提供上述服务呢？</p>
+<p>网络层具有三个主要组件：<strong>IP协议、因特网控制报文协议、因特网路由选择协议</strong>。通过这些<br>组件，网络层可以复杂的网络网中寻找到最合适的路径，将分组从源主机移动到目的主机。<br>下面将通过具体介绍这三大组件，来介绍网络层。</p>
+<p>路由器转发表只有目标地址和链路接口。</p>
+<h3 id="IP数据报格式"><a href="#IP数据报格式" class="headerlink" title="IP数据报格式"></a>IP数据报格式</h3><p>目前正在使用的IP协议有两个版本，一个是广泛部署的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IPv4">IPv4</a>，另一个是被提议用来代替IPv4<br>的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/IPv6">IPv6</a>。对于不同版本的IP协议，对应着不同的<strong>数据报格式</strong>。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/1099775-20180526225151310-959238097-1575444519231.jpg"></p>
+<p>一个IP数据报由首部和数据两部分组成。首部的前一部分长度是20字节，后一部分为可变长度。</p>
+<p>（1）IP数据报首部固定部分中的各字段</p>
+<p> <strong>版本</strong>：4bit，指IP协议的版本。通信双方使用的版本必须保持一致，目前使用的是IPV4。</p>
+<p> <strong>首部长度</strong>：4bit。以4字节为一个单位。</p>
+<p> 服务类型：8bit，用来获取更好的服务。前3bit表示优先级，第4bit表示要求更低时延，第5比特表示要求更高吞吐量，第6比特表示要求更高可靠性，第7比特表示要求选择费用更低廉的路由，第8比特未用。 </p>
+<p>总长度：<strong>这是整个IP数据报的长度，即首部加数据</strong>，<strong>使用字节计算</strong>。该字段长为16比特，因<br>此，IPv4数据报的理论最大长度为65535字节。</p>
+<p><strong>标识、标志位、片偏移：</strong>它们与IP分片有关，<strong>标识号用于确定哪些数据报其实是同一个较大</strong><br><strong>数据报的片</strong>，最后一个片的标志位被设为0， 而其他片的标志位被设为1， 偏移字用于指定<br>该片应该存放在数据报的哪个位置。以8个字节为偏移单位。</p>
+<p><strong>TTL：</strong> 用于确保数据报不会长时间在网络中循环，每当数据报由一台路由器处理时，该字段<br>的值减一，当TTL为0时，数据报将会被丢弃。</p>
+<p><strong>协议：</strong>该字段标识数据报的数据部分将会交给哪个特定的运输层协议</p>
+<p><strong>首部校验和：</strong>用于帮助路由器检测收到的IP数据报中的比特错误，路由器一般会丢弃检测出<br>错误的数据报，</p>
+<p><strong>源和目的IP地址：</strong>顾名思义，就是发出此数据报和接收此数据报的主机地址。</p>
+<p>（2）IP首部的可变部分：</p>
+<p><strong>选项：</strong>选项允许IP首部被扩展，但很少使用。选项使得数据报首部长度可变，故无法预先确<br>定数据字段从何开始。而且使得处理每个数据报的时间不定、也增加了开销</p>
+<p><strong>数据：</strong>数据报的有效载荷，被用来交给上一层</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/1099775-20180526225201094-1120031569.jpg"></p>
+<p><strong>IPv6</strong>数据报中的字段：</p>
+<p><strong>版本：</strong>用于标识IP协议的版本号</p>
+<p><strong>流量类型：</strong>与IPv4中的TOS相似</p>
+<p><strong>流标签：</strong>该20比特用于标识一条数据报的流</p>
+<p><strong>有效载荷长度：</strong>该16比特值给出了在IPv6数据报的定长的40字节的数据报首部后的字节数量</p>
+<p><strong>下一个首部：</strong>标识数据报中的数据字段被交给哪个运输层协议</p>
+<p><strong>源和目的地地址</strong></p>
+<p><strong>数据：</strong>数据报的有效载荷</p>
+<h3 id="IP分片和重组"><a href="#IP分片和重组" class="headerlink" title="IP分片和重组"></a>IP分片和重组</h3><p>为什么IP要分片？</p>
+<p>因为网络链路具有MTU（最大传输单元）属性—–是由链路层最大帧的限制决定的。不同类型的链路具有不同的MTU。</p>
+<p>于是大的IP数据报就会在网络中被分成小的分片：</p>
+<ul>
+<li>一个数据报变成了几个数据报，每片开头都要带上IP报头。</li>
+<li><strong>重组只在目的主机中进行</strong></li>
+<li>数据报头部的标识、标志以及片偏移字段用于目的主机对接收的分片进行分组。</li>
+</ul>
+<p>e.g.:</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204154016487.png"></p>
+<h3 id="IP地址结构"><a href="#IP地址结构" class="headerlink" title="IP地址结构"></a>IP地址结构</h3><p>点分十进制（dotted decimal）</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180620004128989-1575455976350.png"></p>
+<p>一个IP地址可以划分为两个部分：网络号（network numbers）和主机号（host identifier）。</p>
+<p>网络号也称为网络前缀（nerwork prefix）、网络标识（network ID）。<strong>它是用于确定拥有该IP地址的主机位于哪个网络。</strong></p>
+<p>主机号用于确定属于该网络的哪台主机。</p>
+<p>问题:</p>
+<p>. 下面哪些关于两个IP地址的说法是正确的?<br>A.如果它们在不同的网络，则它们的网络号必须不同.<br>B.如果它们在不同的网络，则它们的主机号必须不同.<br>C.如果它们在相同的网络，则它们的主机号必须相同.<br>D.如果它们在相同的网络，则它们的网络号必须相同.<br>E.如果它们在相同的网络，则它们的主机号必须不同.<br>答案：ADE</p>
+<h3 id="IP地址的分类"><a href="#IP地址的分类" class="headerlink" title="IP地址的分类"></a>IP地址的分类</h3><p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180620004705313-1575456022796.png"></p>
+<p><strong>A类网、B类网、C类网个数是主机号的数量-2</strong></p>
+<p>问题：</p>
+<p>下面的IP地址中A类、B类、C类地址分别有几个?<br>92.168.1.100<br>129.32.123.54<br>223.89.201.145<br>220.18.255.254<br>124.254.200.254<br>191.64.220.8<br>66.254.1.100<br>192.1.100.1</p>
+<p>202.15.200.12</p>
+<p>答案：</p>
+<p>A类：第一位确定为0，范围为：0~127，所以：92.168.1.100  124.254.200.254  66.254.1.100三个属于A类网</p>
+<p>B类：前两位确定为10，范围为：128~191，所以：129.32.123.54   191.64.220.8两个属于B类网</p>
+<p>C类：前三位确定为110，范围为:192~223，所以：223.89.201.145  220.18.255.254  192.1.100.1  202.15.200.12四个属于C类网</p>
+<p>问题：有类地址191.168.1.2的网络号和主机号分别是什么？</p>
+<p>答：因为为191开头，所以为B类地址，前16位为网络号，后16位为主机号，所以网络号为191.168.0.0，主机号为0.0.1.2</p>
+<p>问题；一个C类网可用的IP地址有多少个？<br>答：根据问题，<strong>可知是一个确定的C类网，IP地址为可用主机个数，2^8-2&#x3D;254个。</strong> </p>
+<h3 id="子网划分"><a href="#子网划分" class="headerlink" title="子网划分"></a>子网划分</h3><p>一个有类网可以划分为多个相同大小的子网（subnet）。</p>
+<p>子网的意义：<strong>在实际的运用中，我们不可能直接将一个有类网络管理，需要将其分割成不同的块来细分管理，这些块就是子网。</strong></p>
+<p>子网划分的方法：<strong>从主机号中借用一部分位数作为子网号</strong></p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180620011554960.png"></p>
+<h4 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h4><p>上述的子网划分有一个问题：我们怎么知道子网到底借了主机号多少位作为子网号？</p>
+<p>A：通过子网掩码我们就能得知。</p>
+<p>子网掩码的记法：223.1.1.0&#x2F;24中的&#x2F;24就是子网掩码的记法，表示的是该网络号223.1.1（c类网络）的子网掩码的位数为24位。</p>
+<hr>
+<p>首先，我们弄清楚子网掩码位数、IP位数、网络位数、主机位数的关系。</p>
+<p>IP地址位数&#x3D;网络位数+主机位数&#x3D;32位。<strong>子网掩码就是网络地址的位数<em>【</em>子网掩码的1的个数表示网络位的个数，子网掩码中0的个数表示主机号的位数】</strong>。简单地来说，网络位是不属于你控制的，是上级主管给你的，给你多少就是多少。但是主机位是你可以控制的，你可以把它缩短，把缩短出来的位数加到网络位中，这样网络位就长了，子网数就多了，相应地每个子网的IP数量就少了（相当于IP认了山头）。</p>
+<blockquote>
+<p>A类网络的网络位数是8位，默认子网掩码就是11111111.00000000.00000000.00000000，换算成二进制表示为255.0.0.0。即255.0.0.0的子网掩码表示A类网络中的子网没有借用主机号，就一个子网。</p>
+<p>B类网络的网络位数是16位，默认子网掩码就是11111111.11111111.00000000.00000000，换算成十进制表示为255.255.0.0。</p>
+<p>C类网络的网络位数是24位，默认子网掩码就是11111111.11111111.11111111.00000000，换算成十进制表示为255.255.255.0。</p>
+</blockquote>
+<p>A类网络加长子网掩码到16位就把一个A类网络划分为256个B类网络同样大小的网络，再加长到24位就又把每个B类大小的<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%AD%90%E7%BD%91%E5%88%92%E5%88%86&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">子网划分</a>为256个C类网络大小的子网。就是这个道理。一个大的网络，通过把子网掩码加长，使网络位多了，也就是网络数目多了，子网就多了。</p>
+<p>一个B类网络的默认子网掩码为255.255.0.0，你如果想把它划分为2个子网，网络位数就成立17位，也就是说子网掩码就变成了255.255.128.0；想划分为16个子网，因为16是2的4次方，所以网络位数加4变成了20位，也就是说子网掩码加长，成了20位，就是255.255.240.0。依此类推。</p>
+<p>一个C类网络的默认子网掩码为24位的，那么主机位&#x3D;32-24&#x3D;8位，2的8次方等于256，所以一个C类网络的IP地址数量（包括网络地址和<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%B9%BF%E6%92%AD%E5%9C%B0%E5%9D%80&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">广播地址</a>）为256个。</p>
+<p>总结：</p>
+<ul>
+<li>IP地址位数&#x3D;32</li>
+<li>网络位+主机位&#x3D;32</li>
+<li>子网掩码加长n位，则在当前子网基础上划分为<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=2%E7%9A%84n%E6%AC%A1%E6%96%B9&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">2的n次方</a>个子网。每个子网的IP地址数量&#x3D;2^(32-划分前子网掩码位数-n)</li>
+</ul>
+<p>第二个问题：如何根据子网划分的目标计算子网掩码？</p>
+<p>A：核心抓住子网掩码的位数等于该有类网现在网络号的位数。知道了这个道理，<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E8%AE%A1%E7%AE%97%E5%AD%90%E7%BD%91%E6%8E%A9%E7%A0%81&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">计算子网掩码</a>的方法就是：已知子网内IP数的多少，求出主机位的位数，用32减去主机位数就等于网络位数，也就是子网掩码。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/aHR0cHM6Ly9zMS5heDF4LmNvbS8yMDE4LzExLzE4L0ZTQ1l3OS5wbmc.jpg"></p>
+<p>同一个网段的中的计算机子网掩码相同，计算机的网关就就是到其他网段的出口，也就是路由器接口地址。路由器接口使用的地址可以是本网段中任何一个地址，不过通常使用该网段的第一个可用的地址或最后一个可用的地址，这是为了尽可能避免和网络中的计算机地址冲突。（参见下文的层次路由部分）</p>
+<blockquote>
+<p><strong>网关实质上是一个网络通向其他网络的IP地址</strong>(此处也说明了IP地址是路由器的接口地址)。比如有网络A和网络B，网络A的IP地址范围为“192.168.1.1<del>192. 168.1.254”，子网掩码为255.255.255.0；网络B的IP地址范围为“192.168.2.1</del>192.168.2.254”，子网掩码为255.255.255.0。在没有路由器的情况下，两个网络之间是不能进行TCP&#x2F;IP通信的，即使是两个网络连接在同一台交换机(或集线器)上，TCP&#x2F;IP协议也会根据子网掩码(255.255.255.0)判定两个网络中的主机处在不同的网络里。而要实现这两个网络之间的通信，则必须通过网关。如果网络A中的主机发现数据包的目的主机不在本地网络中，就把数据包转发给它自己的网关，再由网关转发给网络B的网关，网络B的网关再转发给网络B的某个主机(如附图所示)。网络B向网络A转发数据包的过程。</p>
+<p>对默认网关，其意思是一台主机如果找不到可用的网关，就把数据包发给默认指定的网关，由这个网关来处理数据包。现在主机使用的网关，一般指的是默认网关。</p>
+</blockquote>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/aHR0cHM6Ly9zMS5heDF4LmNvbS8yMDE4LzExLzE4L0ZTQ2RXNi5wbmc.jpg"></p>
+<h4 id="CIDR"><a href="#CIDR" class="headerlink" title="CIDR"></a>CIDR</h4><p>即上述说的子网掩码的记法：地址格式: a.b.c.d&#x2F;x, 这里的 x表示地址中网络部分的位数 #</p>
+<h3 id="转发"><a href="#转发" class="headerlink" title="转发"></a>转发</h3><p><strong>最长前缀匹配：</strong></p>
+<p>使用 CIDR 时，路由表中的每个项目由“网络前缀”和“下一跳地址”组成。在查找路由表时可能会得到不止一个匹配结果。</p>
+<p>应当从匹配结果中选择具有最长网络前缀的路由：最长前缀匹配(longest-prefix matching)。</p>
+<p>网络前缀越长，其地址块就越小，因而路由就越具体。</p>
+<p><strong>最长前缀匹配又称为最长匹配或最佳匹配。</strong></p>
+<p>e.g</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204195140022.png"></p>
+<p>C4.5E.0.0&#x2F;12的网络前缀为11000100 0101<br>C4.5E.10.0&#x2F;20的网络前缀为11000100 01011110 0000<br>C4.60.0.0&#x2F;12的网络前缀为11000100 0110<br>C4.68.0.0&#x2F;14的网络前缀为11000100 011010<br>80.0.0.0&#x2F;1的网络前缀为1<br>40.0.0.0&#x2F;2的网络前缀为01<br>0.0.0.0&#x2F;2的网络前缀为00</p>
+<p>a中为11000100 01011110 00001101 87符合B；b中为11000100 01011110 0001xxxx 09和B不符合，退而求其次选择A。其他同理。</p>
+<h3 id="获取网络地址和IP地址（主机部分）"><a href="#获取网络地址和IP地址（主机部分）" class="headerlink" title="获取网络地址和IP地址（主机部分）"></a>获取网络地址和IP地址（主机部分）</h3><p>Q：一个网络如何获取一个地址？<br>A：从ISP的地址空间中获得。（找上级组织）</p>
+<p>Q：ISP如何获得整块地址？<br>A： ICANN: Internet Corporation for Assigned Names and Numbers（因特网名字与号码分配团体）</p>
+<p>分配IP地址</p>
+<p>管理 DNS</p>
+<p>分配域名, 解决域名纠纷</p>
+<p>Q：<strong>主机如何获得IP地址？(主机部分)</strong><br>1.A：手动配置。DHCP 动态主机配置协议:从服务器上动态获取IP地址</p>
+<h4 id="DHCP协议"><a href="#DHCP协议" class="headerlink" title="DHCP协议"></a>DHCP协议</h4><p>用于主机在加入网络时动态租用IP地址。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180622023147986.png"></p>
+<p>问：在一个以太网中，哪个DHCP数据包可以让该网络中的每个DHCP服务器知道DHCP客户端是否选用了它提供的IP地址?<br>A.DHCP discover<br>B.DHCP offer<br>C.DHCP request<br>D.DHCP ack<br>解析；如上图，DHCP request可以告知每个DHCP服务器这个客户端选择的是否是服务器提供的IP地址。</p>
+<blockquote>
+<p>DHCP协议的步骤：</p>
+<p>主机广播 “DHCP discover” 报文</p>
+<p>DHCP服务器响应“DHCP offer” 报文</p>
+<p>主机请求IP地址： “DHCP request” 报文</p>
+<p>DHCP 服务器确认： “DHCP ack” 报文</p>
+</blockquote>
+<p>从移动性角度看，DHCP存在问题:当一个节点连接到新的子网中时，要从DHCP中获取新的IP地址。所以在移动的过程中就不能维持TCP的连接。</p>
+<h3 id="网络地址转换NAT-Network-Address-Translation"><a href="#网络地址转换NAT-Network-Address-Translation" class="headerlink" title="网络地址转换NAT(Network Address Translation)"></a>网络地址转换NAT(Network Address Translation)</h3><p><strong>NAT</strong>能使路由器<strong>对于外部世界看起来像一个单一IP的单一设备， 使路由器对外界隐藏内部网络的细节</strong>。<strong>所有离开此内部网络的报文与进入此网络的报文都有一个相同的源地址与目的地址，NAT路由器通过使用一张NAT转换表</strong>来区分内部网络中的各个主机，转换表包含端口号与其IP地址。NAT转换表与某台主机中端口号与进程ID号对照表类似。（NAT就好似一个班级，本地IP地址就是班级的同学，其他人访问这个班级的一个IP地址时，只需要访问到班级，由班级自己转达到该IP地址。此外，为了保护班级同学的隐私，班级对外展示的都是班级同学的外号，其他人找人也只能通过班级+外号来找人。）</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204202221150.png"></p>
+<blockquote>
+<p>把原本的本地IP地址映射成为源端口号</p>
+<p>例如外网需要远程连接内网的192.168.1.9的主机，在NAT中把远程访问的端口3389影射为内网的192.168.1.9:3389，当外网输入<a target="_blank" rel="noopener" href="https://www.baidu.com/s?wd=%E5%A4%96%E7%BD%91Ip&tn=SE_PcZhidaonwhc_ngpagmjz&rsv_dl=gh_pc_zhidao">外网Ip</a>做远程访问时，路由检测到3389的端口号，就自动转到内网192.168.1.9，这时候外网就直接可以和内网的192.168.1.9通过端口影射直接访问了</p>
+</blockquote>
+<p><strong>NAT转换表</strong></p>
+<p>（相当于班级外号表，将班级内的同学的姓名转化成外号传输给外人)</p>
+<p>记录的是<strong>源IP地址,端口号  -&gt; NAT IP 地址,新的端口</strong>的转换对。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180115142745127.png"></p>
+<p>  假设一个私有地址为10.1.0.2的主机想访问互联网服务器162.105.192.12，那么首先它首先把消息发出给NAT路由器。<strong>路由器记录了它的内网地址和端口，并且给它分配一个全局地址和全局端口</strong>。这个地址关系记录在NAT路由表中。之后按照目的地址发给服务器。一段时间之后，服务器回应了请求给NAT路由器，那么路由器根据目的地址和端口（此时是全局的,就是班级号+外号）按照NAT路由表转换为对应的主机地址，再发送给主机，这样主机就收到了服务器的回应。</p>
+<p><strong>NAT的优点：</strong></p>
+<p>1.不需要从 ISP处获得大批IP地址: 所有设备可以使用同一个 IP地址<br>2.可以在不通知外部网络的情况下改变内网主机的IP地址<br>3.即使改变了ISP也无须改变内网主机的IP地址<br>4.内网主机对外网主机而言是不可见的、不可寻址的。<br> (这也算是一项安全措施).<br>5.由上述的分析可知<strong>NAT可以扩展IP的数量</strong>（每一个路由器都可以分配很多私有地址，并且不同路由器的私有地址可以重复。不同班级的二狗子表示不同的人，但是二狗子）</p>
+<p><strong>NAT虽然得到广泛应用，但很多人反对NAT，</strong>原因如下：<br> 1.端口号是用于进程编址，而不是主机编址<br> 2.路由器通常仅应当处理高达第三层的分组<br> 3.主机应彼此直接对话，结点不应该介入修改IP地址与端口号<br> 4.应该使用IPv6来解决IP地址不足的问题</p>
+<p>NAT的另一个问题是<strong>妨碍了P2P应用程序，</strong> 使得在某个NAT下的主机无法与另一个主机建立对等方发起的一条TCP连接。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Universal_Plug_and_Play">UPnP</a>：允许外部主机使用TCP或UDP向NAT化的主机发起通信会话。（告诉对方我的真实IP地址和应用的端口号）</p>
+<p>内部主机通过IGD（ Internet Gateway Device ）协议</p>
+<ul>
+<li>了解公共IP地址</li>
+<li>向路由器注册&#x2F;移除映射记录<br>（内部IP地址，内部端口号）–&gt;（公共IP地址，公共端口号）</li>
+</ul>
+<p>内部主机通过某种渠道向外部应用程序公开（公共IP地址，公共端口号）</p>
+<p>适用于P2P应用</p>
+</blockquote>
+<h3 id="ICMP：因特网控制报文协议"><a href="#ICMP：因特网控制报文协议" class="headerlink" title="ICMP：因特网控制报文协议"></a>ICMP：因特网控制报文协议</h3><p>因特网控制消息协议（Internet Control Message Protocol）<strong>用于主机或路由器发布网络级别的控制消息</strong>。<br>【错误报告: 如主机、网络、端口、协议不可达等。<br>回声请求&#x2F;回答 (用于<strong>ping</strong>应用程序)】</p>
+<p>1、从体系结构而言，位于<strong>IP</strong>层之上 :</p>
+<ul>
+<li><strong>ICMP</strong> 报文封装在<strong>IP</strong>分组中</li>
+</ul>
+<p>2、ICMP 消息: 包括一个类型字段和一个编码字段</p>
+<p>3、ICMP 报文的种类有两种，即 ICMP 差错报告报文和 ICMP 询问报文</p>
+<p>4、ICMP消息的一般格式：</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204204146133.png"></p>
+<p>ICMP消息的常见类型：</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180620225212584.png"></p>
+<h3 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h3><h4 id="IPv6的数据报格式"><a href="#IPv6的数据报格式" class="headerlink" title="IPv6的数据报格式"></a>IPv6的数据报格式</h4><p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191204211226327.png"></p>
+<p><strong>·版本号。</strong>这 4 比特字段用于标识 IP 版本号。 IPv6 将该字段值设为 6。</p>
+<p><strong>·流量类型。</strong>与IPv4的TOS相似</p>
+<p><strong>·流标签。</strong> 该 20 比特字段用于标识一个数据报的流。</p>
+<p><strong>·有效载荷长度。</strong> 给出了 IPv6 数据报中跟在定长的 40 字节数据报首部后面的字节数 量。</p>
+<p><strong>·下一个首部。</strong>该字段标识该数据报中的内容(数据字段)需要交付给哪个协议(如 TCP 或 UDP)该字段使用与 IPv4 首部中协议字段相同的值。</p>
+<p><strong>·跳限制。</strong>转发数据报的每台路由器将对该字段内容减 1。如果跳限制计数到达 0，则 该数据报将被丢弃。</p>
+<p><strong>·源和目的地址。</strong></p>
+<p><strong>·数据。</strong> 几个字段在 IPv6 数据报中已废弃:</p>
+<p><strong>·分片相关字段。</strong>IPv6 不允许在中间路由器上进行分片与重新组装。</p>
+<p><strong>·首部校验和。</strong></p>
+<p><strong>·选项字段。</strong></p>
+<p>几个字段在 IPv6 数据报中已废弃:</p>
+<p><strong>·分片相关字段。</strong>IPv6 不允许在中间路由器上进行分片与重新组装。</p>
+<p><strong>·首部校验和。</strong></p>
+<p><strong>·选项字段。</strong></p>
+<h4 id="ipv4到ipv6的迁移"><a href="#ipv4到ipv6的迁移" class="headerlink" title="ipv4到ipv6的迁移"></a>ipv4到ipv6的迁移</h4><p>双栈技术：</p>
+<p>1、如果源和目标都支持IPv6的话，就使用Ipv6进行通信。</p>
+<p>2、如果任何一方不支持IPv6的话，则使用IPv4进行通信。</p>
+<h2 id="第四部分：选路算法"><a href="#第四部分：选路算法" class="headerlink" title="第四部分：选路算法"></a>第四部分：选路算法</h2><p>目的是：给定一组路由器以及连接路由器的链路，从中找到一条从源路由器到目标路由器“好的”路径。</p>
+<ul>
+<li>根据信息是全局性还是分散式的进行分类：</li>
+</ul>
+<p><strong>全局选路算法</strong></p>
+<p>要求：</p>
+<p>1、所有路由器都知道整个网络拓扑图以及链路的费用信息<br>2、链路状态算法</p>
+<p><strong>分散式选路算法</strong></p>
+<p>要求：</p>
+<p>1、每个路由器仅有与其相连链路的费用信息<br>2、通过迭代计算过程与相邻节点交换信息<br>3、距离向量算法</p>
+<ul>
+<li>根据信息是静态还是动态的进行分类</li>
+</ul>
+<p><strong>静态选路算法</strong></p>
+<p>要求：</p>
+<p>1、随着时间的流逝，路由的变化非常缓慢</p>
+<p><strong>动态选路算法</strong></p>
+<p>要求：</p>
+<p>1、路由信息可以更快地发生变化<br>2、周期性的跟新<br>3、可以响应拓扑或链路费用的变化</p>
+<ul>
+<li>根据是否对负载敏感进行分类</li>
+</ul>
+<p><strong>负载敏感算法</strong></p>
+<p>要求：</p>
+<p>1、链路费用会动态地变化以反映出链路的当前状况</p>
+<p><strong>负载迟钝算法</strong></p>
+<p>要求：</p>
+<p>1、链路费用不明显地反映链路的当前状况</p>
+<h3 id="链路状态选路算法LS"><a href="#链路状态选路算法LS" class="headerlink" title="链路状态选路算法LS"></a>链路状态选路算法LS</h3><p>选择的是迪克斯拉特算法（SPF）—–最低费用算法。具体算法实现不介绍。（Dijkstra算法可参考如下：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35644234/article/details/60870719">点击打开链接</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/yalishadaa/article/details/55827681">点击打开链接</a>）</p>
+<p><strong>利用这些最短路径上的下一个节点作为下一跳得到源节点的转发表（路由表）。所以路由器的下一跳地址是直接得出的，不需要修改。</strong></p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20180625141447532.png"></p>
+<p><strong>可能会遇到的问题：</strong></p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191205000214985.png"></p>
+<h3 id="距离向量选路算法DV"><a href="#距离向量选路算法DV" class="headerlink" title="距离向量选路算法DV"></a>距离向量选路算法DV</h3><p>是基于迭代的算法。每个结点当DV变化时将自身DV估计通告给<strong>邻居</strong>；邻居在必要时（其DV更新后发生改变）才通告它们的邻居</p>
+<p>当结点检测到本地链路费用改变或者接收到来自邻居的新DV估计更新时，即依据B-F方程更新自身的距离向量估计Dx(y)将最终收敛于实际的最小费用dx(y)</p>
+<p><strong>思想</strong>：</p>
+<ol>
+<li><p>$B-F公式：dx(y)&#x3D;minv{c(x,v)+dv(y)}$ </p>
+<ul>
+<li>dx(y):节点x到y的当前最低费用</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>v是对于x的所有直接邻居<ul>
+<li><strong>我到目的地的最小距离，等于 我到邻居距离与邻居到目的地最小距离之和（存在一个或多个邻居） 的最小值。</strong></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>每个路由器中都有一张路由表，包含三个内容：目的网络号、经过的邻居路由器、到目的网络的距离（&lt;目的网络 N，跳数，下一跳地址&gt;）</p>
+</li>
+<li><p>路由器定期向其邻居路由器传送路由表的拷贝</p>
+</li>
+</ol>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191205002131804.png"></p>
+<p><strong>算法执行步骤</strong></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_22238021/article/details/80496138">参考文章</a></p>
+<ol>
+<li>从相邻的 X 路由器接收发送过来的 RIP（Routing Information Protocol） 报文</li>
+<li>将该 RIP 报文中的下一跳地址修改为 X，且跳数增加 1</li>
+<li>对每个项目执行如下步骤<br>a.若原路由表没有 RIP 中的目的网络 N，<strong>直接添加到原路由表中</strong><br>b.若原路由表中有 RIP 中的目的网络 N，但下一跳地址不是 X ，选择跳数少的替换。如果两者跳数一样，则保留原路由表的项。<br>c.若原路由表中有 RIP 中的目的网络 N，且下一跳地址是 X，使用收到的项替换</li>
+<li>若超过 180s （RIP 默认 180s）还没有收到相邻路由器的更新路由表，则相邻路由器置为不可达，跳数为 16<br><strong>路由器的下一跳的地址是不断修改的</strong></li>
+</ol>
+<p><strong>链路状态改变时的特点</strong></p>
+<p>1、好消息（链路费用变小）传的快：起到收缩的作用，让DV趋于最小的值</p>
+<p>在 <em>t0</em> 时刻, <em>y</em> 检测到链路费用变化, 更新自己的距离向量, 同时将这个变化通知给它的邻居<br>在 <em>t1</em>时刻, <em>z</em> 收到来自 <em>y</em> 的更新报文并更新了自己的距离向量表，计算出到x的新的最低费用，并向邻居发送它的新距离向量<br>在 <em>t2</em>时刻，<em>y</em> 收到自<em>z</em>的更新并更新其距离向量表，Y的最低费用未变，因此y不发送任何报文给z</p>
+<p>2、坏消息传播的慢</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191205002609401.png"></p>
+<p>解决方案：</p>
+<p>针对只有3个节点的环路可以采用毒性逆转</p>
+<blockquote>
+<p>毒性逆转：如果一个结点Z到达某目的X的最小费用路径是通过某个邻居Y，则Z告知邻居结点Y到达该目的X的距离为无穷大。</p>
+</blockquote>
+<p>针对有多个节点的环路没有很好的办法，但是可以定义最大度量(maximum metric):一个最大的有效费用值，如16跳步表示费用为∞</p>
+<h3 id="LS算法和DS算法的比较："><a href="#LS算法和DS算法的比较：" class="headerlink" title="LS算法和DS算法的比较："></a>LS算法和DS算法的比较：</h3><ul>
+<li>报文复杂性</li>
+</ul>
+<p><strong>LS 算法要求每个结点都知道网络中每条链路的费用</strong>，要发送O(|N|*|E|)个报文。而且无论何时一条链路的费用改变时，必须向所有结点发送新的链路费用。</p>
+<p><strong>DV算法要求在每次迭代时，在两个直接相连邻居之间交换报文</strong>。当链路费用改变时,DV 算法仅当在新的链路费用导致与该链路相连结点的最低费用路径发生改变时，才传播已改变的链路费用。</p>
+<ul>
+<li>收敛速度</li>
+</ul>
+<p>LS算法的实现是一个要求O(|N|*|E|)个报文的O(|N|^2)算法。但是可能会有震荡的情况发生。</p>
+<p>DV 算法收敛较慢，且在收敛时会遇到路由选择环路，还会遭遇无穷计数的问题。</p>
+<ul>
+<li>健壮性。</li>
+</ul>
+<p>如果一台路由器发生故障、行为错乱或受到破坏时</p>
+<p>LS算法：路由器能够向其连接的一条链路广播不正确费用。作为LS广播的一部分，一个结点也可损坏或丢弃它收到的任何LS广播分组。但是每个LS结点都仅计算自己的转发表。因此路由计算在某种程度上是分离的，提供了一定程度的健壮性。</p>
+<p>DV算法：一个结点可向任意或所有目的结点通告其不正确的最低费用路径。因此一个不正确的结点计算值会扩散到整个网络。</p>
+<h3 id="路由信息协议RIP（内部网关协议）"><a href="#路由信息协议RIP（内部网关协议）" class="headerlink" title="路由信息协议RIP（内部网关协议）"></a>路由信息协议RIP（内部网关协议）</h3><p>RIP协议是一种<strong>采用距离向量算法的路由协议</strong>。</p>
+<ul>
+<li>到目的网络的距离以跳为单位，最大距离为15，距离16表示无穷大，即目的网络不可达。（这一规定限制了RIP协议只能适用于中小网络，网络规模太大的话路由信息就无法到达远端路由器了）</li>
+<li>初始时每个RIP路由器只有到直连网的路由，距离为1；</li>
+<li>每30秒RIP路由器把它的整个路由表发给邻居（具体实现时每个邻居会错开发送，30秒的时间也会随机变化一点）</li>
+</ul>
+<p>简述RIP协议的工作原理：路由器每30秒把自己的路由表发给邻居。路由器用邻居发来的路由表根据距离向量算法修改自己的路由表。初始时每个路由器只有到直连网距离为1的路由。</p>
+<p>利用邻居的路由表建立自己的路由表：当收到邻居发来的路由表时，路由器将更新它的路由表&lt;目的网络，开销，下一跳&gt;：</p>
+<p>首先将收到的路由的距离全加1（即一跳的距离）；</p>
+<p>再利用收到的路由表修改自己的路由表：</p>
+<ul>
+<li>将收到的路由表中不存在的路由表项加入到自己的路由表；</li>
+<li>如果收到的路由表中某一项的距离比该路由器原路由表对应项的距离更小，则更新该路由表项，<strong>并将对应路径的下一跳设置为邻居</strong>；</li>
+<li>如果路由项存在，就要重置失效定时器；</li>
+<li>如果收到的路由表中存在某一项的目的网络也是该路由器的路由表中某一项的目的网络，且下一跳为发送路由表的路由，那无论如何该路由器都要更新对应的表项，将距离改为收到的表项中的距离+1；</li>
+</ul>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20190604103436142.png"></p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20190604103538678.png"></p>
+<h3 id="因特网中的链路状态选路——OSPF协议（内部网关协议）"><a href="#因特网中的链路状态选路——OSPF协议（内部网关协议）" class="headerlink" title="因特网中的链路状态选路——OSPF协议（内部网关协议）"></a>因特网中的链路状态选路——OSPF协议（内部网关协议）</h3><p>是分布式的<strong>链路状态协议</strong>。由于现在的网络的规模越来越大，自治就很重要，要让每个ISP管理自己的路由器。故我们最多的使用的是OSPF协议。使用的是<strong>洪泛链路和Dijkstra最低开销路径算法</strong></p>
+<p>协议的内容：</p>
+<p>第一要点：洪泛法广播自己邻居的链路状态。</p>
+<ol>
+<li><p>向本自治系统中所有路由器发送信息，使用的方法是洪泛法</p>
+</li>
+<li><p>发送的信息就是与本路由器相邻的所有路由器的链路状态（例如拥堵度）</p>
+<p><strong>【每个链路获得与之相连的链路</strong>的标识和开销是由链路状态广播算法实现的。】</p>
+</li>
+<li><p>只要当链路状态发生变化时，路由器就用洪泛法向所有路由器发送此信息</p>
+</li>
+<li><p>即使链路状态没变化，也要周期性地发送链路状态信息</p>
+</li>
+</ol>
+<p>第二要点：所有路由器的链路状态库可及时更新。</p>
+<ol>
+<li>由于各路由器之间频繁地交换链路状态信息，因此所有的路由器最终都能建立一个链路状态数据库</li>
+<li>这个数据库实际上就是全网的拓扑结构图，它在全网范围内是一致的</li>
+<li>OSPF 的链路状态数据库能较快地进行更新，使各个路由器能及时更新其路由表。OSPF 的更新过程收敛得快是其重要优点</li>
+</ol>
+<p><strong>OSPF协议的特点</strong></p>
+<ol>
+<li>不强制如何设置链路权值的策略，但提供对给定链路权值集合确定最低费用路径的机制</li>
+<li>即使链路状态未发生变化，每30分钟广播一次链路状态</li>
+<li>链路状态以OSPF通告的形式封装在OSPF报文中，<strong>由IP分组承载</strong>（协议号：89）</li>
+<li>OSPF路由器之间的交换都是经过鉴别的（简单的、MD5的），以确认OSPF通告的真实性，防止伪造和篡改</li>
+<li>OSPF通告都是有序列号的，以防止重放攻击</li>
+<li>OSPF中支持多条具有相同费用的路径</li>
+<li>OSPF支持多播选路和层次路由</li>
+<li><strong>OSPF使用IP数据报传输报文，是一个网络层协议</strong></li>
+</ol>
+<h3 id="层次路由"><a href="#层次路由" class="headerlink" title="层次路由"></a>层次路由</h3><p>上述讨论的情况都是基于路由器是相似的。但是实际中的网络是具有层次的。</p>
+<p>层次路由解决了当前网络规模大导致路由器无法储存全部的路由器信息的问题。</p>
+<p>让ISP自己管理自己的路由器。实现自治系统（AS）。</p>
+<p>1、在相同AS内的路由器可全部运行同样的选路算法</p>
+<ul>
+<li>自治系统内部选路协议</li>
+</ul>
+<p>【<strong>内部网关协议 IGP</strong> (Interior Gateway Protocol)  目前这类路由选择协议使用得最多，如 RIP 和 OSPF 协议。】</p>
+<p>2、在不同AS内的路由器可以运行不同的自治系统内部选路协议</p>
+<p>3、不同AS之间的选路：<strong>外部网关协议EGP</strong></p>
+<blockquote>
+<p>边界网关协议BGP（包括了外部BGP—eBGP，内部BGP—iBGP）</p>
+<p>对于每个AS，每台路由器要么是一台网关路由器，要么是一台内部路由器。</p>
+<p><strong>网关路由器</strong>:（同上文中的网关一样）</p>
+<p>通常位于AS的边缘</p>
+<p>具有连接到其它AS的链路</p>
+</blockquote>
+<h4 id="BGP会话"><a href="#BGP会话" class="headerlink" title="BGP会话"></a>BGP会话</h4><p>分为内部会话和外部会话。</p>
+<p>内部会话参见上文。外部会话如下：</p>
+<h5 id="因特网上的AS间路由—BGP4"><a href="#因特网上的AS间路由—BGP4" class="headerlink" title="因特网上的AS间路由—BGP4"></a>因特网上的AS间路由—BGP4</h5><p>因为因特网的规模太大，AS间的选择有很多，想要选择最佳路由往往不可实现或者代价很大。</p>
+<p>所以，退而求其次。<br>BGP为每一个AS从相邻AS获取子网可达性信息，然后向内部的所有路由器传播这些消息。<br>基于该可达性信息和AS策略，决定到达子网的“好”路由<br><strong>边界网关协议 BGP 只能是力求寻找一条能够到达目的网络且比较好的路由（不能兜圈子），而并非要寻找一条最佳路由</strong></p>
+<p><strong>外部会话中，BGP边界路由器采取的是半永久的TCP连接交换路由选择的信息。</strong></p>
+<h4 id="路径属性"><a href="#路径属性" class="headerlink" title="路径属性"></a>路径属性</h4><p>前缀+属性（包含在前缀中）&#x3D;路由    前缀表示一个子网或一个子网的集合（IP地址）。例如AS2向AS1通告它的前缀含义就是告诉AS1：你向这个前缀表示的子网或子网集合发送数据报，我一定帮你转发。</p>
+<p>两个重要的属性：</p>
+<p><strong>1、AS-PATH（AS路径）包含前缀通告所经过的AS序列</strong>（如上述AS2告诉了AS1，那么AS2的AS-PATH中包含了AS1，<strong>只能在EBGP邻居之间传路由时进行改动，对IBGP邻居传来的路由改不了</strong>）</p>
+<blockquote>
+<p>AS-PATH<strong>还可以防止环路的出现</strong>。当一个AS收到的路径列表中看到自己就可以拒绝接受该通告</p>
+</blockquote>
+<p><strong>2、NEXT-HOP（下一跳）开始一个AS-PATH的路由器节后，指向一个跳AS。</strong>(因为可能从当前AS到下一跳AS之间可能有多条链路)</p>
+<blockquote>
+<p>特征：</p>
+<p>①从EBGP邻居学习到的路由会传递给我的EBGP邻居，下一跳改变，为自己</p>
+<p>②从EBGP邻居学习到的路由会传递给我的IBGP邻居，下一跳不变，还是EBGP邻居，需要使用next-hop-self改变</p>
+<p>③从IBGP邻居学习到的路由不会再传递给我的IBGP邻居（水平分割）</p>
+<p>④从IBGP邻居学习到的路由会传递给我的EBGP邻居，下一跳改变，为自己</p>
+<p>作用：为BGP发言者指示了去往目的地的下一跳。</p>
+<p>【BGP发言者往往是BGP边界路由器。两个BGP发言人通过一个共享网络连接在一起】</p>
+<p>BGP 的下一跳属性和IGP 的有所不同，不一定就是邻居路由器的IP 地址。下一跳属性取值情况分为4种，如 图所示。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/295065-20180108181340160-1180556704.png" alt="img"></p>
+<ul>
+<li><strong>BGP发言者把自己产生的路由发给所有邻居时</strong></li>
+</ul>
+<p>将把该路由信息的下一跳属性设置为自己与对端连接的接口地址</p>
+<ul>
+<li><strong>BGP发言者把从EBGP邻居得到的路由发给IBGP邻居时</strong></li>
+</ul>
+<p>并不改变该路由信息的下一跳属性。将从EBGP得到的路由的NEXT_HOP直接传递给IBGP对等体。</p>
+<p>上图中，RTA通过IBGP向RTF通告路由8.0.0.0&#x2F;24时，NEXT_HOP为10.3.1.1。</p>
+<ul>
+<li><strong>BGP</strong> <strong>发言者把接收到的路由发送给</strong> <strong>EBGP</strong> <strong>对等体</strong> <strong>时</strong></li>
+</ul>
+<p>将把该路由信息的下一跳属性设置为自己与对端连接的接口地址；</p>
+<p>上图中，RTB通过EBGP向RTA通告路由8.0.0.0&#x2F;24时，NEXT_HOP为10.3.1.1。</p>
+<ul>
+<li><strong>对于可以多路访问的网络（如以太网或帧中继）</strong></li>
+</ul>
+<p>如果通告路由器和源路由器的接口处于同一网段，则BGP会向邻居路由通告路由的实际的来源。</p>
+<p>上图中，RTC向EBGP对等体RTB通告路由8.0.0.0&#x2F;24时，则使用该路由的实际来源地址10.2.1.3作为NEXT_HOP。</p>
+<p>如果配置了负载分担，等价路由被发给IBGP邻居时则会修改下一跳属性。关于“负载分担”的概念请参见“BGP的选路规则”。</p>
+</blockquote>
+<p><strong>当一台网关路由器接收到一个路由器通告时，它使用输入策略决定是否接收或过滤该路由</strong></p>
+<p>Q：路由器怎么确定自己下一跳的目的地呢？<br>A：转发表。路由器的转发表中储存下一跳信息。实现参见上述。</p>
+<h4 id="BGP路由选择"><a href="#BGP路由选择" class="headerlink" title="BGP路由选择"></a>BGP路由选择</h4><p>Q：从源到目标仅有一条路可选或者多条路的时候怎么办？<br>A：只有一条路的时候，就只在AS内广播寻找最低费用路径，反正AS间的路径只有一条。<br>        有多条路径的时候，采取如下消除规则：</p>
+<p>​			1、<strong>本地偏好值</strong>：策略决定（由AS的网络管理员决定的决策）具有最高本地偏好值的路由将被选择。</p>
+<p>​			2、<strong>最短AS-PATH</strong>：在余下的路由中，具有最短AS-PATH的路由将被选择。（起码感受上这个就比其他的短）</p>
+<p>​			3、<strong>热土豆选路</strong>：从余下的路由中，选择具有最靠近NEXT-HOP路由器的路由</p>
+<blockquote>
+<p>热土豆选路：选择具有最小的最低费用（AS内部的）的网关。意思就是<strong>希望尽快将分组送出其AS，而不担心其AS外部到目的地的余下部分的开销</strong>。</p>
+<p>（使用AS内部协议的选路信息决定每个网关的最低费用路径的费用）不同网关的费用已经经过BGP的外部会话传到了源路由器。</p>
+</blockquote>
+<p>一个简单的BGP图例：</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20171030215649545.png"></p>
+<p>子网x通过AS3和AS2均可到达</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20171030215736751.png"></p>
+<h4 id="因特网上的AS内层次路由——层次OSPF"><a href="#因特网上的AS内层次路由——层次OSPF" class="headerlink" title="因特网上的AS内层次路由——层次OSPF"></a>因特网上的AS内层次路由——层次OSPF</h4><p>将自治系统再划分为若干小的范围。</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20181203161051658.png"></p>
+<p>划分区域的好处就是将利用洪泛法交换链路状态信息的范围局限于每一个区域而不是整个的自治系统，这就减少了整个网络上的通信量。</p>
+<p>OSPF 使用层次结构的区域划分。在上层的区域叫作主干区域(backbone area)。主干区域的标识符规定为0.0.0.0。主干区域的作用是用来连通其他在下层的区域。  </p>
+<h4 id="补充路由选择策略"><a href="#补充路由选择策略" class="headerlink" title="补充路由选择策略"></a>补充路由选择策略</h4><p>图示：</p>
+<p>桩网路：所有进入该网络的流量必定以该网络为目的地；所有离开该网络的流量必定源于该网络</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20181203161146760-1575551284208.png">略</p>
+<p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/20181203161156335-1575551270287.png"></p>
+<h3 id="路由协议小结"><a href="#路由协议小结" class="headerlink" title="路由协议小结"></a>路由协议小结</h3><p><img src="/images/%E7%BD%91%E7%BB%9C%E5%B1%82/image-20191205210903587.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/02/Algorithm_%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/02/Algorithm_%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" class="post-title-link" itemprop="url">单源最短路径</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-02 14:08:07" itemprop="dateCreated datePublished" datetime="2019-12-02T14:08:07Z">2019-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="单源最短路径"><a href="#单源最短路径" class="headerlink" title="单源最短路径"></a>单源最短路径</h1><p>最短路径问题：一个带权重的有向图G &#x3D; (V, E)和权重函数w: E-&gt;R，该权重函数将每条边映射到实数值的权重上。一条路径p的权重w(p)是构成该路径的所有边的权重之和，定义从节点u到结点v的最短路径权重δ (u, v)如下：</p>
+<p><img src="/images/%E5%8D%95%E6%BA%90%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/20150510102230925.png"></p>
+<p>单目的地最短路径问题：找出从每个顶点v到指定终点t的最短路径。把图中的每条边反向，就可以把这一问题变为单源最短路径问题。</p>
+<p><strong>一些概念：</strong></p>
+<p>如果一条路径中包含两个相同的结点，则该路径包含<strong>环路</strong>。</p>
+<p>不包含环路的路径称为<strong>简单路径</strong>。</p>
+<p>最短路应为简单路径，不包含环路。</p>
+<ul>
+<li>对任何简单路径最多包含|V|-1条边和|V|个结点。</li>
+<li>不失一般性，假设后续算法寻找的最短路径都不包含环路。</li>
+</ul>
+<h3 id="负权重边"><a href="#负权重边" class="headerlink" title="负权重边"></a>负权重边</h3><p>边的权重可以为负值，即使边的权重为负值，对于所有节点v，最短路径权重 (u, v)都可以有精确定义。但是，<strong>如果图G&#x3D;(V, E)包含从源节点s可以到达的，权重为负值的环路，则最短路径权重无定义，从s到该环路上的任意节点的路径都不可能是最短路径</strong>。如果从节点s到节点v的某条路径上存在权重为负值的环路，则(u, v) &#x3D; -∞。</p>
+<p>示例：</p>
+<img src="https://i.loli.net/2021/01/17/48swgVASim7JBpe.png" style="zoom:67%;" />
+
+<p> 从节点s到节点c有无数条路径；&lt;s,c&gt;, &lt;s,c,d,c&gt;,&lt;s,c,d,c,d,c&gt;等，因为环路&lt;c, d, c&gt;的权重为3&gt;0。所以从s到c的最短路径为&lt;s,c&gt;，δ(s, c)&#x3D;5。</p>
+<p>   从节点s到节点e也有无数条路径：&lt;s,e&gt;, &lt;s,e,f,e&gt;, &lt;s,e, f,e, f,e &gt;等，因为环路&lt;e, f, e&gt;的权重为-3，所以，从节点s到节点e没有最短路径，因此δ(s,e)&#x3D;-∞。类似的， δ(s,f)&#x3D;-∞。因为g可以从节点f到达，所以， δ(s, g)&#x3D;-∞。（因为s到e可以在e、f上转圈圈，就会使得路径趋于负的无穷小）</p>
+<h3 id="最短路径的表示"><a href="#最短路径的表示" class="headerlink" title="最短路径的表示"></a>最短路径的表示</h3><p>一个结点的<strong>前驱结点</strong>记为：v.π<br>（前驱结点或者为NIL或者为另一个结点）</p>
+<p>利用v.π的记录可以搜索出最短路径上的所有结点。</p>
+<p>一个源点s所诱导的前驱子图定义为Gπ&#x3D;(Vπ，Eπ)，其中，</p>
+<p>结点集合Vπ&#x3D;{v∈V：v.π≠NIL}∪{s}</p>
+<ul>
+<li>即Vπ是源点s和图G中的前驱结点不为NIL的所有结点的集合</li>
+</ul>
+<p>边集合Eπ&#x3D;{(v.π,v)∈E：v∈Vπ-{s}}</p>
+<ul>
+<li>即Eπ是由Vπ中的结点v的π值所“诱导”(induced)的边的集合。</li>
+</ul>
+<p>则，算法终止时，<strong>Gπ是一棵最短路径树。</strong></p>
+<p><strong>该树包含了从源点s到每个可以从s到达的结点的最短路径。</strong></p>
+<p><strong>另外，最短路径不是唯一的，最短路径树也不一定是唯一的。</strong></p>
+<h3 id="松弛操作"><a href="#松弛操作" class="headerlink" title="松弛操作"></a>松弛操作</h3><p>松弛：原来用一根橡皮筋连接p和w两点，现在有一点v到w的路径更短，现在把橡皮筋w点的另一端p换成v点，这样缓解橡皮筋紧绷的压力，让其变得松弛。</p>
+<p>简单的说就是不断更新最短路径。</p>
+<p>1）松弛边：  w -&gt; v 意味着先检查从s到v的最短路径是否是先从s 到 w，再由w -&gt; v, 如果是，则更新v.d和v.π的数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于每个顶点v∈V，都设置一个属性d[v]，用来描述从源点s到v的最短路径上权值的上界，称为**最短路径估计（shortest-path estimate）**。π[v]代表S到v的当前最短路径中v点之前的一个点的编号</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">relax</span><span class="params">(DirectedEdge e)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> e.from(), w = e.to();</span><br><span class="line">        <span class="keyword">if</span> (v.d  &gt;  w.d + e.Weight())</span><br><span class="line">        &#123;</span><br><span class="line">            v.d = w.d + e.Weight();</span><br><span class="line">            v.π = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//RELAX 的时间：O(1)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="最短路径和松弛操作的性质"><a href="#最短路径和松弛操作的性质" class="headerlink" title="最短路径和松弛操作的性质"></a>最短路径和松弛操作的性质</h3><p>1。<strong>三角不等式性质</strong>：对于任何边(u,v)∈E，有δ(s,v)≤δ(s,u)+ω(u,v)。</p>
+<blockquote>
+<p>证明：</p>
+<p>假定p是从源结点s到结点v的一条最短路径，则p的权重不会比任何从s到v的其它路径的权重大，因此路径p的权重也不会比这样的一条路径的权重更大：从源结点s到结点u的一条最短路径，再加上边(u,v)而到达结点v的这条路径。</p>
+<p>如果s到v没有最短路径，则不可能存在s到v的路径。</p>
+</blockquote>
+<p>2。<strong>上界性质</strong>：对于所有结点v∈V，我们有v.d≥δ(s,v)。一旦v.d的取值达到δ(s,v)，其值将不再变化。</p>
+<blockquote>
+<p>证明：</p>
+<p>使用数学归纳法</p>
+</blockquote>
+<p>3。<strong>非路径性质</strong>：若从结点s到结点v之间不存在路径，有v.d&#x3D;δ(s,v)&#x3D;∞。</p>
+<blockquote>
+<p>证明：</p>
+<p>因为从源点s到给定点v之间不存在路径，所以δ(s,v)&#x3D;∞。而根据上界性质，总有v.d≥δ(s,v)，所以，v.d≥δ(s,v)&#x3D;∞。</p>
+</blockquote>
+<p>4。<strong>收敛性质：</strong>设结点u,v∈V，如果s⇝u→v是图G中的一条最短路径，且在对边(u,v)进行松弛前的任意时间有u.d&#x3D;δ(s,u)，则在之后的所有时间有v.d&#x3D;δ(s,v)。</p>
+<p>5。<strong>路径松弛性质</strong>：若p&#x3D;&lt;v<del>0</del>,v<del>1</del>,…,v<del>k</del>&gt;是从源结点s&#x3D;v<del>0</del>到结点v<del>k</del>的一条路径，且我们对p中所进行松弛的次序为(v<del>0</del>,v<del>1</del>),(v<del>1</del>,v<del>2</del>),…,(v<del>k−1</del>,v<del>k</del>)，则v<del>k</del>.d&#x3D;δ(s,v<del>k</del>)。</p>
+<blockquote>
+<p>该性质的成立与其他边的松弛操作及次序无关，即使这些松弛操作是与对p上的边所进行的松弛操作穿插进行的。</p>
+<p>数学归纳法证明。</p>
+</blockquote>
+<p>6。<strong>前驱子图性质</strong>：对于所有结点v∈V，一旦v.d&#x3D;δ(s,v)，则前驱子图是一棵根结点为s的最短路径树。</p>
+<h2 id="最短路径的最优子结构"><a href="#最短路径的最优子结构" class="headerlink" title="最短路径的最优子结构"></a>最短路径的最优子结构</h2><p><strong>最短路径具有最优子结构性质：两个结点之间的一条最短路径包含其他的最短路径</strong></p>
+<p><strong>具有&#x3D;&#x3D;贪心思想&#x3D;&#x3D;</strong></p>
+<h3 id="证明（剪枝-复制法-反证法）"><a href="#证明（剪枝-复制法-反证法）" class="headerlink" title="证明（剪枝-复制法+反证法）"></a>证明（剪枝-复制法+反证法）</h3><p>假设路径p分为p<del>oi</del> 、p<del>ij</del>、p<del>jk</del> ，并且p是v<del>o</del>到v<del>k</del>的最短路径。如果p<del>oi</del> 、p<del>ij</del>、p<del>jk</del>不是最短路径的话，假设存在p<del>oi2</del></p>
+<p>是v<del>o</del>到v<del>i</del> 的最短路径。将p<del>oi</del> 减去复制上p<del>oi2</del> 就反证出p不是最短路径，矛盾。</p>
+<h2 id="Bellman-ford算法"><a href="#Bellman-ford算法" class="headerlink" title="Bellman-ford算法"></a>Bellman-ford算法</h2><h3 id="适用条件-amp-范围"><a href="#适用条件-amp-范围" class="headerlink" title="适用条件&amp;范围"></a>适用条件&amp;范围</h3><ul>
+<li>单源最短路径(从源点s到其它所有顶点v);——<strong>可以有负权重的边，但不能有负权重的环</strong></li>
+<li>有向图&amp;无向图(无向图可以看作(u,v),(v,u)同属于边集E的有向图);</li>
+<li>边权可正可负(如有负权回路输出错误提示);</li>
+<li>差分约束系统;</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><p>第一，初始化所有点。每一个点保存一个值，表示从原点到达这个点的距离，将原点的值设为0，其它的点的值设为无穷大（表示不可达）。</p>
+<p>第二，进行循环，循环下标为从1到n－1（n等于图中点的个数）。在循环内部，遍历所有的边，进行松弛计算。（对于N个点，进行N次循环，每次循环依次更新路径）</p>
+<p>第三，遍历途中所有的边（edge（u，v）），判断是否存在这样情况：<br>d（v） &gt; d (u) + w(u,v)（三角不等式性质）<br>则返回false，表示途中存在从源点可达的权为负的回路。</p>
+<h3 id="松弛迭代（核心）"><a href="#松弛迭代（核心）" class="headerlink" title="松弛迭代（核心）"></a>松弛迭代（核心）</h3><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b876fe9b2338">参考文章</a></p>
+<p>大致意思就是，每次对所有边进行松弛，就算一次松弛迭代：</p>
+<p>性质一：<strong>一般性的，当图中已经存在一个或多个已确认顶点时，即图处于任意一种状态，若图中尚存在未确认顶点，则执行一次迭代后，会增加至少一个已确认顶点。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>性质二：<strong>若图中存在由起点不可达的顶点，则这些顶点的初始化状态即为最短路径状态，即初始化时就处于已确认状态。</strong></p>
+<blockquote>
+<p>证明：</p>
+</blockquote>
+<p>所以Bellman-ford算法的循环次数：</p>
+<ul>
+<li>松弛边按照最坏情况下进行，即一次只增加一个已确认顶点，则需要执行的迭代次数为 |V|-1次</li>
+<li>松弛边按照最好情况下进行，则需要执行的迭代次数为 1 次。</li>
+</ul>
+<h3 id="检测带权有向图中是否存在负权回路"><a href="#检测带权有向图中是否存在负权回路" class="headerlink" title="检测带权有向图中是否存在负权回路"></a>检测带权有向图中是否存在负权回路</h3><blockquote>
+<p>根据前面对松弛函数执行次数的分析可知，若图中不存在负权回路，那么即使在最坏情况下，也只需要执行 |V|-1 次迭代松弛，即可获得从起点到各顶点的最短路径。</p>
+<p> 若图中存在负权回路，当回路较小时，例如顶点自身或者两个顶点之间的负权回路，则在 |V|-1 次迭代过程中，可能多次通过了该负权回路；若回路较大，例如从起点出发，串联所有顶点最后回到起点，即通过 |V|-1 条边构成一个圆形，如下图所示。则 |V|-1 次迭代过程中，可能一次也不会通过该负权回路，但是当再执行一次迭代松弛，即可将 d<del>s</del> 值更新为负值，所以<strong>可以多执行一次迭代，通过判断是否更新从起点到某个顶点的最短路径权值，来判断图中是否存在负权回路</strong>。</p>
+</blockquote>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><p>BELLMAN-FORD(G,w, s)</p>
+<pre><code>          INITIALIZE-SINGLE-SOURCE(G, s)
+          for i = 1 to |G.V|-1
+                 for  each edge (u, v)∈ E
+                        RELAX(u, v, w)
+                for each edge (u, v) ∈ E
+                 if  v.d &gt; u.d + w(u, v)
+                        return  FALSE
+                        
+                             return TRUE
+</code></pre>
+<h3 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h3><p>根据最优子结构性和松弛迭代就可以证明：</p>
+<ul>
+<li><p>如果图G中不包含从源结点s可以到达的权重为负值的环路，则算法将返回TRUE，且对于所有结点v∈V，前驱子图Gπ是一个根结点为s的最短路径树。</p>
+<blockquote>
+<p>如果结点v是从s可以到达的，则论断可以从松弛迭代和最优子结构性得到证明。</p>
+<p>如果结点v不能从s可达，则论断可以从非路径性质获得。</p>
+<p>综合前驱子图性质和本论断，可以推导出G<del>π</del>是一棵最短路径树</p>
+</blockquote>
+</li>
+<li><p>如果图G中包含一条从源结点s可以到达的权重为负值的环路，则算法将返回FALSE。</p>
+<blockquote>
+<p>三角不等式性质。可以使用反证法说明</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="时间性能"><a href="#时间性能" class="headerlink" title="时间性能"></a>时间性能</h3><p>初始化：Θ(V)</p>
+<p>松弛处理：for循环执行|V|-1次，每次的时间是Θ(E)</p>
+<p>Bellman-ford算法总的运行时间是O(VE)。</p>
+<h2 id="Dijkstra算法（贪心算法）"><a href="#Dijkstra算法（贪心算法）" class="headerlink" title="Dijkstra算法（贪心算法）"></a>Dijkstra算法（贪心算法）</h2><p>Dijkstra算法解决带权重的有向图上单源最短路径问题</p>
+<p>**&#x3D;&#x3D;该算法要求所有边的权重为非负值&#x3D;&#x3D;**，如果采用合适的实现方式，Dijkstra算法的运行时间要比Bellman-Ford算法快。</p>
+<h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><ul>
+<li>保存两个集合S和U，<strong>S用于存放已经找到和起点之间最短距离的点，U用于存放尚未找到最短距离的点</strong>，起初S中只有起点，其余所有的点存放在U中，并根据和起点是否相邻，修改了距离起点的距离，<strong>不相邻则默认为无穷远。</strong></li>
+<li>循环遍历U中的点，<strong>找出离起点距离最近的点</strong>，该点到起点的距离就是该点到起点的最短距离，将该点从U中移除并放置到S中去，并重新计算U中的点距离起点的距离。这样每次选取的点都是剩余点中距离起点最近的点。</li>
+<li>循环上述操作，直到找到终点到起点的最短路径或则循环结束。</li>
+</ul>
+<p><strong>Dijkstra算法是一个贪心算法：每次总是选择V-S集合中最短路径估计值最小的结点加入S中。</strong></p>
+<h3 id="算法描述-1"><a href="#算法描述-1" class="headerlink" title="算法描述"></a>算法描述</h3><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="constructor">DIJKSTRA(G, <span class="params">w</span>, <span class="params">s</span>)</span></span><br><span class="line">              INITIALIZE-SINGLE-<span class="constructor">SOURCE(G, <span class="params">s</span>)</span><span class="comment">//对所有节点的d值和派值初始化</span></span><br><span class="line">              S = ∅</span><br><span class="line">              Q =G.V</span><br><span class="line">              <span class="keyword">while</span> Q != ∅</span><br><span class="line">                     u = EXTRACT-<span class="constructor">MIN(Q)</span></span><br><span class="line">                     S= S ∪  &#123;u&#125;</span><br><span class="line">                     <span class="keyword">for</span>  each vertex v ∈ G.Adj<span class="literal">[<span class="identifier">u</span>]</span><span class="comment">//对所有从u出发的边进行松弛</span></span><br><span class="line">                            <span class="constructor">RELAX(<span class="params">u</span>, <span class="params">v</span>, <span class="params">w</span>)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="算法证明-1"><a href="#算法证明-1" class="headerlink" title="算法证明"></a>算法证明</h3><p>利用循环不变式证明循环不变式：</p>
+<p>算法在while语句的每次循环开始前，对于每个结点u∈S，有u.d&#x3D;δ(s,u)</p>
+<p>只 需 证 明： 对 于 每 个 结 点u∈V，当u被 加 入 到S时，有u.d&#x3D;δ(s,u)。注：一旦u加入S，就不会再修正u.d。且根据上界性质，该等式将一直保持。</p>
+<p>证明过程：</p>
+<p>（1）初始化：初始时，S&#x3D;Ø，因此循环不变式直接成立。</p>
+<p>（2）保持：在每次循环中，对于加入到集合S中的结点u而言，u.d&#x3D;δ(s,u)。</p>
+<blockquote>
+<p>用反证法证明：设结点u是第一个在加入到集合S时u.d≠δ(s,u)的结点。</p>
+<p>由于s是第一个加入到集合S中的结点，并且s.d&#x3D;δ(s,s)&#x3D;0，所以u≠s，并且在u即将加入S时，S≠Ø，因为S中至少包含了s。故，此时必存在至少一条从s到u的路径（否则，根据非路径性质将有u.d&#x3D;δ(s,u)&#x3D;∞，与假设的u.d≠δ(s,u)相矛盾，故这样路径一定存在），这样也必存在一条从s到u的最短路径，记为p。</p>
+<p>取p路径上的一个点x（该点是s到u的中间点）在结点u加入到集合S时，有x.d&#x3D;δ(x,y)【因为u是第一个不满足关系的点，并且每次S取的点都是剩下点中具有最短路径的点，x.d&lt;&#x3D;u.d。它肯定被取入S中了】</p>
+<p>然后取p路径上的y点，该点的前驱节点为x。则有：在结点u加入到集合S时，应有y.d&#x3D;δ(s,y)。这是因为x∈S，u是第一个u.d≠δ(s,u)的结点，在将x加入到集合S时，有x.d&#x3D;δ(s,x)，y是x的邻接点，<strong>所以此时边(x,y)将被松弛</strong>。由于y是最短路径p上的结点，根据最短路径的最优子结构性和收敛性质，此时应有y.d&#x3D;δ(s,y)。</p>
+<p>因为结点y是从结点s到结点u的一条最短路径上位于u前面的一个结点，所以应有δ(s,y)≤δ(s,u)，即y.d&lt;&#x3D;u.d。</p>
+<p>但是我们注意到，此时取进S集合的是u不是y，所以u.d应该小于等于y.d。矛盾</p>
+</blockquote>
+<h3 id="时间性能-1"><a href="#时间性能-1" class="headerlink" title="时间性能"></a>时间性能</h3><p>根据算法的处理规则，每个结点u仅被加入集合S一次，邻接链表Adj[u]中的每条边在整个运行期间也只被检查一次。因此算法第7-8行的for循环执行次数总共为|E|次（即松弛判定总次数）</p>
+<p>Dijkstra算法的总运行时间依赖于最小优先队列Q的实现。</p>
+<ul>
+<li>如果用线性数组(无序或者按序插入)实现，每次找d最小的结点u需要O(V)的时间，所以算法的总运行时间为O(V^2^+E)&#x3D;O(V^2^)。</li>
+<li>如果用二叉堆实现，每次找d最小的结点u需要O(lgV)的时间，所以算法的总运行时间为O((V+E)lgV)。</li>
+<li>如果用斐波那契堆实现，算法的总运行时间可以改善至O(VlgV+E)。</li>
+</ul>
+<h2 id="差分约束和最短路径"><a href="#差分约束和最短路径" class="headerlink" title="差分约束和最短路径"></a>差分约束和最短路径</h2><p>对于一组不等式：<br>$$<br>\begin{cases}<br>x_1-x_2≤0\<br>x_1-x_5≤1\<br>x_2-x_5≤1\<br>x_3-x_1≤5\<br>x_4-x_1≤4\<br>x_4-x_3≤-1\<br>x_5-x_3≤-3\<br>x_5-x_4≤-3\<br>\end{cases}<br>$$<br>特点是全都是两个未知数的差小于等于某个常数（大于等于也可以，因为左右乘 −1-1−1 就可以化成小于等于的形式），这样的不等式组称作差分约束系统。</p>
+<p>这个不等式组<strong>要么无解，要么就有无限组解</strong>。因为如果存在一组解(x<del>1</del>,·····x<del>n</del>)的话，那么对于任何一个常数 k 有</p>
+<p>(x<del>1</del>+k,·····x<del>n</del>+k)也肯定是一组解，因为任何两个数加上一个数以后，它们之间的关系（差）是不变的，这个差分约束系统中的所有不等式都不会被破坏。</p>
+<h3 id="约束图"><a href="#约束图" class="headerlink" title="约束图"></a>约束图</h3><p>每个未知数 x<del>i</del>对应图中的一个顶点v<del>i</del> ，把所有的不等式都化成图中的一条边，对于不等式<br>$$<br>x_i−x_j≤ y<br>$$<br>化成三角形不等式<br>$$<br>x_i≤ x_j+y<br>$$<br>就可以化成边 &lt;v<del>j</del>,v<del>i</del>&gt;权值为 y 。最后在这张图上求一遍单源最短路，这些三角不等式就全部满足了，因为它是最短路问题的基本性质。<br><img src="https://i.loli.net/2021/01/17/KE3s5rZSqw2bIO4.png"></p>
+<blockquote>
+<p>说明：</p>
+<p>（1）结点集合：约束图中引入一个额外的结点v<del>0</del>，从其出发可以达到其他所有结点。因此结点集合V由代表每个变量x<del>i</del>的结点v<del>i</del>和**额外的结点v<del>0</del>**组成。</p>
+<p>（2）边集合：边集合E包含代表每个差分约束的边，同时包含v0到其他所有结点的边(v<del>0</del>,v<del>i</del>)，i&#x3D;1,2，…，n。</p>
+<p>（3）边的权重：如果x<del>j</del>-x<del>i</del>≤b<del>k</del>是一个差分约束条件，则边(v<del>i</del>,v<del>j</del>)的权重记为ω(v<del>i</del>,v<del>j</del>)&#x3D;b<del>k</del>，而从v<del>0</del>出发到其他结点的边的权重ω(v<del>0</del>,v<del>j</del>)&#x3D;0</p>
+</blockquote>
+<p>图中每一条边都代表差分约束系统的一个不等式。现在以 v<del>0</del>为源点，求单源最短路，最终得到的v<del>0</del>到 v<del>i</del>的最短路径长度就是 x<del>i</del>的一个解。如图中 v<del>0</del>到其他各个顶点的最短距离分别是 {−5,−3,0,−1,−4}{-5,-3,0,-1,-4}{−5,−3,0,−1,−4} ，因此满足上述不等式的一组解就是 {x<del>1</del>,x<del>2</del>,x<del>3</del>,x<del>4</del>,x<del>5</del>}&#x3D;{−5,−3,0,−1,−4} 。当然把每个数都加上 101010 也是一组解 {5,7,10,9,6}{5,7,10,9,6}{5,7,10,9,6} ，但是这组解只满足不等式组 (1) ，也就是原先的差分约束系统，而不满足不等式组 (2) ，也是我们后来加上的那些不等式。当然这是无关紧要的，因为 x<del>0</del>本来就是个局外人，并不在乎它。</p>
+<p>对于上面例子而言，它代表的解 x<del>0</del>值也在其中也就是 x<del>0</del>&#x3D;0。但是 x<del>0</del>的值是无可争议的，既然是以它作为源点求最短路径，那么源点到它的最短路径当然是 0了，因此，我们解这个差分约束系统无形中存在一个条件x<del>0</del>&#x3D;0那么它有什么用呢？可以限制所有的未知数的解都不大于0 。</p>
+<p>解的个数：</p>
+<p><strong>(1) 如果图G不包含权重为负值的回路，则是该系统的一个可行解。</strong></p>
+<p><strong>(2) 如果图G包含权重为负值的回路，则该系统没有可行解</strong></p>
+<p>一个有趣的结论：当我们一开始就把 v<del>0</del>的解死定为 A 的时候，所有未知数的解都不会大于 A （一开始把 dis[0]&#x3D;A）</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/11/30/ComputerNetworking_%E8%BF%90%E8%BE%93%E5%B1%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/30/ComputerNetworking_%E8%BF%90%E8%BE%93%E5%B1%82/" class="post-title-link" itemprop="url">运输层</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-30 15:02:16" itemprop="dateCreated datePublished" datetime="2019-11-30T15:02:16Z">2019-11-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="运输层"><a href="#运输层" class="headerlink" title="运输层"></a>运输层</h1><h2 id="第一部分：概述"><a href="#第一部分：概述" class="headerlink" title="第一部分：概述"></a>第一部分：概述</h2><!---more-->
+
+<p>在学习完应用层的时候，对运输层就有了一定的认识。需要指出的是，运输层是在<strong>端系统</strong>中的而不是在路由器中的。在发送端系统中，运输层将从发送应用程序进程接收到的报文转换成运输层分组。实现的方法是<strong>将报文（Message）划分成为较小的块，并为每块加上一个运输层首部以生成运输层报文段（segment）</strong>。然后运输层将这些报文段传递给网络层，网络层将其封装成网络层分组·······在接受端，网络层从数据段中提取运输层报文段，并将该报文段向上交给运输层。接收方：把报文段重组成应用数据，交付给应用层</p>
+<h3 id="运输层和网络层的关系"><a href="#运输层和网络层的关系" class="headerlink" title="运输层和网络层的关系"></a>运输层和网络层的关系</h3><p><strong>网络层: 不同主机之间的逻辑通信</strong></p>
+<p><strong>运输层： 应用进程之间的逻辑通信</strong></p>
+<blockquote>
+<p>网络层负责ip数据报的产生以及ip数据包在逻辑网络上的路由转发。</p>
+<p><strong>网络层只是根据网络地址将源结点发出的数据包传送到目的结点（点到点）</strong>，其主要任务是：通过路由选择算法，为报文或分组通过通信子网选择最适当的路径。该层控制数据链路层与传输层之间的信息转发，建立、维持和终止网络的连接。具体地说，数据链路层的数据在这一层被转换为数据包，然后通过路径选择、分段组合、顺序、进&#x2F;出路由等控制，将信息从一个网络设备传送到另一个网络设备。</p>
+<p>传输层提供端到端通信服务层次,提供可靠及非可靠连接。</p>
+<p><strong>传输层则负责将数据可靠地传送到相应的端口（端到端）</strong>，传输层提供了主机应用程序进程之间的端到端的服务。传输层利用网络层提供的服务，并通过传输层地址提供给高层用户传输数据的通信端口，使高层用户看到的只是在两个传输实体间的一条端到端的、可由用户控制和设定的、可靠的数据通路。</p>
+</blockquote>
+<p>类似于家庭间通信:</p>
+<p>12个孩子要与另一个家庭的12个孩子相互通信</p>
+<ul>
+<li>进程 &#x3D; 孩子们</li>
+<li>进程间报文 &#x3D; 信封中的信笺</li>
+<li>主机 &#x3D; 家庭的房子</li>
+<li>运输协议 &#x3D; 张三 和 李四（站在大门口的管家）</li>
+<li>网络层协议 &#x3D; 邮局提供的服务</li>
+</ul>
+<p><strong>上例中的几种特殊场景</strong></p>
+<p>1、张三和李四生病了，无法工作，换成张五和李六</p>
+<p><strong>【不同的运输层协议可能提供不一样的服务】</strong></p>
+<p>2、邮局不承诺信件送抵的最长时间</p>
+<p><strong>【运输层协议能够提供的服务受到底层网络协议的服务模型的限制】</strong></p>
+<p>3、邮局不承诺平信一定安全可靠的送达，可能在路上丢失，但张三、李四可在较长时间内没有受到对方的回信时，再次誊写信件，寄出</p>
+<p><strong>【在网络层不提供某些服务的情况下，运输层自己提供】</strong></p>
+<p>ps：</p>
+<p><strong>网络层为主机间提供逻辑通信, 而运输层为应用进程间提供端到端的通信逻辑.</strong></p>
+<p><strong>网络层提供IP数据报首部中的检验和字段, 只检验首部是否出现差错; 而运输层要检验收到的报文是否有差错.</strong></p>
+<p>【邮局只负责送到家，东西坏没坏由管家去查看。管家觉得没问题再给主人（应用）】</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20190328003506312.png"></p>
+<h2 id="第二部分：多路复用和多路分解"><a href="#第二部分：多路复用和多路分解" class="headerlink" title="第二部分：多路复用和多路分解"></a>第二部分：多路复用和多路分解</h2><p><strong>TCP和UDP的最基本任务</strong></p>
+<ol>
+<li><p>将<strong>主机到主机之间</strong>数据的交付（由IP层提供）扩展为运行在<strong>二个主机上的进程间</strong>的数据交付。</p>
+</li>
+<li><p>一台主机可以同时运行多个网络进程</p>
+<ul>
+<li><p>发送方：<strong>多个进程通过各自端口将数据交付给运输层，共同使用运输层的服务。这叫运输层的多路复用。</strong></p>
+</li>
+<li><p>接收方：<strong>当运输层收到从下层网络层传递上来的数据后，通过端口号就数据向上交付给各自的应用进程。这叫运输层的多路分解。</strong></p>
+</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203185040027.png" alt="多路分解和多路复用"></p>
+<p>可以说多路分解和多路复用是运输层的核心作用。</p>
+<blockquote>
+<p><strong>端口</strong></p>
+<p>端口的作用就是让应用层的各种应用进程都能将其数据<strong>通过端口向下交付给运输层</strong>，以及<strong>让运输层知道应当将其报文段中的数据向上通过端口交付给应用层相应的进程（或者线程）</strong></p>
+<p>从这个意义上讲，<strong>端口是用来标志应用层的进程（或者线程）</strong></p>
+<p>端口用一个 16 bit 端口号进行标志</p>
+<p><strong>套接字</strong></p>
+<p>TCP 使用“连接”(而不仅仅是“端口”)作为最基本的抽象，同时将 TCP 连接的端点称为套接字(socket) 。</p>
+<p>套接字和端口、IP 地址的关系是：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203185306343.png" alt="套接字"></p>
+</blockquote>
+<h3 id="报文段（数据段）的投送过程"><a href="#报文段（数据段）的投送过程" class="headerlink" title="报文段（数据段）的投送过程"></a>报文段（数据段）的投送过程</h3><ol>
+<li><p><strong>主机收到IP包</strong></p>
+<ul>
+<li><p>每个数据包都有源IP地址和目的IP地址</p>
+</li>
+<li><p>每个数据包都携带一个传输层的数据报文段</p>
+</li>
+<li><p>每个数据报文段都有源、目的端口号</p>
+</li>
+</ul>
+</li>
+<li><p><strong>主机根据“IP地址＋端口号”将报文段定向到相应的套接字</strong>（这里注意的是，TCP和UDP的socket的内容有差异）</p>
+</li>
+</ol>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203185820481.png" alt="TCP/UDP报文格式"></p>
+<blockquote>
+<p><strong>面向连接的复用和分用</strong></p>
+<ol>
+<li><p><strong>TCP 套接字由一个四元组来标识</strong> </p>
+<p><strong>（源IP地址，源端口号，目的IP地址，目的端口号）</strong></p>
+<p><strong>【提供源IP地址和源端口号是为了TCP连接时的握手】</strong></p>
+</li>
+<li><p>接收方主机根据这四个值将报文段定向到相应的套接字（网络层只管送套接字）</p>
+</li>
+<li><p>服务器主机同时支持多个并发的TCP套接字：</p>
+<p>【每一个套接字都由其四元组来标识】</p>
+</li>
+<li><p>Web服务器为每一个客户连接都产生不同的套接字</p>
+<p>非持久HTTP对每一个请求都建立不同的套接字（由应用层可知会影响性能）</p>
+</li>
+</ol>
+<p><strong>无连接的复用和分用</strong></p>
+<ol>
+<li><p>UDP 套接字由一个二元组来标识</p>
+<p><strong>（目的IP地址，目的端口号）</strong></p>
+<p><strong>【无握手，故称为无连接】</strong></p>
+</li>
+<li><p>接收方根据目的端口号将报文段定向到相应的套接字</p>
+</li>
+<li><p><strong>具有不同源IP地址和&#x2F;或源端口的UDP报文如果具有相同的目的IP地址和目的端口号，则定向到相同的套接字</strong></p>
+</li>
+</ol>
+</blockquote>
+<h2 id="第三部分：无连接的UDP"><a href="#第三部分：无连接的UDP" class="headerlink" title="第三部分：无连接的UDP"></a>第三部分：无连接的UDP</h2><h3 id="一个最简单的运输层协议必须提供"><a href="#一个最简单的运输层协议必须提供" class="headerlink" title="一个最简单的运输层协议必须提供"></a><strong>一个最简单的运输层协议必须提供</strong></h3><ol>
+<li><p><strong>多路复用&#x2F;多路分解服务</strong></p>
+</li>
+<li><p><strong>差错检查</strong>（虽然进行差错检测，但不进行差错恢复。只是丢弃出错的UDP报文或交给应用程序但发出警告）</p>
+<p>请思考下为什么UDP提供的是无连接的不可靠的传输服务，却还要提供差错检测？</p>
+<p>【这是为了防止一直出错而导致数据根本传递不了。不进行差错恢复不意味着可以让数据一直丢失】</p>
+</li>
+<li><p>几乎没有对IP增加什么东西。如果程序开发人员选择基于UDP的Socket，则应用程序几乎是直接与IP打交道。</p>
+</li>
+</ol>
+<h3 id="UDP处理数据的流程"><a href="#UDP处理数据的流程" class="headerlink" title="UDP处理数据的流程"></a>UDP处理数据的流程</h3><p><strong>发送方</strong></p>
+<ul>
+<li>从应用进程得到数据</li>
+<li>附加上为多路复用&#x2F;多路分解所需的源和目的端口号及差错检测信息，形成报文段（<em>数据报</em>）</li>
+<li>递交给网络层，尽力而为的交付给接收主机</li>
+</ul>
+<p><strong>接收方</strong></p>
+<ul>
+<li>从网络层接收报文段（<em>数据报</em>）</li>
+<li>根据目的端口号，将数据交付给相应的应用进程</li>
+</ul>
+<h3 id="UDP的优势"><a href="#UDP的优势" class="headerlink" title="UDP的优势"></a>UDP的优势</h3><ul>
+<li>无需建立连接——建立连接会增加时延</li>
+<li>简单——发送方和接收方无需维护连接状态</li>
+<li>段首部开销小——TCP:20Byte vs UDP:8Byte</li>
+<li>无拥塞控制——UDP 可按需要随时发送</li>
+</ul>
+<h3 id="UDP大量应用可能导致的严重后果"><a href="#UDP大量应用可能导致的严重后果" class="headerlink" title="UDP大量应用可能导致的严重后果"></a>UDP大量应用可能导致的严重后果</h3><p>路由器中大量的分组溢出</p>
+<p>显著减小TCP通信的速率，甚至挤垮TCP会话</p>
+<h3 id="使用UDP的可靠数据传输"><a href="#使用UDP的可靠数据传输" class="headerlink" title="使用UDP的可靠数据传输"></a>使用UDP的可靠数据传输</h3><p><strong>在应用层实现数据的可靠传输</strong></p>
+<p>增加了应用进程的实现难度</p>
+<p>这点说明我们不能单纯的凭借主观感受来说UDP是一定不能可靠数据传输的。</p>
+<h3 id="UDP报文段（数据报datagram）"><a href="#UDP报文段（数据报datagram）" class="headerlink" title="UDP报文段（数据报datagram）"></a>UDP报文段（数据报datagram）</h3><p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20180301192421945.png" alt="UDP报文段"></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203200421270.png" alt="UDP报文段格式"></p>
+<h4 id="UDP的首部格式"><a href="#UDP的首部格式" class="headerlink" title="UDP的首部格式"></a>UDP的首部格式</h4><p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20190328003652736.png" alt="首部格式"></p>
+<p><strong>源端口号以及目的端口号</strong><br>用于唯一标识套接字，指示该报文段所要交付的套接字。端口号一般是16个bit，范围[0,65535]。其中0-1023是周知端口号，比如HTTP是80端口，FTP是21端口<br><strong>长度</strong><br>UDP用户数据报的长度(首部字段和数据字段)，其最小值是8，也即是只有首部。</p>
+<blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首部只有8个字节</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>源端口</code> : 需要对方回信时选用, 不选可全为0.</li>
+<li><code>目的端口</code> : 在终点交付报文时使用.</li>
+<li><code>长度</code> : UDP用户数据报的长度.</li>
+<li><code>检验和</code> : 检验UDP在传输中是否有错.</li>
+</ol>
+</blockquote>
+<p><strong>校验和</strong><br>检测UDP用户数据报在传输的过程中是不是有错，有错就丢弃。</p>
+<h3 id="UDP的检查和"><a href="#UDP的检查和" class="headerlink" title="UDP的检查和"></a>UDP的检查和</h3><p>目标：检测收到的报文段的“差错” (例如, 出现突变的比特)</p>
+<p>发送方</p>
+<ul>
+<li>把报文段看作是16比特字的序列</li>
+<li>检查和：对报文段的所有16比特字的和进行1的补运算</li>
+<li>发送方将计算校验和的结果写入UDP校验和字段中</li>
+</ul>
+<p>接收方</p>
+<ul>
+<li><p>计算接收到的报文段的校验和</p>
+</li>
+<li><p>检查计算结果是否与收到报文段的校验和字段中的值相同</p>
+<p>【不同 — 检测到错误</p>
+<p>​	相同 — 没有检测到错误(但仍可能存在错误)】</p>
+</li>
+</ul>
+<h3 id="UDP特点"><a href="#UDP特点" class="headerlink" title="UDP特点"></a>UDP特点</h3><ol>
+<li>无连接 : 发送数据之前不需要连接.</li>
+<li>尽最大努力交付 : 不保证可靠交付.</li>
+<li>面向报文 : 对应用层下发的报文, 添加d首部后就下发到IP层, 对下发的报文不合并也不c拆分, 仅仅保留报文的边界. 一次交付一个报文.</li>
+<li>无拥塞控制 : 发送后就不在管理.</li>
+<li>多种通信 : 支持一对一, 一对多, 多对多通信.</li>
+<li>首部开销小 : 首部仅有8个字节.</li>
+</ol>
+<h2 id="第四部分-可靠数据传输（十分重要）"><a href="#第四部分-可靠数据传输（十分重要）" class="headerlink" title="第四部分:可靠数据传输（十分重要）"></a>第四部分:可靠数据传输（十分重要）</h2><p>本节只讨论<strong>单向数据传输：数据是从发送端到接受端的。</strong></p>
+<p>在实际的网络传输中，信道是不可靠的，在其上传输的分组可能会损坏或丢失，甚至相对次序都不能保证。</p>
+<p>在这种情况下，应用层的程序迫切需要运输层提供一个可靠的数据传输服务，可以保证无论在实际的物理传输中发生了什么，数据都可以无损按序地交付给接收端。这就是可靠数据传输协议的作用，<strong>也是 TCP 向调用它的应用所提供的服务模型。</strong></p>
+<blockquote>
+<p>信道 (channel）：信道一般指连接信号发送方和接收方的传输线路，包括双绞铜线、同轴电缆、光纤、陆地无线电或者卫星无线电等物理媒体。</p>
+</blockquote>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203201158611.png"></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203201522230.png"></p>
+<h3 id="可靠信道上的可靠传输——-rdt-1-0"><a href="#可靠信道上的可靠传输——-rdt-1-0" class="headerlink" title="可靠信道上的可靠传输—— rdt 1.0"></a>可靠信道上的可靠传输—— <strong>rdt</strong> <strong>1.0</strong></h3><p>考虑的情况：<strong>底层信道完全可靠</strong>。即不会产生比特错误、不会丢失分组。<strong>而且也假定接收方接收数据的速率与发送端发送数据的速率一样快。</strong></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203202020447.png"></p>
+<p>可以看到，rdt 的发送端只通过 <code>rdt_send(data)</code> 事件接收来自较高层的数据发送请求。在完成一次数据发送请求中需要两个动作：</p>
+<ul>
+<li>产生一个包含该数据的分组（经由 <code>make_pkt(data)</code> 产生）</li>
+<li>然后将该分组通过 <code>udt_send(packet)</code> 发送到信道中</li>
+</ul>
+<p>完成这两个动作后，重新返回原始状态，继续等待来自较高层的数据发送请求。</p>
+<p>而在接收端，rdt 通过 <code>rdt_rcv(packet)</code> 事件从底层信道接收一个分组。在一次数据接收过程中同样需要两个动作：</p>
+<ul>
+<li>从分组中取出数据（经由 <code>extract(packet, data)</code> 产生）</li>
+<li>然后将数据上传给较高层（通过 <code>deliver_data(data)</code> 动作）</li>
+</ul>
+<p>和发送端一样，接收端完成这两个动作后也重新返回原始状态，继续等待从底层信道接收分组。</p>
+<p><strong>需要注意的是，在发送端，引起状态变迁的事件是由较高层应用的过程调用产生的；而在接收端，引起状态变迁的事件是由较低层协议的过程调用产生的。</strong></p>
+<p>现在我们就构造出了适用于可靠信道的可靠数据传输协议 rdt 1.0 ，因为信道可靠，接收方也不需要提供任何反馈信息给发送方，不必担心出现差错。而且因为假定了接收方接收数据的速率能够与发送方发送数据的速率一样快，所以接收方也没有必要请求发送方慢一点发送。</p>
+<h3 id="经具有比特差错信道的可靠数据传输协议-rdt-2-0（解决分组出错问题，通过ACK-x2F-NAK告知发送方）"><a href="#经具有比特差错信道的可靠数据传输协议-rdt-2-0（解决分组出错问题，通过ACK-x2F-NAK告知发送方）" class="headerlink" title="经具有比特差错信道的可靠数据传输协议 rdt 2.0（解决分组出错问题，通过ACK&#x2F;NAK告知发送方）"></a>经具有比特差错信道的可靠数据传输协议 rdt 2.0（解决分组出错问题，通过ACK&#x2F;NAK告知发送方）</h3><p>考虑的情况：<strong>分组比特可能受损，所有传输的分组都将按序被接收，不会丢失</strong></p>
+<p><strong>首先需要明确的一点是：如果发送方知道了哪些分组发送出去后接收方并没有收到，那么发送方就需要重传这些分组</strong>。基于这样的重传机制的可靠数据传输协议称为<strong>自动重传请求(Automatic Repeat Request, ARQ)协议</strong> 。</p>
+<p><strong>ARQ处理机制</strong></p>
+<ol>
+<li><p>如何判断分组受损——<strong>差错检测</strong></p>
+<p>【<strong>加校验和checksum</strong>】</p>
+</li>
+<li><p><strong>如何通知发送方分组是否受损——接收方反馈（ACK和NAK）</strong></p>
+<ul>
+<li><p>确认——acknowledgements (ACKs): 接收方明确告诉发送方正确收到分组</p>
+</li>
+<li><p>否认——negative acknowledgements (NAKs): 接收方明确告诉发送方分组有错</p>
+</li>
+</ul>
+</li>
+<li><p>在得知分组受损后，发送方如何处理——<strong>出错重传</strong></p>
+<p>【<strong>当发送方收到了接收方发送的NAKS时，选择重发</strong>】</p>
+</li>
+</ol>
+<p>下面来看一下 rdt 2.0 的有限状态机描述图，现在该数据传输协议（自动重传请求协议）采用了差错检测、肯定确认与否定确认。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203202756161.png"></p>
+<p>rdt 2.0 的发送端有两个状态。在最左边的初始状态中，发送端协议正等待来自较高层传下来的数据。当触发 <code>rdt_send(data)</code> 事件时：</p>
+<ul>
+<li>通过 <code>sndpkt = make_pkt(data, checksum)</code> 产生一个包含待发送数据且带有校验和的分组</li>
+<li>然后将该分组通过 <code>udt_send(sndpkt)</code> 发送到信道中</li>
+</ul>
+<p>执行完上述的两个动作后，发送端的状态变迁为“等待接收接收端的 ACK 或 NAK 分组”。接下来根据接收端的响应不同会有不同的变迁方案：</p>
+<ul>
+<li>如果收到了一个 ACK 分组（<code>rdt_rcv(rcvpkt) &amp;&amp; isACK(rcvpkt)</code>），那么发送端知道接收端已经成功接收到了刚才发送出去的分组，发送端状态回到初始状态，继续等待下一次由较高层传下来的数据发送请求</li>
+<li>如果收到了一个 NAK 分组（<code>rdt_rcv(rcvpkt) &amp;&amp; isNAK(rcvpkt)</code>），那么发送端知道接收端接收到的分组是受损的，所以调用 <code>udt_send(sndpkt)</code> 重新发送该分组，然后状态不变，继续等待接收接收端的 ACK 或 NAK 分组</li>
+</ul>
+<p>由于 rdt 2.0 的发送端拥有这个特性，所以 rdt 2.0 这样的协议被称为<strong>停等（stop-and-wait）协议</strong>。</p>
+<p>rdt 2.0 的接收端仍然只有一个状态。状态变迁取决于收到的分组是否受损，有两种方式：</p>
+<ul>
+<li>如果收到的分组受损，即 <code>rdt_rcv(rcvpkt) &amp;&amp; corrupt(rcvpkt)</code>，则返回 NAK 分组</li>
+<li>如果收到的分组完好，即 <code>rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt)</code>，则返回 ACK 分组</li>
+</ul>
+<p>处理完后仍然返回自身这个状态，继续等待下一次从底层接收分组并处理。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203203413278.png"></p>
+<p>接收方发送ACK。发送方接收到ACK后无异样操作。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203203432961.png"></p>
+<p>接收方收到的报文是有错误的，于是其发送NAK给发送方。发送方收到NAK后选择重传。</p>
+<p>现在我们得到了一个似乎是可以在有比特差错信道上正常工作的可靠数据传输协议了，但仔细想想，我们没有考虑 ACK 或 NAK 分组受损的情况。如果 ACK 或 NAK 分组受损的时候，我们应该怎么做？</p>
+<h3 id="经具有比特差错信道的可靠数据传输协议-rdt-2-1-解决-ACK-或-NAK-分组受损问题和重传问题"><a href="#经具有比特差错信道的可靠数据传输协议-rdt-2-1-解决-ACK-或-NAK-分组受损问题和重传问题" class="headerlink" title="经具有比特差错信道的可靠数据传输协议 rdt 2.1 (解决 ACK 或 NAK 分组受损问题和重传问题)"></a>经具有比特差错信道的可靠数据传输协议 rdt 2.1 (解决 ACK 或 NAK 分组受损问题和重传问题)</h3><p>1、解决A<strong>CK 或 NAK 分组受损的问题</strong>比较简单的一个方法<strong>ACK和NAK加校验和</strong></p>
+<p>Q：我们怎么知道重传的分组是我们需要的分组呢？</p>
+<p>2、解决<strong>只考虑重传可能会出现大量重复分组</strong>问题的方式是：<strong>是在数据分组中添加一个新的字段，然后让发送端对其数据分组编号，将发送数据分组的序号放在该字段中。</strong>于是，接收端只需要检查序号就可以确定收到的分组是否是一次重新传送的分组。因为 rdt 2.0 是一个简单的停等协议【<strong>发送方发出一个分组，然后等待接收方的应答</strong>】，1 比特序号就足够了。</p>
+<p><strong>在这里再次提醒一下我们在 rdt 2.0 开始的地方所做的假设：假设信道不丢分组，而且不会存在分组乱序的情况。</strong>所以发送端知道所接收到的 ACK 和 NAK 分组（无论是否受损）都是为响应其最近发送的数据分组而生成的。</p>
+<p>完善了对 ACK 和 NAK 分组受损的情况的处理机制后，我们把完善后的协议称为 rdt 2.1，下面是 rdt 2.1 发送端的有限状态机描述图：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203204332982.png"></p>
+<p>现在的状态数是以前的两倍，是因为协议的状态必须反映出目前（由发送端）正发送的分组或（在接收端）希望接受的分组序号是 0 还是 1。看起来这个描述图很复杂，其实发送或期望接收 0 号分组的状态中的动作与发送或期望接收 1 号分组的状态中的动作是相似的，唯一不同的是序号处理的方法不同。</p>
+<p>这里我按照上图来描述一下 rdt 2.1 协议发送端的状态变迁过程：</p>
+<ul>
+<li><p>首先由较高层触发 <code>rdt_send(data)</code> 事件，通过 <code>sndpkt = make_pkt(0, data, checksum)</code> 产生一个序号为 0，包含待发送数据且带有校验和的分组，接着通过 <code>udt_send(sndpkt)</code> 将其发送到信道中，然后状态变迁为“等待接收接收端的 ACK 或 NAK 0”</p>
+</li>
+<li><p>当发送端收到了一个来自接收端的分组数据：</p>
+<ul>
+<li>如果该分组数据受损，或者接收到的是 NAK 分组，那么通过 <code>udt_send(sndpkt)</code> 重新传送刚才的序号为 0 的分组到信道中</li>
+<li>如果该分组完好且收到的是 ACK 分组，那么发送端知道接收端已经成功接收了刚才发送的序号为 0 的分组，此时发送端状态变迁到等待较高层传下来的数据发送请求</li>
+</ul>
+</li>
+<li><p>接着再次由较高层触发 <code>rdt_send(data)</code> 事件，通过 <code>sndpkt = make_pkt(1, data, checksum)</code> 产生一个序号为 1，包含待发送数据且带有校验和的分组，接着通过 <code>udt_send(sndpkt)</code> 将其发送到信道中，然后状态变迁为“等待接收接收端的 ACK 或 NAK 1”</p>
+</li>
+<li><p>当发送端再次收到了一个来自接收端的分组数据：</p>
+<ul>
+<li>如果该分组数据受损，或者接收到的是 NAK 分组，那么通过 <code>udt_send(sndpkt)</code> 重新传送刚才的序号为 1 的分组到信道中</li>
+<li>如果该分组完好且收到的是 ACK 分组，那么发送端知道接收端已经成功接收了刚才发送的序号为 1 的分组，此时发送端状态变迁到等待较高层传下来的数据发送请求（即回到本状态机的初始状态）</li>
+</ul>
+</li>
+</ul>
+<p>只要收到NAK就重发，收到ACK就发下一个。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203204349788.png"></p>
+<p>接着再来描述一下 rdt 2.1 协议接收端的状态变迁过程：</p>
+<ul>
+<li>首先在初始状态上，接收端等待着接收由发送端发来的序号为 0 的分组数据</li>
+<li>接着由<code>rdt_rcv(rcvpkt)</code>从底层信道接收了一个分组数据：<ul>
+<li>如果该分组受损（即 <code>rdt_crv(rcvpkt) &amp;&amp; corrupt(rcvpkt)</code>），那么由 <code>sndpkt = make_pkt(NAK, checksum)</code> 产生一个附带校验和的 NAK 分组，接着由 <code>udt_send(sndpkt)</code> 发送回发送端</li>
+<li>如果该<strong>分组失序</strong>（即 <code>rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt) &amp;&amp; has_seq1(rcvpkt)</code>），那么由 <code>sndpkt = make_pkt(ACK, checksum)</code> 产生一个附带校验和的 <strong>ACK 分组</strong>，接着由 <code>udt_send(sndpkt)</code> 发送回发送端</li>
+<li>如果该分组完好且顺序正确（即 <code>rdt_rcv(rcvpkt) &amp;&amp; notcorrupt(rcvpkt) &amp;&amp; has_seq0(rcvpkt)</code>），那么通过 <code>extract(rcvpkt, data)</code> 和 <code>deliver_data(data)</code> 将分组数据上传给较高层程序。接着，由 <code>sndpkt = make_pkt(ACK, checksum)</code> 产生一个附带校验和的 ACK 分组，由 <code>udt_send(sndpkt)</code> 发送回发送端</li>
+</ul>
+</li>
+<li>接下来等待序号为 1 的分组的处理过程与上面类似，不再赘述</li>
+</ul>
+<p>只要分组有错就发NAK，只要分组没错（失序或没有失序）就发ACK。</p>
+<p>总结一下：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203204921570.png"></p>
+<p>发送方在发送的分组是0或者1时都需要确认是否发送的分组被正确的接受。如果没有就重发。所以有2、4两个相同的状态。</p>
+<p><strong>接受端收到失序分组的原因：</strong></p>
+<p>这里顺便解释一下接收端接收到失序分组的原因：假设发送端发送序号为 0 的分组，接收端收到并回复 ACK，接着接收端就开始等待接收序号为 1 的分组，但是这个接收端返回的 ACK 分组由于在传输过程中受损，发送端并不知道序号为 0 的分组已经发送成功，所以仍然重复发送序号为 0 的分组，这样，就造成了接收端在等待接收序号为 1 的分组的时候，却接收到了序号为 0 的失序分组。</p>
+<p><strong>为什么当接收端接收到分组失序时要返回 ACK 分组呢？因为按照上面的假设，信道不会丢失分组，也不会乱序，所以收到失序的分组的唯一原因就是上面解释的这种，那么在这种情况下，只需要告诉发送端：我确实已经收到了你刚才一直重发的分组，可以发新的了。所以接收端回应 ACK 分组即可。</strong></p>
+<h3 id="经具有比特差错信道的可靠数据传输协议-rdt-2-2-无-NAK-分组"><a href="#经具有比特差错信道的可靠数据传输协议-rdt-2-2-无-NAK-分组" class="headerlink" title="经具有比特差错信道的可靠数据传输协议 rdt 2.2 (无 NAK 分组)"></a>经具有比特差错信道的可靠数据传输协议 rdt 2.2 (无 NAK 分组)</h3><p>其实上面的 rdt 2.1 协议在上述假设的底层信道模型中已经工作的不错了，但是我们还可以再简化一下，实现一个无 NAK 的可靠数据传输协议，我们称它为 rdt 2.2。</p>
+<ul>
+<li><p>只使用ACK</p>
+</li>
+<li><p>取消NAK，接收方对最后一个正确收到的分组发送 ACK</p>
+<p>【接收方必须明确指出被确认的分组的序号】</p>
+</li>
+<li><p>发送方收到的<strong>重复的ACK将按照NAK来进行处理</strong></p>
+<p>【重传正确的分组】</p>
+</li>
+</ul>
+<p>rdt 2.1 和 rdt 2.2 之间的细微变化在于，<strong>接收端此时必须包括由一个 ACK 报文所确认的分组序号</strong>（可以通过在接收端有限状态机中，在 <code>make_pkt()</code> 中包括参数 ACK 0 或 ACK 1 来实现），发送端此时必须检查接收到的 ACK 报文中被确认的分组序号（可通过在发送端有限状态机中，在 <code>isACK()</code> 中包括参数 0 或 1 来实现）。</p>
+<p>下图是 rdt 2.2 协议发送端的有限状态机描述图：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203210155986.png"></p>
+<p>下图是接收端的有限状态机描述图：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203210214928.png"></p>
+<p>考虑在 rdt 2.1 协议中，如果接收端收到了一个受损的分组则会返回 NAK 分组。但是**&#x3D;&#x3D;如果不发送 NAK，而是对上次正确接收的分组发送一个 ACK，也能实现与发送 NAK 一样的效果。&#x3D;&#x3D;**（失序分组的话，就告诉发送方发新的，是新的分组错误的话，发之前收到的ACK也告诉发送方发新的。） <strong>发送端接收到对同一个分组的两个 ACK（即接收冗余ACK）后，就知道接收端没有正确接收到跟在被确认两次的分组后面的分组。</strong>这就是 rdt 2.2 可以取消 NAK 分组的原因。</p>
+<p>具体 rdt 2.2 的流程因为和 rdt 2.1 基本类似，故不赘述。</p>
+<h3 id="经具有比特差错的丢包信道的可靠数据传输协议-rdt-3-0-解决数据或者ACK会丢失问题"><a href="#经具有比特差错的丢包信道的可靠数据传输协议-rdt-3-0-解决数据或者ACK会丢失问题" class="headerlink" title="经具有比特差错的丢包信道的可靠数据传输协议 rdt 3.0(解决数据或者ACK会丢失问题)"></a>经具有比特差错的丢包信道的可靠数据传输协议 rdt 3.0(解决数据或者ACK会丢失问题)</h3><p>新的假设：<strong>底层信道会丢包 (数据或 ACK)</strong></p>
+<p>Q：怎么检测丢包和丢包后怎么做？<br>A：发送方检测丢包和恢复丢包。</p>
+<p>解决方法：<strong>发送方对ACK等待“适当的”时间</strong></p>
+<ul>
+<li><p><strong>如果在这个时间内没有收到ACK则重传</strong></p>
+</li>
+<li><p><strong>如果分组或ACK仅仅是延迟到达（而非丢失）:</strong></p>
+</li>
+<li><p><strong>重传将造成重复，但序号可以解决这个问题</strong></p>
+</li>
+<li><p><strong>接收方必须指出确认的分组序号</strong></p>
+</li>
+</ul>
+<p>解释：<strong>发送端负责检测和回复丢包工作</strong>。假定发送端传输一个数据分组，该分组或者接收端对该分组的 ACK 发生了丢失。在这两种情况下，发送端都收不到应当到来的接收端的响应。所以，如果发送端愿意等待足够长的时间以确定该分组缺失已丢失，则它只需要重传该数据分组即可。</p>
+<p>但是等待多长时间合适呢？很明显发送端至少需要等待：<strong>发送端与接收端之间的往返时延（可能会包括在中间路由器的缓冲时延）加上接收端处理一个分组所需的时间。但这个时间是很难估算的。在 RFC 1323 中，这个时间被假定为 3 分钟。</strong></p>
+<p>在实践中，发送端明智地选择一个时间值，以判定可能发生了丢包（尽管不能确定）。如果在这个时间内没有收到 ACK，则重传该分组。注意到如果一个分组经历了特别大的时延，发送端可能会重传该分组，即使该数据分组及其 ACK 都没有丢失。这就在发送端到接收端的信道中引入了<strong>冗余数据分组</strong>的可能性。不过上面的 rdt 2.2 协议已经有足够的功能（即序号）来处理冗余分组情况。</p>
+<p><strong>从发送端的观点来看，重传是万灵药</strong>。发送端不知道是一个数据分组丢失，还是一个 ACK 丢失，或者只是该分组或 ACK 过低延时。在所有这些情况下，发送端执行的动作都是<strong>重传</strong>。</p>
+<p>为了实现基于时间的重传机制，需要一个倒计时计时器，在一个给定的时间量过期后，中断发送端。因此发送端需要能做到：</p>
+<ul>
+<li>每次发送一个分组（包括第一次分组和重传分组）时，便启动一个定时器</li>
+<li>响应定时器中断（采取适当的动作）</li>
+<li>终止定时器</li>
+</ul>
+<h4 id="rdt3-0举例："><a href="#rdt3-0举例：" class="headerlink" title="rdt3.0举例："></a>rdt3.0举例：</h4><p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203210916277.png"></p>
+<p>rdt3.0收到错误序号的ack，并不是立马重传，而是超时重传。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203210929888.png"></p>
+<h4 id="rdt3-0性能分析："><a href="#rdt3-0性能分析：" class="headerlink" title="rdt3.0性能分析："></a>rdt3.0性能分析：</h4><p>rdt3.0 可以工作, 但是性能很差</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203211454895.png"></p>
+<p>解释：正常情况下L&#x2F;R（分组离开发送端）的时间后发送方就要发送新的数据。但是由于rdt3.0需要接受ACK。其中发送方接受ACK的时间为RTT+L&#x2F;R（忽略ACK分组的传输时间，RTT是传播时间）。这段时间内发送方是在等待的。</p>
+<p>结果：</p>
+<p>发送方只有万分之2.7 的时间是忙的</p>
+<p>每30ms（1个RTT）内只能发送1KB ： 1 Gbps 的链路只有33kB&#x2F;sec（1KB&#x2F;30ms） 的吞吐量</p>
+<p>网络协议限制了物理资源的利用率</p>
+<p>图示：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203212024456.png"></p>
+<p><strong>提高性能的一种可行方法：流水线技术</strong></p>
+<h3 id="流水线可靠数据传输协议（提高效率）"><a href="#流水线可靠数据传输协议（提高效率）" class="headerlink" title="流水线可靠数据传输协议（提高效率）"></a>流水线可靠数据传输协议（提高效率）</h3><p>允许发送方发送多个分组而无需等待确认</p>
+<ul>
+<li>必须<strong>增大序号范围</strong>（不再局限于3.0中的一个ACK了。正是3.0如此，故采取流水线作业）ACK(1-XXX)</li>
+<li><strong>协议的发送方和接收方必须对分组进行缓存</strong></li>
+</ul>
+<p>例如：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203212210674.png"></p>
+<p>现在有一个问题：当流水线技术中丢失了一个分组，怎么进行重传？</p>
+<ul>
+<li>Go-Back-N（GBN，回退N步）协议：其后分组全部重传</li>
+<li>选择重传（SR）协议：仅重传该分组</li>
+</ul>
+<p> go-Back-N（回退N重传协议）：</p>
+<p>1.发送者在流水线中最多有 N 个未确认的数据报。</p>
+<p>2.接收者仅发送累计的确认 ，<strong>如果中间有数据报缺失，就不予以确认</strong>。</p>
+<p>3.发送者对最久未确认的数据报进行计时，如果计时器到点, <strong>重传所有未确认的数据报</strong>。</p>
+<p>4.发送窗口大于1 ≤ 2k-1，接受窗口等于1（也就意味着如果某一个报文段出现错误，那么接受窗口会停留再次，之后收到的数据将会被丢弃）</p>
+<p>selective repeat（选择重传协议）：</p>
+<p>1.发送者在流水线中最多有 N 个未确认的数据报。</p>
+<p>2.接收者对单个数据报进行确认。</p>
+<p>3.发送者对每一个未确认的数据报进行计时，如果计时器到点, 仅重传该个未确认的数据报。</p>
+<p>4.发送窗口大于1，接受窗口大于1（意味着可以缓存出错位置之后的报文段），最好是两者相同，</p>
+<h4 id="Go-Back-N：（累计确认）"><a href="#Go-Back-N：（累计确认）" class="headerlink" title="Go-Back-N：（累计确认）"></a>Go-Back-N：（累计确认）</h4><p>允许发送方发送多个分组而不需等待确认，但已发送但未确认的分组数不能超过N。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203220031107.png"></p>
+<p>限制滑动窗口大小：为了流量控制</p>
+<p>ACK-only: 对正确按序到达的分组发送ACK</p>
+<ul>
+<li>可能会产生重复的ACK</li>
+<li>需要记住期待序号 expectedseqnum</li>
+</ul>
+<p>失序分组或损坏分组:</p>
+<ul>
+<li>丢弃 (不缓存) -&gt; 接收方无缓存!</li>
+<li><strong>重发正确按序到达的最高序号分组的ACK</strong>（告诉发送方，该分组的后序分组（ack大于此ack）有问题，要重发）</li>
+<li>每次发送的ACK一定是对正确按序到达的最高序号分组的确认</li>
+</ul>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203220422740.png"></p>
+<p><strong>Go-Back-N协议特点</strong></p>
+<ol>
+<li><p>ACK(n): 接收方对序号n之前包括n在内的所有分组进行确认 - “累积 ACK”（一段ACK都确认后或者没收到后再进行重传）</p>
+</li>
+<li><p>对所有已发送但未确认的分组统一设置一个定时器</p>
+</li>
+<li><p><em>超时</em>（n):重传分组n和窗口中所有序号大于n的分组</p>
+</li>
+<li><p>接收方收到失序分组: </p>
+<ul>
+<li><p>丢弃 (不缓存) -&gt; 接收方无缓存!</p>
+</li>
+<li><p>重发按序到达的最高序号分组的ACK</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="选择重传（超时重传）"><a href="#选择重传（超时重传）" class="headerlink" title="选择重传（超时重传）"></a>选择重传（超时重传）</h4><p>解决GBN大量重传分组的问题</p>
+<ol>
+<li><p>接收方<em>逐个</em>对所有正确收到(即使失序)的分组进行确认（不是累积确认）</p>
+<p>​			<strong>对接收到的（失序）分组进行缓存（GBN不缓存）</strong>, 以便最后对上层进行有序递交</p>
+</li>
+<li><p>发送方只重发<strong>怀疑</strong>丢失或损坏的分组</p>
+<p>​		发送方为每一个没有收到ACK的分组设置<strong>定时器</strong></p>
+</li>
+<li><p>发送窗口</p>
+<ul>
+<li><p>大小为N，范围[sendbase, sendbase + N - 1]</p>
+</li>
+<li><p>限制已发送但未被确认的分组数最多为N</p>
+</li>
+<li><p>sendbase以前的分组都被确认</p>
+</li>
+</ul>
+</li>
+<li><p>接受窗口窗口</p>
+<ul>
+<li><p>大小为N,范围[recvbase, recvbase + N - 1]</p>
+</li>
+<li><p>落在窗口内的序号都是期待收到的分组序号</p>
+</li>
+<li><p>recvbase前都是按序到达，已发出确认，且已递交给上层</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>图示：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203221213732.png"></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203221608167.png"></p>
+<p>补充：为什么发送方会收到比sendbase还小的分组确认？</p>
+<p>假设窗口位于sendbase-1时，序号sendbase-1的分组定时器时间还没收到ACK（sendbase-1），发送方重发该分组。这时又收到了ACK(sendbase-1)，窗口前移。移动后，发送方又收到了ACK(sendbase-1)</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203222134071.png"></p>
+<p>前移的标志：确认收到rcvbase前的分组。</p>
+<p><strong>为什么接受方会收[recvbase-N，recvbase - 1]范围内的分组？并且必须给出确认？</strong></p>
+<ul>
+<li>因为确认可能会丢失。假设接受方按序收到<strong>N</strong>个分组，向发送方发送确认后接受窗口向前移动N位。</li>
+<li>假设确认分组全部丢失，导致发送方重发。发送方最多只能发N个，因此接受方会收到[recvbase-N，recvbase - 1]范围内的分组</li>
+<li><strong>接收方这时必须给出确认，否则发送方窗口无法向前移动</strong></li>
+</ul>
+<p><strong>为什么接受方收到比recvbase-N更早的分组后不用发确认了？</strong></p>
+<ul>
+<li>因为比recvbase-N更早的分组（如recvbase-N-1），发送方一定收到确认了。</li>
+<li>当接受窗口位于recvbase时，意味着接受方一定按序收到了从[recvbase-N, recvbase- 1]的分组</li>
+<li>这意味着发送方窗口一定到了recvbase-N。因此发送方一定收到了比recvbase-N更早的确认</li>
+</ul>
+<p>总之，接受方窗口移动前一定要考虑发送方的窗口移动。要清楚一点：接受方是发出ACK的一方，它的窗口移动是在发送方的前面的。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203223540767.png"></p>
+<p>当发送窗口和接受窗口不同步会产生严重后果。</p>
+<p>第一种情况:</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203223744226.png"></p>
+<p>第二种情况：</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203224403151.png"></p>
+<p>这是接受方在窗口太大时的两难：<strong>最后收到的分组0是新的分组还是重传的？（接受方无法判断是情况一还是二）</strong></p>
+<p><strong>结论：N≤2^k-1^</strong>（窗口长度必须小于等于序列号空间大小的一半）</p>
+<h2 id="第五部分：面向连接的传输-TCP"><a href="#第五部分：面向连接的传输-TCP" class="headerlink" title="第五部分：面向连接的传输 : TCP"></a>第五部分：面向连接的传输 : TCP</h2><p>TCP的特点：</p>
+<p>基于字节流<br>面向连接<br>可靠传输<br>缓冲传输<br>全双工<br>流量控制</p>
+<h3 id="TCP报文段的首部格式"><a href="#TCP报文段的首部格式" class="headerlink" title="TCP报文段的首部格式"></a>TCP报文段的首部格式</h3><p>TCP虽然是面向字节流的,但TCP传送的数据单元却是报文段.<br>TCP报文段首部前20个字节是固定的, 后4n个字节是不定的</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20190328003921619.png"><strong>源端口和目的端口 : 各占两个字节.</strong></p>
+<p>**序号 : 占4个字节, 在一个TCP连接中传送的字节流中的每一个字节都按顺序编号. 整个要传输的字节流的起始序号必须在连接建立时设置. ** <strong>序号字段的值则指的是本报文段所发送的数据的第一个字节在整个报文字节流中的序号</strong></p>
+<blockquote>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191203230341738.png"></p>
+</blockquote>
+<p><strong>确认号 : 占4个字节, 期望收到对方下一个报文段的第一个数据字节的序号.</strong></p>
+<blockquote>
+<p>TCP是全双工的，主机A在向主机B传输数据的同时，也从主机B中接受数据。确认号仅当ACK标志为1时有效。确认号表示期望收到的下一个字节的序号</p>
+</blockquote>
+<p>数据偏移 : 占4位, TCP报文段的数据起始处距离TCP报文段的起始处有多远.</p>
+<p>保留 : 占6位,保留为今后使用，但目前应置为 0</p>
+<p>紧急URG : URG &#x3D; 1时, 紧急指针字段有效, 优先发送, 比如终止指令.</p>
+<p>确认ACK : 当ACK &#x3D; 1时, 才有效. TCP规定, 建立连接后所有传达的报文段ACK必须置为1.</p>
+<p>推送PSH :  接收 TCP 收到推送比特置 1 的报文段，就尽快地交付给接收应用进程，而不再等到整个缓存都填满了后再向上交付。 </p>
+<p>复位RST :当 RST &#x3D; 1 时，表明 TCP 连接中出现严重差错（如由于主机崩溃或其他原因），必须释放连接，然后再重新建立运输连接。</p>
+<p>同步SYN : 在建立连接时同步序号. 当SYN &#x3D; 1, 而ACK &#x3D; 0时, 表明是一个连接请求报文. 如果对方同意建立连接, 则应在相应的报文段中使用SYN &#x3D; 1和ACK &#x3D; 1.</p>
+<p>终止FIN : 当FIN &#x3D; 1, 表示报文发送完毕, 可以释放连接.</p>
+<p>窗口 : 占2字节, 发送报文一方的接收窗口. 窗口值得意义: .作为接收方让发送方设置其发送窗口的依据. 窗口字段明确指出了现在允许对方发送的数据量. 窗口值是动态变化的. 因为接收方的数据缓存空间是有限的.</p>
+<p>校验和 : 占2字节, 检验范围包括首部和数据这两部分. 和UDP的检验和类似.</p>
+<p>紧急指针 : 占2字节, URG &#x3D; 1才有意义.</p>
+<p>选项字段 : 长度可变, TCP 只规定了一种选项，即最大报文段长度 MSS (Maximum Segment Size)。MSS 告诉对方 TCP：“我的缓存所能接收的报文段的数据字段的最大长度是 MSS 个字节。”</p>
+<p>填充字段 ：这是为了使整个首部长度是 4 字节的整数倍。 </p>
+<p><strong>序列号和确认号是整个报文段首部最重要的两个字段</strong></p>
+<h3 id="TCP如何保证可靠性"><a href="#TCP如何保证可靠性" class="headerlink" title="TCP如何保证可靠性"></a>TCP如何保证可靠性</h3><p>UDP传输数据不可靠，具体表现：<br>- 发送方不知道UDP数据段传达到接收方了没有，无反馈信息<br>- 发送方有多少就发多少，不会理会接收方实际可接收的数据大小</p>
+<p>因此可靠性传输需要考虑两个方面：</p>
+<ol>
+<li>接收到消息后的反馈机制</li>
+<li>接收方对于数据的承载能力</li>
+</ol>
+<p>有以下几个点：</p>
+<p>1）应用数据被分割成TCP认为最合适发送的数据块。称为段（Segment）传递给IP层</p>
+<p>【<strong>流水线方式</strong>发送报文段】</p>
+<p>2）当TCP发出一个段后，它会启动一个定时器，等待目的端确认收到这个报文段。若没有及时收到确认，将重新发送这个报文段（最早未确认的报文段）见“超时重传”</p>
+<p>3）当TCP收到发自TCP连接另一端的数据，它将发送一个确认。这个确认不是立即发送的，通常将推迟几分之一秒。</p>
+<p>【累积确认：只确认最后一个正确按序到达的报文段，见“反馈机制”】</p>
+<p>4）TCP将保持它首部和数据的校验和，这是一个端到端的校验和，目的是检测数据在传输过程中的任何变化。如果收到段的校验和有差错，TCP将丢弃这个报文也不进行确认（超时重传导致对方就会重复发送了）。</p>
+<p>5）TCP承载与IP数据报来传输，而IP数据报可能会失序，所以TCP的报文段到达时也可能会失序。但是TCP收到数据后会重新排序到正确的顺序（通过序号）。</p>
+<p>6）IP数据报会发生重复，TCP的接收端必须丢弃重复是数据</p>
+<p>7）TCP还能提供流量控制，TCP连接的每一方都有一定大小的缓冲空间</p>
+<h4 id="反馈机制"><a href="#反馈机制" class="headerlink" title="反馈机制"></a>反馈机制</h4><p>链路层也使用了可靠数据的传输，通过停等协议、滑动窗口协议等，但由于网络层的IP协议是不可靠的，即使在链路层上不会发生丢失和错序，但是在路由器（网络层）上可能发生丢包。<br>TCP传输使用<strong>选择性重传（</strong>selective repeat）的传输方式。不选用停等协议是因为传输层中端到端的延迟很大。选择性重传用到了序列号和确认号<br><strong>确认号+序号</strong></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20180301192735455.png"></p>
+<p>客户端发送第一个报文段，序号为x；第一个确认号字段为y-1。<br>然后服务端成功接收报文段后，提供一个确认，确认号为x+1，表示已经收到x以及之前的数据，期待接收x+1以及之后的数据。这里的报文段序号设置为y.<br>接着第三个报文段由客户发往服务器。确认已经收到服务器发来的数据。确认号为y+1，并且序号为x+1.</p>
+<h4 id="超时重传"><a href="#超时重传" class="headerlink" title="超时重传"></a>超时重传</h4><p>在发送一个数据之后，就开启一个定时器，若是在这个时间内没有收到发送数据的ACK确认报文，则对该报文进行重传，在达到一定次数还没有成功时放弃并发送一个复位信号。<br>　　这里比较重要的是重传超时时间，怎样设置这个定时器的时间（RTO），从而保证对网络资源最小的浪费。因为若RTO太小，可能有些报文只是遇到拥堵或网络不好延迟较大而已，这样就会造成不必要的重传。太大的话，使发送端需要等待过长的时间才能发现数据丢失，影响网络传输效率。<br>　　由于不同的网络情况不一样，不可能设置一样的RTO，实际中RTO是根据网络中的RTT（传输往返时间）来自适应调整的。具体关系参考相关算法。<br>　　通过图来了解重传机制： </p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/1233668-20180613233505890-1600510236.png"></p>
+<p><strong>超时间隔加倍</strong></p>
+<ul>
+<li><p>每一次TCP超时重传均将下一次超时间隔设为先前值的两倍</p>
+</li>
+<li><p>超时间隔由EstimatedRTT和DevRTT决定，每当发生下列事件之一是重新计算超时间隔</p>
+<ul>
+<li><p>收到上层应用的数据</p>
+</li>
+<li><p>收到对未确认数据的ACK</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>快速重传</strong>（缩短了超时的时间）</p>
+<p><strong>TCP采取的是累计确认机制（不是说TCP要收完全部窗口中的ACK再发下一窗口），即当接收端收到比期望序号大的报文段时，便会重复发送最近一次确认的报文段的确认信号，我们称之为冗余ACK（duplicate ACK）。这个和收到错误分组，接收方不发ACK是没有关联的。换句话说，累计确认机制让TCP具备了快速重传的特点。</strong></p>
+<ol>
+<li><p>【增加重发丢失分组的延时】</p>
+</li>
+<li><p>通过重复的ACK检测丢失报文段</p>
+<p>发送方常要连续发送大量报文段</p>
+<p>如果一个报文段丢失，会引起很多连续的重复ACK.</p>
+</li>
+<li><p><strong>如果发送收到一个数据的3个重复ACK，它会认为确认数据之后的报文段丢失</strong></p>
+<p><strong>快速重传: 在超时到来之前重传报文段</strong></p>
+</li>
+</ol>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191204002104341.png"></p>
+<h3 id="TCP重传机制和GBN-x2F-SR的关系"><a href="#TCP重传机制和GBN-x2F-SR的关系" class="headerlink" title="TCP重传机制和GBN&#x2F;SR的关系"></a>TCP重传机制和GBN&#x2F;SR的关系</h3><p><strong>注意：这三者的发送窗口是收到之前的ACK就滑动到下一个分组</strong></p>
+<p>TCP重传机制更多的像一种GBN和SR的混合机制</p>
+<p>TCP积累是确认式的，只用一个定时器，很像GBN</p>
+<p>但有区别：</p>
+<ul>
+<li><p>很多TCP实现缓存失序的报文段。</p>
+</li>
+<li><p>GBN在报文段n超时时，会重发从n开始所有未确认的报文段。而<strong>TCP只会重传报文段n</strong>。甚至如果在报文段n超时收到了对报文段n+1的确认，TCP连报文段n都不会重传。</p>
+<blockquote>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20191005144432618.png"></p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20191005144456427.png"></p>
+</blockquote>
+</li>
+<li><p>TCP还有快速重传机制。</p>
+</li>
+</ul>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>流量控制的原因：</p>
+<ul>
+<li>TCP接收方有一个缓存，所有上交的数据全部缓存在里面</li>
+<li>应用进程从缓冲区中读取数据可能很慢</li>
+</ul>
+<p>所以TCP支持根据接收端能力来决定发送端的发送速度。这个机制叫做流量控制。</p>
+<p>流量控制的目标：</p>
+<p>发送方不会由于传得太多太快而使得接收方缓存溢出</p>
+<p>流量控制的手段：</p>
+<p>接收方在反馈时，将缓冲区剩余空间的大小填充在报文段首部的窗口字段中，通知发送方</p>
+<p><strong>窗口大小</strong></p>
+<p>（接收端向发送端主机通知自己可以接受数据的大小，这个大小限制就叫做窗口大小）</p>
+<p><strong>窗口扩大因子M</strong></p>
+<p>接收端如何把窗口大小告诉发送端呢? 回忆我们的TCP首部中, 有一个16位窗口字段, 就是存放了窗口大小信息;那么问题来了, 16位数字最大表示65535, 那么TCP窗口最大就是65535字节么?实际上, TCP首部40字节选项中还包含了一个窗口扩大因子M,<br>实际窗口大小是 窗口字段的值左移 M 位;</p>
+<p><strong>机理</strong></p>
+<p><strong>接收端将自己可以接收的缓冲区大小放入 TCP 首部中的 “窗口大小” 字段, 通过ACK端通知发送端</strong>;窗口大小字段越大, 说明网络的吞吐量越高;<br><strong>接收端一旦发现自己的缓冲区快满了, 就会将窗口大小设置成一个更小的值通知给发送端;发送端接受到这个窗口之后, 就会减慢自己的发送速度</strong>;</p>
+<p><strong>如果接收端缓冲区满了, 就会将窗口置为0; 这时发送方不再发送数据, 但是需要定期发送一个窗口探测数据段, 使接收端把窗口大小告诉发送端</strong><br><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20180605190737615.png"></p>
+<p>当接收端收到从3001号开始的数据段后其缓冲区挤满。不得不暂时停止发送数据，之后窗口收到更新通知后才得以继续进行。如果这个通知在途中丢失了，可能导致无法继续通信。所以发送方会是不是发送一个窗口探测的数据段。此数据端仅含一个字节来获取最新的窗口大小。</p>
+<h3 id="TCP连接的建立"><a href="#TCP连接的建立" class="headerlink" title="TCP连接的建立"></a>TCP连接的建立</h3><p>就是我们常说的通过<strong>三次握手</strong>建立TCP连接。</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/20180301221159481.png"></p>
+<p>第一步：客户端的TCP想服务器端的TCP发送一个特殊的TCP报文段，称为SYN报文段（syn设置为1），不包含应用层数据，随机选择一个初始序号client_isn。该报文段会被封装到一个IP数据报中，并发送给服务器。（告诉服务器，我来了）<br>第二步：服务器收到ip数据报后，提取出TCP SYN报文段，<strong>为该TCP分配TCP缓存和变量</strong>，<strong>并向该客户TCP发送允许连接的报文段</strong>。这个报文段也不包含应用层数据。首部包含三个重要信息：SYN比特设置为1，确认号设置为client_isn+1；服务器选择自己的随机序号server_isn。该报文也被称为SYNACK segment（服务器告诉客户端你可以连接，我准备好了）<br>第三步：客户机收到SYNACK报文段后，<strong>给该连接分配缓存和变量</strong>。客户机向服务器发送另外一个报文段，对服务器的允许连接的报文段进行确认（确认字段设置为server_isn+1)。因为连接已经建立了，因此SYN比特设置为0。这一阶段可以在报文段负载中携带客户到服务器的数据。（客户告诉服务器我不会鸽你的，我马上就要来了）</p>
+<p><strong>为什么要三次握手？</strong></p>
+<p>第三次握手是为了防止已经失效的连接请求报文段突然又传到服务端，因而产生错误。</p>
+<p>假设只需要二次握手，考虑这种情况：</p>
+<p>1：主机A发出的请求报文段在某些网络节点滞留时间太长，主机A由于超时重发连接请求，B收到重发的连接请求后给出同意连接的确认，主机A收到B的确认建立连接。数据传输完毕释放连接。</p>
+<p>2：这时第一个请求才到达B，主机B收到该失效的请求后，误以为A又发出请求，于是向主机A发出确认，同意建立连接。主机A则不会理睬该确认。主机B则苦等A的数据。三次握手就可以防止这种情况的发生。（主机A不会对主机B的确认发出确认，连接就建立不起来）</p>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191204004122986.png"></p>
+<h4 id="SYN洪泛攻击"><a href="#SYN洪泛攻击" class="headerlink" title="SYN洪泛攻击"></a>SYN洪泛攻击</h4><p>TCP服务器为了响应一个SYN连接请求报文，需要初始化连接变量及分配缓存（需要消耗服务器的资源），然后发送SYNACK报文进行响应，并等待客户端的ACK报文段。</p>
+<p>如果客户机不给出第三次ACK响应来完成第三次握手的最后一步，服务器在等待一段时间后（通常为一分钟）服务器将终止该半开连接并释放资源。</p>
+<h2 id="第六部分：拥塞控制原理"><a href="#第六部分：拥塞控制原理" class="headerlink" title="第六部分：拥塞控制原理"></a>第六部分：拥塞控制原理</h2><p>在过多的源发送了过多的数据，超出了网络的处理能力。</p>
+<blockquote>
+<p><strong>不同于流量控制!</strong></p>
+<p>流量控制是为了匹配发送方和接收方的速度，只发生在发送方和接收方之间</p>
+<p>拥塞控制：网络拥塞时，所有发送方都要抑制发送速度</p>
+</blockquote>
+<p>拥塞的现象：</p>
+<p>丢包 (路由器缓冲区溢出)</p>
+<p>延时长 (在路由器缓冲区排队)</p>
+<h3 id="拥塞控制的方法（TCP选择端系统自己判断是否拥塞）"><a href="#拥塞控制的方法（TCP选择端系统自己判断是否拥塞）" class="headerlink" title="拥塞控制的方法（TCP选择端系统自己判断是否拥塞）"></a>拥塞控制的方法（TCP选择端系统自己判断是否拥塞）</h3><h4 id="网络辅助的拥塞控制"><a href="#网络辅助的拥塞控制" class="headerlink" title="网络辅助的拥塞控制"></a>网络辅助的拥塞控制</h4><p>直接网络反馈：路由器以阻塞分组的形式通知发送方“网络拥塞了”</p>
+<p>经由接收方的网络反馈：路由器标识从发送方流向接收方分组中的某个字段以指示拥塞的产生，由接收方通知发送方“网络拥塞了”</p>
+<h4 id="端到端拥塞控制"><a href="#端到端拥塞控制" class="headerlink" title="端到端拥塞控制"></a>端到端拥塞控制</h4><p>网络层不为拥塞控制提供任何帮助和支持</p>
+<p>端系统通过对网络行为（丢包或时延增加）的观测判断网络是否发生拥塞</p>
+<p>目前TCP采用该种方法</p>
+<h3 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h3><p>由于发送方到接收方之间的信道是公用的，因此如果发送方不考虑中间信道的容量随意发送就可能出现拥塞。拥塞会导致延迟严重，甚至大量丢包</p>
+<p><strong>TCP必须使用端到端拥塞控制。（区别于网络辅助手段）</strong><br><strong>方法：让每一个发送方根据所感知到的网络拥塞程度来限制其能向链接发送流量的速率。</strong><br><strong>不拥塞——加快发送流量的速率</strong><br><strong>拥塞——减慢发送流量的速率</strong></p>
+<p>发送端由一个接收缓存、一个发送缓存和几个变量组成。<br>拥塞控制机制需要跟踪一个额外的变量，<strong>拥塞窗口，cwnd</strong>。它对于一个TCP发送方能向网络中发送流量的速率进行了限制。<br>$LastByteSent−LastByteAcked&lt;&#x3D;min(cwnd,rwnd)$</p>
+<p>这里我们假设接收窗口无限大，发送方未被确认的数据量仅受限于cwnd<br>$ 发送速率 &#x3D; cwnd&#x2F;RTT （字节&#x2F;秒）$</p>
+<p>可以通过调节cwnd来调整发送方向连接发送数据的速率<br><strong>① 限制发送流量</strong><br>运行在发送方的TCP拥塞控制机制跟踪一个额外的变量，即拥塞窗口（congestion window。cwnd）<br>调节cwnd值以控制发送速率<br><strong>② 发送方感知出现拥塞</strong><br>过度拥塞的时候，路由器的缓存会溢出，引起一个数据报被丢弃，引起发送方的丢包事件<br>丢包事件：出现超时或者收到来自接收方的三个冗余ACK<br><strong>③ 发送方在感知拥塞后确定应当发送的速率</strong><br>这里需要用到TCP拥塞控制算法：慢启动；拥塞避免；快速恢复</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>阶段行为</th>
+<th>结束的方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>慢启动</td>
+<td><strong>cwnd的值以一个MSS开始</strong>并且每当传输的报文段首次被确认，就指数增加MSS，1，2，4…每经过一个RTT，发送的速率翻番。</td>
+<td>第一次结束：（出现由超时指示的丢包时间）将cwnd设置为1，然后重新开始慢启动过程，并且设置ssthresh(慢启动阈值）设置为cwnd的一半。                                                             第二次结束：（当cwnd达到或者超过ssthresh），TCP转移到拥塞避免阶段。             第三次结束（检测到3个冗余ACK）：执行快速重传并进入快速恢复状态</td>
+</tr>
+<tr>
+<td>拥塞避免</td>
+<td>此时cwnd的值大约是上次拥塞的值的一半，每次收到确认，将cwnd增加一个MSS</td>
+<td>出现<strong>超时</strong>时，cwnd的值被设置为1个MSS，当<strong>丢包</strong>发生时，ssthresh更新为cwnd值的一半；当<strong>收到3个冗余的ACK时</strong>，将ssthresh的值记录为cwnd的值的一半，然后进入快速恢复状态</td>
+</tr>
+<tr>
+<td>快速恢复</td>
+<td>每收到一个冗余的ACK，cwnd将增加一个MSS</td>
+<td>当对丢失报文段的一个ACK到达时，TCP在降低cwnd后进入拥塞避免状态。如果出现超时事件，cwnd设置为1个MSS，并且ssthresh的值设置为cwnd值的一半，然后迁移到慢启动状态</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><em>MSS</em>,最大报文段长度</p>
+</blockquote>
+<p>此处引入一个概念程为拥塞窗口，拥塞窗口发送开始的时候, 定义拥塞窗口大小为1;每次收到一个ACK应答, 拥塞窗口加1;</p>
+<p>每次发送数据包的时候, <strong>将拥塞窗口和接收端主机反馈的窗口大小做比较, 取较小的值作为实际发送的窗口</strong>;像上面这样的拥塞窗口增长速度, 是指数级别的. “慢启动” 只是指初使时慢, 但是增长速度非常快.为了不增长的那么快, 因此不能使拥塞窗口单纯的加倍.此处引入一个叫做慢启动的阈值。<br><strong>当拥塞窗口超过这个阈值的时候, 不再按照指数方式增长, 而是按照线性方式增长</strong></p>
+<p>**当TCP开始启动的时候, 慢启动阈值等于窗口最大值;在每次超时重发的时候, 慢启动阈值会变成原来的一半, 同时拥塞窗口置回1;**少量的丢包, 我们仅仅是触发超时重传; 大量的丢包, 我们就认为网络拥塞;</p>
+<p>补充：</p>
+<p>1、初始速率很低但是速率的增长速度很快。</p>
+<p>2、对收到3个重复ACK的反应——快速重传</p>
+<ul>
+<li>门限值设为当前CongWin的一半（门限值初始值65kB）</li>
+<li>将CongWin减为新的门限值+3MSS</li>
+<li>线性增大拥塞窗口</li>
+</ul>
+<p>3、对超时事件的反应：设置门限（Threshold）</p>
+<ul>
+<li>门限值设为当前CongWin的一半（门限值初始值65kB）</li>
+<li>将CongWin设为1个 MSS大小; </li>
+<li>窗口以指数速度增大</li>
+<li>窗口增大到门限值之后，再以线性速度增大</li>
+</ul>
+<p><img src="/images/%E8%BF%90%E8%BE%93%E5%B1%82/image-20191204100929736.png"></p>
+<p>在执行慢开始算法时，拥塞窗口 cwnd 的初始值为 1，发送第一个报文段 M0。 </p>
+<p>发送端收到 ACK1 （确认 M0，期望收到 M1）后，将 cwnd 从 1 增大到 2，于是发送端可以接着发送 M1 和 M2 两个报文段。</p>
+<p>接收端发回 ACK2 和 ACK3。发送端每收到一个对新报文段的确认 ACK，就把发送端的拥塞窗口+1MSS。现在发送端的 cwnd 从 2 增大到 4，并可发送 M3 ~ M6共 4个报文段。</p>
+<p>发送端每收到一个对新报文段的确认 ACK，就把发送端的拥塞窗口+1MSS，因此拥塞窗口 cwnd 随着传输次数按指数规律增长。 </p>
+<p>当拥塞窗口 cwnd 增长到慢开始门限值 ssthresh 时（即当 cwnd &#x3D; 16 时），就改为执行拥塞避免算法，拥塞窗口按线性规律增长。 </p>
+<p>假定拥塞窗口的数值增长到 24 时，网络出现超时（表明网络拥塞了）。</p>
+<p>更新后的 ssthresh 值变为 12（即发送窗口数值 24 的一半），拥塞窗口再重新设置为 1，并执行慢开始算法。</p>
+<p>当 cwnd &#x3D; 12 时改为执行拥塞避免算法，拥塞窗口按按线性规律增长，每经过一个往返时延就增加一个 MSS 的大小。</p>
+<p>假定拥塞窗口的数值增长到 24 时，网络出现冗余ACK</p>
+<p><strong>TCP拥塞控制算法（Reno）总结</strong></p>
+<ol>
+<li>当 拥塞窗口CongWin小于门限值Threshold时，发送方处于 慢启动 阶段，窗口以指数速度增大。</li>
+<li>当 拥塞窗口CongWin大于门限值Threshold时，发送方处于 拥塞避免 阶段，窗口线性增大。</li>
+<li>当收到 3个重复的ACK 时,门限值Threshold设为拥塞窗口的1&#x2F;2，而拥塞窗口CongWin设为门限值Threshold+3个MSS。</li>
+<li>当 超时 事件发生时，门限值Threshold设为拥塞窗口的1&#x2F;2，而拥塞窗口CongWin设为1个 MSS。</li>
+</ol>
+<h4 id="TCP吞吐量"><a href="#TCP吞吐量" class="headerlink" title="TCP吞吐量"></a>TCP吞吐量</h4><p>忽略慢启动。</p>
+<p>假定当丢包事件发生时，窗口大小为 W.</p>
+<p>​		此时 吞吐量为$W&#x2F;RTT$</p>
+<p>丢包事件发生后，窗口大小减为W&#x2F;2, 吞吐量为W&#x2F;2RTT. </p>
+<p>​		因此平均吞吐量为: $0.75 W&#x2F;RTT$</p>
+<h4 id="TCP拥塞控制的公平性"><a href="#TCP拥塞控制的公平性" class="headerlink" title="TCP拥塞控制的公平性"></a>TCP拥塞控制的公平性</h4><p>由于TCP是具有拥塞机制的，所以TCP在带宽的处理上是公平的，但是UDP是没有拥塞控制的，所以UDP是不公平的。它会以恒定的速率传输数据。</p>
+<p>在并行TCP连接中，由于TCP是公平的。当一个应用使用了多个并行的TCP连接，它就会占有更多的带宽。从应用的角度来开就不是公平的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1148,20 +2997,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">155</span>
+          <span class="site-state-item-count">160</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

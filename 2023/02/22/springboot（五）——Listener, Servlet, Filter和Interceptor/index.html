@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="springboot（五）——Listener, Servlet, Filter和Interceptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot（五）——Listener, Servlet, Filter和Interceptor">
+<meta property="og:url" content="http://rshawshank.github.io/2023/02/22/springboot%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Listener,%20Servlet,%20Filter%E5%92%8CInterceptor/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="springboot（五）——Listener, Servlet, Filter和Interceptor">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-22T13:58:43.000Z">
+<meta property="article:modified_time" content="2023-02-23T05:28:30.709Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rshawshank.github.io/2023/02/22/springboot%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Listener,%20Servlet,%20Filter%E5%92%8CInterceptor/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>springboot（五）——Listener, Servlet, Filter和Interceptor | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">64</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">160</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/02/22/springboot%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Listener,%20Servlet,%20Filter%E5%92%8CInterceptor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springboot（五）——Listener, Servlet, Filter和Interceptor
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-22 13:58:43" itemprop="dateCreated datePublished" datetime="2023-02-22T13:58:43Z">2023-02-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-23 05:28:30" itemprop="dateModified" datetime="2023-02-23T05:28:30Z">2023-02-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">springboot（五）——Listener, Servlet, Filter和Interceptor</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-几种组件介绍"><a href="#1-几种组件介绍" class="headerlink" title="1.几种组件介绍"></a>1.几种组件介绍</h1><h2 id="1-1-监听器Listener"><a href="#1-1-监听器Listener" class="headerlink" title="1.1. 监听器Listener"></a>1.1. 监听器Listener</h2><p><code>Listener</code> 可以监听 <code>web</code> 服务器中某一个 <strong>事件操作</strong>，并触发注册的 <strong>回调函数</strong>。通俗的语言就是在 <code>application</code>，<code>session</code>，<code>request</code> 三个对象 <strong>创建&#x2F;消亡</strong> 或者 <strong>增删改</strong> 属性时，自动执行代码的功能组件。</p>
+<h2 id="1-2-Servlet"><a href="#1-2-Servlet" class="headerlink" title="1.2. Servlet"></a>1.2. Servlet</h2><p><code>Servlet</code> 是一种运行 <strong>服务器端</strong> 的 <code>java</code> 应用程序，具有 <strong>独立于平台和协议</strong> 的特性，并且可以动态的生成 <code>web</code> 页面，它工作在 <strong>客户端请求</strong> 与 <strong>服务器响应</strong> 的中间层。</p>
+<h2 id="1-3-过滤器Filter"><a href="#1-3-过滤器Filter" class="headerlink" title="1.3. 过滤器Filter"></a>1.3. 过滤器Filter</h2><p><code>Filter</code> 对 <strong>用户请求</strong> 进行 <strong>预处理</strong>，接着将请求交给 <code>Servlet</code> 进行 <strong>处理</strong> 并 <strong>生成响应</strong>，最后 <code>Filter</code> 再对 <strong>服务器响应</strong> 进行 <strong>后处理</strong>。<code>Filter</code> 是可以复用的代码片段，常用来转换 <code>HTTP</code> <strong>请求</strong>、<strong>响应</strong> 和 <strong>头信息</strong>。<code>Filter</code> 不像 <code>Servlet</code>，它不能产生 <strong>响应</strong>，而是只 <strong>修改</strong> 对某一资源的 <strong>请求</strong> 或者 <strong>响应</strong>。</p>
+<h2 id="1-4-拦截器Interceptor"><a href="#1-4-拦截器Interceptor" class="headerlink" title="1.4. 拦截器Interceptor"></a>1.4. 拦截器Interceptor</h2><p>类似 <strong>面向切面编程</strong> 中的 <strong>切面</strong> 和 <strong>通知</strong>，我们通过 <strong>动态代理</strong> 对一个 <code>service()</code> 方法添加 <strong>通知</strong> 进行功能增强。比如说在方法执行前进行 <strong>初始化处理</strong>，在方法执行后进行 <strong>后置处理</strong>。<strong>拦截器</strong> 的思想和 <code>AOP</code> 类似，区别就是 <strong>拦截器</strong> 只能对 <code>Controller</code> 的 <code>HTTP</code> 请求进行拦截。</p>
+<h1 id="2-过滤器-VS-拦截器"><a href="#2-过滤器-VS-拦截器" class="headerlink" title="2. 过滤器 VS 拦截器"></a>2. 过滤器 VS 拦截器</h1><h2 id="2-1-两者的区别"><a href="#2-1-两者的区别" class="headerlink" title="2.1. 两者的区别"></a>2.1. 两者的区别</h2><ol>
+<li><code>Filter</code> 是基于 <strong>函数回调</strong>的，而 <code>Interceptor</code> 则是基于 <code>Java</code> <strong>反射</strong> 和 <strong>动态代理</strong>。</li>
+<li><code>Filter</code> 依赖于 <code>Servlet</code> 容器，而 <code>Interceptor</code> 不依赖于 <code>Servlet</code> 容器。</li>
+<li><code>Filter</code> 对几乎 <strong>所有的请求</strong> 起作用，而 <code>Interceptor</code> 只对 <code>Controller</code> 对请求起作用。</li>
+</ol>
+<h2 id="2-2-执行顺序"><a href="#2-2-执行顺序" class="headerlink" title="2.2. 执行顺序"></a>2.2. 执行顺序</h2><p>对于自定义 <code>Servlet</code> 对请求分发流程：</p>
+<ol>
+<li><code>Filter</code> 过滤请求处理；</li>
+<li><code>Servlet</code> 处理请求；</li>
+<li><code>Filter</code> 过滤响应处理。</li>
+</ol>
+<p>对于自定义 <code>Controller</code> 的请求分发流程：</p>
+<ol>
+<li><code>Filter</code> 过滤请求处理；</li>
+<li><code>Interceptor</code> 拦截请求处理；</li>
+<li>对应的 <code>HandlerAdapter</code> 处理请求；</li>
+<li><code>Interceptor</code> 拦截响应处理；</li>
+<li><code>Interceptor</code> 的最终处理；</li>
+<li><code>Filter</code> 过滤响应处理。</li>
+</ol>
+<h1 id="Interceptor"><a href="#Interceptor" class="headerlink" title="Interceptor"></a>Interceptor</h1><h2 id="Interceptor-介绍"><a href="#Interceptor-介绍" class="headerlink" title="Interceptor 介绍"></a>Interceptor 介绍</h2><p><strong>拦截器(Interceptor)同</strong> Filter 过滤器一样，它俩都是面向切面编程——AOP 的具体实现</p>
+<p>你可以使用 Interceptor 来执行某些任务，例如在 <strong>Controller</strong> 处理请求之前编写日志，添加或更新配置……</p>
+<p>在 <strong>Spring中</strong>，当请求发送到 <strong>Controller</strong> 时，在被<strong>Controller</strong>处理之前，它必须经过 <strong>Interceptors</strong>（0或多个）。</p>
+<p><strong>Spring Interceptor</strong>是一个非常类似于<strong>Servlet Filter</strong> 的概念 。</p>
+<h2 id="Interceptor-作用"><a href="#Interceptor-作用" class="headerlink" title="Interceptor 作用"></a>Interceptor 作用</h2><ol>
+<li>日志记录：记录请求信息的日志，以便进行信息监控、信息统计、计算 PV（Page View）等；</li>
+<li>权限检查：如登录检测，进入处理器检测是否登录；</li>
+<li>性能监控：通过拦截器在进入处理器之前记录开始时间，在处理完后记录结束时间，从而得到该请求的处理时间。（反向代理，如 Apache 也可以自动记录）</li>
+<li>通用行为：读取 Cookie 得到用户信息并将用户对象放入请求，从而方便后续流程使用，还有如提取 Locale、Theme 信息等，只要是多个处理器都需要的即可使用拦截器实现。</li>
+</ol>
+<h2 id="配置-Interceptor"><a href="#配置-Interceptor" class="headerlink" title="配置 Interceptor"></a>配置 Interceptor</h2><p>拦截器 <code>Interceptor</code> 只对 <code>Handler</code> 生效。<code>Spring MVC</code> 会为 <code>Controller</code> 中的每个 <strong>请求方法</strong> 实例化为一个 <code>Handler</code>对象，由 <code>HandlerMapping</code> 对象路由请求到具体的 <code>Handler</code>，然后由 <code>HandlerAdapter</code> 通过反射进行请求 <strong>处理</strong> 和 <strong>响应</strong>，这中间就穿插着 <strong>拦截处理</strong>。</p>
+<p>在Spring MVC中，拦截器和Handler（处理器）是两个不同的概念，但它们之间有着密切的联系。</p>
+<p>Handler是用来处理HTTP请求的组件，它通常是一个Controller类的方法。当请求进入Spring MVC框架时，DispatcherServlet会根据请求的URL找到对应的Handler。</p>
+<p>拦截器是Spring MVC框架中的一种拦截器组件，它可以在Handler执行前或执行后对请求进行拦截和处理。拦截器是通过实现HandlerInterceptor接口来实现的，它有三个方法：preHandle、postHandle和afterCompletion。</p>
+<p>在Spring MVC中，拦截器可以在请求进入Handler之前或请求离开Handler之后对请求进行处理。当一个请求到达DispatcherServlet时，DispatcherServlet会按照配置文件中定义的拦截器顺序依次调用每个拦截器的preHandle方法，在Handler执行前对请求进行拦截处理。当Handler执行完毕后，DispatcherServlet会再次按照相反的顺序依次调用每个拦截器的postHandle方法，在Handler执行后对请求进行处理。最后，DispatcherServlet会按照相反的顺序再次调用每个拦截器的afterCompletion方法，在请求完成后进行处理。</p>
+<p>因此，拦截器和Handler是相互关联的，拦截器可以在Handler执行前或执行后对请求进行拦截处理，从而对请求进行增强、修改、记录等操作。</p>
+<h2 id="自定义-Interceptor"><a href="#自定义-Interceptor" class="headerlink" title="自定义 Interceptor"></a>自定义 Interceptor</h2><p>如果你需要自定义 <strong>Interceptor</strong> 的话必须实现 <code>org.springframework.web.servlet.HandlerInterceptor</code>接口或继承 <code>org.springframework.web.servlet.handler.HandlerInterceptorAdapter</code>类，并且需要重写下面下面 3 个方法：</p>
+<ol>
+<li><code>preHandler(HttpServletRequest request, HttpServletResponse response, Object handler)</code> 方法在请求处理之前被调用。该方法在 Interceptor 类中最先执行，用来进行一些前置初始化操作或是对当前请求做预处理，也可以进行一些判断来决定请求是否要继续进行下去。该方法的返回至是 Boolean 类型，当它返回 false 时，表示请求结束，后续的 Interceptor 和 Controller 都不会再执行；当它返回为 true 时会继续调用下一个 Interceptor 的 preHandle 方法，如果已经是最后一个 Interceptor 的时候就会调用当前请求的 Controller 方法。</li>
+<li><code>postHandler(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)</code> 方法在当前请求处理完成之后，也就是 Controller 方法调用之后执行，但是它会在  DispatcherServlet  进行视图返回渲染之前被调用，所以我们可以在这个方法中对 Controller 处理之后的 ModelAndView 对象进行操作。</li>
+<li><code>afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handle, Exception ex)</code> 方法需要在当前对应的 Interceptor 类的 postHandler 方法返回值为 true 时才会执行。顾名思义，该方法将在整个请求结束之后，也就是在 DispatcherServlet  渲染了对应的视图之后执行。此方法主要用来进行资源清理。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2023/02/22/springboot%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94Listener,%20Servlet,%20Filter%E5%92%8CInterceptor/" title="springboot（五）——Listener, Servlet, Filter和Interceptor">http://rshawshank.github.io/2023/02/22/springboot（五）——Listener, Servlet, Filter和Interceptor/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"><i class="fa fa-tag"></i> springboot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/02/06/springboot%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Spring-Security/" rel="prev" title="springboot（四）——Spring Security">
+      <i class="fa fa-chevron-left"></i> springboot（四）——Spring Security
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/06/seata%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%A6%82%E8%BF%B0/" rel="next" title="seata（一）——概述">
+      seata（一）——概述 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%87%A0%E7%A7%8D%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">1.几种组件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E7%9B%91%E5%90%AC%E5%99%A8Listener"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 监听器Listener</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Servlet"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. Servlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E8%BF%87%E6%BB%A4%E5%99%A8Filter"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 过滤器Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%8B%A6%E6%88%AA%E5%99%A8Interceptor"><span class="nav-number">1.4.</span> <span class="nav-text">1.4. 拦截器Interceptor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E8%BF%87%E6%BB%A4%E5%99%A8-VS-%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 过滤器 VS 拦截器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E4%B8%A4%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 两者的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 执行顺序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interceptor"><span class="nav-number">3.</span> <span class="nav-text">Interceptor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interceptor-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.</span> <span class="nav-text">Interceptor 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interceptor-%E4%BD%9C%E7%94%A8"><span class="nav-number">3.2.</span> <span class="nav-text">Interceptor 作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Interceptor"><span class="nav-number">3.3.</span> <span class="nav-text">配置 Interceptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89-Interceptor"><span class="nav-number">3.4.</span> <span class="nav-text">自定义 Interceptor</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">160</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
