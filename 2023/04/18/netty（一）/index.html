@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="netty（一）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netty（一）">
+<meta property="og:url" content="http://rshawshank.github.io/2023/04/18/netty%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="netty（一）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422526.webp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422298.webp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201408742.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202305041614378.jpeg">
+<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/11/1/166cf694962300a8~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201423994.webp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201419110.jpeg">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201423927.webp">
+<meta property="article:published_time" content="2023-04-18T14:34:55.000Z">
+<meta property="article:modified_time" content="2023-05-04T08:14:28.923Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422526.webp">
+
+<link rel="canonical" href="http://rshawshank.github.io/2023/04/18/netty%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>netty（一） | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/04/18/netty%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          netty（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-04-18 14:34:55" itemprop="dateCreated datePublished" datetime="2023-04-18T14:34:55Z">2023-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-04 08:14:28" itemprop="dateModified" datetime="2023-05-04T08:14:28Z">2023-05-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">netty（一）</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>大概用Netty的，都知道它是一个“网络通讯框架”。所谓框架，基本上都是一个作用：基于底层API，提供更便捷的编程模型。那么”通讯框架”到底做了什么事情呢？回答这个问题并不太容易，我们不妨反过来看看，不使用netty，直接基于NIO编写网络程序，你需要做什么(以Server端TCP连接为例，这里我们使用Reactor模型)：</p>
+<ol>
+<li>监听端口，建立Socket连接</li>
+<li>建立线程，处理内容<ol>
+<li>读取Socket内容，并对协议进行解析</li>
+<li>进行逻辑处理</li>
+<li>回写响应内容</li>
+<li>如果是多次交互的应用(SMTP、FTP)，则需要保持连接多进行几次交互</li>
+</ol>
+</li>
+<li>关闭连接</li>
+</ol>
+<p>建立线程是一个比较耗时的操作，同时维护线程本身也有一些开销，所以我们会需要多线程机制，幸好JDK已经有很方便的多线程框架了，这里我们不需要花很多心思。</p>
+<p>此外，因为TCP连接的特性，我们还要使用连接池来进行管理：</p>
+<ol>
+<li>建立TCP连接是比较耗时的操作，对于频繁的通讯，保持连接效果更好</li>
+<li>对于并发请求，可能需要建立多个连接</li>
+<li>维护多个连接后，每次通讯，需要选择某一可用连接</li>
+<li>连接超时和关闭机制</li>
+</ol>
+<p>想想就觉得很复杂了！实际上，基于NIO直接实现这部分东西，即使是老手也容易出现错误，而使用Netty之后，你只需要关注逻辑处理部分就可以了。</p>
+<h1 id="NIO和BIO"><a href="#NIO和BIO" class="headerlink" title="NIO和BIO"></a>NIO和BIO</h1><p>NIO代表的一个词汇叫着IO多路复用。它是由操作系统提供的系统调用，早期这个操作系统调用的名字是select，但是性能低下，后来渐渐演化成了Linux下的epoll和Mac里的kqueue。我们一般就说是epoll，因为没有人拿苹果电脑作为服务器使用对外提供服务。而Netty就是基于Java NIO技术封装的一套框架。</p>
+<p>BIO（Blocking IO）,如何理解这个Blocking呢？</p>
+<ol>
+<li>客户端监听（Listen）时，Accept是阻塞的，只有新连接来了，Accept才会返回，主线程才能继续</li>
+<li>读写socket时，Read是阻塞的，只有请求消息来了，Read才能返回，子线程才能继续处理</li>
+<li>读写socket时，Write是阻塞的，只有客户端把消息收了，Write才能返回，子线程才能继续读取下一个请求</li>
+</ol>
+<p>传统的BIO模式下，从头到尾的所有线程都是阻塞的，这些线程就干等着，占用系统的资源，什么事也不干。</p>
+<p>那么NIO是怎么做到非阻塞的呢。它用的是事件机制。它可以用一个线程把Accept，读写操作，请求处理的逻辑全干了。如果什么事都没得做，它也不会死循环，它会将线程休眠起来，直到下一个事件来了再继续干活，这样的一个线程称之为NIO线程。</p>
+<p>NIO 的 Server 通信的简单模型：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422526.webp" alt="img"></p>
+<p>BIO 的 Server 通信的简单模型：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422298.webp" alt="img"></p>
+<p>NIO的特点：</p>
+<ol>
+<li>一个线程可以处理多个通道，减少线程创建数量；</li>
+<li>读写非阻塞，节约资源：没有可读／可写数据时，不会发生阻塞导致线程资源的浪费</li>
+</ol>
+<h1 id="Netty中的buffer"><a href="#Netty中的buffer" class="headerlink" title="Netty中的buffer"></a>Netty中的buffer</h1><p>Netty的结构最底层是buffer机制</p>
+<h2 id="buffer是什么"><a href="#buffer是什么" class="headerlink" title="buffer是什么"></a>buffer是什么</h2><p>buffer中文名又叫缓冲区，是”在数据传输时，在内存里开辟的一块临时保存数据的区域”。它其实是一种化同步为异步的机制，可以解决数据传输的速率不对等以及不稳定的问题。</p>
+<p>根据这个定义，我们可以知道涉及I&#x2F;O(特别是I&#x2F;O写)的地方，基本会有Buffer了。就Java来说，我们非常熟悉的Old I&#x2F;O–<code>InputStream</code>&amp;<code>OutputStream</code>系列API，基本都是在内部使用到了buffer。Java课程老师就教过，必须调用<code>OutputStream.flush()</code>，才能保证数据写入生效！</p>
+<p>而NIO中则直接将buffer这个概念封装成了对象，其中最常用的大概是ByteBuffer了。于是使用方式变为了：将数据写入Buffer，flip()一下，然后将数据读出来。于是，buffer的概念更加深入人心了！</p>
+<p>Netty中的buffer也不例外。不同的是，Netty的buffer专为网络通讯而生，所以它又叫ChannelBuffer(其实没有什么因果关系…)。我们下面就来讲讲Netty中得buffer。当然，关于Netty，我们必须讲讲它的所谓”Zero-Copy-Capable”机制。</p>
+<h2 id="TCP-x2F-IP协议与buffer"><a href="#TCP-x2F-IP协议与buffer" class="headerlink" title="TCP&#x2F;IP协议与buffer"></a>TCP&#x2F;IP协议与buffer</h2><p>TCP&#x2F;IP协议是目前的主流网络协议。它是一个多层协议，最下层是物理层，最上层是应用层(HTTP协议等)，而做Java应用开发，一般只接触TCP以上，即传输层和应用层的内容。这也是Netty的主要应用场景。</p>
+<p>TCP报文有个比较大的特点，就是它传输的时候，会先把应用层的数据项拆开成字节，然后按照自己的传输需要，选择合适数量的字节进行传输。什么叫”自己的传输需要”？首先TCP包有最大长度限制，那么太大的数据项肯定是要拆开的。其次因为TCP以及下层协议会附加一些协议头信息，如果数据项太小，那么可能报文大部分都是没有价值的头信息，这样传输是很不划算的。因此有了收集一定数量的小数据，并打包传输的Nagle算法(这个东东在HTTP协议里会很讨厌，Netty里可以用setOption(“tcpNoDelay”, true)关掉它)。</p>
+<p><code>messageReceived</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">messageReceived</span><span class="params">(</span></span><br><span class="line"><span class="params">        ChannelHandlerContext ctx, MessageEvent e)</span> &#123;</span><br><span class="line">    <span class="comment">// Send back the received message to the remote peer.</span></span><br><span class="line">    transferredBytes.addAndGet(((ChannelBuffer) e.getMessage()).readableBytes());</span><br><span class="line">    e.getChannel().write(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里<code>MessageEvent.getMessage()</code>默认的返回值是一个<code>ChannelBuffer</code>。我们知道，业务中需要的”Message”，其实是一条应用层级别的完整消息，而一般的buffer工作在传输层，与”Message”是不能对应上的。那么这个ChannelBuffer是什么呢？</p>
+<p>来一个官方给的图，我想这个答案就很明显了：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201408742.png" alt="virtual buffer in Netty"></p>
+<p>这里可以看到，TCP层HTTP报文被分成了两个ChannelBuffer，这两个Buffer对我们上层的逻辑(HTTP处理)是没有意义的。但是两个ChannelBuffer被组合起来，就成为了一个有意义的HTTP报文，这个报文对应的ChannelBuffer，才是能称之为”Message”的东西。这里用到了一个词”Virtual Buffer”，也就是所谓的”Zero-Copy-Capable Byte Buffer”了。</p>
+<p><strong>如果说NIO的Buffer和Netty的ChannelBuffer最大的区别的话，就是前者仅仅是传输上的Buffer，而后者其实是传输Buffer和抽象后的逻辑Buffer的结合。</strong>延伸开来说，NIO仅仅是一个网络传输框架，而Netty是一个网络应用框架，包括网络以及应用的分层结构。</p>
+<h1 id="事件驱动模型"><a href="#事件驱动模型" class="headerlink" title="事件驱动模型"></a>事件驱动模型</h1><p>通常，我们设计一个事件处理模型的程序有两种思路：</p>
+<ul>
+<li><strong>轮询方式，</strong>线程不断轮询访问相关事件发生源有没有发生事件，有发生事件就调用事件处理逻辑。</li>
+<li><strong>事件驱动方式，</strong>发生事件，主线程把事件放入事件队列，在另外线程不断循环消费事件列表中的事件，调用事件对应的处理逻辑处理事件。事件驱动方式也被称为消息通知方式，其实是设计模式中观察者模式的思路。</li>
+</ul>
+<p>以 GUI 的逻辑处理为例，说明两种逻辑的不同：</p>
+<ul>
+<li><strong>轮询方式，</strong>线程不断轮询是否发生按钮点击事件，如果发生，调用处理逻辑。</li>
+<li><strong>事件驱动方式，</strong>发生点击事件把事件放入事件队列，在另外线程消费的事件列表中的事件，根据事件类型调用相关事件处理逻辑。</li>
+</ul>
+<p>事件驱动模型解释图：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202305041614378.jpeg" alt="img"></p>
+<p>事件驱动模型</p>
+<p>主要包括 4 个基本组件：</p>
+<ul>
+<li><strong>事件队列（event queue）：</strong>接收事件的入口，存储待处理事件。</li>
+<li><strong>分发器（event mediator）：</strong>将不同的事件分发到不同的业务逻辑单元。</li>
+<li><strong>事件通道（event channel）：</strong>分发器与处理器之间的联系渠道。</li>
+<li><strong>事件处理器（event processor）：</strong>实现业务逻辑，处理完成后会发出事件，触发下一步操作。</li>
+</ul>
+<p>可以看出，相对传统轮询模式，事件驱动有如下优点：</p>
+<ul>
+<li><strong>可扩展性好，</strong>分布式的异步架构，事件处理器之间高度解耦，可以方便扩展事件处理逻辑。</li>
+<li><strong>高性能，</strong>基于队列暂存事件，能方便并行异步处理事件。</li>
+</ul>
+<h1 id="Reactor"><a href="#Reactor" class="headerlink" title="Reactor"></a>Reactor</h1><p>们知道，对于应用服务器，一个主要规律就是，CPU的处理速度是要远远快于IO速度的，如果CPU为了IO操作（例如从Socket读取一段数据）而阻塞显然是不划算的。好一点的方法是分为多进程或者线程去进行处理，但是这样会带来一些进程切换的开销，试想一个进程一个数据读了500ms，期间进程切换到它3次，但是CPU却什么都不能干，就这么切换走了，是不是也不划算？</p>
+<p>这时先驱们找到了事件驱动，或者叫回调的方式，来完成这件事情。这种方式就是，应用业务向一个中间人注册一个回调（event handler），当IO就绪后，就这个中间人产生一个事件，并通知此handler进行处理。<em>这种回调的方式，也体现了“好莱坞原则”（Hollywood principle）-“Don’t call us, we’ll call you”，在我们熟悉的IoC中也有用到。看来软件开发真是互通的！</em></p>
+<p>简单来说，Reactor模式里，操作系统只负责通知IO就绪，具体的IO操作（例如读写）仍然是要在业务进程里阻塞的去做的，而Proactor模式则更进一步，由操作系统将IO操作执行好（例如读取，会将数据直接读到内存buffer中），而handler只负责处理自己的逻辑，真正做到了IO与程序处理异步执行。所以我们一般又说Reactor是同步IO，Proactor是异步IO。</p>
+<h2 id="Reactor线程模型"><a href="#Reactor线程模型" class="headerlink" title="Reactor线程模型"></a>Reactor线程模型</h2><h3 id="Reactor单线程模型"><a href="#Reactor单线程模型" class="headerlink" title="Reactor单线程模型"></a>Reactor单线程模型</h3><p>一个NIO线程+一个accept线程：</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/11/1/166cf694962300a8~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
+<h3 id="Reactor多线程模型"><a href="#Reactor多线程模型" class="headerlink" title="Reactor多线程模型"></a>Reactor多线程模型</h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201423994.webp" alt="img"></p>
+<h3 id="Reactor主从模型"><a href="#Reactor主从模型" class="headerlink" title="Reactor主从模型"></a>Reactor主从模型</h3><p>主从Reactor多线程：多个acceptor的NIO线程池用于接受客户端的连接</p>
+<p>这个模式里，mainReactor只有一个，负责响应client的连接请求，并建立连接，它使用一个NIO Selector；subReactor可以有一个或者多个，每个subReactor都会在一个独立线程中执行，并且维护一个独立的NIO Selector。</p>
+<p>这样的好处很明显，因为subReactor也会执行一些比较耗时的IO操作，例如消息的读写，使用多个线程去执行，则更加有利于发挥CPU的运算能力，减少IO等待时间。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201419110.jpeg" alt="Multiple Reactors"></p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201423927.webp" alt="img"></p>
+<p>Netty可以基于如上三种模型进行灵活的配置。</p>
+<p>在Netty里面，Accept连接可以使用单独的线程池去处理，读写操作又是另外的线程池来处理。</p>
+<p>Accept连接和读写操作也可以使用同一个线程池来进行处理。而请求处理逻辑既可以使用单独的线程池进行处理，也可以跟放在读写线程一块处理。线程池中的每一个线程都是NIO线程。用户可以根据实际情况进行组装，构造出满足系统需求的高性能并发模型。</p>
+<h2 id="Netty-的零拷贝"><a href="#Netty-的零拷贝" class="headerlink" title="Netty 的零拷贝"></a>Netty 的零拷贝</h2><h3 id="传统意义的拷贝"><a href="#传统意义的拷贝" class="headerlink" title="传统意义的拷贝"></a>传统意义的拷贝</h3><p>是在发送数据的时候，传统的实现方式是：</p>
+<ol>
+<li><p><code>File.read(bytes)</code></p>
+</li>
+<li><p>&#96;&#96;Socket.send(bytes)&#96;</p>
+</li>
+</ol>
+<p>这种方式需要四次数据拷贝和四次上下文切换：</p>
+<ol>
+<li><p>数据从磁盘读取到内核的read buffer</p>
+</li>
+<li><p>数据从内核缓冲区拷贝到用户缓冲区</p>
+</li>
+<li><p>数据从用户缓冲区拷贝到内核的socket buffer</p>
+</li>
+<li><p>数据从内核的socket buffer拷贝到网卡接口（硬件）的缓冲区</p>
+</li>
+</ol>
+<h3 id="零拷贝的概念"><a href="#零拷贝的概念" class="headerlink" title="零拷贝的概念"></a>零拷贝的概念</h3><p>明显上面的第二步和第三步是没有必要的，通过java的FileChannel.transferTo方法，可以避免上面两次多余的拷贝（当然这需要底层操作系统支持）</p>
+<ol>
+<li>调用transferTo,数据从文件由DMA引擎拷贝到内核read buffer</li>
+<li>接着DMA从内核read buffer将数据拷贝到网卡接口buffer</li>
+</ol>
+<p>上面的两次操作都不需要CPU参与，所以就达到了零拷贝。</p>
+<h3 id="Netty中的零拷贝"><a href="#Netty中的零拷贝" class="headerlink" title="Netty中的零拷贝"></a>Netty中的零拷贝</h3><p>主要体现在三个方面：</p>
+<p><strong>1、bytebuffer</strong></p>
+<p>Netty发送和接收消息主要使用bytebuffer，bytebuffer使用对外内存（DirectMemory）直接进行Socket读写。</p>
+<p>原因：如果使用传统的堆内存进行Socket读写，JVM会将堆内存buffer拷贝一份到直接内存中然后再写入socket，多了一次缓冲区的内存拷贝。DirectMemory中可以直接通过DMA发送到网卡接口</p>
+<p><strong>2、Composite Buffers</strong></p>
+<p>传统的ByteBuffer，如果需要将两个ByteBuffer中的数据组合到一起，我们需要首先创建一个size&#x3D;size1+size2大小的新的数组，然后将两个数组中的数据拷贝到新的数组中。但是使用Netty提供的组合ByteBuf，就可以避免这样的操作，因为CompositeByteBuf并没有真正将多个Buffer组合起来，而是保存了它们的引用，从而避免了数据的拷贝，实现了零拷贝。</p>
+<p><strong>3、对于FileChannel.transferTo的使用</strong></p>
+<p>Netty中使用了FileChannel的transferTo方法，该方法依赖于操作系统实现零拷贝。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2023/04/18/netty%EF%BC%88%E4%B8%80%EF%BC%89/" title="netty（一）">http://rshawshank.github.io/2023/04/18/netty（一）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/netty/" rel="tag"><i class="fa fa-tag"></i> netty</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E2%80%94%E2%80%94xxljob/" rel="prev" title="定时任务——xxljob">
+      <i class="fa fa-chevron-left"></i> 定时任务——xxljob
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/18/netty%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="netty（二）">
+      netty（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NIO%E5%92%8CBIO"><span class="nav-number">2.</span> <span class="nav-text">NIO和BIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84buffer"><span class="nav-number">3.</span> <span class="nav-text">Netty中的buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.1.</span> <span class="nav-text">buffer是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-x2F-IP%E5%8D%8F%E8%AE%AE%E4%B8%8Ebuffer"><span class="nav-number">3.2.</span> <span class="nav-text">TCP&#x2F;IP协议与buffer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">事件驱动模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reactor"><span class="nav-number">5.</span> <span class="nav-text">Reactor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">Reactor线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.1.</span> <span class="nav-text">Reactor单线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.2.</span> <span class="nav-text">Reactor多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.3.</span> <span class="nav-text">Reactor主从模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.</span> <span class="nav-text">Netty 的零拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%84%8F%E4%B9%89%E7%9A%84%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.1.</span> <span class="nav-text">传统意义的拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%B6%E6%8B%B7%E8%B4%9D%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">5.2.2.</span> <span class="nav-text">零拷贝的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.3.</span> <span class="nav-text">Netty中的零拷贝</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
