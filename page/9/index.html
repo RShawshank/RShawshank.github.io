@@ -126,7 +126,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">68</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,688 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/03/02/java-%E5%AE%B9%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/02/java-%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">java-容器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-02 14:30:19" itemprop="dateCreated datePublished" datetime="2021-03-02T14:30:19Z">2021-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="一、集合介绍"><a href="#一、集合介绍" class="headerlink" title="一、集合介绍"></a>一、集合介绍</h1><p>Java的集合类</p>
+<p>　　集合类主要负责保存、盛装和管理对象，因此集合类也被称为容器类。</p>
+<p>　　集合类分为Set、List、Map和Queue四大体系。</p>
+<ul>
+<li>Set 代表无序、不可重复集合；</li>
+<li>List 代表有序、可重复集合；</li>
+<li>Map 代表具有映射关系元素的集合；</li>
+<li>Queue 代表队列，实现元素的先进先出管理。</li>
+</ul>
+<p>　　数组也是一种集合类，它是能随机存储和访问引用序列的诸多方法中最高效的一种，当追求高效的数据访问时，数组是很不错的选择。</p>
+<p>所有集合类都位于java.util包中，集合中只能保存对象的引用。<strong>集合类把它所含有的元素看成是Object的实例</strong>，这样方便但是也有隐患，即多个类型不同的元素被放入一个集合中，会增加集合访问时类型转换的困难，甚至会产生错误。</p>
+<p>　　泛型的引入改善了这种情况，使用泛型来限制集合里元素的类型，并让集合记住元素的类型。这样可以允许编译器检查加入集合的元素类型，避免值类型不一致的错误。</p>
+<h1 id="二、集合概述"><a href="#二、集合概述" class="headerlink" title="二、集合概述"></a>二、集合概述</h1><p>Java的集合类主要由两个接口派生而出——Collection和Map，它们是Java集合框架的根接口。</p>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208220948084.png"/> </div><br>
+
+<p>Collection接口存储一组不唯一（可以重复），无序的对象</p>
+<p><img src="https://i.loli.net/2021/03/05/ojb6kgSeCnhmw1F.png" alt="img"></p>
+<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20201101234335837.png"/> </div><br>
+
+<p>　标准集合类实现了Collection接口，其中一些是抽象类，实现部分接口，其它是具体类，可以直接在代码中使用。</p>
+<h2 id="2-1-Set"><a href="#2-1-Set" class="headerlink" title="2.1 Set"></a>2.1 Set</h2><ul>
+<li><p>TreeSet：（有序，唯一）： 红黑树(自平衡的排序二叉树)。HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。</p>
+</li>
+<li><p>HashSet：无序，唯一）: 基于 <code>HashMap</code> 实现的，底层采用<code>HashMap</code> 来保存元素。</p>
+</li>
+<li><p>LinkedHashSet：具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。</p>
+</li>
+</ul>
+<h2 id="2-2-List"><a href="#2-2-List" class="headerlink" title="2.2 List"></a>2.2 List</h2><ul>
+<li><p>ArrayList：基于动态数组实现，支持随机访问。</p>
+</li>
+<li><p>Vector：和 ArrayList 类似，但它是线程安全的。</p>
+<ul>
+<li><p>1.<strong>Stack栈是继承了Vector类，所以底层还是数组</strong>。</p>
+<p>2.Stack栈是将底层的数组的最后一个元素当做栈顶。第一个元素当做栈底。</p>
+</li>
+</ul>
+</li>
+<li><p>LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。</p>
+</li>
+</ul>
+<h2 id="2-3-Queue"><a href="#2-3-Queue" class="headerlink" title="2.3 Queue"></a>2.3 Queue</h2><ul>
+<li>LinkedList：可以用它来实现双向队列。</li>
+<li>PriorityQueue：基于堆结构实现，可以用它来实现优先队列。</li>
+</ul>
+<h2 id="2-4-Map"><a href="#2-4-Map" class="headerlink" title="2.4 Map"></a>2.4 Map</h2><ul>
+<li>TreeMap：基于红黑树实现。</li>
+<li>HashMap：DK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
+<li>key不可重复</li>
+<li>HashTable： 数组+链表组成的，数组是HashTable的主体，链表则是主要为了解决哈希冲突而存在的。<br>线程安全，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。</li>
+<li>LinkedHashMap：<code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。详细可以查看：<a target="_blank" rel="noopener" href="https://www.imooc.com/article/22931">《LinkedHashMap 源码详细分析（JDK1.8）》</a></li>
+</ul>
+<h2 id="2-5-如何选用集合"><a href="#2-5-如何选用集合" class="headerlink" title="2.5 如何选用集合"></a>2.5 如何选用集合</h2><p>需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合：</p>
+<ul>
+<li>需要排序时选择 <code>TreeMap</code></li>
+<li>不需要排序时就选择 <code>HashMap</code></li>
+<li>需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</li>
+</ul>
+<p>只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合：</p>
+<ul>
+<li>需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code></li>
+<li>不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code></li>
+</ul>
+<h2 id="2-6-为什么需要使用集合？"><a href="#2-6-为什么需要使用集合？" class="headerlink" title="2.6 为什么需要使用集合？"></a>2.6 为什么需要使用集合？</h2><p>数组存储的数据是有序的、可重复的，特点单一。 但是集合提高了数据存储的灵活性，Java 集合不仅可以用来存储不同类型不同数量的对象，还可以保存具有映射关系的数据。</p>
+<h1 id="三、Collection的子接口——List"><a href="#三、Collection的子接口——List" class="headerlink" title="三、Collection的子接口——List"></a>三、Collection的子接口——List</h1><h2 id="3-1-ArrayList和Vector的区别"><a href="#3-1-ArrayList和Vector的区别" class="headerlink" title="3.1 ArrayList和Vector的区别"></a>3.1 ArrayList和Vector的区别</h2><ul>
+<li><code>ArrayList</code> 是 <code>List</code> 的主要实现类，底层使用 <code>Object[ ]</code>存储，适用于频繁的查找工作，线程不安全 ；</li>
+<li><code>Vector</code> 是 <code>List</code> 的古老实现类，底层使用<code> Object[ ]</code> 存储，线程安全的。</li>
+</ul>
+<h2 id="3-2-ArrayList和LinkedList的区别"><a href="#3-2-ArrayList和LinkedList的区别" class="headerlink" title="3.2 ArrayList和LinkedList的区别"></a>3.2 ArrayList和LinkedList的区别</h2><ol>
+<li><strong>是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</li>
+<li><strong>底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6 之前为循环链表，JDK1.7 取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</li>
+<li><strong>插入和删除是否受元素位置的影响：</strong><ol>
+<li><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</li>
+<li><code>LinkedList</code> 采用链表存储，所以对于<code>add(E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O(1)，如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</li>
+</ol>
+</li>
+<li><strong>是否支持快速随机访问：</strong> <ol>
+<li><code>LinkedList</code> 不支持高效的随机元素访问</li>
+<li><code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</li>
+</ol>
+</li>
+<li><strong>内存空间占用：</strong> ArrayList 的空间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据）。</li>
+</ol>
+<h2 id="3-3-ArrayList的扩容机制（重点）"><a href="#3-3-ArrayList的扩容机制（重点）" class="headerlink" title="3.3 ArrayList的扩容机制（重点）"></a>3.3 ArrayList的扩容机制（重点）</h2><ol>
+<li>初始化的默认容量是10；</li>
+<li>当添加元素的时候，add（）方法会调用ensureCapacityInternal（size+1）方法，用来进行容量检查，决定扩容的想要的最小容量。</li>
+<li>当需要扩容的时候，会调用grow（）方法。<br><strong>int newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1),所以 ArrayList 每次扩容之后容量都会变为原来的 1.5 倍左右（oldCapacity 为偶数就是 1.5 倍，否则是 1.5 倍左右）！</strong> </li>
+<li><strong>真正的实现扩容其实是Arrays.copy方法，就是复制数组实现扩容</strong></li>
+</ol>
+<h1 id="四、Collection的子接口Set"><a href="#四、Collection的子接口Set" class="headerlink" title="四、Collection的子接口Set"></a>四、Collection的子接口Set</h1><h2 id="4-1-comparable-和-Comparator-的区别"><a href="#4-1-comparable-和-Comparator-的区别" class="headerlink" title="4.1 comparable 和 Comparator 的区别"></a>4.1 comparable 和 Comparator 的区别</h2><ul>
+<li><code>comparable</code> 接口实际上是出自<code>java.lang</code>包 它有一个 <code>compareTo(Object obj)</code>方法用来排序</li>
+<li><code>comparator</code>接口实际上是出自 java.util包它有一个<code>compare(Object obj1, Object obj2)</code>方法用来排序</li>
+</ul>
+<h2 id="4-2-比较-HashSet、LinkedHashSet-和-TreeSet-三者的异同"><a href="#4-2-比较-HashSet、LinkedHashSet-和-TreeSet-三者的异同" class="headerlink" title="4.2 比较 HashSet、LinkedHashSet 和 TreeSet 三者的异同"></a>4.2 比较 HashSet、LinkedHashSet 和 TreeSet 三者的异同</h2><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
+<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
+<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
+<h1 id="五、Map接口"><a href="#五、Map接口" class="headerlink" title="五、Map接口"></a>五、Map接口</h1><h2 id="5-1-HashMap-和-Hashtable-的区别"><a href="#5-1-HashMap-和-Hashtable-的区别" class="headerlink" title="5.1 HashMap 和 Hashtable 的区别"></a>5.1 HashMap 和 Hashtable 的区别</h2><ol>
+<li><strong>线程是否安全：</strong> <code>HashMap</code> 是非线程安全的，<code>HashTable</code> 是线程安全的,因为 <code>HashTable</code> 内部的方法基本都经过<code>synchronized</code> 修饰。（如果你要保证线程安全的话就使用 <code>ConcurrentHashMap</code> 吧！）；</li>
+<li><strong>效率：</strong> 因为线程安全的问题，<code>HashMap</code> 要比 <code>HashTable</code> 效率高一点。另外，<code>HashTable</code> 基本被淘汰，不要在代码中使用它；</li>
+<li><strong>对 Null key 和 Null value 的支持：</strong> <code>HashMap</code> 可以存储 null 的 key 和 value，但 null 作为键只能有一个，null 作为值可以有多个；HashTable 不允许有 null 键和 null 值，否则会抛出 <code>NullPointerException</code>。</li>
+<li><strong>初始容量大小和每次扩充容量大小的不同 ：</strong> ① 创建时如果不指定容量初始值，<code>Hashtable</code> 默认的初始大小为 11，之后每次扩充，容量变为原来的 2n+1。<code>HashMap</code> 默认的初始化大小为 16。之后每次扩充，容量变为原来的 2 倍。② 创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 <code>HashMap</code> 会将其扩充为 2 的幂次方大小（<code>HashMap</code> 中的<code>tableSizeFor()</code>方法保证，下面给出了源代码）。也就是说 <code>HashMap</code> 总是使用 2 的幂作为哈希表的大小,后面会介绍到为什么是 2 的幂次方。</li>
+<li><strong>底层数据结构：</strong> JDK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</li>
+</ol>
+<h2 id="5-2-HashMap-和-HashSet-区别"><a href="#5-2-HashMap-和-HashSet-区别" class="headerlink" title="5.2 HashMap 和 HashSet 区别"></a>5.2 HashMap 和 HashSet 区别</h2><p><code>HashSet</code> 底层就是基于 <code>HashMap</code> 实现的。</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>HashMap</code></th>
+<th align="center"><code>HashSet</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">实现了 <code>Map</code> 接口</td>
+<td align="center">实现 <code>Set</code> 接口</td>
+</tr>
+<tr>
+<td align="center">存储键值对</td>
+<td align="center">仅存储对象</td>
+</tr>
+<tr>
+<td align="center">调用 <code>put()</code>向 map 中添加元素</td>
+<td align="center">调用 <code>add()</code>方法向 <code>Set</code> 中添加元素</td>
+</tr>
+<tr>
+<td align="center"><code>HashMap</code> 使用键（Key）计算 <code>hashcode</code></td>
+<td align="center"><code>HashSet</code> 使用成员对象来计算 <code>hashcode</code> 值，对于两个对象来说 <code>hashcode</code> 可能相同，所以<code> equals()</code>方法用来判断对象的相等性</td>
+</tr>
+</tbody></table>
+<h2 id="5-3-HashMap-和-TreeMap-区别"><a href="#5-3-HashMap-和-TreeMap-区别" class="headerlink" title="5.3 HashMap 和 TreeMap 区别"></a>5.3 HashMap 和 TreeMap 区别</h2><p>相比于<code>HashMap</code>来说 <code>TreeMap</code> 主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力。</p>
+<h2 id="5-4-HashSet-如何检查重复"><a href="#5-4-HashSet-如何检查重复" class="headerlink" title="5.4 HashSet 如何检查重复"></a>5.4 HashSet 如何检查重复</h2><p>先看hashcode；再用equals（）</p>
+<p>当你把对象加入<code>HashSet</code>时，<code>HashSet</code> 会先计算对象的<code>hashcode</code>值来判断对象加入的位置，同时也会与其他加入的对象的 <code>hashcode</code> 值作比较，如果没有相符的 <code>hashcode</code>，<code>HashSet</code> 会假设对象没有重复出现。但是如果发现有相同 <code>hashcode</code> 值的对象，这时会调用<code>equals()</code>方法来检查 <code>hashcode</code> 相等的对象是否真的相同。如果两者相同，<code>HashSet</code> 就不会让加入操作成功。</p>
+<p><strong><code>hashCode()</code>与 <code>equals()</code> 的相关规定：</strong></p>
+<ol>
+<li>如果两个对象相等，则 <code>hashcode</code> 一定也是相同的</li>
+<li>两个对象相等,对两个 <code>equals()</code> 方法返回 true</li>
+<li>两个对象有相同的 <code>hashcode</code> 值，它们也不一定是相等的</li>
+<li>综上，<code>equals()</code> 方法被覆盖过，则 <code>hashCode()</code> 方法也必须被覆盖</li>
+<li><code>hashCode() </code>的默认行为是对堆上的对象产生独特值。如果没有重写 <code>hashCode()</code>，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。</li>
+</ol>
+<h2 id="5-5-HashMap-多线程操作导致死循环问题"><a href="#5-5-HashMap-多线程操作导致死循环问题" class="headerlink" title="5.5 HashMap 多线程操作导致死循环问题"></a>5.5 HashMap 多线程操作导致死循环问题</h2><p>主要原因在于并发下的 Rehash 会造成元素之间会形成一个循环链表。不过，jdk 1.8 后解决了这个问题，但是还是不建议在多线程下使用 HashMap,因为多线程下使用 HashMap 还是会存在其他问题比如数据丢失。并发环境下推荐使用 ConcurrentHashMap 。</p>
+<h2 id="5-6-HashMap-有哪几种常见的遍历方式"><a href="#5-6-HashMap-有哪几种常见的遍历方式" class="headerlink" title="5.6 HashMap 有哪几种常见的遍历方式?"></a>5.6 HashMap 有哪几种常见的遍历方式?</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Zz6mofCtmYpABDL1ap04ow">HashMap 的 7 种遍历方式与性能分析！</a></p>
+<p>HashMap <strong>遍历从大的方向来说，可分为以下 4 类</strong>：</p>
+<ol>
+<li>迭代器（Iterator）方式遍历；</li>
+<li>For Each 方式遍历；</li>
+<li>Lambda 表达式遍历（JDK 1.8+）;</li>
+<li>Streams API 遍历（JDK 1.8+）。</li>
+</ol>
+<h2 id="5-7-ConcurrentHashMap-和-Hashtable-的区别"><a href="#5-7-ConcurrentHashMap-和-Hashtable-的区别" class="headerlink" title="5.7 ConcurrentHashMap 和 Hashtable 的区别"></a>5.7 ConcurrentHashMap 和 Hashtable 的区别</h2><p><code>ConcurrentHashMap</code> 和 <code>Hashtable</code> 的区别主要体现在实现线程安全的方式上不同。</p>
+<ul>
+<li><strong>底层数据结构：</strong> JDK1.7 的 <code>ConcurrentHashMap</code> 底层采用 <strong>分段的数组+链表</strong> 实现，JDK1.8 采用的数据结构跟 <code>HashMap1.8</code> 的结构一样，数组+链表&#x2F;红黑二叉树。<code>Hashtable</code> 和 JDK1.8 之前的 <code>HashMap</code> 的底层数据结构类似都是采用 <strong>数组+链表</strong> 的形式，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的；</li>
+<li><strong>实现线程安全的方式（重要）：</strong> ① <strong>在 JDK1.7 的时候，<code>ConcurrentHashMap</code>（分段锁）</strong> 对整个桶数组进行了分割分段(<code>Segment</code>)，每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。 <strong>到了 JDK1.8 的时候已经摒弃了 <code>Segment</code> 的概念，而是直接用 <code>Node</code> 数组+链表+红黑树的数据结构来实现，并发控制使用 <code>synchronized</code> 和 CAS 来操作。（JDK1.6 以后 对 <code>synchronized</code> 锁做了很多优化）</strong> 整个看起来就像是优化过且线程安全的 <code>HashMap</code>，虽然在 JDK1.8 中还能看到 <code>Segment</code> 的数据结构，但是已经简化了属性，只是为了兼容旧版本；② <strong><code>Hashtable</code>(同一把锁)</strong> :使用 <code>synchronized</code> 来保证线程安全，效率非常低下。当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或轮询状态，如使用 put 添加元素，另一个线程不能使用 put 添加元素，也不能使用 get，竞争会越来越激烈效率越低。</li>
+</ul>
+<p><strong>两者的对比图：</strong></p>
+<p><strong>HashTable:</strong></p>
+<p><img src="https://i.loli.net/2021/03/05/aEFBtdkMfr6m5Aw.png" alt="HashTable全表锁"></p>
+<p style="text-align:right;font-size:13px;color:gray">http://www.cnblogs.com/chengxiao/p/6842045.html></p>
+
+<p><strong>JDK1.7 的 ConcurrentHashMap：</strong></p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ConcurrentHashMap%E5%88%86%E6%AE%B5%E9%94%81.jpg" alt="JDK1.7的ConcurrentHashMap"></p>
+<p style="text-align:right;font-size:13px;color:gray">http://www.cnblogs.com/chengxiao/p/6842045.html></p>
+
+<p><strong>JDK1.8 的 ConcurrentHashMap：</strong></p>
+<p><img src="https://i.loli.net/2021/03/05/bEcBXCiyvxn9Qw4.png" alt="Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）"></p>
+<p>JDK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 &#x2F; 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
+<h2 id="5-8-ConcurrentHashMap-线程安全的具体实现方式-x2F-底层具体实现"><a href="#5-8-ConcurrentHashMap-线程安全的具体实现方式-x2F-底层具体实现" class="headerlink" title="5.8 ConcurrentHashMap 线程安全的具体实现方式&#x2F;底层具体实现"></a>5.8 ConcurrentHashMap 线程安全的具体实现方式&#x2F;底层具体实现</h2><h3 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h3><p>首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。</p>
+<p><strong><code>ConcurrentHashMap</code> 是由 <code>Segment</code> 数组结构和 <code>HashEntry</code> 数组结构组成</strong>。</p>
+<p>Segment 实现了 <code>ReentrantLock</code>,所以 <code>Segment</code> 是一种可重入锁，扮演锁的角色。<code>HashEntry</code> 用于存储键值对数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Segment</span>&lt;K,V&gt; <span class="keyword">extends</span> <span class="title class_">ReentrantLock</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
+<h3 id="JDK1-8-（上面有示意图）"><a href="#JDK1-8-（上面有示意图）" class="headerlink" title="JDK1.8 （上面有示意图）"></a>JDK1.8 （上面有示意图）</h3><p><code>ConcurrentHashMap</code> 取消了 <code>Segment</code> 分段锁，采用 CAS 和 <code>synchronized</code> 来保证并发安全。数据结构跟 HashMap1.8 的结构类似，数组+链表&#x2F;红黑二叉树。Java 8 在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为 O(N)）转换为红黑树（寻址时间复杂度为 O(log(N))）</p>
+<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
+<h1 id="六、Collections-工具类"><a href="#六、Collections-工具类" class="headerlink" title="六、Collections 工具类"></a>六、Collections 工具类</h1><p>Collections 工具类常用方法:</p>
+<ol>
+<li>排序</li>
+<li>查找,替换操作</li>
+<li>同步控制(不推荐，需要线程安全的集合类型时请考虑使用 JUC 包下的并发集合)</li>
+</ol>
+<h2 id="6-1-排序"><a href="#6-1-排序" class="headerlink" title="6.1 排序"></a>6.1 排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(List list)</span><span class="comment">//反转</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">shuffle</span><span class="params">(List list)</span><span class="comment">//随机排序</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">sort</span><span class="params">(List list)</span><span class="comment">//按自然排序的升序排序</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">sort</span><span class="params">(List list, Comparator c)</span><span class="comment">//定制排序，由Comparator控制排序逻辑</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(List list, <span class="type">int</span> i , <span class="type">int</span> j)</span><span class="comment">//交换两个索引位置的元素</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">rotate</span><span class="params">(List list, <span class="type">int</span> distance)</span><span class="comment">//旋转。当distance为正数时，将list后distance个元素整体移到前面。当distance为负数时，将 list的前distance个元素整体移到后面</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2-查找-替换操作"><a href="#6-2-查找-替换操作" class="headerlink" title="6.2 查找,替换操作"></a>6.2 查找,替换操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">binarySearch</span><span class="params">(List list, Object key)</span><span class="comment">//对List进行二分查找，返回索引，注意List必须是有序的</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(Collection coll)</span><span class="comment">//根据元素的自然顺序，返回最大的元素。 类比int min(Collection coll)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(Collection coll, Comparator c)</span><span class="comment">//根据定制排序，返回最大元素，排序规则由Comparatator类控制。类比int min(Collection coll, Comparator c)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">fill</span><span class="params">(List list, Object obj)</span><span class="comment">//用指定的元素代替指定list中的所有元素。</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">frequency</span><span class="params">(Collection c, Object o)</span><span class="comment">//统计元素出现次数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">indexOfSubList</span><span class="params">(List list, List target)</span><span class="comment">//统计target在list中第一次出现的索引，找不到则返回-1，类比int lastIndexOfSubList(List source, list target).</span></span><br><span class="line"><span class="type">boolean</span> <span class="title function_">replaceAll</span><span class="params">(List list, Object oldVal, Object newVal)</span>, 用新元素替换旧元素</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-3-同步控制"><a href="#6-3-同步控制" class="headerlink" title="6.3 同步控制"></a>6.3 同步控制</h2><p><code>Collections</code> 提供了多个<code>synchronizedXxx()</code>方法·，该方法可以将指定集合包装成线程同步的集合，从而解决多线程并发访问集合时的线程安全问题。</p>
+<p>我们知道 <code>HashSet</code>，<code>TreeSet</code>，<code>ArrayList</code>,<code>LinkedList</code>,<code>HashMap</code>,<code>TreeMap</code> 都是线程不安全的。<code>Collections</code> 提供了多个静态方法可以把他们包装成线程同步的集合。</p>
+<p><strong>最好不要用下面这些方法，效率非常低，需要线程安全的集合类型时请考虑使用 JUC 包下的并发集合。</strong></p>
+<p>方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">synchronizedCollection(Collection&lt;T&gt;  c) <span class="comment">//返回指定 collection 支持的同步（线程安全的）collection。</span></span><br><span class="line">synchronizedList(List&lt;T&gt; list)<span class="comment">//返回指定列表支持的同步（线程安全的）List。</span></span><br><span class="line">synchronizedMap(Map&lt;K,V&gt; m) <span class="comment">//返回由指定映射支持的同步（线程安全的）Map。</span></span><br><span class="line">synchronizedSet(Set&lt;T&gt; s) <span class="comment">//返回指定 set 支持的同步（线程安全的）set。</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="七、容器中的设计模式"><a href="#七、容器中的设计模式" class="headerlink" title="七、容器中的设计模式"></a>七、容器中的设计模式</h1><h2 id="7-1-迭代器模式"><a href="#7-1-迭代器模式" class="headerlink" title="7.1 迭代器模式"></a>7.1 迭代器模式</h2><div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208225301973.png"/> </div><br>
+
+<p>Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。</p>
+<p>从 JDK 1.5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">list.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (String item : list) &#123;</span><br><span class="line">    System.out.println(item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-适配器模式"><a href="#7-2-适配器模式" class="headerlink" title="7.2 适配器模式"></a>7.2 适配器模式</h2><p>java.util.Arrays#asList() 可以把数组类型转换为 List 类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SafeVarargs</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="title function_">asList</span><span class="params">(T... a)</span></span><br></pre></td></tr></table></figure>
+
+<p>应该注意的是 asList() 的参数为泛型的变长参数，不能使用基本类型数组作为参数，只能使用相应的包装类型数组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(arr);</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用以下方式调用 asList()：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/" class="post-title-link" itemprop="url">Algorithm__前缀和哈希表</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-10 22:23:19" itemprop="dateCreated datePublished" datetime="2021-02-10T22:23:19Z">2021-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm__并查集</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-10 21:56:17" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:17Z">2021-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">Algorithm__滑动窗口</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-10 21:56:07" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:07Z">2021-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>滑动窗口主要用来处理连续问题。比如题目求解“连续子串 xxxx”，“连续子数组 xxxx”，就应该可以想到滑动窗口。能不能解决另说，但是这种敏感性还是要有的。</p>
+<p>从类型上说主要有：</p>
+<ul>
+<li>固定窗口大小</li>
+<li>窗口大小不固定，求解最大的满足条件的窗口</li>
+<li>窗口大小不固定，求解最小的满足条件的窗口（上面的 209 题就属于这种）</li>
+</ul>
+<p>后面两种我们统称为<code>可变窗口</code>。当然不管是哪种类型基本的思路都是一样的，不一样的仅仅是代码细节。</p>
+<h2 id="固定窗口大小"><a href="#固定窗口大小" class="headerlink" title="固定窗口大小"></a>固定窗口大小</h2><p>对于固定窗口，我们只需要固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点，并且保证：</p>
+<ol>
+<li>l 初始化为 0</li>
+<li>初始化 r，使得 r - l + 1 等于窗口大小</li>
+<li>同时移动 l 和 r</li>
+<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
+<li>4.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解</li>
+<li>4.2 如果不满足，则继续。</li>
+</ul>
+</li>
+</ol>
+<h2 id="可变窗口大小"><a href="#可变窗口大小" class="headerlink" title="可变窗口大小"></a>可变窗口大小</h2><p>对于可变窗口，我们同样固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点。后面有所不同，我们需要保证：</p>
+<ol>
+<li>l 和 r 都初始化为 0</li>
+<li>r 指针移动一步</li>
+<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
+<li>3.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解。并尝试通过移动 l 指针缩小窗口大小。循环执行 3.1</li>
+<li>3.2 如果不满足，则继续。</li>
+</ul>
+</li>
+</ol>
+<p>形象地来看的话，就是 r 指针不停向右移动，l 指针仅仅在窗口满足条件之后才会移动，起到窗口收缩的效果。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">Leetcode 3.无重复字符的最长子串</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Character, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(r = <span class="number">0</span>;r&lt;s.length();r++)<span class="comment">//右边的窗口是一直往前走的</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(s.charAt(r)))<span class="comment">//当不符合条件时，左边窗口移动</span></span><br><span class="line">                l = Math.max(l,map.get(s.charAt(r)) + <span class="number">1</span>);<span class="comment">//只有右边加进窗口的元素是重复的，左边才会移动，所以要移动到重复元素后面一位</span></span><br><span class="line">            map.put(s.charAt(r),r);</span><br><span class="line">            max = Math.max(max,r-l+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-window-substring/">Leetcode 76.最小覆盖子串</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">minWindow</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="literal">null</span> || s == <span class="string">&quot;&quot;</span> || t == <span class="literal">null</span> || t == <span class="string">&quot;&quot;</span> || s.length() &lt; t.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> t_length=t.length();</span><br><span class="line">        <span class="type">char</span>[] chars = s.toCharArray(), chart = t.toCharArray();</span><br><span class="line">        <span class="type">int</span>[] hold = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">128</span>];<span class="comment">//记录窗口中的元素和其个数</span></span><br><span class="line">        <span class="comment">//记录t中的所有元素和元素出现的个数</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;t_length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> temp=chart[i];</span><br><span class="line">            hold[temp]--;</span><br><span class="line">        &#125;</span><br><span class="line">        String output=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//窗口中含有t字符串的元素个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;s.length();right++)</span><br><span class="line">        &#123;</span><br><span class="line">            hold[chars[right]]++;</span><br><span class="line">            <span class="keyword">if</span>(hold[chars[right]]&lt;=<span class="number">0</span>)count++;<span class="comment">//表示右边框进来的是t中的元素</span></span><br><span class="line">            <span class="comment">//当窗口元素达到要求后，此时的目标是找到最小的窗口</span></span><br><span class="line">            <span class="comment">//情况一：左边的元素是不需要的，直接进行左窗口移位</span></span><br><span class="line">            <span class="comment">//情况二：左边的元素是需要的，但是此时右边寻找到了一样的元素，为了进行最小窗口的迭代，将左窗口移位</span></span><br><span class="line">            <span class="keyword">while</span>(count==t_length&amp;&amp;hold[chars[left]]&gt;<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                hold[chars[left]]--;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//进行最小子串的迭代</span></span><br><span class="line">            <span class="keyword">if</span>(count==t_length)</span><br><span class="line">            <span class="keyword">if</span>(output==<span class="string">&quot;&quot;</span>||output.length()&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                output=s.substring(left,right+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/">Leetcode 209.长度最小的子数组</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> num=<span class="number">0</span>;<span class="comment">//记录子数组和</span></span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//记录子数组个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;nums.length;right++)</span><br><span class="line">        &#123;</span><br><span class="line">            num+=nums[right];</span><br><span class="line">            <span class="keyword">while</span>(num&gt;=target)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//最小子数组迭代</span></span><br><span class="line">                <span class="keyword">if</span>(count==<span class="number">0</span>||count&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                    count=right-left+<span class="number">1</span>;</span><br><span class="line">                <span class="comment">//在满足要求的基础上寻找最小子数组</span></span><br><span class="line">                <span class="comment">//此时不断压缩左边窗口，可以遍历出所有满足要求的窗口</span></span><br><span class="line">                num-=nums[left];</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%A0%86%E5%92%8C%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/11/Algorithm-%E5%A0%86%E5%92%8C%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">Algorithm__堆和队列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-10 21:55:47" itemprop="dateCreated datePublished" datetime="2021-02-10T21:55:47Z">2021-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/11/Algorithm-%E6%A0%91/" class="post-title-link" itemprop="url">Algorithm__树</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-10 21:55:37" itemprop="dateCreated datePublished" datetime="2021-02-10T21:55:37Z">2021-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="树的遍历——颜色标记法"><a href="#树的遍历——颜色标记法" class="headerlink" title="树的遍历——颜色标记法"></a>树的遍历——颜色标记法</h1><p>我们知道垃圾回收算法中，有一种算法叫三色标记法。 即：</p>
+<ul>
+<li>用白色表示尚未访问</li>
+<li>灰色表示尚未完全访问子节点</li>
+<li>黑色表示子节点全部访问</li>
+</ul>
+<p>那么我们可以模仿其思想，使用双色标记法来统一三种遍历。</p>
+<p>其核心思想如下：</p>
+<ul>
+<li>使用颜色标记节点的状态，新节点为白色，已访问的节点为灰色。</li>
+<li>如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈。</li>
+<li>如果遇到的节点为灰色，则将节点的值输出。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/submissions/">剑指 Offer 34.二叉树中和为某一定值</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> </span><br><span class="line">&#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">pathSum</span><span class="params">(TreeNode root, <span class="type">int</span> sum)</span> &#123;</span><br><span class="line">        List&lt;Integer&gt; node = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        bfs(root,<span class="number">0</span>,node,sum);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">bfs</span><span class="params">(TreeNode root,<span class="type">int</span> all,List node,<span class="type">int</span> sum)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">null</span>)<span class="keyword">return</span>;</span><br><span class="line">        node.add(root.val);</span><br><span class="line">        all+=root.val;</span><br><span class="line">        <span class="keyword">if</span>(sum==all)<span class="comment">//从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</span></span><br><span class="line">        &#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(node));</span><br><span class="line">            <span class="comment">//return;如果加了return 会得不到正确的结果。因为代码提前return，导致后面的remove没有执行，影响回溯了。</span></span><br><span class="line">        &#125;</span><br><span class="line">        bfs(root.left,all,node,sum);</span><br><span class="line">        bfs(root.right,all,node,sum);</span><br><span class="line">        node.remove(node.size()-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -698,1015 +1380,10 @@ oscillation_costs_ &#x2F;&#x2F;振荡代价函数，一旦速度发生振荡，�
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/28/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E4%B8%B2/" class="post-title-link" itemprop="url">数据结构-串</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-27 23:48:13" itemprop="dateCreated datePublished" datetime="2020-08-27T23:48:13Z">2020-08-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yjiyjige/p/3263858.html">https://www.cnblogs.com/yjiyjige/p/3263858.html</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/07/31/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E6%80%BB%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/31/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">组成原理-总线</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-30 20:09:52" itemprop="dateCreated datePublished" datetime="2020-07-30T20:09:52Z">2020-07-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E5%8E%9F%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组原原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h1>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/07/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">数据结构-栈和队列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-17 21:34:52" itemprop="dateCreated datePublished" datetime="2020-07-17T21:34:52Z">2020-07-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h1><p>理解桟的定义需要注意：首先它是一个线性表，也就是说，栈元素具有线性关系，即前驱后继关系。只不过它是一种特殊的线性表而已。</p>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tomato0906/articles/4509237.html">参考文章</a></p>
-<h2 id="栈的应用"><a href="#栈的应用" class="headerlink" title="栈的应用"></a>栈的应用</h2><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p><strong>我们把一个直接调用自己或通过一系列的调用语句间接地调用自己的函数，称做递归函数。</strong></p>
-<p>递归过程退回的顺序是它前行顺序的逆序。显然这符合栈的存储方式。简单的说，就是在前行阶段，对于每一层递归，函数的局部变量、参数值以及返回地址都被压如栈中。在退回阶段，位于栈顶的局部变量、参数值和返回地址被弹出，用于返回调用层次中执行代码的其余部分，也就是恢复了调用的状态。当然，对于现在的高级语言，这样的递归问题是不需要用户来管理这个栈的，一切都由系统代劳就可以了。</p>
-<p>例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">f</span><span class="params">(<span class="type">long</span> m,<span class="type">long</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">long</span> sum;</span><br><span class="line">    <span class="keyword">if</span>(m==<span class="number">0</span>) sum=n+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">0</span>) sum=f(m<span class="number">-1</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">else</span> k=f(m<span class="number">-1</span>,f(m,n<span class="number">-1</span>));</span><br><span class="line"><span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>非递归：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">f</span><span class="params">(<span class="type">long</span> m,<span class="type">long</span> n)</span></span><br><span class="line">&#123;</span><br><span class="line">  listStack&lt;<span class="type">long</span>&gt; k;    <span class="comment">//用链栈来实现</span></span><br><span class="line">  k.push(m);</span><br><span class="line">  k.push(n);</span><br><span class="line">  <span class="type">long</span> sum;</span><br><span class="line"> <span class="keyword">while</span>(k.length()!=<span class="number">1</span>)  <span class="comment">//栈中只有一个元素时退出循环</span></span><br><span class="line">  &#123;</span><br><span class="line">      n=k.pop();      <span class="comment">//出栈 </span></span><br><span class="line">       m=k.pop();</span><br><span class="line">      <span class="keyword">if</span>(m==<span class="number">0</span>) k.push(n+<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        k.push(m<span class="number">-1</span>);</span><br><span class="line">        n=<span class="number">1</span>;</span><br><span class="line">        k.push(n);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        k.push(m<span class="number">-1</span>);</span><br><span class="line">        k.push(m);</span><br><span class="line">        k.push(n<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  sum=k.pop();  </span><br><span class="line"><span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h1><p>注意，在大多数的课本中，队尾指向的是队列的最后一个元素的下一个元素。</p>
-<p>“假溢出现象”：</p>
-<p>在<strong>顺序存储结构</strong>中，队列的不断出队列会导致这些出去的元素的地址将无法使用（因为后续入队列的元素的地址将往后排）。</p>
-<h2 id="循环队列和链队列的优劣势"><a href="#循环队列和链队列的优劣势" class="headerlink" title="循环队列和链队列的优劣势"></a>循环队列和链队列的优劣势</h2><p>对于循环队列与<a target="_blank" rel="noopener" href="http://www.nowamagic.net/librarys/veda/tag/%E9%93%BE%E9%98%9F%E5%88%97">链队列</a>的比较，可以从两方面来考虑：</p>
-<ul>
-<li><p>从时间上，其实它们的基本操作都是常数时间，即都为0(1)的，不过循环队列是事先申请好空间，使用期间不释放，而对于链队列，每次申请和释放结点也会存在一些时间开销，如果入队出队频繁，则两者还是有细微差异。</p>
-</li>
-<li><p>对于空间上来说，循环队列必须有一个固定的长度，所以就有了存储元素个数和空间浪费的问题。而链队列不存在这个问题，尽管它需要一个指针域，会产生一些空间上的开销，但也可以接受。所以在空间上，链队列更加灵活。</p>
-</li>
-<li><p>总的来说，在可以确定队列长度最大值的情况下，建议用循环队列，如果你无法预估队列的长度时，则用链队列。</p>
-</li>
-</ul>
-<p>用数组实现队列时，如果不移动，随着数据的不断读写，会出现假满队列的情况。即尾数组已满但头数组还是空的。循环队列也是一种数组，只是它在逻辑上把数组的头和尾相连，形成<a target="_blank" rel="noopener" href="http://www.nowamagic.net/librarys/veda/tag/%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97">循环队列</a>，当数组尾满的时候，要判断数组头是否为空，不为空继续存放数据，可以有效的利用资源。但是用循环队列有个小麻烦，不好判断数列是为空还是为满；</p>
-<p>链队列就不存在上面的问题。“循环队列”最大优点就是节省空间和少分配空间，而链队列多了一点点地址存储开销。</p>
-<h1 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h1><h2 id="矩阵的压缩存储"><a href="#矩阵的压缩存储" class="headerlink" title="矩阵的压缩存储"></a>矩阵的压缩存储</h2><p>按照我们正常的矩阵存储，其实对内存的空间开销还是比较大的，所以我们自然就想到了压缩存储。</p>
-<p>那么什么是矩阵的压缩存储？<strong>其实就是为很多个值相同的元素只分配一个存储空间。对零元素不分配存储空间。</strong>那么这个值相同的元素，我们很容易就想到了线性代数的特殊矩阵，比如单位阵，对角阵，对称阵等，我们这里说三个。分别是对称矩阵、上下三角矩阵、和对角矩阵。</p>
-<p>对称矩阵：</p>
-<p>就是矩阵的行和列对调之后还是和原来的矩阵相等。那么这种矩阵就是对称矩阵。</p>
-<p>ok，我们知道了对称矩阵的特性，所以要运用要压缩存储上，因为对称矩阵有这样的特性，所以我们存储的时候就不用将元素全部存储，我们只需要存储这个镜面一半的元素就可以了。比如上面这个，我们只存158234这些元素即可，相同的元素不要重复存储。 </p>
-<p>稀疏矩阵：</p>
-<p>其实就是说矩阵中的元素为0的特别多。</p>
-<p>那么我们再存储的时候其实存储分零元素是最能节省空间的。但是稀疏矩阵的位置又没有前面哪些矩阵的规律，所以我们存储的时候就干脆把元素的行列下标也存进去。形成一个三元组。也就是行下标、列下标、元素值。</p>
-<p>注意三元组的存储方式牺牲了随机存储的优点。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">组成原理-存储系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-01 21:36:18" itemprop="dateCreated datePublished" datetime="2020-07-01T21:36:18Z">2020-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-15 07:54:46" itemprop="dateModified" datetime="2022-11-15T07:54:46Z">2022-11-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="组成原理-存储系统"><a href="#组成原理-存储系统" class="headerlink" title="组成原理-存储系统"></a>组成原理-存储系统</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/20190111184331949.png"></p>
-<h2 id="基本术语"><a href="#基本术语" class="headerlink" title="基本术语"></a>基本术语</h2><ul>
-<li>存储器：存放程序和数据的器件。</li>
-<li>存储位：存放一个二进制数位的存储单元，是存储器最小的存储单位。</li>
-<li>存储字：计算机可寻址（作为一个整体存入或取出）的最小信息单位。</li>
-<li>存储单元：存放一个存储字的若干个记忆单元组成一个存储单元。</li>
-<li>存储体：大量存储单元的集合组成存储体。</li>
-<li>存储单元地址：存储单元的编号。</li>
-<li>字编址：对存储单元按字编址。</li>
-<li>字节编址：对存储单元按字节编址。</li>
-<li>寻址：通过地址寻找数据，从对应地址的存储单元中访存数据。</li>
-</ul>
-<h1 id="存储系统分类"><a href="#存储系统分类" class="headerlink" title="存储系统分类"></a>存储系统分类</h1><h2 id="按存储介质分类"><a href="#按存储介质分类" class="headerlink" title="按存储介质分类"></a>按存储介质分类</h2><p><strong>半导体存储器</strong>：用半导体器件组成的存储器。<br><strong>磁表面存储器</strong>：用磁性材料做成的存储器。（磁盘、磁带）<br><strong>激光存储器</strong>：信息以刻痕的形式保存在盘面上，用激光束照射盘面，靠盘面的不同反射率来读出信息。</p>
-<h2 id="按存取方式分类"><a href="#按存取方式分类" class="headerlink" title="按存取方式分类"></a>按存取方式分类</h2><h3 id="RAM"><a href="#RAM" class="headerlink" title="RAM"></a>RAM</h3><p><strong>随机存储器（RAM，Random Access Memory）</strong>：可随机访问任意存储单元，且存取时间与存储单元的物理位置无关。主要充当高速缓冲存储器和主存储器。</p>
-<blockquote>
-<p>半导体随机存储器</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831150521567-371157831.png"></p>
-</blockquote>
-<h4 id="动态随机存储器（DRAM）"><a href="#动态随机存储器（DRAM）" class="headerlink" title="动态随机存储器（DRAM）"></a>动态随机存储器（DRAM）</h4><p>只能将数据保持很短的时间。为了保持数据，DRAM 使用电容存储，所以必须隔一段时间刷新（Refresh）一次，如果存储单元没有被刷新，存储的信息就会丢失，关机就会丢失数据。<strong>常用于主存储器</strong>。<strong>DRAM 采用地址复用技术，地址线是原来的 1&#x2F;2，且地址信号分行、列两次传送</strong>。相对于 SRAM 来说，DRAM 具有容易集成、价位低、容量大和功耗低等优点，但 DRAM 的存取速度比 SRAM 慢，一般用来组成大容量主存系统。</p>
-<p>DRAM 保存的信息会自动消失（易失性存储器），为此，每隔一段时间必须刷新，通常取 2ms，这个时间称为刷新周期。常用的刷新方式有 3 种：集中刷新、分散刷新和异步刷新。</p>
-<p>　　（1）集中刷新：指在一个刷新周期内，利用一段固定的时间，依次对存储器的<strong>所有行</strong>进行逐一再生，在此期间停止对存储器的读写操作，称为“死时间”，又称访存“死区”。集中刷新的优点是读写操作时不受刷新工作的影响，因此系统的存取速度较高；缺点是在集中刷新期间（死区）不能访问存储器。</p>
-<blockquote>
-<p>补充一点：为什么刷新与存取不能并行？<br>因为内存就一套地址译码和片选装置，刷新与存取有相似的过程，它要选中一行——这期间片选线、地址线、地址译码器全被占用着。同理，刷新操作之间也不能并行——意味着一次只能刷一行。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112715598-1052856783.png"></p>
-</blockquote>
-<p>　　（2）分散刷新：把对每行的刷新分散到各个工作周期中。这样，一个存储器的系统工作周期分为两部分：前半部分用于正常读、写或保持；后半部分用于刷新某一行。这种刷新方式增加了系统的存取周期，如存储芯片的存取周期为 0.5μs，则系统的存取周期为 1μs。分散刷新的优点是<strong>没有死区</strong>；缺点是加长了系统的存取周期，降低了整机的速度。</p>
-<blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112726854-1502618203.png"></p>
-<p>即在每个存取操作后绑定一个刷新操作。延长了存取周期，这样存取周期就成了0.5μs + 0.5μs &#x3D;1μs。但是由于与存取操作绑定，就不需要专门给出一段时间来刷新了。这样，每有128个读取操作，就会把0-127行全部刷新一遍。故每隔128μs 就可将存储芯片全部刷新一遍，即刷新周期是1μs×128&#x3D;128μs远短于2ms，而且不存在停止读&#x2F;写的死时间，但是存取周期长了，整个系统速度降低了。（分散刷新的刷新周期128μs ，其实不需要这么频繁，会导致浪费）</p>
-</blockquote>
-<p>　　（3）异步刷新：异步刷新是前两种方法的结合，它既可以缩短“死时间”，又能充分利用最大刷新间隔为 2ms 的特点。具体做法是将刷新周期除以行数，得到两次刷新操作的时间间隔 t，利用逻辑电路每隔时间 t 产生一次刷新请求。这样可以避免使 CPU 连续等待过长的时间，而且减少了刷新次数，从根本上提高了整机速度。</p>
-<blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1920541-20200319112736772-1585159475.png"></p>
-<p>具体操作为：在2ms内对128行各刷新一遍</p>
-<p>即每隔15.6μs刷新一行(2000μs&#x2F;128≈15.6μs)，而每行刷新的时间仍为0.5μs。这样，刷新一行只能停止一个存取周期，但对每行来说，刷新间隔时间仍为2ms，而死时间为0.5μs。（相对每一段来说，是集中式刷新，相对整体来说，是分散式刷新）</p>
-<p>如果将DRAM的刷新安排在CPU对指令的译码阶段，由于这个阶段CPU不访问存储器，所以这种方案既克服了分散刷新需独占0.5μs用于刷新，使存取周期加长且降低系统速度的缺点，又不会出现集中刷新的访存“死区”问题，从根本上上提高了整机的工作效率。</p>
-</blockquote>
-<p>DRAM 的刷新需注意以下问题：（1）<strong>刷新对 CPU 是透明的，即刷新不依赖外部的访问</strong>；（2）动态 RAM 的刷新单位是行，故刷新操作时仅需要行地址；（3）刷新操作类似于读操作，但又有所不同。刷新操作仅给栅极电容补充电荷，不需要信息输出。另外，刷新时不需要选片，即整个存储器中的所有芯片同时被刷新。</p>
-<p>　　SRAM 和 DRAM 都满足断电内容消失，但<strong>需要刷新的只有 DRAM</strong>，而 SRAM 不需要刷新。</p>
-<h4 id="静态随机存储器（SRAM）"><a href="#静态随机存储器（SRAM）" class="headerlink" title="静态随机存储器（SRAM）"></a>静态随机存储器（SRAM）</h4><p><em>所谓的 “静态”，指这种存储器只要保持通电，里面储存的数据就可以恒常保持</em>。相对之下，DRAM 里面储存的数据需要周期性地 Refresh。然而，当电力供应停止（关机）时，储存的数据还是会消失，所以也称为 Volatile Memory（易失性存储器），这与在断电后仍能储存数据的 ROM 或闪存不同的。但是 SRAM 也有它的缺点，即它的集成度较低，功耗较 DRAM 大，相同容量的 DRAM 内存可以设计为较小的体积，但是 SRAM 却需要很大的体积。同样面积的硅片可以做出更大容量的 DRAM，因此 SRAM 显得更贵。<strong>常用于高速缓存</strong>。</p>
-<table>
-<thead>
-<tr>
-<th><strong>特点 \ 类型</strong></th>
-<th><strong>SRAM</strong></th>
-<th><strong>DRAM</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>存储信息</td>
-<td>触发器</td>
-<td>电容</td>
-</tr>
-<tr>
-<td>破坏性读出</td>
-<td>非</td>
-<td>是</td>
-</tr>
-<tr>
-<td>需要刷新</td>
-<td>不要</td>
-<td>需要</td>
-</tr>
-<tr>
-<td>送行列地址</td>
-<td>同时送</td>
-<td>分两次送</td>
-</tr>
-<tr>
-<td>运行速度</td>
-<td>快</td>
-<td>慢</td>
-</tr>
-<tr>
-<td>集成度</td>
-<td>低</td>
-<td>高</td>
-</tr>
-<tr>
-<td>发热量（功耗）</td>
-<td>大</td>
-<td>小</td>
-</tr>
-<tr>
-<td>存储成本</td>
-<td>高</td>
-<td>低</td>
-</tr>
-<tr>
-<td>主要用途</td>
-<td>高速缓存</td>
-<td>主机内存</td>
-</tr>
-</tbody></table>
-<h3 id="静态存储器结构"><a href="#静态存储器结构" class="headerlink" title="静态存储器结构"></a>静态存储器结构</h3><p>译码部分：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221204450394.png"></p>
-<p>找到静态存储器中对应的存储单元。</p>
-<p>总体：</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221204615051.png"></p>
-<h3 id="串行访问存储器（SAS）"><a href="#串行访问存储器（SAS）" class="headerlink" title="串行访问存储器（SAS）"></a>串行访问存储器（SAS）</h3><p>对存储单元进行 读&#x2F;写 操作时，需按其物理地址的先后顺序寻址，包括顺序存取存储器（如磁带，SAM）与直接存取存储器（如磁盘,DAM）。</p>
-<h4 id="顺序存取存储器（SAM）"><a href="#顺序存取存储器（SAM）" class="headerlink" title="顺序存取存储器（SAM）"></a>顺序存取存储器（SAM）</h4><p>是完全的串行访问，顺序存取存储器的内容只能按照某种顺序存取，存取时间的长短与信息在存储体上的物理位置有关，其特点是存取速度缓慢。如：磁带，读写时要待磁带移动到合适位置之后才能顺序读写。由于价格便宜，主要用于数据备份容灾系统。</p>
-<h4 id="直接存取存储器（DAM）"><a href="#直接存取存储器（DAM）" class="headerlink" title="直接存取存储器（DAM）"></a>直接存取存储器（DAM）</h4><p>是部分的串行访问，如：HHD 机械硬盘，对信息的存取有两步操作。首先，磁头直接移动到目标区域（磁道），然后再从磁道的合适位置开始读写，它介于顺序存取和随机存取之间。主要用于辅助存储器。</p>
-<h3 id="只读存储器（ROM）"><a href="#只读存储器（ROM）" class="headerlink" title="只读存储器（ROM）"></a>只读存储器（ROM）</h3><p>存储器的内容只能随机读出而不能写入。信息一旦写入存储器就固定不变，即使断电，内容也不会丢失。因此，通常用它存放固定不变的程序、常数和汉字字库，甚至用于操作系统的固化。它与随机存储器可共同作为主存的一部分，统一构成主存的地址域。</p>
-<p>由 ROM 派生出的存储器也包含可反复重写的类型，<strong>ROM 与 RAM 的存取方式均为随机存取</strong>。广义上的只读存储器已可已可通过电擦除等方式进行写入，其“只读”的概念没有保留，但仍然保留了断电内容保留、随机读取特性，但其写入速度比读取速度慢得多。</p>
-<h4 id="掩膜式只读存储器（MROM）"><a href="#掩膜式只读存储器（MROM）" class="headerlink" title="掩膜式只读存储器（MROM）"></a>掩膜式只读存储器（MROM）</h4><p>MROM 写入后任何人无法改变其内容</p>
-<h4 id="一次可编程只读存储器（PROM）"><a href="#一次可编程只读存储器（PROM）" class="headerlink" title="一次可编程只读存储器（PROM）"></a>一次可编程只读存储器（PROM）</h4><p>PROM 允许用户利用专门的设备（编程器）写入自己的程序，一旦写入，内容就无法改变。</p>
-<h4 id="可擦除可编程只读存储器（EPROM）"><a href="#可擦除可编程只读存储器（EPROM）" class="headerlink" title="可擦除可编程只读存储器（EPROM）"></a>可擦除可编程只读存储器（EPROM）</h4><p>EPROM不仅可以由用户利用编程器写入信息，而且可以对其内容进行多次改写。需要修改 EPROM 内容时，先将其全部内容擦除，然后编程。</p>
-<h4 id="闪速存储器（Flash-Memory）"><a href="#闪速存储器（Flash-Memory）" class="headerlink" title="闪速存储器（Flash Memory）"></a>闪速存储器（Flash Memory）</h4><h4 id="固态硬盘（Solid-State-Drives"><a href="#固态硬盘（Solid-State-Drives" class="headerlink" title="固态硬盘（Solid State Drives"></a>固态硬盘（Solid State Drives</h4><h2 id="按信息的可保存性分类"><a href="#按信息的可保存性分类" class="headerlink" title="按信息的可保存性分类"></a>按信息的可保存性分类</h2><p><strong>非永久记忆（易失性）的存储器</strong>：掉电后数据消失的存储器，如：<em>半导体读&#x2F;写存储器 RAM</em>。<br><strong>永久性记忆（非易失性）的存储器</strong>：掉电后仍能保存信息的存储器，如：<em>磁性材料做成的存储器以及半导体 ROM</em>。</p>
-<p>若某个存储单元所存储的信息被读出时，原存储信息被破坏，则称为<u>破坏性读出</u>；若读出时，被读单元存储信息不被破坏，则称为非破坏性读出，具有破坏性读出的存储器，每次读出操作后，必须紧接一个再生的操作，以便恢复被破坏的信息。</p>
-<h2 id="三层存储结构"><a href="#三层存储结构" class="headerlink" title="三层存储结构"></a>三层存储结构</h2><p>几个问题：</p>
-<p>1、cpu速度慢：cpu访问的是主存，但是主存的速度慢于cpu的读取速度。导致cpu的速度慢。</p>
-<p>2、主存容量不足</p>
-<p>解决方法：</p>
-<p>1、cache：解决cpu速度慢的问题（一般是集成在cpu上）</p>
-<p>2、辅存解决主存容量小的问题</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221202328281.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831145558214-2105504734.png"></p>
-<blockquote>
-<p>存储系统层次结构主要体现在 “Cache - 主存” 层次和 “主存 - 辅存” 层次。前者主要解决 CPU 和主存速度不匹配的问题，后者主要解决存储系统容量的问题</p>
-</blockquote>
-<p><strong>主存和 Cache 之间的数据调动是由硬件自动完成的，对所有程序员均是透明的；而主存和辅存之间的数据调动则是由硬件和操作系统共同完成的，对应用程序员是透明的</strong>。</p>
-<h3 id="主存储器：主存（又称内存）"><a href="#主存储器：主存（又称内存）" class="headerlink" title="主存储器：主存（又称内存）"></a>主存储器：主存（又称内存）</h3><p>用来存放计算机运行期间所需的大量程序和数据，<strong>CPU 可以直接随机地对其进行访问</strong>，也可以和告诉缓冲存储器（Cache）及辅助存储器交换数据，其特点是容量较小、存取速度较快、单位价格较高。</p>
-<ul>
-<li>半导体存储器、DRAM、非永久记忆存储器</li>
-<li>特性：“可随机访问任意存储单元” 和 “掉电即失去数据”，这些特性均服务于冯诺依曼体系 “存储程序” 的核心理想。</li>
-</ul>
-<h3 id="辅助存储器：辅存"><a href="#辅助存储器：辅存" class="headerlink" title="辅助存储器：辅存"></a>辅助存储器：辅存</h3><p>又称外存储器（外存），是主存储器的后援存储器，用来存放当前暂时不用的程序和数据，以及一些需要永久性保存的信息，它不能与 CPU 直接交换信息。其特点是容量极大、存取速度较慢、单位成本低。</p>
-<h3 id="高速缓冲存储器：cache"><a href="#高速缓冲存储器：cache" class="headerlink" title="高速缓冲存储器：cache"></a>高速缓冲存储器：cache</h3><p>位于主存和 CPU 之间，用来存放正在执行的程序段和数据，以便 CPU 能高速地使用它们。Cache 地存取速度可与 CPU 的速度匹配，但存储容量小、价格高。目前的高档计算机通常将它们制作在 CPU 中。</p>
-<h2 id="存储器的性能指标"><a href="#存储器的性能指标" class="headerlink" title="存储器的性能指标"></a>存储器的性能指标</h2><p>存储器有 3 个主要性能指标，即存储容量、单位成本和存储速度。这 3 个指标相互制约，设计存储器系统所追求的目标就是大容量、低成本和高速度。</p>
-<p>具体可见《王道》</p>
-<h1 id="主存中的数据组织"><a href="#主存中的数据组织" class="headerlink" title="主存中的数据组织"></a>主存中的数据组织</h1><p>主存：随机访问存储器，包含读&#x2F;写存储空间和只读存储空间</p>
-<p><strong>存储字长</strong>：主存的一个存储单元所包含的二进制位数。按照字节为单位。</p>
-<h2 id="数据存储与边界的关系"><a href="#数据存储与边界的关系" class="headerlink" title="数据存储与边界的关系"></a>数据存储与边界的关系</h2><p>按边界对齐，方便访问和读取。但是会浪费空间。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221202909440.png"></p>
-<h2 id="大端和小端存储方式"><a href="#大端和小端存储方式" class="headerlink" title="大端和小端存储方式"></a>大端和小端存储方式</h2><p>大端：最高字节地址作为数据地址</p>
-<p>小端：最低字节地址作为数据地址</p>
-<p>大端模式更符合人的读写习惯，但是小端模式更符合计算机的处理。</p>
-<h1 id="CPU和主存储器连接"><a href="#CPU和主存储器连接" class="headerlink" title="CPU和主存储器连接"></a>CPU和主存储器连接</h1><ul>
-<li><p>连接由总线来支持：包括数据总线、地址总线和控制总线。</p>
-</li>
-<li><p>CPU 通过 AR（地址寄存器）&amp; AB（地址总线）、DR（数码寄存器）&amp; DB（数据总线）和主存进行数据传输。</p>
-</li>
-</ul>
-<p>若 AR 为 K 位字长，表示 CPU 的寻址宽度，即允许主存包含有 2K 个可寻址存储单位；<br>若 DR 为 n 位字长，则表示在一个存储周期内，CPU 和主存之间通过总线进行 n 位数据传输。<br>控制总线包括控制数据传输的读（READ）、写（WRITE）和表示存储器功能完成的（READY）的三种控制线。</p>
-<blockquote>
-<p>cpu向内存写数据的时，相当于将数据写入内存地址中。数据的地址经过地址总线送给译码器，译码器的有效输出送给锁存单元的使能端，而cpu中寄存器数据通过数据总线送给锁存单元的输入端，实现数据存入内存。</p>
-<p>cpu读内存数据时，相当于将内存地址中的数据读入cpu。数据的地址经过地址总线送给译码器，译码器的有效输出送给锁存单元的使能端，此时锁存单元将输出端数据送入数据总线，再通过数据总线送入cpu。</p>
-<p>cpu与内存通过数据总线交换数据，数据总线是双向的。</p>
-</blockquote>
-<h2 id="CPU读取主存数据"><a href="#CPU读取主存数据" class="headerlink" title="CPU读取主存数据"></a>CPU读取主存数据</h2><p>当 CPU 从存储器读取一个存储字时，CPU 必须指定该存储字的地址，将该地址送到 AR 再经 AB 送到存储器，同时，CPU 通过控制线发送 READ 信号到存储器。此后，CPU 等到存储器通过控制线发来一个 READY 信号，表示已经完成了数据的读，并将数据经 DB 放到 DR 上了，CPU 再从 DR 取出相应的数据。以此来完成了一个存储器字的读与取。</p>
-<h2 id="CPU存放数据到主存"><a href="#CPU存放数据到主存" class="headerlink" title="CPU存放数据到主存"></a>CPU存放数据到主存</h2><p>CPU 为了存放一个字到存储器，首先将存储字在存储器中的存放地址通过 AR 经 AB 发送到存储器，并将存储字放到 DR，同时发出一个 WRITE 信号到存储器。此后，CPU 等到接收 READY 信号。存储器会根据 AB 收到的地址来存放 DB 接收到的存储字，然后通过 READY 控制线发送 READY 信号给 CPU 接收。以此完成了一个存储字的存放。</p>
-<p>可见，主存和 CPU 之间采用的是异步工作方式，以 READY 信号表示以此访存操作的结束。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/20200311152228285.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/20190708131719484.jpeg"></p>
-<h2 id="存储扩展"><a href="#存储扩展" class="headerlink" title="存储扩展"></a>存储扩展</h2><p>CPU 的数据线数与存储芯片数据位数不一定相等，通常进行位扩展，用多个存储芯片对字长进行扩充，使数据位数与 CPU 的数据线数相等。可用的技术方法有位扩展法、子扩展法和字位同时扩展法。</p>
-<p>分为字扩展和位扩展以及字位扩展。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211045477.png"></p>
-<h3 id="位扩展"><a href="#位扩展" class="headerlink" title="位扩展"></a>位扩展</h3><p>地址线不变，但是数据线分成了四个部分。因为<strong>位表示的是字的深度，字的地址还是和没扩展前一样的。</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211321650.png"></p>
-<p><strong>仅采用位扩展时，各个芯片连接地址线的方式一样，而连接数据线的方式不一样，某一时刻选中所有芯片，所以片选信号线要连接到所有芯片。</strong></p>
-<h3 id="字扩展"><a href="#字扩展" class="headerlink" title="字扩展"></a>字扩展</h3><p>由于位数没有发生变化，所以数据线是没有发生变化的。但是由于字的<strong>数量（厚度）</strong>增加了，所以地址线要增加。</p>
-<p><em>片选信号是选择字扩展中的字的厚度中的那一层。</em></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211536092.png"></p>
-<p>字扩展将存储芯片的地址线、数据线、读写控制线相应并联，而由片选信号来区分芯片的地址范围</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191221211551295.png"></p>
-<p><strong>仅采用字扩展时，各个芯片连接地址线方式相同，连接数据线的方式也相同，但在某一时刻只需选中部分芯片，所以通过片选信号或采用译码器设计连接到相应的芯片。</strong></p>
-<h3 id="字位扩展"><a href="#字位扩展" class="headerlink" title="字位扩展"></a>字位扩展</h3><p>字位同时扩展就是既增加存储字的数量，又增加存储字长。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222143433903.png"></p>
-<p><strong>采用字位同时扩展时，各个芯片连接地址线的方式相同，但连接数据线的方式不同，而且需要通过片选信号或采用译码器设计连接到相应的芯片。</strong></p>
-<h1 id="双端口-RAM-和多模块存储器"><a href="#双端口-RAM-和多模块存储器" class="headerlink" title="双端口 RAM 和多模块存储器"></a>双端口 RAM 和多模块存储器</h1><p>双端口 RAM 是指同一个存储器有左、右两个独立的端口，分别具有两组相互独立的地址线、数据线和控制线，允许两个独立的控制器同时异步地访问存储单元。当两个端口的地址不相同时，在两个端口上进行读写操作一定不会发生冲突。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1520534-20190831193253926-1954121305.png"></p>
-<p>两个端口同时存取存储器地同一地址单元时，会因数据冲突造成数据存储或读取错误。两个端口对同一主存操作有以下4 种情况：</p>
-<ol>
-<li>两个端口不同时对同一地址单元存取数据。</li>
-<li>两个端口同时对同一地址单元读出数据。</li>
-<li>两个端口同时对同一地址单元写入数据。</li>
-<li>两个端口同时对同一地址单元操作，一个写入数据，另一个读出数据。</li>
-</ol>
-<p>其中，第 1 种和第 2 种情况不会出现错误；第 3 种情况会出现写入错误；第 4 种情况会出现读出错误。</p>
-<h1 id="多体交叉存储器"><a href="#多体交叉存储器" class="headerlink" title="多体交叉存储器"></a>多体交叉存储器</h1><p>由多个存储模块构成。基本思想是：在不提高存储器效率、不扩展数据通路位数的前提下，通过存储芯片的交叉组织，提高CPU单位时间内访问的数据量，从而缓解快速的CPU与慢速的主存之间的速度差异。</p>
-<p>分为高位和低位两种多体交叉存储器。</p>
-<h2 id="高位多体交叉存储器"><a href="#高位多体交叉存储器" class="headerlink" title="高位多体交叉存储器"></a>高位多体交叉存储器</h2><p>可以看到的是，用<strong>高位段地址</strong>经过译码后产生片选信号，<strong>选择存储体</strong>。<strong>低位段地址</strong>直接选择一个存储体内的不同<strong>存储单元</strong>。</p>
-<p><strong>特点</strong></p>
-<ul>
-<li><strong>相邻的地址在同一个存储体中</strong></li>
-<li><strong>不同存储体的地址不相邻</strong></li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222144034180.png"></p>
-<p><strong>问题</strong></p>
-<p><strong>因为连续的地址在同一个存储体中，无法实现存储体并行工作</strong></p>
-<h2 id="低位多体交叉存储器"><a href="#低位多体交叉存储器" class="headerlink" title="低位多体交叉存储器"></a>低位多体交叉存储器</h2><p>用<strong>低位段地址</strong>经过译码后产生片选信号，<strong>选择存储体</strong>。<strong>高位段地址</strong>直接选择一个存储体内的不同<strong>存储单元</strong>。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222145028079.png"></p>
-<p><strong>存储流水线访问</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222145353046.png"></p>
-<p>其中：存储周期T&#x3D;0至W<del>0</del> 时间，表示的是存储体存入数据的时间。</p>
-<p>连续并行读取时间是：0至W<del>0</del> +W<del>0</del>至W<del>1</del> （此时第一个存储体的数据读出） +W<del>1</del>至W<del>2</del> （此时第二个存储体的数据读出） +W<del>2</del>至W<del>3</del></p>
-<h1 id="Cache的基本原理"><a href="#Cache的基本原理" class="headerlink" title="Cache的基本原理"></a>Cache的基本原理</h1><p>cache，中译名高速缓冲存储器，其作用是为了更好的利用局部性原理，减少CPU访问主存的次数。简单地说，CPU正在访问的指令和数据，其可能会被以后多次访问到，或者是该指令和数据附近的内存区域，也可能会被多次访问。因此，第一次访问这一块区域时，将其复制到cache中，以后访问该区域的指令或者数据时，就不用再从主存中取出。</p>
-<blockquote>
-<p>程序访问的局部性原理包括时间局部性和空间局部性。</p>
-<ul>
-<li>空间局部性：在最近的未来要用到的信息（指令和数据），很可能与现在正在使用的信息在存储空间上是邻近的</li>
-<li>时间局部性：在最近的未来要用到的信息，很可能是现在正在使用的信息</li>
-</ul>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222150221127.png"></p>
-<p>主要分析的是CPU和主存之间的Cache</p>
-<h3 id="cache的工作过程"><a href="#cache的工作过程" class="headerlink" title="cache的工作过程"></a>cache的工作过程</h3><p>Cache和主存都被分成若干大小相等的块（Cache块又称为Cache行），每块由若干字节组成，块的长度称为块长（Cache行长）。所以Cache中的块数要远少于主存中的块数，它仅保存主存中最活跃的若干块的副本。</p>
-<p><strong>CPU与Cache之间的数据交换以字为单位，而Cache与主存之间的数据交换则以Cahce块为单位。</strong></p>
-<ul>
-<li><p>当CPU发出读请求时，若访存地址在Cache中<strong>命中</strong>，就将此地址转换成Cache地址<strong>，直接对Cahce进行读操作，与主存无关</strong>；若访存地址在Cache中<strong>未命中</strong>，<strong>则需访问主存</strong>，<strong>并把此字所在的块一次性地从主存调入Cache，若此时Cache已满，则需根据某种 替换算法，用这个块替换Cache中原来的某块信息。</strong></p>
-<ul>
-<li><p>Q：如何判断数据在Cache中？</p>
-<p>​	A：使用相联存储器（注意，这里是在相联存储器中进行分析的，没有进入到cache块中）</p>
-</li>
-<li><p>Q：Cache中的数据是有效的吗？</p>
-<p>​	A：使用cache块中的vaild</p>
-</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222151148417.png"></p>
-</li>
-<li><p>当CPU发出写请求时，若Cache命中，有可能会遇到Cache与主存中的内容不一致的问题，此时需要根据某种 <strong>写策略</strong> 解决这个问题。</p>
-<ul>
-<li><p>在写穿式Cache中，数据更新时，在写入缓存之后，立即也将数据写入内存，如果此时请求指定的地址没有对应的缓存，那么直接写入内存。所以每次操作总会执行：</p>
-<p>​			  第一步，CPU将数据写入Cache；<br>　　	第二步，将Cache数据传送到Memory中相应的位置； </p>
-</li>
-<li><p>在写回式Cache中，数据更新时，在写入缓存之后，不会立即更新对应的内存，只有当该缓存被用于其他的内存数据（即数据被替换出缓存）时，被修改的缓存中的数据才会被覆盖式地写入到对应的内存中。</p>
-<p>​				并不是每次执行步骤1后都执行步骤2操作。</p>
-</li>
-<li><p>Q：写回前，主存的数据是新的吗？（因为没有及时的写回主存中）</p>
-<p>​		A：使用cache块中的dirty</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222151318537.png" alt="image-20191222151318537"></p>
-<h3 id="cache的地址划分"><a href="#cache的地址划分" class="headerlink" title="cache的地址划分"></a>cache的地址划分</h3><p>因为cache是以块划分的，所以对主存地址，需要进行二次划分。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152243021.png"></p>
-<p>为了解决上述的三个问题，cache的结构需要进行相应的改变。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152556327.png" alt="cache的结构"></p>
-<p>CPU将地址置入相联存储器中，如果数据在cache中，去cache中对应的地址查找，如果不再就直接对主存进行访问。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222152817373.png"></p>
-<h2 id="相联存储器"><a href="#相联存储器" class="headerlink" title="相联存储器"></a>相联存储器</h2><p>作用：判断CPU要访问的内容是否在Cache中，在的话，会给出相应内容在cache中的地址。</p>
-<p>存放查找表  (独立硬件，不在缓存中)<br>存储容量 &#x3D; 查找表容量 &#x3D; cache块数 * 表项大小<br>cache中用于存放<strong>块表</strong>，虚拟存储器中存放<strong>段表、页表</strong><br>（valid,      Key，               Value ）<br> ( 有效位,  主存块地址 ， Cache块地址）  注：value不一定是必要的</p>
-<p>CPU给出的块地址与查找表中某单元相同且有效位为1表示<strong>命中</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222205525474.png"></p>
-<p><strong>步骤</strong>(对应的是系统的读过程)</p>
-<ul>
-<li><p>CPU给出主存地址（块地址，块内地址）</p>
-</li>
-<li><p>主存<strong>块地址</strong>为<strong>关键字</strong>查找相联存储器中的查找表</p>
-</li>
-<li><p>如相符表示<strong>副本</strong>在cache中，命中，访问cache</p>
-</li>
-<li><p>否则数据缺失，访问主存</p>
-<ul>
-<li><p>将数据所在块副本调入cache（块交换—局部性）</p>
-</li>
-<li><p>载入副本过程可能引起替换</p>
-</li>
-<li><p>更新查找表，记录当前数据块地址</p>
-</li>
-<li><p>cache缺失时系统等待数据调入</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>基本结构如下</strong></p>
-<p>检索寄存器从地址中剥离Key</p>
-<p>当明确查找的在Cache中时，符合寄存器会记录要查找的地址的位置</p>
-<p><strong>此处的存储体就是cache中的标记存储体</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222203715046.png"></p>
-<p>由下图可以看到：key包含了tag和offset。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222204443669.png"></p>
-<h2 id="cache地址映射和变换方法"><a href="#cache地址映射和变换方法" class="headerlink" title="cache地址映射和变换方法"></a>cache地址映射和变换方法</h2><p>这里的地址映射是指：主存空间映射到cache的地址空间。</p>
-<p>在使用相联存储器得知数据在cache中后，接下来需要得知主存数据如何放置到cache行中。此外，cache满后应该如何处理？如何实现保持cache和主存的一致性？</p>
-<h3 id="全相联映射"><a href="#全相联映射" class="headerlink" title="全相联映射"></a>全相联映射</h3><p><strong>只有一个组，就是全相联。</strong>不用hash来确定组，<strong>直接挨个比对高位地址，来确定是否命中</strong>。可以想见这种方式不适合大的缓存。想想看，如果4M 的大缓存　linesize为32Byte，采用全相联的话，就意味着4<em>1024</em>1024&#x2F;32 &#x3D; 128K 个line挨个比较，来确定是否命中，这是多要命的事情。高速缓存立马成了低速缓存了。</p>
-<p><strong>映射算法：主存的数据块可映射到cache任意行</strong>同时将该数据块地址对应的标记存储体中保存。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222212547429.png"></p>
-<p>主存地址&#x3D;块地址（标记）+块内地址（字）</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214501924.png"></p>
-<p>因为只有一组，cache中的所有行标记会全部送入相联存储器中进行比较。如果命中的话，从cache中剥离出具体要访问的那个字。反之，会根据cpu给出的原始地址再次访问主存。</p>
-<h3 id="直接映射"><a href="#直接映射" class="headerlink" title="直接映射"></a>直接映射</h3><p>每个组只有一个line，选中组之后不需要和组中的每个line比对，因为只有一个line。这样导致了cache的利用率低，块内冲突率高，但是淘汰算法（后来的赶走之前的）简单，适合大容量cache。</p>
-<p><strong>映射算法：cache共n行，主存第j快映射到cache行号为i&#x3D;jmod (n)即映射到特定行</strong></p>
-<p>主存调入cache中的位置由行地址决定。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214438924.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222214717465.png"></p>
-<p>先看索引，取出对应的标识放入相联存储器中比较。命中与否的结果与上述相同。可以很明显的看出比较的内容变少了。</p>
-<h3 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a>组相联映射</h3><p>cache分成多个组，每个组分成多个行。所谓8路组相连（ 8-way set associative）的含义是指，每个组里面有8个行。</p>
-<p>cache分组（每组包含的行数相同），主存以cache分组标准将块分组（两者数量相同）</p>
-<p><strong>映射算法：cache共n组，主存第j块号映射到cache的组号是i&#x3D;jmod（n）。即主存的数据块映射到cache特定组的任意行</strong></p>
-<blockquote>
-<p>我们知道，cache的容量要远远小于主存，主存和cache肯定不是一一对应的，那么主存中的地址和cache的映射关系是怎样的呢？</p>
-<p>拿到一个地址，首先是映射到一个组里面去。如何映射？取内存地址的中间几位来映射。</p>
-<p>举例来说，data cache: 32-KB, 8-way set associative, 64-byte line size</p>
-<p>Cache总大小为32KB，8路组相连（每组有8个line），每个line的大小linesize为64Byte,OK，我们可以很轻易的算出一共有32K&#x2F;8&#x2F;64&#x3D;64 个组。</p>
-<p>对于32位的内存地址，每个line有2^6 &#x3D; 64Byte，所以地址的【0，5】区分line中的那个字节。一共有64个组。我们取内存地址中间6为来hash查找地址属于那个组。即内存地址的【6，11】位来确定属于64组的哪一个组。组确定了之后，【12，31】的内存地址与组中8个line挨个比对，如果【12，31】为与某个line一致，并且这个line为有效，那么缓存命中。</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222222824337.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222222921836.png"></p>
-<p>先看索引，取出索引组的全部行对应的标识放入相联存储器中比较。命中与否的结果与上述相同。</p>
-<h2 id="替换算法"><a href="#替换算法" class="headerlink" title="替换算法"></a>替换算法</h2><p>cache存储空间被占满后需要替换数据块。</p>
-<p><strong>直接映射是不需要替换算法的。全相联映射替换算法适用于全部行。组相联映射替换算法适用组内全部行</strong></p>
-<p>① 先进先出算法(FIFO)</p>
-<p>基本思想：按照数据块进入Cache的先后决定替换的顺序，即在需要进行替换时，选择最先</p>
-<p>​     被调入Cache中的块作为替换块。这种方法要求为每块记录它们进入Cache的先</p>
-<p>​     后次序。</p>
-<p>优点：FIFO算法系统开销较小。</p>
-<p>缺点：是不考虑程序访问的局部性，可能会把一些需要经常使用的块（如循环程序块）也作</p>
-<p>   为最早进入Cache的块而替换掉，因此，可能导致Cache的命中率不高。</p>
-<p>② 近期最少使用(LRU)算法</p>
-<p>基本思想：将近期内长久未被访问过的行换出。为此，每行设置一个计数器，cache每命中一次，命中行计数器清零，其它各行计数器增1，因此它是未访问次数计数器。当需要替换时，比较各特定行的计数值，将计数值最大的行换出。</p>
-<p>优点：这种算法显然保护了刚调入Cache的新数据，符合cache工作原理，因而使cache有较高</p>
-<p>   的命中率。LRU算法硬件实现简单</p>
-<p>③ 最不经常使用(LFU)算法</p>
-<p>基本思想：将一段时间内被访次数最少的那行数据换出。为此，每行设置一个计数器，新新</p>
-<p>​     调入行的数据从0开始计数，每访问一次被访行的计数器增1。当需要替换时，对</p>
-<p>​     这些特定行的计数值进行比较，将计数值最小的行换出。</p>
-<p>缺点：一段期间访问情况不能严格反映近期访问情况。例如特定行中的A、B两行，A行在期间的前期多次被访问而后期未被访问，但累积计数值很大，B行是前期不常用而后期却正被频繁访问，但可能由于累积计数小于A行而被LFU算法换出了。</p>
-<p>④ 随机替换算法</p>
-<p>基本思想：需要进行替换时，从特定的行位置中随机地选取一行进行替换。</p>
-<p>优点：硬件实现最容易，而且速度也比前几种策略快。</p>
-<p>缺点：随意换出的数据很可能马上又要用，从而降低命中率和cache工作效率。但这个负面效应随着cache容量增大会减少，模拟研究表明随机替换策略的功效只是稍逊于LFU和LRU。</p>
-<h3 id="随机替换法"><a href="#随机替换法" class="headerlink" title="随机替换法"></a>随机替换法</h3><h3 id="替换算法的抖动"><a href="#替换算法的抖动" class="headerlink" title="替换算法的抖动"></a>替换算法的抖动</h3><p>调出去的那块就是即将访问的那块数据。</p>
-<p>要避免抖动，需要在程序行为上避免。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222224652504.png"></p>
-<h2 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h2><p>解决了程序大小大于内存的限制问题</p>
-<p>虚拟存储器处于“主存-辅存”存储层次。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225312099.png"></p>
-<ul>
-<li><strong>辅存—–逻辑地址</strong></li>
-<li><strong>主存—–物理地址</strong></li>
-</ul>
-<h3 id="页式虚拟存储器"><a href="#页式虚拟存储器" class="headerlink" title="页式虚拟存储器"></a>页式虚拟存储器</h3><p>采用页表判断cpu访问的内容是否在主存，如果在辅存，则调用其内容到主存中。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225546137.png"></p>
-<p>转换：</p>
-<p>MMU用于指出页表在内存中的位置，通过与VPN结合就能访问到页表中与虚拟页号VPN相对应的物理页号PPN。实现虚拟地址到物理地址的转换。</p>
-<blockquote>
-<p>页表常驻在内存中。保存有虚拟页号和物理页号的对应关系。</p>
-<p>进程开始要访问一个地址，它可能会经历下面的过程</p>
-<p>1、每次我要访问地址空间上的某一个地址，都需要把地址翻译为实际物理内存地址<br>2、所有进程共享这整一块物理内存，每个进程只把自己目前需要的虚拟地址空间映射到物理内存上<br>3、进程需要知道哪些地址空间上的数据在物理内存上，哪些不在（可能这部分存储在磁盘上），还有在物理内存上的哪里，这就需要通过页表来记录<br>4、页表的每一个表项分两部分，第一部分记录此页是否在物理内存上，第二部分记录物理内存页的地址（如果在的话）<br>5、当进程访问某个虚拟地址的时候，就会先去看页表，如果发现对应的数据不在物理内存上，就会发生缺页异常<br>6、缺页异常的处理过程，操作系统立即阻塞该进程，并将硬盘里对应的页换入内存，然后使该进程就绪，如果内存已经满了，没有空地方了，那就找一个页覆盖，至于具体覆盖的哪个页，就需要看操作系统的页面置换算法是怎么设计的了。</p>
-<p>当每个进程创建的时候，内核会为进程分配4G的<strong>虚拟内存</strong>，当进程还没有开始运行时，这只是一个内存布局。<strong>实际上并不立即就把虚拟内存对应位置的程序数据和代码（比如.text .data段）拷贝到物理内存中，只是建立好虚拟内存和磁盘文件之间的映射就好（叫做存储器映射）。这个时候数据和代码还是在磁盘上的。当运行到对应的程序时，进程（拿着虚拟地址）去寻找页表，发现页表中地址没有存放在物理内存上，而是在磁盘上，于是发生缺页异常，于是将磁盘上的数据拷贝到物理内存中。</strong></p>
-<p>另外在进程运行过程中，要通过malloc来动态分配内存时，也只是分配了虚拟内存，即为这块虚拟内存对应的页表项做相应设置，当进程真正访问到此数据时，才引发缺页异常。</p>
-<p>可以认为虚拟空间都被映射到了磁盘空间中（事实上也是按需要映射到磁盘空间上，通过mmap，mmap是用来建立虚拟空间和磁盘空间的映射关系的）</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222225706372.png"></p>
-<h3 id="TLB"><a href="#TLB" class="headerlink" title="TLB"></a>TLB</h3><p>虚实地址转换过程中存在的问题：</p>
-<p>两次访问主存：第一次拿页表项判断是否在主存中，第二次得到数据。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222235123905.png"></p>
-<p>5，6步骤是为了替换主存中的对应物理地址的内容。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112011182.png"></p>
-<p>为了减少访问主存的次数。设置TLB，不去主存拿页表。故TLB能节省一次CPU访问主存的次数。</p>
-<p>于是TLB设计成页表映像的一部分。</p>
-<p>1、CPU拿着虚拟地址访问MMU（为了将虚拟地址中剥离出的虚页号与MMU中的页表基址寄存器结合得到物理内存地址）</p>
-<p>2、MMU拿着虚页号VPN访问TLB</p>
-<blockquote>
-<p>首先，先去TLB中根据标志Tag寻找，假如找到了并且有效位是1，说明TLB命中了，那么直接就可以从TLB中获取该虚拟页号对应的物理页号。假如有效位是0，说明该页不在内存中，这时候就发生缺页异常，CPU需要先去外存中将<strong>该页调入内存并将页表和TLB更新。</strong></p>
-<p>  假如<strong>在TLB中没有找到，那么就去页表（Page Table）中寻找（以虚拟页号为索引）</strong>，假如找到了并且有效位是1，那么就可以取出对应的物理页号。假如有效位是0，说明该页不在内存中，这时候就发生缺页异常，<strong>CPU需要先去外存中将该页调入内存并将页表和TLB更新。</strong></p>
-<p>  假如在页表中没有找到，也是缺页。同意会执行上述的缺页处理。</p>
-<p>  （不管从哪获取到物理页号，都可以根据规则组拼成实际物理地址，然后就可以访存去数据啦）</p>
-</blockquote>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191222235644799.png"></p>
-<p>此处TLB tag是因为TLB只是页表的一个子集，不能全部遍历页表中的每一项。所以要增加tag判断与虚页对应的物理页是否存在。（具体见上面的引用部分）</p>
-<h3 id="段式虚拟存储器"><a href="#段式虚拟存储器" class="headerlink" title="段式虚拟存储器"></a>段式虚拟存储器</h3><p>以段为单位。一般将主存空间按照实际运行程序中的段来划分。由此 段可大可小。</p>
-<p>段的独立性—易于编译、管理、修改和维护，也便于多道程序共享</p>
-<p>各段的长度不同，给主存的分配带来麻烦</p>
-<p>段式管理容易产生碎块，浪费主存空间</p>
-<h3 id="段页式虚拟存储器"><a href="#段页式虚拟存储器" class="headerlink" title="段页式虚拟存储器"></a>段页式虚拟存储器</h3><p>程序按模块分段</p>
-<p>段再分成长度固定的页。</p>
-<p>程序调入调出按页面来进行</p>
-<p>程序共享保护按段进行</p>
-<p>兼备段式，页式管理的优点</p>
-<p>在地址映像中需要多次查表</p>
-<h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><p>核心技术：将数据条带化后的存放在不同磁盘上，通过多磁盘的并行操作提高磁盘系统的读写速率。使用基于异或运算为基础的校验技术恢复损坏的数据</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112352878.png"></p>
-<p>最左边的盘就是冗余盘。是用于备份的。</p>
-<h3 id="RAID0"><a href="#RAID0" class="headerlink" title="RAID0"></a>RAID0</h3><p>数据以条带方式均匀分散在各磁盘上。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112559304.png"></p>
-<p>没有冗余，没有校验技术，任一磁盘坏了就GG。</p>
-<h3 id="RAID1"><a href="#RAID1" class="headerlink" title="RAID1"></a>RAID1</h3><p>数据采用镜像的冗余方式，同一个数据有多份拷贝</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223112953043.png"></p>
-<h3 id="RAID3-x2F-4"><a href="#RAID3-x2F-4" class="headerlink" title="RAID3&#x2F;4"></a>RAID3&#x2F;4</h3><p>专用校验盘。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113009663.png"></p>
-<h3 id="RAID5"><a href="#RAID5" class="headerlink" title="RAID5"></a>RAID5</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113521894.png"></p>
-<h3 id="RAID10"><a href="#RAID10" class="headerlink" title="RAID10"></a>RAID10</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113548311.png"></p>
-<h3 id="RAID01"><a href="#RAID01" class="headerlink" title="RAID01"></a>RAID01</h3><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113601613.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E5%9B%9B/image-20191223113627560.png"></p>
-<h1 id="一些习题"><a href="#一些习题" class="headerlink" title="一些习题"></a>一些习题</h1><p>![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 015 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
-<p>![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 020 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com-1595315230835.png)![](&#x2F;images&#x2F;组成原理-存储系统&#x2F;FireShot Capture 011 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/02/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" class="post-title-link" itemprop="url">组成原理-计算机系统概述</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-01 21:36:18" itemprop="dateCreated datePublished" datetime="2020-07-01T21:36:18Z">2020-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="计算机系统概述"><a href="#计算机系统概述" class="headerlink" title="计算机系统概述"></a>计算机系统概述</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190109093356418.png"></p>
-<h2 id="计算机发展历程"><a href="#计算机发展历程" class="headerlink" title="计算机发展历程"></a>计算机发展历程</h2><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B.png" alt="计算机发展历程"></p>
-<h2 id="计算机系统的层次结构"><a href="#计算机系统的层次结构" class="headerlink" title="计算机系统的层次结构"></a>计算机系统的层次结构</h2><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190329161804884.png"></p>
-<p>M4<br>高级语言级，它时面向用户的为方面用户编写应用程序而设置的。这一级由各种高级语言编译程序支持和执行。如C语言,c++等。它们编写的程序会由相应的编译器编写成汇编语言。实现高级语言的语法和语义等的执行过程对该层的程序员是透明的。</p>
-<p>M3<br>汇编语言级，它给程序人员提供一种符号式的程序设计语言，以减少程序编写的复杂性。一个机器都有自己的汇编语言，上层的高级语言首先被翻译成汇编语言，再进一步翻译（翻译过程由机器系统软件中的汇编软件完成）成机器直接识别的机器语言。机器通过执行机器语言程序来最终完成用户所要求的功能。 </p>
-<p>M2<br>操作系统级，它由操作系统程序实现。这些操作系统由机器指令和广义指令组成，广义指令是操作系统定义和解释的软件指令，所以这一级也成为混合级，计算机中所有机器指令的集合成为这台计算机的指令系统，指令系统又分为精简指令系统（RISC)和复杂指令系统（CISC)。</p>
-<p>操作系统对用户程序使用机器的各种资源（CPU、存储器、输入输出设备等）进行管理和分配。例如，当某一用户程序需要运行时，首先由操作系统将其调入内存中，这其中需要操作系统为其分配内存空间进行存储。再如某程序需要使用某一输出设备进行结果的输出时，需要操作系统为其提供对该设备的控制等。 </p>
-<p>M1<br>一般机器级，也称机器语言级，它<strong>由微程序解释机器指令系统</strong>，这一级也是硬件级，如二进制代码01010100101人真的很难看懂的 。</p>
-<p>M0<br>微程序设计级或逻辑电路级，这是一个实在的硬件级，<strong>由硬件直接执行</strong>，如果某一个应用程序直接用微指令来编写，那么可再这一级上运行应用程序。</p>
-<p>这一层的核心是计算机硬件控制单元。控制单元会逐条接收来自上层的机器指令，然后分析译码，产生一系列的操作控制信号，并由这些控制信号控制下层的逻辑部件按照一定的时间顺序有序地工作。 </p>
-<p><strong>解释程序由于是翻译一句执行一句，是不会有目标程序生成的</strong></p>
-<h2 id="计算机的组成"><a href="#计算机的组成" class="headerlink" title="计算机的组成"></a>计算机的组成</h2><p>一个完整的计算机系统，是由硬件系统和软件系统两大部分组成的。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20180923212410372" alt="计算机系统组成"></p>
-<h3 id="硬件系统"><a href="#硬件系统" class="headerlink" title="硬件系统"></a>硬件系统</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cc_net/article/details/10419645?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase">参考文章</a></p>
-<p>主要分为<strong>主机（CPU+主存储器）和外设（I&#x2F;O设备）两部分</strong>，是指那些构成计算机系统的物理实体，它们主要由各种各样的电子器件和机电装置组成。<br>从ENIAC(世界上第一台计算机)到当前最先进的计算机，硬件系统的设计采用的都是冯·诺依曼体系结构。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20190318201755609.png" alt="经典冯诺依曼体系结构"></p>
-<ul>
-<li><p>运算器:　负责数据的算术运算和逻辑运算，即数据的加工处理。</p>
-</li>
-<li><p>控制器:　是整个计算机的中枢神经，分析程序规定的控制信息，并根据程序要求进行控制，协调计算机各部分组件工作及内存与外设的访问等。<br>运算器和控制器统称中央处理器（即CPU)</p>
-<blockquote>
-<ul>
-<li><p>处理单元（Processing Unit，PU）：又称数据通路（Datapath）或运算器，包含了算术逻辑单元（Arithmetic Logic Unit，ALU）和处理器寄存器（Processor Register）。用于完成各种算术和逻辑运算。</p>
-</li>
-<li><p>控制器单元（Control Unit，CU）：包含了指令寄存器（Instruction Register）和程序计数器（Program Counter）。用于控制程序的流程（程序流），通常是条件判断和跳转。</p>
-</li>
-</ul>
-<p>PU 和 CU 就组成了 CPU（Central Processing Unit，中央处理器）。</p>
-</blockquote>
-</li>
-<li><p>存储器：包括用于存储数据（Data）和指令（Instruction）的主存储器和容量更大但速度却慢的外部存储器。</p>
-</li>
-<li><p>输入设备:　实现将程序、原始数据、文字、字符、控制命令或现场采集的数据等信息输入到计算机。</p>
-</li>
-<li><p>输出设备:　实现将计算机处理后生成的中间结果或最后结果（各种数据符号及文字或各种控制信号等信息）输出出来。</p>
-</li>
-</ul>
-<!--重点-->
-
-<blockquote>
-<p><strong>冯诺依曼体系结构的核心思想是存储程序原理：</strong></p>
-<p><strong>将程序指令以代码形式提前输入计算机主存储器，然后按照其在存储器中的首地址执行程序的第一条指令，以后就按该程序的规定顺序执行其他指令，直至程序执行结束</strong></p>
-<p>计算机按照此原理应该具有：<strong>数据传送功能、数据存储功能、数据处理功能、操作控制功能、操作判断功能</strong></p>
-</blockquote>
-<h3 id="软件系统"><a href="#软件系统" class="headerlink" title="软件系统"></a>软件系统</h3><ul>
-<li>主要分为系统软件和应用软件，是指计算机证运行所需的各种各样的计算机程序。<ul>
-<li>系统软件：OS、DBMS、语言处理程序、分布式软件系统、网络软件系统、标准库程序、服务性程序等</li>
-</ul>
-</li>
-<li>系统软件的任务是既要保证计算机硬件的正常工作，又要使计算机硬件的性能得到充分发挥，并且为计算机用户提供一个比较直观、方便和友好的使用界面。</li>
-</ul>
-<h3 id="操作系统（Operation-System，OS）"><a href="#操作系统（Operation-System，OS）" class="headerlink" title="操作系统（Operation System，OS）"></a>操作系统（Operation System，OS）</h3><p>没有安装操作系统的计算机，通常被称为<strong>裸机</strong><br>如果想在 裸机 上运行自己所编写的程序，就必须用机器语言书写程序。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/20180923213658380" alt="操作系统作为接口的示意图"></p>
-<h4 id="操作系统的作用"><a href="#操作系统的作用" class="headerlink" title="操作系统的作用"></a>操作系统的作用</h4><ul>
-<li>是现代计算机系统中 最基本和最重要 的系统软件</li>
-<li>主要作用是管理好硬件设备，并为用户和应用程序提供一个简单的接口，以便于使用</li>
-<li>而其他的诸如驱动程序、编译程序、数据库管理系统，以及大量的应用软件，都直接依赖于操作系统的支持</li>
-</ul>
-<h3 id="其他系统程序"><a href="#其他系统程序" class="headerlink" title="其他系统程序"></a>其他系统程序</h3><ul>
-<li>驱动程序：真正管理和控制硬件的程序，往往操作系统会携带一些默认版本</li>
-<li>语言处理程序：也称为编译程序，作用是把程序员用某种编程语言(如Python)所编写的程序，翻译成计算机可执行的机器语言。机器语言也被称为机器码，是可以通过CPU进行分析和执行的指令集。</li>
-</ul>
-<h2 id="计算机硬件的主要技术指标"><a href="#计算机硬件的主要技术指标" class="headerlink" title="计算机硬件的主要技术指标"></a>计算机硬件的主要技术指标</h2><ul>
-<li><p>机器字长：CPU一次能处理数据的位数，一般和CPU的寄存器位数有关</p>
-<ul>
-<li>太短了会使得计算机运行的速度变慢</li>
-<li>太长了会使得硬件的造价太高，但是可以提高精度和数的表示范围</li>
-</ul>
-</li>
-<li><p>存储容量：存储单元个数X存储字长</p>
-</li>
-</ul>
-<p>![](&#x2F;images&#x2F;组成原理-计算机系统概述&#x2F;FireShot Capture 025 - [图文]计算机系统结构习题课()-万继光 - 百度文库 - wenku.baidu.com.png)</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/30/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/" class="post-title-link" itemprop="url">数据结构_线性表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-06-29 21:27:58" itemprop="dateCreated datePublished" datetime="2020-06-29T21:27:58Z">2020-06-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/2019120617574622.png"></p>
-<h2 id="线性表的定义"><a href="#线性表的定义" class="headerlink" title="线性表的定义"></a>线性表的定义</h2><p>线性表是<strong>具有相同特性的数据元素</strong>的一个<strong>有限</strong>序列。线性表<strong>属于逻辑结构中的线性结构</strong>，它包括顺序表、链表、栈、队列等。</p>
-<p>线性表在存储结构上有顺序存储和链式存储两种方式，但不管哪种存储方式，它们的结构都有如下特点：</p>
-<ol>
-<li>均匀性：虽然不同数据表的数据元素可以是各种各样的，但对于同一个线性表来说，<strong>数据元素必须具有相同的数据类型和长度</strong>。每个数据元素都是单个元素。</li>
-<li>有序性：各数据元素在线性表中的位置只取决于它们的序号，数据元素之间的相对位置是线性的，即存在唯一的”第一个”和”最后一个”数据元素。除了第一个和最后一个外，其他元素前面均只有一个数据元素(直接前驱)，后面均只有一个数据元素(直接后继)。</li>
-<li>有限性：表中元素的个数是有限的</li>
-<li>抽象性：只讨论表中元素间的关系，不考虑元素究竟表示什么内容</li>
-</ol>
-<h2 id="有序表"><a href="#有序表" class="headerlink" title="有序表"></a>有序表</h2><p>我们很容易把有序表与顺序表、链表相提并论，其实这是错误的。因为顺序表、链表是根据线性表的存储结构(顺序或链式)来划分概念的，而<u>有序表是根据线性表的数据元素的数值大小来划分概念，故有序表与顺序表、链表不是相互独立的，而是内容互相交错的</u>。</p>
-<p>有序表是指表中所有数据元素的数值以<strong>递增或递减方式有序排列</strong>，是数据元素的数值的有序性。<br>有序表只描述元素之间的逻辑关系，故为逻辑结构，因此有序表既可以顺序存储也可以链式存储。</p>
-<blockquote>
-<p>例如，数组int array[3]&#x3D;[1,2,3];是顺序存储结构的有序表。因为是数组，所以是顺序存储结构；因为数据元素[1,2,3]是从小到大排列，故是有序表。而单链表1-&gt;2-&gt;3则是链式存储结构的有序表。由这个例子可见：有序表与顺序表、链表不是相互独立的，而是内容互相交错的，我们不能把他们相提并论。</p>
-</blockquote>
-<h2 id="线性表的顺序存储（顺序表）"><a href="#线性表的顺序存储（顺序表）" class="headerlink" title="线性表的顺序存储（顺序表）"></a>线性表的顺序存储（顺序表）</h2><p>顺序表是顺序存储结构的线性表，是把线性表中的所有元素按照其逻辑顺序依次存储到计算机存储器中指定位置开始的一块<strong>连续的物理地址的空间中。由于顺序表的逻辑地址与其物理地址皆相邻</strong>，故称为顺序表。</p>
-<blockquote>
-<p>编程语言中的数组就是顺序表的一个典型实例。</p>
-</blockquote>
-<p>表中的任一元素的地址都可以通过这个公式得到：$LOC(d_i)&#x3D;LOC(d_1)+(i-1)*L 　1≤i≤n $其中，L是元素占用存储单元的长度。     </p>
-<p><img src="/images/%E6%95%B0%E6%8D%AE%E7%BB%93%E7%BB%93%E6%9E%84-%E7%BA%BF%E6%80%A7%E8%A1%A8/20180414135155413"></p>
-<h3 id="顺序表的特点"><a href="#顺序表的特点" class="headerlink" title="顺序表的特点"></a>顺序表的特点</h3><p><strong>优点</strong>：</p>
-<p>1.空间利用率高，数据是连续存放，命中率比较高</p>
-<p>2.不用为表示结点间的逻辑关系而增加额外的开销</p>
-<p>3.顺序表可以按照元素下标**&#x3D;&#x3D;随机访问&#x3D;&#x3D;**</p>
-<p><strong>缺点</strong>：</p>
-<p>1.在插入和删除时大约移动平均一半的元素，对比较大的顺序表操作时效率很低</p>
-<blockquote>
-<p>最好情况是：在表尾插入和删除<br>最坏情况是：在表头插入和删除</p>
-</blockquote>
-<p>2.需要预先分配足够大的空间，估计过大，导致空间浪费；估计过小，会造成溢出</p>
-<blockquote>
-<p>此处需要注意的是：数组的动态分配还是顺序存储结构，并不是链式存储。<strong>数组的动态分配是开辟一块更大的存储空间来替换原本的存储空间。</strong></p>
-</blockquote>
-<p>**时间复杂度 :**插入和删除操作为O(n)。</p>
-<blockquote>
-<p>查找操作：<br>如果是按照元素序号和首地址来查找的话，时间复杂度是O(1)；</p>
-<p>如果是按照元素值查找的话，时间复杂度是O(n)。</p>
-</blockquote>
-<h2 id="线性表的链式存储-链表"><a href="#线性表的链式存储-链表" class="headerlink" title="线性表的链式存储(链表)"></a>线性表的链式存储(链表)</h2><p>链表是链式存储结构的线性表，是用任意一组物理地址来存储数据元素，而数据元素之间的逻辑关系通过指针来表示。所以它的<strong>存储结构可以是连续的，也可以不是连续的</strong>。<br>一般我们说的链表都是不连续的。有一种用数组来表示的特殊链表，叫做<strong>静态链表</strong>，它的存储结构就是连续的。</p>
-<p><strong>优点：</strong></p>
-<p>1.插入和删除速度快，保留原有的物理顺序，在插入或者删除一个元素的时候，只需要改变指针指向即可。</p>
-<p>2.没有空间限制,存储元素无上限,只与内存空间大小有关. </p>
-<p>3.动态分配内存空间，不用事先开辟内存</p>
-<p>4.是内存的利用率变高</p>
-<p><strong>缺点：</strong></p>
-<p>1.占用额外的空间以存储指针，比较浪费空间，不连续存储，malloc函数开辟空间碎片比较多)</p>
-<p>2.查找速度比较慢，因为在查找时，需要循环链表。</p>
-<p>**时间复杂度 :**查找操作为O(n) ,插入和删除操作为O(1)。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1772,7 +1449,7 @@ oscillation_costs_ &#x2F;&#x2F;振荡代价函数，一旦速度发生振荡，�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1785,7 +1462,7 @@ oscillation_costs_ &#x2F;&#x2F;振荡代价函数，一旦速度发生振荡，�
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

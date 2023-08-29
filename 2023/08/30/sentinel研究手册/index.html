@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="sentinel研究手册">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sentinel研究手册">
+<meta property="og:url" content="http://rshawshank.github.io/2023/08/30/sentinel%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="sentinel研究手册">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://sentinelguard.io/docs/zh-cn/img/sentinel-flow-overview.jpg">
+<meta property="og:image" content="http://sentinelguard.io/docs/zh-cn/img/sentinel-slot-chain-architecture.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202308111440060.webp">
+<meta property="og:image" content="https://user-images.githubusercontent.com/9434884/46783631-93324d00-cd5d-11e8-8ad1-a802bcc8f9c9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/9434884/164955218-3469f26d-3838-41fc-9e89-c6fa0997b8c8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200612173433621.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2h4eWFzY3g=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2023-08-29T16:36:56.000Z">
+<meta property="article:modified_time" content="2023-08-29T08:38:25.775Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="sentinel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sentinelguard.io/docs/zh-cn/img/sentinel-flow-overview.jpg">
+
+<link rel="canonical" href="http://rshawshank.github.io/2023/08/30/sentinel%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>sentinel研究手册 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">68</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">28</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/08/30/sentinel%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sentinel研究手册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-29 16:36:56 / 修改时间：08:38:25" itemprop="dateCreated datePublished" datetime="2023-08-29T16:36:56Z">2023-08-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">sentinel研究手册</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Sentinel-研究手册"><a href="#Sentinel-研究手册" class="headerlink" title="Sentinel 研究手册"></a>Sentinel 研究手册</h1><p>为什么需要流量控制？</p>
+<p>首先明确一个概念：</p>
+<p><code>服务雪崩</code>：由于某个微小的服务挂了,导致整一大片的服务都不可用。</p>
+<p>举个例子：</p>
+<p>在一个微服务架构模式下的系统当中，会存在很多个服务，这些服务彼此之间或多或少会存在调用关系。假设服务A1调用了服务B1，服务B又调用了服务C1。在服务C1由于某种原因，出现了阻塞，然后服务B1、A1都在等待C1的响应结果。此时如果在没有感知到这三个节点的状态的情况下，又恰好有许多请求转发到了C1上，使得C1出现了<code>过载现象</code></p>
+<p>雪崩发生的原因多种多样，有不合理的容量设计，或者是高并发下某一个方法响应变慢，亦或是某台机器的资源耗尽。我们无法完全杜绝雪崩源头的发生，只有做好足够的容错，保证在一个服务发生问题，不会影响到其它服务的正常运行。因此，我们需要引入一种机制，对服务质量进行监控。如果哪个节点中出现了服务不可用或者是响应缓慢时，我们就减少对其调用的频率，将其工作任务转发给当前节点所在服务集群的其他节点进行处理。过一段时间后再逐渐恢复对其的调用。</p>
+<h2 id="服务雪崩的常见解决方案"><a href="#服务雪崩的常见解决方案" class="headerlink" title="服务雪崩的常见解决方案"></a>服务雪崩的常见解决方案</h2><p>要防止雪崩的扩散，我们就要做好服务的容错。常见的容错思路有隔离、超时、限流、熔断、降级这几种。</p>
+<h3 id="隔离机制"><a href="#隔离机制" class="headerlink" title="隔离机制"></a>隔离机制</h3><p>在上游服务调用多个下游服务的时候，给不同的下游服务分配固定的线程——不会把所有的线程都分配给某一个服务。</p>
+<p>例如：服务A内总共有100个线程，现在服务A可能会调用服务B、服务C、服务D。隔离策略：调用服务B分配30个线程；调用服务C分配30个线程；调用服务D分配40个线程。这样进行资源的隔离，保证即使下游某个服务挂了，也不至于把服务A的线程消耗完。</p>
+<h3 id="超时机制"><a href="#超时机制" class="headerlink" title="超时机制"></a>超时机制</h3><p>  在上游服务调用下游服务的时候，设置一个最大响应时间，如果超过这个时间，下游未作出反应，就断开请求，释放掉线程。</p>
+<h3 id="限流机制"><a href="#限流机制" class="headerlink" title="限流机制"></a>限流机制</h3><p>  限流就是限制系统的输入和输出流量已达到保护系统的目的。为了保证系统的稳固运行，一旦达到的需要限制的阈值，就需要限制流量并采取少量措施以完成限制流量的目的。</p>
+<h3 id="熔断机制"><a href="#熔断机制" class="headerlink" title="熔断机制"></a>熔断机制</h3><p>  在互联网系统中，当下游服务因访问压力过大而响应变慢或失败，上游服务为了保护系统整体的可用性，可以暂时切断对下游服务的调用。这种牺牲局部，保全整体的措施就叫做熔断。</p>
+<p>服务熔断一般有三种状态：</p>
+<ol>
+<li>熔断关闭状态（Closed）：服务没有故障时，熔断器所处的状态，对调用方的调用不做任何限制。</li>
+<li>熔断开启状态（Open）：后续对该服务接口的调用不再经过网络，直接执行本地的fallback方法。</li>
+<li>半熔断状态（Half-Open）：尝试恢复服务调用，允许有限的流量调用该服务，并监控调用成功率。如果成功率达到预期，则说明服务已恢复，进入熔断关闭状态；如果成功率仍旧很低，则重新进入熔断关闭状态。</li>
+</ol>
+<h2 id="Sentinel的介绍"><a href="#Sentinel的介绍" class="headerlink" title="Sentinel的介绍"></a>Sentinel的介绍</h2><p>Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从流量控制、熔断降级、系统自适应保护等多个维度来帮助用户保障微服务的稳定性。</p>
+<p>Sentinel 分为两个部分:</p>
+<ul>
+<li>核心库（Java 客户端）不依赖任何框架&#x2F;库，能够运行于所有 Java 运行时环境，同时对 Dubbo &#x2F; Spring Cloud 等框架也有较好的支持。</li>
+<li>控制台（Dashboard）基于 Spring Boot 开发，打包后可以直接运行，不需要额外的 Tomcat 等应用容器。</li>
+</ul>
+<p>Sentinel与其他类似组件比较</p>
+<table>
+<thead>
+<tr>
+<th>Sentinel</th>
+<th>Hystrix</th>
+<th>Resilience4j</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>隔离策略</td>
+<td>信号量隔离（并发线程数限流）</td>
+<td>线程池隔离&#x2F;信号量隔离</td>
+<td>信号量隔离</td>
+</tr>
+<tr>
+<td>熔断降级策略</td>
+<td>基于响应时间、异常比率、异常数</td>
+<td>基于异常比率</td>
+<td>基于异常比率、响应时间</td>
+</tr>
+<tr>
+<td>实时统计实现</td>
+<td>滑动窗口（Leaparray）</td>
+<td>滑动窗口（基于 RxJava）</td>
+<td>Ring Bit Buffer</td>
+</tr>
+<tr>
+<td>动态规则配置</td>
+<td>支持多种数据源</td>
+<td>支持多种数据源</td>
+<td>有限支持</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>多个扩展点</td>
+<td>插件的形式</td>
+<td>接口的形式</td>
+</tr>
+<tr>
+<td>限流</td>
+<td>基于QPS，支持基于调用关系的限流</td>
+<td>有限的支持</td>
+<td>Rate Limiter</td>
+</tr>
+<tr>
+<td>流量整形</td>
+<td>支持预热模式、匀速器模式、预热排队模式</td>
+<td>不支持</td>
+<td>简单的 Rate Limiter 模式</td>
+</tr>
+<tr>
+<td>系统自适应保护</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>控制台</td>
+<td>提供开箱即用的控制台，可配置规则、查看秒级监控、机器发现等</td>
+<td>简单的监控查看</td>
+<td>不提供控制台,，可对接其他监控系统</td>
+</tr>
+</tbody></table>
+<h2 id="Sentinel的相关概念"><a href="#Sentinel的相关概念" class="headerlink" title="Sentinel的相关概念"></a>Sentinel的相关概念</h2><h3 id="资源-Resource"><a href="#资源-Resource" class="headerlink" title="资源(Resource)"></a>资源(Resource)</h3><p>在Sentinel参与到的系统当中，一切皆可视为资源。</p>
+<p>资源可以是一段代码，又或者是一个接口，Sentinel中并没有什么强制规定，但是实际项目中一般以一个接口为一个资源，比如说一个http接口，又或者是rpc接口，它们就是资源，可以被保护。</p>
+<p>资源是通过Sentinel的API定义的，每个资源都有一个对应的名称，比如对于一个http接口资源来说，Sentinel默认的资源名称就是请求路径。</p>
+<p>Sentinel可以视为保护资源的卫兵。</p>
+<p>说明：</p>
+<ol>
+<li>“资源”在一个系统中是唯一的吗？即不同接口上的资源名称可以重复吗？<br>答：可以重复。resource相当于是一个分类，可以加在不同的接口上。</li>
+<li>一个资源名称，在两个接口上一起使用时，限流统计规则是两个接口独立计算。</li>
+<li>资源定义的方式有很多种，建议通过注解。</li>
+</ol>
+<h3 id="规则（Rules）"><a href="#规则（Rules）" class="headerlink" title="规则（Rules）"></a>规则（Rules）</h3><p>规则也是一个重要的概念，规则其实比较好理解，比如说要对一个资源进行限流，那么限流的条件就是规则，后面在限流的时候会基于这个规则来判定是否需要限流。</p>
+<p>Sentinel的规则分为流量控制规则、熔断降级规则以及系统保护规则，不同的规则实现的效果不一样。</p>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>这里的流量控制指的是对各个服务节点网络访问请求的控制，根据服务节点的处理能力，动态地调整访问流量阈值。</p>
+<p>流量控制有以下几个角度:</p>
+<ul>
+<li>资源的调用关系，例如资源的调用链路，资源和资源之间的关系；</li>
+<li>运行指标，例如 QPS、线程池、系统负载等；</li>
+<li>控制的效果，例如直接限流、冷启动、排队等。</li>
+</ul>
+<p><img src="http://sentinelguard.io/docs/zh-cn/img/sentinel-flow-overview.jpg" alt="arch"></p>
+<h3 id="服务熔断、服务降级和服务限流"><a href="#服务熔断、服务降级和服务限流" class="headerlink" title="服务熔断、服务降级和服务限流"></a>服务熔断、服务降级和服务限流</h3><p>熔断降级是防止出现服务雪崩而采取的一种措施。当一个节点堆积了许多未来的及处理的请求时，就会发生频繁超时、异常比例升高。因此需要感知服务调用状态，当出现这中现象时，再有服务请求要访问这个节点，就阻止访问，直接返回调用失败的提示，释放资源。然后再隔一段时间后又慢慢地尝试恢复对其访问，测试其有没有恢复，如果恢复，则恢复对其的正常访问。这便是<code>服务熔断</code>。它在服务调用方直接阻止了对服务的调用。</p>
+<p><code>服务降级</code>则是相对于被访问节点而言。当这个节点面对大量的服务请求处理的力不从心是，果断放弃当前节点中的边缘业务，留下资源，用于处理核心业务。当发生对边缘业务的处理请求时，不做真正的业务处理，直接返回一个友好的提示，释放资源，从而保证对核心业务的处理能力。</p>
+<p><code>服务限流</code>则对访问当前节点的请求数直接做出限定，比如规定1秒内，只能有100请求访问当前节点，则第101个服务请求在这一秒内来访问的话，会被直接给拒绝掉。</p>
+<p>Sentinel在当调用链路中某个资源出现不稳定，例如，表现为 timeout，异常比例升高的时，对这个资源的调用进行限制，并让请求快速失败，避免影响到其它的资源，最终产生雪崩的效果。</p>
+<p><strong>服务熔断作用于服务调用方（服务上游），服务降级作用于服务提供方（服务下游）</strong></p>
+<h2 id="Sentinel如何实现熔断降级"><a href="#Sentinel如何实现熔断降级" class="headerlink" title="Sentinel如何实现熔断降级"></a>Sentinel如何实现熔断降级</h2><h3 id="限制资源并发线程的数量"><a href="#限制资源并发线程的数量" class="headerlink" title="限制资源并发线程的数量"></a>限制资源并发线程的数量</h3><p>优点：没有线程切换的损耗，也不需要预先分配线程池的大小。</p>
+<p>说明：当某个资源出现不稳定的情况下，例如响应时间变长，对资源的直接影响就是会造成线程数的逐步堆积。当线程数在特定资源上堆积到一定的数量之后，对该资源的新请求就会被拒绝。堆积的线程完成任务后才开始继续接收请求。</p>
+<h3 id="通过响应时间对资源进行降级"><a href="#通过响应时间对资源进行降级" class="headerlink" title="通过响应时间对资源进行降级"></a>通过响应时间对资源进行降级</h3><p>说明：当依赖的资源出现响应时间过长后，所有对该资源的访问都会被直接拒绝，直到过了指定的时间窗口之后才重新恢复。</p>
+<h2 id="Sentinel核心类"><a href="#Sentinel核心类" class="headerlink" title="Sentinel核心类"></a>Sentinel核心类</h2><h3 id="Entry"><a href="#Entry" class="headerlink" title="Entry"></a>Entry</h3><p>每一次资源调用都会创建一个 <code>Entry</code>。</p>
+<p><code>Entry</code>中持有本次对资源调用的相关信息：</p>
+<ul>
+<li>createTime：创建该Entry的时间戳。</li>
+<li>ProcessorSlot链</li>
+<li>curNode：Entry当前是在哪个节点。</li>
+<li>orginNode：Entry的调用源节点。</li>
+<li>resourceWrapper：Entry关联的资源信息。<ul>
+<li>任何一个被保护的资源都被封装成<code>resourceWrapper</code>对象</li>
+</ul>
+</li>
+</ul>
+<p> <code>Entry</code>是一个抽象类，<code>CtEntry</code> 是 <code>Entry</code>的实现，<code>CtEntry</code> 持有Context和调用链的信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//代表要处理名称为HelloWorld的资源。操作成功后会返回一个Entry对象，否则抛出异常代表不处理当前请求(可以认为是规则限制)</span><br><span class="line">Entry entry = SphU.entry(<span class="string">&quot;HelloWorld&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Sphu-entry"><a href="#Sphu-entry" class="headerlink" title="Sphu.entry"></a>Sphu.entry</h4><p>SphU.entry()通过一系列的调用最终调用到CtSph的entryWithPriority()方法上：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//resourceWrapper：是StringResourceWrapper对象，表示资源</span></span><br><span class="line"><span class="comment">//count：表示令牌数，默认是1，一般一个请求对应一个令牌，也可以指定一个请求对应多个令牌，如果令牌不够，则禁止访问</span></span><br><span class="line">   private Entry entryWithPriority(ResourceWrapper resourceWrapper, <span class="built_in">int</span> count, boolean prioritized, <span class="built_in">Object</span>... args)</span><br><span class="line">       throws BlockException &#123;</span><br><span class="line">       <span class="comment">//构建上下文对象，上下文对象存储在ThreadLocal中</span></span><br><span class="line">       Context context = ContextUtil.getContext();</span><br><span class="line">       <span class="keyword">if</span> (context instanceof NullContext) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//一般的线程第一次访问资源，context都是null，我们也可以在应用程序中使用ContextUtil自己创建Context对象</span></span><br><span class="line">       <span class="keyword">if</span> (context == <span class="keyword">null</span>) &#123;</span><br><span class="line">       	<span class="comment">//下面创建了一个名字为sentinel_default_context的Context对象</span></span><br><span class="line">           context = InternalContextUtil.internalEnter(Constants.CONTEXT_DEFAULT_NAME);</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//全局开关，可以使用它来关闭sentinel</span></span><br><span class="line">       <span class="keyword">if</span> (!Constants.ON) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//使用SPI构建slot链，每个slot对象都有一个next属性，可以使用该属性指定下一个slot对象</span></span><br><span class="line">       ProcessorSlot&lt;<span class="built_in">Object</span>&gt; chain = lookProcessChain(resourceWrapper);</span><br><span class="line">       <span class="keyword">if</span> (chain == <span class="keyword">null</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">new</span> CtEntry(resourceWrapper, <span class="keyword">null</span>, context);</span><br><span class="line">       &#125;</span><br><span class="line">	<span class="comment">//创建Entry对象</span></span><br><span class="line">       Entry e = <span class="keyword">new</span> CtEntry(resourceWrapper, chain, context);</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">       	<span class="comment">//对该请求，遍历每个slot对象</span></span><br><span class="line">           chain.entry(context, resourceWrapper, <span class="keyword">null</span>, count, prioritized, args);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (BlockException e1) &#123;</span><br><span class="line">           e.exit(count, args);</span><br><span class="line">           <span class="keyword">throw</span> e1;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (Throwable e1) &#123;</span><br><span class="line">           RecordLog.info(<span class="string">&quot;Sentinel unexpected exception&quot;</span>, e1);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> e;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>说明：<strong>创建完Context对象后，使用SPI构建slot链，之后是创建Entry对象，之后就是遍历slot链以决定是否允许该请求访问资源。</strong></p>
+<p>需要注意的一点：CtEntry 构造函数中会做调用链的变换，即将当前 Entry 接到传入 Context 的调用链路上（<code>setUpEntryFor</code>）。</p>
+<p>资源调用结束时需要 <code>entry.exit()</code>。exit 操作会过一遍 slot chain exit，恢复调用栈，exit context 然后清空 entry 中的 context 防止重复调用。</p>
+<h3 id="Context"><a href="#Context" class="headerlink" title="Context"></a>Context</h3><p>Context 代表调用链路上下文，贯穿一次调用链路中的所有 <code>Entry</code>。Context 维持着入口节点（<code>entranceNode</code>）、本次调用链路的 curNode、调用来源（<code>origin</code>）等信息。Context保存在ThreadLocal中。</p>
+<p>Context可以在资源调用之前手动通过ContextUtil.enter(name,origin)创建，name为当前context的名称，origin为调用方名称，当配置了调用方限流的时候会用到。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//name表示Context的名称或者链路入口的名称，origin表示调用来源的名称，默认为空字符串</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Context <span class="title function_">enter</span><span class="params">(String name, String origin)</span>;</span><br><span class="line"> 	<span class="keyword">public</span> <span class="keyword">static</span> Context <span class="title function_">enter</span><span class="params">(String name)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>在初始化slot责任链部分前，执行context的初始化。在Context初始化的过程中，会把EntranceNode加入到Root子节点中（实际Root本身是一个特殊的EntranceNode），并把EntranceNode放到contextNameNodeMap中。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">               root<span class="operator"></span></span><br><span class="line"><span class="operator">            /         </span>\<span class="operator"></span></span><br><span class="line"><span class="operator">           /           </span>\</span><br><span class="line">   entranceNode1      entranceNode2    -------表示入口节点对象EntranceNode<span class="operator"></span></span><br><span class="line"><span class="operator">         /               </span>\<span class="operator"></span></span><br><span class="line"><span class="operator">        /                 </span>\</span><br><span class="line"><span class="constructor">DefaultNode(<span class="params">nodeA</span>)</span>   <span class="constructor">DefaultNode(<span class="params">nodeB</span>)</span>   ---------内部创建DefaultNode节点</span><br><span class="line">       <span class="pattern-match">|                   |          </span></span><br><span class="line"><span class="pattern-match">       |                   |</span></span><br><span class="line"><span class="pattern-match"> <span class="constructor">ClusterNode(<span class="params">nodeA</span>)</span>   <span class="constructor">ClusterNode(<span class="params">nodeB</span>)</span>    ------------记录资源的访问数据</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>每调用一次SphU.entry()方法都会在访问链路树上增加一个子节点，通过这个树可以还原出资源的访问路径。<br>每访问一个资源，Context对象都使用curEntry属性记录下正在访问资源对应的Entry对象，Entry对象有一个parent属性记录下父Entry，比如上面代码中，nodeB的父Entry是nodeA，Entry还有一个curNode属性，该属性记录了对应的DefaultNode对象。每个DefaultNode对象还有一个ClusterNode类的属性clusterNode，clusterNode的作用是记录被访问的资源的统计数据，比如平均响应时间、总请求数、QPS等，FlowSlot便是依据这些数据来判断是否允许访问资源。Context可以通过上述这些属性构建出一个完整的资源访问树，并将资源访问数据更新到对应的ClusterNode对象中。</p>
+</blockquote>
+<h4 id="维持方式"><a href="#维持方式" class="headerlink" title="维持方式"></a>维持方式</h4><p>通过 ThreadLocal 传递，只有在入口 <code>enter</code> 的时候生效。由于 Context 是通过 ThreadLocal 传递的，因此对于异步调用链路，线程切换的时候会丢掉 Context，因此需要手动通过 <code>ContextUtil.runOnContext(context, f)</code> 来变换 context。</p>
+<h3 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h3><p>Node中保存了对资源的实时数据的统计，Sentinel中的限流或者降级等功能就是通过Node中的数据进行判断的。Node是一个接口，里面定义了各种操作request、exception、rt、qps、thread的方法。﻿</p>
+<p>Sentinel 里面的各种种类的统计节点：</p>
+<ul>
+<li><p><code>StatisticNode</code>：最为基础的统计节点，包含秒级和分钟级两个滑动窗口结构。用于完成数据统计。</p>
+</li>
+<li><p><code>DefaultNode</code>：默认节点，用于统计一个资源在当前Context中的流量数据。</p>
+</li>
+<li><p><code>ClusterNode</code>：集群节点，用于统计一个资源在所有Context中的总体流量数据。</p>
+</li>
+<li><p><code>EntranceNode</code>：入口节点，特殊的链路节点，对应某个 Context 入口的所有调用数据,创建维度为resource。<code>Constants.ROOT</code> 节点也是入口节点。</p>
+</li>
+</ul>
+<p>构建的时机：</p>
+<ul>
+<li><code>EntranceNode</code> 在 <code>ContextUtil.enter(xxx)</code> 的时候就创建了，然后塞到 Context 里面。</li>
+<li><code>NodeSelectorSlot</code>：根据 context 创建 <code>DefaultNode</code>，然后 set curNode to context。</li>
+<li><code>ClusterBuilderSlot</code>：首先根据 resourceName 创建 <code>ClusterNode</code>，并且 set clusterNode to defaultNode；然后再根据 origin 创建来源节点（类型为 <code>StatisticNode</code>），并且 set originNode to curEntry。</li>
+</ul>
+<p>几种 Node 的维度（数目）：</p>
+<ul>
+<li><code>ClusterNode</code> 的维度是 resource</li>
+<li><code>DefaultNode</code> 的维度是 resource * context，存在每个 NodeSelectorSlot 的 <code>map</code> 里面</li>
+<li><code>EntranceNode</code> 的维度是 context，存在 ContextUtil 类的 <code>contextNameNodeMap</code> 里面</li>
+<li>来源节点（类型为 <code>StatisticNode</code>）的维度是 resource * origin，存在每个 ClusterNode 的 <code>originCountMap</code> 里面</li>
+</ul>
+<h2 id="Slot-Chain"><a href="#Slot-Chain" class="headerlink" title="Slot Chain"></a>Slot Chain</h2><p>sentinel在内部创建了一个责任链，责任链是由一系列Processor Slot对象组成的，每个Processor Slot对象负责不同的功能，外部请求是否允许访问资源，需要通过责任链的校验，只有校验通过的，才可以访问资源，如果被校验失败，会抛出BlockException异常。</p>
+<p>辅助资源指标数据统计的<code>Process Slot</code>：</p>
+<ul>
+<li><code>NodeSelectorSlot</code> 负责收集资源路径，并将这些资源的调用路径，以树状结构存储起来，用于根据调用路径来限流降级、数据统计。</li>
+<li><code>ClusterBuilderSlot</code>建ClusterNode对象，该对象用于统计访问资源的QPS、线程数、异常、响应时间等，每个资源对应一个ClusterNode对象。</li>
+<li><code>StatisticSlot</code> 用于从多个维度（入口流量、调用者、当前被访问资源）统计响应时间、并发线程数、处理失败个数、处理成功个数等。<strong>核心的Slot</strong></li>
+<li><code>FlowSlot</code> 用于流控，可以根据QPS或者每秒并发线程数控制，当QPS或者并发线程数超过设定值，便会抛出FlowException异常。FlowSlot依赖于StatisticSlot的统计数据。</li>
+</ul>
+<p>这些辅助ProcessorSlot需要严格的顺序执行</p>
+<blockquote>
+<p>NodeSelectorSlot ——&gt; ClusterBuilderSlot ——&gt; StatisticSlot</p>
+</blockquote>
+<p>实现降级功能的<code>Process Slot</code>：</p>
+<ul>
+<li><code>AuthoritySlot</code> 黑白名单校验，按照字符串匹配，如果在黑名单，则禁止访问。</li>
+<li><code>DegradeSlot</code> 用于服务降级，如果发现服务超时次数或者报错次数超过限制，DegradeSlot将禁止再次访问服务，等待一段时间后，DegradeSlot试探性的放过一个请求，然后根据该请求的处理情况，决定是否再次降级。</li>
+<li><code>SystemSlot</code> 校验QPS、并发线程数、系统负载、CPU使用率、平均响应时间是否超过限制，使用滑动窗口算法统计上述这些数据。</li>
+<li><code>LogSlot</code> 打印日志。</li>
+</ul>
+<p>总体的框架如下:</p>
+<p><img src="http://sentinelguard.io/docs/zh-cn/img/sentinel-slot-chain-architecture.png" alt="arch overview"></p>
+<p>详细说明：</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202308111440060.webp" alt="img"></p>
+<h3 id="自定义slot"><a href="#自定义slot" class="headerlink" title="自定义slot"></a>自定义slot</h3><p>我们也可以添加自定义的slot，只需要实现ProcessorSlot接口，在com.alibaba.csp.sentinel.slotchain.ProcessorSlot文件中添加自定义类的全限定名，然后使用注解<code>@SpiOrder</code>指定顺序即可。</p>
+<p><img src="https://user-images.githubusercontent.com/9434884/46783631-93324d00-cd5d-11e8-8ad1-a802bcc8f9c9.png" alt="Slot Chain SPI"></p>
+<h3 id="StatisticSlot"><a href="#StatisticSlot" class="headerlink" title="StatisticSlot"></a>StatisticSlot</h3><p><code>StatisticSlot</code> 是 Sentinel 最为重要的类之一，用于根据规则判断结果进行相应的统计操作。</p>
+<p>entry 的时候：依次执行后面的判断 slot。每个 slot 触发流控的话会抛出异常（<code>BlockException</code> 的子类）。若有 <code>BlockException</code> 抛出，则记录 block 数据；若无异常抛出则算作可通过（pass），记录 pass 数据。</p>
+<p>exit 的时候：若无 error（无论是业务异常还是流控异常），记录 complete（success）以及 RT，线程数-1。</p>
+<p>记录数据的维度：线程数+1、记录当前 DefaultNode 数据、记录对应的 originNode 数据（若存在 origin）、累计 IN 统计数据（若流量类型为 IN）。</p>
+<h3 id="Process-Slot-Chain"><a href="#Process-Slot-Chain" class="headerlink" title="Process Slot Chain"></a>Process Slot Chain</h3><p>Sentinel 的核心骨架，将不同的 Slot 按照顺序串在一起（责任链模式），从而将不同的功能（限流、降级、系统保护）组合在一起。</p>
+<p><strong>Sentinel 会为每个资源创建且仅创建一个 ProcessorSlotChain，只要名称相同就认为是同一个资源。ProcessorSlotChain 被缓存在 CtSph.chainMap 静态字段，key 为资源 ID.</strong></p>
+<h2 id="SPI-扩展"><a href="#SPI-扩展" class="headerlink" title="SPI 扩展"></a>SPI 扩展</h2><p>Sentinel 提供多样化的 SPI 接口用于提供扩展的能力。开发者可以在用同一个 <code>sentinel-core</code> 的基础上自行扩展接口实现，从而可以方便地根据业务需求给 Sentinel 添加自定义的逻辑。目前 Sentinel 提供如下的扩展点：</p>
+<ul>
+<li>初始化过程扩展：提供 <code>InitFunc</code> SPI接口，可以添加自定义的一些初始化逻辑，如动态规则源注册等。</li>
+<li>Slot&#x2F;Slot Chain 扩展：用于给 Sentinel 功能链添加自定义的功能并自由编排。</li>
+<li>指标统计扩展（StatisticSlot Callback）：用于扩展 StatisticSlot 指标统计相关的逻辑。</li>
+<li>Transport 扩展：提供 CommandHandler、CommandCenter 等接口，用于对心跳发送、监控 API Server 进行扩展。</li>
+<li>集群流控扩展：可以方便地定制 token client&#x2F;server 自定义实现，可参考<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/wiki/%E9%9B%86%E7%BE%A4%E6%B5%81%E6%8E%A7#%E6%89%A9%E5%B1%95%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1">对应文档</a></li>
+<li>日志扩展：用于自定义 record log Logger，可用于对接 slf4j 等标准日志实现。</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/9434884/164955218-3469f26d-3838-41fc-9e89-c6fa0997b8c8.png" alt="image"></p>
+<h2 id="Sentinel部署k8s"><a href="#Sentinel部署k8s" class="headerlink" title="Sentinel部署k8s"></a>Sentinel部署k8s</h2><h3 id="sentinel-docker镜像化"><a href="#sentinel-docker镜像化" class="headerlink" title="sentinel docker镜像化"></a>sentinel docker镜像化</h3><p>windows系统下载一个Docker Desktop。</p>
+<ol>
+<li><p>下载sentinel-dashboard.jar<br><a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/releases">https://github.com/alibaba/Sentinel/releases</a></p>
+<p>最新版本为：1.8.6</p>
+</li>
+<li><p>编写Dockerfile</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">FROM</span> openjdk:<span class="number">8</span>-jre-slim</span><br><span class="line">   </span><br><span class="line"><span class="attribute">COPY</span> sentinel-dashboard-<span class="number">1</span>.<span class="number">8</span>.<span class="number">6</span>.jar sentinel-dashboard.jar</span><br><span class="line">   </span><br><span class="line"><span class="attribute">ENV</span> JAVA_OPTS=<span class="string">&quot;-Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard&quot;</span></span><br><span class="line">   </span><br><span class="line"><span class="attribute">ENTRYPOINT</span> java <span class="variable">$&#123;JAVA_OPTS&#125;</span> -jar sentinel-dashboard.jar</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+
+<p>此处需要注意的是：版本号一致；1.8.6版本的默认端口号为8080</p>
+</li>
+<li><p>将jar包和Dockerfile放到同一目录，执行打包命令</p>
+</li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> build -t sentinel/sentinel-dashboard:<span class="number">1</span>.<span class="number">8</span>.<span class="number">6</span> -f Dockerfile .</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker build  -t ImageName:TagName dir</span><br><span class="line">**选项**</span><br><span class="line">- `-t` − 给镜像加一个Tag</span><br><span class="line">- `ImageName` − 给镜像起的名称</span><br><span class="line">- `TagName` − 给镜像的Tag名</span><br><span class="line">- `Dir` − Dockerfile所在目录</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>给镜像打个标签</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> tag sentinel-dashboard:<span class="number">1</span>.<span class="number">8</span>.<span class="number">6</span> <span class="number">10.99.180.131</span>/jxcccommon/jxcc-sentinel:<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>说明：标签类似于版本</p>
+</li>
+<li><p>本地测试镜像是否正常运行</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> run --name sentinel -p <span class="number">8080</span>:<span class="number">8080</span> -td <span class="number">10.99.180.131</span>/jxcccommon/jxcc-sentinel:<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>访问localhost:8080</p>
+</li>
+<li><p>登录10.99.180.131 harbor.jxcc.com,需要输入用户名密码</p>
+<p>此处可以上传到docker-hub仓库。</p>
+</li>
+<li><p>上传镜像到harbor仓库</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">docker</span> push <span class="number">10.99.180.131</span>/jxcccommon/jxcc-sentinel:<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="k8s容器化部署"><a href="#k8s容器化部署" class="headerlink" title="k8s容器化部署"></a>k8s容器化部署</h3><ol>
+<li>创建工作负载；确定好pull的镜像地址和内部容器端口号</li>
+<li>创建服务；选择1中创建的工作负载</li>
+<li>启动服务</li>
+</ol>
+<h1 id="方案选择"><a href="#方案选择" class="headerlink" title="方案选择"></a>方案选择</h1><h2 id="方案一：微服务单独集成sentinel"><a href="#方案一：微服务单独集成sentinel" class="headerlink" title="方案一：微服务单独集成sentinel"></a>方案一：微服务单独集成sentinel</h2><p><strong>将 Sentinel 集成到单个微服务的优缺点：</strong></p>
+<p>优点：</p>
+<ol>
+<li><strong>隔离性：</strong> 在每个微服务中集成 Sentinel 可以实现更细粒度的流量控制和熔断策略，使得每个微服务可以根据自身特点和需求进行配置。</li>
+<li><strong>更灵活的限流策略：</strong> 每个微服务可以根据自己的业务场景定制限流策略，避免不同微服务之间的相互影响。</li>
+<li><strong>独立运维：</strong> 每个微服务独立配置 Sentinel，减少了对网关的依赖，即使网关出现问题也不会影响到其他微服务。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><strong>配置重复：</strong> 如果有多个微服务，可能需要在每个微服务中都配置 Sentinel 规则，导致配置重复和维护成本增加。</li>
+<li><strong>监控分散：</strong> 每个微服务的监控数据被分散到各个微服务中，可能需要额外的工作来汇总和分析监控数据。</li>
+</ol>
+<h2 id="方案二：gateway集成sentinel"><a href="#方案二：gateway集成sentinel" class="headerlink" title="方案二：gateway集成sentinel"></a>方案二：gateway集成sentinel</h2><p>相较于单独使用sentinel，其优点在于：</p>
+<ol>
+<li><p>统一的监控：Gateway集成Sentinel后，可以将所有<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%BE%AE%E6%9C%8D%E5%8A%A1&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:%223068472794%22%7D">微服务</a>的请求都通过Gateway进行转发，这样可以更方便地对所有请求进行统一的监控和管理，从而实现更全面、更深入的监控。</p>
+</li>
+<li><p>更高的可靠性：Gateway集成Sentinel后，可以在网关层面对请求进行限流和<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%86%94%E6%96%AD&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:%223068472794%22%7D">熔断</a>，从而保证微服务的可靠性和稳定性。而如果单独使用Sentinel，可能需要在每个微服务中都进行限流和熔断的配置，这样会增加配置的复杂度和维护的难度。</p>
+</li>
+<li><p>更好的灵活性：Gateway集成Sentinel后，可以根据不同的业务场景和需求，灵活地配置限流和熔断规则，从而更好地满足不同的业务需求。而如果单独使用Sentinel，可能需要在每个微服务中都进行限流和熔断的配置，这样会限制配置的灵活性。</p>
+</li>
+<li><p>更好的性能：Gateway集成Sentinel后，可以在网关层面对请求进行限流和熔断，从而减少了微服务的请求压力，提高了系统的性能和响应速度。而如果单独使用Sentinel，可能需要在每个微服务中都进行限流和熔断的配置，这样会增加系统的负担，降低系统的性能。</p>
+</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li><strong>单点故障：</strong> 如果网关本身出现故障，整个微服务架构的流量控制和熔断功能可能会受到影响。</li>
+<li><strong>性能瓶颈：</strong> 将流量控制和监控逻辑集中在网关中可能增加网关的负载，需要进行适当的性能测试和优化。</li>
+</ol>
+<p>访问地址：10.99.186.32:31783</p>
+<h2 id="控制台和客户端通信原理"><a href="#控制台和客户端通信原理" class="headerlink" title="控制台和客户端通信原理"></a>控制台和客户端通信原理</h2><h3 id="控制台的使用"><a href="#控制台的使用" class="headerlink" title="控制台的使用"></a>控制台的使用</h3><p>控制台使用懒加载，在第一次访问的时候才会开始进行初始化，并向控制台发送心跳和客户端规则等信息。</p>
+<h3 id="交互方式"><a href="#交互方式" class="headerlink" title="交互方式"></a>交互方式</h3><ol>
+<li>首先 sentinel-core 向 dashboard 发送心跳包</li>
+<li>dashboard 将 sentinel-core 的机器信息保存在内存中</li>
+<li>dashboard 根据 sentinel-core 的机器信息通过 httpClient 获取实时的数据</li>
+<li>sentinel-core 接收到请求之后，会找到具体的 CommandHandler 来处理</li>
+<li>sentinel-core 将处理好的结果返回给 dashboard</li>
+</ol>
+<h4 id="连接-dashboard"><a href="#连接-dashboard" class="headerlink" title="连接 dashboard"></a>连接 dashboard</h4><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=sentinel&spm=1001.2101.3001.7020">sentinel</a>-core 在初始化的时候，通过 JVM 参数中指定的 dashboard 的 ip 和 port，会主动向 dashboard 发起连接的请求，该请求是通过 HeartbeatSender 接口以心跳的方式发送的，并将自己的 ip 和 port 告知 dashboard。这里 sentinel-core 上报给 dashboard 的端口是 sentinel 对外暴露的自己的 CommandCenter 的端口。</p>
+<p>HeartbeatSender 有两个实现类，一个是通过 http，另一个是通过 netty。</p>
+<p>该类通过一个 HttpClient 向 dashboard 发送了自己的信息，包括 ip port 和版本号等信息。</p>
+<p>其中 consoleHost 和 consolePort 的值就是从 JVM 参数 csp.sentinel.dashboard.server 中获取的。</p>
+<p>dashboard 在接收到 sentinel-core 的连接之后，就会与 sentinel-core 建立连接，并将 sentinel-core 上报的 ip 和 port 的信息包装成一个 MachineInfo 对象，然后通过 SimpleMachineDiscovery 将该对象保存在一个 map 中，如下图所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200612173433621.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2h4eWFzY3g=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="请求数据"><a href="#请求数据" class="headerlink" title="请求数据"></a>请求数据</h4><p>当 dashboard 有了具体的 sentinel-core 实例的 ip 和 port 之后，就可以去请求所需要的数据了。</p>
+<p>当在页面上查询某一台机器的限流的规则时，是将该机器的 ip 和 port 以及 appName 都传给了服务端，服务端通过这些信息去具体的远程实例中请求所需的数据，拿到数据后再封装成 dashboard 所需的格式返回给前端页面进行展示。</p>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>sentinel-core 在启动的时候，执行了一个 InitExecutor.init 的方法，该方法会触发所有 InitFunc 实现类的 init 方法。</p>
+<p>因为这里我们引入了<code>sentinel-transport-simple-http</code>模块，所以使用spi加载InitFunc的子类的时候会新加载两个子类实例，分别是：CommandCenterInitFunc、HeartbeatSenderInitFunc。然后会遍历loader，根据@InitOrder的大小进行排序，并封装成OrderWrapper放入到initList中。</p>
+<p>CommandCenterInitFunc 则会启动一个 CommandCenter 对外提供 sentinel-core 的数据服务，而这些数据服务是通过一个一个的 CommandHandler 来提供的</p>
+<h3 id="Sentinel-控制台、Nacos-和客户端应用程序之间的交互过程"><a href="#Sentinel-控制台、Nacos-和客户端应用程序之间的交互过程" class="headerlink" title="Sentinel 控制台、Nacos 和客户端应用程序之间的交互过程"></a>Sentinel 控制台、Nacos 和客户端应用程序之间的交互过程</h3><ol>
+<li><strong>配置规则：</strong> 在 Sentinel 控制台中配置流控、降级等规则，输入资源名、限流参数、策略等信息，并保存配置。</li>
+<li><strong>推送配置到 Nacos：</strong> Sentinel 控制台会将配置的规则信息推送到 Nacos 配置中心。这需要在 Nacos 上创建相应的配置项。</li>
+<li><strong>客户端应用程序从 Nacos 拉取配置：</strong> 客户端应用程序通过 Nacos 的配置监听机制，定时或实时地从 Nacos 中拉取最新的规则配置信息。</li>
+<li><strong>解析规则：</strong> 客户端应用程序将从 Nacos 拉取的规则配置进行解析，转换为内部的规则对象。</li>
+<li><strong>注册规则：</strong> 客户端应用程序将解析后的规则注册到 Sentinel 中的规则管理模块。</li>
+<li><strong>实时监控和限流处理：</strong> 客户端应用程序在运行时实时监控流量情况，根据规则配置进行限流、降级等操作。当请求达到限流条件时，Sentinel 会根据规则进行相应的限流处理。</li>
+<li><strong>动态刷新：</strong> 如果在 Sentinel 控制台上更新了规则，控制台会将新的规则配置推送到 Nacos 配置中心。客户端应用程序通过 Nacos 配置监听机制感知配置变更并获取到最新的规则配置，然后进行动态刷新。</li>
+<li><strong>实时监控与反馈：</strong> Sentinel 控制台提供实时的监控界面，您可以在控制台上查看应用程序的流量、规则生效情况等数据，以及对异常情况进行相应的处理。</li>
+</ol>
+<h3 id="sentinel执行规则"><a href="#sentinel执行规则" class="headerlink" title="sentinel执行规则"></a>sentinel执行规则</h3><p>Sentinel 执行规则的过程是基于 AOP（面向切面编程）和动态代理的机制。当应用程序的资源被访问时，Sentinel 会拦截这些访问，根据事先配置的规则进行判断和处理，从而实现流量控制、降级等功能。以下是 Sentinel 如何执行规则的一般流程：</p>
+<ol>
+<li><strong>定义资源：</strong> 在应用程序中，您需要定义要受到限流、降级等规则控制的资源，比如方法、API、URL 等。</li>
+<li><strong>规则配置：</strong> 使用 Sentinel 控制台或通过代码方式，在规则管理中配置资源对应的限流、降级等规则，定义规则的类型、条件、策略等信息。</li>
+<li><strong>切入点拦截：</strong> Sentinel 使用 AOP 技术拦截您定义的资源访问切入点。这意味着当应用程序的资源被访问时，Sentinel 会拦截这些访问并进行处理。</li>
+<li><strong>规则匹配：</strong> Sentinel 根据请求的资源信息，匹配事先配置的规则，判断请求是否满足规则条件，如是否超出了限流阈值。</li>
+<li><strong>限流处理：</strong> 如果请求满足规则条件，Sentinel 将执行规则配置中指定的限流策略，比如拒绝请求、返回预设错误信息等。</li>
+<li><strong>降级处理：</strong> 如果资源的请求达到降级条件，Sentinel 将执行降级策略，返回降级后的响应，避免影响系统的整体稳定性。</li>
+<li><strong>统计和监控：</strong> Sentinel 会根据请求的情况进行统计，生成流量、规则生效情况等监控数据，供您在 Sentinel 控制台上查看。</li>
+<li><strong>动态刷新：</strong> Sentinel 允许您在运行时动态调整规则配置，从而实现灵活的流量控制和降级策略。</li>
+</ol>
+<p>总体而言，Sentinel 在应用程序运行时，通过拦截资源的访问切入点，根据预先配置的规则进行匹配和处理，从而实现流量控制、降级等功能。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="问题一：sentinel熔断降级与自定义异常拦截冲突"><a href="#问题一：sentinel熔断降级与自定义异常拦截冲突" class="headerlink" title="问题一：sentinel熔断降级与自定义异常拦截冲突"></a>问题一：sentinel熔断降级与自定义异常拦截冲突</h2><p>项目中使用了自定义全局异常处理，而异常数或者异常比例的统计在</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.alibaba.csp.sentinel.adapter.spring.webmvc.AbstractSentinelInterceptor.afterCompletion</span><br></pre></td></tr></table></figure>
+
+<p>这个方法执行，自定义全局异常的处理会先于</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.alibaba.csp.sentinel.adapter.spring.webmvc.AbstractSentinelInterceptor.afterCompletion</span><br></pre></td></tr></table></figure>
+
+<p>这个方法执行执行，因为我们在全局异常里面已经对异常进行处理，比如转换为一个对象，这样导致AbstractSentinelInterceptor.afterCompletion无法获取到异常，进而无法统计异常数或者异常比例。</p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>全局异常修改：</p>
+<p>1、引入jar包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.csp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>sentinel-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、在@ExceptionHandler方法中使用Tracer.trace(e)方法将异常信息传递给Sentinel进行统计</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 拦截所有基础全局异常</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@ExceptionHandler(PromptException.class)</span></span><br><span class="line">  <span class="keyword">public</span> Result <span class="title function_">baseException</span><span class="params">(PromptException e)</span> &#123;</span><br><span class="line">      <span class="comment">// 记录异常信息到Sentinel中</span></span><br><span class="line">      Tracer.trace(e);</span><br><span class="line">      log.warn(<span class="string">&quot;【全局异常拦截】PromptException: 状态码 &#123;&#125;, 异常信息 &#123;&#125;&quot;</span>, e.msgCode().getCodeValue(), e.msgCode().getMsgLog());</span><br><span class="line">      simpleLogPromptException(e);</span><br><span class="line">      <span class="keyword">return</span> Result.promptInstance(e);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题二：热点规则不生效"><a href="#问题二：热点规则不生效" class="headerlink" title="问题二：热点规则不生效"></a>问题二：热点规则不生效</h2><p>web埋点如果以url作为资源名，规则不生效</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ol>
+<li><p>注意是否使用了@SentinelResource注解定义的name作为资源名</p>
+</li>
+<li><blockquote>
+<p>配置热点规则配置@SentinelResource后，可能还会出现</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.reflect.UndeclaredThrowableException: null</span><br></pre></td></tr></table></figure>
+
+<p>需要在方法中添加throws BlockException或添加blockHandler来处理异常</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2023/08/30/sentinel%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C/" title="sentinel研究手册">http://rshawshank.github.io/2023/08/30/sentinel研究手册/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/sentinel/" rel="tag"><i class="fa fa-tag"></i> sentinel</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/14/getway%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="getway（三）">
+      <i class="fa fa-chevron-left"></i> getway（三）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/30/sentinel%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" rel="next" title="sentinel使用手册">
+      sentinel使用手册 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Sentinel-%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C"><span class="nav-number">1.</span> <span class="nav-text">Sentinel 研究手册</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%9B%AA%E5%B4%A9%E7%9A%84%E5%B8%B8%E8%A7%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">服务雪崩的常见解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.1.</span> <span class="nav-text">隔离机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E6%97%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">超时机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">限流机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%86%94%E6%96%AD%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">熔断机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">Sentinel的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">Sentinel的相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90-Resource"><span class="nav-number">1.3.1.</span> <span class="nav-text">资源(Resource)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%84%E5%88%99%EF%BC%88Rules%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">规则（Rules）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-number">1.3.3.</span> <span class="nav-text">流量控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD%E3%80%81%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7%E5%92%8C%E6%9C%8D%E5%8A%A1%E9%99%90%E6%B5%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">服务熔断、服务降级和服务限流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7"><span class="nav-number">1.4.</span> <span class="nav-text">Sentinel如何实现熔断降级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E8%B5%84%E6%BA%90%E5%B9%B6%E5%8F%91%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">限制资源并发线程的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B5%84%E6%BA%90%E8%BF%9B%E8%A1%8C%E9%99%8D%E7%BA%A7"><span class="nav-number">1.4.2.</span> <span class="nav-text">通过响应时间对资源进行降级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel%E6%A0%B8%E5%BF%83%E7%B1%BB"><span class="nav-number">1.5.</span> <span class="nav-text">Sentinel核心类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Entry"><span class="nav-number">1.5.1.</span> <span class="nav-text">Entry</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sphu-entry"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">Sphu.entry</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context"><span class="nav-number">1.5.2.</span> <span class="nav-text">Context</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%B4%E6%8C%81%E6%96%B9%E5%BC%8F"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">维持方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node"><span class="nav-number">1.5.3.</span> <span class="nav-text">Node</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slot-Chain"><span class="nav-number">1.6.</span> <span class="nav-text">Slot Chain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89slot"><span class="nav-number">1.6.1.</span> <span class="nav-text">自定义slot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#StatisticSlot"><span class="nav-number">1.6.2.</span> <span class="nav-text">StatisticSlot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-Slot-Chain"><span class="nav-number">1.6.3.</span> <span class="nav-text">Process Slot Chain</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI-%E6%89%A9%E5%B1%95"><span class="nav-number">1.7.</span> <span class="nav-text">SPI 扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel%E9%83%A8%E7%BD%B2k8s"><span class="nav-number">1.8.</span> <span class="nav-text">Sentinel部署k8s</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sentinel-docker%E9%95%9C%E5%83%8F%E5%8C%96"><span class="nav-number">1.8.1.</span> <span class="nav-text">sentinel docker镜像化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k8s%E5%AE%B9%E5%99%A8%E5%8C%96%E9%83%A8%E7%BD%B2"><span class="nav-number">1.8.2.</span> <span class="nav-text">k8s容器化部署</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E9%80%89%E6%8B%A9"><span class="nav-number">2.</span> <span class="nav-text">方案选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%8D%95%E7%8B%AC%E9%9B%86%E6%88%90sentinel"><span class="nav-number">2.1.</span> <span class="nav-text">方案一：微服务单独集成sentinel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9Agateway%E9%9B%86%E6%88%90sentinel"><span class="nav-number">2.2.</span> <span class="nav-text">方案二：gateway集成sentinel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%80%9A%E4%BF%A1%E5%8E%9F%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">控制台和客户端通信原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">控制台的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">交互方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5-dashboard"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">连接 dashboard</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%95%B0%E6%8D%AE"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">请求数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sentinel-%E6%8E%A7%E5%88%B6%E5%8F%B0%E3%80%81Nacos-%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BA%A4%E4%BA%92%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.3.</span> <span class="nav-text">Sentinel 控制台、Nacos 和客户端应用程序之间的交互过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sentinel%E6%89%A7%E8%A1%8C%E8%A7%84%E5%88%99"><span class="nav-number">2.3.4.</span> <span class="nav-text">sentinel执行规则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80%EF%BC%9Asentinel%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7%E4%B8%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E6%8B%A6%E6%88%AA%E5%86%B2%E7%AA%81"><span class="nav-number">3.1.</span> <span class="nav-text">问题一：sentinel熔断降级与自定义异常拦截冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">解决办法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%BA%8C%EF%BC%9A%E7%83%AD%E7%82%B9%E8%A7%84%E5%88%99%E4%B8%8D%E7%94%9F%E6%95%88"><span class="nav-number">3.2.</span> <span class="nav-text">问题二：热点规则不生效</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

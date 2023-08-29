@@ -126,7 +126,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">68</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -136,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">165</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,892 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/17/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%AE%80%E4%BB%8B+Tomcat/" class="post-title-link" itemprop="url">JavaWeb学习（一）——简介—+Tomcat</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-17 15:20:56" itemprop="dateCreated datePublished" datetime="2021-09-17T15:20:56Z">2021-09-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="javaWeb简介"><a href="#javaWeb简介" class="headerlink" title="javaWeb简介"></a>javaWeb简介</h1><p>Java web，是用java技术来解决相关web互联网领域的技术的总称。web包括：web服务器和web客户端两部分。</p>
+<p>web资源分类：</p>
+<p>所谓web资源即放在Internet网上供外界访问的文件或程序，又根据它们呈现的效果及原理不同，将它们划分为静态资源和动态资源。</p>
+<ul>
+<li><p>静态web资源：固定不变数据文件（静态网页 HTML、CSS文件、文本、音频、视频）</p>
+</li>
+<li><p>静态web技术：HTML+CSS+JavaScript</p>
+</li>
+<li><p>动态web资源：一段服务程序，运行后，生成的数据文件</p>
+</li>
+<li><p>动态web技术：servlet，jsp，php， .net ,ruby、python等等</p>
+</li>
+</ul>
+<p>常见的web服务器：</p>
+<blockquote>
+<p>Tomcat：由Apache组织提供的一种Web服务器，提供对jsp和Servlet的支持。它是一种轻量级的javaWeb容器（服务器），也是当前应用最广的JavaWeb服务器（免费）。<br>Jboss：是一个遵从JavaEE规范的、开放源代码的、纯Java的EJB服务器，它支持所有的JavaEE规范（免费）。<br>GlassFish： 由Oracle公司开发的一款JavaWeb服务器，是一款强健的商业服务器，达到产品级质量（应用很少，收费）。<br>Resin：是CAUCHO公司的产品，是一个非常流行的应用服务器，对servlet和JSP提供了良好的支持，性能也比较优良，resin自身采用JAVA语言开发（收费，应用比较多）。<br>WebLogic：是Oracle公司的产品，是目前应用最广泛的Web服务器，支持JavaEE规范，而且不断的完善以适应新的开发要求，适合大型项目（收费，用的不多，适合大公司）。</p>
+</blockquote>
+<h2 id="JAVAWEB目录结构"><a href="#JAVAWEB目录结构" class="headerlink" title="JAVAWEB目录结构"></a>JAVAWEB目录结构</h2><p><img src="https://i.loli.net/2021/08/31/n1K9YAmo6TdqF3M.png"></p>
+<p>以上图说明：</p>
+<ul>
+<li>bbs目录代表一个web应用</li>
+<li>bbs目录下的html,jsp文件可以直接被浏览器访问</li>
+<li><strong>WEB-INF目录下的资源是不能直接被浏览器访问的</strong></li>
+<li>web.xml文件是web程序的主要配置文件</li>
+<li>所有的classes文件都放在classes目录下</li>
+<li>jar文件放在lib目录下</li>
+</ul>
+<h1 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h1><p>是一个运行java的网络<strong>服务器</strong>，在中小型系统和并发量小的场合下被普遍使用，是开发和调试Servlet、JSP 程序的首选。</p>
+<p><img src="https://i.loli.net/2021/08/26/yMknVOF26t7J8K4.png" alt="img"></p>
+<h2 id="tomcat体系结构"><a href="#tomcat体系结构" class="headerlink" title="tomcat体系结构"></a>tomcat体系结构</h2><p><img src="https://i.loli.net/2021/08/30/YBJksmbM7TN2pCV.png"></p>
+<p>Tomcat中最顶层的容器是Server，代表着整个服务器，从上图中可以看出，一个Server可以包含至少一个Service，即可以包含多个Service，用于具体提供服务。</p>
+<p>Service主要包含两个部分：Connector和Container。从上图中可以看出 Tomcat 的心脏就是这两个组件，他们的作用如下：</p>
+<ul>
+<li>Connector用于处理连接相关的事情，并提供Socket与Request请求和Response响应相关的转化;</li>
+<li>Container用于封装和管理Servlet，以及具体处理Request请求；</li>
+</ul>
+<p>一个Tomcat中只有一个Server，一个Server可以包含多个Service，一个Service只有一个Container，但是可以有多个Connectors，这是因为一个服务可以有多个连接，如同时提供Http和Https链接，也可以提供向相同协议不同端口的连接</p>
+<p>多个 Connector 和一个 Container 就形成了一个 Service，有了 Service 就可以对外提供服务了，但是 Service 还要一个生存的环境，必须要有人能够给她生命、掌握其生死大权，那就非 Server 莫属了！所以整个 Tomcat 的生命周期由 Server 控制。</p>
+<h2 id="Tomcat-有哪几种Connector-运行模式-优化-？"><a href="#Tomcat-有哪几种Connector-运行模式-优化-？" class="headerlink" title="Tomcat 有哪几种Connector 运行模式(优化)？"></a>Tomcat 有哪几种Connector 运行模式(优化)？</h2><h3 id="BIO：同步并阻塞"><a href="#BIO：同步并阻塞" class="headerlink" title="BIO：同步并阻塞"></a>BIO：同步并阻塞</h3><p>一个线程处理一个请求。缺点：并发量高时，线程数较多，浪费资源。Tomcat7或以下，在Linux系统中默认使用这种方式。</p>
+<h3 id="NIO：同步非阻塞IO"><a href="#NIO：同步非阻塞IO" class="headerlink" title="NIO：同步非阻塞IO"></a>NIO：同步非阻塞IO</h3><p>利用Java的异步IO处理，可以通过少量的线程处理大量的请求，可以复用同一个线程处理多个connection(多路复用)。Tomcat8在Linux系统中默认使用这种方式。</p>
+<h3 id="APR：即Apache-Portable-Runtime"><a href="#APR：即Apache-Portable-Runtime" class="headerlink" title="APR：即Apache Portable Runtime"></a>APR：即Apache Portable Runtime</h3><p>从操作系统层面解决io阻塞问题。</p>
+<p>Tomcat有几种部署方式？<br>Tomcat容器是如何创建servlet类实例？用到了什么原理？</p>
+<ol>
+<li>当容器启动时，会读取在webapps目录下所有的web应用中的web.xml文件，然后对 xml文件进行解析，并读取servlet注册信息。然后，将每个应用中注册的servlet类都进行加载，并通过 反射的方式实例化。（有时候也是在第一次请求时实例化）</li>
+<li>在servlet注册时加上1如果为正数，则在一开始就实例化，如果不写或为负数，则第一次请求实例化。</li>
+</ol>
+<p>浏览器访问web资源的流程图</p>
+<p><img src="https://i.loli.net/2021/08/30/mbWCsLRuD1UEPvB.png"></p>
+<p>有关配置虚拟目录、临时域名、虚拟主机见：<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013122831">参考文献</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xdp-gacl/p/3744053.html">JavaWeb学习总结(三)——Tomcat服务器学习和使用(二) - 孤傲苍狼 - 博客园 (cnblogs.com)</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94XML%E5%92%8CJSON/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94XML%E5%92%8CJSON/" class="post-title-link" itemprop="url">JavaWeb学习（十三）——XML和JSON</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 17:03:17" itemprop="dateCreated datePublished" datetime="2021-09-13T17:03:17Z">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h1><p>xml数据或者xml文档只用于组织、存储数据。</p>
+<ul>
+<li>为xml定规则：使用DTD或Schema技术</li>
+<li>解析xml数据：使用DOM或SAX技术</li>
+<li>提供样式：XSLT可扩展样是转换语言</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="文档声明"><a href="#文档声明" class="headerlink" title="文档声明"></a>文档声明</h3><ul>
+<li>XML声明放在XML的第一行</li>
+<li>version—-版本</li>
+<li>encoding–编码</li>
+<li>standalone–独立使用–默认是no。standalone表示该xml是不是独立的，如果是yes，则表示这个XML文档时独立的，不能引用外部的DTD规范文件；如果是no，则该XML文档不是独立的，表示可以引用外部的DTD规范文档。</li>
+<li>正确的文档声明格式，属性的位置不能改变！</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> standalone=<span class="string">&quot;no&quot;</span>?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><p>首先在这里说明一个概念：<strong>在XML中元素和标签指的是同一个东西！不要被不同的名称所迷惑了！</strong></p>
+<p>元素中需要值得注意的地方：</p>
+<ul>
+<li>XML元素中的出现的空格和换行都会被当做元素内容进行处理</li>
+<li>每个XML文档必须有且只有一个根元素</li>
+<li>元素必须闭合</li>
+<li>大小写敏感</li>
+<li>不能交叉嵌套</li>
+<li>不能以数字开头</li>
+</ul>
+<p>看起来好像有很多需要值得注意的地方，其实只需要记住：<strong>XML的语法是规范的！不要随意乱写！</strong></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>属性是作为XML元素中的一部分的，命名规范也是和XML元素一样的！</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--属性名是name，属性值是china--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">中国</span> <span class="attr">name</span>=<span class="string">&quot;china&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">中国</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p><strong>注释和HTML的注释是一样的</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!----&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CDATA"><a href="#CDATA" class="headerlink" title="CDATA"></a>CDATA</h3><p>在编写XML文件时，有些内容可能不想让解析引擎解析执行，而是当作原始内容处理。遇到此种情况，可以把这些内容放在CDATA区里，对于CDATA区域内的内容，XML解析程序不会处理，而是直接原封不动的输出</p>
+<p>语法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;![CDATA[</span><br><span class="line">    ...内容</span><br><span class="line">]]&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="处理指令"><a href="#处理指令" class="headerlink" title="处理指令"></a>处理指令</h3><p>处理指令，简称PI （processing instruction）。处理指令用来指挥解析引擎如何解析XML文档内容。</p>
+<p>例如：</p>
+<p>在XML文档中可以使用xml-stylesheet指令，通知XML解析引擎，应用css文件显示xml文档内容。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;1.css&quot;</span>?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>XML代码：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;1.css&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">china</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">guangzhou</span>&gt;</span></span><br><span class="line">        广州</span><br><span class="line">    <span class="tag">&lt;/<span class="name">guangzhou</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">shenzhen</span>&gt;</span></span><br><span class="line">        深圳</span><br><span class="line">    <span class="tag">&lt;/<span class="name">shenzhen</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">china</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CSS代码：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">guangzhou&#123;</span><br><span class="line">    font-size: 40px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果：</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/14/9SIbOmX3aJur2vo.png" alt="img"></p>
+<h1 id="JDK中的XML-API"><a href="#JDK中的XML-API" class="headerlink" title="JDK中的XML API"></a>JDK中的XML API</h1><p>①：JAXP（The Java API For XML Processing)：主要负责解析XML</p>
+<p>②：JAXB（Java Architecture for XML Binding)：主要负责将XML映射为Java对象</p>
+<h2 id="XML解析"><a href="#XML解析" class="headerlink" title="XML解析"></a>XML解析</h2><p>XML解析就是读取XML的数据！</p>
+<h3 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a>解析方式</h3><p>XML解析方式分为两种：</p>
+<p>①：dom(Document Object Model)文档对象模型，是W3C组织推荐解析XML的一种方式</p>
+<p>②：sax(Simple API For XML)，它是XML社区的标准，几乎所有XML解析器都支持它！</p>
+<p><img src="https://i.loli.net/2021/09/14/aPnvBl8ZEtDdw6u.png"></p>
+<p>常用的解析器和解析开发包的关系如下所示：</p>
+<p><img src="https://i.loli.net/2021/09/14/LGhW3AzUJvqfHSy.png"></p>
+<ul>
+<li>jaxp是jdk自带的，无需导入开发包</li>
+<li>jdom需要导入开发包</li>
+<li>dom4j是用的最多的，需要导入开发包</li>
+</ul>
+<h2 id="jaxp"><a href="#jaxp" class="headerlink" title="jaxp"></a>jaxp</h2><h3 id="DOM解析操作"><a href="#DOM解析操作" class="headerlink" title="DOM解析操作"></a>DOM解析操作</h3><blockquote>
+<p>DOM解析是一个基于对象的API，它把XML的内容加载到内存中，生成与XML文档内容对应的模型！当解析完成，内存中会生成与XML文档的结构与之对应的DOM对象树，这样就能够根据树的结构，以节点的形式对文档进行操作！</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/09/14/K8txMdaeUW59su7.png"></p>
+<p><strong>在DOM解析中有几个核心的操作接口：</strong></p>
+<ul>
+<li><strong>Document【代表整个XML文档，通过Document节点可以访问XML文件中所有的元素内容！】</strong></li>
+<li><strong>Node【Node节点几乎在XML操作接口中几乎相当于普通Java类的Object，很多核心接口都实现了它！】</strong></li>
+<li><strong>NodeList【代表着一个节点的集合，通常是一个节点中子节点的集合！】</strong></li>
+<li>NameNodeMap【表示一组节点和其唯一名称对应的一一对应关系，主要用于属性节点的表示】</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013252686">XML就是这么简单 - SegmentFault 思否</a></p>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p>JSON：<strong>JavaScript Object Notation</strong> 【JavaScript 对象表示法】</p>
+<p>JSON 是存储和交换文本信息的语法。类似 XML。</p>
+<p>JSON采用完全独立于任何程序语言的文本格式，使JSON成为理想的数据交换语言。</p>
+<p><strong>JSON 比 XML 更小、更快，更易解析</strong>。</p>
+<ul>
+<li>javaScript原生支持JSON，解析速度会很快</li>
+<li>XML解析成DOM对象的时候，浏览器【IE和fireFox】会有差异</li>
+<li>使用JSON会更简单</li>
+</ul>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p>JSON所表示的数据要么就是对象，要么就是数据</p>
+<p>JSON语法是javaScript语法的子集，<strong>javaScript用[]中括号来表示数组，用{}大括号来表示对象，JSON亦是如此。</strong></p>
+<h3 id="JSON数组"><a href="#JSON数组" class="headerlink" title="JSON数组"></a>JSON数组</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> employees = [</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;Bill&quot;</span> , <span class="string">&quot;lastName&quot;</span>:<span class="string">&quot;Gates&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;George&quot;</span> , <span class="string">&quot;lastName&quot;</span>:<span class="string">&quot;Bush&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;Thomas&quot;</span> , <span class="string">&quot;lastName&quot;</span>: <span class="string">&quot;Carter&quot;</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h3 id="JSON对象"><a href="#JSON对象" class="headerlink" title="JSON对象"></a>JSON对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">str</span>: <span class="string">&quot;zhongfucheng&quot;</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&quot;我爱学习&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>当然啦，数组可以包含对象，在对象中也可以包含数组</strong></p>
+<h3 id="解析JSON"><a href="#解析JSON" class="headerlink" title="解析JSON"></a>解析JSON</h3><p><strong>使用eval()函数来解析JSON，把JSON文本数据转换成一个JavaScript对象。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">           <span class="comment">//在写JOSN的时候，记得把带上逗号</span></span><br><span class="line">           <span class="keyword">var</span> txt = <span class="string">&quot;&#123;a:123,&quot;</span> +</span><br><span class="line">                   <span class="string">&quot;b:&#x27;zhongfucheng&#x27;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">           <span class="comment">//使用eval解析JSON字符串，需要增添()</span></span><br><span class="line">           <span class="keyword">var</span> aa = <span class="built_in">eval</span>(<span class="string">&quot;(&quot;</span> + txt + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">           <span class="title function_">alert</span>(aa);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/" class="post-title-link" itemprop="url">JavaWeb学习（十二）——AJAX</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 17:03:04" itemprop="dateCreated datePublished" datetime="2021-09-13T17:03:04Z">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h1><p>AJAX即“Asynchronous Javascript And XML”，是指一种创建交互式网页应用的网页开发技术。AJAX 是一种用于创建快速动态网页的技术。它可以令开发者只向服务器获取数据（而不是图片，HTML文档等资源），互联网资源的传输变得前所未有的轻量级和纯粹。</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/12/24/167e05bddfd8dce9~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<p>Ajax实际上是下面这几种技术的融合：</p>
+<ol>
+<li>XHTML和CSS的基于标准的表示技术</li>
+<li>DOM进行动态显示和交互</li>
+<li>XML和XSLT进行数据交换和处理</li>
+<li>XMLHttpRequest进行异步数据检索</li>
+<li>Javascript将以上技术融合在一起</li>
+</ol>
+<p><strong>客户端与服务器，可以在【不必刷新整个浏览器】的情况下，与服务器进行异步通讯的技术</strong></p>
+<p>————<strong>可以进行局部刷新</strong></p>
+<h2 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h2><p>浏览器是先把请求发送到XMLHttpRequest异步对象之中，异步对象对请求进行封装，然后再发送给服务器。<strong>服务器并不是以转发的方式响应，而是以流的方式把数据返回给浏览器</strong></p>
+<p>XMLHttpRequest异步对象会不停监听服务器状态的变化，得到服务器返回的数据，就写到浏览器上【因为不是转发的方式，所以是无刷新就能够获取服务器端的数据】</p>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><ul>
+<li><strong>open()</strong>(<strong>String method,String url,boolean asynch</strong>,String username,String password)</li>
+<li><strong>send(content)</strong></li>
+<li><strong>setRequestHeader(String header,String value)</strong></li>
+<li>getAllResponseHeaders()</li>
+<li>getResponseHeader(String header)</li>
+<li>abort()</li>
+</ul>
+<p><strong>常用的方法就是黑色粗体的前三个</strong></p>
+<ul>
+<li><strong>open()：该方法创建http请求</strong><ul>
+<li><strong>第一个参数是指定提交方式(post、get)</strong></li>
+<li><strong>第二个参数是指定要提交的地址是哪</strong></li>
+<li><strong>第三个参数是指定是异步还是同步(true表示异步，false表示同步)</strong></li>
+<li>第四和第五参数在http认证的时候会用到。是可选的</li>
+</ul>
+</li>
+<li><strong>setRequestHeader(String header,String value)：设置消息头（使用post方式才会使用到，get方法并不需要调用该方法）</strong><ul>
+<li><strong>xmlhttp.setRequestHeader(“Content-type”,”application&#x2F;x-www-form-urlencoded”);</strong></li>
+</ul>
+</li>
+<li><strong>send(content)：发送请求给服务器</strong><ul>
+<li><strong>如果是get方式，并不需要填写参数，或填写null</strong></li>
+<li><strong>如果是post方式，把要提交的参数写上去</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><strong>onreadystatechange：请求状态改变的事件触发器（readyState变化时会调用此方法），一般用于指定回调函数</strong></p>
+</li>
+<li><p><strong>readyState：请求状态readyState一改变，回调函数被调用，它有5个状态</strong></p>
+<ul>
+<li>0：未初始化</li>
+<li>1：open方法成功调用以后</li>
+<li>2：服务器已经应答客户端的请求</li>
+<li>3：交互中。Http头信息已经接收，响应数据尚未接收。</li>
+<li><strong>4：完成。数据接收完成</strong></li>
+</ul>
+</li>
+<li><p><strong>responseText：服务器返回的文本内容</strong></p>
+</li>
+<li><p><strong>responseXML：服务器返回的兼容DOM的XML内容</strong></p>
+</li>
+<li><p><strong>status：服务器返回的状态码</strong></p>
+</li>
+<li><p>statusText：服务器返回状态码的文本信息</p>
+</li>
+</ul>
+<h2 id="ajax的使用"><a href="#ajax的使用" class="headerlink" title="ajax的使用"></a>ajax的使用</h2><h3 id="创建XMLHttpRequest对象"><a href="#创建XMLHttpRequest对象" class="headerlink" title="创建XMLHttpRequest对象"></a>创建XMLHttpRequest对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> httpRequest;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">XMLHttpRequest</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以上的版本以及其他内核的浏览器(Mozilla)等</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">ActiveXObject</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以下的版本</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">ActiveXObject</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="向服务器发送请求"><a href="#向服务器发送请求" class="headerlink" title="向服务器发送请求"></a>向服务器发送请求</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">1</span>. xhr.open(<span class="keyword">method</span>,<span class="title function_">url</span>,<span class="title function_">async</span>);  </span><br><span class="line">    <span class="number">2</span>. send(string)<span class="punctuation">;</span><span class="comment">//post请求时才使用字符串参数，否则不用带参数。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">method</span>：请求的类型；<span class="title function_">GET</span> 或 <span class="title function_">POST</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">url</span>：文件在服务器上的位置</span><br><span class="line"></span><br><span class="line"><span class="title function_">async</span>：<span class="title function_">true</span>（异步）或 <span class="title function_">false</span>（同步） 注意：<span class="title function_">post</span>请求一定要设置请求头的格式内容</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="built_in">open</span>(<span class="string">&quot;POST&quot;</span>,<span class="string">&quot;test.html&quot;</span>,<span class="literal">true</span>);  </span><br><span class="line">xhr.setRequestHeader(<span class="string">&quot;Content-type&quot;</span>,<span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);  </span><br><span class="line">xhr.<span class="built_in">send</span>(<span class="string">&quot;fname=Henry&amp;lname=Ford&quot;</span>); <span class="comment"> //post请求参数放在send里面，即请求体</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务器响应处理"><a href="#服务器响应处理" class="headerlink" title="服务器响应处理"></a>服务器响应处理</h3><p>responseText    获得字符串形式的响应数据。</p>
+<p>responseXML   获得XML 形式的响应数据。</p>
+<h4 id="①同步处理"><a href="#①同步处理" class="headerlink" title="①同步处理"></a>①同步处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>,<span class="string">&quot;info.txt&quot;</span>,<span class="literal">false</span>);  </span><br><span class="line">xhr.<span class="title function_">send</span>();  </span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>; <span class="comment">//获取数据直接显示在页面上</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="②异步处理"><a href="#②异步处理" class="headerlink" title="②异步处理"></a>②异步处理</h4><p>相对来说比较复杂，要在请求状态改变事件中处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="property">onreadystatechange</span>=<span class="keyword">function</span>(<span class="params"></span>)  &#123; </span><br><span class="line">	  <span class="keyword">if</span> (xhr.<span class="property">readyState</span>==<span class="number">4</span> &amp;&amp;xhr.<span class="property">status</span>==<span class="number">200</span>)  &#123; </span><br><span class="line">	       <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>;  </span><br><span class="line">	     &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013473001">AJAX跨域完全讲解 - SegmentFault 思否</a></p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013291898">AJAX面试题都在这里 - SegmentFault 思否</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">力量训练基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-16 16:11:37" itemprop="dateCreated datePublished" datetime="2021-08-16T16:11:37Z">2021-08-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>深蹲</p>
+<p>主要要点：</p>
+<ul>
+<li>重心：杠铃重心应该始终保持在脚中心的正上方位置</li>
+<li>站姿：脚跟距离与肩同宽；脚尖外展约30度</li>
+<li>握距：越窄越好，越窄越能将杠铃控制在肌肉上。大拇指应该在杠铃上方以确保握杠时手腕和前臂在一条直线上。</li>
+<li>肘向上抬</li>
+<li>全程保持头向下看</li>
+<li>发力方向：髋部发力应该是往上不是往前，往前的话会导致重心往脚尖压</li>
+<li>反弹：反弹必须作为发力过程的启动部分而存在</li>
+<li>呼吸：深吸一口气并屏住呼吸</li>
+</ul>
+<h2 id="5X5训练计划"><a href="#5X5训练计划" class="headerlink" title="5X5训练计划"></a>5X5训练计划</h2><p>一周在非连续的日子里健身3次，并把AB部分轮流使用：</p>
+<p>周一：</p>
+<p>A：深蹲5X5（起始重量）、推举5X5（起始重量）、硬拉1X5（起始重量）</p>
+<p>周三：</p>
+<p>B：深蹲5X5（+2.5kg）、卧推5X5（起始重量）、划船5X5（起始重量）</p>
+<p>周五：</p>
+<p>A：深蹲5X5（+2.5kg）、推举5X5（+2.5kg）、硬拉1X5（+5kg）</p>
+<p>周一：</p>
+<p>B：深蹲5X5（+2.5kg）、卧推5X5（+2.5kg）、划船5X5（+2.5kg）</p>
+<p><strong>热身</strong>：</p>
+<p>一般会做三个热身组，先用50%今天要做的重量做一组，65%今天要做的重量做一组，80%今天要做的重量做一组。</p>
+<p><strong>注意事项</strong>：</p>
+<p>1、如不能完成5组任意一个，争取做完全部5组（能做几个做几个），下次继续，如果三次训练不能做完，减重10%继续5*5，只要你还没达到瓶颈，就加重下去。</p>
+<p>2、至于推举和划船的重量，你也应该尝试每次增加5磅重量，但是由于这两个锻炼所要求的肌肉力量会少于深蹲、硬拉、和卧推（推举所用的肩部力量远远少于你大腿的伸膝力量），每次增加5磅重量不一定现实。</p>
+<blockquote>
+<p>比如：我用160磅卧推5X5时第三组时失败了，只做了4下。那么我第四组时会拿155磅的重量企图完成，如果我还是败了就用150磅完成第五组。<br>如果失败的地方是在第五组，那么不要纠结企图多做一组了。下次再说吧。注意如果你出现失败的情况，那么下次不能增加重量。</p>
+</blockquote>
+<p>3、如果你加重失败，5组没做完出现完成不了的情况，你可以选择多休息（5+分钟）再挑战这个重量，或者在把重量减少到上次的重量后，再把剩下几组做完。</p>
+<p>正常的话，组间休息在90秒左右；训练初期重量较轻，组间休息时间可以适当减少，到后期快到达极限时需要酌情延长。一般休息3分钟可以让ATP恢复到80%左右，5分钟可以恢复到95%。</p>
+<p><strong>deload:</strong></p>
+<p>全体deload的方法很简单。花一周时间，啥运动都不做，就休息。每健身的第九周，全体deload一周。当然如果你没有健身疲劳也没必要什么运动都不做。你可以照样跟平时一样健身，组数次数啥的都一样，但就把重量减轻40%或更多，然后专门注意纠正改善你的姿势。<br>有的人会问deload完之后怎么办。之后就当啥事没发生，之前该干啥还干啥。该做什么计划就继续做什么计划。</p>
+<p>半deload一般只适合在用线性计划、长时间某项锻炼无法提高的朋友。<br>如果你在做5X5，并且已经有两周你的卧推停滞在80KG上涨不了，那么你可以半deload。方法很简单，别的锻炼照样做，卧推重量减少15磅（或者更多），设这个为你的新的RM。然后从这里开始再慢慢把重量加回去。<br>一般来说，在开始一项新的计划之前，你应该把你的所有锻炼都半deload，以较轻的新的RM开始这个计划（像5&#x2F;3&#x2F;1会专门求你设原来的1RM的90%为1RM）。原因很简单：你从来不想让自己用一个新的计划的第一天就拼尽全力。用一个新的计划的前两周你应该处于一种适应的状态，如果你连这个计划的频率、训练量都没适应，就直接push你自己，只会导致自己肌肉恢复跟不上、然后各种失败。</p>
+<p><strong>辅助训练（最好不加</strong>）：</p>
+<p>引体向上 （最多3组）或 绳索下拉（最多3组）<br>孤立三头锻炼 （最多3组）或 双杠臂屈伸（最多3组）<br>孤立二头肌锻炼（最多3组）<br>后侧肌肉群锻炼 如山羊挺身、罗马尼亚硬拉、直腿硬拉（最多3组）</p>
+<h3 id="ICF冰淇淋5X5："><a href="#ICF冰淇淋5X5：" class="headerlink" title="ICF冰淇淋5X5："></a>ICF冰淇淋5X5：</h3><p>A部分<br>深蹲 5X5<br>卧推 5X5<br>划船 5X5<br>杠铃或哑铃耸肩 3X8-12<br>三头肌下压 3X8-12<br>二头肌弯举 3X8-12<br>逆向曲腿3X8-12<br>腹肌锻炼自己加</p>
+<p>B部分<br>深蹲5X5<br>推举5X5<br>硬拉1X5<br>划船（用比A部分少10%的重量做） 5X5<br>窄距卧推 或 双杠臂屈伸 3X8-12<br>二头肌弯举 3X8-12<br>腹肌锻炼自己加</p>
+<p>这个计划在5X5的基础上添加了很多辅助增肌的锻炼，因此如果你并不是特别对力量有兴趣，更追求增肌的话，这个计划在5X5的计划里算是最适合健美增肌的了（而5X5本身就比99%的其他计划更适合健美增肌。。。）。<br>如果你在减脂，却还想使用这个计划的话，也不是不可以，把所有5组的锻炼做3组，所有3组的锻炼做2组就可以了。你如果减脂期间坚持做完整个计划的话，你会发现你的肌肉恢复会可能跟不上。</p>
+<h2 id="拉伸"><a href="#拉伸" class="headerlink" title="拉伸"></a>拉伸</h2><p>每次拉伸至少要拉30秒以上</p>
+<p>1、髖屈肌群拉伸</p>
+<p>2、</p>
+<h2 id="madcow5X5"><a href="#madcow5X5" class="headerlink" title="madcow5X5"></a>madcow5X5</h2><p>当你可以深蹲体重1.5到2倍左右、硬拉体重2到2.5倍左右、卧推体重1.25倍到1.5倍左右的时候</p>
+<p>每周第一天<br>深蹲 5X5 (除了最后1组之外，前面4组分别用最后一组的60%，70%，80%，90%完成）<br>卧推 5X5 （除了最后1组之外，前面4组从60%开始增加重量）<br>俯身划船 5X5 （除了最后1组之外，前面4组从60%开始增加重量）<br>可选辅助锻炼： 腹肌锻炼、3组二头肌弯举、三组三头肌下压</p>
+<p>第二天 休息</p>
+<p>第三天<br>深蹲 4X5 （和第一天一样，只不过你不做最后一组正式组）<br>推举 或 上斜卧推 4X5 （前3组从60%开始增加重量，第四组为正式组）<br>硬拉 4X5 （前3组从60%开始增加重量，第四组为正式组）<br>可选辅助锻炼：3组哑铃飞鸟、2组窄握双杠臂屈伸、3组二头肌弯举、腹肌锻炼</p>
+<p>第四天 休息</p>
+<p>第五天<br>深蹲 4X5 1X3 1X8 （前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>卧推 4X5 1X3 1X8（前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>俯身划船 4X5 1X3 1X8（前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>可选辅助锻炼：3组窄握双杠臂屈伸、3组脸拉、3组二头肌弯举、腹肌锻炼</p>
+<p>第六天第七天休息，然后下周第一天时，正式组都用上一周的1X3来做。<br>也就是说：这周周一我第五组正式组是1X5 200磅卧推，这周周五的我的第五组正式组是1X3 205磅卧推，那么下周周一我的第五组正式组是1X5 205磅卧推。<br>至于第三天的推举和硬拉，你只需要跟着每周正式组增加2.5%的重量走就可以了。</p>
+<h3 id="Canditto-LP坎底托直线提高计划介绍"><a href="#Canditto-LP坎底托直线提高计划介绍" class="headerlink" title="Canditto LP坎底托直线提高计划介绍"></a>Canditto LP坎底托直线提高计划介绍</h3><p>本周第一天 上身力量<br>杠铃卧推 3X6<br>背部主要锻炼 3X6<br>肩部主要锻炼 1X6<br>背部次要锻炼 1X6<br>可选上身锻炼1 3X8-15<br>可选上身锻炼2 3X8-15</p>
+<p>本周第二天 下身力量<br>后端深蹲（高杠或低杠）3X6<br>硬拉 2X5<br>可选下身锻炼1 3X8-15<br>可选下身锻炼2 3X8-15<br>可选下身锻炼3 3X8-15<br>本周第三天 休息</p>
+<p>本周第四天 上身增肌<br>杠铃或哑铃卧推 3X8-12<br>背部主要锻炼 4X8-12<br>肩部主要锻炼 3X8-12<br>背部次要锻炼 4X8-12<br>上斜杠铃或哑铃卧推 3X8-12<br>二头肌弯举 3X8-12<br>可选上身锻炼 3X8-12</p>
+<p>本周第五天 下身增肌<br>深蹲（前端或后端） 5X8<br>可选花式硬拉 2X6<br>腘绳肌锻炼 3X8-12<br>小腿提锺 3X8-12<br>可选下身锻炼1 3X8-12<br>可选下身锻炼2 3X8-12</p>
+<p>本周第六天 第七天 休息</p>
+<p>这个模板可以说是相当地灵活，你可以自己随便加锻炼进去。当然，我个人推荐加如下的锻炼：<br>背部主要锻炼 - 俯身划船 或 负重引体向上 或 背部下拉<br>背部次要锻炼 - 俯身划船 或 负重引体向上 或 背部下拉<br>肩部主要锻炼 - 直立杠铃推举 或 坐姿哑铃推举<br>可选上身锻炼 - 二头肌弯举 三头肌下压 俯身哑铃飞鸟 杠铃或哑铃耸肩<br>可选花式硬拉 - 罗马尼亚硬拉 直腿硬拉<br>可选下身锻炼 - 跳箱 前端深蹲 前屈弓步 （这个选择面比较广）<br>腘绳肌锻炼 - 双腿伸屈（机器）</p>
+<p>增重原则<br>所有锻炼，每周尝试增加0-10磅的重量。<br>因为真正的力量日上身下身一周各只有一天，所以增重的尝试只有一次。很多人因此觉得这个计划的增重规律实在太慢，但我个人认为0-10磅的增重设计反而非常不错，因此不会硬逼着你加重，你如何加重完全是看感觉。新手，特别是动作姿势还有问题的新手，被逼着加重时很可能出现姿势不正确、不完全完成动作的行为（比如深蹲时就做个半蹲），因此这种灵活的增重设计我是赞成的。</p>
+<h2 id="GZCL训练理念"><a href="#GZCL训练理念" class="headerlink" title="GZCL训练理念"></a>GZCL训练理念</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25446245">【最良心的干货】手把手教你周期力量计划的设计 - 知乎 (zhihu.com)</a></p>
+<p>每次训练你把你的锻炼要分为三个不同的区域之内，分别是：</p>
+<p><strong>一级主项，二级副项，三级辅助</strong>。</p>
+<p>ZCL理念即是：每天的训练应该安排成一个金字塔。金字塔的厚度为训练量，高为训练强度。最高的位置，训练强度最高、训练量越低，这也是对于你发展力量最重要的训练部分（一级主项）；稍微往下，训练强度、训练量都为中等，这是你<a target="_blank" rel="noopener" href="http://music.163.com/#/program?id=900702866">攻克自己的弱点</a>、直接性辅助你力量提高的训练部分（二级副项）；最下方，训练强度最低，训练量最高，这是你做大量的次数和组数好得到增肌效果、以助于你以后力量的提高（三级辅助）。</p>
+<p>一级主项的锻炼安排：一般来说这是你最重要的大三项，深蹲硬拉卧推。根据你目标的不同，也可以包括别的主项锻炼，比如实力推。你每次训练的目的是把最多的精力和力量安排到一级主项上面。一般而言，你每次训练只会安排一个主项，训练强度一般都高于80%1RM。</p>
+<p>二级副项的锻炼安排：一般来说这是你的三大项的<strong>专项性辅助。</strong>深蹲的包括：暂停深蹲、其他深蹲方式（主蹲低杠的，可以安排高杠或者前蹲）；硬拉的包括：超程硬拉、架上拉、其他硬拉方式（主拉相扑拉的，可以安排传统拉）；卧推的包括：暂停卧推、窄距卧推。这都只是一些例子。要注意的是你也可以把主项放入副项里练。副项的目标，除了攻克弱点、直接性辅助你的主项之外，也可以发展其他的主项；但是重要性会低于当天的一级主项。具体这是什么意思，我会在底下说明白。一般而言，你每次训练只会安排一个或者两个副项，训练强度一般在65%-85%1RM之间。</p>
+<p>三级辅助的锻炼安排：一般来说这是任何其它的辅助锻炼，包括（不限制于）：背部锻炼（划船、引体向上）、哑铃锻炼（哑铃卧推）、增肌性质的三大项辅助（硬拉：罗马尼亚硬拉、直腿硬拉；卧推：哑铃卧推、俯卧撑、甚至胸推机器；深蹲：哑铃弓箭步、箱跳、腿弯举）、肩部锻炼（推举这边也可以练）。你要通过三级辅助，把一级和二级锻炼里还没有压榨完的精力给全部花出去。一般而言，每次训练会安排两个以上的三级辅助，每个的组数锻炼至少3组以上、每组10-20次（Cody喜欢做每组20下的三级辅助，走他的黑又壮计划的朋友们应该都明白，哭死人）。三级辅助的目标是：提高训练容量（高组数高次数）、达到增肌效果、提高综合耐力。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/08/13/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/13/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-title-link" itemprop="url">oracle数据库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-13 10:45:54" itemprop="dateCreated datePublished" datetime="2021-08-13T10:45:54Z">2021-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/oracle%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">oracle数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013537329">参考文章</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013540871">参考文章</a></p>
+<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>Oracle数据库服务器由两部分组成：</p>
+<ul>
+<li><strong>实例：理解为对象,看不见的</strong></li>
+<li><strong>数据库：理解为类，看得见的</strong></li>
+</ul>
+<p>Oracle数据库把表、视图等都看成是对象。</p>
+<h2 id="null值"><a href="#null值" class="headerlink" title="null值"></a>null值</h2><p>Oracle中如果存在字段是null值的话，那么在sqlplus中它是不会显示出来的….<strong>如果我们使用null值的数据与其他数据进行运算…那么最终得出的结果都是null值</strong></p>
+<p>因此，Oracle提供了NVL(表达式1，表达式2)函数供我们使用，如果表达式1的值为null值，那么就取表达式2的值…当然了，如果表达式1不是null，取的就是表达式1的值</p>
+<p>还有值得注意的是：<strong>null值不能参数&#x3D;号运算，null能参数number&#x2F;date&#x2F;varchar2类型运算</strong></p>
+<p><strong>Oracle提供了 is null关键字来代替&#x3D;号运算的问题</strong></p>
+<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p>Mysql中如果要用别名的话，需要使用as关键字 ，后面跟着别名就行了….Oracle可以省略as关键字…</p>
+<p>并且，一般地，我们使用别名都是用双引号””把别名括起来，Oracle也支持我们直接写别名，但是呢<strong>，如果我们不写双引号，那么我们的别名是不能有空格的</strong></p>
+<p>还有一点的是：<strong>Oracle的别名是不能使用单引号来括起来的，Oracle默认认为单引号是字符串类型和日期类型的。</strong></p>
+<h2 id="操作表细节"><a href="#操作表细节" class="headerlink" title="操作表细节"></a>操作表细节</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">进入回收站</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> users;</span><br><span class="line"></span><br><span class="line">查询回收站中的对象</span><br><span class="line"><span class="keyword">show</span> recyclebin;</span><br><span class="line"></span><br><span class="line">闪回，即将回收站还原</span><br><span class="line">flashback <span class="keyword">table</span> 表名 <span class="keyword">to</span> before <span class="keyword">drop</span>;</span><br><span class="line">flashback <span class="keyword">table</span> 表名 <span class="keyword">to</span> before <span class="keyword">drop</span> rename <span class="keyword">to</span>  新表名;</span><br><span class="line"></span><br><span class="line">彻底删除users表</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> users purge;</span><br><span class="line"></span><br><span class="line">清空回收站</span><br><span class="line">purge recyclebin;</span><br><span class="line"></span><br><span class="line">为emp表增加image列，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">add</span> 列名 类型(宽度) </span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line"><span class="keyword">add</span> image <span class="type">blob</span>;</span><br><span class="line"></span><br><span class="line">修改ename列的长度为<span class="number">20</span>个字节，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 modify 列名 类型(宽度) </span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line">modify ename varchar2(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">删除image列，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 <span class="keyword">drop</span> <span class="keyword">column</span> 列名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">column</span> image;</span><br><span class="line"></span><br><span class="line">重名列名ename为username，<span class="keyword">alter</span> <span class="keyword">table</span> 表名 rename <span class="keyword">column</span> 原列名 <span class="keyword">to</span> 新列名</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> emp</span><br><span class="line">rename <span class="keyword">column</span> ename <span class="keyword">to</span> username;</span><br><span class="line"></span><br><span class="line">将emp表重命名emps，rename 原表名 <span class="keyword">to</span> 新表名</span><br><span class="line">rename emp <span class="keyword">to</span> emps;</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是：<strong>修改表的时候，是不能回滚的！</strong></p>
+<p>Oracle中的级联操作：</p>
+<ul>
+<li><strong>【on delete cascade】级联删除</strong></li>
+<li><strong>【on delete set null】将外键一方设置为null</strong></li>
+</ul>
+<h1 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h1><p>Oracle中的分页是依靠着rownum这个伪列来实现的，由于rownum只能使用的是&lt;&#x3D;或者&lt;来获取数据。。。因为rownum的值可能会经常变【加入一条数据，那么rownum就+1，讲道理rownum可以是无穷大的，因此不能使用&gt;来进行操作】….</p>
+<p>那么Oracle分页的思路是这样子的：</p>
+<ul>
+<li>先在子查询中获取前n条记录</li>
+<li><strong>由于返回的是多行多列，因此我们可以看做成一张表</strong></li>
+<li>那么将查询出来的数据放在from字句的后边</li>
+<li>外套的查询可以<strong>通过where字句来对子查询出来的数据进行过滤</strong></li>
+<li>那么我们就可以查询出想要的数据了…</li>
+</ul>
+<p>公式：</p>
+<ul>
+<li><strong>Mysql从(currentPage-1)*lineSize开始取数据，取lineSize条数据</strong></li>
+<li><strong>Oracle先获取currentPage*lineSize条数据，从(currentPage-1)*lineSize开始取数据</strong></li>
+</ul>
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><h2 id="批量操作"><a href="#批量操作" class="headerlink" title="批量操作"></a>批量操作</h2><p><strong>我们查询出来的数据可看成是一张表，那么我们在插入数据的时候，可以根据查询出来的数据进行插入</strong>…这就可以看成是批量操作…</p>
+<p>值得注意的是，<strong>如果没有指定插入哪些字段的话，那么查询出来的全部字段均会插入表中</strong>..</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">将xxx_emp表中所有<span class="number">20</span>号部门的员工，复制到emp表中，批量插入，<span class="keyword">insert</span> <span class="keyword">into</span> 表名 <span class="keyword">select</span> ...语法</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br><span class="line"><span class="keyword">from</span> xxx_emp</span><br><span class="line"><span class="keyword">where</span> deptno<span class="operator">=</span><span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除操作对比"><a href="#删除操作对比" class="headerlink" title="删除操作对比"></a>删除操作对比</h3><p>我们的删除语法有三种：</p>
+<ul>
+<li><strong>delete from</strong></li>
+<li><strong>truncate from</strong></li>
+<li><strong>drop from</strong></li>
+</ul>
+<p>我们来对比一下他们的区别：</p>
+<p>drop table</p>
+<ul>
+<li>1)属于DDL</li>
+<li>2)不可回滚</li>
+<li>3)不可带where</li>
+<li>4)表内容和结构删除</li>
+<li>5)删除速度快</li>
+</ul>
+<p>truncate table</p>
+<ul>
+<li>1)属于DDL</li>
+<li>2)不可回滚</li>
+<li>3)不可带where</li>
+<li>4)表内容删除</li>
+<li>5)删除速度快</li>
+</ul>
+<p>delete from</p>
+<ul>
+<li>1)属于DML</li>
+<li>2)可回滚</li>
+<li>3)可带where</li>
+<li>4)表结构在，表内容要看where执行的情况</li>
+<li>5)删除速度慢,需要逐行删除</li>
+</ul>
+<h2 id="访问其他用户的对象"><a href="#访问其他用户的对象" class="headerlink" title="访问其他用户的对象"></a>访问其他用户的对象</h2><p><strong>我们只要在访问表的时候，指定具体的用户.数据库表就行了，但是呢，还要看看该用户有没有权限查询别的用户的数据表，于是就需要赋予权限了</strong>…</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">声明：scott或hr叫用户名<span class="operator">/</span>方案名<span class="operator">/</span>空间名</span><br><span class="line">      scott<span class="comment">--tiger</span></span><br><span class="line">      hr<span class="comment">-----lion</span></span><br><span class="line">      </span><br><span class="line">查询当前用户是谁</span><br><span class="line"><span class="keyword">show</span> <span class="keyword">user</span>;</span><br><span class="line"></span><br><span class="line">查询scott自己表空间下的所有对象时，可加，或不加用户名<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line">或</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> scott.emp;</span><br><span class="line"></span><br><span class="line">以sysdba身份解锁hr普通帐户</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> hr account unlock;</span><br><span class="line"></span><br><span class="line">以sysdba身份设置hr普通帐户的密码</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> hr identified <span class="keyword">by</span> lion;</span><br><span class="line"></span><br><span class="line">当scott查询hr表空间下的所有表时，必须得加用户名</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> hr.jobs;</span><br><span class="line"></span><br><span class="line">在默认情况下，每个用户只能查询自已空间下的对象的权限，不能查询其它用户空间下的对象</span><br><span class="line"></span><br><span class="line">以sysdba身份角色，授予scott用户查询所有用户空间下的对象权限</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line">以sysdba身份，撤销scott用户查询所有用户空间下的对象权限</span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">from</span> scott;</span><br><span class="line"></span><br><span class="line">scott自已查看自己所拥有的权限</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> user_sys_privs;</span><br><span class="line"></span><br><span class="line">从scott用户空间导航到sysdba用户空间</span><br><span class="line">conn <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line"></span><br><span class="line">从sysdba用户空间导航到scott用户空间</span><br><span class="line">conn scott<span class="operator">/</span>tiger;</span><br><span class="line"></span><br><span class="line">从scott用户空间导航到hr用户空间</span><br><span class="line">conn hr<span class="operator">/</span>lion;</span><br><span class="line"></span><br><span class="line">查询hr用户空间中的所有对象</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tab;</span><br><span class="line"></span><br><span class="line">从hr用户空间导航到scott用户空间</span><br><span class="line">conn scott<span class="operator">/</span>tiger;</span><br><span class="line"></span><br><span class="line">在scott用户空间下，查询hr用户空间下的jobs表，必须加上hr用户空间名</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> hr.jobs;</span><br></pre></td></tr></table></figure>
+
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">基于emp表所有列，创建视图emp_view_1，<span class="keyword">create</span> <span class="keyword">view</span> 视图名 <span class="keyword">as</span> <span class="keyword">select</span>对一张或多张基表的查询</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_1</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">默认情况下，普通用户无权创建视图，得让sysdba为你分配creare <span class="keyword">view</span>的权限 </span><br><span class="line"></span><br><span class="line">以sysdba身份，授权scott用户<span class="keyword">create</span> <span class="keyword">view</span>权限</span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">view</span> <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line">以sysdba身份，撤销scott用户<span class="keyword">create</span> <span class="keyword">view</span>权限</span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">create</span> <span class="keyword">view</span> <span class="keyword">from</span> scott;</span><br><span class="line"></span><br><span class="line">基于emp表指定列，创建视图emp_view_2，该视图包含编号<span class="operator">/</span>姓名<span class="operator">/</span>工资<span class="operator">/</span>年薪<span class="operator">/</span>年收入（查询中使用列别名）</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_2</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">基于emp表指定列，创建视图emp_view_3(a,b,c,d,e)，包含编号<span class="operator">/</span>姓名<span class="operator">/</span>工资<span class="operator">/</span>年薪<span class="operator">/</span>年收入（视图中使用列名）</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> emp_view_3(a,b,c,d,e)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">查询emp_view_3创建视图的结构</span><br><span class="line"><span class="keyword">desc</span> emp_view_3;</span><br><span class="line"></span><br><span class="line">修改emp_view_3(id,name,salary,annual,income)视图，<span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> 视图名 <span class="keyword">as</span> 子查询</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_3(id,name,salary,annual,income)</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> empno &quot;编号&quot;,ename &quot;姓名&quot;,sal &quot;工资&quot;,sal<span class="operator">*</span><span class="number">12</span> &quot;年薪&quot;,sal<span class="operator">*</span><span class="number">12</span><span class="operator">+</span>NVL(comm,<span class="number">0</span>) &quot;年收入&quot;</span><br><span class="line"><span class="keyword">from</span> emp;</span><br><span class="line"></span><br><span class="line">查询emp表，求出各部门的最低工资，最高工资，平均工资</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">min</span>(sal),<span class="built_in">max</span>(sal),round(<span class="built_in">avg</span>(sal),<span class="number">0</span>),deptno</span><br><span class="line"><span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br><span class="line"></span><br><span class="line">创建视图emp_view_4，视图中包含各部门的最低工资，最高工资，平均工资</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_4</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> deptno &quot;部门号&quot;,<span class="built_in">min</span>(sal) &quot;最低工资&quot;,<span class="built_in">max</span>(sal) &quot;最高工资&quot;,round(<span class="built_in">avg</span>(sal),<span class="number">0</span>) &quot;平均工资&quot;</span><br><span class="line"><span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> deptno;</span><br><span class="line"></span><br><span class="line">创建视图emp_view_5，视图中包含员工编号，姓名，工资，部门名，工资等级</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_5</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> e.empno &quot;编号&quot;,e.ename &quot;姓名&quot;,e.sal &quot;工资&quot;,d.dname &quot;部门名&quot;,s.grade &quot;工资等级&quot;</span><br><span class="line"><span class="keyword">from</span> emp e,dept d,salgrade s</span><br><span class="line"><span class="keyword">where</span> (e.deptno<span class="operator">=</span>d.deptno) <span class="keyword">and</span> (e.sal <span class="keyword">between</span> s.losal <span class="keyword">and</span> s.hisal);</span><br><span class="line"></span><br><span class="line">删除视图emp_view_1中的<span class="number">7788</span>号员工的记录，使用<span class="keyword">delete</span>操作，会影响基表吗</span><br><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> emp_view_1 <span class="keyword">where</span> empno<span class="operator">=</span><span class="number">7788</span>;写法正确，会影响基表</span><br><span class="line"></span><br><span class="line">修改emp_view_1为只读视图【<span class="keyword">with</span> read <span class="keyword">only</span>】，再执行上述<span class="keyword">delete</span>操作，还行吗？</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace <span class="keyword">view</span> emp_view_1</span><br><span class="line"><span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> emp</span><br><span class="line"><span class="keyword">with</span> read <span class="keyword">only</span>;</span><br><span class="line">不能进行<span class="keyword">delete</span>操作了</span><br><span class="line"></span><br><span class="line">删除视图中的【某条】记录会影响基表吗？</span><br><span class="line">会影响基表</span><br><span class="line"></span><br><span class="line">将【整个】视图删除，会影响表吗？</span><br><span class="line">不会影响基表</span><br><span class="line"></span><br><span class="line">删除视图，会进入回收站吗？</span><br><span class="line">不会进入回收站</span><br><span class="line"></span><br><span class="line">删除基表会影响视图吗？</span><br><span class="line">会影响视图</span><br><span class="line"></span><br><span class="line">闪回基表后,视图有影响吗？</span><br><span class="line">视图又可以正常工作了</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">为emp表的empno字段，创建序列emp_empno_seq，<span class="keyword">create</span> sequence 序列名</span><br><span class="line"><span class="keyword">create</span> sequence emp_empno_seq;</span><br><span class="line"></span><br><span class="line">删除序列emp_empno_seq，<span class="keyword">drop</span> sequence 序列名</span><br><span class="line"><span class="keyword">drop</span> sequence emp_empno_seq;</span><br><span class="line"></span><br><span class="line">查询emp_empno_seq序列的当前值currval和下一个值nextval，第一次使用序列时，必须选用：序列名.nextval</span><br><span class="line"><span class="keyword">select</span> emp_empno_seq.nextval <span class="keyword">from</span> dual;</span><br><span class="line"><span class="keyword">select</span> emp_empno_seq.currval <span class="keyword">from</span> dual;</span><br><span class="line"></span><br><span class="line">使用序列，向emp表插入记录，empno字段使用序列值</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(emp_empno_seq.nextval);</span><br><span class="line"></span><br><span class="line">修改emp_empno_seq序列的increment <span class="keyword">by</span>属性为<span class="number">20</span>，默认<span class="keyword">start</span> <span class="keyword">with</span>是<span class="number">1</span>，<span class="keyword">alter</span> sequence 序列名</span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line">increment <span class="keyword">by</span> <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">修改修改emp_empno_seq序列的的increment <span class="keyword">by</span>属性为<span class="number">5</span></span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line">increment <span class="keyword">by</span> <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">修改emp_empno_seq序列的<span class="keyword">start</span> <span class="keyword">with</span>属性，行吗</span><br><span class="line"><span class="keyword">alter</span> sequence emp_empno_seq</span><br><span class="line"><span class="keyword">start</span> <span class="keyword">with</span> <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">有了序列后，还能为主健手工设置值吗？</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(<span class="number">9999</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> emp(empno) <span class="keyword">values</span>(<span class="number">7900</span>);</span><br><span class="line"></span><br><span class="line">删除表，会影响序列吗？</span><br><span class="line">你无法做<span class="keyword">insert</span>操作,表真正亡，序列亡</span><br><span class="line"></span><br><span class="line">删除序列，会影响表吗？</span><br><span class="line"></span><br><span class="line">不会</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在hibernate中，如果是访问oracle数据库服务器，那么User.hbm.xml映射文件中关于<span class="operator">&lt;</span>id<span class="operator">&gt;</span>标签如何配置呢？</span><br><span class="line"><span class="operator">&lt;</span>id name<span class="operator">=</span>&quot;id&quot; <span class="keyword">column</span><span class="operator">=</span>&quot;id&quot;<span class="operator">&gt;</span></span><br><span class="line">   <span class="operator">&lt;</span>generator class<span class="operator">=</span>&quot;increment/identity/uuid/【sequence】/【native】&quot;<span class="operator">/</span><span class="operator">&gt;</span></span><br><span class="line"><span class="operator">&lt;</span><span class="operator">/</span>id<span class="operator">&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>（1）是一种<strong>快速查询表中内容的机制</strong>，类似于新华字典的目录<br>（2）运用在表中某个&#x2F;些字段上，但<strong>存储时，独立于表之外</strong></p>
+<p>为什么要用索引</p>
+<ul>
+<li>（1）<strong>通过指针加速Oracle服务器的查询速度</strong></li>
+<li>（2）<strong>通过rowid快速定位数据的方法，减少磁盘I&#x2F;O</strong><ul>
+<li>rowid是oracle中唯一确定每张表不同记录的唯一身份证</li>
+</ul>
+</li>
+</ul>
+<h3 id="rowid特点"><a href="#rowid特点" class="headerlink" title="rowid特点"></a>rowid特点</h3><ol>
+<li>位于每个表中，但表面上看不见，例如：desc emp是看不见的</li>
+<li>只有在select中，显示写出rowid，方可看见</li>
+<li>它与每个表绑定在一起，表亡，该表的rowid亡，二张表rownum可以相同，但rowid必须是唯一的</li>
+<li>rowid是18位大小写加数字混杂体，唯一表代该条记录在DBF文件中的位置</li>
+<li>rowid可以参与&#x3D;&#x2F;like比较时，用’’单引号将rowid的值包起来，且区分大小写</li>
+<li>rowid是联系表与DBF文件的桥梁</li>
+</ol>
+<h3 id="索引特点"><a href="#索引特点" class="headerlink" title="索引特点"></a>索引特点</h3><ol>
+<li>索引一旦建立, <strong>Oracle管理系统会对其进行自动维护</strong>, 而且由Oracle管理系统决定何时使用索引</li>
+<li>用户不用在查询语句中指定使用哪个索引</li>
+<li><strong>在定义primary key或unique约束后系统自动在相应的列上创建索引</strong></li>
+<li>用户也能按自己的需求，对指定单个字段或多个字段，添加索引</li>
+</ol>
+<p>需要注意的是：<strong>Oracle是自动帮我们管理索引的，并且如果我们指定了primary key或者unique约束，系统会自动在对应的列上创建索引</strong>..</p>
+<p>什么时候【要】创建索引</p>
+<p>（1）表经常进行 SELECT 操作</p>
+<p>（2）表很大(记录超多)，记录内容分布范围很广</p>
+<p>（3）列名经常在 WHERE 子句或连接条件中出现</p>
+<p>什么时候【不要】创建索引</p>
+<p>（1）表经常进行 INSERT&#x2F;UPDATE&#x2F;DELETE 操作</p>
+<p>（2）表很小(记录超少)</p>
+<p>（3）列名不经常作为连接条件或出现在 WHERE 子句中</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">为emp表的empno单个字段，创建索引emp_empno_idx，叫单列索引，<span class="keyword">create</span> index 索引名 <span class="keyword">on</span> 表名(字段,...)</span><br><span class="line"><span class="keyword">create</span> index emp_empno_idx</span><br><span class="line"><span class="keyword">on</span> emp(empno);</span><br><span class="line"></span><br><span class="line">为emp表的ename,job多个字段，创建索引emp_ename_job_idx，多列索引<span class="operator">/</span>联合索引</span><br><span class="line"><span class="keyword">create</span> index emp_ename_job_idx </span><br><span class="line"><span class="keyword">on</span> emp(ename,job);</span><br><span class="line">如果在<span class="keyword">where</span>中只出现job不使用索引</span><br><span class="line">如果在<span class="keyword">where</span>中只出现ename使用索引</span><br><span class="line">我们提倡同时出现ename和job</span><br><span class="line"></span><br><span class="line">注意：索引创建后，只有查询表有关，和其它（<span class="keyword">insert</span><span class="operator">/</span><span class="keyword">update</span><span class="operator">/</span><span class="keyword">delete</span>）无关,解决速度问题</span><br><span class="line"></span><br><span class="line">删除emp_empno_idx和emp_ename_job_idx索引，<span class="keyword">drop</span> index 索引名</span><br><span class="line"><span class="keyword">drop</span> index emp_empno_idx;</span><br><span class="line"><span class="keyword">drop</span> index emp_ename_job_idx;</span><br></pre></td></tr></table></figure>
+
+<h1 id="权限和用户"><a href="#权限和用户" class="headerlink" title="权限和用户"></a>权限和用户</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line">一）用户</span><br><span class="line">Oracle中的用户分为二大类</span><br><span class="line"><span class="number">1</span>）Oracle数据库服务器创建时，由系统自动创建的用户，叫系统用户，如sys。</span><br><span class="line"><span class="number">2</span>）利用系统用户创建的用户，叫普通用户，如scott,hr，c##tiger,zhaojun,...</span><br><span class="line"></span><br><span class="line">》用sys登录，查询当前Oracle数据库服务器中已有用户的名字和状态</span><br><span class="line">  username表示登录名</span><br><span class="line">  expired<span class="operator">&amp;</span>locked表示帐号过期和锁定</span><br><span class="line">  <span class="keyword">open</span>表示帐号现在可用</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  col username <span class="keyword">for</span> a30;</span><br><span class="line">  col account_status <span class="keyword">for</span> a30;</span><br><span class="line">  <span class="keyword">set</span> pagesize <span class="number">100</span>;</span><br><span class="line">  <span class="keyword">select</span> username,account_status <span class="keyword">from</span> dba_users;</span><br><span class="line">  </span><br><span class="line">  查询Oracle中有哪些用户</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> all_users;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">二）创建与删除普通用户</span><br><span class="line">可以在Oracle中创建新的普通用户，创建普通用户命令是：<span class="keyword">create</span> <span class="keyword">user</span>，在创建普通用户的同时，应该为其分配一个具体的表空间，通常叫users。</span><br><span class="line"></span><br><span class="line">》用sys登录，查询Oracle中有哪些可用存储空间，所有普通用户默认为users存储空间</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> v$tablespace;</span><br><span class="line"></span><br><span class="line">》用sys登录，创建普通用户c##tiger，密码为abc，默认使用users存储空间，即对应硬盘上的一个DBF二进制文件</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">user</span> c##tiger identified <span class="keyword">by</span> abc <span class="keyword">default</span> tablespace users;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配users空间无限制使用，即数据库中DBF文件可以无限增加，一个DBF文件不够，会创建第二个DBF文件</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">alter</span> <span class="keyword">user</span> c##tiger quota unlimited <span class="keyword">on</span> users;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，能进orcl数据库吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  进不去orcl数据库</span><br><span class="line"></span><br><span class="line">》用sys登录，删除普通用户c##tiger</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">drop</span> <span class="keyword">user</span> c##tiger cascade;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">三）了解系统用户</span><br><span class="line">sys是Oracle中一个重要的系统用户，sys是Oracle中最高权限用户，其角色为SYSDBA（系统管理员）</span><br><span class="line">sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">四）权限</span><br><span class="line">权限的最终作用于用户。即所有用户在数据库内的操作对象和可执行的动作都是受到限制的。</span><br><span class="line">Oracle中权限分为二大类：</span><br><span class="line"><span class="number">1</span>）系统权限</span><br><span class="line"><span class="number">2</span>）对象权限</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">五）系统权限</span><br><span class="line">针对数据库中特定操作的许可，例如：让c##tiger能登录到orcl数据库，能在orcl数据库中创建表</span><br><span class="line"></span><br><span class="line">》用sys登录，获取系统权限的相关信息，例如：<span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span>表示针对所有表的<span class="keyword">select</span>权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">select</span> <span class="keyword">distinct</span> privilege <span class="keyword">from</span> dba_sys_privs;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配<span class="keyword">create</span> session与数据库建立会话的权限，即允许该用户登录</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">create</span> session <span class="keyword">to</span> c##tiger;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，能进orcl数据库吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  能进去orcl数据库</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，创建一张tiger的表，能创建吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">table</span> tiger(</span><br><span class="line">    name varchar2(<span class="number">20</span>)</span><br><span class="line">  );</span><br><span class="line">  这时c##tiger没有权限创建表</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配<span class="keyword">create</span> <span class="keyword">table</span>权限，即允许创建表</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">to</span> c##tiger;</span><br><span class="line"></span><br><span class="line">》用c##tiger登录，创建一张tiger的表，能创建吗？</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc</span><br><span class="line">  <span class="keyword">create</span> <span class="keyword">table</span> tiger(</span><br><span class="line">    name varchar2(<span class="number">20</span>)</span><br><span class="line">  );</span><br><span class="line">  可以创建c##tiger表</span><br><span class="line"></span><br><span class="line">》用sys登录，查询c##tiger所拥有的系统权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">select</span> grantee,privilege <span class="keyword">from</span> dba_sys_privs <span class="keyword">where</span> <span class="built_in">lower</span>(grantee) <span class="operator">=</span> <span class="string">&#x27;c##tiger&#x27;</span>;</span><br><span class="line">  grantee表示普通用户名</span><br><span class="line">  privilege权限名  </span><br><span class="line"></span><br><span class="line">》用sys登录，撤销c##tiger的<span class="keyword">create</span> <span class="keyword">table</span>权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">revoke</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="keyword">from</span> c##tiger;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">六）对象权限</span><br><span class="line">用户对已有对象的操作权限，包括：</span><br><span class="line"><span class="number">1</span>）<span class="keyword">select</span>可用于表，视图和序列</span><br><span class="line"><span class="number">2</span>）<span class="keyword">insert</span>向表或视图中插入新的记录</span><br><span class="line"><span class="number">3</span>）<span class="keyword">update</span>更新表中数据</span><br><span class="line"><span class="number">4</span>）<span class="keyword">delete</span>删除表中数据</span><br><span class="line"><span class="number">5</span>）<span class="keyword">execute</span>函数，过程的执行</span><br><span class="line"><span class="number">6</span>）index为表创建索引</span><br><span class="line"><span class="number">7</span>）<span class="keyword">references</span>为表创建外健</span><br><span class="line"><span class="number">8</span>）<span class="keyword">alter</span>修改表或者序列的属性</span><br><span class="line"></span><br><span class="line">》用sys登录，查询c##tiger所拥有的对象权限</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  col grantee <span class="keyword">for</span> a10;</span><br><span class="line">  col table_name <span class="keyword">for</span> a10;</span><br><span class="line">  col privilege <span class="keyword">for</span> a20;</span><br><span class="line">  <span class="keyword">select</span> grantee,table_name,privilege <span class="keyword">from</span> dba_tab_privs <span class="keyword">where</span> <span class="built_in">lower</span>(grantee) <span class="operator">=</span> <span class="string">&#x27;c##tiger&#x27;</span>;</span><br><span class="line"></span><br><span class="line">》用sys登录，为c##tiger分配对tiger表的所有权限，即增删改查操作</span><br><span class="line">  sqlplus <span class="operator">/</span> <span class="keyword">as</span> sysdba;</span><br><span class="line">  <span class="keyword">grant</span> <span class="keyword">all</span> <span class="keyword">on</span> c##tiger.tiger <span class="keyword">to</span> c##tiger;</span><br><span class="line">  注意：c##tiger表示空间名</span><br><span class="line">        tiger表示该空间下的表名</span><br><span class="line">  C##TIGER   TIGER      FLASHBACK</span><br><span class="line">  C##TIGER   TIGER      DEBUG</span><br><span class="line">  C##TIGER   TIGER      QUERY REWRITE</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">ON</span> <span class="keyword">COMMIT</span> REFRESH</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">REFERENCES</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">UPDATE</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">SELECT</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">INSERT</span></span><br><span class="line">  C##TIGER   TIGER      INDEX</span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">DELETE</span></span><br><span class="line">  C##TIGER   TIGER      <span class="keyword">ALTER</span></span><br><span class="line"></span><br><span class="line">》用c##tiger登录，对tiger表进行增删改查操作</span><br><span class="line">  sqlplus c##tiger<span class="operator">/</span>abc;</span><br><span class="line">  <span class="keyword">insert</span> <span class="keyword">into</span> tiger(name) <span class="keyword">values</span>(<span class="string">&#x27;AA&#x27;</span>);</span><br><span class="line">  <span class="keyword">update</span> tiger <span class="keyword">set</span> name <span class="operator">=</span> <span class="string">&#x27;BB&#x27;</span>;</span><br><span class="line">  <span class="keyword">delete</span> <span class="keyword">from</span> tiger <span class="keyword">where</span> rownum <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> tiger;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="PLSQL学习"><a href="#PLSQL学习" class="headerlink" title="PLSQL学习"></a>PLSQL学习</h1><p><strong>PLSQL是Oracle对SQL99的一种扩展</strong></p>
+<ul>
+<li>是专用于Oracle服务器，在SQL基础之上，<strong>添加了一些过程化控制语句，叫PLSQL</strong></li>
+<li>过程化包括有：类型定义，判断，循环，游标，异常或例外处理。。。</li>
+<li><strong>PLSQL强调过程</strong></li>
+</ul>
+<p>为什么要用PLSQL</p>
+<ul>
+<li>因为SQL是第四代命令式语言，<strong>无法显示处理过程化的业务，所以得用一个过程化程序设计语言来弥补SQL的不足之处</strong>，</li>
+<li>SQL和PLSQL不是替代关系，是弥补关系</li>
+</ul>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013560860">参考文章</a></p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013517914">参考文章</a></p>
+<h1 id="有关mysql命令"><a href="#有关mysql命令" class="headerlink" title="有关mysql命令"></a>有关mysql命令</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000017278335">面试前必须知道的MySQL命令【explain】 - SegmentFault 思否</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/08/12/%E9%BB%91%E4%B9%A6%E7%B3%BB%E5%88%97-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/12/%E9%BB%91%E4%B9%A6%E7%B3%BB%E5%88%97-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">黑书系列-深入理解计算机系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-12 09:32:19" itemprop="dateCreated datePublished" datetime="2021-08-12T09:32:19Z">2021-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E9%BB%91%E4%B9%A6/" itemprop="url" rel="index"><span itemprop="name">黑书</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>1、文件是对I&#x2F;O设备的抽象表示；虚拟内存是对主存和磁盘I&#x2F;O的抽象表示；进程是对处理器、主存和I&#x2F;O设备的抽象表示。</p>
+<p>2、shell进程：shell做为一种和Linux系统的特殊交互式工具，为用户提供了启动程序、管理文件系统中的文件及运行在Linux上的进程的途径。shell通过解析输入的文本命令，在内核中执行来达到与系统交互的功能。shell包含了一组内部命令，通过这些命令可以进行文件管理、程序管理及运行等操作。</p>
+<blockquote>
+<p>【什么是shell】</p>
+<p>简单点理解，就是系统跟<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6&from=1011904q&sa=gh_pl_wisezm">计算机硬件</a>交互时使用的中间介质，它只是系统的一个工具。实际上，在shell和<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6&from=1011904q&sa=gh_pl_wisezm">计算机硬件</a>之间还有一层东西那就是系统内核了。打个比方，如果把<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6&from=1011904q&sa=gh_pl_wisezm">计算机硬件</a>比作一个人的躯体，而系统内核则是人的大脑，至于shell，把它比作人的五官似乎更加贴切些。回到计算机上来，用户直接面对的不是<a target="_blank" rel="noopener" href="https://m.baidu.com/s?word=%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6&from=1011904q&sa=gh_pl_wisezm">计算机硬件</a>而是shell，用户把指令告诉shell，然后shell再传输给系统内核，接着内核再去支配计算机硬件去执行各种操作。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1074,692 +1960,10 @@ DROP FOREIGN KEY fk_PerOrders
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/03/02/java-%E5%AE%B9%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/02/java-%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">java-容器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-02 14:30:19" itemprop="dateCreated datePublished" datetime="2021-03-02T14:30:19Z">2021-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="一、集合介绍"><a href="#一、集合介绍" class="headerlink" title="一、集合介绍"></a>一、集合介绍</h1><p>Java的集合类</p>
-<p>　　集合类主要负责保存、盛装和管理对象，因此集合类也被称为容器类。</p>
-<p>　　集合类分为Set、List、Map和Queue四大体系。</p>
-<ul>
-<li>Set 代表无序、不可重复集合；</li>
-<li>List 代表有序、可重复集合；</li>
-<li>Map 代表具有映射关系元素的集合；</li>
-<li>Queue 代表队列，实现元素的先进先出管理。</li>
-</ul>
-<p>　　数组也是一种集合类，它是能随机存储和访问引用序列的诸多方法中最高效的一种，当追求高效的数据访问时，数组是很不错的选择。</p>
-<p>所有集合类都位于java.util包中，集合中只能保存对象的引用。<strong>集合类把它所含有的元素看成是Object的实例</strong>，这样方便但是也有隐患，即多个类型不同的元素被放入一个集合中，会增加集合访问时类型转换的困难，甚至会产生错误。</p>
-<p>　　泛型的引入改善了这种情况，使用泛型来限制集合里元素的类型，并让集合记住元素的类型。这样可以允许编译器检查加入集合的元素类型，避免值类型不一致的错误。</p>
-<h1 id="二、集合概述"><a href="#二、集合概述" class="headerlink" title="二、集合概述"></a>二、集合概述</h1><p>Java的集合类主要由两个接口派生而出——Collection和Map，它们是Java集合框架的根接口。</p>
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208220948084.png"/> </div><br>
-
-<p>Collection接口存储一组不唯一（可以重复），无序的对象</p>
-<p><img src="https://i.loli.net/2021/03/05/ojb6kgSeCnhmw1F.png" alt="img"></p>
-<div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20201101234335837.png"/> </div><br>
-
-<p>　标准集合类实现了Collection接口，其中一些是抽象类，实现部分接口，其它是具体类，可以直接在代码中使用。</p>
-<h2 id="2-1-Set"><a href="#2-1-Set" class="headerlink" title="2.1 Set"></a>2.1 Set</h2><ul>
-<li><p>TreeSet：（有序，唯一）： 红黑树(自平衡的排序二叉树)。HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。</p>
-</li>
-<li><p>HashSet：无序，唯一）: 基于 <code>HashMap</code> 实现的，底层采用<code>HashMap</code> 来保存元素。</p>
-</li>
-<li><p>LinkedHashSet：具有 HashSet 的查找效率，并且内部使用双向链表维护元素的插入顺序。</p>
-</li>
-</ul>
-<h2 id="2-2-List"><a href="#2-2-List" class="headerlink" title="2.2 List"></a>2.2 List</h2><ul>
-<li><p>ArrayList：基于动态数组实现，支持随机访问。</p>
-</li>
-<li><p>Vector：和 ArrayList 类似，但它是线程安全的。</p>
-<ul>
-<li><p>1.<strong>Stack栈是继承了Vector类，所以底层还是数组</strong>。</p>
-<p>2.Stack栈是将底层的数组的最后一个元素当做栈顶。第一个元素当做栈底。</p>
-</li>
-</ul>
-</li>
-<li><p>LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。</p>
-</li>
-</ul>
-<h2 id="2-3-Queue"><a href="#2-3-Queue" class="headerlink" title="2.3 Queue"></a>2.3 Queue</h2><ul>
-<li>LinkedList：可以用它来实现双向队列。</li>
-<li>PriorityQueue：基于堆结构实现，可以用它来实现优先队列。</li>
-</ul>
-<h2 id="2-4-Map"><a href="#2-4-Map" class="headerlink" title="2.4 Map"></a>2.4 Map</h2><ul>
-<li>TreeMap：基于红黑树实现。</li>
-<li>HashMap：DK1.8 之前 <code>HashMap</code> 由数组+链表组成的，数组是 <code>HashMap</code> 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间</li>
-<li>key不可重复</li>
-<li>HashTable： 数组+链表组成的，数组是HashTable的主体，链表则是主要为了解决哈希冲突而存在的。<br>线程安全，这意味着同一时刻多个线程同时写入 HashTable 不会导致数据不一致。它是遗留类，不应该去使用它，而是使用 ConcurrentHashMap 来支持线程安全，ConcurrentHashMap 的效率会更高，因为 ConcurrentHashMap 引入了分段锁。</li>
-<li>LinkedHashMap：<code>LinkedHashMap</code> 继承自 <code>HashMap</code>，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，<code>LinkedHashMap</code> 在上面结构的基础上使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。详细可以查看：<a target="_blank" rel="noopener" href="https://www.imooc.com/article/22931">《LinkedHashMap 源码详细分析（JDK1.8）》</a></li>
-</ul>
-<h2 id="2-5-如何选用集合"><a href="#2-5-如何选用集合" class="headerlink" title="2.5 如何选用集合"></a>2.5 如何选用集合</h2><p>需要根据键值获取到元素值时就选用 <code>Map</code> 接口下的集合：</p>
-<ul>
-<li>需要排序时选择 <code>TreeMap</code></li>
-<li>不需要排序时就选择 <code>HashMap</code></li>
-<li>需要保证线程安全就选用 <code>ConcurrentHashMap</code>。</li>
-</ul>
-<p>只需要存放元素值时，就选择实现<code>Collection</code> 接口的集合：</p>
-<ul>
-<li>需要保证元素唯一时选择实现 <code>Set</code> 接口的集合比如 <code>TreeSet</code> 或 <code>HashSet</code></li>
-<li>不需要就选择实现 <code>List</code> 接口的比如 <code>ArrayList</code> 或 <code>LinkedList</code></li>
-</ul>
-<h2 id="2-6-为什么需要使用集合？"><a href="#2-6-为什么需要使用集合？" class="headerlink" title="2.6 为什么需要使用集合？"></a>2.6 为什么需要使用集合？</h2><p>数组存储的数据是有序的、可重复的，特点单一。 但是集合提高了数据存储的灵活性，Java 集合不仅可以用来存储不同类型不同数量的对象，还可以保存具有映射关系的数据。</p>
-<h1 id="三、Collection的子接口——List"><a href="#三、Collection的子接口——List" class="headerlink" title="三、Collection的子接口——List"></a>三、Collection的子接口——List</h1><h2 id="3-1-ArrayList和Vector的区别"><a href="#3-1-ArrayList和Vector的区别" class="headerlink" title="3.1 ArrayList和Vector的区别"></a>3.1 ArrayList和Vector的区别</h2><ul>
-<li><code>ArrayList</code> 是 <code>List</code> 的主要实现类，底层使用 <code>Object[ ]</code>存储，适用于频繁的查找工作，线程不安全 ；</li>
-<li><code>Vector</code> 是 <code>List</code> 的古老实现类，底层使用<code> Object[ ]</code> 存储，线程安全的。</li>
-</ul>
-<h2 id="3-2-ArrayList和LinkedList的区别"><a href="#3-2-ArrayList和LinkedList的区别" class="headerlink" title="3.2 ArrayList和LinkedList的区别"></a>3.2 ArrayList和LinkedList的区别</h2><ol>
-<li><strong>是否保证线程安全：</strong> <code>ArrayList</code> 和 <code>LinkedList</code> 都是不同步的，也就是不保证线程安全；</li>
-<li><strong>底层数据结构：</strong> <code>Arraylist</code> 底层使用的是 <strong><code>Object</code> 数组</strong>；<code>LinkedList</code> 底层使用的是 <strong>双向链表</strong> 数据结构（JDK1.6 之前为循环链表，JDK1.7 取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）</li>
-<li><strong>插入和删除是否受元素位置的影响：</strong><ol>
-<li><code>ArrayList</code> 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。</li>
-<li><code>LinkedList</code> 采用链表存储，所以对于<code>add(E e)</code>方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O(1)，如果是要在指定位置<code>i</code>插入和删除元素的话（<code>(add(int index, E element)</code>） 时间复杂度近似为<code>o(n))</code>因为需要先移动到指定位置再插入。</li>
-</ol>
-</li>
-<li><strong>是否支持快速随机访问：</strong> <ol>
-<li><code>LinkedList</code> 不支持高效的随机元素访问</li>
-<li><code>ArrayList</code> 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于<code>get(int index)</code>方法)。</li>
-</ol>
-</li>
-<li><strong>内存空间占用：</strong> ArrayList 的空间浪费主要体现在在 list 列表的结尾会预留一定的容量空间，而 LinkedList 的空间花费则体现在它的每一个元素都需要消耗比 ArrayList 更多的空间（因为要存放直接后继和直接前驱以及数据）。</li>
-</ol>
-<h2 id="3-3-ArrayList的扩容机制（重点）"><a href="#3-3-ArrayList的扩容机制（重点）" class="headerlink" title="3.3 ArrayList的扩容机制（重点）"></a>3.3 ArrayList的扩容机制（重点）</h2><ol>
-<li>初始化的默认容量是10；</li>
-<li>当添加元素的时候，add（）方法会调用ensureCapacityInternal（size+1）方法，用来进行容量检查，决定扩容的想要的最小容量。</li>
-<li>当需要扩容的时候，会调用grow（）方法。<br><strong>int newCapacity &#x3D; oldCapacity + (oldCapacity &gt;&gt; 1),所以 ArrayList 每次扩容之后容量都会变为原来的 1.5 倍左右（oldCapacity 为偶数就是 1.5 倍，否则是 1.5 倍左右）！</strong> </li>
-<li><strong>真正的实现扩容其实是Arrays.copy方法，就是复制数组实现扩容</strong></li>
-</ol>
-<h1 id="四、Collection的子接口Set"><a href="#四、Collection的子接口Set" class="headerlink" title="四、Collection的子接口Set"></a>四、Collection的子接口Set</h1><h2 id="4-1-comparable-和-Comparator-的区别"><a href="#4-1-comparable-和-Comparator-的区别" class="headerlink" title="4.1 comparable 和 Comparator 的区别"></a>4.1 comparable 和 Comparator 的区别</h2><ul>
-<li><code>comparable</code> 接口实际上是出自<code>java.lang</code>包 它有一个 <code>compareTo(Object obj)</code>方法用来排序</li>
-<li><code>comparator</code>接口实际上是出自 java.util包它有一个<code>compare(Object obj1, Object obj2)</code>方法用来排序</li>
-</ul>
-<h2 id="4-2-比较-HashSet、LinkedHashSet-和-TreeSet-三者的异同"><a href="#4-2-比较-HashSet、LinkedHashSet-和-TreeSet-三者的异同" class="headerlink" title="4.2 比较 HashSet、LinkedHashSet 和 TreeSet 三者的异同"></a>4.2 比较 HashSet、LinkedHashSet 和 TreeSet 三者的异同</h2><p><code>HashSet</code> 是 <code>Set</code> 接口的主要实现类 ，<code>HashSet</code> 的底层是 <code>HashMap</code>，线程不安全的，可以存储 null 值；</p>
-<p><code>LinkedHashSet</code> 是 <code>HashSet</code> 的子类，能够按照添加的顺序遍历；</p>
-<p><code>TreeSet</code> 底层使用红黑树，能够按照添加元素的顺序进行遍历，排序的方式有自然排序和定制排序。</p>
-<h1 id="五、Map接口"><a href="#五、Map接口" class="headerlink" title="五、Map接口"></a>五、Map接口</h1><h2 id="5-1-HashMap-和-Hashtable-的区别"><a href="#5-1-HashMap-和-Hashtable-的区别" class="headerlink" title="5.1 HashMap 和 Hashtable 的区别"></a>5.1 HashMap 和 Hashtable 的区别</h2><ol>
-<li><strong>线程是否安全：</strong> <code>HashMap</code> 是非线程安全的，<code>HashTable</code> 是线程安全的,因为 <code>HashTable</code> 内部的方法基本都经过<code>synchronized</code> 修饰。（如果你要保证线程安全的话就使用 <code>ConcurrentHashMap</code> 吧！）；</li>
-<li><strong>效率：</strong> 因为线程安全的问题，<code>HashMap</code> 要比 <code>HashTable</code> 效率高一点。另外，<code>HashTable</code> 基本被淘汰，不要在代码中使用它；</li>
-<li><strong>对 Null key 和 Null value 的支持：</strong> <code>HashMap</code> 可以存储 null 的 key 和 value，但 null 作为键只能有一个，null 作为值可以有多个；HashTable 不允许有 null 键和 null 值，否则会抛出 <code>NullPointerException</code>。</li>
-<li><strong>初始容量大小和每次扩充容量大小的不同 ：</strong> ① 创建时如果不指定容量初始值，<code>Hashtable</code> 默认的初始大小为 11，之后每次扩充，容量变为原来的 2n+1。<code>HashMap</code> 默认的初始化大小为 16。之后每次扩充，容量变为原来的 2 倍。② 创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 <code>HashMap</code> 会将其扩充为 2 的幂次方大小（<code>HashMap</code> 中的<code>tableSizeFor()</code>方法保证，下面给出了源代码）。也就是说 <code>HashMap</code> 总是使用 2 的幂作为哈希表的大小,后面会介绍到为什么是 2 的幂次方。</li>
-<li><strong>底层数据结构：</strong> JDK1.8 以后的 <code>HashMap</code> 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。</li>
-</ol>
-<h2 id="5-2-HashMap-和-HashSet-区别"><a href="#5-2-HashMap-和-HashSet-区别" class="headerlink" title="5.2 HashMap 和 HashSet 区别"></a>5.2 HashMap 和 HashSet 区别</h2><p><code>HashSet</code> 底层就是基于 <code>HashMap</code> 实现的。</p>
-<table>
-<thead>
-<tr>
-<th align="center"><code>HashMap</code></th>
-<th align="center"><code>HashSet</code></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">实现了 <code>Map</code> 接口</td>
-<td align="center">实现 <code>Set</code> 接口</td>
-</tr>
-<tr>
-<td align="center">存储键值对</td>
-<td align="center">仅存储对象</td>
-</tr>
-<tr>
-<td align="center">调用 <code>put()</code>向 map 中添加元素</td>
-<td align="center">调用 <code>add()</code>方法向 <code>Set</code> 中添加元素</td>
-</tr>
-<tr>
-<td align="center"><code>HashMap</code> 使用键（Key）计算 <code>hashcode</code></td>
-<td align="center"><code>HashSet</code> 使用成员对象来计算 <code>hashcode</code> 值，对于两个对象来说 <code>hashcode</code> 可能相同，所以<code> equals()</code>方法用来判断对象的相等性</td>
-</tr>
-</tbody></table>
-<h2 id="5-3-HashMap-和-TreeMap-区别"><a href="#5-3-HashMap-和-TreeMap-区别" class="headerlink" title="5.3 HashMap 和 TreeMap 区别"></a>5.3 HashMap 和 TreeMap 区别</h2><p>相比于<code>HashMap</code>来说 <code>TreeMap</code> 主要多了对集合中的元素根据键排序的能力以及对集合内元素的搜索的能力。</p>
-<h2 id="5-4-HashSet-如何检查重复"><a href="#5-4-HashSet-如何检查重复" class="headerlink" title="5.4 HashSet 如何检查重复"></a>5.4 HashSet 如何检查重复</h2><p>先看hashcode；再用equals（）</p>
-<p>当你把对象加入<code>HashSet</code>时，<code>HashSet</code> 会先计算对象的<code>hashcode</code>值来判断对象加入的位置，同时也会与其他加入的对象的 <code>hashcode</code> 值作比较，如果没有相符的 <code>hashcode</code>，<code>HashSet</code> 会假设对象没有重复出现。但是如果发现有相同 <code>hashcode</code> 值的对象，这时会调用<code>equals()</code>方法来检查 <code>hashcode</code> 相等的对象是否真的相同。如果两者相同，<code>HashSet</code> 就不会让加入操作成功。</p>
-<p><strong><code>hashCode()</code>与 <code>equals()</code> 的相关规定：</strong></p>
-<ol>
-<li>如果两个对象相等，则 <code>hashcode</code> 一定也是相同的</li>
-<li>两个对象相等,对两个 <code>equals()</code> 方法返回 true</li>
-<li>两个对象有相同的 <code>hashcode</code> 值，它们也不一定是相等的</li>
-<li>综上，<code>equals()</code> 方法被覆盖过，则 <code>hashCode()</code> 方法也必须被覆盖</li>
-<li><code>hashCode() </code>的默认行为是对堆上的对象产生独特值。如果没有重写 <code>hashCode()</code>，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）。</li>
-</ol>
-<h2 id="5-5-HashMap-多线程操作导致死循环问题"><a href="#5-5-HashMap-多线程操作导致死循环问题" class="headerlink" title="5.5 HashMap 多线程操作导致死循环问题"></a>5.5 HashMap 多线程操作导致死循环问题</h2><p>主要原因在于并发下的 Rehash 会造成元素之间会形成一个循环链表。不过，jdk 1.8 后解决了这个问题，但是还是不建议在多线程下使用 HashMap,因为多线程下使用 HashMap 还是会存在其他问题比如数据丢失。并发环境下推荐使用 ConcurrentHashMap 。</p>
-<h2 id="5-6-HashMap-有哪几种常见的遍历方式"><a href="#5-6-HashMap-有哪几种常见的遍历方式" class="headerlink" title="5.6 HashMap 有哪几种常见的遍历方式?"></a>5.6 HashMap 有哪几种常见的遍历方式?</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Zz6mofCtmYpABDL1ap04ow">HashMap 的 7 种遍历方式与性能分析！</a></p>
-<p>HashMap <strong>遍历从大的方向来说，可分为以下 4 类</strong>：</p>
-<ol>
-<li>迭代器（Iterator）方式遍历；</li>
-<li>For Each 方式遍历；</li>
-<li>Lambda 表达式遍历（JDK 1.8+）;</li>
-<li>Streams API 遍历（JDK 1.8+）。</li>
-</ol>
-<h2 id="5-7-ConcurrentHashMap-和-Hashtable-的区别"><a href="#5-7-ConcurrentHashMap-和-Hashtable-的区别" class="headerlink" title="5.7 ConcurrentHashMap 和 Hashtable 的区别"></a>5.7 ConcurrentHashMap 和 Hashtable 的区别</h2><p><code>ConcurrentHashMap</code> 和 <code>Hashtable</code> 的区别主要体现在实现线程安全的方式上不同。</p>
-<ul>
-<li><strong>底层数据结构：</strong> JDK1.7 的 <code>ConcurrentHashMap</code> 底层采用 <strong>分段的数组+链表</strong> 实现，JDK1.8 采用的数据结构跟 <code>HashMap1.8</code> 的结构一样，数组+链表&#x2F;红黑二叉树。<code>Hashtable</code> 和 JDK1.8 之前的 <code>HashMap</code> 的底层数据结构类似都是采用 <strong>数组+链表</strong> 的形式，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的；</li>
-<li><strong>实现线程安全的方式（重要）：</strong> ① <strong>在 JDK1.7 的时候，<code>ConcurrentHashMap</code>（分段锁）</strong> 对整个桶数组进行了分割分段(<code>Segment</code>)，每一把锁只锁容器其中一部分数据，多线程访问容器里不同数据段的数据，就不会存在锁竞争，提高并发访问率。 <strong>到了 JDK1.8 的时候已经摒弃了 <code>Segment</code> 的概念，而是直接用 <code>Node</code> 数组+链表+红黑树的数据结构来实现，并发控制使用 <code>synchronized</code> 和 CAS 来操作。（JDK1.6 以后 对 <code>synchronized</code> 锁做了很多优化）</strong> 整个看起来就像是优化过且线程安全的 <code>HashMap</code>，虽然在 JDK1.8 中还能看到 <code>Segment</code> 的数据结构，但是已经简化了属性，只是为了兼容旧版本；② <strong><code>Hashtable</code>(同一把锁)</strong> :使用 <code>synchronized</code> 来保证线程安全，效率非常低下。当一个线程访问同步方法时，其他线程也访问同步方法，可能会进入阻塞或轮询状态，如使用 put 添加元素，另一个线程不能使用 put 添加元素，也不能使用 get，竞争会越来越激烈效率越低。</li>
-</ul>
-<p><strong>两者的对比图：</strong></p>
-<p><strong>HashTable:</strong></p>
-<p><img src="https://i.loli.net/2021/03/05/aEFBtdkMfr6m5Aw.png" alt="HashTable全表锁"></p>
-<p style="text-align:right;font-size:13px;color:gray">http://www.cnblogs.com/chengxiao/p/6842045.html></p>
-
-<p><strong>JDK1.7 的 ConcurrentHashMap：</strong></p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/ConcurrentHashMap%E5%88%86%E6%AE%B5%E9%94%81.jpg" alt="JDK1.7的ConcurrentHashMap"></p>
-<p style="text-align:right;font-size:13px;color:gray">http://www.cnblogs.com/chengxiao/p/6842045.html></p>
-
-<p><strong>JDK1.8 的 ConcurrentHashMap：</strong></p>
-<p><img src="https://i.loli.net/2021/03/05/bEcBXCiyvxn9Qw4.png" alt="Java8 ConcurrentHashMap 存储结构（图片来自 javadoop）"></p>
-<p>JDK1.8 的 <code>ConcurrentHashMap</code> 不在是 <strong>Segment 数组 + HashEntry 数组 + 链表</strong>，而是 <strong>Node 数组 + 链表 &#x2F; 红黑树</strong>。不过，Node 只能用于链表的情况，红黑树的情况需要使用 **<code>TreeNode</code>**。当冲突链表达到一定长度时，链表会转换成红黑树。</p>
-<h2 id="5-8-ConcurrentHashMap-线程安全的具体实现方式-x2F-底层具体实现"><a href="#5-8-ConcurrentHashMap-线程安全的具体实现方式-x2F-底层具体实现" class="headerlink" title="5.8 ConcurrentHashMap 线程安全的具体实现方式&#x2F;底层具体实现"></a>5.8 ConcurrentHashMap 线程安全的具体实现方式&#x2F;底层具体实现</h2><h3 id="JDK1-7"><a href="#JDK1-7" class="headerlink" title="JDK1.7"></a>JDK1.7</h3><p>首先将数据分为一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据时，其他段的数据也能被其他线程访问。</p>
-<p><strong><code>ConcurrentHashMap</code> 是由 <code>Segment</code> 数组结构和 <code>HashEntry</code> 数组结构组成</strong>。</p>
-<p>Segment 实现了 <code>ReentrantLock</code>,所以 <code>Segment</code> 是一种可重入锁，扮演锁的角色。<code>HashEntry</code> 用于存储键值对数据。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Segment</span>&lt;K,V&gt; <span class="keyword">extends</span> <span class="title class_">ReentrantLock</span> <span class="keyword">implements</span> <span class="title class_">Serializable</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个 <code>ConcurrentHashMap</code> 里包含一个 <code>Segment</code> 数组。<code>Segment</code> 的结构和 <code>HashMap</code> 类似，是一种数组和链表结构，一个 <code>Segment</code> 包含一个 <code>HashEntry</code> 数组，每个 <code>HashEntry</code> 是一个链表结构的元素，每个 <code>Segment</code> 守护着一个 <code>HashEntry</code> 数组里的元素，当对 <code>HashEntry</code> 数组的数据进行修改时，必须首先获得对应的 <code>Segment</code> 的锁。</p>
-<h3 id="JDK1-8-（上面有示意图）"><a href="#JDK1-8-（上面有示意图）" class="headerlink" title="JDK1.8 （上面有示意图）"></a>JDK1.8 （上面有示意图）</h3><p><code>ConcurrentHashMap</code> 取消了 <code>Segment</code> 分段锁，采用 CAS 和 <code>synchronized</code> 来保证并发安全。数据结构跟 HashMap1.8 的结构类似，数组+链表&#x2F;红黑二叉树。Java 8 在链表长度超过一定阈值（8）时将链表（寻址时间复杂度为 O(N)）转换为红黑树（寻址时间复杂度为 O(log(N))）</p>
-<p><code>synchronized</code> 只锁定当前链表或红黑二叉树的首节点，这样只要 hash 不冲突，就不会产生并发，效率又提升 N 倍。</p>
-<h1 id="六、Collections-工具类"><a href="#六、Collections-工具类" class="headerlink" title="六、Collections 工具类"></a>六、Collections 工具类</h1><p>Collections 工具类常用方法:</p>
-<ol>
-<li>排序</li>
-<li>查找,替换操作</li>
-<li>同步控制(不推荐，需要线程安全的集合类型时请考虑使用 JUC 包下的并发集合)</li>
-</ol>
-<h2 id="6-1-排序"><a href="#6-1-排序" class="headerlink" title="6.1 排序"></a>6.1 排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(List list)</span><span class="comment">//反转</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">shuffle</span><span class="params">(List list)</span><span class="comment">//随机排序</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">sort</span><span class="params">(List list)</span><span class="comment">//按自然排序的升序排序</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">sort</span><span class="params">(List list, Comparator c)</span><span class="comment">//定制排序，由Comparator控制排序逻辑</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(List list, <span class="type">int</span> i , <span class="type">int</span> j)</span><span class="comment">//交换两个索引位置的元素</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">rotate</span><span class="params">(List list, <span class="type">int</span> distance)</span><span class="comment">//旋转。当distance为正数时，将list后distance个元素整体移到前面。当distance为负数时，将 list的前distance个元素整体移到后面</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6-2-查找-替换操作"><a href="#6-2-查找-替换操作" class="headerlink" title="6.2 查找,替换操作"></a>6.2 查找,替换操作</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">binarySearch</span><span class="params">(List list, Object key)</span><span class="comment">//对List进行二分查找，返回索引，注意List必须是有序的</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(Collection coll)</span><span class="comment">//根据元素的自然顺序，返回最大的元素。 类比int min(Collection coll)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">max</span><span class="params">(Collection coll, Comparator c)</span><span class="comment">//根据定制排序，返回最大元素，排序规则由Comparatator类控制。类比int min(Collection coll, Comparator c)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">fill</span><span class="params">(List list, Object obj)</span><span class="comment">//用指定的元素代替指定list中的所有元素。</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">frequency</span><span class="params">(Collection c, Object o)</span><span class="comment">//统计元素出现次数</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">indexOfSubList</span><span class="params">(List list, List target)</span><span class="comment">//统计target在list中第一次出现的索引，找不到则返回-1，类比int lastIndexOfSubList(List source, list target).</span></span><br><span class="line"><span class="type">boolean</span> <span class="title function_">replaceAll</span><span class="params">(List list, Object oldVal, Object newVal)</span>, 用新元素替换旧元素</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-3-同步控制"><a href="#6-3-同步控制" class="headerlink" title="6.3 同步控制"></a>6.3 同步控制</h2><p><code>Collections</code> 提供了多个<code>synchronizedXxx()</code>方法·，该方法可以将指定集合包装成线程同步的集合，从而解决多线程并发访问集合时的线程安全问题。</p>
-<p>我们知道 <code>HashSet</code>，<code>TreeSet</code>，<code>ArrayList</code>,<code>LinkedList</code>,<code>HashMap</code>,<code>TreeMap</code> 都是线程不安全的。<code>Collections</code> 提供了多个静态方法可以把他们包装成线程同步的集合。</p>
-<p><strong>最好不要用下面这些方法，效率非常低，需要线程安全的集合类型时请考虑使用 JUC 包下的并发集合。</strong></p>
-<p>方法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">synchronizedCollection(Collection&lt;T&gt;  c) <span class="comment">//返回指定 collection 支持的同步（线程安全的）collection。</span></span><br><span class="line">synchronizedList(List&lt;T&gt; list)<span class="comment">//返回指定列表支持的同步（线程安全的）List。</span></span><br><span class="line">synchronizedMap(Map&lt;K,V&gt; m) <span class="comment">//返回由指定映射支持的同步（线程安全的）Map。</span></span><br><span class="line">synchronizedSet(Set&lt;T&gt; s) <span class="comment">//返回指定 set 支持的同步（线程安全的）set。</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="七、容器中的设计模式"><a href="#七、容器中的设计模式" class="headerlink" title="七、容器中的设计模式"></a>七、容器中的设计模式</h1><h2 id="7-1-迭代器模式"><a href="#7-1-迭代器模式" class="headerlink" title="7.1 迭代器模式"></a>7.1 迭代器模式</h2><div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191208225301973.png"/> </div><br>
-
-<p>Collection 继承了 Iterable 接口，其中的 iterator() 方法能够产生一个 Iterator 对象，通过这个对象就可以迭代遍历 Collection 中的元素。</p>
-<p>从 JDK 1.5 之后可以使用 foreach 方法来遍历实现了 Iterable 接口的聚合对象。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">list.add(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;b&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (String item : list) &#123;</span><br><span class="line">    System.out.println(item);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-2-适配器模式"><a href="#7-2-适配器模式" class="headerlink" title="7.2 适配器模式"></a>7.2 适配器模式</h2><p>java.util.Arrays#asList() 可以把数组类型转换为 List 类型。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SafeVarargs</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="title function_">asList</span><span class="params">(T... a)</span></span><br></pre></td></tr></table></figure>
-
-<p>应该注意的是 asList() 的参数为泛型的变长参数，不能使用基本类型数组作为参数，只能使用相应的包装类型数组。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer[] arr = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line"><span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(arr);</span><br></pre></td></tr></table></figure>
-
-<p>也可以使用以下方式调用 asList()：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/" class="post-title-link" itemprop="url">Algorithm__前缀和哈希表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 22:23:19" itemprop="dateCreated datePublished" datetime="2021-02-10T22:23:19Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm__并查集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:56:17" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:17Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">Algorithm__滑动窗口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:56:07" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:07Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>滑动窗口主要用来处理连续问题。比如题目求解“连续子串 xxxx”，“连续子数组 xxxx”，就应该可以想到滑动窗口。能不能解决另说，但是这种敏感性还是要有的。</p>
-<p>从类型上说主要有：</p>
-<ul>
-<li>固定窗口大小</li>
-<li>窗口大小不固定，求解最大的满足条件的窗口</li>
-<li>窗口大小不固定，求解最小的满足条件的窗口（上面的 209 题就属于这种）</li>
-</ul>
-<p>后面两种我们统称为<code>可变窗口</code>。当然不管是哪种类型基本的思路都是一样的，不一样的仅仅是代码细节。</p>
-<h2 id="固定窗口大小"><a href="#固定窗口大小" class="headerlink" title="固定窗口大小"></a>固定窗口大小</h2><p>对于固定窗口，我们只需要固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点，并且保证：</p>
-<ol>
-<li>l 初始化为 0</li>
-<li>初始化 r，使得 r - l + 1 等于窗口大小</li>
-<li>同时移动 l 和 r</li>
-<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
-<li>4.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解</li>
-<li>4.2 如果不满足，则继续。</li>
-</ul>
-</li>
-</ol>
-<h2 id="可变窗口大小"><a href="#可变窗口大小" class="headerlink" title="可变窗口大小"></a>可变窗口大小</h2><p>对于可变窗口，我们同样固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点。后面有所不同，我们需要保证：</p>
-<ol>
-<li>l 和 r 都初始化为 0</li>
-<li>r 指针移动一步</li>
-<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
-<li>3.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解。并尝试通过移动 l 指针缩小窗口大小。循环执行 3.1</li>
-<li>3.2 如果不满足，则继续。</li>
-</ul>
-</li>
-</ol>
-<p>形象地来看的话，就是 r 指针不停向右移动，l 指针仅仅在窗口满足条件之后才会移动，起到窗口收缩的效果。</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">Leetcode 3.无重复字符的最长子串</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Character, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(r = <span class="number">0</span>;r&lt;s.length();r++)<span class="comment">//右边的窗口是一直往前走的</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(s.charAt(r)))<span class="comment">//当不符合条件时，左边窗口移动</span></span><br><span class="line">                l = Math.max(l,map.get(s.charAt(r)) + <span class="number">1</span>);<span class="comment">//只有右边加进窗口的元素是重复的，左边才会移动，所以要移动到重复元素后面一位</span></span><br><span class="line">            map.put(s.charAt(r),r);</span><br><span class="line">            max = Math.max(max,r-l+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-window-substring/">Leetcode 76.最小覆盖子串</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">minWindow</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="literal">null</span> || s == <span class="string">&quot;&quot;</span> || t == <span class="literal">null</span> || t == <span class="string">&quot;&quot;</span> || s.length() &lt; t.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> t_length=t.length();</span><br><span class="line">        <span class="type">char</span>[] chars = s.toCharArray(), chart = t.toCharArray();</span><br><span class="line">        <span class="type">int</span>[] hold = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">128</span>];<span class="comment">//记录窗口中的元素和其个数</span></span><br><span class="line">        <span class="comment">//记录t中的所有元素和元素出现的个数</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;t_length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> temp=chart[i];</span><br><span class="line">            hold[temp]--;</span><br><span class="line">        &#125;</span><br><span class="line">        String output=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//窗口中含有t字符串的元素个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;s.length();right++)</span><br><span class="line">        &#123;</span><br><span class="line">            hold[chars[right]]++;</span><br><span class="line">            <span class="keyword">if</span>(hold[chars[right]]&lt;=<span class="number">0</span>)count++;<span class="comment">//表示右边框进来的是t中的元素</span></span><br><span class="line">            <span class="comment">//当窗口元素达到要求后，此时的目标是找到最小的窗口</span></span><br><span class="line">            <span class="comment">//情况一：左边的元素是不需要的，直接进行左窗口移位</span></span><br><span class="line">            <span class="comment">//情况二：左边的元素是需要的，但是此时右边寻找到了一样的元素，为了进行最小窗口的迭代，将左窗口移位</span></span><br><span class="line">            <span class="keyword">while</span>(count==t_length&amp;&amp;hold[chars[left]]&gt;<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                hold[chars[left]]--;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//进行最小子串的迭代</span></span><br><span class="line">            <span class="keyword">if</span>(count==t_length)</span><br><span class="line">            <span class="keyword">if</span>(output==<span class="string">&quot;&quot;</span>||output.length()&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                output=s.substring(left,right+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/">Leetcode 209.长度最小的子数组</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> num=<span class="number">0</span>;<span class="comment">//记录子数组和</span></span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//记录子数组个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;nums.length;right++)</span><br><span class="line">        &#123;</span><br><span class="line">            num+=nums[right];</span><br><span class="line">            <span class="keyword">while</span>(num&gt;=target)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//最小子数组迭代</span></span><br><span class="line">                <span class="keyword">if</span>(count==<span class="number">0</span>||count&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                    count=right-left+<span class="number">1</span>;</span><br><span class="line">                <span class="comment">//在满足要求的基础上寻找最小子数组</span></span><br><span class="line">                <span class="comment">//此时不断压缩左边窗口，可以遍历出所有满足要求的窗口</span></span><br><span class="line">                num-=nums[left];</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%A0%86%E5%92%8C%E9%98%9F%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%A0%86%E5%92%8C%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">Algorithm__堆和队列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:55:47" itemprop="dateCreated datePublished" datetime="2021-02-10T21:55:47Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E6%A0%91/" class="post-title-link" itemprop="url">Algorithm__树</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:55:37" itemprop="dateCreated datePublished" datetime="2021-02-10T21:55:37Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="树的遍历——颜色标记法"><a href="#树的遍历——颜色标记法" class="headerlink" title="树的遍历——颜色标记法"></a>树的遍历——颜色标记法</h1><p>我们知道垃圾回收算法中，有一种算法叫三色标记法。 即：</p>
-<ul>
-<li>用白色表示尚未访问</li>
-<li>灰色表示尚未完全访问子节点</li>
-<li>黑色表示子节点全部访问</li>
-</ul>
-<p>那么我们可以模仿其思想，使用双色标记法来统一三种遍历。</p>
-<p>其核心思想如下：</p>
-<ul>
-<li>使用颜色标记节点的状态，新节点为白色，已访问的节点为灰色。</li>
-<li>如果遇到的节点为白色，则将其标记为灰色，然后将其右子节点、自身、左子节点依次入栈。</li>
-<li>如果遇到的节点为灰色，则将节点的值输出。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/submissions/">剑指 Offer 34.二叉树中和为某一定值</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> </span><br><span class="line">&#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; list = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">pathSum</span><span class="params">(TreeNode root, <span class="type">int</span> sum)</span> &#123;</span><br><span class="line">        List&lt;Integer&gt; node = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;Integer&gt;();</span><br><span class="line">        bfs(root,<span class="number">0</span>,node,sum);</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">bfs</span><span class="params">(TreeNode root,<span class="type">int</span> all,List node,<span class="type">int</span> sum)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(root==<span class="literal">null</span>)<span class="keyword">return</span>;</span><br><span class="line">        node.add(root.val);</span><br><span class="line">        all+=root.val;</span><br><span class="line">        <span class="keyword">if</span>(sum==all)<span class="comment">//从树的根节点开始往下一直到叶节点所经过的节点形成一条路径。</span></span><br><span class="line">        &#123;</span><br><span class="line">            list.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(node));</span><br><span class="line">            <span class="comment">//return;如果加了return 会得不到正确的结果。因为代码提前return，导致后面的remove没有执行，影响回溯了。</span></span><br><span class="line">        &#125;</span><br><span class="line">        bfs(root.left,all,node,sum);</span><br><span class="line">        bfs(root.right,all,node,sum);</span><br><span class="line">        node.remove(node.size()-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1825,7 +2029,7 @@ DROP FOREIGN KEY fk_PerOrders
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">165</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1838,7 +2042,7 @@ DROP FOREIGN KEY fk_PerOrders
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
