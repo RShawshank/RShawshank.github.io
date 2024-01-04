@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201419110.jpeg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201423927.webp">
 <meta property="article:published_time" content="2023-04-18T14:34:55.000Z">
-<meta property="article:modified_time" content="2023-07-12T08:01:18.322Z">
+<meta property="article:modified_time" content="2023-11-22T03:00:10.811Z">
 <meta property="article:author" content="rhb">
 <meta property="article:tag" content="netty">
 <meta name="twitter:card" content="summary">
@@ -138,17 +138,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">68</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">28</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">32</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -260,7 +260,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-12 08:01:18" itemprop="dateModified" datetime="2023-07-12T08:01:18Z">2023-07-12</time>
+                <time title="修改时间：2023-11-22 03:00:10" itemprop="dateModified" datetime="2023-11-22T03:00:10Z">2023-11-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -305,8 +305,12 @@
 <li>连接超时和关闭机制</li>
 </ol>
 <p>想想就觉得很复杂了！实际上，基于NIO直接实现这部分东西，即使是老手也容易出现错误，而使用Netty之后，你只需要关注逻辑处理部分就可以了。</p>
-<h1 id="NIO和BIO"><a href="#NIO和BIO" class="headerlink" title="NIO和BIO"></a>NIO和BIO</h1><p>NIO代表的一个词汇叫着IO多路复用。它是由操作系统提供的系统调用，早期这个操作系统调用的名字是select，但是性能低下，后来渐渐演化成了Linux下的epoll和Mac里的kqueue。我们一般就说是epoll，因为没有人拿苹果电脑作为服务器使用对外提供服务。而Netty就是基于Java NIO技术封装的一套框架。</p>
+<h1 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h1><p>BIO是一个连接一个线程。</p>
+<p>NIO是一个请求一个线程。</p>
+<p>AIO是一个有效请求一个线程。</p>
+<h2 id="NIO和BIO"><a href="#NIO和BIO" class="headerlink" title="NIO和BIO"></a>NIO和BIO</h2><p>NIO代表的一个词汇叫着IO多路复用。它是由操作系统提供的系统调用，早期这个操作系统调用的名字是select，但是性能低下，后来渐渐演化成了Linux下的epoll和Mac里的kqueue。我们一般就说是epoll，因为没有人拿苹果电脑作为服务器使用对外提供服务。而Netty就是基于Java NIO技术封装的一套框架。</p>
 <p>BIO（Blocking IO）,如何理解这个Blocking呢？</p>
+<p>服务器实现模式为一个连接一个线程，即<strong>客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销</strong>，可以通过线程池机制改善(实现多个客户连接服务器)</p>
 <ol>
 <li>客户端监听（Listen）时，Accept是阻塞的，只有新连接来了，Accept才会返回，主线程才能继续</li>
 <li>读写socket时，Read是阻塞的，只有请求消息来了，Read才能返回，子线程才能继续处理</li>
@@ -318,11 +322,16 @@
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422526.webp" alt="img"></p>
 <p>BIO 的 Server 通信的简单模型：</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304201422298.webp" alt="img"></p>
+<p>NIO多路复用：</p>
+<p>NIO 的非阻塞模式，使一个线程从某通道发送请求或者读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取，而不是保持线程阻塞，所以直至数据变的可以读取之前，该线程可以继续做其他的事情。 非阻塞写也是如此，一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。</p>
 <p>NIO的特点：</p>
 <ol>
 <li>一个线程可以处理多个通道，减少线程创建数量；</li>
 <li>读写非阻塞，节约资源：没有可读／可写数据时，不会发生阻塞导致线程资源的浪费</li>
 </ol>
+<h2 id="AIO"><a href="#AIO" class="headerlink" title="AIO"></a>AIO</h2><p>非阻塞异步IO模型。简单来说，内核将读完成事件通知应用，读操作由内核完成，应用只需操作数据即可；应用做异步写操作时立即返回，内核会进行写操作排队并执行写操作。</p>
+<p>对于NIO来说，我们的业务线程是在IO操作准备好时，得到通知，接着就由这个线程自行进行IO操作，IO操作本身是同步的。</p>
+<p>但是对AIO来说，则更加进了一步，它不是在IO准备好时再通知线程，而是在IO操作已经完成后，再给线程发出通知。因此AIO是不会阻塞的，此时我们的业务逻辑将变成一个回调函数，等待IO操作完成后，由系统自动触发。</p>
 <h1 id="Netty中的buffer"><a href="#Netty中的buffer" class="headerlink" title="Netty中的buffer"></a>Netty中的buffer</h1><p>Netty的结构最底层是buffer机制</p>
 <h2 id="buffer是什么"><a href="#buffer是什么" class="headerlink" title="buffer是什么"></a>buffer是什么</h2><p>buffer中文名又叫缓冲区，是”在数据传输时，在内存里开辟的一块临时保存数据的区域”。它其实是一种化同步为异步的机制，可以解决数据传输的速率不对等以及不稳定的问题。</p>
 <p>根据这个定义，我们可以知道涉及I&#x2F;O(特别是I&#x2F;O写)的地方，基本会有Buffer了。就Java来说，我们非常熟悉的Old I&#x2F;O–<code>InputStream</code>&amp;<code>OutputStream</code>系列API，基本都是在内部使用到了buffer。Java课程老师就教过，必须调用<code>OutputStream.flush()</code>，才能保证数据写入生效！</p>
@@ -510,7 +519,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NIO%E5%92%8CBIO"><span class="nav-number">2.</span> <span class="nav-text">NIO和BIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84buffer"><span class="nav-number">3.</span> <span class="nav-text">Netty中的buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.1.</span> <span class="nav-text">buffer是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-x2F-IP%E5%8D%8F%E8%AE%AE%E4%B8%8Ebuffer"><span class="nav-number">3.2.</span> <span class="nav-text">TCP&#x2F;IP协议与buffer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">事件驱动模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reactor"><span class="nav-number">5.</span> <span class="nav-text">Reactor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">Reactor线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.1.</span> <span class="nav-text">Reactor单线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.2.</span> <span class="nav-text">Reactor多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.3.</span> <span class="nav-text">Reactor主从模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.</span> <span class="nav-text">Netty 的零拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%84%8F%E4%B9%89%E7%9A%84%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.1.</span> <span class="nav-text">传统意义的拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%B6%E6%8B%B7%E8%B4%9D%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">5.2.2.</span> <span class="nav-text">零拷贝的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.3.</span> <span class="nav-text">Netty中的零拷贝</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO%E5%92%8CBIO"><span class="nav-number">2.1.</span> <span class="nav-text">NIO和BIO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AIO"><span class="nav-number">2.2.</span> <span class="nav-text">AIO</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84buffer"><span class="nav-number">3.</span> <span class="nav-text">Netty中的buffer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.1.</span> <span class="nav-text">buffer是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-x2F-IP%E5%8D%8F%E8%AE%AE%E4%B8%8Ebuffer"><span class="nav-number">3.2.</span> <span class="nav-text">TCP&#x2F;IP协议与buffer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">事件驱动模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reactor"><span class="nav-number">5.</span> <span class="nav-text">Reactor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">Reactor线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.1.</span> <span class="nav-text">Reactor单线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.2.</span> <span class="nav-text">Reactor多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor%E4%B8%BB%E4%BB%8E%E6%A8%A1%E5%9E%8B"><span class="nav-number">5.1.3.</span> <span class="nav-text">Reactor主从模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Netty-%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.</span> <span class="nav-text">Netty 的零拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%84%8F%E4%B9%89%E7%9A%84%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.1.</span> <span class="nav-text">传统意义的拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%B6%E6%8B%B7%E8%B4%9D%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">5.2.2.</span> <span class="nav-text">零拷贝的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty%E4%B8%AD%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.2.3.</span> <span class="nav-text">Netty中的零拷贝</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -524,20 +533,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">177</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">72</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -569,7 +578,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
