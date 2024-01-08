@@ -22,15 +22,13 @@
     var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Kafka（一）">
+  <meta name="description" content="Kafka（一）——基本概念">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka（一）">
-<meta property="og:url" content="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:title" content="Kafka（一）——基本概念">
+<meta property="og:url" content="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="rhb_blog">
-<meta property="og:description" content="Kafka（一）">
+<meta property="og:description" content="Kafka（一）——基本概念">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/28/16eb068bb0f1a796~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp">
-<meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/28/16eb068bb477c550~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918278.webp">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281432907.jpeg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281433158.jpeg">
@@ -41,6 +39,12 @@
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281443598.jpeg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281443814.jpeg">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281443672.jpeg">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/167520dfe8774b99ab535652d801093c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/afc0c54c83e04f44915e6ccf66881ec2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/019590a19b0743f5be9c57fc537bef34~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081426362.webp">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/697ed6604e154bf593cd6dc7964b56a0~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8ab68b6f42974821a0e7747fb5cbb182~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp">
 <meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918244.webp">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5cf4faf24ab42a595766c7a2bf41c74~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5156282ac58a4917801ac5c8b1b84491~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp">
@@ -49,13 +53,13 @@
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cd1895a27cf646fe9bb306babb3828fe~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp">
 <meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/68dea3e907fe43cfa012ffd395b7a993~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp">
 <meta property="article:published_time" content="2023-04-20T15:01:01.000Z">
-<meta property="article:modified_time" content="2023-06-20T07:31:28.624Z">
+<meta property="article:modified_time" content="2024-01-08T06:28:21.716Z">
 <meta property="article:author" content="rhb">
 <meta property="article:tag" content="Kafka">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/28/16eb068bb0f1a796~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918278.webp">
 
-<link rel="canonical" href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/">
+<link rel="canonical" href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
 
 
 <script id="page-configurations">
@@ -68,7 +72,7 @@
   };
 </script>
 
-  <title>Kafka（一） | rhb_blog</title>
+  <title>Kafka（一）——基本概念 | rhb_blog</title>
   
 
 
@@ -149,17 +153,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">73</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">32</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">180</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -241,7 +245,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -254,7 +258,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Kafka（一）
+          Kafka（一）——基本概念
         </h1>
 
         <div class="post-meta">
@@ -271,7 +275,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 07:31:28" itemprop="dateModified" datetime="2023-06-20T07:31:28Z">2023-06-20</time>
+                <time title="修改时间：2024-01-08 06:28:21" itemprop="dateModified" datetime="2024-01-08T06:28:21Z">2024-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,7 +288,7 @@
             </span>
 
           
-            <div class="post-description">Kafka（一）</div>
+            <div class="post-description">Kafka（一）——基本概念</div>
 
         </div>
       </header>
@@ -317,12 +321,7 @@
 <li>流式处理：流式处理是有一个能够提供多种应用程序的领域。</li>
 <li>限流削峰：Kafka 多用于互联网领域某一时刻请求特别多的情况下，可以把请求写入Kafka 中，避免直接请求后端程序导致服务崩溃。</li>
 </ul>
-<h2 id="Kafka-的消息队列"><a href="#Kafka-的消息队列" class="headerlink" title="Kafka 的消息队列"></a>Kafka 的消息队列</h2><p>Kafka 的消息队列一般分为两种模式：点对点模式和发布订阅模式</p>
-<p>Kafka 是支持消费者群组的，也就是说 Kafka 中会有一个或者多个消费者，如果一个生产者生产的消息由一个消费者进行消费的话，那么这种模式就是点对点模式</p>
-<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/28/16eb068bb0f1a796~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
-<p>如果一个生产者或者多个生产者产生的消息能够被多个消费者同时消费的情况，这样的消息队列成为发布订阅模式的消息队列</p>
-<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/11/28/16eb068bb477c550~tplv-t2oaga2asx-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
-<h2 id="Kafka整体架构"><a href="#Kafka整体架构" class="headerlink" title="Kafka整体架构"></a>Kafka整体架构</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918278.webp" alt="img"></p>
+<h2 id="Kafka-整体架构"><a href="#Kafka-整体架构" class="headerlink" title="Kafka 整体架构"></a>Kafka 整体架构</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918278.webp" alt="img"></p>
 <p>一个典型的 Kafka 体系架构包括若干 Producer、若干 Broker、若干 Consumer，以及一个 ZooKeeper 集群，如图所示。其中 ZooKeeper 是 Kafka 用来负责集群元数据的管理、控制器 的选举等操作的。Producer 将消息发送到 Broker，Broker 负责将收到的消息存储到磁盘中，而 Consumer 负责从 Broker 订阅并消费消息。</p>
 <p>整个 Kafka 体系结构中引入了以下 3 个术语。</p>
 <ul>
@@ -337,20 +336,20 @@
 <p>主题：一个逻辑上的概念，它还可以细分为多个分区，<strong>一个分区只属于单个主题</strong>。同一主题下的不同分区包含的消息是不同的，分区在存储层面可以看作一个可追加的日志（Log）文件，消息在被追加到分区日志文件的时候都会分配一个特定的偏移量（offset）。</p>
 <p>offset ：消息在分区中的唯一标识，Kafka 通过它来保证消息在分区内的顺序性，不过 offset 并不跨越分区，也就是说，<strong>Kafka 保证的是分区有序而不是主题有序</strong>。</p>
 <p>重平衡：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。</p>
-<h2 id="1-topic"><a href="#1-topic" class="headerlink" title="1.topic"></a>1.topic</h2><p>Event（事件）代表过去发生的一个事实。简单理解就是一条消息、一条记录。</p>
+<h2 id="topic"><a href="#topic" class="headerlink" title="topic"></a>topic</h2><p>Event（事件）代表过去发生的一个事实。简单理解就是一条消息、一条记录。</p>
 <p>Event 是不可变的，但是很活跃，经常从一个地方流向另一个地方。</p>
 <p>Stream 事件流表示运动中的相关事件。</p>
 <p>当一个事件流进入 Kafka 之后，它就成为了一个 Topic 主题。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281432907.jpeg" alt="img"></p>
 <p>所以，Topic 就是具体的事件流，也可以理解为一个 Topic 就是一个静止的 Stream。</p>
 <p>Topic 把相关的 Event 组织在一起，并且保存。一个 Topic 就像数据库中的一张表。</p>
-<h2 id="2-Partition-分区"><a href="#2-Partition-分区" class="headerlink" title="2.Partition 分区"></a>2.Partition 分区</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281433158.jpeg" alt="img"></p>
+<h2 id="Partition-分区"><a href="#Partition-分区" class="headerlink" title="Partition 分区"></a>Partition 分区</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281433158.jpeg" alt="img"></p>
 <p>Kafka 中 Topic 被分成多个 Partition 分区。</p>
 <p>Topic 是一个逻辑概念，Partition 是最小的存储单元，掌握着一个 Topic 的部分数据。</p>
 <p>每个 Partition 都是一个单独的 log 文件，每条记录都以追加的形式写入。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281433605.jpeg" alt="img"></p>
 <p>Record（记录） 和 Message（消息）是一个概念。</p>
-<h3 id="2-1-Offsets（偏移量）和消息的顺序"><a href="#2-1-Offsets（偏移量）和消息的顺序" class="headerlink" title="2.1 Offsets（偏移量）和消息的顺序"></a>2.1 Offsets（偏移量）和消息的顺序</h3><p>Partition 中的每条记录都会被分配一个唯一的序号，称为 Offset（偏移量）。</p>
+<h3 id="Offsets（偏移量）和消息的顺序"><a href="#Offsets（偏移量）和消息的顺序" class="headerlink" title="Offsets（偏移量）和消息的顺序"></a>Offsets（偏移量）和消息的顺序</h3><p>Partition 中的每条记录都会被分配一个唯一的序号，称为 Offset（偏移量）。</p>
 <p>Offset 是一个递增的、不可变的数字，由 Kafka 自动维护。</p>
 <p>当一条记录写入 Partition 的时候，它就被追加到 log 文件的末尾，并被分配一个序号，作为 Offset。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281434219.jpeg" alt="img"></p>
@@ -359,7 +358,7 @@
 <p>但单独看 Partition 的话，Partition 内部消息是有序的。</p>
 <p>所以，一个 Partition 内部消息有序，一个 Topic 跨 Partition 是无序的。</p>
 <p>如果强制要求 Topic 整体有序，就只能让 Topic 只有一个 Partition。</p>
-<h3 id="2-2-Partition的扩展能力"><a href="#2-2-Partition的扩展能力" class="headerlink" title="2.2 Partition的扩展能力"></a>2.2 Partition的扩展能力</h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281435646.jpeg" alt="img"></p>
+<h3 id="Partition的扩展能力"><a href="#Partition的扩展能力" class="headerlink" title="Partition的扩展能力"></a>Partition的扩展能力</h3><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281435646.jpeg" alt="img"></p>
 <p>一个 Kafka 集群由多个 Broker（就是 Server） 构成，每个 Broker 中含有集群的部分数据。</p>
 <p>Kafka 把 Topic 的多个 Partition 分布在多个 Broker 中。</p>
 <p>这样会有多种好处：</p>
@@ -368,7 +367,7 @@
 <li>一个 Topic 可以被多个 Consumer 并行消费。如果 Topic 的所有 Partition 都在一个 Broker，那么支持的 Consumer 数量就有限，而分散之后，可以支持更多的 Consumer。</li>
 <li>一个 Consumer 可以有多个实例，Partition 分布在多个 Broker 的话，Consumer 的多个实例就可以连接不同的 Broker，大大提升了消息处理能力。可以让一个 Consumer 实例负责一个 Partition，这样消息处理既清晰又高效。</li>
 </ul>
-<h3 id="2-3-写入Partition"><a href="#2-3-写入Partition" class="headerlink" title="2.3 写入Partition"></a>2.3 写入Partition</h3><h4 id="使用-Partition-Key-写入特定-Partition"><a href="#使用-Partition-Key-写入特定-Partition" class="headerlink" title="使用 Partition Key 写入特定 Partition"></a>使用 Partition Key 写入特定 Partition</h4><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281440047.jpeg" alt="img"></p>
+<h3 id="写入Partition"><a href="#写入Partition" class="headerlink" title="写入Partition"></a>写入Partition</h3><h4 id="使用-Partition-Key-写入特定-Partition"><a href="#使用-Partition-Key-写入特定-Partition" class="headerlink" title="使用 Partition Key 写入特定 Partition"></a>使用 Partition Key 写入特定 Partition</h4><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281440047.jpeg" alt="img"></p>
 <p>Producer 发送消息的时候，可以指定一个 Partition Key，这样就可以写入特定 Partition 了。</p>
 <p>Partition Key 可以使用任意值，例如设备ID、User ID。</p>
 <p>Partition Key 会传递给一个 Hash 函数，由计算结果决定写入哪个 Partition。</p>
@@ -380,7 +379,7 @@
 <p>这样，消息会均衡的写入各个 Partition。</p>
 <p>但这样无法确保消息的有序性。</p>
 <h4 id="自定义规则"><a href="#自定义规则" class="headerlink" title="自定义规则"></a>自定义规则</h4><p>Kafka 支持自定义规则，一个 Producer 可以使用自己的分区指定规则。</p>
-<h3 id="2-4-读取-Partition"><a href="#2-4-读取-Partition" class="headerlink" title="2.4 读取 Partition"></a>2.4 读取 Partition</h3><p>Kafka 不像普通消息队列具有发布&#x2F;订阅功能，Kafka 不会向 Consumer 推送消息。</p>
+<h3 id="读取-Partition"><a href="#读取-Partition" class="headerlink" title="读取 Partition"></a>读取 Partition</h3><p>Kafka 不像普通消息队列具有发布&#x2F;订阅功能，Kafka 不会向 Consumer 推送消息。</p>
 <p>Consumer 必须自己从 Topic 的 Partition 拉取消息。</p>
 <p>一个 Consumer 连接到一个 Broker 的 Partition，从中依次读取消息。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281443598.jpeg" alt="img"></p>
@@ -394,8 +393,8 @@
 <p>消费组这种方式可以让多个 Partition 并行消费，大大提高了消息的消费能力，最大并行度为 Topic 的 Partition 数量。</p>
 <p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304281443672.jpeg" alt="img"></p>
 <p>例如一个 Topic 有 3 个 Partition，你有 4 个 Consumer 负责这个 Topic，也只会有 Consumer 工作，另一个作为后补队员，当某个 Consumer 故障了，它再补上去，是一种很好的容错机制。</p>
-<h2 id="3-消费者与消费组"><a href="#3-消费者与消费组" class="headerlink" title="3.消费者与消费组"></a>3.消费者与消费组</h2><p>一个<code>topic</code> 可以被 <strong>多个</strong> <code>消费者组</code> 消费，但是每个 <code>消费者组</code> 消费的数据是 <strong>互不干扰</strong> 的，也就是说，每个 <code>消费组</code> 消费的都是 <strong>完整的数据</strong> 。</p>
-<p>一个分区只能被 <strong>同一个消费组内</strong> 的一个 <code>消费者</code> 消费，而 <strong>不能拆给多个消费者</strong> 消费，也就是说如果你某个 消费者组内的消费者数 比 该 Topic 的分区数还多，那么多余的消费者是不起作用的</p>
+<h2 id="消费者与消费组"><a href="#消费者与消费组" class="headerlink" title="消费者与消费组"></a>消费者与消费组</h2><p>一个<code>topic</code> 可以被 <strong>多个</strong> <code>消费者组</code> 消费，但是每个 <code>消费者组</code> 消费的数据是 <strong>互不干扰</strong> 的，也就是说，每个 <code>消费组</code> 消费的都是 <strong>完整的数据</strong> 。</p>
+<p>一个分区只能被 <strong>同一个消费组内</strong> 的一个 <code>消费者</code> 消费，而 <strong>不能拆给多个消费者</strong> 消费，也就是说如果你某个消费者组内的消费者数比该 Topic 的分区数还多，那么多余的消费者是不起作用的</p>
 <ol>
 <li>在同一个消费者组内，一个 Partition 只能被一个消费者消费。</li>
 <li>在同一个消费者组内，所有消费者组合起来必定可以消费一个 Topic 下的所有 Partition。</li>
@@ -403,7 +402,124 @@
 <li>在不同消费者组内，同一个分区可以被多个消费者消费。</li>
 <li>每个消费者组一定会完整消费一个 Topic 下的所有 Partition。</li>
 </ol>
-<h2 id="4-存储视图"><a href="#4-存储视图" class="headerlink" title="4.存储视图"></a>4.存储视图</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918244.webp" alt="img"></p>
+<h1 id="核心机制"><a href="#核心机制" class="headerlink" title="核心机制"></a>核心机制</h1><p>整个 Kafka Core 中权重最大、使用频率最高的三个角色是 Broker、Producer 和 Consumer，这几个角色的使用和我们的业务开发也是息息相关，对这些角色的核心机制进行深入了解对后续的业务开发、故障排查是有很大帮助</p>
+<h2 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h2><p>Broker 端是 Kafka 整个内部处理流程最复杂的组件了，这当中的机制没有办法一个一个列举出来详细说，我这里选择了 Controller 和 Broker 管理机制，还有副本管理中的高水位机制来进行介绍</p>
+<p>之所以选择这几个机制进行解读，是因为他们对帮助理解集群故障转移过程中的行为、影响面有很大帮助，其他机制都是围绕着这些核心的一些外围机制，是一些辅助角色</p>
+<h3 id="Controller-选举"><a href="#Controller-选举" class="headerlink" title="Controller 选举"></a>Controller 选举</h3><p>我下面画了一张集群故障转移的图，描述的是 Controller 因网络、硬件故障等原因下线，整个集群重新选举 Controller 的过程</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/167520dfe8774b99ab535652d801093c~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="流程图 (8).jpg"></p>
+<p>如图所示，整个 Controller 选举的过程分四个阶段进行：</p>
+<ul>
+<li>阶段 1：因为 Controller 和 Zookeeper 之间的会话因为超时、网络连接断开等原因失效，导致临时节点 &#x2F;controller 被删除</li>
+<li>阶段 2：Broker 1 和 Broker 2 监听到了 &#x2F;controller 删除的事件，触发了 Controller 的重新选举</li>
+<li>阶段 3：Broker 1 成功创建 &#x2F;controller 节点并写入数据，Broker 2 检测到了新写入的 &#x2F;controller 数据中止选举</li>
+<li>阶段 4：Broker 1 作为 Controller 初始化完成，向集群中的其他节点发送更新集群元数据的请求，同步最新的数据</li>
+</ul>
+<p>这个过程称之为「选举」其实有些不合适，因为这里其实基于锁的一种选主机制，先抢到锁的获得资源使用权，因为后面 Kafka 推出了基于 KRaft 选举协议的 Controller，所以这里想做一些特别说明</p>
+<p>注意，Controller 的选举之后往往伴随着 Broker 的下线，因为 Controller 的重新选举一般就是 Broker 失效引起的，下一节会介绍这其中的相关机制</p>
+<h3 id="Broker-上线下线"><a href="#Broker-上线下线" class="headerlink" title="Broker 上线下线"></a>Broker 上线下线</h3><p>在线的 Controller 通过监听 &#x2F;brokers 节点的异动情况处理 Broker 的上线、下线事件，这里梳理了一下整个事件处理的流程</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/afc0c54c83e04f44915e6ccf66881ec2~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="流程图 (9).jpg"></p>
+<p>整个处理的流程还是比较清晰的，分支不多，值得注意的点有几个：</p>
+<ol>
+<li>异动数据是通过比对 Controller 中的元数据和 ZK 的数据差异计算出来的</li>
+<li>这是个异步处理流程，在 ControllerEventManager 中用队列进行了解耦</li>
+<li>针对 bouncedBroker 的处理方式是先移除，再添加</li>
+<li>KafkaController 中的 onBrokerStartup 方法执行了 Broker 上线后的存在 新增&#x2F;离线 副本的分区进行领导者选举</li>
+</ol>
+<p>Broker 的异动在集群中是一个非常重要的事件，因为其影响到了集群整体的可用性：</p>
+<ul>
+<li>Coordinator 需要转移到其他 Broker 上，否则与之绑定的消费者组无法正常运行，且转移期间消费者组无法正常消费</li>
+<li>分区副本，尤其是领导者副本需要在 Broker 中重新分布，并且会触发分区领导者副本选举</li>
+</ul>
+<p>上面两点我认为是集群 Broker 异动过程中比较核心的地方，因为 Controller 端处理完成 Broker 的元数据变更，后面的更新机制都是围绕这两个点进行</p>
+<h3 id="高水位更新"><a href="#高水位更新" class="headerlink" title="高水位更新"></a>高水位更新</h3><p>高水位是 Kafka 设计的一套用于跟踪从副本异步复制进度和保证数据一致性的机制</p>
+<p>在架构部分简要说了一下 Kafka 的副本管理中副本数据的分布情况，这里进一步介绍一下对一个分区来说，是如何通过高水位管理数据同步进度的</p>
+<p>这里我们用一个三副本的分区的场景来介绍该场景下高水位的值是如何更新到 4 的，如下图所示：</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/019590a19b0743f5be9c57fc537bef34~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="流程图 (10).jpg"></p>
+<p>注意：</p>
+<ul>
+<li>为了方便讨论，这里假设三个副本始终都在 ISR 中</li>
+<li>已写入领导者副本的消息在写入时均满足最小已同步副本要求</li>
+</ul>
+<h4 id="更新规则"><a href="#更新规则" class="headerlink" title="更新规则"></a>更新规则</h4><p>在分析这个更新流程之前，我们先明确一下更新规则：</p>
+<ol>
+<li>高水位的值就是远程副本状态中远程 LEO 的最小值，注意这里不判定 ISR 是否满足最小已同步副本要求</li>
+<li>从副本同步时拉取消息的起始偏移，会被记录为此副本在 ISR 中的远程 LEO</li>
+<li>从副本拉取消息时，返回数据中包括当前最新的高水位值</li>
+</ol>
+<p>整个高水位的更新流程都是基于上面这三条规则去运行的，这三条规则一起看能有点眼花缭乱，总结一下就是每次从副本发起消息同步请求的时候干两件事：</p>
+<ol>
+<li>上报自己的拉取消息起点，领导者副本将其当做 LEO</li>
+<li>获取领导者副本的 HW 用于更新同步本地的 HW</li>
+</ol>
+<h4 id="流程解读"><a href="#流程解读" class="headerlink" title="流程解读"></a>流程解读</h4><p>现在来看下这三条规则是如何应用的，更新流程如下：</p>
+<ul>
+<li>阶段1：副本 0 和 2 消息都完全同步，仅副本 1 存在 2 条消息的延迟，这时候副本 1 发出同步请求，远程副本状态中对应的远程 LEO 更新为 4，本地 LEO 更新为 5</li>
+<li>阶段2：因为远程副本状态中的远程 LEO 发生变化，领导者副本的高水位更新为 4，随后从副本 2 发出同步请求，获取到了最新的高水位 4 并更新本地值，LEO 不发生变化</li>
+<li>阶段3：从副本 1 继续发出同步请求，远程副本状态的远程 LEO 此时被更新为 5，请求返回后获取到了最新的高水位 4 并更新本地值，同时远程 LEO 的更新引起领导者副本 0 高水位的变化，更新为 5，随后从副本 2 通过同步请求获取到了变化后的值，高水位也随之更新为 5</li>
+</ul>
+<p>后续重复以上流程，最终所有副本的高水位和 LEO 都会更新到 5</p>
+<h2 id="Producer"><a href="#Producer" class="headerlink" title="Producer"></a>Producer</h2><h3 id="消息发送机制"><a href="#消息发送机制" class="headerlink" title="消息发送机制"></a>消息发送机制</h3><p>目前生产端的消息发送是基于异步发送机制实现的，通过 RecordAccumulator 去做了解耦了消息生产和网络请求</p>
+<p>RecordAccumulator 两侧各自的处理流程，用户侧调用 send 方法之后，消息被追加到 RecordAccumulator，异步线程轮询，满足条件之后调用网络客户端的 send 方法向 Broker 发送消息生产请求</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081426362.webp" alt="流程图 (11).jpg"></p>
+<h4 id="消息乱序问题"><a href="#消息乱序问题" class="headerlink" title="消息乱序问题"></a>消息乱序问题</h4><p>我们通常认为生产者发送的消息总是能够保证分区有序，这是一种误解，因为这里有一个陷阱，就是 <code>max.in.flight.requests.per.connection</code> 这个客户端网络配置</p>
+<p>查阅 Kafka 的 <a href="https://link.juejin.cn/?target=https://kafka.apache.org/documentation/%23producerconfigs_max.in.flight.requests.per.connection">官方文档</a> 此配置的默认值是 5，表示一个连接中可以同时有 5 个消息批次在途，文档中也明确指出了由于错误重试的关系，这种场景下消息会乱序</p>
+<p>所以，当我们业务上对消息顺序有硬性需求的时候，这个点必须引起重视</p>
+<h3 id="消息分区机制"><a href="#消息分区机制" class="headerlink" title="消息分区机制"></a>消息分区机制</h3><p>消息分区机制可以认为是生产端的负载均衡机制，下面梳理了一张分区计算的流程图，不同的分支对应不同的分区场景</p>
+<p>需要注意的一点就是分区函数的入参不只是消息的 Key，Topic、Value、Cluster（集群元数据）都可以作为该函数的输入信息去计算分区</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/697ed6604e154bf593cd6dc7964b56a0~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="流程图 (12).jpg"></p>
+<h2 id="Consumer"><a href="#Consumer" class="headerlink" title="Consumer"></a>Consumer</h2><h3 id="成员管理"><a href="#成员管理" class="headerlink" title="成员管理"></a>成员管理</h3><p>消费者组是 Kafka 消费端实现负载均衡、动态扩容、故障转移的重要机制，此机制的运行和流转需要 Broker 端的 Coordinator 和消费端的 Consumer 通过建立长连接进行交互和状态流转来完成此项工作</p>
+<h4 id="Coordinator-的定位"><a href="#Coordinator-的定位" class="headerlink" title="Coordinator 的定位"></a>Coordinator 的定位</h4><p>这里插入一个小话题，那就是消费者怎么知道自己的 Coordinator 在哪个 Broker 上，计算的过程非常简明，就是根据消费者组名的 HashCode 对 __consumer_offset 主题的分区数进行取余，代码如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Scala</span></span><br><span class="line">复制代码<span class="function"><span class="keyword">def</span> <span class="title">partitionFor</span></span>(groupId: <span class="type">String</span>): <span class="type">Int</span> = <span class="type">Utils</span>.abs(groupId.hashCode) % groupMetadataTopicPartitionCount</span><br></pre></td></tr></table></figure>
+
+<p>计算出的分区领导者副本所在的 Broker 就是对应 Coordinator 的位置</p>
+<p>注意，上述计算过程中所需的各种关于集群的信息，在获取集群元数据的阶段都缓存在了本地，这在本文的「架构-集群架构解析-消费」这一部分已经介绍过了</p>
+<h4 id="消费者组状态机"><a href="#消费者组状态机" class="headerlink" title="消费者组状态机"></a>消费者组状态机</h4><p>消费者组有一个状态集合，整个消费者组就是在这几个状态之间流转的，下面我用表格和状态机图例说明这些状态怎么流转的，状态列表如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>状态</strong></th>
+<th><strong>前置状态</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Empty</td>
+<td>PreparingRebalance</td>
+<td>此状态同时也是初始状态</td>
+</tr>
+<tr>
+<td>PreparingRebalance</td>
+<td>Empty, CompletingRebalance, Stable</td>
+<td></td>
+</tr>
+<tr>
+<td>CompletingRebalance</td>
+<td>PreparingRebalance</td>
+<td></td>
+</tr>
+<tr>
+<td>Stable</td>
+<td>CompletingRebalance</td>
+<td>转移条件一般是 Coordinator 收到领导者发来的组同步请求</td>
+</tr>
+<tr>
+<td>Dead</td>
+<td>Empty, PreparingRebalance, CompletingRebalance, Stable</td>
+<td>通常是 Coordinator 出现转移会导致组状态变成 Dead</td>
+</tr>
+</tbody></table>
+<p>状态流转图如下：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8ab68b6f42974821a0e7747fb5cbb182~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp" alt="流程图 (13).jpg"></p>
+<p>上图展示的是所有可能的状态流转路径，对一个新创建的消费者组来说，符合预期的流转路径是 1 → 3 → 5，下一小节介绍重平衡机制的时候会详细说明流转过程</p>
+<p>此外，这个状态流转图中有一个危险的“死亡循环”，也就是 3 ⇆ 4 这两条路径组成的循环</p>
+<h3 id="心跳保活机制"><a href="#心跳保活机制" class="headerlink" title="心跳保活机制"></a>心跳保活机制</h3><p>消费者加入消费者组之后，还需要保活机制维持其组成员的这个身份，保活主要通过两条路径来进行：</p>
+<ol>
+<li>客户端每次 poll 尝试拉取消息，Consumer 中运行在异步线程的 ConsumerCoordinator 会判定两次 poll 的时间间隔是否超出 <code>max.poll.interval.ms</code> 设定的值，超过则判定失效发起主动离组请求</li>
+<li>异步线程定时发送心跳包，间隔超过<code>session.timeout.ms</code> 则服务端判定失效，强制剔除出消费者组</li>
+</ol>
+<p>如果两者之一失效消费者会被移出消费者组并触发重平衡机制，整个过程和上面介绍的重平衡机制类似</p>
+<p>要注意上面两条路径一个是客户端本地判定，另一个是服务去判定的，第一条因为是客户端的实现，有些语言的客户端可能没这个机制</p>
+<h2 id="存储视图"><a href="#存储视图" class="headerlink" title="存储视图"></a>存储视图</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202304240918244.webp" alt="img"></p>
 <p>主题和分区都是提供给上层用户的抽象，而在副本层面或更加确切地说是 Log 层面才有实际物理上的存在。同一个分区中的多个副本必须分布在不同的 broker 中，这样才能提供有效的数据冗余。</p>
 <p>为了防止 Log 过大， Kafka 又引入了日志分段（LogSegment）的概念，将 Log 切分为多个 LogSegment，相当于一个巨型文件被平均分配为多个相对较小的文件，这样也便于消息的维护和清理。事实上，Log 和 LogSegment 也不是纯粹物理意义上的概念，Log 在物理上只以文件夹的形式存储，而每个 LogSegment 对应于磁盘上的一个日志文件和两个索引文件，以及可能的其他文件(比如以 “.txnindex”为后缀的事务索引文件) 。</p>
 <p>举例，查看主题“topic-log”（副本数为 1，分区数为 4）:</p>
@@ -416,7 +532,7 @@
 <blockquote>
 <p>注意每个 LogSegment 中不只包含“.log”“.index”“.timeindex”这 3 种文件，还可能包 含“.deleted”、“.cleaned”、“.swap”等临时文件，以及可能的“.snapshot”、“.txnindex”、 “leader-epoch-checkpoint”等文件。从更加宏观的视角上看，Kafka 中的文件不只上面提及的这些文件，比如还有一些检查点文件。</p>
 </blockquote>
-<h2 id="5-多副本"><a href="#5-多副本" class="headerlink" title="5.多副本"></a>5.多副本</h2><p>Kafka 为分区引入了多副本（Replica）机制，通过增加副本数量可以提升容灾能力。同一分区的不同副本中保存的是相同的消息（在同一时刻，副本之间并非完全一样），副本之间是一主多从的关系，其中 leader 副本负责处理读写请求，follower 副本只负责与 leader 副本的消息同步。副本处于不同的 broker 中，当 leader 副本出现故障时，从 follower 副本中重新选举新的 leader 副本对外提供服务。Kafka 通过多副本机制实现了故障的自动转移，当 Kafka 集群中某个 broker 失效时仍然能保证服务可用。</p>
+<h2 id="多副本"><a href="#多副本" class="headerlink" title="多副本"></a>多副本</h2><p>Kafka 为分区引入了多副本（Replica）机制，通过增加副本数量可以提升容灾能力。同一分区的不同副本中保存的是相同的消息（在同一时刻，副本之间并非完全一样），副本之间是一主多从的关系，其中 leader 副本负责处理读写请求，follower 副本只负责与 leader 副本的消息同步。副本处于不同的 broker 中，当 leader 副本出现故障时，从 follower 副本中重新选举新的 leader 副本对外提供服务。Kafka 通过多副本机制实现了故障的自动转移，当 Kafka 集群中某个 broker 失效时仍然能保证服务可用。</p>
 <p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d39913d9c02946dbba7de22e958905df~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp" alt="img"></p>
 <p>如上图所示，Kafka 集群中有 4 个 broker，某个主题中有 3 个分区，且副本因子（即副本个数）也为 3，如此每个分区便有 1 个 leader 副本和 2 个 follower 副本。生产者和消费者只与 leader 副本进行交互，而 follower 副本只负责消息的同步，很多时候 follower 副本中的消息相对 leader 副本而言会有一定的滞后。</p>
 <p>分区中的所有副本统称为 <strong>AR</strong> <strong>(Assigned Replicas)</strong> 。所有与 leader 副本保持一定程度同步的副本(包括 leader 副本在内)组成 <strong>ISR (In-Sync Replicas)</strong> ，ISR 集合是 AR 集合中的一个子 集。消息会先发送到 leader 副本，然后 follower 副本才能从 leader 副本中拉取消息进行同步， 同步期间内 follower 副本相对于 leader 副本而言会有一定程度的滞后。</p>
@@ -451,7 +567,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/" title="Kafka（一）">http://rshawshank.github.io/2023/04/20/Kafka（一）/</a>
+    <a href="http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" title="Kafka（一）——基本概念">http://rshawshank.github.io/2023/04/20/Kafka（一）——基本概念/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -476,8 +592,8 @@
       <i class="fa fa-chevron-left"></i> netty（二）
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="kafka（二）">
-      kafka（二） <i class="fa fa-chevron-right"></i>
+    <a href="/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/" rel="next" title="kafka（二）——spring cloud stream应用">
+      kafka（二）——spring cloud stream应用 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -537,7 +653,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka"><span class="nav-number">1.</span> <span class="nav-text">Kafka</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%88%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Kafka 的特性（设计原则）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Kafka 的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E7%9A%84%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">1.3.</span> <span class="nav-text">Kafka 的消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">Kafka整体架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">Kafka基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-topic"><span class="nav-number">2.1.</span> <span class="nav-text">1.topic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Partition-%E5%88%86%E5%8C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">2.Partition 分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Offsets%EF%BC%88%E5%81%8F%E7%A7%BB%E9%87%8F%EF%BC%89%E5%92%8C%E6%B6%88%E6%81%AF%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 Offsets（偏移量）和消息的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Partition%E7%9A%84%E6%89%A9%E5%B1%95%E8%83%BD%E5%8A%9B"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 Partition的扩展能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%86%99%E5%85%A5Partition"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3 写入Partition</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Partition-Key-%E5%86%99%E5%85%A5%E7%89%B9%E5%AE%9A-Partition"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">使用 Partition Key 写入特定 Partition</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%B1-kafka-%E5%86%B3%E5%AE%9A"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">由 kafka 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">自定义规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E8%AF%BB%E5%8F%96-Partition"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4 读取 Partition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">3.消费者与消费组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AD%98%E5%82%A8%E8%A7%86%E5%9B%BE"><span class="nav-number">2.4.</span> <span class="nav-text">4.存储视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%A4%9A%E5%89%AF%E6%9C%AC"><span class="nav-number">2.5.</span> <span class="nav-text">5.多副本</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka"><span class="nav-number">1.</span> <span class="nav-text">Kafka</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E7%9A%84%E7%89%B9%E6%80%A7%EF%BC%88%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Kafka 的特性（设计原则）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Kafka 的使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">Kafka 整体架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">Kafka基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#topic"><span class="nav-number">2.1.</span> <span class="nav-text">topic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Partition-%E5%88%86%E5%8C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">Partition 分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Offsets%EF%BC%88%E5%81%8F%E7%A7%BB%E9%87%8F%EF%BC%89%E5%92%8C%E6%B6%88%E6%81%AF%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">Offsets（偏移量）和消息的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition%E7%9A%84%E6%89%A9%E5%B1%95%E8%83%BD%E5%8A%9B"><span class="nav-number">2.2.2.</span> <span class="nav-text">Partition的扩展能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5Partition"><span class="nav-number">2.2.3.</span> <span class="nav-text">写入Partition</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Partition-Key-%E5%86%99%E5%85%A5%E7%89%B9%E5%AE%9A-Partition"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">使用 Partition Key 写入特定 Partition</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%B1-kafka-%E5%86%B3%E5%AE%9A"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">由 kafka 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">自定义规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96-Partition"><span class="nav-number">2.2.4.</span> <span class="nav-text">读取 Partition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85%E4%B8%8E%E6%B6%88%E8%B4%B9%E7%BB%84"><span class="nav-number">2.3.</span> <span class="nav-text">消费者与消费组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">核心机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Broker"><span class="nav-number">3.1.</span> <span class="nav-text">Broker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller-%E9%80%89%E4%B8%BE"><span class="nav-number">3.1.1.</span> <span class="nav-text">Controller 选举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Broker-%E4%B8%8A%E7%BA%BF%E4%B8%8B%E7%BA%BF"><span class="nav-number">3.1.2.</span> <span class="nav-text">Broker 上线下线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%B0%B4%E4%BD%8D%E6%9B%B4%E6%96%B0"><span class="nav-number">3.1.3.</span> <span class="nav-text">高水位更新</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%A7%84%E5%88%99"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">更新规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E8%A7%A3%E8%AF%BB"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">流程解读</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Producer"><span class="nav-number">3.2.</span> <span class="nav-text">Producer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">消息发送机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%B9%B1%E5%BA%8F%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">消息乱序问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%88%86%E5%8C%BA%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.2.</span> <span class="nav-text">消息分区机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Consumer"><span class="nav-number">3.3.</span> <span class="nav-text">Consumer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%90%E5%91%98%E7%AE%A1%E7%90%86"><span class="nav-number">3.3.1.</span> <span class="nav-text">成员管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Coordinator-%E7%9A%84%E5%AE%9A%E4%BD%8D"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">Coordinator 的定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E8%80%85%E7%BB%84%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">消费者组状态机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%83%E8%B7%B3%E4%BF%9D%E6%B4%BB%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.2.</span> <span class="nav-text">心跳保活机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%A7%86%E5%9B%BE"><span class="nav-number">3.4.</span> <span class="nav-text">存储视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%89%AF%E6%9C%AC"><span class="nav-number">3.5.</span> <span class="nav-text">多副本</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -551,20 +667,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

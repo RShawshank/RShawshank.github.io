@@ -1,3 +1,8 @@
+http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/
+http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/
+http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E9%AB%98%E7%BA%A7%E6%9C%BA%E5%88%B6/
+http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/
+http://rshawshank.github.io/2024/01/04/austin%E2%80%94%E2%80%94%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E5%B9%B3%E5%8F%B0/
 http://rshawshank.github.io/2024/01/04/prometheus%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E7%A0%94%E7%A9%B6%E6%89%8B%E5%86%8C/
 http://rshawshank.github.io/2023/08/30/sentinel%E9%9B%86%E6%88%90nacos/
 http://rshawshank.github.io/2023/08/30/sentinel%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/
@@ -14,8 +19,6 @@ http://rshawshank.github.io/2023/04/18/netty%EF%BC%88%E4%B8%80%EF%BC%89/
 http://rshawshank.github.io/2023/07/14/getway%EF%BC%88%E4%B8%89%EF%BC%89/
 http://rshawshank.github.io/2023/07/14/getway%EF%BC%88%E4%BA%8C%EF%BC%89/
 http://rshawshank.github.io/2023/07/14/getway%EF%BC%88%E4%B8%80%EF%BC%89/
-http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/
-http://rshawshank.github.io/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/
 http://rshawshank.github.io/2023/03/20/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E2%80%94%E2%80%94xxljob/
 http://rshawshank.github.io/2023/03/06/seata%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Saga%E6%A8%A1%E5%BC%8F/
 http://rshawshank.github.io/2023/03/06/seata%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94TCC%E6%A8%A1%E5%BC%8F/
@@ -256,6 +259,7 @@ http://rshawshank.github.io/tags/Nightingale/
 http://rshawshank.github.io/tags/k8s/
 http://rshawshank.github.io/tags/Elasticsearch/
 http://rshawshank.github.io/tags/prometheus/
+http://rshawshank.github.io/tags/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/
@@ -288,3 +292,4 @@ http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Nigh
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/Elasticsearch/
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/prometheus/
 http://rshawshank.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/sentinel/
+http://rshawshank.github.io/categories/%E5%B7%A5%E4%BD%9C%E7%AC%94%E8%AE%B0/%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-loading-bar.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="kafka（四）——常见问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka（四）——常见问题">
+<meta property="og:url" content="http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="rhb_blog">
+<meta property="og:description" content="kafka（四）——常见问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081403635.png">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081403072.png">
+<meta property="article:published_time" content="2024-01-08T14:01:08.000Z">
+<meta property="article:modified_time" content="2024-01-08T06:29:28.041Z">
+<meta property="article:author" content="rhb">
+<meta property="article:tag" content="Kafka">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081403635.png">
+
+<link rel="canonical" href="http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>kafka（四）——常见问题 | rhb_blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">rhb_blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">rao的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">73</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">180</span></a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-camera fa-fw"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-resources">
+
+    <a href="/resources/" rel="section"><i class="fa fa-download fa-fw"></i>资源</a>
+
+  </li>
+        <li class="menu-item menu-item-readnote">
+
+    <a href="/readnote" rel="section"><i class="fa fa-book fa-fw"></i>阅读笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-somethink">
+
+    <a href="/somethink/" rel="section"><i class="fa fa-sticky-note fa-fw"></i>随笔闲谈</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/RShawshank" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kafka（四）——常见问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-08 14:01:08 / 修改时间：06:29:28" itemprop="dateCreated datePublished" datetime="2024-01-08T14:01:08Z">2024-01-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">kafka（四）——常见问题</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="位移（offset）提交导致的问题（循环rebalance）"><a href="#位移（offset）提交导致的问题（循环rebalance）" class="headerlink" title="位移（offset）提交导致的问题（循环rebalance）"></a>位移（offset）提交导致的问题（循环rebalance）</h1><p>如果消费者一直运行，位移量的提交并不会产生任何影响。但是如果有消费者发生崩溃，或者有新的消费者加入消费者群组的时候，会触发kafka的再均衡机制。这使得 Kafka 完成再均衡之后，每个消费者可能被会分到新分区中。为了能够继续之前的工作，消费者就需要读取每一个分区的最后一次提交的位移量，然后从位移量指定的地方继续处理。</p>
+<p>当消费速度过慢时有可能会触发rebalance, 这批消息被分配到另一个消费者，然后新的消费者还会消费过慢，再次rebalance, 这样一直恶性循环下去。发生这种情况最明显的标志就是日志里能看到<code>CommitFailedException</code>异常，然后还会带上下面一段话：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.</span><br></pre></td></tr></table></figure>
+
+<h2 id="消息丢失"><a href="#消息丢失" class="headerlink" title="消息丢失"></a>消息丢失</h2><p>如果提交的偏移量大于客户端处理的最后一个消息的偏移量,那么处于两个偏移量之间的消息将会丢失。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081403635.png" alt="在这里插入图片描述"></p>
+<h2 id="消息重复消费"><a href="#消息重复消费" class="headerlink" title="消息重复消费"></a>消息重复消费</h2><p>如果提交的位移（offset）量小于消费者实际处理的最后一个消息的位移（offset）量，处于两个位移（offset）之间的消息会被重复处理。</p>
+<p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081403072.png" alt="在这里插入图片描述"></p>
+<p>鉴于位移提交甚至是位移管理对 Consumer 端的巨大影响， KafkaConsumer API，提供了多种提交位移的方式。</p>
+<h2 id="解决方式"><a href="#解决方式" class="headerlink" title="解决方式"></a>解决方式</h2><h4 id="Consumer位移提交方式"><a href="#Consumer位移提交方式" class="headerlink" title="Consumer位移提交方式"></a>Consumer位移提交方式</h4><ul>
+<li>从用户的角度来说，位移提交分为自动提交和手动提交；</li>
+<li>从 Consumer 端的角度来说，位移提交分为同步提交和异步提交。</li>
+</ul>
+<h5 id="自动提交"><a href="#自动提交" class="headerlink" title="自动提交"></a>自动提交</h5><p>自动提交是<code>KafkaConsumer</code> API中的默认提交方式。</p>
+<p>自动提交，需要配置两个参数：</p>
+<ul>
+<li><p><code>enable.auto.commit=true</code> 的时候代表自动提交位移。</p>
+</li>
+<li><p><code>auto.commit.interval.ms=5000</code> （单位ms）</p>
+<blockquote>
+<p>这个参数定义了两次<code>poll()</code>之间的最大间隔，默认值为5分钟。如果超过这个间隔同样会触发rebalance。在多数情况下这个参数是导致rebalance消息重复的关键，即业务处理消息耗时太长。有人可能会疑惑，如果5分钟都没处理完消息那肯定时出了问题，其实不然。<strong>能否在5min内处理完还取决于你每次拉取了多少条消息</strong>，如果一次拿到了成千上万条的话，5min就够呛了。</p>
+</blockquote>
+</li>
+<li><p><code>max.poll.records=20</code> </p>
+<blockquote>
+<p>这个参数定义了<code>poll()</code>方法最多可以返回多少条消息，<strong>默认值为500</strong>。注意这里的用词是”最多”，也就是说如果在拉取消息的时候新消息不足500条，那有多少返回多少；如果超过500条，就只返回500。这个默认值是比较坑人的，如果你的消息处理逻辑比较重，比如需要查数据库，调用接口，甚至是复杂计算，那么你很难保证能够在5min内处理完500条消息，也就是说，如果上游真的突然大爆发生产了成千上万条消息，而平摊到每个消费者身上的消息达到了500的又无法按时消费完成的话就会触发rebalance, 然后这批消息会被分配到另一个消费者中，还是会处理不完，又会触发rebalance, 这样这批消息就永远也处理不完，而且一直在重复处理。</p>
+</blockquote>
+</li>
+</ul>
+<h5 id="手动同步提交"><a href="#手动同步提交" class="headerlink" title="手动同步提交"></a>手动同步提交</h5><p>手动提交，则是指你要自己提交位移，Kafka Consumer 压根不管。</p>
+<p>开启手动提交，把<code>enable.auto.commit=false</code>，用<code>commitSync()</code>提交由poll方法返回的最新偏移量。该方法为同步操作，等待直到 offset 被成功提交才返回。</p>
+<p>手动同步提交会 调用 <code>commitSync</code>方法 时，Consumer 处于阻塞状态，直到 Broker 返回结果，这样就会限制应用程序的吞吐量。虽然可以通过降低提交频率来提升吞吐量，但一旦发生再均衡，会增加重复消息的数量。</p>
+<h1 id="不堪重负的-Controller"><a href="#不堪重负的-Controller" class="headerlink" title="不堪重负的 Controller"></a>不堪重负的 Controller</h1><p>前面的集群架构部分我们已经了解到，所有的 Broker 中都有一个 Controller 角色，但是同时只有一个对外提供服务，这里讨论一下这个集群唯一的 Controller 的负载问题</p>
+<p>同样是考虑在 1000+ Broker 集群的场景下，Controller 所在的 Broker 负载会比其他 Broker 大，因为要处理整个集群范围内所有集群管理相关的请求，那么这个 Broker 就很可能因为负载过大导致节点失效，引起 Controller 选举和故障转移</p>
+<p>在小规模的集群中这样的故障转移可以很快速，代价很小，但是在我们现在讨论的场景中集群元数据很多，同时伴随着大量的主题和分区消息数据，整个故障转移的代价非常大</p>
+<p>转移过程中可能出现的一些异常情况：</p>
+<ul>
+<li>Controller 选举过程时间长，选举期间无法执行新建主题、分区扩容等操作</li>
+<li>Broker 之间进行分区副本数据的转移，大量的文件读写导致页缓存大规模失效，Broker 无法读取到到页缓存，也加入到了频繁的 IO 操作中进一步恶化 IO 性能</li>
+<li>没有 Controller 导致集群元数据无法及时更新，导致客户端获取到无效的数据，无法正常工作</li>
+</ul>
+<p>Controller 在集群中的地位非常重要，Kafka 及其类似的消息系统都对这一个组件做了诸多重构和优化，形成了不同的解决方案：</p>
+<ol>
+<li>可以将集群中的几个 Broker 独立出来，提升硬件配置，专门负责 Controller 选举</li>
+<li>BMQ [3] 对 Kafka 的这部分功能进行了重构</li>
+</ol>
+<h1 id="不稳定的消费者"><a href="#不稳定的消费者" class="headerlink" title="不稳定的消费者"></a>不稳定的消费者</h1><p>在这里我们考虑一下实际消费场景下的情况，假设有一个 100+ 消费者的消费组</p>
+<p>前面我们已经介绍了一种场景下的重平衡机制，这里需要讨论关于重平衡对业务的影响，因为发起重平衡之后，消费者组就无法继续消费数据了，必须要等到消费者组重新进入稳定状态才可以继续消费</p>
+<p>理想情况下，消费者成功入组之后就能持续消费，稳定运行，但是实际场景中面临如下挑战：</p>
+<ul>
+<li>首次入组，因为不同消费者启动速度有差异，导致 99 个消费者成功入组之后，最后一个消费者申请入组触发重平衡（默认是等待 3s 进入 PrepareRebalancing）</li>
+<li>消费者消费过程中，因为数据倾斜部分消费者负载高，因 GC 等原因下线或心跳超时，触发重平衡</li>
+<li>消费者组运行过程中，发现消费进度跟不上，故对消费者组扩容触发重平衡</li>
+</ul>
+<p><strong>重平衡的代价很大，需要等所有消费者停止消费，然后开启申请入组、组同步的这个流程，整个重平衡期间消费者组无法消费将加剧消息消费的延迟</strong></p>
+<p>所以在这种消费者数量多的情况下，保证每个消费者能够稳定运行非常重要，避免因 GC 或者网络抖动等内外因素触发重平衡</p>
+<p>虽然 Kafka 提供了消费者组这样的机制去帮助实现消费端的负载均衡和弹性扩容，但是这种扩容也是有边界的，消费集群的规模也不是能够无限扩张的，保证消费集群的稳定性是个很大问题</p>
+<p>针对消费场景的重平衡问题，比较常见的做法是绕过这套机制自行管理分区的消费，比如我接触过的 Spark 和 Flink 大数据计算框架就是主要使用自行分配绑定分区消费，并且不使用 Kafka 提供的消息偏移管理机制或仅作为辅助手段</p>
+<p>业务上也可以参考这种方案去实现一套消费方案的管理机制，对出现故障的消费者予以告警和及时介入，隔离故障节点和对应的分区，不要影响其他分区的正常消费</p>
+<h1 id="不可靠的代码"><a href="#不可靠的代码" class="headerlink" title="不可靠的代码"></a>不可靠的代码</h1><p>核心机制中介绍了生产者的消息分区函数，这是生产端负载均衡的重要机制，最常见的无 Key 或者使用哈希值计算分区的场景下，Key 总是能在分区中均匀分布</p>
+<p>实际业务场景中分区函数不一定按照我们预期的行为向 Broker 分发消息，因为代码问题还是可能导致Key 的计算不符合预期，分区数据产生倾斜，引起部分 Broker 负载过高</p>
+<p>因为在 Kafka Core 集群的架构里存储和计算没有分离，这种场景下因为存储导致的压力无法向其他 Broker 均摊，反而会连累整个 Broker 一起挂掉</p>
+<p>此外，除了 Key 分区引起的数据倾斜之外，过大的消息体也可能造成问题（比如把整个文件当成消息体发送），如果因为代码错误向某个分区持续发送比较大的消息体造成数据倾斜（实际情况没有这么夸张，因为服务端对单批次的消息最大值有限制，默认是 1048588 Bytes ≈ 1MB）</p>
+<blockquote>
+<p>如果是把 Kafka 当成文件系统来使用确实可能出现这个问题，因此大文件的异步消费最好是只传递文件的元信息</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>rhb
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rshawshank.github.io/2024/01/08/kafka%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" title="kafka（四）——常见问题">http://rshawshank.github.io/2024/01/08/kafka（四）——常见问题/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Kafka/" rel="tag"><i class="fa fa-tag"></i> Kafka</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/08/kafka%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E9%AB%98%E7%BA%A7%E6%9C%BA%E5%88%B6/" rel="prev" title="kafka（三）——高级机制">
+      <i class="fa fa-chevron-left"></i> kafka（三）——高级机制
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%8D%E7%A7%BB%EF%BC%88offset%EF%BC%89%E6%8F%90%E4%BA%A4%E5%AF%BC%E8%87%B4%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%88%E5%BE%AA%E7%8E%AFrebalance%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">位移（offset）提交导致的问题（循环rebalance）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1"><span class="nav-number">1.1.</span> <span class="nav-text">消息丢失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="nav-number">1.2.</span> <span class="nav-text">消息重复消费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">解决方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Consumer%E4%BD%8D%E7%A7%BB%E6%8F%90%E4%BA%A4%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Consumer位移提交方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BA%A4"><span class="nav-number">1.3.0.1.1.</span> <span class="nav-text">自动提交</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%90%8C%E6%AD%A5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.3.0.1.2.</span> <span class="nav-text">手动同步提交</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E5%A0%AA%E9%87%8D%E8%B4%9F%E7%9A%84-Controller"><span class="nav-number">2.</span> <span class="nav-text">不堪重负的 Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E7%A8%B3%E5%AE%9A%E7%9A%84%E6%B6%88%E8%B4%B9%E8%80%85"><span class="nav-number">3.</span> <span class="nav-text">不稳定的消费者</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E9%9D%A0%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">不可靠的代码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">rhb</p>
+  <div class="site-description" itemprop="description">纵浪大化中，不喜亦不惧</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">180</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">73</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/RShawshank" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;RShawshank" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">rhb</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://lib.baomitu.com/canvas-nest.js/1.0.1/canvas-nest.js"></script>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

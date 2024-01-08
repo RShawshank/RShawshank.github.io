@@ -22,20 +22,22 @@
     var CONFIG = {"hostname":"rshawshank.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":3,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="kafka（二）">
+  <meta name="description" content="kafka（二）——spring cloud stream应用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kafka（二）">
-<meta property="og:url" content="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:title" content="kafka（二）——spring cloud stream应用">
+<meta property="og:url" content="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/index.html">
 <meta property="og:site_name" content="rhb_blog">
-<meta property="og:description" content="kafka（二）">
+<meta property="og:description" content="kafka（二）——spring cloud stream应用">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081336358.webp">
 <meta property="article:published_time" content="2023-04-24T14:08:40.000Z">
-<meta property="article:modified_time" content="2023-06-20T07:54:58.004Z">
+<meta property="article:modified_time" content="2024-01-08T05:54:48.127Z">
 <meta property="article:author" content="rhb">
 <meta property="article:tag" content="Kafka">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081336358.webp">
 
-<link rel="canonical" href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/">
+<link rel="canonical" href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/">
 
 
 <script id="page-configurations">
@@ -48,7 +50,7 @@
   };
 </script>
 
-  <title>kafka（二） | rhb_blog</title>
+  <title>kafka（二）——spring cloud stream应用 | rhb_blog</title>
   
 
 
@@ -129,17 +131,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">73</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">32</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">180</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -221,7 +223,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -234,7 +236,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          kafka（二）
+          kafka（二）——spring cloud stream应用
         </h1>
 
         <div class="post-meta">
@@ -251,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 07:54:58" itemprop="dateModified" datetime="2023-06-20T07:54:58Z">2023-06-20</time>
+                <time title="修改时间：2024-01-08 05:54:48" itemprop="dateModified" datetime="2024-01-08T05:54:48Z">2024-01-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,7 +266,7 @@
             </span>
 
           
-            <div class="post-description">kafka（二）</div>
+            <div class="post-description">kafka（二）——spring cloud stream应用</div>
 
         </div>
       </header>
@@ -283,8 +285,14 @@
 <p>**Sink（接收器）:**一个接口类，内部定义了一个输入管道，例如定义一个输入管道 @input（”XXOO”）。说明这个接收器将会从这个管道接收数据。</p>
 <p>**Binder（绑定器）:**用于与管道进行绑定。Binder将于消息中间件进行关联。@EnableBinding （Source.class&#x2F;Sink.class）。@EnableBinding（）里面是可以定义多个发射器&#x2F;接收器</p>
 <p>@StreamListener：这个注解可以监听输入通道里的消息内容，注解里面的属性指定我们刚才定义的输入通道名称，而MessageChannel则可以通过输出通道发送消息。使用@Resource注入时需要指定我们刚才定义的输出通道名称</p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">stream:</span></span><br><span class="line">     <span class="attr">kafka:</span></span><br><span class="line">      <span class="attr">binder:</span></span><br><span class="line">        <span class="attr">auto-create-topics:</span> <span class="literal">true</span>   <span class="comment"># 自动创建topics</span></span><br><span class="line">        <span class="attr">auto-add-partitions:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">consumer-properties:</span></span><br><span class="line">        <span class="attr">brokers:</span> <span class="string">testdatawork1.jxcc.com:9092</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">bindings:</span></span><br><span class="line">     <span class="comment">#配置自己定义的通道与哪个中间件交互</span></span><br><span class="line">      <span class="attr">notice-in-todo:</span> <span class="comment">#MessageChannel里Input和Output的值</span></span><br><span class="line">        <span class="attr">destination:</span> <span class="string">noticeTodo</span> <span class="comment">#消息发往的目的地，对应topic</span></span><br><span class="line">        <span class="attr">content-type:</span> <span class="string">application/json</span></span><br><span class="line">        <span class="attr">group:</span> <span class="string">input-group-1</span> <span class="comment">#对应kafka的group</span></span><br><span class="line">      <span class="attr">notice-in-message:</span> <span class="comment">#MessageChannel里Input和Output的值</span></span><br><span class="line">        <span class="attr">destination:</span> <span class="string">noticeMessage</span> <span class="comment">#消息发往的目的地，对应topic</span></span><br><span class="line">        <span class="attr">content-type:</span> <span class="string">application/json</span></span><br><span class="line">        <span class="attr">group:</span> <span class="string">input-group-1</span> <span class="comment">#对应kafka的group</span></span><br><span class="line">          <span class="comment"># consumer:</span></span><br><span class="line">          <span class="comment">#  auto-commit-offset: true # 手动提交偏移量</span></span><br><span class="line">          <span class="comment"># start-position: earliest # 从最早的位置开始消费</span></span><br><span class="line">          <span class="comment"># partitioned: true # 支持多分区消费</span></span><br><span class="line">          <span class="comment"># 配置消费者的错误处理方式</span></span><br><span class="line">          <span class="comment"># error-channel-enabled: true # 启用错误处理通道</span></span><br><span class="line">          <span class="comment"># max-attempts: 3 # 最大重试次数</span></span><br><span class="line">          <span class="comment"># backoff-initial-interval: 1000 # 重试间隔时间</span></span><br><span class="line">          <span class="comment"># backoff-max-interval: 5000 # 最大重试间隔时间</span></span><br><span class="line">        <span class="comment"># backoff-multiplier: 2 # 重试间隔时间的倍数</span></span><br></pre></td></tr></table></figure>
+<h2 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h2><p><img src="https://picture11111111.oss-cn-hangzhou.aliyuncs.com/img/202401081336358.webp" alt="img"></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cloud:</span></span><br><span class="line">  <span class="attr">stream:</span></span><br><span class="line">     <span class="attr">kafka:</span></span><br><span class="line">      <span class="attr">binder:</span></span><br><span class="line">        <span class="attr">auto-create-topics:</span> <span class="literal">true</span>   <span class="comment"># 自动创建topics</span></span><br><span class="line">        <span class="attr">auto-add-partitions:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">consumer-properties:</span></span><br><span class="line">        <span class="attr">brokers:</span> <span class="string">testdatawork1.jxcc.com:9092</span></span><br><span class="line">		  <span class="attr">consumer-properties:</span></span><br><span class="line">          <span class="attr">max:</span></span><br><span class="line">            <span class="attr">poll:</span></span><br><span class="line">              <span class="attr">records:</span> <span class="number">1000</span> <span class="comment"># </span></span><br><span class="line">          <span class="attr">fetch:</span></span><br><span class="line">            <span class="attr">min:</span></span><br><span class="line">              <span class="attr">bytes:</span> <span class="number">20480</span> <span class="comment">#指定了消费者从服务器获取记录的最小字节数</span></span><br><span class="line">            <span class="attr">max:</span></span><br><span class="line">              <span class="attr">wait:</span></span><br><span class="line">                <span class="attr">ms:</span> <span class="number">20000</span> <span class="comment"># 指定 broker 的等待时间</span></span><br><span class="line">    <span class="attr">bindings:</span></span><br><span class="line">     <span class="comment">#配置自己定义的通道与哪个中间件交互</span></span><br><span class="line">      <span class="attr">notice-in-todo:</span> <span class="comment">#MessageChannel里Input和Output的值</span></span><br><span class="line">        <span class="attr">destination:</span> <span class="string">noticeTodo</span> <span class="comment">#消息发往的目的地，对应topic</span></span><br><span class="line">        <span class="attr">content-type:</span> <span class="string">application/json</span></span><br><span class="line">        <span class="attr">group:</span> <span class="string">input-group-1</span> <span class="comment">#对应kafka的group</span></span><br><span class="line">      <span class="attr">notice-in-message:</span> <span class="comment">#MessageChannel里Input和Output的值</span></span><br><span class="line">        <span class="attr">destination:</span> <span class="string">noticeMessage</span> <span class="comment">#消息发往的目的地，对应topic</span></span><br><span class="line">        <span class="attr">content-type:</span> <span class="string">application/json</span></span><br><span class="line">        <span class="attr">group:</span> <span class="string">input-group-1</span> <span class="comment">#对应kafka的group</span></span><br><span class="line">          <span class="comment"># consumer:</span></span><br><span class="line">          <span class="comment">#  auto-commit-offset: true # 手动提交偏移量</span></span><br><span class="line">          <span class="comment"># start-position: earliest # 从最早的位置开始消费</span></span><br><span class="line">          <span class="comment"># partitioned: true # 支持多分区消费</span></span><br><span class="line">          <span class="comment"># 配置消费者的错误处理方式</span></span><br><span class="line">          <span class="comment"># error-channel-enabled: true # 启用错误处理通道</span></span><br><span class="line">          <span class="comment"># max-attempts: 3 # 最大重试次数</span></span><br><span class="line">          <span class="comment"># backoff-initial-interval: 1000 # 重试间隔时间</span></span><br><span class="line">          <span class="comment"># backoff-max-interval: 5000 # 最大重试间隔时间</span></span><br><span class="line">        <span class="comment"># backoff-multiplier: 2 # 重试间隔时间的倍数</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="fetch-min-bytes"><a href="#fetch-min-bytes" class="headerlink" title="fetch.min.bytes"></a>fetch.min.bytes</h4><p>该属性指定了消费者从服务器获取记录的最小字节数。broker 在收到消费者的数据请求时，如果可用的数据量小于 fetch.min.bytes 指定的大小，那么它会等到有足够的可用数据时才把它返回给消费者。这样可以降低消费者和 broker 的工作负载，因为它们在主题不是很活跃的时候（或者一天里的低谷时段）就不需要来来回回地处理消息。如果没有很多可用数据，但消费者的 CPU 使用率却很高，那么就需要把该属性的值设得比默认值大。如果消费者的数量比较多，把该属性的值设置得大一点可以降低 broker 的工作负载。</p>
+<h4 id="fetch-max-wait-ms"><a href="#fetch-max-wait-ms" class="headerlink" title="fetch.max.wait.ms"></a>fetch.max.wait.ms</h4><p>我们通过 fetch.min.bytes 告诉 Kafka，等到有足够的数据时才把它返回给消费者。而 feth.max.wait.ms 则用于指定 broker 的等待时间，默认是 500ms。</p>
+<p>如果没有足够的数据流入 Kafka，消费者获取最小数据量的要求就得不到满足，最终导致 500ms 的延迟。如果要降低潜在的延迟（为了满足 SLA），可以把该参数值设置得小一些。如果 fetch.max.wait.ms 被设为 100ms，并且 fetch.min.bytes 被设为 1MB，那么 Kafka 在收到消费者的请求后，要么返回 1MB 数据，要么在 100ms 后返回所有可用的数据，就看哪个条件先得到满足。</p>
+<h4 id="max-poll-interval-ms"><a href="#max-poll-interval-ms" class="headerlink" title="max.poll.interval.ms"></a>max.poll.interval.ms</h4><p>这个参数定义了两次<code>poll()</code>之间的最大间隔，默认值为5分钟。如果超过这个间隔同样会触发rebalance。在多数情况下这个参数是导致rebalance消息重复的关键，即业务处理消息耗时太长。有人可能会疑惑，如果5分钟都没处理完消息那肯定时出了问题，其实不然。<strong>能否在5min内处理完还取决于你每次拉取了多少条消息</strong>，如果一次拿到了成千上万条的话，5min就够呛了。</p>
+<h4 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h4><p>这个参数定义了<code>poll()</code>方法最多可以返回多少条消息，<strong>默认值为500</strong>。注意这里的用词是”最多”，也就是说如果在拉取消息的时候新消息不足500条，那有多少返回多少；如果超过500条，就只返回500。这个默认值是比较坑人的，如果你的消息处理逻辑比较重，比如需要查数据库，调用接口，甚至是复杂计算，那么你很难保证能够在5min内处理完500条消息，也就是说，如果上游真的突然大爆发生产了成千上万条消息，而平摊到每个消费者身上的消息达到了500的又无法按时消费完成的话就会触发rebalance, 然后这批消息会被分配到另一个消费者中，还是会处理不完，又会触发rebalance, 这样这批消息就永远也处理不完，而且一直在重复处理。</p>
 
     </div>
 
@@ -300,7 +308,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89/" title="kafka（二）">http://rshawshank.github.io/2023/04/24/kafka（二）/</a>
+    <a href="http://rshawshank.github.io/2023/04/24/kafka%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94spring%20cloud%20stream%E5%BA%94%E7%94%A8/" title="kafka（二）——spring cloud stream应用">http://rshawshank.github.io/2023/04/24/kafka（二）——spring cloud stream应用/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -321,8 +329,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="Kafka（一）">
-      <i class="fa fa-chevron-left"></i> Kafka（一）
+    <a href="/2023/04/20/Kafka%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="prev" title="Kafka（一）——基本概念">
+      <i class="fa fa-chevron-left"></i> Kafka（一）——基本概念
     </a></div>
       <div class="post-nav-item">
     <a href="/2023/07/14/getway%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="getway（一）">
@@ -386,7 +394,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka%E5%BA%94%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">kafka应用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-Stream"><span class="nav-number">1.1.</span> <span class="nav-text">Spring Cloud Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.1.</span> <span class="nav-text">配置文件</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka%E5%BA%94%E7%94%A8%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">kafka应用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-Stream"><span class="nav-number">1.1.</span> <span class="nav-text">Spring Cloud Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kafka"><span class="nav-number">1.2.</span> <span class="nav-text">kafka</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch-min-bytes"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">fetch.min.bytes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fetch-max-wait-ms"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">fetch.max.wait.ms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#max-poll-interval-ms"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">max.poll.interval.ms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#max-poll-records"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">max.poll.records</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -400,20 +408,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">73</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">32</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">180</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,606 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/01/02/Algorithm_%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/02/Algorithm_%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%9B%BE%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">基本的图算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-02 15:48:19" itemprop="dateCreated datePublished" datetime="2020-01-02T15:48:19Z">2020-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="图检索算法"><a href="#图检索算法" class="headerlink" title="图检索算法"></a>图检索算法</h1><h2 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h2><p><a href="cnblogs.com/xiaoyh/p/10411762.html">原文链接</a></p>
+<p>对于图G&#x3D;（V，E）借助数组存储的方法有邻接矩阵表示法和邻接表表示法，边集表示法。</p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>图的邻接矩阵（adjacent matrix）表示法是使用数组来存储图结构的方法，也被称为数组表示法。 它采用两个数组来表示图：一个是用于存储所有顶点信息的一维数组，另一个是用于存储图中顶点之间关联关系的二维数组，这个关联关系数组也被称为邻接矩阵。</p>
+<p><img src="https://i.loli.net/2021/08/12/CNJ7UDyAsajngEo.png"></p>
+<p><img src="https://i.loli.net/2021/08/12/xBY1f62s5nIUjuh.png"></p>
+<p>邻接矩阵有如下特性：</p>
+<ul>
+<li>图中各顶点序号确定后，图的邻接矩阵是唯一确定的。</li>
+<li>无向图和无向网的邻接矩阵是一个对称矩阵。</li>
+<li>无向图邻接矩阵中第i行或第i列的非0元素个数即为第i个顶点的度。</li>
+<li>有向图邻接矩阵第i行非0元素个数为第i个顶点的出度，第i列非0元素个数为第i个顶点的入度，第i个顶点的度为第i行与第i列非0元素个数之和。</li>
+<li>无向图的边数等于邻接矩阵中非0元素个数之和的一半，有向图的弧数等于邻接矩阵中非0元素个数之和。</li>
+<li>除完全图外，其他图的邻接矩阵有许多零元素，特别是当n值较大，而边数相对完全图的边n-1又少的多时，则此矩阵称为稀疏矩阵，非常浪费存储空间。</li>
+</ul>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>邻接表（adjacency list）是图的一种链式存储方法，邻接表表示法类似于树的孩子链表表示法。</p>
+<p>　　在邻接表中对于图G中的每个顶点v<del>i</del>建立一个单链表，将所有邻接于v<del>i</del>的顶点v<del>j</del>链成一个单链表，并在表头附设一个表头结点，这个单链表就称为顶点v<del>i</del>的邻接表。</p>
+<p>邻接表中共有两种结点结构，分别是边表结点和表头结点。</p>
+<p>　　<img src="https://i.loli.net/2021/08/12/qA9kpoL3TJOjVim.png"></p>
+<p>邻接表中的每一个结点均包含有两个域：邻接点域和指针域。</p>
+<ul>
+<li>邻接点域用于存放与定点vi相邻接的一个顶点的序号。</li>
+<li>指针域用于指向下一个边表结点。</li>
+</ul>
+<p>边表结点由3个域组成：</p>
+<ul>
+<li>邻接点域（adjvex）指示与定点v<del>i</del>邻接的顶点在图中的位置。</li>
+<li>链域（nextdge）指向下一条边所在的结点。</li>
+<li>数据域（info）存储和边有关的信息。</li>
+</ul>
+<p>头结点由2个域组成：</p>
+<ul>
+<li>链域（firstedge）指向链表中的第一个结点之外。</li>
+<li>数据域（data）存储顶点相关信息。</li>
+</ul>
+<p>如下图为邻接表的存储示例：</p>
+<p>　　<img src="https://i.loli.net/2021/08/12/PkLCSdMaGp4TtlQ.png"></p>
+<p>在无向图的邻接表中，顶点的每一个边表结点对应于与顶点相关联的一条边。</p>
+<p>在有向图的邻接表中，顶点的每一个边表结点对应于<strong>以顶点为始点的一条弧</strong>，因此也称有向图的邻接表的边表为出边表。</p>
+<p>在有向图的邻接表中，将顶点的每个边表结点对应于以顶点为重点的一条弧，即用便捷点的邻接点域存储邻接到顶点的序号，由此构成的邻接表称为有向图的逆邻接表，逆邻接表有边表称为入边表。</p>
+<p>邻接表的性质如下：</p>
+<ul>
+<li>图的邻接表表示不是惟一的，它与表结点的链入次序有关。</li>
+<li>无向图的邻接表中第i个边表的结点个数即为第i个顶点的度。</li>
+<li>有向图的邻接表中第i个出边表的结点个数即为第i个结点的出度，有向图的逆邻接表中第i个入边表的结点个数即为第i个结点的入度。</li>
+<li>无向图的边数等于邻接表中边表结点数的一半，有向图的弧数等于邻接表（逆邻接表）中出边表结点（入边表结点）的数目。</li>
+</ul>
+<p>需要说明的是：</p>
+<ul>
+<li>在邻接表的每个线性链接表中各结点的顺序是任意的。</li>
+<li>邻接表中的各个线性链接表不说明他们顶点之间的邻接关系。</li>
+<li>对于无向图，某顶点的度数&#x3D;该顶点对应的线性链表的结点数。</li>
+<li>对于有向图，某顶点的“出度”数&#x3D;该顶点对应的线性链表的结点数；求某顶点的“入度”需要对整个邻接表的各链接扫描一遍，看有多少与该顶点相同的结点，相同结点数之和即为“入度”值。</li>
+</ul>
+<p>邻接表与邻接矩阵的关系如下：</p>
+<ul>
+<li>对应于邻接矩阵的每一行有一个线形连接表；</li>
+<li>链接表的表头对应着邻接矩阵该行的顶点；</li>
+<li>链接表中的每个结点对应着邻接矩阵中该行的一个非零元素；</li>
+<li>对于无向图，一个非零元素表示与该行顶点相邻接的另一个顶点；</li>
+<li>对于有向图，非零元素则表示以该行顶点为起点的一条边的终点。</li>
+</ul>
+<h2 id="宽度（广度）优先检索BFS"><a href="#宽度（广度）优先检索BFS" class="headerlink" title="宽度（广度）优先检索BFS"></a>宽度（广度）优先检索BFS</h2><p>广度优先搜索类似于树的<strong>层次遍历</strong>。从图中的某一顶点出发，遍历每一个顶点时，依次遍历其所有的邻接点，然后再从这些邻接点出发，同样依次访问它们的邻接点。按照此过程，直到图中所有被访问过的顶点的邻接点都被访问到。</p>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><p><strong>广度优先遍历背后基于队列</strong>，下面介绍一下具体实现的方法：</p>
+<ol>
+<li><p>访问起始顶点，并将插入队列；</p>
+</li>
+<li><p>从队列中删除队头顶点，将与其相邻的未被访问的顶点插入队列中；</p>
+</li>
+<li><p>重复第二步，直至队列为空。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//邻接矩阵</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">breadFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (v &lt; <span class="number">0</span> || v &gt;= numOfVexs)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundsException</span>();</span><br><span class="line">		visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];</span><br><span class="line">		<span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">		Queue&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">   		 queue.offer(v);</span><br><span class="line">		visit[v] = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">            v = queue.poll();</span><br><span class="line">			sb.append(vexs[v] + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; numOfVexs; i++) &#123;</span><br><span class="line">				<span class="keyword">if</span> ((edges[v][i] != <span class="number">0</span> &amp;&amp; edges[v][i] != Integer.MAX_VALUE)&amp;&amp; !visited[i]) &#123;</span><br><span class="line">					queue.offer(i);<span class="comment">//因为使用的是队列，所以每次poll出去的都是同一层的。这个和深度优先算法使用栈，每次pop出的都是一层中的一个元素不同</span></span><br><span class="line">					visit[i] = <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">           <span class="keyword">return</span> sb.length() &gt; <span class="number">0</span> ? sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>) : <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="comment">//邻接表</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">breadFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (v &lt; <span class="number">0</span> || v &gt;= numOfVexs)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundsException</span>();</span><br><span class="line">		visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];</span><br><span class="line">		<span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">		Queue&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>&lt;Integer&gt;();</span><br><span class="line">		queue.offer(v);</span><br><span class="line">		visit[v] = <span class="literal">true</span>;</span><br><span class="line">		ENode current;</span><br><span class="line">		<span class="keyword">while</span> (!queue.isEmpty()) &#123;</span><br><span class="line">			v = queue.poll();</span><br><span class="line">			sb.append(vexs[v].data + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">			current = vexs[v].firstadj;</span><br><span class="line">			<span class="keyword">while</span> (current != <span class="literal">null</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (!visited[current.adjvex]) &#123;</span><br><span class="line">					queue.offer(current.adjvex);</span><br><span class="line">					visit[current.adjvex] = <span class="literal">true</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				current = current.nextadj;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> sb.length() &gt; <span class="number">0</span> ? sb.substring(<span class="number">0</span>, sb.length() - <span class="number">1</span>) : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="深度优先检索DFS"><a href="#深度优先检索DFS" class="headerlink" title="深度优先检索DFS"></a>深度优先检索DFS</h2><p><strong>从一个顶点V0开始，沿着一条路一直走到底，如果发现不能到达目标解，那就返回到上一个节点，然后从另一条路开始走到底</strong></p>
+<p><strong>从图中的某一个顶点x出发，访问x，然后遍历任何一个与x相邻的未被访问的顶点y，再遍历任何一个与y相邻的未被访问的顶点z……依次类推，直到到达一个所有邻接点都被访问的顶点为止；然后，依次回退到尚有邻接点未被访问过的顶点，重复上述过程，直到图中的全部顶点都被访问过为止。</strong></p>
+<p><img src="https://i.loli.net/2021/08/12/gGuw5ejA7aSIPpL.png"></p>
+<h3 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h3><p><strong>深度优先遍历背后基于堆栈，有两种方式：第一种是在程序中显示构造堆栈，利用压栈出栈操作实现；第二种是利用递归函数调用，基于递归程序栈实现。</strong></p>
+<h4 id="堆栈法"><a href="#堆栈法" class="headerlink" title="堆栈法"></a>堆栈法</h4><ol>
+<li>访问起始顶点，并将其压入栈中；</li>
+<li>从栈中弹出最上面的顶点，将与其相邻的未被访问的顶点压入栈中；</li>
+<li>重复第二步，直至栈为空栈。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//采用邻接矩阵</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">depthFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundException</span>();</span><br><span class="line">    <span class="type">boolean</span> []visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">    Stack&lt;Integer&gt; stack  = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;Integer&gt;();</span><br><span class="line">    <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">    stack.push(v);</span><br><span class="line">    visit[v]=<span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span>(!stack.isEmpty())</span><br><span class="line">    &#123;</span><br><span class="line">        v=stack.pop();<span class="comment">//每层依次出一个没有标记的节点</span></span><br><span class="line">        sb.append(vexs[v] + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=numOfVexs-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>((edges[v][i]!=<span class="number">0</span>&amp;&amp;edges[v][i]!=Integer.MAX_VALUE)&amp;&amp;!visit[i])</span><br><span class="line">            &#123;</span><br><span class="line">                stack.push(i);</span><br><span class="line">                visit[i]=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//基于邻接表</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">depthFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">   <span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundException</span>();</span><br><span class="line">   <span class="type">boolean</span> []visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">   Stack&lt;Integer&gt; stack  = <span class="keyword">new</span> <span class="title class_">Stack</span>&lt;Integer&gt;();</span><br><span class="line">   <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">   stack.push(v);</span><br><span class="line">   visit[v]=<span class="literal">true</span>;</span><br><span class="line">	Node current;</span><br><span class="line">    <span class="keyword">while</span>(!stack.isEmpty())</span><br><span class="line">    &#123;</span><br><span class="line">        v=stack.pop();<span class="comment">//每次一层选一个出栈</span></span><br><span class="line">        sb.append(vexs[v].data + <span class="string">&quot;,&quot;</span>);</span><br><span class="line">       	current = vexs[v].firstadj;</span><br><span class="line">        <span class="keyword">while</span>(current!=<span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[current.adjvex])</span><br><span class="line">            &#123;</span><br><span class="line">                stack.push(current.adjvex);<span class="comment">//这里也是把邻接点全部入栈</span></span><br><span class="line">                visit[current.abjvex]=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            current=current.nextabj;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="递归法"><a href="#递归法" class="headerlink" title="递归法"></a>递归法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//邻接矩阵</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">depthFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundException</span>();</span><br><span class="line">	<span class="type">boolean</span> []visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">	visit[v]=<span class="literal">true</span>;</span><br><span class="line">	printf(<span class="string">&quot;%d &quot;</span>,v);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;numOfVexs;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="keyword">if</span>(visit[i]!=<span class="number">0</span>&amp;&amp;(edges[v][i]!=<span class="number">0</span>&amp;&amp;edges[v][i]!=Integer.MAX_VALUE))</span><br><span class="line">    	depthFirstSearch(i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//邻接表</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">depthFirstSearch</span><span class="params">(<span class="type">int</span> v)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span>(v&lt;<span class="number">0</span>||v&gt;=numOfVexs) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ArrayIndexOutOfBoundException</span>();</span><br><span class="line">	<span class="type">boolean</span> []visit = <span class="keyword">new</span> <span class="title class_">boolean</span>[numOfVexs];<span class="comment">//用来标记节点是否被访问</span></span><br><span class="line">	visit[v]=<span class="literal">true</span>;</span><br><span class="line">	printf(<span class="string">&quot;%d &quot;</span>,v);</span><br><span class="line">    Node current;</span><br><span class="line">	<span class="keyword">while</span>(current!=<span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(visit[current.abjvex]!=<span class="literal">true</span>)</span><br><span class="line">            depthFirstSearch(current.abjvex);</span><br><span class="line">                    current=current.nextabj;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/01/02/Algorithm_%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/02/Algorithm_%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">贪心算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-02 15:47:35" itemprop="dateCreated datePublished" datetime="2020-01-02T15:47:35Z">2020-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p>贪心算法是这样一种方法：分步骤实施，它<strong>在每一步仅作出当时看起来最佳的选择</strong>，即<strong>局部最优的选择</strong>，并希望通过这样的选择最终能找到<strong>全局最优解</strong>。</p>
+<p>贪心算法没有固定的算法框架，算法设计的关键是贪心策略的选择。必须注意的是，贪心算法不是对所有问题都能得到整体最优解，选择的贪心策略必须具备无后效性（即某个状态以后的过程不会影响以前的状态，只与当前状态有关。）</p>
+<p><strong>所以，对所采用的贪心策略一定要仔细分析其是否满足无后效性。</strong></p>
+<blockquote>
+<p>最优解问题大部分都可以拆分成一个个的子问题，把解空间的遍历视作对子问题树的遍历，则以某种形式对树整个的遍历一遍就可以求出最优解，大部分情况下这是不可行的。<strong>贪心算法和动态规划本质上是对子问题树的一种修剪，两种算法要求问题都具有的一个性质就是子问题最优性</strong>(组成最优解的每一个子问题的解，对于这个子问题本身肯定也是最优的)。动态规划方法代表了这一类问题的一般解法，我们自底向上构造子问题的解，对每一个子树的根，求出下面每一个叶子的值，并且以其中的最优值作为自身的值，其它的值舍弃。而贪心算法是动态规划方法的一个特例，可以证明每一个子树的根的值不取决于下面叶子的值，而只取决于当前问题的状况。换句话说，不需要知道一个节点所有子树的情况，就可以求出这个节点的值。由于贪心算法的这个特性，它对解空间树的遍历不需要自底向上，而只需要自根开始，选择最优的路，一直走到底就可以了。</p>
+</blockquote>
+<p>对比动态规划方法：</p>
+<p>在动态规划方法中，每个步骤也都要进行一次选择，但这种选择通常依赖于子问题的解，这导致我们要先求解较小的子问题，然后才能计算较大的子问题。</p>
+<p>在贪心方法中，我们总是做出当前看来最佳的选择，然后求解剩下的唯一一个子问题。尽管贪心算法进行选择时可能依赖之前做出的选择，但不依赖任何将来的选择或子问题的解。</p>
+<p>动态规划要先求解子问题才能进行选择，贪心算法在进行第一次选择之前不需要求解任何子问题。</p>
+<p>动态规划算法通常采用自底向上的方式完成计算，而贪心算法通常是自顶向下的，每一次选择，将给定的问题转换成一个更小的问题，然后继续求解小问题</p>
+<h2 id="贪心算法的步骤"><a href="#贪心算法的步骤" class="headerlink" title="贪心算法的步骤"></a>贪心算法的步骤</h2><p>贪心算法通常采用自顶向下的设计，做出一个选择，然后求解剩下的子问题。每次选择将问题转化成一个更小规模的问题。</p>
+<ul>
+<li><p>确定问题的最优子结构</p>
+</li>
+<li><p>将最优化问题转化为这样的形式：每次对其作出选择后，只剩下一个子问题需要求解；</p>
+</li>
+<li><p>证明作出贪心选择后，剩余的子问题满足：其最优子解与前面的贪心选择组合即可得到原问题的最优解(具有最优子结构)。</p>
+</li>
+</ul>
+<p>注：对应每个贪心算法，都有一个动态规划算法，但动态规划算法要繁琐的多。</p>
+<h2 id="贪心算法存在的问题"><a href="#贪心算法存在的问题" class="headerlink" title="贪心算法存在的问题"></a>贪心算法存在的问题</h2><ul>
+<li>不能保证求得的最后解是最佳的</li>
+<li>不能用来求最大值或最小值的问题</li>
+<li>只能求满足某些约束条件的可行解的范围</li>
+</ul>
+<h2 id="贪心算法适用的问题"><a href="#贪心算法适用的问题" class="headerlink" title="贪心算法适用的问题"></a>贪心算法适用的问题</h2><p><strong>贪心策略适用的前提是：局部最优策略能导致产生全局最优解。</strong><br>实际上，贪心算法适用的情况很少。一般对一个问题分析是否适用于贪心算法，可以先选择该问题下的几个实际数据进行分析，就可以做出判断。</p>
+<h2 id="活动选择问题"><a href="#活动选择问题" class="headerlink" title="活动选择问题"></a>活动选择问题</h2><p>有n个需要在同一天使用同一个教室的活动a1,a2,…,an，教室同一时刻只能由一个活动使用。每个活动ai都有一个开始时间si和结束时间fi 。一旦被选择后，活动ai就占据半开时间区间[si,fi)。如果[si,fi]和[sj,fj]互不重叠，ai和aj两个活动就可以被安排在这一天。</p>
+<p>活动选择问题：就是对给定的包含n个活动的集合S，在已知每个活动开始时间和结束时间的条件下，从中选出最多可兼容活动的子集合，称为最大兼容活动集合。不失一般性，设活动已经按照结束时间单调递增排序：</p>
+<p>$$<br>f1&lt;&#x3D;f2&lt;&#x3D;f3&lt;&#x3D;f4&lt;&#x3D;…&lt;&#x3D;fn-1&lt;&#x3D;fn<br>$$</p>
+<h3 id="活动选择问题的最优子结构"><a href="#活动选择问题的最优子结构" class="headerlink" title="活动选择问题的最优子结构"></a>活动选择问题的最优子结构</h3><p>令S<del>ij</del>表示在ai结束之后开始且在a<del>j</del>开始之前结束的那些活动的集合。</p>
+<p>问题和子问题的形式定义如下：设A<del>ij</del>是S<del>ij</del>的一个最大兼容活动集，并设A<del>ij</del>包含活动a<del>k</del>，则有：<strong>A<del>ik</del>表示A<del>ij</del>中a<del>k</del>开始之前的活动子集，A<del>kj</del>表示A<del>ij</del>中a<del>k</del>结束之后的活动子集</strong>。并得到两个子问题：寻找S<del>ik</del>的最大兼容活动集合和寻找S<del>kj</del>的最大兼容活动集合。</p>
+<p>活动选择问题具有最优子结构性，即：必有：A<del>ik</del>是S<del>ik</del>一个最大兼容活动子集，A<del>kj</del>是S<del>kj</del>一个最大兼容活动子集。而A<del>ij</del>&#x3D; A<del>ik</del>∪{a<del>k</del>}∪A<del>kj</del>。——最优子结构性成立。</p>
+<h3 id="活动选择问题的动态规划方法"><a href="#活动选择问题的动态规划方法" class="headerlink" title="活动选择问题的动态规划方法"></a>活动选择问题的动态规划方法</h3><p>$$<br>c[i,j]表示集合s_{ij}的最优解大小，递归式如下：\<br>c[i,j]&#x3D;c[i,k]+c[k,j]+1\<br>c[i,j]&#x3D;\begin{cases}<br>0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\quad S_{ij}&#x3D;\Phi\<br>\max\limits_{a_k\in S_{ij}}(c[i,k]+c[k,j]+1)\ \ if\quad S_{ij}\not&#x3D;\Phi<br>\end{cases}<br>$$</p>
+<h3 id="活动选择问题的贪心算法"><a href="#活动选择问题的贪心算法" class="headerlink" title="活动选择问题的贪心算法"></a>活动选择问题的贪心算法</h3><p>活动选择问题的贪心选择：每次总选择具有最早结束时间的兼容活动加入到集合A中。</p>
+<p>直观上，按这种方法选择兼容活动可以为未安排的活动留下尽可能多的时间。也就是说，该算法的贪心选择的意义是使剩余的可安排时间段最大化，以便安排尽可能多的兼容活动。</p>
+<h4 id="贪心算法的正确性"><a href="#贪心算法的正确性" class="headerlink" title="贪心算法的正确性"></a>贪心算法的正确性</h4><p>假设A<del>ij</del>是S<del>ij</del>的某个最大兼容活动集，假设A<del>ij</del>中，最早结束的活动是a<del>n</del>，分两种情况：</p>
+<p>1、如果a<del>n</del>&#x3D;a<del>i</del> ,得证</p>
+<p>2、如果a<del>n</del>！&#x3D; a<del>i</del> ，则a<del>n</del>的结束时间一定会晚于a<del>1</del>的结束时间，我们用a<del>i</del>去替换A<del>ij</del>中的a<del>n</del>，于是得到A^1^，由于a<del>i</del>比a<del>n</del>结束的早，而A<del>ij</del>中的其他活动都比a<del>n</del>的结束时间开始 的要晚，所以A^1^中的其他活动 都与a<del>i</del>不想交，所以A^1^中的所有活动是兼容的，所以A^1^也是S<del>ij</del>的一个最大兼容活动集。</p>
+<h4 id="贪心算法的递归实现"><a href="#贪心算法的递归实现" class="headerlink" title="贪心算法的递归实现"></a>贪心算法的递归实现</h4><p>自顶向下的设计</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//s、f数组分别表示n个活动的开始时间和结束时间，假设n个活动已经按照结束时间单调递增排列好了</span></span><br><span class="line"><span class="comment">//list用来保存已选的活动</span></span><br><span class="line"><span class="comment">//对于当前的k，返回Sk的一个最大兼容活动集</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; RECURSIVE_ACTIVITY+SELECTOR(List&lt;Integer&gt; list,<span class="type">int</span>[] s ,<span class="type">int</span>[] f,<span class="type">int</span> k,<span class="type">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> k+<span class="number">1</span>;<span class="comment">//表示是当前剩下没有添加到list的第一个活动</span></span><br><span class="line">    <span class="keyword">if</span>(k==<span class="number">0</span>)</span><br><span class="line">        list.add(m);</span><br><span class="line">    <span class="comment">//往后找f[k]&lt;=s[m]的活动</span></span><br><span class="line">    <span class="keyword">while</span>(m&lt;=s.length&amp;&amp;s[m]&lt;f[k])</span><br><span class="line">    &#123;</span><br><span class="line">        m++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(m&lt;=n)</span><br><span class="line">    &#123;</span><br><span class="line">        list.add[m+<span class="number">1</span>];<span class="comment">//m+1对应活动编号。k=0时的第一个加入的活动编号为1</span></span><br><span class="line">        RECURSIVE_ACTIVITY+SELECTOR(s,f,m,n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="贪心算法的迭代实现"><a href="#贪心算法的迭代实现" class="headerlink" title="贪心算法的迭代实现"></a>贪心算法的迭代实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Integer&gt; GREEDY_ACTIVITY+SELECTOR(List&lt;Integer&gt; list,<span class="type">int</span>[] s ,<span class="type">int</span>[] f,<span class="type">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> k=<span class="number">1</span>;</span><br><span class="line">   	list.add(k);<span class="comment">//添加第一个活动。</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> m=<span class="number">2</span>;m&lt;=n;m++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(s[m]&gt;=f[k])<span class="comment">//依次添加符合条件的活动，反正f都是排好序的</span></span><br><span class="line">        &#123;</span><br><span class="line">            list.add(m);</span><br><span class="line">            k=m</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="分数背包问题"><a href="#分数背包问题" class="headerlink" title="分数背包问题"></a>分数背包问题</h2><p>已知n种物品，各具有重量(w<del>1</del>,w<del>2</del>,…,w<del>n</del>)和效益值(p<del>1</del>,p<del>2</del>,…,p<del>n</del>)，及一个可容纳M重量的背包。</p>
+<p>问：怎样装包才能使在不超过背包容量的前提下，装入背包的物品的总效益最大？</p>
+<p>​	这里：</p>
+<p>​				1）所有的w<del>i</del>&gt;0, p<del>i</del>&gt;0，1≤i≤n；</p>
+<p>​				2）问题的解用向量(x<del>1</del>,x<del>2</del>,…,x<del>n</del>)表示，每个x<del>i</del>表示物品i被放入背包的比例，0≤x<del>i</del>≤1。当物品i的一部分x<del>i</del>放入背包，可得到p<del>i</del>x<del>i</del>的效益，同时会占用x<del>i</del>w<del>i</del>的重量。</p>
+<p>问题分析：</p>
+<ul>
+<li><p>装入背包的总重量小于等于M，即：<br>$$<br>\sum_{1&lt;&#x3D;i&lt;&#x3D;n}W_iX_i&lt;&#x3D;M<br>$$</p>
+</li>
+<li><p>$$<br>求\sum_{1&lt;&#x3D;i&lt;&#x3D;n}P_iX_i的最大值<br>$$</p>
+</li>
+<li><p>可行解：满足上述约束条件的任一(x<del>1</del>,x<del>2</del>,…,x<del>n</del>) 都是问题的一个可行解。可行解可能有多个（甚至是无穷多个）。</p>
+</li>
+<li><p>最优解：能够使目标函数取最大值的可行解是问题的最优解。最优解也可能有多个。</p>
+</li>
+</ul>
+<h3 id="贪心策略"><a href="#贪心策略" class="headerlink" title="贪心策略"></a>贪心策略</h3><p>这里我们需要思考：</p>
+<p>1、策略一：以每装入一件物品，就使背包获得最大可能的效益增量作为策略</p>
+<p>2、策略二：让背包容量尽可能慢地被消耗，从而可以尽可能多地装入一些物品。</p>
+<p>3、如下的贪心策略</p>
+<p>我们要设计一个贪心策略来使得装入背包物品的价值最大。我们的第一直觉肯定是要选择单位重量价格最高的。</p>
+<p>然后再选择物品里面第二高的，一次类推直到装满背包为止！</p>
+<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>可以利用反证法求证策略一和策略二都不是最优解。</p>
+<p>策略三：</p>
+<p><strong>需要注意的是X<del>i</del> 的值是小于等于1的</strong></p>
+<p>我们首先假设我们有一个最优解A<del>1</del>,那么我们首先找到A<del>1</del>里面单位价值最高的物品a<del>m</del></p>
+<ul>
+<li>情况一：a<del>m</del>&#x3D;商品里面单位价值最高的物品a<del>1</del>。那么问题得证（因为只要不断拿掉单位价值最高的即可）</li>
+<li>情况二：a<del>m</del>&lt;a<del>1</del>。运用剪枝技巧，讲a<del>m</del> 剪掉，补上a<del>1</del> （a<del>1</del>将a<del>m</del>进行全部替换或者部分替换）<ul>
+<li>如果a<del>m</del> 的重量比a<del>1</del> 的重量小，a<del>1</del> 全部替换a<del>m</del>，</li>
+<li>如果a<del>m</del> 的重量比a<del>1</del> 的重量大，a<del>1</del> 部分替换a<del>m</del>，其余部分保留</li>
+</ul>
+</li>
+</ul>
+<h2 id="Huffman编码"><a href="#Huffman编码" class="headerlink" title="Huffman编码"></a>Huffman编码</h2><p>其中变长编码表是通过一种评估来源符号出现机率的方法得到的，<strong>出现机率高的字母使用较短的编码，反之出现机率低的则使用较长的编码</strong>，这便使编码之后的字符串的平均长度、期望值降低，从而达到无损压缩数据的目的。</p>
+<p>前缀码(Prefix code)：任何码字都不是其它码字的前缀。</p>
+<p>问题是：如何设计前缀码？</p>
+<h3 id="编码树"><a href="#编码树" class="headerlink" title="编码树"></a>编码树</h3><p>一种为表示字符二进制编码而构造的二叉树。</p>
+<p>叶子结点：对应给定的字符，每个字符对应一个叶子结点。</p>
+<p>编码构造：字符的二进制码字由根结点到该字符叶子结点的简单路径表示：0代表转向左孩子，1代表转向右孩子。</p>
+<p><img src="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/image-20200102212604104.png"></p>
+<p>一个文件的最优字符编码方案总对应一棵满(full)二叉树，即每个非叶子结点都有两个孩子结点。</p>
+<h3 id="最优编码方案"><a href="#最优编码方案" class="headerlink" title="最优编码方案"></a>最优编码方案</h3><p>文件的最优编码方案对应一棵满二叉树。</p>
+<ul>
+<li><p>设C为字母表</p>
+<ul>
+<li>对字母表C中的任意字符c，令属性c.freq表示字符c在文件中出现的频率（设所有字符的出现频率均为正数）。</li>
+<li>最优前缀码对应的树中恰好有|C|个叶子结点，每个叶子结点对应字母表中的一个字符，且恰有|C|-1个内部结点。</li>
+</ul>
+</li>
+<li><p>令T表示一棵前缀编码树；</p>
+</li>
+<li><p>令d<del>T</del>(c)表示c的叶子结点在树T中的深度（根到叶子结点的路径长度）。</p>
+<ul>
+<li>d<del>T</del>(c)也是字符c对应的码字的长度。</li>
+</ul>
+</li>
+</ul>
+<p>令B(T)表示采用编码方案T时文件的编码长度，则：<br>$$<br>B(T)&#x3D;\sum_{c\in C}c.freq*d_T(c)<br>$$<br>即文件要用B(T)个二进制位表示.</p>
+<ul>
+<li>称B(T)为T的代价。</li>
+<li>最优编码：对给定的字符集和文件，使文件的编码长度最小的编码称为最优编码。<ul>
+<li>Huffman编码是一种最优编码。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Huffman编码的贪心算法"><a href="#Huffman编码的贪心算法" class="headerlink" title="Huffman编码的贪心算法"></a>Huffman编码的贪心算法</h3><p>自底向上法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HUFFMAN(C)<span class="comment">//C表示字母表</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> n=C.size();</span><br><span class="line">    <span class="type">queue</span> <span class="variable">Q</span> <span class="operator">=</span>C;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n-<span class="number">1</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">node</span> z;</span><br><span class="line">        z.left = x = EXTRACT_MIN(Q);<span class="comment">//取队列中频率最小的</span></span><br><span class="line">        z.right=y=EXTRACT_MIN(Q);</span><br><span class="line">        z.freq=x.freq+y.freq;</span><br><span class="line">        INSERT(Q,Z);<span class="comment">//频率低的拼好后，一步步往上累加</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/image-20200102213951216.png"></p>
+<h4 id="时间分析"><a href="#时间分析" class="headerlink" title="时间分析"></a>时间分析</h4><p>Q是使用最小二叉堆实现的。</p>
+<ul>
+<li><p>首先，Q的初始化花费O(n)的时间。</p>
+</li>
+<li><p>其次，循环的总代价是O(nlgn)。</p>
+<ul>
+<li>for循环共执行了n-1次，每次从堆中找出当前频率最小的两个结点及把合并得到的新结点插入到堆中均花费O(lgn)，所以循环的总代价是O(nlgn).</li>
+</ul>
+</li>
+</ul>
+<p><strong>所以，HUFFMAN的总运行时间O(nlgn)</strong></p>
+<h4 id="HUFFMAN算法的正确性"><a href="#HUFFMAN算法的正确性" class="headerlink" title="HUFFMAN算法的正确性"></a>HUFFMAN算法的正确性</h4><p>1、第一点：令C为一个字母表，其中每个字符c∈C都有一个频率c.freq。令x和y是C中频率最低的两个字符。那么存在C的一个最优前缀码，x和y的码字长度相同，且只有最后一个二进制位不同。</p>
+<p>二叉树T表示字符集C的一个最优前缀码，证明可以对T作适当修改后得到一棵新的二叉树T”，在T”中x和y是最深叶子且为兄弟，同时T”表示的前缀码也是C的最优前缀码。设b和c是二叉树T的最深叶子，且为兄弟。设f(b)&lt;&#x3D;f(c)，f(x)&lt;&#x3D;f(y)。由于x和y是C中具有最小频率的两个字符，有f(x)&lt;&#x3D;f(b)，f(y)&lt;&#x3D;f(c)。首先，在树T中交换叶子b和x的位置得到T’，然后再树T’中交换叶子c和y的位置，得到树T’’。如图所示：<br><img src="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1364295841_4708.jpg"></p>
+<p>由此可知，树T和T’的前缀码的平均码长之差为：</p>
+<p><img src="/images/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/1364296506_7690.jpg"></p>
+<p> 因此，<em>T’’表示的前缀码也是最优前缀码</em>，且x,y具有相同的码长，同时，仅最优一位编码不同。</p>
+<p>2、第二点：令C为一个给定的字母表，其中每个字符c∈C都有一个频率c.freq。</p>
+<p>令x和y是C中频率最低的两个字符。<br>令C’为C去掉字符x和y，并加入一个新字符z后得到的字母表，即C’&#x3D; C -{x, y}∪{z}。</p>
+<p>类似C，也为C’定义freq，且z.freq&#x3D; x.freq+ y.freq。<br>令T’为字母表C’的任意一个最优前缀码对应的编码树。则有：可以将T’中叶子结点z替换为一个以x和y为孩子的内部结点，得到树T，而T表示字母表C的一个最优前缀码。</p>
+<h4 id="最优子结构性质"><a href="#最优子结构性质" class="headerlink" title="最优子结构性质"></a>最优子结构性质</h4><p>贪心选择性：</p>
+<ul>
+<li>1、第一点说明首次选择频率最低的两个字符和选择其它可能的字符一样，都可以构造相应的最优编码树。</li>
+<li>2、第二点说明首次贪心选择，选择出频率最低的两个字符x和y，合并后将z加入元素集合，可以构造包含z的最优编码树，而还原x和y，一样还是最优编码树。</li>
+<li>所以贪心选择性成立。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2020/01/02/OS_%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/02/OS_%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/" class="post-title-link" itemprop="url">资源分配与调度</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-02 13:02:12" itemprop="dateCreated datePublished" datetime="2020-01-02T13:02:12Z">2020-01-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D/" itemprop="url" rel="index"><span itemprop="name">资源分配</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="资源分配与调度"><a href="#资源分配与调度" class="headerlink" title="资源分配与调度"></a>资源分配与调度</h1><h2 id="资源管理概述"><a href="#资源管理概述" class="headerlink" title="资源管理概述"></a>资源管理概述</h2><p>资源：应用程序执行时所需要的<strong>全部硬件、软件和数据</strong>。</p>
+<p>资源管理的目标：</p>
+<ul>
+<li>保证资源的高利用率。</li>
+<li>在“合理”时间内使所有顾客有获得所需资源的机会。</li>
+<li>对不可共享的资源实施互斥使用。</li>
+<li>防止由资源分配不当而引起的死锁。</li>
+</ul>
+<h3 id="资源管理的任务"><a href="#资源管理的任务" class="headerlink" title="资源管理的任务"></a>资源管理的任务</h3><p>(1) 资源数据结构的描述<br>        包含资源的物理名、逻辑名、类型、地址、分配状态等信息。</p>
+<p>(2) 确定资源的分配原则(调度原则)<br>        决定资源应分给谁，何时分配，分配多少等问题。</p>
+<p>(3) 实施资源分配<br>        执行资源分配；资源收回工作。</p>
+<p>(4) 存取控制和安全保护<br>        对资源的存取进行控制并对资源实施安全保护措施。</p>
+<h3 id="资源的静态分配和动态分配"><a href="#资源的静态分配和动态分配" class="headerlink" title="资源的静态分配和动态分配"></a>资源的静态分配和动态分配</h3><h4 id="静态分配"><a href="#静态分配" class="headerlink" title="静态分配"></a>静态分配</h4><p>系统对<strong>作业一级</strong>采用资源静态分配方法。系统在调度作业时，根据作业所需资源进行分配；并在作业运行完毕时，收回所分配的全部资源。这种分配通常称为资源的静态分配。</p>
+<h4 id="动态分配"><a href="#动态分配" class="headerlink" title="动态分配"></a>动态分配</h4><p>系统对<strong>进程一级</strong>采用资源动态分配方法。系统在进程运行中，根据进程提出的资源需求，进行资源的动态分配和回收。这种分配通常称为资源的动态分配。</p>
+<blockquote>
+<p>  （1）作业是用户向计算机提交任务的任务实体。在用户向计算机提交作业后，系统将它放入外存中的作业等待队列中等待执行。而进程则是完成用户任务的执行实体，是向系统申请分配资源的基本单位。任一进程，只要它被创建，总有相应的部分存在于内存中。</p>
+<p>  （2）一个作业可由多个进程组成，且必须至少由一个进程组成，反过来则不成立。</p>
+<p>  （3）作业的概念主要用在批处理系统中，像UNIX这样的分时系统中就没有作业的概念。而进程的概念则用在几乎所有的多道程序系统中。</p>
+</blockquote>
+<h3 id="虚拟资源"><a href="#虚拟资源" class="headerlink" title="虚拟资源"></a>虚拟资源</h3><ul>
+<li><p>物理资源(实资源)</p>
+</li>
+<li><p>虚拟资源(逻辑资源)：<strong>用户使用的逻辑资源</strong>，这是经过操作系统改造的、使用方便的虚资源，而不是物理的、实际的资源。</p>
+</li>
+</ul>
+<p>可以理解为操作系统将资源进行了封装，用户无需关心具体的资源在哪里，只要关心操作系统向用户提供的虚资源的描述。</p>
+<p><img src="/images/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/image-20200102132245004.png"></p>
+<h1 id="资源分配结构和策略"><a href="#资源分配结构和策略" class="headerlink" title="资源分配结构和策略"></a>资源分配结构和策略</h1><p>资源管理的实质是<strong>资源管理的机制和资源管理的策略</strong>。</p>
+<ul>
+<li><p>机制：进行资源分配所必须的基本设施和部件，包括描述资源状态的数据结构、保证不可共享资源互斥使用的同步机构以及对不能立即得到满足的资源请求进行排队的各种资源队列的结构。</p>
+</li>
+<li><p>策略：资源分配的原则。</p>
+</li>
+</ul>
+<h2 id="资源分配的机构"><a href="#资源分配的机构" class="headerlink" title="资源分配的机构"></a>资源分配的机构</h2><h3 id="资源描述器"><a href="#资源描述器" class="headerlink" title="资源描述器"></a>资源描述器</h3><p>描述各类资源的最小分配单位的数据结构称为资源描述器rd（resource descriptor）。如：主存分区分配方法中，最小分配单位为主存分区。资源描述器描述了<strong>资源的特性和该资源的管理方式</strong>。</p>
+<p><strong>用于资源分配的最重要的信息是这一资源分配单位是可用的还是已分配的。</strong></p>
+<ul>
+<li>若它具有N个资源分配器，则有N个资源描述器。这些描述器的组织是个重要问题。</li>
+<li>描述器的组织方式取决于资源分配单位的数量和数量是否可变这一特征。<ul>
+<li>如果数量不可变，使用表结构。</li>
+<li>如果数量可变，使用队列结构。</li>
+<li>如果数目变化范围可知且不大，使用数组。</li>
+</ul>
+</li>
+</ul>
+<p><strong>资源描述器的内容：</strong></p>
+<p>资源名、资源类型、最小分配单位的大小、地址、分配标志、描述器链接信息、存取权限、密级、存取时间</p>
+<h3 id="资源信息块"><a href="#资源信息块" class="headerlink" title="资源信息块"></a>资源信息块</h3><p>描述某类资源的请求者、可用资源和该类资源分配程序等必要信息的数据结构。</p>
+<p><img src="/images/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/image-20200102133508777.png"></p>
+<p>资源分配程序包括了资源分配程序和资源回收程序。当有进程请求资源的时候，先去资源分配程序中看看有没有资源，没有的话，将进程加入到等待资源队列中；当进程执行释放资源命令时，使用资源回收程序，将释放的资源加入到可利用资源的队列中。</p>
+<h2 id="资源分配策略"><a href="#资源分配策略" class="headerlink" title="资源分配策略"></a>资源分配策略</h2><p>对某类资源而言，在多个资源有多个请求者申请的情况下，资源分配的策略包括<strong>选择请求者的策略和选择资源的策略两种。</strong></p>
+<p>选择请求者的策略：即资源分配策略，即在众多请求者中选一个满足条件的请求者的原则。</p>
+<p>选择资源的策略：是在同等资源间选择一个满足条件的资源的原则。</p>
+<p>具体实现：体现在队列的排队原则上。</p>
+<p><strong>资源分配的时机</strong></p>
+<ul>
+<li>当请求者发出一个明确的资源请求命令时；</li>
+<li>当处理机空闲时；</li>
+<li>当一个存储区被释放变为空闲时；</li>
+<li>当一个外存设备发生完成中断时。</li>
+</ul>
+<h3 id="先请求先服务策略"><a href="#先请求先服务策略" class="headerlink" title="先请求先服务策略"></a>先请求先服务策略</h3><p>每一个新产生的请求均排在队尾；当资源可用时，取队首元素，并满足其需要。</p>
+<p>排序原则：按请求的先后次序排序。（<strong>有饿死现象！</strong>）</p>
+<h3 id="优先调度策略"><a href="#优先调度策略" class="headerlink" title="优先调度策略"></a>优先调度策略</h3><p>对每一个进程指定一个优先级，优先级反映了进程要求处理的紧迫程度；</p>
+<p>每一个新产生的请求，按其优先级的高低插到相应的位置；</p>
+<p>当资源可用时，取队首元素，并满足其需要。</p>
+<p>排序原则：按优先级的高低排序。</p>
+<p>缺点：<strong>因为优先级不同，会存在插队的状况。所以会消耗时间，导致效率下降</strong></p>
+<h3 id="针对设备特性的调度策略"><a href="#针对设备特性的调度策略" class="headerlink" title="针对设备特性的调度策略"></a>针对设备特性的调度策略</h3><p>目的是为了当有大量I&#x2F;O请求时，降低完成这些I&#x2F;O服务的总时间。</p>
+<h4 id="移臂调度"><a href="#移臂调度" class="headerlink" title="移臂调度"></a>移臂调度</h4><p>总是选取与当前移动臂前进方向上最近的那个I&#x2F;O请求，使移臂距离最短。</p>
+<p><strong>移臂的方向是由外向里，即柱面号由小到大</strong></p>
+<h4 id="旋转调度"><a href="#旋转调度" class="headerlink" title="旋转调度"></a>旋转调度</h4><p>总是选取与当前读写头最近的那个I&#x2F;O请求，使旋转圈数最少。</p>
+<h3 id="几种移臂调度算法"><a href="#几种移臂调度算法" class="headerlink" title="几种移臂调度算法"></a>几种移臂调度算法</h3><h4 id="最短寻道时间优先算法（SSTF）"><a href="#最短寻道时间优先算法（SSTF）" class="headerlink" title="最短寻道时间优先算法（SSTF）"></a>最短寻道时间优先算法（SSTF）</h4><p>从等待访问者中挑选寻找时间最短的（也就是离得最近的）那个请求先执行</p>
+<p>缺点：可能会引起读写头在盘面上的大范围移动，可能会推迟请求的服务导致无限拖延</p>
+<h4 id="扫描算法（SCAN，即电梯调度算法）"><a href="#扫描算法（SCAN，即电梯调度算法）" class="headerlink" title="扫描算法（SCAN，即电梯调度算法）"></a>扫描算法（SCAN，即电梯调度算法）</h4><p>磁头前进方向上的最短查找时间优先算法。</p>
+<p>很大程度上消除了SSTF的不公平性</p>
+<h3 id="循环扫描算法（CSCAN）"><a href="#循环扫描算法（CSCAN）" class="headerlink" title="循环扫描算法（CSCAN）"></a>循环扫描算法（CSCAN）</h3><p>就是在电梯算法的基础上，一个方向找完了，回到起点再找（电梯算法是一个方向找完了转身反方向找）</p>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><p>在两个或多个并发进程中，如果每个进程持有某种资源而又都等待着别的进程释放它或它们现在保持着的资源，否则就不能向前推进。此时，称这一组进程产生了死锁。</p>
+<h2 id="死锁的起因和条件"><a href="#死锁的起因和条件" class="headerlink" title="死锁的起因和条件"></a>死锁的起因和条件</h2><h3 id="死锁的原因"><a href="#死锁的原因" class="headerlink" title="死锁的原因"></a>死锁的原因</h3><p>①系统资源不足</p>
+<p>②进程推进顺序非法</p>
+<h3 id="产生死锁的必要条件"><a href="#产生死锁的必要条件" class="headerlink" title="产生死锁的必要条件"></a>产生死锁的必要条件</h3><p><strong>①互斥条件</strong></p>
+<p>涉及的资源是非共享的，即为临界资源。</p>
+<p><strong>②不剥夺条件</strong></p>
+<p>进程所获得的资源在未使用完毕之前，不能被其他进程强行夺走。</p>
+<p>（根据操作系统的特性，例如windows系统就是不可剥夺的）</p>
+<p><strong>③部分分配</strong></p>
+<p>进程每次申请它所需要的一部分资源。在等待一新资源的同时，进程继续占用已分配到的资源。</p>
+<p><strong>④环路条件</strong></p>
+<p>存在一种进程的循环链，链中的每一个进程已获得的资源同时被链中下一个进程所请求。</p>
+<h3 id="解决死锁问题的策略"><a href="#解决死锁问题的策略" class="headerlink" title="解决死锁问题的策略"></a>解决死锁问题的策略</h3><p>破坏产生死锁的四个必要条件之一</p>
+<ul>
+<li>采用静态资源分配方法——预防死锁。</li>
+<li>采用有控资源分配方法——避免死锁</li>
+<li>死锁的检测与忽略</li>
+</ul>
+<h3 id="死锁的预防和避免"><a href="#死锁的预防和避免" class="headerlink" title="死锁的预防和避免"></a>死锁的预防和避免</h3><h4 id="静态预防死锁的方法"><a href="#静态预防死锁的方法" class="headerlink" title="静态预防死锁的方法"></a>静态预防死锁的方法</h4><p>在作业调度时为选中的作业分配它所需要的所有资源，当资源一旦分配给该作业后，在其整个运行期间这些资源为它独占。</p>
+<h4 id="动态避免死锁的方法"><a href="#动态避免死锁的方法" class="headerlink" title="动态避免死锁的方法"></a>动态避免死锁的方法</h4><h5 id="有序资源分配法（破坏了部分分配和循环等待）"><a href="#有序资源分配法（破坏了部分分配和循环等待）" class="headerlink" title="有序资源分配法（破坏了部分分配和循环等待）"></a>有序资源分配法（破坏了部分分配和循环等待）</h5><p>系统中所有资源都给定一个唯一的编号，所有分配请求必须以上升的次序进行。当遵守上升次序的规则时，若资源可用，则予以分配；否则，请求者等待。（缺点：资源浪费！）</p>
+<h5 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h5><p>申请者事先说明对各类资源的最大需求量。在进程活动期间动态申请某类资源时，由系统审查现有该类资源的数目是否能满足当前进程的最大需求量，如能满足就予以分配，否则拒绝。</p>
+<h3 id="死锁的检测与忽略"><a href="#死锁的检测与忽略" class="headerlink" title="死锁的检测与忽略"></a>死锁的检测与忽略</h3><p>检测：算法复杂，开销很大</p>
+<p>忽略：后患无穷</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>假设一个可移动磁头的磁盘具有 200个磁道，其编号为0~199,当它刚刚结束了 125道的存取后，现正在处理143道的服务请求，假设系统当前的请求序列以请求的先后次序排列如下: 86、147、91、177、150、102、175、130。试问对以下几种磁盘IO请求调度算法而言，满足以上请求序列，磁头将分别如何移动?</p>
+<p>（1）  先来先服务算法（FCFS）</p>
+<p>（2）  最短寻道时间优先调度（SSTF）</p>
+<p>（3）  扫描算法（SCAN）</p>
+<p>（4）  循环扫描算法（CSCAN）</p>
+<p>答：</p>
+<p>（1）  FCFS：143→86→147→91→177→150→102→175→130；</p>
+<p>（2）  SSTF：143→147→150→130→102→94→91→86→175→177；</p>
+<p>（3）  SCAN：143→147→150→175→177→130→102→94→91→86；</p>
+<p>（4）  C-SCAN：143→147→150→175→177→86→91→94→102→130。</p>
+<p>5-9 三个进程共享四个同类资源，这些资源的分配与释放只能一次一个，已知每一进程最多需要两个资源，试问该系统会发生死锁吗？为什么？</p>
+<p>答：该系统不会发生死锁。</p>
+<p>因为最坏情况是每个进程都占有一个资源，申请第二个资源，而此时系统中还剩一个资源，不管这个资源分给哪个进程，都能满足它的资源要求，因此它能在有限时间内运行结束而释放它所占有的两个资源，这两个资源又可以分配给另外两个进程，使它们能够运行结束，所以系统不会发生死锁。</p>
+<p>5-10 p个进程共享m个同类资源，每一个资源在任一时刻只能供一个进程使用，每一进程对任一资源都只能使用一有限时间，使用完便立即释放，并且每个进程对该类资源的最大需求量小于该类资源的数目，设所有进程对资源的最大需求数目之和小于p+m，试证在该系统中不会发生死锁。</p>
+<p>解：采用“反证法”，假定max(i)为第i个进程最大资源需求量，need(i)为第i个进程还需要的资源量，alloc(i)为第i个进程已分配的资源量，则</p>
+<p>max(i)&lt;&#x3D;m</p>
+<p>max(i)&#x3D;need(i)+alloc(i)</p>
+<p>max(1)+L+ max(p)&#x3D;(need(1)+ L…+need(p))+(alloc(1)+ L…+alloc(p))&lt;p+m</p>
+<p>若发生死锁，则需要满足下面两个条件，</p>
+<p>① 全部分配，alloc(1)+…+alloc(p)&#x3D;m；② 所有进程无限等待</p>
+<p>由①②可得， need(1)+…+need(p)&lt;p</p>
+<p>则死锁后，p个进程需要的资源小于p，则一定存在进程i，need (i) &#x3D; 0，进程已获得全部资源，进程i 可以执行完，同假设发生矛盾，所以不会发生死锁。</p>
+<p>5-11图5.9 表示一带闸门的运河，其上有两架吊桥，吊桥坐落在一条公路上，为使该公路避开一块沼泽地而其横跨运河两次。运河和公路的交通都是单方向的，运河的基本运输由驳船担负。在一艘驳船接近吊桥A 时就拉汽笛警告，若桥上无车辆，吊桥就吊起，直到驳船尾部通过该桥为止，对吊桥B按同样次序处理</p>
+<p>(1) 一艘典型驳船的长度为200 米，当它在河道航行时是否会产生死锁？若会，其理由是什么？</p>
+<p>(2) 如何能克服一个可能的死锁？请想出一个防止死锁的办法。</p>
+<p>(3) 如何利用信号灯的P、V 操作实现车辆和驳船的同步？</p>
+<p><img src="/images/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/clip_image002.png"></p>
+<p>(1) 答：驳船长200 米，当驳船通过了A 桥，其船头到达B 桥，请求B 桥吊起，而此时它的尾部占据A 桥，若这个时候B 桥及B桥到A 桥之间的公路都被汽车占据，而汽车又要求通过A 桥。这样驳船和汽车都无法前进，形成死锁的局面。</p>
+<p>(2) 答：方案之一。可规定资源按序申请和分配，从而破坏了死锁的循环等待条件，防止死锁的发生。规定如B 桥的序号小于A 桥的序号，驳船和汽车都必须先申请序号小的资源B 桥，申请得到满足后，再申请序号大的资源A 桥。</p>
+<p>(3) 答：将每台车的行驶看作是进程，则有Auto1，Auto2，LAutoi i个汽车进程。将每条驳船的航行看作是进程，则有Ship1，Ship2，LShipj个驳船进程。桥A和桥B对车和船为互斥资源。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">main&#123;</span><br><span class="line">	int SA=<span class="number">1</span>；<span class="regexp">//</span>A桥的互斥信号量<span class="regexp">//</span></span><br><span class="line">	int SB=<span class="number">1</span>；<span class="regexp">//</span>B桥的互斥信号量<span class="regexp">//</span></span><br><span class="line">	cobegin</span><br><span class="line">		Auto1;Auto2;···Autoi;</span><br><span class="line">		Ship1; Ship2; ···Shipj;</span><br><span class="line">	coend</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Autoi()&#123;</span><br><span class="line">车在公路上行驶；</span><br><span class="line">P（SB）；</span><br><span class="line">过B桥；</span><br><span class="line">V（SB）；</span><br><span class="line">过弯道；</span><br><span class="line">P（SA）；</span><br><span class="line">过A桥；</span><br><span class="line">V（SA）；</span><br><span class="line">车在公路上行驶；                          </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Shipj()&#123;</span><br><span class="line">运河航行；</span><br><span class="line">P（SB）；                  </span><br><span class="line">P（SA）；                    </span><br><span class="line">吊起过A桥；                    </span><br><span class="line">运河航行；                             </span><br><span class="line">吊起过B桥；                    </span><br><span class="line">V（SA）；                         </span><br><span class="line">V（SB）；</span><br><span class="line">运河航行；</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>5-14在采用银行家算法管理资源分配的系统中，有A、B、C三类资源可供5个进程P1、P2、P3、P4、P5共享。3类资源的总量为(17, 5, 20)，即A类17个，B类5个，C类20个。假设T0时刻各进程对资源的需求和分配情况如下表所示。</p>
+<p><img src="/images/%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E4%B8%8E%E8%B0%83%E5%BA%A6/clip_image002-1578241244505.png" alt="img"></p>
+<p>（1）  现在系统是否处于安全状态？如是，给出一个安全序列。</p>
+<p>（2）  T0时刻，如果进程P4和P1依次提出A、B、C资源请求（2,0,1）和（0,2,0），系统能否满足它们的请求?请说明原因。</p>
+<p>答：（1）系统处于安全状态，如P4→P2→P3→P5→P1。</p>
+<p>（2）不能满足。由于P4与P1提出请求后，A、B、C剩余（0，1，2），此时A类无，只能等待拥有足够A类资源的进程结束释放A类资源，别的进程才能执行，而此时P4需（0，2，0），P3需（0，0，6），而剩余（0，1，2），不能满足要求，产生死锁。</p>
+<p><strong>1．</strong> <strong>设有一个售票大厅，可容纳200人购票。如果厅内不足200人则允许进入，超过则在厅外等候；售票员某时只能给一个购票者服务，购票者买完票后就离开。试问：</strong></p>
+<p><strong>（1）</strong> <strong>购票者之间是同步关系还是互斥关系？</strong></p>
+<p>答：互斥关系。</p>
+<p><strong>用P、V操作描述购票者的工作过程。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">semaphore empty=<span class="number">200</span>;</span><br><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore waiting=<span class="number">0</span>；</span><br><span class="line"><span class="type">void</span> <span class="built_in">buy</span>()</span><br><span class="line">&#123;   <span class="built_in">p</span>(waiting);</span><br><span class="line">	<span class="built_in">p</span>(mutex);</span><br><span class="line">	买票；</span><br><span class="line">	<span class="built_in">v</span>(mutex);</span><br><span class="line">	<span class="built_in">v</span>(empty);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">waiting</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">p</span>(empty);</span><br><span class="line">	等待；</span><br><span class="line">	waiting++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -3035,549 +3635,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">概率分析和随机算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-25 23:48:52" itemprop="dateCreated datePublished" datetime="2019-12-25T23:48:52Z">2019-12-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="概率分析和随机算法"><a href="#概率分析和随机算法" class="headerlink" title="概率分析和随机算法"></a>概率分析和随机算法</h1>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/26/Algorithm_%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%E5%92%8C%E9%9A%8F%E6%9C%BA%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/26/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/26/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">组成原理-输入输出系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-25 23:30:39" itemprop="dateCreated datePublished" datetime="2019-12-25T23:30:39Z">2019-12-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">组成原理</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="输入输出系统"><a href="#输入输出系统" class="headerlink" title="输入输出系统"></a>输入输出系统</h1><p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155751236.png"></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20190112155821404.png"></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="IO系统具有的特点"><a href="#IO系统具有的特点" class="headerlink" title="IO系统具有的特点"></a>IO系统具有的特点</h3><ul>
-<li>异步性：外围设备相对于处理机是异步工作的。</li>
-<li>实时性：当外围设备与处理机交互时，由于设备的类型不同，它们的工作步调是不同的，处理机必须按照不同设备所要求传送方式和传输速率不失时机地为设备提供服务，这就要求实时性控制；</li>
-<li>与设备无关性：各种外部设备必须根据其特点和要求选择一种标准接口和处理机进行连接，它们之间的差别必须由设备本身的控制器通过硬件和软件来填补；这样，处理机本身无须了解外设的具体细节，可以采用统一的硬件和软件对其管理。</li>
-</ul>
-<h3 id="输入过程"><a href="#输入过程" class="headerlink" title="输入过程"></a>输入过程</h3><p>1、CPU将一个地址放在地址总线上，选择设备</p>
-<p>2、CPU等候输入设备的数据成为有效</p>
-<p>3、CPU从数据总线读入数据</p>
-<h3 id="输出过程"><a href="#输出过程" class="headerlink" title="输出过程"></a>输出过程</h3><p>1、CPU将一个地址放在地址总线上，选择设备</p>
-<p>2、CPU把数据放在数据总线上；</p>
-<p>3、输出设备认为数据有效，取走数据</p>
-<h2 id="输入输出方式"><a href="#输入输出方式" class="headerlink" title="输入输出方式"></a>输入输出方式</h2><ul>
-<li>无条件IO方式难做到</li>
-</ul>
-<p>在程序的适当位置直接安排I&#x2F;O指令，当程序执行到这些I&#x2F;O指令时，<strong>CPU默认外设始终是准备就绪的</strong>（I&#x2F;O总是准备好接收CPU的输出数据，或总是准备好向CPU输入数据），无需检查I&#x2F;O的状态，就进行数据的传输；</p>
-<p>硬件接口电路和软件控制程序都比较简单。输入时，必须确保CPU执行I&#x2F;O指令读取数据时，外设已将数据准备好；输出时，必须确保外部设备的数据锁存器为空，即外设已将上次的数据取走，等待接收新的数据，否则会导致数据传送出错，但一般的外设难以满足这种要求。</p>
-<ul>
-<li>程序控制IO方式</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226161108043.png"></p>
-<p>如果不设置查询次数，就可能会无限次循环导致死机。</p>
-<p><strong>设备状态字寄存器：</strong></p>
-<ol>
-<li>用来标志设备的工作状态，以便接口对外部设备进行监视。</li>
-<li>CPU通过程序查询设备状态位来判断设备的状态。</li>
-<li>因此，设备状态寄存器是设备对主机的窗口，主机通过它了解设备的状态，并对设备设置操作方式。</li>
-<li>设备状态寄存器又叫设备状态字（DSW）是设备所有状态的集合，每种状态均用一个触发器来表示。</li>
-</ol>
-<p>程序控制I&#x2F;O方式特点：<strong>何时对何设备进行输入输出操作完全受CPU控制</strong>，外围设备与CPU处于异步工作关系，数据的输入&#x2F;输出都要经过CPU。</p>
-<ul>
-<li>中断IO方式</li>
-</ul>
-<p>当外设准备好后，<strong>主动</strong>通知CPU并进行接收或输出数据的方法；</p>
-<p>CPU接到外设的通知后暂停现行的工作，转入中断服务程序，和外设交换数据，等中断程序处理完毕后，再返回到被中断的原程序中继续以前被暂停的工作。</p>
-<ul>
-<li>DMA</li>
-</ul>
-<p>是一种完全由硬件执行的I&#x2F;O交换方式</p>
-<ul>
-<li>通道方式和IO处理机方式</li>
-</ul>
-<p>在复杂的计算机系统中，外围设备的台数一般比较多，设备的种类、工作方式和工作速度的差别很大，为了把对外围设备的管理工作从CPU中分离出来，采用通道或I&#x2F;O处理机方式。</p>
-<p>通道是能够专门执行I&#x2F;O指令的处理机，它可以实现对外围设备的统一管理，以及外设与主存之间的数据传输。</p>
-<p>（通道可以跑简单的IO程序）</p>
-<p>I&#x2F;O处理机是通道方式的进一步发展，它的结构更接近于一般处理机。</p>
-<h2 id="中断请求和响应"><a href="#中断请求和响应" class="headerlink" title="中断请求和响应"></a>中断请求和响应</h2><p>可以实现主机和外设之间的并行工作。</p>
-<h3 id="中断的类型"><a href="#中断的类型" class="headerlink" title="中断的类型"></a>中断的类型</h3><p>内部中断：来自于CPU内部的指令中断请求，分为软件中断和异常。</p>
-<p>外部中断：中断请求来自CPU外部，又分为可屏蔽和不可屏蔽中断。</p>
-<p>不可屏蔽中断NMI：由系统内部硬件引发的中断，优先级高于外部硬件中断，且不受中断允许标志位的影响，所以是不可屏蔽中断。</p>
-<p>可屏蔽中断：由外设通过中断请求线向处理器申请而产生的中断，处理器可以用指令来屏蔽（禁止），即不响应它的中断请求。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226165258341.png"></p>
-<h3 id="中断的基本功能"><a href="#中断的基本功能" class="headerlink" title="中断的基本功能"></a>中断的基本功能</h3><h4 id="中断请求信号保持与清除"><a href="#中断请求信号保持与清除" class="headerlink" title="中断请求信号保持与清除"></a>中断请求信号保持与清除</h4><p>使用硬件方式实现</p>
-<h4 id="中断源识别"><a href="#中断源识别" class="headerlink" title="中断源识别"></a>中断源识别</h4><p>识别中断号。</p>
-<h4 id="中断控制"><a href="#中断控制" class="headerlink" title="中断控制"></a>中断控制</h4><p>中断触发方式：是指外设以什么逻辑信号去申请中断，即边沿触发和电平触发两种方式。</p>
-<p>中断排队方式：当系统有多个中断源时，就可能出现同时有几个中断源都申请中断，而处理器在一个时刻只能响应并处理一个中断请求；为此，要进行中断排队。处理器按“优先级高的先服务”的原则提供服务。</p>
-<ul>
-<li>按优先级排队：根据任务的轻重缓急，给每个中断源指定CPU响应的优先级，任务紧急的先响应，可以暂缓的后响应。</li>
-<li>循环轮流排队：不分级别高低，CPU轮流响应各个中断源的中断请求。</li>
-</ul>
-<h4 id="中断嵌套"><a href="#中断嵌套" class="headerlink" title="中断嵌套"></a>中断嵌套</h4><p>当CPU正在处理某个中断时，会出现优先级更高的中断源申请中断；为了使更紧急的、级别更高的中断源及时得到服务，需要暂时打断（挂起）当前正在执行的中断服务程序，去处理级别更高的中断请求，处理完成后再返回被打断了的中断服务程序继续执行。</p>
-<p>但级别相同或级别低的中断源不能打断级别高的中断服务，这就是所谓的中断嵌套。</p>
-<p>可屏蔽中断可以进行中断嵌套。NMI不可以进行中断嵌套。</p>
-<h4 id="中断屏蔽"><a href="#中断屏蔽" class="headerlink" title="中断屏蔽"></a>中断屏蔽</h4><p>处理器用指令来控制中断屏蔽触发器的状态，从而控制是否接受某个特殊外设的中断请求。</p>
-<p>处理器内部也有一个中断允许触发器，只有当其为“1”（即开中断），CPU才能响应外部中断。</p>
-<h4 id="中断优先级"><a href="#中断优先级" class="headerlink" title="中断优先级"></a>中断优先级</h4><p>硬件<strong>响应</strong>优先序：未被屏蔽的几个中断源同时提出申请时，CPU选择服务对象的顺序由硬件电路实现，<strong>用户不能修改。</strong></p>
-<ul>
-<li>响应优先序是指CPU对设备中断请求进行响应的先后次序</li>
-</ul>
-<p>软件<strong>服务</strong>优先序：在各中断服务程序开头，用软件设置自己的中断屏蔽字，以此改变实际服务顺序。</p>
-<ul>
-<li>服务优先序是指CPU实际完成中断处理程序的先后次序</li>
-</ul>
-<h4 id="中断的处理"><a href="#中断的处理" class="headerlink" title="中断的处理"></a>中断的处理</h4><p>注意多重中断处理流程。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226170332390.png"></p>
-<h2 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h2><p>DMA的设计是为了解决中断处理程序中每次传送一个字节、字就要响应中断的麻烦。</p>
-<p>方式：</p>
-<ul>
-<li>外设与主存间建立一个由硬件管理的数据通路</li>
-<li>CPU不介入外设与主存的数据传送操作</li>
-<li>减少CPU开销，提升效率</li>
-</ul>
-<p>通常系统总线是由CPU管理的，在ＤＭＡ方式时，就希望CPU把这些总线让出来，即CPU连到这些总线上的线处于第三态(高阻状态)，而由DMA控制器接管，控制传送的字节数，判断DMA是否结束，以及发出DMA结束信号。因此DMA控制器必须有以下功能:</p>
-<p>1、能向CPU发出系统保持(HOLD)信号，提出总线接管请求；</p>
-<p>2、当CPU发出允许接管信号后，负责对总线的控制，进入DMA方式;</p>
-<p>3、能对存储器寻址及能修改地址指针，实现对内存的读写；</p>
-<p>4、能决定本次DMA传送的字节数，判断DMA传送是否借宿。</p>
-<p>5、发出DMA结束信号，使CPU恢复正常工作状态。</p>
-<p>DMA传输将从一个地址空间复制到另外一个地址空间。当CPU初始化这个传输动作，传输动作本身是由DMA控制器来实行和完成。  典型例子—移动一个外部内存的区块到芯片内部更快的内存区。</p>
-<p>对于实现ＤＭＡ传输，它是由DMA控制器直接掌管总线（地址总线、数据总线和控制总线），因此，存在一个总线控制权转移问题</p>
-<p>DMA传输开始前：　　　　CPU——&gt;DMA控制器</p>
-<p>DMA传输结束后：              DMA控制器——&gt;CPU</p>
-<p>一个完整的DMA传输过程必须经历DMA请求、DMA响应、DMA传输、DMA结束4个步骤。</p>
-<p>DMA方式是一种完全由硬件进行组信息传送的控制方式，具有中断方式的优点，<strong>即在数据准备阶段，CPU与外设并行工作。</strong></p>
-<h3 id="DMA传输步骤"><a href="#DMA传输步骤" class="headerlink" title="DMA传输步骤"></a>DMA传输步骤</h3><p>申请阶段：一个设备接口试图通过总线直接向另一个设备发送数据(一般是大批量的数据)，它会先向CPU发送DMA请求信号；</p>
-<p>响应阶段：CPU收到DMA请求信号后，在当前的总线周期结束后，会按DMA信号的优先级和提出DMA请求的先后顺序响应DMA信号；</p>
-<p>数据传送阶段：CPU对某个设备接口响应DMA请求时，会让出总线控制权；于是在DMA控制器的管理下，外设和存储器直接进行数据交换，而不需CPU干预；</p>
-<p>传送结束阶段：数据传送完毕后，设备接口会向CPU发送DMA结束信号，交还总线控制权。</p>
-<h3 id="DMA传输模式"><a href="#DMA传输模式" class="headerlink" title="DMA传输模式"></a>DMA传输模式</h3><h4 id="停止CPU访问内存"><a href="#停止CPU访问内存" class="headerlink" title="停止CPU访问内存"></a>停止CPU访问内存</h4><p>当需要传送一批数据时，DMA控制器首先要求CPU放弃对总线的控制权；然后开始进行数据传送。在一批数据传送完毕后，DMA控制器通知CPU可以使用内存，并把总线控制权交还给CPU。<strong>在这种DMA传送过程中，CPU基本处于不工作状态或者说保持状态。</strong></p>
-<h4 id="周期挪用"><a href="#周期挪用" class="headerlink" title="周期挪用"></a>周期挪用</h4><p>停止CPU访问内存会导致内存使用效率不高。</p>
-<p>当I&#x2F;O设备没有DMA请求时，CPU按程序要求访问内存；一旦I&#x2F;O设备有DMA请求，则由I&#x2F;O设备挪用一个或几个内存周期。</p>
-<blockquote>
-<p>DMA要求访问主存时，CPU暂停<strong>一个或多个存储周期</strong>。一个数据传送结束后，CPU继续运行。</p>
-<p>CPU现场没有变动，仅延缓了指令的执行</p>
-</blockquote>
-<p>I&#x2F;O设备要求DMA传送时可能遇到两种情况：</p>
-<ul>
-<li>当CPU不需要访问内存时，此时I&#x2F;O访内与CPU访内没有冲突，即I&#x2F;O设备挪用一二个内存周期对CPU执行程序没有任何影响；</li>
-<li>CPU也同时要求访问内存，这就产生了访存冲突，在这种情况下<strong>I&#x2F;O设备访存优先</strong>。</li>
-</ul>
-<h4 id="DMA和CPU交替访问内存"><a href="#DMA和CPU交替访问内存" class="headerlink" title="DMA和CPU交替访问内存"></a>DMA和CPU交替访问内存</h4><p>如果CPU的工作周期比内存存取周期长很多，此时采用交替访存的方法，可以使DMA传送和CPU同时发挥最高的效率。</p>
-<p>将主存的存取周期分成两段：一段给CPU使用，一段给DMAC使用。</p>
-<p>缺点是硬件的代价很大，会很复杂。</p>
-<h3 id="DMA和中断的区别"><a href="#DMA和中断的区别" class="headerlink" title="DMA和中断的区别"></a>DMA和中断的区别</h3><ol>
-<li>中断通过程序传送数据，DMA靠硬件来实现。</li>
-<li>中断时机为两指令之间，DMA响应时机为两存储周期之间。</li>
-<li>中断不仅具有数据传送能力，还能处理异常事件。DMA只能进行数据传送。</li>
-<li>DMA仅挪用了一个存储周期，不改变CPU现场。</li>
-<li>DMA请求的优先权比中断请求高。CPU优先响应DMA请求，是为了避免DMA所连接的高速外设丢失数据。</li>
-<li>DMA利用了中断技术</li>
-</ol>
-<h2 id="通道方式"><a href="#通道方式" class="headerlink" title="通道方式"></a>通道方式</h2><p>DMA方式依赖硬件逻辑支持，随着设备数量的增加，DMA控制器增加，成本也相应增加。</p>
-<p>设置专用的输入输出处理机（通道），分担输入输出管理的全部或大部分工作。</p>
-<p>吸取了DMA技术，增加了软件管理，设有专用通道指令</p>
-<p>层次性的I&#x2F;O系统</p>
-<ul>
-<li>一个主机可以连接多个通道</li>
-<li>一个通道可以管理<strong>多个设备控制器</strong></li>
-<li>一个设备控制器又可以控制多台设备。</li>
-</ul>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/20171130091852029"></p>
-<p>⑴字节多路通道<br>　　它适用于连接打印机、终端等低速或中速的I&#x2F;O设备。这种通道以字节为单位交叉工作：当为一台设备传送一个字节后，立即转去为另一它设备传送一个字节。</p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173353103.png"></p>
-<p>⑵选择通道<br>　　它适用于连接磁盘、磁带等高速设备。这种通道以“组方式”工作，每次传送一批数据，传送速率很高，但在一段时间<strong>只能为一台设备服务。每当一个I&#x2F;O请求处理完之后，就选择另一台设备并为其服务。</strong></p>
-<p><img src="/images/%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86%E4%B8%83/image-20191226173426866.png"></p>
-<p>⑶成组多路通道<br>　　这种通道综合了字节多路通道分时工作和选择通道传输速率高的特点，其实质是：对通道程序采用多道程序设计技术，使得与通道连接的设备可以并行工作。</p>
-<ul>
-<li>多个设备以数据组（块）为单位交叉使用通道。</li>
-<li>设备占用通道时，连续传送一组数据，然后将出让通道使用权</li>
-<li>数据组的大小因设备而异，有256B、512B或1KB等。</li>
-</ul>
-<h3 id="通道控制方式与DMA控制方式的区别"><a href="#通道控制方式与DMA控制方式的区别" class="headerlink" title="通道控制方式与DMA控制方式的区别"></a>通道控制方式与DMA控制方式的区别</h3><p>1）DMA控制方式中需要CPU来控制所传输数据块的大小，传输的内存地址；通道控制方式中这些信息都是由通道来控制管理的。</p>
-<p>2）一个DMA控制器对应一台设备与内存传递数据，而一个通道可以控制多台设备与内存的数据交换。</p>
-<p>—– I&#x2F;O通道与一般处理器的区别：I&#x2F;O通道的指令类型单一，其所能执行的命令主要局限于与I&#x2F;O操作有关的指令；通道没有自己的内存，通道所执行的通道程序放在主机的内存中，也就是说通道是与CPU共享内存的。</p>
-<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><h3 id="名词解释"><a href="#名词解释" class="headerlink" title="名词解释"></a>名词解释</h3><p>(1)接口：接口是两个不同部件或系统之间的连接部分，可以是两个硬设备(可以都是计算机，也可以都是外部设备)之间的连接，也可以是软件系统中两个独立程序块之间的连接。</p>
-<p>(2)中断：计算机系统运行时，若系统外部、内部或现行程序本身出现某种非预期的事件，CPU将暂时停下现行程序，转向为该事件服务，待事件处理完毕，再恢复执行原来被终止的程序，这个过程称为中断。</p>
-<p>(3) 中断处理优先级:处理优先级是指CPU实际完成中断处理程序的先后次序。对单级中断而言,先被CPU响应的中断服务程序先完成；对多重中断而言，先被CPU响应的中断不一定先完成，这与中断屏蔽密切相关。</p>
-<p>(4) 中断屏蔽: 为了便于利用程序控制中断处理的先后顺序，可通过程序有选择地封锁部分中断源发出的中断请求，而允许其余部分中断仍得到响应，这种方式称为中断屏蔽。</p>
-<p>(5) 多重中断: 若在中断服务程序执行过程中，如果允许CPU响应其它中断请求，则这种中断称为多重中断，也称中断嵌套。</p>
-<p>(6) 中断向量: 通常将中断服务程序的入口地址和程序状态字(有的机器不包含此项)称为中断向量。</p>
-<p>(7) 中断响应优先级: 响应优先级是指CPU对各设备中断请求进行响应的先后次序，它根据中断事件的重要性和迫切性而定。当几个设备同时有中断请求时，优先级高的先响应，优先级低的后响应。</p>
-<p>(8) 中断隐指令: CPU响应中断之后，经过某些操作，转去执行中断服务程序。这些操作是由硬件直接实现的，把它称为中断隐指令。中断隐指令并不是指令系统中的一条真正的指令，它没有操作码，所以中断隐指令是一种不允许、也不可能为用户使用的特殊指令。</p>
-<p>(9) 程序中断I&#x2F;O: 当主机启动外设后，无需等待查询，而是继续执行原来的程序，外设在做好输入输出准备时，向主机发出中断请求，主机接到请求后就暂时中止原来执行的程序，转去执行中断服务程序对外部请求进行处理，在中断处理完毕后返回原来的程序继续执行。</p>
-<p>(10)程序查询I&#x2F;O: 程序查询方式是一种程序直接控制方式,这是主机与外设间进行信息交换的最简单的方式,输入和输出完全是通过CPU执行程序来完成的。一旦某一外设被选中并启动后，主机将查询这个外设的某些状态位，看其是否准备就绪？若外设未准备就绪，主机将再次查询；若外设已准备就绪，则执行一次I&#x2F;O操作。</p>
-<p>(11)DMA: 直接存储器存取控制方式DMA方式下外设与主存之间传送数据时，CPU仍可执行主程序.</p>
-<p>(12)周期挪用:周期挪用是指利用CPU不访问存储器的那些周期来实现DMA操作，此时DMAC可以使用总线而不用通知CPU也不会妨碍CPU的工作。</p>
-<p>(13)通道: 通道方式是DMA方式的发展，在通道方式下，数据的传送方向、存取数据的内存起始地址及传送的数据块长度等都由独立于CPU的通道来进行控制，因此，通道方式可进一步减少CPU的干预。</p>
-<p>(14)选择型通道: 对于这种高速传输，通道难以同时对多个这样的设备进行操作，只能一次对一个设备进行操作,这种通道称为选择通道。</p>
-<p>(15)通道指令: 通道程序是由一系列通道指令组成的，通道指令一般包含被交换数据在内存中应占据的位置、传送方向、数据块长度及被控制的I&#x2F;O设备的地址信息、特征信息（例如是磁带设备还是磁盘设备）等.</p>
-<p>(16)输入设备:向计算机输入数据和信息的设备.</p>
-<p>(17)输出设备:是人与计算机交互的一种部件，用于数据的输出。</p>
-<p>(18)显示分辨率:显示分辨率是显示器在显示图像时的分辨率，分辨率是用点来衡量的，显示器上这个“点”就是指像素(pixel)。</p>
-<p>(19)点距: 点距指屏幕上相邻两个同色像素单元之间的距离，即两个红色（或绿、蓝）像素单元之间的距离。</p>
-<p>(20)行反转扫描法: 先对所有行线送”1”，所有列线送“0”，读键盘行扫描值；然后反过先对所有行线送”0”，然后对所有列线送“1”，并读键盘列扫描值。</p>
-<h3 id="简要问题"><a href="#简要问题" class="headerlink" title="简要问题"></a>简要问题</h3><p>1)什么是接口?它有哪些功能?</p>
-<p>2)主机与外部设备之间如何连接?</p>
-<p>3)主机与外部设备信息交换的控制方式有哪些?各有什么特点?</p>
-<p>4)什么是程序程序查询I&#x2F;O方式,简要说明其工作原理.</p>
-<p>5)比较单级中断和多重中断处理流程的异同点.</p>
-<p>6)中断隐指令完成什么功能?</p>
-<p>7)为什么在保护现场和恢复现场的过程中,CPU必须关中断?</p>
-<p>8)CPU响应中断的条件有哪些?</p>
-<p>9)什么是中断向量,简要分析中断向量方式下形成中断向量的基本方法.</p>
-<p>10)为什么采用DMA方式能提高成组数据传送的速度?</p>
-<p>11)什么是中断优先级?它具有哪两层含义?划分优先等级的原则是什么?</p>
-<p>12)计算机中断系统中使用屏蔽技术有什么好处?</p>
-<p>13)计算机中断响应后，如何调出中断服务程序?</p>
-<p>14)DMA方式传送数据前，主机应向DMA接口输送哪些参数?</p>
-<p>15)比较中断I&#x2F;O和DMA的一统点。</p>
-<p>16)比较DMA与通道的异同点。</p>
-<p>17)中断系统中设计中断允许和中断屏蔽的作用分别是什么?两者是否可以合二为一?</p>
-<p>解：(1)接口是两个不同部件或系统之间的连接部分，可以是两个硬设备(可以都是计算机，也可以都是外部设备)之间的连接，也可以是软件系统中两个独立程序块之间的连接。</p>
-<p>具有的功能：1)寻址功能。2)数据输入&#x2F;输出功能。3)匹配主机与外设的速度差距。4)实现数据格式转换或逻辑电平转换。5)传送主机命令。6)反映设备的工作状态。</p>
-<p>(2)主机通过接口连接I&#x2F;O设备，接口实现主机与外设的连接和信息的交换。</p>
-<p>(3) 主机与外部设备信息交换的控制方式有:程序查询控制方式、程序中断控制方式、直接存储器存取控制方式(DMA)、通道方式、外围处理机方式。</p>
-<p>特点：程序查询控制方式接口设计简单，但是CPU与外设只能串行工作，由于CPU的速度比外设的速度要高得多，所以在信息传送过程中，CPU的大量时间是花费在查询和等待上，从而使系统效率大大降低。</p>
-<p>程序中断控制方式：允许外部设备用“中断”信号中止CPU正在执行的程序。具体他说，当接口电路需要与CPU进行数据交换（输入、输出等）时，便由接口电路向CPU发出一个中断请求信号，CPU响应这一中断请求，并调用中断服务程序完成一个或多个字节的信息交换。这种方式不需要接口软件主动查询，而是由接口电路主动通知CPU，即在设备准备数据阶段，CPU与外设能并行工作，使得接口软件的效率比较高。</p>
-<p>直接存储器存取控制方式：数据传输的基本单位是数据块；所传输的数据是从设备直接送入内存的,或者相反；整块数据的传送是在控制器的控制下完成的；</p>
-<p>通道方式：CPU发出启动通道的指令，通道就开始工作。I&#x2F;O通道控制I&#x2F;O控制器工作，I&#x2F;O控制器又控制I&#x2F;O设备。这样，一个通道可以连接多个I&#x2F;O控制器，而一个I&#x2F;O控制器又可以连接若干台同类型的外部设备。</p>
-<p>外围处理机方式: 通常用于大、中型计算机系统中。由于PPU基本上独立于主机工作，其结构更接近一般处理机，甚至就是一般的通用微小型计算机。它可以完成IOP的功能，还可以完成码制变换、格式处理、数据块检错、纠错等操作。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2019/12/25/Algorithm_%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/25/Algorithm_%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/" class="post-title-link" itemprop="url">分治策略</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-24 23:29:41" itemprop="dateCreated datePublished" datetime="2019-12-24T23:29:41Z">2019-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="分治策略"><a href="#分治策略" class="headerlink" title="分治策略"></a>分治策略</h1><p>分治法遵循三个基本步骤：</p>
-<p>1）分解（Divide）：将原问题分为若干个规模较小、相互独立，性质与原问题一样的子问题；</p>
-<p>2）解决（Conquer）：若子问题规模较小、可直接求解时则直接解；否则<strong>“递归”</strong>求解各个子问题，即继续将较大子问题分解为更小的子问题，然后用同一策略继续求解子问题。</p>
-<p>3）合并（Combine）：将子问题的解合并成原问题的解。</p>
-<h2 id="递归式求解的三种方法"><a href="#递归式求解的三种方法" class="headerlink" title="递归式求解的三种方法"></a>递归式求解的三种方法</h2><p>通常遇到的输入规模为n的递归式，形式如下：</p>
-<p>$$T(n) &#x3D; aT(n&#x2F;b) + f(n)$$</p>
-<p>该式描述的是：它将规模为n的问题分解为a个子问题，每个子问题规模为n&#x2F;b，其中a和b都是正常数。a个子问题递归地进行求解，每个花费时间T(n&#x2F;b)。<strong>函数f(n)包含了问题分解和子问题解合并的代价</strong>。例如，描述Strassen算法的递归式中，a&#x3D;7，b&#x3D;2，f(n) &#x3D; Θ(n2) 。</p>
-<p>接下来分析求解上述式子的三种方法</p>
-<h3 id="代入法"><a href="#代入法" class="headerlink" title="代入法"></a>代入法</h3><p>  实质上就是数学归纳法，先对一个小的值做假设，然后推测更大的值得正确性。</p>
-<p>​    1.猜测解的形式；</p>
-<p>​    2.用数学归纳法求出解中的常数，并证明解是正确的。</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>T(n) &#x3D; 2T(n&#x2F;2) + n</p>
-<ul>
-<li>step one: 猜测<br> 上述等式可以转换为 T(n)&#x2F;n &#x3D; 2T(n&#x2F;2)&#x2F;n + 1<br> 令 S(n) &#x3D; T(n)&#x2F;n<br> 则S(n) &#x3D; S(n&#x2F;2) + 1<br> 而这种形式与以下的等式很像(这是关键步骤)<br> lgn &#x3D; lg (n&#x2F;2) + 1 (此处lg2 &#x3D; 1)<br> 因此可以推测 T(n) &#x2F; n &#x3D; clgn (c是常数)</li>
-</ul>
-<p>因此猜出其解为 T(n) &#x3D; O(nlgn)</p>
-<ul>
-<li>step two: 数学归纳法证明这个解的合理性<br> 直接代入去运算</li>
-</ul>
-<h3 id="递归树法"><a href="#递归树法" class="headerlink" title="递归树法"></a>递归树法</h3><p>利用递归树方法求算法复杂度，其实是提供了一个好的猜测，简单而直观。在递归树中，每一个结点表示一个单一问题的代价，子问题对应某次递归函数调用。我们将树中每层中的代价求和，得到每层代价，然后将所有层的代价求和，得到所有层次的递归调用总代价。简单来说就是将递归的一层一层分析出来，再累加求和。</p>
-<p>   递归树最适合用来生成好的猜测，然后可用代入法来验证猜测是否正确。当使用递归树来生成好的猜测时，常常要忍受一点儿“不精确”，因为关注的是如何寻找解的一个上界。</p>
-<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/20160201091404071"></p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/20160201091411294"></p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/20160201091528638"></p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/20160201091655389"></p>
-<p> 在递归树中，每一个结点都代表一个子代价，每层的代价是该层所有子代价的总和，总问题的代价就是所有层的代价总和。所以，我们利用递归树求解代价，只要知道每一层的代价和层数即可。</p>
-<p>   这些，都需要直观的找出规律，以上图为例，当递归调用到叶子T(1)时所用到的递归次数就是整棵递归树的深度。我们从图中可以得到第i层的结点的代价为n&#x2F;(4^i)，当n&#x2F;(4^i)&#x3D;1即i &#x3D; log4(n)时，递归到达了叶子，故整棵递归树的深度为log4(n)。总代价是所有层代价的总和。</p>
-<h3 id="主方法（最普适）"><a href="#主方法（最普适）" class="headerlink" title="主方法（最普适）"></a>主方法（最普适）</h3><blockquote>
-<p><strong>定理4.1（主定理）</strong> 令 a≥1 和 b&gt;1 是常数，f(n) 是一个函数，T(n) 是定义在非负整数上的递归式：<br> $T(n) &#x3D; aT(n&#x2F;b) + f(n)$<br> 那么T(n)有如下渐进界：</p>
-<ol>
-<li>若对某个常数 ε&gt;0 有 f(n) &#x3D; O(nlog<del>b</del>^a^-ε)，则 T(n) &#x3D; Θ(nlog<del>b</del>^a^) 。</li>
-<li>若 f(n) &#x3D; Θ(nlogba)，则 T(n) &#x3D; Θ(nlog<del>b</del>^a^lgn) 。</li>
-<li>若对某个常数 ε&gt;0 有 f(n) &#x3D; Ω(nlog<del>b</del>^a^+ε)，且**对某个常数 c&lt;1 和所有足够大的 n 有 af(n&#x2F;b) ≤ cf(n)**，则 T(n) &#x3D; Θ(f(n)) 。</li>
-</ol>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/20160201085628397"></p>
-</blockquote>
-<p>将余项f(n)与<strong>函数 nlog<del>b</del>^a^</strong> 进行比较， 直觉上来说两个函数的较大者决定了递归式的解，如情况一是 nlogba 较大，情况3是 f(n) 较大。而情况2是两者一样大，这种情况需要乘上一个对数因子。</p>
-<p>这里要注意主方法不能求解的地方，所有的大于和小于都是多项式意义上的大于和小于，对于有些递归式夹在三种情况的间隙中，是无法用主方法来求解的。下面解释一下什么是多项式意义上的小于和大于：  </p>
-<blockquote>
-<p>  f(x)多项式大于g(x):存在实数e&gt;0,使得f(x)&gt;g(x)n^e^<br>  f(x)多项式小于g(x):存在实数e&gt;0,使得f(x)&lt;g(x)n^e^</p>
-</blockquote>
-<p>举个例子，有递归式T(n) &#x3D; 2T(n&#x2F;2)+nlgn。</p>
-<p>对于这个递归式，我们有 a &#x3D; 2，b &#x3D; 2， f(n) &#x3D; n，因此 nlog<del>b</del>^a^ &#x3D; nlog<del>2</del>^2^ &#x3D; Θ(n^1^) 。</p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/image-20191225125958169.png"></p>
-<blockquote>
-<p>但是nlogn仅仅渐进大于n</p>
-<p>因为对于任意c&gt;0,均有logn &lt; n^c^(由洛必达法则可知)。</p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/image-20191225130856418.png"></p>
-</blockquote>
-<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><p>T(n) &#x3D; 9T(n&#x2F;3) + n</p>
-<p>对于这个递归式，我们有 a &#x3D; 9，b &#x3D; 3， f(n) &#x3D; n，因此 nlog<del>b</del>^a^ &#x3D; nlog<del>3</del>^9^ &#x3D; Θ(n^2^) 。而 f(n) &#x3D; n 渐进小于 Θ(n^2^)，所以可以应用于主定理的情况1，从而得到解 T(n) &#x3D; Θ(n^2^) 。</p>
-<p>T(n) &#x3D; T(2n&#x2F;3) + 1</p>
-<p>其中，a &#x3D; 1， b &#x3D; 3&#x2F;2， f(n) &#x3D; 1，因此 nlog<del>b^</del>a^ &#x3D; nlog<del>3&#x2F;2</del>^1^ &#x3D; n^0^ &#x3D; 1 。由于 f(n) &#x3D; Θ(1) ，与Θ(nlog<del>b</del>^a^)恰好相等，可应用于情况2，从而得到解 T(n) &#x3D; Θ(lgn) 。</p>
-<p>T(n) &#x3D; 3T(n&#x2F;4) + nlgn</p>
-<p>我们有 a &#x3D; 3，b &#x3D; 4，f(n) &#x3D; nlgn，因此nlog<del>b</del>^a^ &#x3D; nlog<del>4</del>^3^ &#x3D; O(n^0.793^) 。由于 f(n) &#x3D; Θ(nlgn) &#x3D; Ω(n) &#x3D; Ω(n^0.793+0.207^)，因此可以考虑应用于情况3，其中 ε &#x3D; 0.207。但需要检查是否满足条件：当 n 足够大时，存在 c&lt;1 使 af(n&#x2F;b) ≤ cf(n) 。</p>
-<ul>
-<li>令 3f(n&#x2F;4) ≤ cf(n) 有<br> 3n&#x2F;4lg(n&#x2F;4) ≤ cnlgn<br> 3&#x2F;4(lgn - lg4) ≤ clgn<br> (3&#x2F;4 - c)lgn ≤ 3&#x2F;4lg4</li>
-</ul>
-<p>容易发现，当 c ≥ 3&#x2F;4 时，上式对于足够大的 n 恒成立。因此可以使用主定理的情况3，得出递归式的解为 T(n) &#x3D; Θ(nlgn) 。</p>
-<h2 id="最大子数组问题"><a href="#最大子数组问题" class="headerlink" title="最大子数组问题"></a>最大子数组问题</h2><p>已知数组A，在A中寻找“和最大”的非空连续子数组。——称这样的连续子数组为最大子数组(maximum subarray)</p>
-<h3 id="方法一：暴力求解"><a href="#方法一：暴力求解" class="headerlink" title="方法一：暴力求解"></a>方法一：暴力求解</h3><p>暴力求解的时间复杂度为O（n^2^）</p>
-<h3 id="方法二：分治求解"><a href="#方法二：分治求解" class="headerlink" title="方法二：分治求解"></a>方法二：分治求解</h3><p>分治求解的核心在于递归。所以需要考虑最大子数组如何满足递归的要求。</p>
-<p>首先，将数组分成均分为两个部分。那么最大子数组可能存在的位置可能存在的情况有三种：</p>
-<ol>
-<li>最大子数组在左边的数组中</li>
-<li>最大子数组在右边数组中</li>
-<li>最大子数组跨越了左右两个子数组</li>
-</ol>
-<p>递归的结束：左右子数组的元素为1时，就可以结束递归了。</p>
-<p>递归层需要做的事情：计算左右子数组的最大子数组和横跨左右子数组的最大数组。<br>在求解横跨左右子数组的最大数组时，可以从mid出发，分别向左和向右找出“和最大”的子区间，mid分别是左右区间的终点和起点。然后合并这两个区间即可得到跨越中点时的A[low … high]的最大子数组。</p>
-<p>递归的返回值：返回MAX（左右子数组的最大子数组，横跨左右子数组的最大数组）</p>
-<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p>对A[low..mid]和A[mid+1..high]两个子问题递归求解，每个子问题的规模是n&#x2F;2，所以每个子问题的求解时间为T(n&#x2F;2)，两个子问题递归求解的总时间是2T(n&#x2F;2)。</p>
-<p>FIND-MAX-CROSSING-SUBARRAY的时间是Θ(n)。</p>
-<p>所以T(n)&#x3D;Θ(nlgn）</p>
-<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/maximum-subarray/">Leetcode 53.最大子序和</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxSubArray</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="keyword">if</span>(l==<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> maxSubArraySum(nums,<span class="number">0</span>,l-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxSubArraySum</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> l,<span class="type">int</span> r)</span></span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//递归的结束：当只有子数组只有一个元素的时候</span></span><br><span class="line">        <span class="keyword">if</span>(l==r)</span><br><span class="line">        <span class="keyword">return</span> nums[l];</span><br><span class="line">        <span class="type">int</span> mid=(r+l)/<span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span>  <span class="operator">=</span> Math.max(maxSubArraySum(nums,mid+<span class="number">1</span>,r),maxCrossingSum(nums,l,mid,r));</span><br><span class="line">        <span class="keyword">return</span> Math.max(maxSubArraySum(nums,l,mid),temp);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxCrossingSum</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> l,<span class="type">int</span> mid ,<span class="type">int</span> r)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> leftsum=Integer.MIN_VALUE;</span><br><span class="line">        <span class="comment">//从mid的左边走，一直走到最大子数组的位置</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=mid;i&gt;=l;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=nums[i];</span><br><span class="line">            <span class="keyword">if</span>(sum&gt;=leftsum)</span><br><span class="line">            leftsum=sum;</span><br><span class="line">        &#125;</span><br><span class="line">        sum=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> rightsum=Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=mid+<span class="number">1</span>;i&lt;=r;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=nums[i];</span><br><span class="line">            <span class="keyword">if</span>(sum&gt;rightsum)</span><br><span class="line">            rightsum=sum;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> leftsum+rightsum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Strassen矩阵乘法"><a href="#Strassen矩阵乘法" class="headerlink" title="Strassen矩阵乘法"></a>Strassen矩阵乘法</h2><p>矩阵乘法是种极其耗时的运算。</p>
-<p>以C &#x3D; A • B为例，其中A和B都是 n x n 的矩阵。根据矩阵乘法的定义，计算过程如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQUARE-MATRIX-MULTIPLY(A, B)</span><br><span class="line">n = A.rows</span><br><span class="line">let C be a <span class="keyword">new</span> <span class="title class_">nxn</span> matrix</span><br><span class="line"><span class="type">for</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span> to n</span><br><span class="line">    <span class="type">for</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span> to n</span><br><span class="line">        c[i][j] = <span class="number">0</span></span><br><span class="line">        <span class="type">for</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">1</span> to n</span><br><span class="line">            c[i][j] += a[i][k] * b[k][j]</span><br><span class="line"><span class="keyword">return</span> C</span><br></pre></td></tr></table></figure>
-
-<p>由于存在三层循环，它的时间复杂度将达到O(n3)。</p>
-<p>这是一个很可怕的数字。但是，凭着科学家们的智慧，这个数正在一步步下降。本文介绍经典的Strassen算法，该算法将时间复杂度降低到O(nlg7) ≈ O(n2.81)。别小看这个细微的改进，当n非常大时，该算法将比平凡算法节约大量时间。</p>
-<h3 id="分治法"><a href="#分治法" class="headerlink" title="分治法"></a>分治法</h3><p>Strassen算法基于分治的思想，因此我们首先考虑一个简单的分治策略。</p>
-<p>每个 n x n 的矩阵都可以分割为四个 n&#x2F;2 x n&#x2F;2 的矩阵：</p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/1186132-ab97111959554711.webp"></p>
-<p>因此可以将公式C &#x3D; A • B改写为</p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/1186132-a643e20f23008d91.webp"></p>
-<p>于是上式就等价于如下四个公式：</p>
-<p><small>（式3-3）</small><br> C11 &#x3D; A11 • B11 + A12 • B21<br> C12 &#x3D; A11 • B12 + A12 • B22<br> C21 &#x3D; A21 • B11 + A22 • B21<br> C22 &#x3D; A21 • B12 + A22 • B22</p>
-<blockquote>
-<p>注：任意两个子矩阵块的乘可以沿用同样的规则：如果子矩阵的阶大于2，则将子矩阵分成更小的子矩阵，直到每个子矩阵只含一个元素为止。从而构造出一个递归计算过程。</p>
-</blockquote>
-<p>每个公式需要计算两次矩阵乘法和一次矩阵加法，使用T(n)表示 n x n 矩阵乘法的时间复杂度，那么我们可以根据上面的分解得到一个递推公式。</p>
-<p>T(n) &#x3D; 8T(n&#x2F;2) + Θ(n^2^)</p>
-<p>其中，8T(n&#x2F;2)表示8次矩阵乘法，而且相乘的矩阵规模降到了n&#x2F;2。Θ(n^2^)表示4次矩阵加法的时间复杂度以及合并C矩阵的时间复杂度。</p>
-<p>要想计算出T(n)并不复杂，可以采用画递归树的方式计算，结果是T(n) &#x3D; Θ(n^3^)</p>
-<p>可见，简单的分治策略并没有起到加速运算的效果。</p>
-<h3 id="Strassen算法"><a href="#Strassen算法" class="headerlink" title="Strassen算法"></a>Strassen算法</h3><p>让我们回头观察前面使用分治策略的时候为什么无法提高速度。</p>
-<p>因为分解后的问题包含了8次矩阵相乘和4次矩阵相加，就是这8次矩阵相乘导致了速度不能提升。于是我们想到能<strong>不能减少矩阵相乘的次数，取而代之的是矩阵相加的次数增加</strong>。Strassen正是利用了这一点。</p>
-<p>现在，我们来看一下Strassen算法的原理。</p>
-<p>仍然把每个矩阵分割为4份，然后创建如下10个中间矩阵：</p>
-<p>S1 &#x3D; B12 - B22<br> S2 &#x3D; A11 + A12<br> S3 &#x3D; A21 + A22<br> S4 &#x3D; B21 - B11<br> S5 &#x3D; A11 + A22<br> S6 &#x3D; B11 + B22<br> S7 &#x3D; A12 - A22<br> S8 &#x3D; B21 + B22<br> S9 &#x3D; A11 - A21<br> S10 &#x3D; B11 + B12</p>
-<p>接着，计算7次矩阵乘法：</p>
-<p>P1 &#x3D; A11 • S1<br> P2 &#x3D; S2 • B22<br> P3 &#x3D; S3 • B11<br> P4 &#x3D; A22 • S4<br> P5 &#x3D; S5 • S6<br> P6 &#x3D; S7 • S8<br> P7 &#x3D; S9 • S10</p>
-<p>最后，根据这7个结果就可以计算出C矩阵：<br> C11 &#x3D; P5 + P4 - P2 + P6<br> C12 &#x3D; P1 + P2<br> C21 &#x3D; P3 + P4<br> C22 &#x3D; P5 + P1 - P3 - P7</p>
-<p>我们可以把P矩阵和S矩阵展开，并带入最后的式子计算，会发现恰好是公式3中的四个式子。也就是说，Strassen为了计算公式3，绕了一大圈，用了更多的步骤，成功的把计算量变成了7个矩阵乘法和18个矩阵加法。虽然矩阵加法增加了好几倍，而矩阵乘法只减小了1个，但在数量级面前，18个加法仍然渐进快于1个乘法。这就是该算法的精妙之处。</p>
-<p>同样地，我们可以写出Strassen算法的递推公式：</p>
-<p>T(n) &#x3D; 7T(n&#x2F;2) + Θ(n2)</p>
-<p>使用递归树或主方法可以计算出结果：</p>
-<p>T(n) &#x3D; Θ(nlg7) ≈ Θ(n2.81)</p>
-<p>下图展示了平凡算法和Strassen算法的性能差异，n越大，Strassen算法节约的时间越多。</p>
-<p><img src="/images/%E5%88%86%E6%B2%BB%E7%AD%96%E7%95%A5/1186132-d4454de5a866191b.webp" alt="性能比较"></p>
-<h2 id="最近点对问题"><a href="#最近点对问题" class="headerlink" title="最近点对问题"></a>最近点对问题</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -3647,20 +3704,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

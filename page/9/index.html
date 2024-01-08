@@ -126,17 +126,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">73</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">32</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">177</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">180</span></a>
 
   </li>
         <li class="menu-item menu-item-photos">
@@ -213,6 +213,476 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94XML%E5%92%8CJSON/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94XML%E5%92%8CJSON/" class="post-title-link" itemprop="url">JavaWeb学习（十三）——XML和JSON</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 17:03:17" itemprop="dateCreated datePublished" datetime="2021-09-13T17:03:17Z">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h1><p>xml数据或者xml文档只用于组织、存储数据。</p>
+<ul>
+<li>为xml定规则：使用DTD或Schema技术</li>
+<li>解析xml数据：使用DOM或SAX技术</li>
+<li>提供样式：XSLT可扩展样是转换语言</li>
+</ul>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="文档声明"><a href="#文档声明" class="headerlink" title="文档声明"></a>文档声明</h3><ul>
+<li>XML声明放在XML的第一行</li>
+<li>version—-版本</li>
+<li>encoding–编码</li>
+<li>standalone–独立使用–默认是no。standalone表示该xml是不是独立的，如果是yes，则表示这个XML文档时独立的，不能引用外部的DTD规范文件；如果是no，则该XML文档不是独立的，表示可以引用外部的DTD规范文档。</li>
+<li>正确的文档声明格式，属性的位置不能改变！</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span> standalone=<span class="string">&quot;no&quot;</span>?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="元素"><a href="#元素" class="headerlink" title="元素"></a>元素</h3><p>首先在这里说明一个概念：<strong>在XML中元素和标签指的是同一个东西！不要被不同的名称所迷惑了！</strong></p>
+<p>元素中需要值得注意的地方：</p>
+<ul>
+<li>XML元素中的出现的空格和换行都会被当做元素内容进行处理</li>
+<li>每个XML文档必须有且只有一个根元素</li>
+<li>元素必须闭合</li>
+<li>大小写敏感</li>
+<li>不能交叉嵌套</li>
+<li>不能以数字开头</li>
+</ul>
+<p>看起来好像有很多需要值得注意的地方，其实只需要记住：<strong>XML的语法是规范的！不要随意乱写！</strong></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>属性是作为XML元素中的一部分的，命名规范也是和XML元素一样的！</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--属性名是name，属性值是china--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">中国</span> <span class="attr">name</span>=<span class="string">&quot;china&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">中国</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p><strong>注释和HTML的注释是一样的</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!----&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="CDATA"><a href="#CDATA" class="headerlink" title="CDATA"></a>CDATA</h3><p>在编写XML文件时，有些内容可能不想让解析引擎解析执行，而是当作原始内容处理。遇到此种情况，可以把这些内容放在CDATA区里，对于CDATA区域内的内容，XML解析程序不会处理，而是直接原封不动的输出</p>
+<p>语法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;![CDATA[</span><br><span class="line">    ...内容</span><br><span class="line">]]&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="处理指令"><a href="#处理指令" class="headerlink" title="处理指令"></a>处理指令</h3><p>处理指令，简称PI （processing instruction）。处理指令用来指挥解析引擎如何解析XML文档内容。</p>
+<p>例如：</p>
+<p>在XML文档中可以使用xml-stylesheet指令，通知XML解析引擎，应用css文件显示xml文档内容。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;1.css&quot;</span>?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>XML代码：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml-stylesheet type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;1.css&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">china</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">guangzhou</span>&gt;</span></span><br><span class="line">        广州</span><br><span class="line">    <span class="tag">&lt;/<span class="name">guangzhou</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">shenzhen</span>&gt;</span></span><br><span class="line">        深圳</span><br><span class="line">    <span class="tag">&lt;/<span class="name">shenzhen</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">china</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CSS代码：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">guangzhou&#123;</span><br><span class="line">    font-size: 40px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>效果：</li>
+</ul>
+<p><img src="https://i.loli.net/2021/09/14/9SIbOmX3aJur2vo.png" alt="img"></p>
+<h1 id="JDK中的XML-API"><a href="#JDK中的XML-API" class="headerlink" title="JDK中的XML API"></a>JDK中的XML API</h1><p>①：JAXP（The Java API For XML Processing)：主要负责解析XML</p>
+<p>②：JAXB（Java Architecture for XML Binding)：主要负责将XML映射为Java对象</p>
+<h2 id="XML解析"><a href="#XML解析" class="headerlink" title="XML解析"></a>XML解析</h2><p>XML解析就是读取XML的数据！</p>
+<h3 id="解析方式"><a href="#解析方式" class="headerlink" title="解析方式"></a>解析方式</h3><p>XML解析方式分为两种：</p>
+<p>①：dom(Document Object Model)文档对象模型，是W3C组织推荐解析XML的一种方式</p>
+<p>②：sax(Simple API For XML)，它是XML社区的标准，几乎所有XML解析器都支持它！</p>
+<p><img src="https://i.loli.net/2021/09/14/aPnvBl8ZEtDdw6u.png"></p>
+<p>常用的解析器和解析开发包的关系如下所示：</p>
+<p><img src="https://i.loli.net/2021/09/14/LGhW3AzUJvqfHSy.png"></p>
+<ul>
+<li>jaxp是jdk自带的，无需导入开发包</li>
+<li>jdom需要导入开发包</li>
+<li>dom4j是用的最多的，需要导入开发包</li>
+</ul>
+<h2 id="jaxp"><a href="#jaxp" class="headerlink" title="jaxp"></a>jaxp</h2><h3 id="DOM解析操作"><a href="#DOM解析操作" class="headerlink" title="DOM解析操作"></a>DOM解析操作</h3><blockquote>
+<p>DOM解析是一个基于对象的API，它把XML的内容加载到内存中，生成与XML文档内容对应的模型！当解析完成，内存中会生成与XML文档的结构与之对应的DOM对象树，这样就能够根据树的结构，以节点的形式对文档进行操作！</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/09/14/K8txMdaeUW59su7.png"></p>
+<p><strong>在DOM解析中有几个核心的操作接口：</strong></p>
+<ul>
+<li><strong>Document【代表整个XML文档，通过Document节点可以访问XML文件中所有的元素内容！】</strong></li>
+<li><strong>Node【Node节点几乎在XML操作接口中几乎相当于普通Java类的Object，很多核心接口都实现了它！】</strong></li>
+<li><strong>NodeList【代表着一个节点的集合，通常是一个节点中子节点的集合！】</strong></li>
+<li>NameNodeMap【表示一组节点和其唯一名称对应的一一对应关系，主要用于属性节点的表示】</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013252686">XML就是这么简单 - SegmentFault 思否</a></p>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p>JSON：<strong>JavaScript Object Notation</strong> 【JavaScript 对象表示法】</p>
+<p>JSON 是存储和交换文本信息的语法。类似 XML。</p>
+<p>JSON采用完全独立于任何程序语言的文本格式，使JSON成为理想的数据交换语言。</p>
+<p><strong>JSON 比 XML 更小、更快，更易解析</strong>。</p>
+<ul>
+<li>javaScript原生支持JSON，解析速度会很快</li>
+<li>XML解析成DOM对象的时候，浏览器【IE和fireFox】会有差异</li>
+<li>使用JSON会更简单</li>
+</ul>
+<h2 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h2><p>JSON所表示的数据要么就是对象，要么就是数据</p>
+<p>JSON语法是javaScript语法的子集，<strong>javaScript用[]中括号来表示数组，用{}大括号来表示对象，JSON亦是如此。</strong></p>
+<h3 id="JSON数组"><a href="#JSON数组" class="headerlink" title="JSON数组"></a>JSON数组</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> employees = [</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;Bill&quot;</span> , <span class="string">&quot;lastName&quot;</span>:<span class="string">&quot;Gates&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;George&quot;</span> , <span class="string">&quot;lastName&quot;</span>:<span class="string">&quot;Bush&quot;</span> &#125;,</span><br><span class="line">&#123; <span class="string">&quot;firstName&quot;</span>:<span class="string">&quot;Thomas&quot;</span> , <span class="string">&quot;lastName&quot;</span>: <span class="string">&quot;Carter&quot;</span> &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h3 id="JSON对象"><a href="#JSON对象" class="headerlink" title="JSON对象"></a>JSON对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">str</span>: <span class="string">&quot;zhongfucheng&quot;</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(<span class="string">&quot;我爱学习&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>当然啦，数组可以包含对象，在对象中也可以包含数组</strong></p>
+<h3 id="解析JSON"><a href="#解析JSON" class="headerlink" title="解析JSON"></a>解析JSON</h3><p><strong>使用eval()函数来解析JSON，把JSON文本数据转换成一个JavaScript对象。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">test</span>(<span class="params"></span>) &#123;</span><br><span class="line">           <span class="comment">//在写JOSN的时候，记得把带上逗号</span></span><br><span class="line">           <span class="keyword">var</span> txt = <span class="string">&quot;&#123;a:123,&quot;</span> +</span><br><span class="line">                   <span class="string">&quot;b:&#x27;zhongfucheng&#x27;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">           <span class="comment">//使用eval解析JSON字符串，需要增添()</span></span><br><span class="line">           <span class="keyword">var</span> aa = <span class="built_in">eval</span>(<span class="string">&quot;(&quot;</span> + txt + <span class="string">&quot;)&quot;</span>);</span><br><span class="line">           <span class="title function_">alert</span>(aa);</span><br><span class="line"></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/14/JavaWeb%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94AJAX/" class="post-title-link" itemprop="url">JavaWeb学习（十二）——AJAX</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 17:03:04" itemprop="dateCreated datePublished" datetime="2021-09-13T17:03:04Z">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h1><p>AJAX即“Asynchronous Javascript And XML”，是指一种创建交互式网页应用的网页开发技术。AJAX 是一种用于创建快速动态网页的技术。它可以令开发者只向服务器获取数据（而不是图片，HTML文档等资源），互联网资源的传输变得前所未有的轻量级和纯粹。</p>
+<p><img src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2018/12/24/167e05bddfd8dce9~tplv-t2oaga2asx-watermark.awebp" alt="img"></p>
+<p>Ajax实际上是下面这几种技术的融合：</p>
+<ol>
+<li>XHTML和CSS的基于标准的表示技术</li>
+<li>DOM进行动态显示和交互</li>
+<li>XML和XSLT进行数据交换和处理</li>
+<li>XMLHttpRequest进行异步数据检索</li>
+<li>Javascript将以上技术融合在一起</li>
+</ol>
+<p><strong>客户端与服务器，可以在【不必刷新整个浏览器】的情况下，与服务器进行异步通讯的技术</strong></p>
+<p>————<strong>可以进行局部刷新</strong></p>
+<h2 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h2><p>浏览器是先把请求发送到XMLHttpRequest异步对象之中，异步对象对请求进行封装，然后再发送给服务器。<strong>服务器并不是以转发的方式响应，而是以流的方式把数据返回给浏览器</strong></p>
+<p>XMLHttpRequest异步对象会不停监听服务器状态的变化，得到服务器返回的数据，就写到浏览器上【因为不是转发的方式，所以是无刷新就能够获取服务器端的数据】</p>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><ul>
+<li><strong>open()</strong>(<strong>String method,String url,boolean asynch</strong>,String username,String password)</li>
+<li><strong>send(content)</strong></li>
+<li><strong>setRequestHeader(String header,String value)</strong></li>
+<li>getAllResponseHeaders()</li>
+<li>getResponseHeader(String header)</li>
+<li>abort()</li>
+</ul>
+<p><strong>常用的方法就是黑色粗体的前三个</strong></p>
+<ul>
+<li><strong>open()：该方法创建http请求</strong><ul>
+<li><strong>第一个参数是指定提交方式(post、get)</strong></li>
+<li><strong>第二个参数是指定要提交的地址是哪</strong></li>
+<li><strong>第三个参数是指定是异步还是同步(true表示异步，false表示同步)</strong></li>
+<li>第四和第五参数在http认证的时候会用到。是可选的</li>
+</ul>
+</li>
+<li><strong>setRequestHeader(String header,String value)：设置消息头（使用post方式才会使用到，get方法并不需要调用该方法）</strong><ul>
+<li><strong>xmlhttp.setRequestHeader(“Content-type”,”application&#x2F;x-www-form-urlencoded”);</strong></li>
+</ul>
+</li>
+<li><strong>send(content)：发送请求给服务器</strong><ul>
+<li><strong>如果是get方式，并不需要填写参数，或填写null</strong></li>
+<li><strong>如果是post方式，把要提交的参数写上去</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ul>
+<li><p><strong>onreadystatechange：请求状态改变的事件触发器（readyState变化时会调用此方法），一般用于指定回调函数</strong></p>
+</li>
+<li><p><strong>readyState：请求状态readyState一改变，回调函数被调用，它有5个状态</strong></p>
+<ul>
+<li>0：未初始化</li>
+<li>1：open方法成功调用以后</li>
+<li>2：服务器已经应答客户端的请求</li>
+<li>3：交互中。Http头信息已经接收，响应数据尚未接收。</li>
+<li><strong>4：完成。数据接收完成</strong></li>
+</ul>
+</li>
+<li><p><strong>responseText：服务器返回的文本内容</strong></p>
+</li>
+<li><p><strong>responseXML：服务器返回的兼容DOM的XML内容</strong></p>
+</li>
+<li><p><strong>status：服务器返回的状态码</strong></p>
+</li>
+<li><p>statusText：服务器返回状态码的文本信息</p>
+</li>
+</ul>
+<h2 id="ajax的使用"><a href="#ajax的使用" class="headerlink" title="ajax的使用"></a>ajax的使用</h2><h3 id="创建XMLHttpRequest对象"><a href="#创建XMLHttpRequest对象" class="headerlink" title="创建XMLHttpRequest对象"></a>创建XMLHttpRequest对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> httpRequest;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">XMLHttpRequest</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以上的版本以及其他内核的浏览器(Mozilla)等</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="variable language_">window</span>.<span class="property">ActiveXObject</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//在IE6以下的版本</span></span><br><span class="line">        httpRequest = <span class="keyword">new</span> <span class="title class_">ActiveXObject</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="向服务器发送请求"><a href="#向服务器发送请求" class="headerlink" title="向服务器发送请求"></a>向服务器发送请求</h3><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">1</span>. xhr.open(<span class="keyword">method</span>,<span class="title function_">url</span>,<span class="title function_">async</span>);  </span><br><span class="line">    <span class="number">2</span>. send(string)<span class="punctuation">;</span><span class="comment">//post请求时才使用字符串参数，否则不用带参数。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">method</span>：请求的类型；<span class="title function_">GET</span> 或 <span class="title function_">POST</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">url</span>：文件在服务器上的位置</span><br><span class="line"></span><br><span class="line"><span class="title function_">async</span>：<span class="title function_">true</span>（异步）或 <span class="title function_">false</span>（同步） 注意：<span class="title function_">post</span>请求一定要设置请求头的格式内容</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="built_in">open</span>(<span class="string">&quot;POST&quot;</span>,<span class="string">&quot;test.html&quot;</span>,<span class="literal">true</span>);  </span><br><span class="line">xhr.setRequestHeader(<span class="string">&quot;Content-type&quot;</span>,<span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);  </span><br><span class="line">xhr.<span class="built_in">send</span>(<span class="string">&quot;fname=Henry&amp;lname=Ford&quot;</span>); <span class="comment"> //post请求参数放在send里面，即请求体</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务器响应处理"><a href="#服务器响应处理" class="headerlink" title="服务器响应处理"></a>服务器响应处理</h3><p>responseText    获得字符串形式的响应数据。</p>
+<p>responseXML   获得XML 形式的响应数据。</p>
+<h4 id="①同步处理"><a href="#①同步处理" class="headerlink" title="①同步处理"></a>①同步处理</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>,<span class="string">&quot;info.txt&quot;</span>,<span class="literal">false</span>);  </span><br><span class="line">xhr.<span class="title function_">send</span>();  </span><br><span class="line"><span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>; <span class="comment">//获取数据直接显示在页面上</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="②异步处理"><a href="#②异步处理" class="headerlink" title="②异步处理"></a>②异步处理</h4><p>相对来说比较复杂，要在请求状态改变事件中处理。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xhr.<span class="property">onreadystatechange</span>=<span class="keyword">function</span>(<span class="params"></span>)  &#123; </span><br><span class="line">	  <span class="keyword">if</span> (xhr.<span class="property">readyState</span>==<span class="number">4</span> &amp;&amp;xhr.<span class="property">status</span>==<span class="number">200</span>)  &#123; </span><br><span class="line">	       <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;myDiv&quot;</span>).<span class="property">innerHTML</span>=xhr.<span class="property">responseText</span>;  </span><br><span class="line">	     &#125;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013473001">AJAX跨域完全讲解 - SegmentFault 思否</a></p>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013291898">AJAX面试题都在这里 - SegmentFault 思否</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="rhb">
+      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="rhb_blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/08/17/%E5%8A%9B%E9%87%8F%E8%AE%AD%E7%BB%83%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">力量训练基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-16 16:11:37" itemprop="dateCreated datePublished" datetime="2021-08-16T16:11:37Z">2021-08-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>深蹲</p>
+<p>主要要点：</p>
+<ul>
+<li>重心：杠铃重心应该始终保持在脚中心的正上方位置</li>
+<li>站姿：脚跟距离与肩同宽；脚尖外展约30度</li>
+<li>握距：越窄越好，越窄越能将杠铃控制在肌肉上。大拇指应该在杠铃上方以确保握杠时手腕和前臂在一条直线上。</li>
+<li>肘向上抬</li>
+<li>全程保持头向下看</li>
+<li>发力方向：髋部发力应该是往上不是往前，往前的话会导致重心往脚尖压</li>
+<li>反弹：反弹必须作为发力过程的启动部分而存在</li>
+<li>呼吸：深吸一口气并屏住呼吸</li>
+</ul>
+<h2 id="5X5训练计划"><a href="#5X5训练计划" class="headerlink" title="5X5训练计划"></a>5X5训练计划</h2><p>一周在非连续的日子里健身3次，并把AB部分轮流使用：</p>
+<p>周一：</p>
+<p>A：深蹲5X5（起始重量）、推举5X5（起始重量）、硬拉1X5（起始重量）</p>
+<p>周三：</p>
+<p>B：深蹲5X5（+2.5kg）、卧推5X5（起始重量）、划船5X5（起始重量）</p>
+<p>周五：</p>
+<p>A：深蹲5X5（+2.5kg）、推举5X5（+2.5kg）、硬拉1X5（+5kg）</p>
+<p>周一：</p>
+<p>B：深蹲5X5（+2.5kg）、卧推5X5（+2.5kg）、划船5X5（+2.5kg）</p>
+<p><strong>热身</strong>：</p>
+<p>一般会做三个热身组，先用50%今天要做的重量做一组，65%今天要做的重量做一组，80%今天要做的重量做一组。</p>
+<p><strong>注意事项</strong>：</p>
+<p>1、如不能完成5组任意一个，争取做完全部5组（能做几个做几个），下次继续，如果三次训练不能做完，减重10%继续5*5，只要你还没达到瓶颈，就加重下去。</p>
+<p>2、至于推举和划船的重量，你也应该尝试每次增加5磅重量，但是由于这两个锻炼所要求的肌肉力量会少于深蹲、硬拉、和卧推（推举所用的肩部力量远远少于你大腿的伸膝力量），每次增加5磅重量不一定现实。</p>
+<blockquote>
+<p>比如：我用160磅卧推5X5时第三组时失败了，只做了4下。那么我第四组时会拿155磅的重量企图完成，如果我还是败了就用150磅完成第五组。<br>如果失败的地方是在第五组，那么不要纠结企图多做一组了。下次再说吧。注意如果你出现失败的情况，那么下次不能增加重量。</p>
+</blockquote>
+<p>3、如果你加重失败，5组没做完出现完成不了的情况，你可以选择多休息（5+分钟）再挑战这个重量，或者在把重量减少到上次的重量后，再把剩下几组做完。</p>
+<p>正常的话，组间休息在90秒左右；训练初期重量较轻，组间休息时间可以适当减少，到后期快到达极限时需要酌情延长。一般休息3分钟可以让ATP恢复到80%左右，5分钟可以恢复到95%。</p>
+<p><strong>deload:</strong></p>
+<p>全体deload的方法很简单。花一周时间，啥运动都不做，就休息。每健身的第九周，全体deload一周。当然如果你没有健身疲劳也没必要什么运动都不做。你可以照样跟平时一样健身，组数次数啥的都一样，但就把重量减轻40%或更多，然后专门注意纠正改善你的姿势。<br>有的人会问deload完之后怎么办。之后就当啥事没发生，之前该干啥还干啥。该做什么计划就继续做什么计划。</p>
+<p>半deload一般只适合在用线性计划、长时间某项锻炼无法提高的朋友。<br>如果你在做5X5，并且已经有两周你的卧推停滞在80KG上涨不了，那么你可以半deload。方法很简单，别的锻炼照样做，卧推重量减少15磅（或者更多），设这个为你的新的RM。然后从这里开始再慢慢把重量加回去。<br>一般来说，在开始一项新的计划之前，你应该把你的所有锻炼都半deload，以较轻的新的RM开始这个计划（像5&#x2F;3&#x2F;1会专门求你设原来的1RM的90%为1RM）。原因很简单：你从来不想让自己用一个新的计划的第一天就拼尽全力。用一个新的计划的前两周你应该处于一种适应的状态，如果你连这个计划的频率、训练量都没适应，就直接push你自己，只会导致自己肌肉恢复跟不上、然后各种失败。</p>
+<p><strong>辅助训练（最好不加</strong>）：</p>
+<p>引体向上 （最多3组）或 绳索下拉（最多3组）<br>孤立三头锻炼 （最多3组）或 双杠臂屈伸（最多3组）<br>孤立二头肌锻炼（最多3组）<br>后侧肌肉群锻炼 如山羊挺身、罗马尼亚硬拉、直腿硬拉（最多3组）</p>
+<h3 id="ICF冰淇淋5X5："><a href="#ICF冰淇淋5X5：" class="headerlink" title="ICF冰淇淋5X5："></a>ICF冰淇淋5X5：</h3><p>A部分<br>深蹲 5X5<br>卧推 5X5<br>划船 5X5<br>杠铃或哑铃耸肩 3X8-12<br>三头肌下压 3X8-12<br>二头肌弯举 3X8-12<br>逆向曲腿3X8-12<br>腹肌锻炼自己加</p>
+<p>B部分<br>深蹲5X5<br>推举5X5<br>硬拉1X5<br>划船（用比A部分少10%的重量做） 5X5<br>窄距卧推 或 双杠臂屈伸 3X8-12<br>二头肌弯举 3X8-12<br>腹肌锻炼自己加</p>
+<p>这个计划在5X5的基础上添加了很多辅助增肌的锻炼，因此如果你并不是特别对力量有兴趣，更追求增肌的话，这个计划在5X5的计划里算是最适合健美增肌的了（而5X5本身就比99%的其他计划更适合健美增肌。。。）。<br>如果你在减脂，却还想使用这个计划的话，也不是不可以，把所有5组的锻炼做3组，所有3组的锻炼做2组就可以了。你如果减脂期间坚持做完整个计划的话，你会发现你的肌肉恢复会可能跟不上。</p>
+<h2 id="拉伸"><a href="#拉伸" class="headerlink" title="拉伸"></a>拉伸</h2><p>每次拉伸至少要拉30秒以上</p>
+<p>1、髖屈肌群拉伸</p>
+<p>2、</p>
+<h2 id="madcow5X5"><a href="#madcow5X5" class="headerlink" title="madcow5X5"></a>madcow5X5</h2><p>当你可以深蹲体重1.5到2倍左右、硬拉体重2到2.5倍左右、卧推体重1.25倍到1.5倍左右的时候</p>
+<p>每周第一天<br>深蹲 5X5 (除了最后1组之外，前面4组分别用最后一组的60%，70%，80%，90%完成）<br>卧推 5X5 （除了最后1组之外，前面4组从60%开始增加重量）<br>俯身划船 5X5 （除了最后1组之外，前面4组从60%开始增加重量）<br>可选辅助锻炼： 腹肌锻炼、3组二头肌弯举、三组三头肌下压</p>
+<p>第二天 休息</p>
+<p>第三天<br>深蹲 4X5 （和第一天一样，只不过你不做最后一组正式组）<br>推举 或 上斜卧推 4X5 （前3组从60%开始增加重量，第四组为正式组）<br>硬拉 4X5 （前3组从60%开始增加重量，第四组为正式组）<br>可选辅助锻炼：3组哑铃飞鸟、2组窄握双杠臂屈伸、3组二头肌弯举、腹肌锻炼</p>
+<p>第四天 休息</p>
+<p>第五天<br>深蹲 4X5 1X3 1X8 （前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>卧推 4X5 1X3 1X8（前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>俯身划船 4X5 1X3 1X8（前4组和第一天第三天一样，第五组1X3用周一的重量提高2.5%完成，第六组1X8用前四组中的第三组完成）<br>可选辅助锻炼：3组窄握双杠臂屈伸、3组脸拉、3组二头肌弯举、腹肌锻炼</p>
+<p>第六天第七天休息，然后下周第一天时，正式组都用上一周的1X3来做。<br>也就是说：这周周一我第五组正式组是1X5 200磅卧推，这周周五的我的第五组正式组是1X3 205磅卧推，那么下周周一我的第五组正式组是1X5 205磅卧推。<br>至于第三天的推举和硬拉，你只需要跟着每周正式组增加2.5%的重量走就可以了。</p>
+<h3 id="Canditto-LP坎底托直线提高计划介绍"><a href="#Canditto-LP坎底托直线提高计划介绍" class="headerlink" title="Canditto LP坎底托直线提高计划介绍"></a>Canditto LP坎底托直线提高计划介绍</h3><p>本周第一天 上身力量<br>杠铃卧推 3X6<br>背部主要锻炼 3X6<br>肩部主要锻炼 1X6<br>背部次要锻炼 1X6<br>可选上身锻炼1 3X8-15<br>可选上身锻炼2 3X8-15</p>
+<p>本周第二天 下身力量<br>后端深蹲（高杠或低杠）3X6<br>硬拉 2X5<br>可选下身锻炼1 3X8-15<br>可选下身锻炼2 3X8-15<br>可选下身锻炼3 3X8-15<br>本周第三天 休息</p>
+<p>本周第四天 上身增肌<br>杠铃或哑铃卧推 3X8-12<br>背部主要锻炼 4X8-12<br>肩部主要锻炼 3X8-12<br>背部次要锻炼 4X8-12<br>上斜杠铃或哑铃卧推 3X8-12<br>二头肌弯举 3X8-12<br>可选上身锻炼 3X8-12</p>
+<p>本周第五天 下身增肌<br>深蹲（前端或后端） 5X8<br>可选花式硬拉 2X6<br>腘绳肌锻炼 3X8-12<br>小腿提锺 3X8-12<br>可选下身锻炼1 3X8-12<br>可选下身锻炼2 3X8-12</p>
+<p>本周第六天 第七天 休息</p>
+<p>这个模板可以说是相当地灵活，你可以自己随便加锻炼进去。当然，我个人推荐加如下的锻炼：<br>背部主要锻炼 - 俯身划船 或 负重引体向上 或 背部下拉<br>背部次要锻炼 - 俯身划船 或 负重引体向上 或 背部下拉<br>肩部主要锻炼 - 直立杠铃推举 或 坐姿哑铃推举<br>可选上身锻炼 - 二头肌弯举 三头肌下压 俯身哑铃飞鸟 杠铃或哑铃耸肩<br>可选花式硬拉 - 罗马尼亚硬拉 直腿硬拉<br>可选下身锻炼 - 跳箱 前端深蹲 前屈弓步 （这个选择面比较广）<br>腘绳肌锻炼 - 双腿伸屈（机器）</p>
+<p>增重原则<br>所有锻炼，每周尝试增加0-10磅的重量。<br>因为真正的力量日上身下身一周各只有一天，所以增重的尝试只有一次。很多人因此觉得这个计划的增重规律实在太慢，但我个人认为0-10磅的增重设计反而非常不错，因此不会硬逼着你加重，你如何加重完全是看感觉。新手，特别是动作姿势还有问题的新手，被逼着加重时很可能出现姿势不正确、不完全完成动作的行为（比如深蹲时就做个半蹲），因此这种灵活的增重设计我是赞成的。</p>
+<h2 id="GZCL训练理念"><a href="#GZCL训练理念" class="headerlink" title="GZCL训练理念"></a>GZCL训练理念</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25446245">【最良心的干货】手把手教你周期力量计划的设计 - 知乎 (zhihu.com)</a></p>
+<p>每次训练你把你的锻炼要分为三个不同的区域之内，分别是：</p>
+<p><strong>一级主项，二级副项，三级辅助</strong>。</p>
+<p>ZCL理念即是：每天的训练应该安排成一个金字塔。金字塔的厚度为训练量，高为训练强度。最高的位置，训练强度最高、训练量越低，这也是对于你发展力量最重要的训练部分（一级主项）；稍微往下，训练强度、训练量都为中等，这是你<a target="_blank" rel="noopener" href="http://music.163.com/#/program?id=900702866">攻克自己的弱点</a>、直接性辅助你力量提高的训练部分（二级副项）；最下方，训练强度最低，训练量最高，这是你做大量的次数和组数好得到增肌效果、以助于你以后力量的提高（三级辅助）。</p>
+<p>一级主项的锻炼安排：一般来说这是你最重要的大三项，深蹲硬拉卧推。根据你目标的不同，也可以包括别的主项锻炼，比如实力推。你每次训练的目的是把最多的精力和力量安排到一级主项上面。一般而言，你每次训练只会安排一个主项，训练强度一般都高于80%1RM。</p>
+<p>二级副项的锻炼安排：一般来说这是你的三大项的<strong>专项性辅助。</strong>深蹲的包括：暂停深蹲、其他深蹲方式（主蹲低杠的，可以安排高杠或者前蹲）；硬拉的包括：超程硬拉、架上拉、其他硬拉方式（主拉相扑拉的，可以安排传统拉）；卧推的包括：暂停卧推、窄距卧推。这都只是一些例子。要注意的是你也可以把主项放入副项里练。副项的目标，除了攻克弱点、直接性辅助你的主项之外，也可以发展其他的主项；但是重要性会低于当天的一级主项。具体这是什么意思，我会在底下说明白。一般而言，你每次训练只会安排一个或者两个副项，训练强度一般在65%-85%1RM之间。</p>
+<p>三级辅助的锻炼安排：一般来说这是任何其它的辅助锻炼，包括（不限制于）：背部锻炼（划船、引体向上）、哑铃锻炼（哑铃卧推）、增肌性质的三大项辅助（硬拉：罗马尼亚硬拉、直腿硬拉；卧推：哑铃卧推、俯卧撑、甚至胸推机器；深蹲：哑铃弓箭步、箱跳、腿弯举）、肩部锻炼（推举这边也可以练）。你要通过三级辅助，把一级和二级锻炼里还没有压榨完的精力给全部花出去。一般而言，每次训练会安排两个以上的三级辅助，每个的组数锻炼至少3组以上、每组10-20次（Cody喜欢做每组20下的三级辅助，走他的黑又壮计划的朋友们应该都明白，哭死人）。三级辅助的目标是：提高训练容量（高组数高次数）、达到增肌效果、提高综合耐力。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1644,250 +2114,6 @@ DROP FOREIGN KEY fk_PerOrders
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%89%8D%E7%BC%80%E5%92%8C%E5%93%88%E5%B8%8C%E8%A1%A8/" class="post-title-link" itemprop="url">Algorithm__前缀和哈希表</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 22:23:19" itemprop="dateCreated datePublished" datetime="2021-02-10T22:23:19Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm__并查集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:56:17" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:17Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rshawshank.github.io/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="rhb">
-      <meta itemprop="description" content="纵浪大化中，不喜亦不惧">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="rhb_blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/11/Algorithm-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" class="post-title-link" itemprop="url">Algorithm__滑动窗口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-10 21:56:07" itemprop="dateCreated datePublished" datetime="2021-02-10T21:56:07Z">2021-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-13 09:13:26" itemprop="dateModified" datetime="2022-11-13T09:13:26Z">2022-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>滑动窗口主要用来处理连续问题。比如题目求解“连续子串 xxxx”，“连续子数组 xxxx”，就应该可以想到滑动窗口。能不能解决另说，但是这种敏感性还是要有的。</p>
-<p>从类型上说主要有：</p>
-<ul>
-<li>固定窗口大小</li>
-<li>窗口大小不固定，求解最大的满足条件的窗口</li>
-<li>窗口大小不固定，求解最小的满足条件的窗口（上面的 209 题就属于这种）</li>
-</ul>
-<p>后面两种我们统称为<code>可变窗口</code>。当然不管是哪种类型基本的思路都是一样的，不一样的仅仅是代码细节。</p>
-<h2 id="固定窗口大小"><a href="#固定窗口大小" class="headerlink" title="固定窗口大小"></a>固定窗口大小</h2><p>对于固定窗口，我们只需要固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点，并且保证：</p>
-<ol>
-<li>l 初始化为 0</li>
-<li>初始化 r，使得 r - l + 1 等于窗口大小</li>
-<li>同时移动 l 和 r</li>
-<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
-<li>4.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解</li>
-<li>4.2 如果不满足，则继续。</li>
-</ul>
-</li>
-</ol>
-<h2 id="可变窗口大小"><a href="#可变窗口大小" class="headerlink" title="可变窗口大小"></a>可变窗口大小</h2><p>对于可变窗口，我们同样固定初始化左右指针 l 和 r，分别表示的窗口的左右顶点。后面有所不同，我们需要保证：</p>
-<ol>
-<li>l 和 r 都初始化为 0</li>
-<li>r 指针移动一步</li>
-<li>判断窗口内的连续元素是否满足题目限定的条件<ul>
-<li>3.1 如果满足，再判断是否需要更新最优解，如果需要则更新最优解。并尝试通过移动 l 指针缩小窗口大小。循环执行 3.1</li>
-<li>3.2 如果不满足，则继续。</li>
-</ul>
-</li>
-</ol>
-<p>形象地来看的话，就是 r 指针不停向右移动，l 指针仅仅在窗口满足条件之后才会移动，起到窗口收缩的效果。</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/">Leetcode 3.无重复字符的最长子串</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lengthOfLongestSubstring</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span><span class="number">0</span>;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Character, Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(r = <span class="number">0</span>;r&lt;s.length();r++)<span class="comment">//右边的窗口是一直往前走的</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(s.charAt(r)))<span class="comment">//当不符合条件时，左边窗口移动</span></span><br><span class="line">                l = Math.max(l,map.get(s.charAt(r)) + <span class="number">1</span>);<span class="comment">//只有右边加进窗口的元素是重复的，左边才会移动，所以要移动到重复元素后面一位</span></span><br><span class="line">            map.put(s.charAt(r),r);</span><br><span class="line">            max = Math.max(max,r-l+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-window-substring/">Leetcode 76.最小覆盖子串</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">minWindow</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (s == <span class="literal">null</span> || s == <span class="string">&quot;&quot;</span> || t == <span class="literal">null</span> || t == <span class="string">&quot;&quot;</span> || s.length() &lt; t.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> t_length=t.length();</span><br><span class="line">        <span class="type">char</span>[] chars = s.toCharArray(), chart = t.toCharArray();</span><br><span class="line">        <span class="type">int</span>[] hold = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">128</span>];<span class="comment">//记录窗口中的元素和其个数</span></span><br><span class="line">        <span class="comment">//记录t中的所有元素和元素出现的个数</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;t_length;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> temp=chart[i];</span><br><span class="line">            hold[temp]--;</span><br><span class="line">        &#125;</span><br><span class="line">        String output=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//窗口中含有t字符串的元素个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;s.length();right++)</span><br><span class="line">        &#123;</span><br><span class="line">            hold[chars[right]]++;</span><br><span class="line">            <span class="keyword">if</span>(hold[chars[right]]&lt;=<span class="number">0</span>)count++;<span class="comment">//表示右边框进来的是t中的元素</span></span><br><span class="line">            <span class="comment">//当窗口元素达到要求后，此时的目标是找到最小的窗口</span></span><br><span class="line">            <span class="comment">//情况一：左边的元素是不需要的，直接进行左窗口移位</span></span><br><span class="line">            <span class="comment">//情况二：左边的元素是需要的，但是此时右边寻找到了一样的元素，为了进行最小窗口的迭代，将左窗口移位</span></span><br><span class="line">            <span class="keyword">while</span>(count==t_length&amp;&amp;hold[chars[left]]&gt;<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                hold[chars[left]]--;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//进行最小子串的迭代</span></span><br><span class="line">            <span class="keyword">if</span>(count==t_length)</span><br><span class="line">            <span class="keyword">if</span>(output==<span class="string">&quot;&quot;</span>||output.length()&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                output=s.substring(left,right+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> output;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/">Leetcode 209.长度最小的子数组</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minSubArrayLen</span><span class="params">(<span class="type">int</span> target, <span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> right=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> left=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> num=<span class="number">0</span>;<span class="comment">//记录子数组和</span></span><br><span class="line">        <span class="type">int</span> count=<span class="number">0</span>;<span class="comment">//记录子数组个数</span></span><br><span class="line">        <span class="keyword">for</span>(right=<span class="number">0</span>;right&lt;nums.length;right++)</span><br><span class="line">        &#123;</span><br><span class="line">            num+=nums[right];</span><br><span class="line">            <span class="keyword">while</span>(num&gt;=target)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//最小子数组迭代</span></span><br><span class="line">                <span class="keyword">if</span>(count==<span class="number">0</span>||count&gt;right-left+<span class="number">1</span>)</span><br><span class="line">                    count=right-left+<span class="number">1</span>;</span><br><span class="line">                <span class="comment">//在满足要求的基础上寻找最小子数组</span></span><br><span class="line">                <span class="comment">//此时不断压缩左边窗口，可以遍历出所有满足要求的窗口</span></span><br><span class="line">                num-=nums[left];</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1957,20 +2183,20 @@ DROP FOREIGN KEY fk_PerOrders
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">177</span>
+          <span class="site-state-item-count">180</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">73</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
